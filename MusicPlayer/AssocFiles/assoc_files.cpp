@@ -11,63 +11,71 @@
 #include <QMessageBox>
 #include <QtDebug>
 
+struct tentry
+{
+    QString ext;
+    QString description;
+    QString file_desc;
+};
+
 AssocFiles::AssocFiles(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AssocFiles)
 {
     ui->setupUi(this);
-    typedef QPair<QString, QString> tentry;
     QList<tentry> formats;
-    formats << tentry("wav",  "WAV - Uncompressed PCM Audio");
-    formats << tentry("voc",  "VOC - Creative Labs Audio File");
-    formats << tentry("mp3",  "MP3 - MPEG-1/2/2.5 Layer 3, Lossy data compressed audio");
-    formats << tentry("ogg",  "OGG - OGG Vorbis, Lossy data compressed audio");
-    formats << tentry("flac", "FLAC - Free Lossless Audio Codec, Loss-less compressed");
-    formats << tentry("mid",  "mid - Music Instrument Digital Interface, commands list");
-    formats << tentry("midi", "midi - Music Instrument Digital Interface, commands list");
-    formats << tentry("kar",  "kar - Music Instrument Digital Interface, commands list");
-    formats << tentry("rmi",  "rmi - Music Instrument Digital Interface, commands list");
-    formats << tentry("xmi",  "XMI - AIL eXtended MIDI file");
-    formats << tentry("mus",  "MUS - DMX MIDI Music file");
-    formats << tentry("cmf",  "CMF - Creative Music File (mixed MIDI and OPL2 synth)");
+    formats << tentry{"wav",  "WAV - Uncompressed PCM Audio", tr("PCM Audio File", "File Type Name")};
+    formats << tentry{"voc",  "VOC - Creative Labs Audio File", tr("Creative Labs Audio File", "File Type Name")};
+    formats << tentry{"mp3",  "MP3 - MPEG-1/2/2.5 Layer 3, Lossy data compressed audio", tr("MPEG Layer-3 Audio File", "File Type Name")};
+    formats << tentry{"ogg",  "OGG - OGG Vorbis, Lossy data compressed audio", tr("OGG Vorbis File", "File Type Name")};
+    formats << tentry{"opus", "OPUS - OGG Opus, Lossy data compressed audio", tr("OPUS Audio File", "File Type Name")};
+    formats << tentry{"flac", "FLAC - Free Lossless Audio Codec, Loss-less compressed", tr("FLAC Audio File", "File Type Name")};
+    formats << tentry{"mid",  "mid - Music Instrument Digital Interface, commands list", tr("MIDI File", "File Type Name")};
+    formats << tentry{"midi", "midi - Music Instrument Digital Interface, commands list", tr("MIDI File", "File Type Name")};
+    formats << tentry{"kar",  "kar - Music Instrument Digital Interface, commands list", tr("MIDI Karaoke File", "File Type Name")};
+    formats << tentry{"rmi",  "RMI - Music Instrument Digital Interface, commands list", tr("RIFF MIDI File", "File Type Name")};
+    formats << tentry{"xmi",  "XMI - AIL eXtended MIDI file", tr("AIL eXtended MIDI File", "File Type Name")};
+    formats << tentry{"mus",  "MUS - DMX MIDI Music file", tr("DMX MIDI File", "File Type Name")};
+    formats << tentry{"cmf",  "CMF - Creative Music File (mixed MIDI and OPL2 synth)", tr("Creative MIDI+OPL2 File", "File Type Name")};
 
-    formats << tentry("ay",   "AY - ZX Spectrum/Amstrad CPC");
-    formats << tentry("gbs",  "GBS - Nintendo Game Boy");
-    formats << tentry("gym",  "GYM - Sega Genesis/Mega Drive");
-    formats << tentry("hes",  "HES - NEC TurboGrafx-16/PC Engine");
-    formats << tentry("kss",  "KSS - MSX Home Computer/other Z80 systems (doesn't support FM sound)");
-    formats << tentry("nsf",  "NSF - Nintendo NES/Famicom (with VRC 6, Namco 106, and FME-7 sound)");
-    formats << tentry("nsfe", "NSFE - Nintendo NES/Famicom (with VRC 6, Namco 106, and FME-7 sound)");
-    formats << tentry("sap",  "SAP - Atari systems using POKEY sound chip");
-    formats << tentry("spc",  "SPC - Super Nintendo/Super Famicom");
-    formats << tentry("vgm",  "VGM - Sega Master System/Mark III, Sega Genesis/Mega Drive,BBC Micro");
-    formats << tentry("vgz",  "VGZ - Sega Master System/Mark III, Sega Genesis/Mega Drive,BBC Micro (GZ Compressed)");
+    formats << tentry{"ay",   "AY - ZX Spectrum/Amstrad CPC", tr("ZX Spectrum/Amstrad Music", "File Type Name")};
+    formats << tentry{"gbs",  "GBS - Nintendo Game Boy", tr("Nintendo Game Boy Music", "File Type Name")};
+    formats << tentry{"gym",  "GYM - Sega Genesis/Mega Drive", tr("Sega Music", "File Type Name")};
+    formats << tentry{"hes",  "HES - NEC TurboGrafx-16/PC Engine", tr("NEC TurboGrafx-16 Music", "File Type Name")};
+    formats << tentry{"kss",  "KSS - Z80 systems music", tr("Z80 systems Music file", "File Type Name")};
+    formats << tentry{"nsf",  "NSF - Nintendo NES/Famicom", tr("NES/Famicom Music File", "File Type Name")};
+    formats << tentry{"nsfe", "NSFE - Nintendo NES/Famicom", tr("NES/Famicom Music File", "File Type Name")};
+    formats << tentry{"sap",  "SAP - Atari (POKEY)", tr("Atari POKEY music", "File Type Name")};
+    formats << tentry{"spc",  "SPC - Super NES/Famicom Music", tr("Super NES/Famicom Music", "File Type Name")};
+    formats << tentry{"vgm",  "VGM - Video Game Music", tr("Video Game Music", "File Type Name")};
+    formats << tentry{"vgz",  "VGZ - Video Game Music (GZ Compressed)", tr("Video Game Music (GZ-compressed)", "File Type Name")};
 
-    formats << tentry("669",  "669 - Composer 669, Unis 669");
-    formats << tentry("amf",  "AMF - ASYLUM Music Format V1.0/DSMI Advanced Module Format");
-    formats << tentry("apun", "APUN - APlayer");
-    formats << tentry("dsm",  "DSM - DSIK internal format");
-    formats << tentry("far",  "FAR - Farandole Composer");
-    formats << tentry("gdm",  "GDM - General DigiMusic");
-    formats << tentry("it",   "IT - Impulse Tracker");
-    formats << tentry("mptm", "MPTM - Open ModPlug Tracker");
-    formats << tentry("imf",  "IMF - Imago Orpheus");
-    formats << tentry("mod",  "MOD - 15 and 31 instruments");
-    formats << tentry("med",  "MED - OctaMED");
-    formats << tentry("mtm",  "MTM - MultiTracker Module editor");
-    formats << tentry("okt",  "OKT - Amiga Oktalyzer");
-    formats << tentry("s3m",  "S3M - Scream Tracker 3");
-    formats << tentry("stm",  "STM - Scream Tracker");
-    formats << tentry("stx",  "STX - Scream Tracker Music Interface Kit");
-    formats << tentry("ult",  "ULT - UltraTracker");
-    formats << tentry("uni",  "UNI - MikMod");
-    formats << tentry("xm",   "XM - FastTracker 2");
+    formats << tentry{"669",  "669 - Composer 669, Unis 669", tr("Composer 669, Unis 669", "File Type Name")};
+    formats << tentry{"amf",  "AMF - ASYLUM Music Format V1.0/DSMI Advanced Module Format", tr("ASYLUM Music Format", "File Type Name")};
+    formats << tentry{"apun", "APUN - APlayer", tr("APlayer Music File", "File Type Name")};
+    formats << tentry{"dsm",  "DSM - DSIK internal format", tr("DSIK Music File", "File Type Name")};
+    formats << tentry{"far",  "FAR - Farandole Composer", tr("Farandole Composer File", "File Type Name")};
+    formats << tentry{"gdm",  "GDM - General DigiMusic", tr("General DigiMusic File", "File Type Name")};
+    formats << tentry{"it",   "IT - Impulse Tracker", tr("Impulse Tracker File", "File Type Name")};
+    formats << tentry{"mptm", "MPTM - Open ModPlug Tracker", tr("Open ModPlug Tracker Music", "File Type Name")};
+    formats << tentry{"imf",  "IMF - Imago Orpheus/Id Music File", tr("Imago Orpheus/Id Music File", "File Type Name")};
+    formats << tentry{"mod",  "MOD - 15 and 31 instruments", tr("Module Music file", "File Type Name")};
+    formats << tentry{"med",  "MED - OctaMED", tr("OctaMED Music File", "File Type Name")};
+    formats << tentry{"mtm",  "MTM - MultiTracker Module editor", tr("MultiTracker Module File", "File Type Name")};
+    formats << tentry{"okt",  "OKT - Amiga Oktalyzer", tr("Amiga Oktalyzer File", "File Type Name")};
+    formats << tentry{"s3m",  "S3M - Scream Tracker 3", tr("Scream Tracker 3 File", "File Type Name")};
+    formats << tentry{"stm",  "STM - Scream Tracker", tr("Scream Tracker File", "File Type Name")};
+    formats << tentry{"stx",  "STX - Scream Tracker Music Interface Kit", tr("Scream Tracker Music", "File Type Name")};
+    formats << tentry{"ult",  "ULT - UltraTracker", tr("UltraTracker Music", "File Type Name")};
+    formats << tentry{"uni",  "UNI - MikMod", tr("MikMod Music", "File Type Name")};
+    formats << tentry{"xm",   "XM - FastTracker 2", tr("FastTracker 2 Music", "File Type Name")};
 
     for(int i=0; i<formats.size(); i++)
     {
-        tentry& e = formats[i];
-        QListWidgetItem item(e.second, ui->typeList);
-        item.setData(Qt::UserRole, e.first);
+        const tentry& e = formats[i];
+        QListWidgetItem item(e.description, ui->typeList);
+        item.setData(Qt::UserRole, e.ext);
+        item.setData(Qt::UserRole + 1, e.file_desc);
         item.setFlags(Qt::ItemIsEnabled|Qt::ItemIsSelectable|Qt::ItemIsUserCheckable);
         items.append(item);
         ui->typeList->addItem(&items.last());
@@ -242,7 +250,7 @@ void AssocFiles::on_AssocFiles_accepted()
     success = registry_hkcu.isWritable();
 
     //Main entry
-    registry_hkcu.setValue("Software/Classes/PGEWohlstand.MusicFile/Default", tr("PGE-MusPlay Music File", "File Types"));
+    registry_hkcu.setValue("Software/Classes/PGEWohlstand.MusicFile/Default", tr("Moondust MusPlay Music File", "File Types"));
     registry_hkcu.setValue("Software/Classes/PGEWohlstand.MusicFile/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",1");
     registry_hkcu.setValue("Software/Classes/PGEWohlstand.MusicFile/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
 
@@ -279,7 +287,7 @@ void AssocFiles::on_AssocFiles_accepted()
         if(items[i].checkState() == Qt::Checked)
         {
             auto &item = items[i];
-            entries.append(entryTemplate.arg(item.data(Qt::UserRole).toString(), item.text()));
+            entries.append(entryTemplate.arg(item.data(Qt::UserRole).toString(), item.data(Qt::UserRole + 1).toString()));
             minesForDesktopFile.append(QString("application/x-pge-music-%1;").arg(item.data(Qt::UserRole).toString()));
         }
     }
