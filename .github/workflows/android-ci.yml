@@ -19,9 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set output
-        id: vars
-        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+      - uses: Wohlstand/branch-name@v1.0.1-wohl
 
       - name: Install Dependencies
         shell: bash
@@ -61,21 +59,35 @@ jobs:
       - name: Rename APK
         shell: bash
         run: |
-          mv moondust/build/outputs/apk/releaseci/moondust-releaseci.apk moondust-engine-android-${{ steps.vars.outputs.short_ref }}.apk
+          if [[ "${BRANCH_NAME}" == *"merge"* ]]; then
+              BRANCH_NAME_RES="pull-request"
+              echo "-- Pull-request detected!"
+          else
+              BRANCH_NAME_RES=${BRANCH_NAME}
+          fi
+
+          mv moondust/build/outputs/apk/releaseci/moondust-releaseci.apk moondust-engine-android-${BRANCH_NAME_RES}.apk
 
       - name: Upload APK
         if: success()
         uses: actions/upload-artifact@v3
         with:
-          name: thextech-android-${{ steps.vars.outputs.short_ref }}
-          path: Engine/android-project/moondust-engine-android-${{ steps.vars.outputs.short_ref }}.apk
+          name: thextech-android-${BRANCH_NAME_RES}
+          path: Engine/android-project/moondust-engine-android-*.apk
 
       - name: Deploy to builds.wohlsoft.ru
         if: success() && github.event_name != 'pull_request'
         shell: bash
         run: |
+          if [[ "${BRANCH_NAME}" == *"merge"* ]]; then
+              BRANCH_NAME_RES="pull-request"
+              echo "-- Pull-request detected!"
+          else
+              BRANCH_NAME_RES=${BRANCH_NAME}
+          fi
+
           UPLOAD_LIST="set ssl:verify-certificate no;"
-          UPLOAD_LIST="${UPLOAD_LIST} put -O "www/android/" ./moondust-engine-android-${{ steps.vars.outputs.short_ref }}.apk;"
+          UPLOAD_LIST="${UPLOAD_LIST} put -O "www/android/" ./moondust-engine-android-${BRANCH_NAME_RES}.apk;"
           lftp -e "${UPLOAD_LIST} exit" -u ${{ secrets.builds_login }},${{ secrets.builds_password }} ${{ secrets.builds_host }}
 
       - name: List Build Directory
