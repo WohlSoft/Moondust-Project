@@ -230,7 +230,7 @@ void TilesetGroupEditor::on_Open_clicked()
         lastFileName = pathInfo.baseName();
         QString dirPath = pathInfo.absoluteDir().absolutePath();
         m_categories.reset(new QSettings(dirPath + "/categories.ini", QSettings::IniFormat, this));
-        if(m_categories.get())
+        if(!m_categories.isNull())
             m_categories->setIniCodec("UTF-8");
 
         for(QString &tarName : t.tilesets)
