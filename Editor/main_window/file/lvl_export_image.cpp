@@ -91,6 +91,8 @@ void LevelEdit::ExportingReady() //slot
     bool gridWasShown = false;
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
+
     settings.beginGroup("Main");
     m_recentExportPath = settings.value("export-path", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)).toString();
     keepAspectRatio = settings.value("export-keep-aspect-ratio", true).toBool();

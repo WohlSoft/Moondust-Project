@@ -258,6 +258,8 @@ void GIFs2PNG::findConfigPacks()
         if(!QFile::exists(main_ini))
             continue;  // Is not a config pack
         QSettings m(main_ini, QSettings::IniFormat);
+        m.setIniCodec("UTF-8");
+
         if(m.status() != QSettings::NoError)
             continue;  // Invalid main.ini
 

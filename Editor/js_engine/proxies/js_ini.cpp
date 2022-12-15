@@ -79,6 +79,9 @@ void PGE_JS_INIFile::open(QString filePath)
 {
     close();
     m_ini     = new QSettings(filePath, QSettings::IniFormat, this);
+
+    if(m_ini)
+        m_ini->setIniCodec("UTF-8");
 }
 
 void PGE_JS_INIFile::close()

@@ -66,210 +66,212 @@ void WorldEdit::ExportToImage_fn()
 
 void WorldEdit::ExportingReady() //slot
 {
-        long th, tw;
+    long th, tw;
 
-        bool keepAspectRatio = false;
-        bool hideMusic = false;
-        bool hidePathLevels = false;
-        bool hideGrid = false;
-        bool hideMetas = false;
-        bool gridWasShown = false;
-        bool cameraGridWasShown = false;
-        QString inifile = AppPathManager::settingsFile();
-        QSettings settings(inifile, QSettings::IniFormat);
-        settings.beginGroup("Main");
-        latest_export_path = settings.value("export-path", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)).toString();
-        keepAspectRatio = settings.value("export-keep-aspect-ratio", true).toBool();
-        keepAspectRatio = settings.value("export-proportions", keepAspectRatio).toBool();
-        settings.endGroup();
+    bool keepAspectRatio = false;
+    bool hideMusic = false;
+    bool hidePathLevels = false;
+    bool hideGrid = false;
+    bool hideMetas = false;
+    bool gridWasShown = false;
+    bool cameraGridWasShown = false;
+    QString inifile = AppPathManager::settingsFile();
+    QSettings settings(inifile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
-        QSize imgSize;
-        WldSaveImage imageExportDialog(scene->captutedSize.toRect(),
-                                 scene->captutedSize.size().toSize(),
-                                 keepAspectRatio, MainWinConnect::pMainWin);
-        imageExportDialog.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        imageExportDialog.setGeometry(util::alignToScreenCenter(imageExportDialog.size()));
-        if(imageExportDialog.exec()!=QDialog::Rejected)
+    settings.beginGroup("Main");
+    latest_export_path = settings.value("export-path", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)).toString();
+    keepAspectRatio = settings.value("export-keep-aspect-ratio", true).toBool();
+    keepAspectRatio = settings.value("export-proportions", keepAspectRatio).toBool();
+    settings.endGroup();
+
+    QSize imgSize;
+    WldSaveImage imageExportDialog(scene->captutedSize.toRect(),
+                             scene->captutedSize.size().toSize(),
+                             keepAspectRatio, MainWinConnect::pMainWin);
+    imageExportDialog.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    imageExportDialog.setGeometry(util::alignToScreenCenter(imageExportDialog.size()));
+    if(imageExportDialog.exec()!=QDialog::Rejected)
+    {
+        LogDebug("ImageExport -> accepted");
+        imgSize = imageExportDialog.imageSize;
+        LogDebug(QString("ImageExport -> Image size %1x%2").arg(imgSize.width()).arg(imgSize.height()));
+    }
+    else {
+        LogDebug("ImageExport -> Rejected");
+        return;
+    }
+
+    keepAspectRatio = imageExportDialog.m_keepAspectRatio;
+    hideMusic       = imageExportDialog.hideMusBoxes;
+    hidePathLevels  = imageExportDialog.hidePaths;
+    hideGrid        = imageExportDialog.hideGrid;
+    hideMetas       = imageExportDialog.hideMetas;
+
+    if((imgSize.width() < 0) || (imgSize.height() < 0))
+        return;
+
+    LogDebug("ImageExport -> Open file dialog");
+
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Export selected area to image"),
+        latest_export_path + "/" +
+        QString("%1_x%2_y%3.png").arg( (WldData.EpisodeTitle.isEmpty())? QFileInfo(curFile).baseName() : util::filePath(WldData.EpisodeTitle.replace(QChar(' '), QChar('_'))) )
+                                    .arg(scene->captutedSize.x())
+                                    .arg(scene->captutedSize.y()), tr("PNG Image (*.png)"), nullptr, c_fileDialogOptions);
+
+    LogDebug("ImageExport -> Check file dialog...");
+    if (fileName.isEmpty())
+        return;
+
+    LogDebug("ImageExport -> Start exporting...");
+    QFileInfo exported(fileName);
+
+    QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 100, MainWinConnect::pMainWin);
+    progress.setWindowTitle(tr("Please wait..."));
+    progress.setWindowModality(Qt::WindowModal);
+    progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+    progress.setFixedSize(progress.size());
+    progress.setGeometry(util::alignToScreenCenter(progress.size()));
+    progress.setCancelButton(0);
+    progress.setMinimumDuration(0);
+
+    //progress.show();
+
+    if(!progress.wasCanceled()) progress.setValue(0);
+
+    qApp->processEvents();
+    scene->stopAnimation(); //Reset animation to 0 frame
+    if(hideMusic)
+        scene->hideMusicBoxes(false);
+    if(hidePathLevels)
+        scene->hidePathAndLevels(false);
+
+    QList<QGraphicsItem*> invisibleMetas;
+    if(hideMetas)
+    {
+        QList<QGraphicsItem*> allBlocks = scene->items();
+        for(QGraphicsItem* it : allBlocks)
         {
-            LogDebug("ImageExport -> accepted");
-            imgSize = imageExportDialog.imageSize;
-            LogDebug(QString("ImageExport -> Image size %1x%2").arg(imgSize.width()).arg(imgSize.height()));
-        }
-        else {
-            LogDebug("ImageExport -> Rejected");
-            return;
-        }
+            if(it->data(ITEM_TYPE).toString() != "TILE" &&
+               it->data(ITEM_TYPE).toString() != "SCENERY" &&
+               it->data(ITEM_TYPE).toString() != "PATH" &&
+               it->data(ITEM_TYPE).toString() != "LEVEL")
+                continue;
 
-        keepAspectRatio = imageExportDialog.m_keepAspectRatio;
-        hideMusic       = imageExportDialog.hideMusBoxes;
-        hidePathLevels  = imageExportDialog.hidePaths;
-        hideGrid        = imageExportDialog.hideGrid;
-        hideMetas       = imageExportDialog.hideMetas;
+            //Exclude already hidden elements
+            if(!it->isVisible())
+                continue;
 
-        if((imgSize.width() < 0) || (imgSize.height() < 0))
-            return;
-
-        LogDebug("ImageExport -> Open file dialog");
-
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Export selected area to image"),
-            latest_export_path + "/" +
-            QString("%1_x%2_y%3.png").arg( (WldData.EpisodeTitle.isEmpty())? QFileInfo(curFile).baseName() : util::filePath(WldData.EpisodeTitle.replace(QChar(' '), QChar('_'))) )
-                                        .arg(scene->captutedSize.x())
-                                        .arg(scene->captutedSize.y()), tr("PNG Image (*.png)"), nullptr, c_fileDialogOptions);
-
-        LogDebug("ImageExport -> Check file dialog...");
-        if (fileName.isEmpty())
-            return;
-
-        LogDebug("ImageExport -> Start exporting...");
-        QFileInfo exported(fileName);
-
-        QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 100, MainWinConnect::pMainWin);
-        progress.setWindowTitle(tr("Please wait..."));
-        progress.setWindowModality(Qt::WindowModal);
-        progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
-        progress.setFixedSize(progress.size());
-        progress.setGeometry(util::alignToScreenCenter(progress.size()));
-        progress.setCancelButton(0);
-        progress.setMinimumDuration(0);
-
-        //progress.show();
-
-        if(!progress.wasCanceled()) progress.setValue(0);
-
-        qApp->processEvents();
-        scene->stopAnimation(); //Reset animation to 0 frame
-        if(hideMusic)
-            scene->hideMusicBoxes(false);
-        if(hidePathLevels)
-            scene->hidePathAndLevels(false);
-
-        QList<QGraphicsItem*> invisibleMetas;
-        if(hideMetas)
-        {
-            QList<QGraphicsItem*> allBlocks = scene->items();
-            for(QGraphicsItem* it : allBlocks)
+            if(it->data(ITEM_TYPE).toString() == "TILE")
             {
-                if(it->data(ITEM_TYPE).toString() != "TILE" &&
-                   it->data(ITEM_TYPE).toString() != "SCENERY" &&
-                   it->data(ITEM_TYPE).toString() != "PATH" &&
-                   it->data(ITEM_TYPE).toString() != "LEVEL")
-                    continue;
-
-                //Exclude already hidden elements
-                if(!it->isVisible())
-                    continue;
-
-                if(it->data(ITEM_TYPE).toString() == "TILE")
+                auto *blk = dynamic_cast<ItemTile*>(it);
+                if(blk && blk->data(ITEM_IS_META).toBool())
                 {
-                    auto *blk = dynamic_cast<ItemTile*>(it);
-                    if(blk && blk->data(ITEM_IS_META).toBool())
-                    {
-                        it->setVisible(false);
-                        invisibleMetas.push_back(it);
-                    }
+                    it->setVisible(false);
+                    invisibleMetas.push_back(it);
                 }
-                else if(it->data(ITEM_TYPE).toString() == "SCENERY")
+            }
+            else if(it->data(ITEM_TYPE).toString() == "SCENERY")
+            {
+                auto *blk = dynamic_cast<ItemScene*>(it);
+                if(blk && blk->data(ITEM_IS_META).toBool())
                 {
-                    auto *blk = dynamic_cast<ItemScene*>(it);
-                    if(blk && blk->data(ITEM_IS_META).toBool())
-                    {
-                        it->setVisible(false);
-                        invisibleMetas.push_back(it);
-                    }
+                    it->setVisible(false);
+                    invisibleMetas.push_back(it);
                 }
-                else if(it->data(ITEM_TYPE).toString() == "PATH")
+            }
+            else if(it->data(ITEM_TYPE).toString() == "PATH")
+            {
+                auto *blk = dynamic_cast<ItemPath*>(it);
+                if(blk && blk->data(ITEM_IS_META).toBool())
                 {
-                    auto *blk = dynamic_cast<ItemPath*>(it);
-                    if(blk && blk->data(ITEM_IS_META).toBool())
-                    {
-                        it->setVisible(false);
-                        invisibleMetas.push_back(it);
-                    }
+                    it->setVisible(false);
+                    invisibleMetas.push_back(it);
                 }
-                else if(it->data(ITEM_TYPE).toString() == "LEVEL")
+            }
+            else if(it->data(ITEM_TYPE).toString() == "LEVEL")
+            {
+                auto *blk = dynamic_cast<ItemLevel*>(it);
+                if(blk && blk->data(ITEM_IS_META).toBool())
                 {
-                    auto *blk = dynamic_cast<ItemLevel*>(it);
-                    if(blk && blk->data(ITEM_IS_META).toBool())
-                    {
-                        it->setVisible(false);
-                        invisibleMetas.push_back(it);
-                    }
+                    it->setVisible(false);
+                    invisibleMetas.push_back(it);
                 }
             }
         }
+    }
 
-        if(hideGrid)
-        {
-            gridWasShown = scene->m_opts.grid_show;
-            scene->m_opts.grid_show = false;
+    if(hideGrid)
+    {
+        gridWasShown = scene->m_opts.grid_show;
+        scene->m_opts.grid_show = false;
 
-            cameraGridWasShown = scene->m_opts.camera_grid_show;
-            scene->m_opts.camera_grid_show = false;            
-        }
+        cameraGridWasShown = scene->m_opts.camera_grid_show;
+        scene->m_opts.camera_grid_show = false;
+    }
 
-        if(!progress.wasCanceled())
-            progress.setValue(10);
-        scene->invalidate();
-        scene->update();
-        qApp->processEvents();
-        scene->clearSelection(); // Clear selection on export
+    if(!progress.wasCanceled())
+        progress.setValue(10);
+    scene->invalidate();
+    scene->update();
+    qApp->processEvents();
+    scene->clearSelection(); // Clear selection on export
 
-        latest_export_path = exported.absoluteDir().path();
+    latest_export_path = exported.absoluteDir().path();
 
-        th=imgSize.height();
-        tw=imgSize.width();
+    th=imgSize.height();
+    tw=imgSize.width();
 
-        qApp->processEvents();
-        QImage img((int)tw, (int)th, QImage::Format_ARGB32_Premultiplied);
-        img.fill(Qt::black);
+    qApp->processEvents();
+    QImage img((int)tw, (int)th, QImage::Format_ARGB32_Premultiplied);
+    img.fill(Qt::black);
 
-        if(!progress.wasCanceled()) progress.setValue(20);
+    if(!progress.wasCanceled()) progress.setValue(20);
 
-        qApp->processEvents();
-        QPainter p(&img);
+    qApp->processEvents();
+    QPainter p(&img);
 
-        if(!progress.wasCanceled()) progress.setValue(30);
-        qApp->processEvents();
-        scene->render(&p, QRectF(0,0,tw,th), scene->captutedSize);
+    if(!progress.wasCanceled()) progress.setValue(30);
+    qApp->processEvents();
+    scene->render(&p, QRectF(0,0,tw,th), scene->captutedSize);
 
-        qApp->processEvents();
-        p.end();
+    qApp->processEvents();
+    p.end();
 
-        if(!progress.wasCanceled()) progress.setValue(40);
-        qApp->processEvents();
-        img.save(fileName);
+    if(!progress.wasCanceled()) progress.setValue(40);
+    qApp->processEvents();
+    img.save(fileName);
 
-        qApp->processEvents();
-        if(!progress.wasCanceled()) progress.setValue(90);
+    qApp->processEvents();
+    if(!progress.wasCanceled()) progress.setValue(90);
 
-        qApp->processEvents();
-        if(scene->m_opts.animationEnabled)
-            scene->startAnimation(); // Restart animation
-        if(hideMusic)
-            scene->hideMusicBoxes(true);
-        if(hidePathLevels)
-            scene->hidePathAndLevels(true);
-        if(gridWasShown)
-            scene->m_opts.grid_show = true;
-        if(cameraGridWasShown)
-            scene->m_opts.camera_grid_show = true;
-        if(hideMetas)
-        {
-            for(QGraphicsItem *it : invisibleMetas)
-                it->setVisible(true);
-        }
-        scene->invalidate();
-        scene->update();
+    qApp->processEvents();
+    if(scene->m_opts.animationEnabled)
+        scene->startAnimation(); // Restart animation
+    if(hideMusic)
+        scene->hideMusicBoxes(true);
+    if(hidePathLevels)
+        scene->hidePathAndLevels(true);
+    if(gridWasShown)
+        scene->m_opts.grid_show = true;
+    if(cameraGridWasShown)
+        scene->m_opts.camera_grid_show = true;
+    if(hideMetas)
+    {
+        for(QGraphicsItem *it : invisibleMetas)
+            it->setVisible(true);
+    }
+    scene->invalidate();
+    scene->update();
 
-        if(!progress.wasCanceled()) progress.setValue(100);
-        if(!progress.wasCanceled())
-            progress.close();
+    if(!progress.wasCanceled()) progress.setValue(100);
+    if(!progress.wasCanceled())
+        progress.close();
 
-        settings.beginGroup("Main");
-            settings.setValue("export-path", latest_export_path);
-            settings.setValue("export-keep-aspect-ratio", keepAspectRatio);
-        settings.endGroup();
+    settings.beginGroup("Main");
+        settings.setValue("export-path", latest_export_path);
+        settings.setValue("export-keep-aspect-ratio", keepAspectRatio);
+    settings.endGroup();
 }
 
 

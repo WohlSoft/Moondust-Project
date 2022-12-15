@@ -55,6 +55,7 @@ void DevConsole::init()
 
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     settings.beginGroup("dev-console");
     currentDevConsole->restoreGeometry(settings.value("geometry", currentDevConsole->saveGeometry()).toByteArray());
@@ -245,6 +246,7 @@ void DevConsole::closeEvent(QCloseEvent *event)
 {
     QString iniFile = AppPathManager::settingsFile();
     QSettings settings(iniFile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     settings.beginGroup("dev-console");
     settings.setValue("geometry", this->saveGeometry());

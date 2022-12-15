@@ -123,6 +123,7 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
     {
         QSettings cCounters(AppPathManager::settingsFile(), QSettings::IniFormat);
         cCounters.setIniCodec("UTF-8");
+
         cCounters.beginGroup("message-boxes");
         bool showNotice = cCounters.value("cpu-architecture-warning", true).toBool();
 

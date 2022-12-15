@@ -338,6 +338,7 @@ void CaseFixer::refreshProgressBar()
 void CaseFixer::loadSetup()
 {
     QSettings settings(AppPathManager::settingsFile(), QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     settings.beginGroup("CaseFixer");
     {
@@ -349,6 +350,7 @@ void CaseFixer::loadSetup()
 void CaseFixer::saveSetup()
 {
     QSettings settings(AppPathManager::settingsFile(), QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     settings.beginGroup("CaseFixer");
     {

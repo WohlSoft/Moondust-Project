@@ -38,6 +38,7 @@ void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration
     createDirs();
 
     QSettings conf(fileName, QSettings::IniFormat);
+    conf.setIniCodec("UTF-8");
 
     conf.beginGroup("common");
     {
@@ -276,6 +277,7 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
         QFile::remove(ini_sprite); // So, remove it before saving a new one
 
     QSettings conf(ini_sprite, QSettings::IniFormat);
+    conf.setIniCodec("UTF-8");
 
     conf.clear();
 

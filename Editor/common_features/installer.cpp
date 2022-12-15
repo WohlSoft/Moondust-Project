@@ -52,6 +52,8 @@ void Installer::moveFromAppToUser()
     for(QString &f : files)
         QFile::copy(ApplicationPath + "/" + f, AppPathManager::userAppDir() + "/" + f);
     QSettings setup(AppPathManager::settingsFile(), QSettings::IniFormat);
+    setup.setIniCodec("UTF-8");
+
     setup.beginGroup("logging");
     setup.remove("log-path");
     setup.endGroup();

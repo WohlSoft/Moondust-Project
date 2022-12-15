@@ -62,6 +62,7 @@ void MainWindow::loadBasicSettings()
 {
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     settings.beginGroup("Main");
     {
@@ -77,6 +78,7 @@ void MainWindow::loadSettings()
 {
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     #ifdef Q_OS_WIN
 #define FloatDocks true
@@ -253,6 +255,8 @@ void MainWindow::saveSettings()
     QString inifile = AppPathManager::settingsFile();
 
     QSettings settings(inifile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
+
     settings.beginGroup("Main");
     {
         settings.setValue("pos", pos());

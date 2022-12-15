@@ -93,6 +93,7 @@ void MainWindow::setDefLang()
 
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     settings.beginGroup("Main");
     {

@@ -29,8 +29,9 @@
 - Fixed an appearance of a junk slash at begin of the opened directory path
 - The level/world data directory will be auto-created if it doesn't exist on an attempt to open it via the "Open level directory" menu item.
 - Fixed the problem where invisible objects get ignored when performing a section cloning/deleting/rotating operation using the "Level" menu
-﻿Editor 0.3.2.3-beta
+beta2
 - Fixed the deadlock happening on config initial loading errors
+- Fixed processing of paths while reading/writing INI files
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

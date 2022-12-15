@@ -345,6 +345,7 @@ void tileset::SaveSimpleTileset(const QString &path, const SimpleTileset &tilese
     modifiedPath = path;
     QSettings simpleTilesetINI(modifiedPath, QSettings::IniFormat);
     simpleTilesetINI.setIniCodec("UTF-8");
+
     simpleTilesetINI.clear();
     simpleTilesetINI.beginGroup("tileset"); //HEADER
     simpleTilesetINI.setValue("rows", tileset.rows);
@@ -364,6 +365,7 @@ bool tileset::OpenSimpleTileset(const QString &path, SimpleTileset &tileset)
 {
     QSettings simpleTilesetINI(path, QSettings::IniFormat);
     simpleTilesetINI.setIniCodec("UTF-8");
+
     QStringList groups = simpleTilesetINI.childGroups();
     int tilesetindex;
     if((tilesetindex = groups.indexOf("tileset")) != -1)

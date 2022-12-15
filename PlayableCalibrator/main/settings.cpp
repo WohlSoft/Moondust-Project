@@ -41,6 +41,7 @@ void CalibrationMain::loadAppSettings()
 {
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     settings.beginGroup("Main");
     {
@@ -57,6 +58,7 @@ void CalibrationMain::saveAppSettings()
 {
     QString config = AppPathManager::settingsFile();
     QSettings opts(config, QSettings::IniFormat);
+    opts.setIniCodec("UTF-8");
 
     opts.beginGroup("Main");
     {

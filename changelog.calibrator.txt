@@ -6,6 +6,8 @@
 * Majorly reworked the main window
 * Added the compatibility mode to target calibrations for different engines and provide a relevant hint for every option
 * Fixed the accuracy of the grabbed item rendering, compared with the SMBX code
+beta2
+* Fixed processing of paths while reading/writing INI files
 
 2.3
 * Begin the changelog

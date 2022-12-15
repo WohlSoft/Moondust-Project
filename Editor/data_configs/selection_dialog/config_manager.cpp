@@ -343,8 +343,11 @@ void ConfigManager::saveCurrentSettings()
 {
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
+
     if(!m_currentConfigPath.endsWith('/'))
         m_currentConfigPath.append('/');
+
     settings.beginGroup("Main");
     settings.setValue("current-config",     m_currentConfigPath);
     settings.setValue("ask-config-again",   m_doAskAgain);
@@ -391,6 +394,7 @@ QString ConfigManager::loadConfigs()
     QString inifile = AppPathManager::settingsFile();
 
     QSettings settings(inifile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     settings.beginGroup("Main");
     QString configPath  = settings.value("current-config", QString()).toString();
@@ -488,6 +492,7 @@ bool ConfigManager::isConfigured()
         return false;
 
     QSettings settings(settingsFile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     settings.beginGroup("main");
     bool ret = settings.value("application-path-configured", false).toBool();
@@ -504,6 +509,8 @@ bool ConfigManager::isIntegrationCompatible()
 {
     int apiVersion;
     QSettings settings(m_currentConfigPath + "main.ini", QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
+
     settings.beginGroup("main");
     apiVersion = settings.value("api-version", -1).toInt();
     settings.endGroup();

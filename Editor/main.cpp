@@ -145,6 +145,8 @@ int main(int argc, char *argv[])
     {
         //Initialize the HighDPI settings
         QSettings advSetup(AppPathManager::settingsFile(), QSettings::IniFormat);
+        advSetup.setIniCodec("UTF-8");
+
         advSetup.beginGroup("extra");
         bool atr_hdpi   = advSetup.value("high-dpi-scaling", true).toBool();
         advSetup.endGroup();

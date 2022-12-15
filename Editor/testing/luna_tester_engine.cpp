@@ -1564,6 +1564,7 @@ bool LunaTesterEngine::verifyCompatibility()
 void LunaTesterEngine::loadSetup()
 {
     QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     settings.beginGroup("LunaTester");
     {
@@ -1584,6 +1585,7 @@ void LunaTesterEngine::loadSetup()
 void LunaTesterEngine::saveSetup()
 {
     QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     settings.beginGroup("LunaTester");
     {
@@ -1808,6 +1810,8 @@ bool LunaTesterEngine::doTestWorldFile(const QString &worldFile)
 
         SETTINGS_TestSettings  t = GlobalSettings::testing;
         QSettings autostartINI(autoStart, QSettings::IniFormat);
+        autostartINI.setIniCodec("UTF-8");
+
         autostartINI.beginGroup("autostart");
         autostartINI.setValue("do-autostart", true);
         autostartINI.setValue("episode-name", wld.EpisodeTitle);

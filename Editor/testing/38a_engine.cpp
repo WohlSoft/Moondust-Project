@@ -384,6 +384,7 @@ QString SanBaEiRuntimeEngine::getBridgePath()
 void SanBaEiRuntimeEngine::loadSetup()
 {
     QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     settings.beginGroup("38aTester");
     {
@@ -401,6 +402,7 @@ void SanBaEiRuntimeEngine::loadSetup()
 void SanBaEiRuntimeEngine::saveSetup()
 {
     QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     settings.beginGroup("38aTester");
     {

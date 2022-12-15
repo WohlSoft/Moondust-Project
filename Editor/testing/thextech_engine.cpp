@@ -71,6 +71,7 @@ QString TheXTechEngine::getEnginePath()
 void TheXTechEngine::loadSetup()
 {
     QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     settings.beginGroup("main");
     {
@@ -93,6 +94,7 @@ void TheXTechEngine::loadSetup()
 void TheXTechEngine::saveSetup()
 {
     QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
+    settings.setIniCodec("UTF-8");
 
     settings.beginGroup("TheXTech");
     {
