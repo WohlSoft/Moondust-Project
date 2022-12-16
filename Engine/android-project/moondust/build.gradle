@@ -93,13 +93,13 @@ println "Project version: " + xTechVersionString + ", version code: " + xTechVer
 
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
     defaultConfig {
         if (buildAsApplication) {
             applicationId "ru.wohlsoft.moondust"
         }
         minSdkVersion 16
-        targetSdkVersion 31
+        targetSdkVersion 32
 
         versionName xTechVersionString
         versionCode xTechVersionNumber
@@ -141,6 +141,9 @@ android {
             versionNameSuffix '-DEVDEBUG'
         }
     }
+    lint {
+        abortOnError false
+    }
 
     if (!project.hasProperty('EXCLUDE_NATIVE_LIBS')) {
         sourceSets {
@@ -165,9 +168,6 @@ android {
 
     }
 
-    lintOptions {
-        abortOnError false
-    }
 
     if (buildAsLibrary) {
         libraryVariants.all { variant ->

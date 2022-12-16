@@ -471,12 +471,7 @@ list(APPEND PGE_ENGINE_LINK_LIBS
 )
 
 if(PGE_STATIC_SDLMIXER)
-    list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDLMixerX_static)
-    if(ANDROID)
-        list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDL2)
-    else()
-        list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDL2_static)
-    endif()
+    list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDLMixerX_static PGE_SDL2_static)
 else()
     list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDLMixerX PGE_SDL2)
 endif()

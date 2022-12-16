@@ -168,7 +168,7 @@ else()
     # ============================================================
     message("== SDL2 shared: ${PGE_SHARED_SDLMIXER}")
     set(SDL2_BUILD_SHARED OFF)
-    if(PGE_SHARED_SDLMIXER OR ANDROID)
+    if(PGE_SHARED_SDLMIXER)
         set(SDL2_BUILD_SHARED ON)
     endif()
 
@@ -216,20 +216,16 @@ else()
         target_link_libraries(PGE_SDL2_static INTERFACE  ${SDL2_main_Lib})
     endif()
 
-    if(ANDROID)
-        add_library(SDL2_local_so_lib SHARED IMPORTED)
-        set_target_properties(SDL2_local_so_lib PROPERTIES
-            IMPORTED_LOCATION "${SDL2_SO_Lib}"
-            OUTPUT_NAME "libSDL2"
-            DEBUG_POSTFIX ""
-        )
-    endif()
+#    if(ANDROID)
+#        add_library(SDL2_local_so_lib SHARED IMPORTED)
+#        set_target_properties(SDL2_local_so_lib PROPERTIES
+#            IMPORTED_LOCATION "${SDL2_SO_Lib}"
+#            OUTPUT_NAME "libSDL2"
+#            DEBUG_POSTFIX ""
+#        )
+#    endif()
 
-    if(ANDROID)
-        target_link_libraries(PGE_SDL2 INTERFACE SDL2_local_so_lib)
-    else()
-        target_link_libraries(PGE_SDL2 INTERFACE "${SDL2_SO_Lib}")
-    endif()
+    target_link_libraries(PGE_SDL2 INTERFACE "${SDL2_SO_Lib}")
     target_link_libraries(PGE_SDL2_static INTERFACE "${SDL2_A_Lib}")
 endif()
 
