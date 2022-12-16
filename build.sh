@@ -236,19 +236,19 @@ do
                 exit 0;
             ;;
         update-submodules)
-            git submodule foreach git checkout master
-            git submodule foreach git pull origin master
+            PATH=${PATH}:$PWD/_common
+            git submodule foreach submodule-update.sh
             exit 0
             ;;
         repair-submodules)
+            PATH=${PATH}:$PWD/_common
             echo "=== Cleaning-up old state..."
             git submodule foreach 'pwd; rm -Rf * .git*;'
             echo "=== Fetching new submodules..."
             git submodule init
             git submodule update
             echo ""
-            git submodule foreach git checkout master
-            git submodule foreach git pull origin master
+            git submodule foreach submodule-update.sh
             echo ""
             echo "==== Fixed! ===="
             exit 0;

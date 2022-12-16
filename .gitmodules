@@ -11,12 +11,20 @@
 [submodule "_Libs/AudioCodecs"]
 	path = _Libs/AudioCodecs
 	url = https://github.com/WohlSoft/AudioCodecs.git
+	branch = master
 [submodule "_Libs/SDL_Mixer_X"]
 	path = _Libs/SDL_Mixer_X
 	url = https://github.com/WohlSoft/SDL-Mixer-X.git
+	branch = master
 [submodule "Content/help"]
 	path = Content/help
 	url = https://github.com/WohlSoft/Moondust-Devkit-Help.git
+	branch = master
 [submodule "_Libs/luabind"]
 	path = _Libs/luabind
 	url = https://github.com/WohlSoft/moondust-luabind.git
+	branch = master
+[submodule "_Libs/LuaJIT"]
+	path = _Libs/LuaJIT
+	url = https://github.com/WohlSoft/LuaJIT.git
+	branch = 2.1
