@@ -181,31 +181,32 @@ namespace PGE_MusicPlayer
     const char *musicTypeC()
     {
         return (
-                   type == MUS_NONE ? "No Music" :
-                   type == MUS_CMD ? "CMD" :
-                   type == MUS_WAV ? "PCM Wave" :
-                   type == MUS_MOD ? "Tracker" :
-                   type == MUS_MID ? "MIDI" :
-                   type == MUS_OGG ? "OGG" :
-                   type == MUS_MP3 ? "MP3" :
-                   type == MUS_FLAC ? "FLAC" :
+                    type == MUS_NONE ? "No Music" :
+                    type == MUS_CMD ? "CMD" :
+                    type == MUS_WAV ? "PCM Wave" :
+                    type == MUS_MOD ? "Tracker" :
+                    type == MUS_MID ? "MIDI" :
+                    type == MUS_OGG ? "OGG" :
+                    type == MUS_MP3 ? "MP3" :
+                    type == MUS_FLAC ? "FLAC" :
+                    type == MUS_WAVPACK ? "WAVPACK" :
+                    type == MUS_GME ? "GME Chiptune" :
 #ifdef SDL_MIXER_X
 #   if SDL_MIXER_MAJOR_VERSION > 2 || \
     (SDL_MIXER_MAJOR_VERSION == 2 && SDL_MIXER_MINOR_VERSION >= 2)
-                   type == MUS_OPUS ? "OPUS" :
+                    type == MUS_OPUS ? "OPUS" :
 #   endif
-                   type == MUS_ADLMIDI ? "IMF/MUS/XMI" :
-                   type == MUS_OPNMIDI ? "MUS/XMI(OPN)" :
-                   type == MUS_EDMIDI ? "MUS/XMI(ED)" :
-                   type == MUS_FLUIDLITE ? "MUS/XMI(Fluid)" :
-                   type == MUS_NATIVEMIDI ? "MUS/XMI(Native)" :
-                   type == MUS_GME ? "GME Chiptune" :
-                   type == MUS_FFMPEG ? "FFMPEG" :
+                    type == MUS_ADLMIDI ? "IMF/MUS/XMI" :
+                    type == MUS_OPNMIDI ? "MUS/XMI(OPN)" :
+                    type == MUS_EDMIDI ? "MUS/XMI(ED)" :
+                    type == MUS_FLUIDLITE ? "MUS/XMI(Fluid)" :
+                    type == MUS_NATIVEMIDI ? "MUS/XMI(Native)" :
+                    type == MUS_FFMPEG ? "FFMPEG" :
 #else
 #   if SDL_MIXER_MAJOR_VERSION > 2 || \
     (SDL_MIXER_MAJOR_VERSION == 2 && SDL_MIXER_MINOR_VERSION > 0) || \
     (SDL_MIXER_MAJOR_VERSION == 2 && SDL_MIXER_MINOR_VERSION == 0 && SDL_MIXER_PATCHLEVEL >= 4)
-                   type == MUS_OPUS ? "OPUS" :
+                    type == MUS_OPUS ? "OPUS" :
 #   endif
 #endif
                    "<Unknown>");
