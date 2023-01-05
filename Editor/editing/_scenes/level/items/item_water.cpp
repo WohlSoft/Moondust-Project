@@ -147,6 +147,7 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     ItemMenu.addSeparator();
 
     QMenu *copyPreferences =    ItemMenu.addMenu(tr("Copy preferences"));
+    QAction *copyArrayID =      copyPreferences->addAction(tr("Array-ID: %1").arg(m_data.meta.array_id));
     QAction *copyPosXYWH =      copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
     QAction *copyPosLTRB =      copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
     ItemMenu.addSeparator();
@@ -172,6 +173,11 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         m_scene->m_mw->on_actionCut_triggered();
     else if(selected == copyWater)
         m_scene->m_mw->on_actionCopy_triggered();
+    else if(selected == copyArrayID)
+    {
+        QApplication::clipboard()->setText(QString("%1").arg(m_data.meta.array_id));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+    }
     else if(selected == copyPosXYWH)
     {
         QApplication::clipboard()->setText(

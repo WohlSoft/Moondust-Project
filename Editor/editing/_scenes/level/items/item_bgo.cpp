@@ -131,6 +131,7 @@ void ItemBGO::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
     /*************Copy Preferences*******************/
     QMenu *copyPreferences =   ItemMenu.addMenu(tr("Copy preferences"));
+    QAction *copyArrayID =      copyPreferences->addAction(tr("Array-ID: %1").arg(m_data.meta.array_id));
     QAction *copyItemID =       copyPreferences->addAction(tr("BGO-ID: %1").arg(m_data.id));
     QAction *copyPosXY =        copyPreferences->addAction(tr("Position: X, Y"));
     QAction *copyPosXYWH =      copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
@@ -395,6 +396,11 @@ cancelTransform:
 
         if(!newData.bgo.isEmpty() || !newData.blocks.isEmpty())
             scene->m_history->addTransform(newData, oldData);
+    }
+    else if(selected == copyArrayID)
+    {
+        QApplication::clipboard()->setText(QString("%1").arg(m_data.meta.array_id));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyItemID)
     {

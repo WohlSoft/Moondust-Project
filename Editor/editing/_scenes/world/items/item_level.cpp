@@ -97,6 +97,7 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
     QMenu *copyPreferences =   ItemMenu.addMenu(tr("Copy preferences"));
 
+    QAction *copyArrayID =      copyPreferences->addAction(tr("Array-ID: %1").arg(m_data.meta.array_id));
     QAction *copyItemID =       copyPreferences->addAction(tr("Level-ID: %1").arg(m_data.id));
     QAction *copyPosXY =        copyPreferences->addAction(tr("Position: X, Y"));
     QAction *copyPosXYWH =      copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
@@ -116,8 +117,9 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     m_scene->m_contextMenuIsOpened =  true; //bug protector
 
     QAction *selected =         ItemMenu.exec(mouseEvent->screenPos());
-    if(!selected) return;
 
+    if(!selected)
+        return;
 
     if(selected == openLvl)
     {
@@ -218,6 +220,11 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         delete itemList;
         if(!newData.levels.isEmpty())
             m_scene->m_history->addTransformHistory(newData, oldData);
+    }
+    else if(selected == copyArrayID)
+    {
+        QApplication::clipboard()->setText(QString("%1").arg(m_data.meta.array_id));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyItemID)
     {
