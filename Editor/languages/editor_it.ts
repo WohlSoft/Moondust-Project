@@ -875,6 +875,13 @@ Salvali prima di fare qualsiasi altra cosa.</translation>
         <source>Join the official Moondust Discord server to submit the report</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>While making a report, please explain what you did to cause a crash error.
+- Please give a list of actions you did to cause a crash. 
+- If a crash happened with editing a specific file, please attach it to the report.
+- What operating system you are using?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CustomCounterGUI</name>
@@ -1070,7 +1077,7 @@ Salvali prima di fare qualsiasi altra cosa.</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rimuovi</translation>
     </message>
     <message>
         <source>General</source>
@@ -1108,7 +1115,7 @@ Salvali prima di fare qualsiasi altra cosa.</translation>
     <message>
         <source>Width</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Larghezza</translation>
     </message>
     <message>
         <source>Level</source>
@@ -1776,6 +1783,10 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
         <source>Edit raw user data...</source>
         <translation>Modifica il raw user data...</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1917,6 +1928,10 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
         <source>Edit raw user data...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemBoxListModel</name>
@@ -2051,12 +2066,12 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Direzione</translation>
     </message>
     <message>
         <source>Left</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sinistra</translation>
     </message>
     <message>
         <source>Up</source>
@@ -2066,12 +2081,16 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
     <message>
         <source>Right</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Destra</translation>
     </message>
     <message>
         <source>Down</source>
         <comment>Direction of pipe</comment>
         <translation type="unfinished">Giù</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2143,6 +2162,10 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Le preferenze sono state copiate: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2223,6 +2246,10 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Le preferenze sono state copiate: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2359,6 +2386,10 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
         <source>Edit raw user data...</source>
         <translation>Modifica i raw user data...</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemPath</name>
@@ -2409,6 +2440,10 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Le preferenze sono state copiate: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2525,6 +2560,10 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
         <source>Preferences have been copied: %1</source>
         <translation>Le preferenze sono state copiate: %1</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemPlayerPoint</name>
@@ -2598,6 +2637,10 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Le preferenze sono state copiate: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2728,6 +2771,10 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Le preferenze sono state copiate: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3370,6 +3417,12 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlCloneSection</name>
@@ -3971,12 +4024,12 @@ Questa opzione usa il bug di SMBX del rendering degli oggetti di sfondo. Per far
     <message>
         <source>Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sinistra</translation>
     </message>
     <message>
         <source>Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Destra</translation>
     </message>
     <message>
         <source>Up</source>
@@ -4868,6 +4921,12 @@ Seleziona la Mappa necessaria nella lista:</translation>
     </message>
     <message>
         <source>Do you really want to apply this setting to all objects?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6336,6 +6395,18 @@ Expected config pack ID: %4</source>
         <source>Bulk convert and repair of level and world files...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Can&apos;t start testing, engine is not found: 
+%1
+Please, choose the engine application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -7386,6 +7457,29 @@ Il numero massimo di musiche è %2.</translation>
         <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SanBaEiRuntimeEngine</name>
@@ -7722,7 +7816,7 @@ Il numero massimo di musiche è %2.</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Debug</translation>
     </message>
     <message>
         <source>Player settings</source>
@@ -7960,7 +8054,7 @@ Arguments: %2</source>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Percorso</translation>
     </message>
     <message>
         <source>Level</source>
@@ -8063,7 +8157,7 @@ Arguments: %2</source>
     </message>
     <message>
         <source>Please enter a filename!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Inserisci un nome file!</translation>
     </message>
     <message>
         <source>Filename:</source>
@@ -8089,7 +8183,7 @@ I dati potrebbero essere corrotti!</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Non mostrare questo messaggio di nuovo.</translation>
     </message>
     <message>
         <source>Welcome to tileset editor!

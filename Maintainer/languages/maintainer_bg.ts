@@ -986,7 +986,7 @@ Supported formats:
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
-        <location filename="../Graphics/gifs2png.cpp" line="283"/>
+        <location filename="../Graphics/gifs2png.cpp" line="285"/>
         <source>Start</source>
         <translation>Започни</translation>
     </message>
@@ -1079,7 +1079,7 @@ Supported formats:
         <translation>Преобразуване бе приключено с грешки. Моля погледнете изходният лог за по-подробна информация.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="281"/>
+        <location filename="../Graphics/gifs2png.cpp" line="283"/>
         <source>Stop</source>
         <translation>Спри</translation>
     </message>

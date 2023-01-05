@@ -690,17 +690,17 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation type="vanished">Сохранено</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="334"/>
+        <location filename="../main/calibration_file.cpp" line="336"/>
         <source>Configuration saved in file</source>
         <translation>Конфигурация сохранена в файле</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="637"/>
+        <location filename="../main/calibration_file.cpp" line="639"/>
         <source>Bad data generated</source>
         <translation>Сгенерированы испорченные данные</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="638"/>
+        <location filename="../main/calibration_file.cpp" line="640"/>
         <source>Some generated values are out of range, SMBX-38A may crash. File will not be patched.</source>
         <translation>Некоторые сгенерированные значения находятся за пределами диапазонов, SMBX-38A может сломаться. Файл останется неизменным.</translation>
     </message>
@@ -907,17 +907,17 @@ Do you want to continue?</source>
 Продолжить?</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="79"/>
+        <location filename="../main/settings.cpp" line="81"/>
         <source>Graphical editor is not specified</source>
         <translation>Графический редактор не назначен</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="80"/>
+        <location filename="../main/settings.cpp" line="82"/>
         <source>External graphics editor application is not specified. Do you want to select it now?</source>
         <translation>Приложение внешнего графического редактора не назначено. Хотите выбрать его сейчас?</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="102"/>
+        <location filename="../main/settings.cpp" line="104"/>
         <source>Select a path to the graphical editor executable</source>
         <comment>File dialog title</comment>
         <translation>Выберите путь к приложению графического редактора</translation>

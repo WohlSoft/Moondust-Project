@@ -986,7 +986,7 @@ Supported formats:
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
-        <location filename="../Graphics/gifs2png.cpp" line="283"/>
+        <location filename="../Graphics/gifs2png.cpp" line="285"/>
         <source>Start</source>
         <translation>스타트</translation>
     </message>
@@ -1079,7 +1079,7 @@ Supported formats:
         <translation>변환이 완료되었지만 오류가 있습니다. 자세한 정보는 출력 로그를 참조하십시오.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="281"/>
+        <location filename="../Graphics/gifs2png.cpp" line="283"/>
         <source>Stop</source>
         <translation>중지</translation>
     </message>

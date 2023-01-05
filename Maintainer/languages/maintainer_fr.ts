@@ -986,7 +986,7 @@ Formats pris en charge :
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
-        <location filename="../Graphics/gifs2png.cpp" line="283"/>
+        <location filename="../Graphics/gifs2png.cpp" line="285"/>
         <source>Start</source>
         <translation>Démarrer</translation>
     </message>
@@ -1079,7 +1079,7 @@ Formats pris en charge :
         <translation>La conversion s&apos;est terminée avec des erreurs. Veuillez consulter le journal de sortie pour des informations plus détaillées.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="281"/>
+        <location filename="../Graphics/gifs2png.cpp" line="283"/>
         <source>Stop</source>
         <translation>Arrêter</translation>
     </message>

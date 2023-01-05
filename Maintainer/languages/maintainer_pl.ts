@@ -986,7 +986,7 @@ Wspierane formaty:
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
-        <location filename="../Graphics/gifs2png.cpp" line="283"/>
+        <location filename="../Graphics/gifs2png.cpp" line="285"/>
         <source>Start</source>
         <translation>Uruchom</translation>
     </message>
@@ -1079,7 +1079,7 @@ Wspierane formaty:
         <translation>Konwersja została skończona z błędami. Proszę poszukaj bardziej szczegółowych informacji w dzienniku wyjściowym.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="281"/>
+        <location filename="../Graphics/gifs2png.cpp" line="283"/>
         <source>Stop</source>
         <translation>Zatrzymaj</translation>
     </message>

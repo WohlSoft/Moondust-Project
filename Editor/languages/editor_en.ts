@@ -1800,6 +1800,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Edit raw user data...</source>
         <translation>Edit raw user data...</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>Array-ID: %1</translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1940,6 +1944,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Edit raw user data...</source>
         <translation>Edit raw user data...</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>Array-ID: %1</translation>
     </message>
 </context>
 <context>
@@ -2097,6 +2105,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <comment>Direction of pipe</comment>
         <translation>Down</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>Array-ID: %1</translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -2167,6 +2179,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Preferences have been copied: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>Array-ID: %1</translation>
     </message>
 </context>
 <context>
@@ -2247,6 +2263,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Preferences have been copied: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>Array-ID: %1</translation>
     </message>
 </context>
 <context>
@@ -2383,6 +2403,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Edit raw user data...</source>
         <translation>Edit raw user data...</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>Array-ID: %1</translation>
+    </message>
 </context>
 <context>
     <name>ItemPath</name>
@@ -2433,6 +2457,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Preferences have been copied: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>Array-ID: %1</translation>
     </message>
 </context>
 <context>
@@ -2549,6 +2577,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation>Preferences have been copied: %1</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>Array-ID: %1</translation>
+    </message>
 </context>
 <context>
     <name>ItemPlayerPoint</name>
@@ -2622,6 +2654,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Preferences have been copied: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>Array-ID: %1</translation>
     </message>
 </context>
 <context>
@@ -2752,6 +2788,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Preferences have been copied: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>Array-ID: %1</translation>
     </message>
 </context>
 <context>

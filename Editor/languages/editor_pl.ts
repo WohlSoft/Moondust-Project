@@ -876,6 +876,13 @@ Proszę zapisz je przed zrobieniem czegokolwiek innego.</translation>
         <source>Join the official Moondust Discord server to submit the report</source>
         <translation>Dołącz do oficjalnego serweru Moondust na Discordzie, aby wysłać zgłoszenie</translation>
     </message>
+    <message>
+        <source>While making a report, please explain what you did to cause a crash error.
+- Please give a list of actions you did to cause a crash. 
+- If a crash happened with editing a specific file, please attach it to the report.
+- What operating system you are using?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CustomCounterGUI</name>
@@ -1782,6 +1789,10 @@ a także z pasków narzędzi (panele z ikonami na górze okna) i z menu. W tym e
         <source>Edit raw user data...</source>
         <translation>Edytuj nie przetworzone dane użytkownika...</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1922,6 +1933,10 @@ Limity wiadomości: maksymalna długość linii to 27 znaków</translation>
     <message>
         <source>Edit raw user data...</source>
         <translation>Edytuj dane nie przetworzone użytkownika...</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2079,6 +2094,10 @@ Limity wiadomości: maksymalna długość linii to 27 znaków</translation>
         <comment>Direction of pipe</comment>
         <translation type="unfinished">Dół</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -2149,6 +2168,10 @@ Limity wiadomości: maksymalna długość linii to 27 znaków</translation>
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Ustawienia zostały skopiowane: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2229,6 +2252,10 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Ustawienia zostały skopiowane: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2365,6 +2392,10 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
         <source>Edit raw user data...</source>
         <translation>Edytuj dane nie przetworzone użytkownika...</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemPath</name>
@@ -2415,6 +2446,10 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Ustawienia zostały skopiowane: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2531,6 +2566,10 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
         <source>Preferences have been copied: %1</source>
         <translation>Ustawienia zostały skopiowane: %1</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemPlayerPoint</name>
@@ -2604,6 +2643,10 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Ustawienia zostały skopiowane: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2734,6 +2777,10 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Ustawienia zostały skopiowane: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3381,6 +3428,12 @@ To oznacza, że niemożliwym jest uruchomić poziom w LunaTesterze. LunaLua jest
     </message>
     <message>
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4885,6 +4938,12 @@ Proszę, wybierz jeden plik z listy:</translation>
         <source>Do you really want to apply this setting to all objects?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -6364,6 +6423,18 @@ Oczekiwany Indetyfikator pakietu konfiguracji: %4</translation>
         <source>Bulk convert and repair of level and world files...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Can&apos;t start testing, engine is not found: 
+%1
+Please, choose the engine application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -7415,6 +7486,29 @@ Maksymalny numer bloków muzyki to %2.</translation>
     </message>
     <message>
         <source>Needs floor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

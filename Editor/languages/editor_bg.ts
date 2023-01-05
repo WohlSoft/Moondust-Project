@@ -876,6 +876,13 @@ Please save them before doing anything else.</source>
         <source>Join the official Moondust Discord server to submit the report</source>
         <translation>Присъединете се към официалния Moondust Discord сървър за подаване на отчета</translation>
     </message>
+    <message>
+        <source>While making a report, please explain what you did to cause a crash error.
+- Please give a list of actions you did to cause a crash. 
+- If a crash happened with editing a specific file, please attach it to the report.
+- What operating system you are using?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CustomCounterGUI</name>
@@ -1782,6 +1789,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Edit raw user data...</source>
         <translation>Редактиране на необработени потребителски данни...</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1922,6 +1933,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Edit raw user data...</source>
         <translation>Редактиране на необработени потребителски данни...</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2079,6 +2094,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <comment>Direction of pipe</comment>
         <translation type="unfinished">Надолу</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -2149,6 +2168,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Предпочитанията са копирани: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2229,6 +2252,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Предпочитанията са копирани: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2365,6 +2392,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Edit raw user data...</source>
         <translation>Редактиране на необработени потребителски данни...</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemPath</name>
@@ -2415,6 +2446,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Предпочитанията са копирани: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2531,6 +2566,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation>Предпочитанията са копирани: %1</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemPlayerPoint</name>
@@ -2604,6 +2643,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Предпочитанията са копирани: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2734,6 +2777,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Предпочитанията са копирани: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3378,6 +3425,12 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlCloneSection</name>
@@ -3500,7 +3553,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Autoscroll section</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Секция за автоматично превъртане</translation>
     </message>
     <message>
         <source>Section</source>
@@ -3508,7 +3561,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Section settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Настройки на секцията</translation>
     </message>
     <message>
         <source>Current section:</source>
@@ -3532,7 +3585,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Наляво</translation>
     </message>
     <message>
         <source>Top</source>
@@ -3548,7 +3601,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Надясно</translation>
     </message>
     <message>
         <source>Set music</source>
@@ -3568,7 +3621,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Common</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Общи</translation>
     </message>
     <message>
         <source>Do end game:</source>
@@ -3600,19 +3653,19 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Run</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Бягане</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Надолу</translation>
     </message>
     <message>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Нагоре</translation>
     </message>
     <message>
         <source>Drop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Пускане</translation>
     </message>
     <message>
         <source>Alt-run</source>
@@ -3620,11 +3673,11 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Започни</translation>
     </message>
     <message>
         <source>Jump</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Скачане</translation>
     </message>
     <message>
         <source>Alt-jump</source>
@@ -3632,7 +3685,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Trigger event</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Задействане на събитие</translation>
     </message>
     <message>
         <source>Delay</source>
@@ -3691,7 +3744,7 @@ Do you want to continue?</source>
     <message>
         <source>Type:</source>
         <comment>Autoscroll type</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Тип:</translation>
     </message>
     <message>
         <source>Simple</source>
@@ -3716,7 +3769,7 @@ Do you want to continue?</source>
     <name>LvlHistoryManager</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Премахване</translation>
     </message>
     <message>
         <source>Place</source>
@@ -3759,15 +3812,15 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Блок</translation>
     </message>
     <message>
         <source>Slippery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Хлъзгав</translation>
     </message>
     <message>
         <source>Resize</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Преоразмеряване</translation>
     </message>
     <message>
         <source>Block contents:</source>
@@ -3799,19 +3852,19 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Invisible</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Невидим</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Широчина:</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Височина:</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ФО</translation>
     </message>
     <message>
         <source>Z-Position</source>
@@ -3827,23 +3880,23 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Background-2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Фон-2</translation>
     </message>
     <message>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Фон</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">По подразбиране</translation>
     </message>
     <message>
         <source>Foreground</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Преден план</translation>
     </message>
     <message>
         <source>Foreground-2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Преден план-2</translation>
     </message>
     <message>
         <source>SMBX64 defines:</source>
@@ -3880,11 +3933,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Посока</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Наляво</translation>
     </message>
     <message>
         <source>Random</source>
@@ -3892,27 +3945,27 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Надясно</translation>
     </message>
     <message>
         <source>Generator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Генератор</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Тип:</translation>
     </message>
     <message>
         <source>Warp</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Проход</translation>
     </message>
     <message>
         <source>Projectile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Снаряд</translation>
     </message>
     <message>
         <source>Delay (seconds):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Забавяне (секунди):</translation>
     </message>
     <message>
         <source>Contains of current NPC-Container</source>
@@ -3928,15 +3981,15 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Friendly</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Приятелски</translation>
     </message>
     <message>
         <source>Doesn&apos;t move</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Не се движи</translation>
     </message>
     <message>
         <source>Set as Boss</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Задаване като бос</translation>
     </message>
     <message>
         <source>Block ID: %1, Array ID: %2</source>
@@ -3948,11 +4001,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>%1 coins</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 монета(и)</translation>
     </message>
     <message>
         <source>[empty]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[празно]</translation>
     </message>
     <message>
         <source>BGO ID: %1, Array ID: %2</source>
@@ -3969,27 +4022,28 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Грешка във файла %1:
+%2</translation>
     </message>
     <message>
         <source>Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Наляво</translation>
     </message>
     <message>
         <source>Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Надясно</translation>
     </message>
     <message>
         <source>Up</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Нагоре</translation>
     </message>
     <message>
         <source>Down</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Надолу</translation>
     </message>
     <message>
         <source>Up-Left</source>
@@ -4020,11 +4074,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Премахване</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Добавяне</translation>
     </message>
     <message>
         <source>Lock</source>
@@ -4061,7 +4115,7 @@ All objects on this layer will be moved to the &apos;Default&apos; layer.</sourc
     </message>
     <message>
         <source>Remove Layer and keep items</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Премахване на слоя и запазване на елементите</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this layer?
@@ -4131,7 +4185,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Блок</translation>
     </message>
     <message>
         <source>Reset Search Fields</source>
@@ -4155,7 +4209,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>[empty]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[празно]</translation>
     </message>
     <message>
         <source>Invisible:</source>
@@ -4163,7 +4217,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Тип:</translation>
     </message>
     <message>
         <source>Search Block</source>
@@ -4187,7 +4241,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ФО</translation>
     </message>
     <message>
         <source>Search BGO</source>
@@ -4231,15 +4285,15 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Doesn&apos;t move</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Не се движи</translation>
     </message>
     <message>
         <source>Friendly</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Приятелски</translation>
     </message>
     <message>
         <source>Set as Boss</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Задаване като бос</translation>
     </message>
     <message>
         <source>Contains Msg:</source>
@@ -4247,11 +4301,11 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Посока</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Наляво</translation>
     </message>
     <message>
         <source>Random</source>
@@ -4259,7 +4313,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Надясно</translation>
     </message>
     <message>
         <source>Case Sensitive?</source>
@@ -4384,12 +4438,12 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Музика</translation>
     </message>
     <message>
         <source>Custom</source>
         <comment>Flag of custom music on the level</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Потребителски</translation>
     </message>
     <message>
         <source>Music file:</source>
@@ -4405,7 +4459,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Please, save file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Моля, запазете файла</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to manage custom background config files.</source>
@@ -4421,7 +4475,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Моля, запазете файла, за да използвате персонализирана музика.</translation>
     </message>
     <message>
         <source>Name that will appear in the editor</source>
@@ -4441,7 +4495,8 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Грешка във файла %1:
+%2</translation>
     </message>
     <message>
         <source>Change the extra format specific settings of a custom music</source>
@@ -4452,11 +4507,11 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <name>LvlWarpBox</name>
     <message>
         <source>Warps and Doors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Проходи и врати</translation>
     </message>
     <message>
         <source>Main</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Основен</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4465,16 +4520,16 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Без монтирания</translation>
     </message>
     <message>
         <source>Allow NPC</source>
         <comment>Please, translate as &quot;Allow items&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Разрешаване на елементи</translation>
     </message>
     <message>
         <source>Locked</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Заключена</translation>
     </message>
     <message>
         <source>Set Exit</source>
@@ -4498,19 +4553,19 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>0 - Instant</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">0 - Незабавно</translation>
     </message>
     <message>
         <source>1 - Pipe</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">1 - Тръба</translation>
     </message>
     <message>
         <source>2 - Door</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">2 - Врата</translation>
     </message>
     <message>
         <source>3 - Portal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">3 - Портал</translation>
     </message>
     <message>
         <source>Message which will be shown if the player
@@ -4630,19 +4685,19 @@ Measured in pixels per 1/65 seconds.</source>
     </message>
     <message>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Надолу</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Наляво</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Надясно</translation>
     </message>
     <message>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Нагоре</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -4840,6 +4895,12 @@ Please, select necessary world map in a list:</source>
         <source>Do you really want to apply this setting to all objects?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -4861,7 +4922,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ниво</translation>
     </message>
     <message>
         <source>Current section</source>
@@ -4877,7 +4938,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Изглед</translation>
     </message>
     <message>
         <source>Window</source>
@@ -4897,11 +4958,11 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Custom data</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Персонализирани данни</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Редактиране</translation>
     </message>
     <message>
         <source>Test</source>
@@ -4913,7 +4974,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Основни</translation>
     </message>
     <message>
         <source>Wrap Horizontally</source>
@@ -4957,7 +5018,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Warps and Doors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Проходи и врати</translation>
     </message>
     <message>
         <source>Events</source>
@@ -5009,7 +5070,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Debugger</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Дебъгер</translation>
     </message>
     <message>
         <source>Testing options...</source>
@@ -5017,7 +5078,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Position bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Позиции на отметки</translation>
     </message>
     <message>
         <source>Open...</source>
@@ -5061,7 +5122,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запазете</translation>
     </message>
     <message>
         <source>Save (Ctrl+S)</source>
@@ -5093,7 +5154,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Съдържание</translation>
     </message>
     <message>
         <source>Contents (F1)</source>
@@ -5197,7 +5258,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Properties...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Свойства...</translation>
     </message>
     <message>
         <source>Disable world map</source>
@@ -5269,7 +5330,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Play music</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Възпроизвеждане на музика</translation>
     </message>
     <message>
         <source>Play music (F11)</source>
@@ -5301,7 +5362,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Анимация</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5313,7 +5374,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Копиране</translation>
     </message>
     <message>
         <source>Copy selected items</source>
@@ -5354,7 +5415,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Изрязване</translation>
     </message>
     <message>
         <source>Select only</source>
@@ -5701,7 +5762,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>[all]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[Всички]</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</source>
@@ -5721,7 +5782,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Прекратяване</translation>
     </message>
     <message>
         <source>Configuration is busy</source>
@@ -5863,7 +5924,7 @@ The configuration pack was loaded, but contains errors.</source>
     </message>
     <message>
         <source>Saving</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запазване</translation>
     </message>
     <message>
         <source>File saved</source>
@@ -5972,11 +6033,11 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>Margin of section</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Граница на секция</translation>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Моля, изберете на какво разстояние от границите на секцията (в пиксели) да премахнете елементите.</translation>
     </message>
     <message>
         <source>Section has been removed</source>
@@ -6005,7 +6066,7 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Нищо за правене</translation>
     </message>
     <message>
         <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
@@ -6017,7 +6078,7 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Моля, изчакайте...</translation>
     </message>
     <message>
         <source>Done</source>
@@ -6145,12 +6206,12 @@ Please save the file first.</source>
     <message>
         <source>Warps and Doors</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Проходи и врати</translation>
     </message>
     <message>
         <source>Water</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вода</translation>
     </message>
     <message>
         <source>Options</source>
@@ -6175,7 +6236,7 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
     </message>
     <message>
         <source>Level items browser</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Браузър за търсене</translation>
     </message>
     <message>
         <source>Items browser with a search</source>
@@ -6197,11 +6258,11 @@ See %2 for more information.</source>
     </message>
     <message>
         <source>Test level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ниво на изпитване</translation>
     </message>
     <message>
         <source>Start Game</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Започни игра</translation>
     </message>
     <message>
         <source>Test world map</source>
@@ -6287,6 +6348,18 @@ Expected config pack ID: %4</source>
         <source>Bulk convert and repair of level and world files...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Can&apos;t start testing, engine is not found: 
+%1
+Please, choose the engine application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -6315,19 +6388,19 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>Physics</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Физика</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ширина</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"> пкс</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Височина</translation>
     </message>
     <message>
         <source>Speed multiplier</source>
@@ -6363,7 +6436,7 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Нулиране</translation>
     </message>
     <message>
         <source>Graphics</source>
@@ -6395,7 +6468,7 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Основни</translation>
     </message>
     <message>
         <source>Frame speed multiplier</source>
@@ -6415,7 +6488,7 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>Foreground</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Преден план</translation>
     </message>
     <message>
         <source>In game</source>
@@ -6508,11 +6581,12 @@ Expected config pack ID: %4</source>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Не може да се прочете файл %1:
+%2.</translation>
     </message>
     <message>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запазване като</translation>
     </message>
     <message>
         <source>SMBX custom NPC config file (npc-*.txt)</source>
@@ -6520,21 +6594,23 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>File save error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Грешка при записване на файл</translation>
     </message>
     <message>
         <source>Cannot save file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Не може да се запази файл %1:
+%2.</translation>
     </message>
     <message>
         <source> not saved</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"> не е запазен</translation>
     </message>
     <message>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&apos;%1&apos; е променен.
+Искате ли да запазите промените?</translation>
     </message>
 </context>
 <context>
@@ -6589,7 +6665,7 @@ Error description:
     <message>
         <source>Start Game</source>
         <comment>Launch PGE Engine as a normal game</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Започни игра</translation>
     </message>
     <message>
         <source>Unsupported yet</source>
@@ -6615,19 +6691,19 @@ Error description:
     </message>
     <message>
         <source>Slippery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Хлъзгав</translation>
     </message>
     <message>
         <source>Z-Layer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Z-слой</translation>
     </message>
     <message>
         <source>Z-Offset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Z-Изместване</translation>
     </message>
     <message>
         <source>Friendly</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Приятелски</translation>
     </message>
     <message>
         <source>Boss</source>
@@ -6643,7 +6719,7 @@ Error description:
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Посока</translation>
     </message>
     <message>
         <source>Included NPC</source>
@@ -6659,7 +6735,7 @@ Error description:
     </message>
     <message>
         <source>No Vehicles</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Без монтирания</translation>
     </message>
     <message>
         <source>Two-way warp</source>
@@ -6667,7 +6743,7 @@ Error description:
     </message>
     <message>
         <source>Allow NPC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Разрешаване на елементи</translation>
     </message>
     <message>
         <source>Allow NPC inter level</source>
@@ -6675,11 +6751,11 @@ Error description:
     </message>
     <message>
         <source>Locked</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Заключена</translation>
     </message>
     <message>
         <source>Need a bomb</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Нуждае се от бомба</translation>
     </message>
     <message>
         <source>Hide number of stars</source>
@@ -6931,7 +7007,7 @@ Error description:
     </message>
     <message>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Музика</translation>
     </message>
     <message>
         <source>Custom Music</source>
@@ -6947,7 +7023,7 @@ Error description:
     </message>
     <message>
         <source>Always Visible</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Винаги видим</translation>
     </message>
     <message>
         <source>Big Path Background</source>
@@ -7296,7 +7372,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Default</source>
         <comment>Name of pallete</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">По подразбиране</translation>
     </message>
     <message>
         <source>Dark blue</source>
@@ -7311,13 +7387,36 @@ The maximum number of Music Boxes is %2.</source>
         <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SanBaEiRuntimeEngine</name>
     <message>
         <source>Test level</source>
         <comment>Run the testing of current file in SMBX-38A via interprocessing tunnel.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ниво на изпитване</translation>
     </message>
     <message>
         <source>Test level in battle mode</source>
@@ -7331,11 +7430,11 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Reset checkpoints</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Нулиране на контролни точки</translation>
     </message>
     <message>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Нулиране на всички контролни точки.</translation>
     </message>
     <message>
         <source>Enable magic hand</source>
@@ -7376,11 +7475,11 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Start Game</source>
         <comment>Launch SMBX-38A as a normal game</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Започни игра</translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Контролните точки бяха нулирани успешно!</translation>
     </message>
     <message>
         <source>Path to SMBX-38A</source>
@@ -7394,12 +7493,12 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Use default</source>
         <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Използване по подразбиране</translation>
     </message>
     <message>
         <source>Custom</source>
         <comment>Using a user selected SMBX-38A path</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Потребителски</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -7407,7 +7506,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запазете</translation>
     </message>
     <message>
         <source>Select a path to SMBX-38A executable</source>
@@ -7467,7 +7566,7 @@ The maximum number of Music Boxes is %2.</source>
     <name>SavingNotificationDialog</name>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запазете</translation>
     </message>
     <message>
         <source>Discard</source>
@@ -7554,7 +7653,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Extra settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Допълнителни настройки</translation>
     </message>
     <message>
         <source>Debug info</source>
@@ -7669,12 +7768,12 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запазете</translation>
     </message>
     <message>
         <source>Test level</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ниво на изпитване</translation>
     </message>
     <message>
         <source>Test saved level</source>
@@ -7684,7 +7783,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Започни игра</translation>
     </message>
     <message>
         <source>Please select a path to TheXTech executable:</source>
@@ -7693,12 +7792,12 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Използване по подразбиране</translation>
     </message>
     <message>
         <source>Custom</source>
         <comment>Using a user selected TheXTech path</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Потребителски</translation>
     </message>
     <message>
         <source>Select a path to TheXTech executable</source>
@@ -7718,7 +7817,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Default</source>
         <comment>Automatically selected rendering engine</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">По подразбиране</translation>
     </message>
     <message>
         <source>Software</source>
@@ -7864,11 +7963,11 @@ Arguments: %2</source>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Блок</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ФО</translation>
     </message>
     <message>
         <source>NPC</source>
@@ -7876,23 +7975,23 @@ Arguments: %2</source>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Плочка на терена</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Пейзажи</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Път</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ниво</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Тип:</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -7900,7 +7999,7 @@ Arguments: %2</source>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запазете</translation>
     </message>
     <message>
         <source>Tileset name:</source>
@@ -7912,11 +8011,11 @@ Arguments: %2</source>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Височина:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Широчина:</translation>
     </message>
     <message>
         <source>Show custom only</source>
@@ -7936,7 +8035,7 @@ Arguments: %2</source>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Търсене</translation>
     </message>
     <message>
         <source>Search settings</source>
@@ -7945,37 +8044,37 @@ Arguments: %2</source>
     <message>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Търсене по име</translation>
     </message>
     <message>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Търсене по ИД</translation>
     </message>
     <message>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Търсене по ID (съдържащ)</translation>
     </message>
     <message>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сортиране по</translation>
     </message>
     <message>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Име</translation>
     </message>
     <message>
         <source>ID</source>
         <comment>Sort by ID</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ИД</translation>
     </message>
     <message>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Низходящо</translation>
     </message>
     <message>
         <source>Clean tileset editor</source>
@@ -8050,7 +8149,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Нагоре</translation>
     </message>
     <message>
         <source>Order weight</source>
@@ -8062,7 +8161,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Category:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Категория:</translation>
     </message>
     <message>
         <source>Defines the custom order priority. If weight values are equal between of different tileset group or equal to -1, tileset groups will be ordered alphabetically.</source>
@@ -8086,7 +8185,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Надолу</translation>
     </message>
     <message>
         <source>Remove tileset</source>
@@ -8098,7 +8197,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запазете</translation>
     </message>
     <message>
         <source>Select Tileset</source>
@@ -8168,7 +8267,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Group:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Група:</translation>
     </message>
 </context>
 <context>
@@ -8214,7 +8313,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Locked</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Заключена</translation>
     </message>
     <message>
         <source>Layer exists</source>
@@ -8339,11 +8438,11 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Добавяне</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Премахване</translation>
     </message>
 </context>
 <context>
@@ -8354,7 +8453,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ниво</translation>
     </message>
     <message>
         <source>Big path background</source>
@@ -8362,7 +8461,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Path background</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Фонов път</translation>
     </message>
     <message>
         <source>Game start point</source>
@@ -8390,7 +8489,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Преглед</translation>
     </message>
     <message>
         <source>Go to coordinates:</source>
@@ -8474,7 +8573,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Placement mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Режим на поставяне</translation>
     </message>
     <message>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
@@ -8521,7 +8620,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Анимация</translation>
     </message>
     <message>
         <source>You will return to the x0-y0 position of the map.</source>
@@ -8537,7 +8636,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Прекратяване</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -8656,7 +8755,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Грешка</translation>
     </message>
     <message>
         <source>Can&apos;t start &quot;%1&quot; because of: %2</source>
@@ -8694,7 +8793,7 @@ Data may be corrupted!</source>
     <name>WldHistoryManager</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Премахване</translation>
     </message>
     <message>
         <source>Place</source>
@@ -8733,27 +8832,27 @@ Data may be corrupted!</source>
     <name>WldSaveImage</name>
     <message>
         <source>Export to image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Експортиране в изображение</translation>
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Скриване на мрежата (ако е показана)</translation>
     </message>
     <message>
         <source>Please, select target image size:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Моля, изберете целевия размер на изображението:</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Височина</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&lt;p&gt;Когато е маркирано, това ще изчисли размера на противоположното измерение (височина или ширина), за да се създаде целево изображение с правилните пропорции.&lt;/p&gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
     <message>
         <source>Keep original aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запазване на оригиналното съотношение на страните</translation>
     </message>
     <message>
         <source>Export selected rectangle to image</source>
@@ -8761,19 +8860,19 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&lt;p&gt;Това е &lt;span style=&quot;&quot;&gt;ширината&lt;/span&gt; на целевото изображение. Целевото изображение ще бъде мащабирано до тази ширина.&lt;/p&gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"> пкс</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&lt;p&gt;Това е &lt;span style=&quot;&quot;&gt;височината&lt;/span&gt; на целевото изображение. Целевото изображение ще бъде мащабирано до тази височина.&lt;/p&gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ширина</translation>
     </message>
     <message>
         <source>Hide all paths and levels like &quot;game already stated&quot;</source>
@@ -8850,11 +8949,11 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Тип:</translation>
     </message>
     <message>
         <source>[empty]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[празно]</translation>
     </message>
     <message>
         <source>Reset Search Fields</source>
@@ -8866,7 +8965,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Плочка на терена</translation>
     </message>
     <message>
         <source>Search Terrain Tile</source>
@@ -8874,7 +8973,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Пейзажи</translation>
     </message>
     <message>
         <source>Search Scenery</source>
@@ -8882,7 +8981,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Път</translation>
     </message>
     <message>
         <source>Search Path</source>
@@ -8890,7 +8989,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ниво</translation>
     </message>
     <message>
         <source>Level file</source>
@@ -8902,7 +9001,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Always Visible</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Винаги видим</translation>
     </message>
     <message>
         <source>Game start point</source>
@@ -8914,7 +9013,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Path background</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Фонов път</translation>
     </message>
     <message>
         <source>Search Level</source>
@@ -9021,23 +9120,23 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>PNG Image (*.png)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PNG изображение (*.png)</translation>
     </message>
     <message>
         <source>Saving section image...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запазване на изображение на секция...</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Прекратяване</translation>
     </message>
     <message>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Моля, изчакайте...</translation>
     </message>
     <message>
         <source>Untitled %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Неозаглавено %1</translation>
     </message>
     <message>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
@@ -9045,7 +9144,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Saving</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запазване</translation>
     </message>
     <message>
         <source>Episode Title: </source>
@@ -9053,7 +9152,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Make custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Създаване на потребителска папка</translation>
     </message>
     <message>
         <source>Note: Custom folders are not supported for legacy SMBX Engine!</source>
@@ -9061,19 +9160,19 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запазване като</translation>
     </message>
     <message>
         <source>Extension is not set</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Не е зададено разширение на файла</translation>
     </message>
     <message>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Разширението на файла не е зададено, моля, въведете валидно файлово разширение!</translation>
     </message>
     <message>
         <source>SMBX file version</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Версия на SMBX файла</translation>
     </message>
     <message>
         <source>Which version do you want to save as? (from 0 to 64)</source>
@@ -9081,7 +9180,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>The SMBX64 limit has been exceeded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ограничението за SMBX64 е надхвърлено</translation>
     </message>
     <message>
         <source>Do you want to save file anyway?
@@ -9092,21 +9191,23 @@ Installed LunaLUA partially extends than limits.</source>
     </message>
     <message>
         <source>File save error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Грешка при записване на файл</translation>
     </message>
     <message>
         <source>Cannot save file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Не може да се запази файл %1:
+%2.</translation>
     </message>
     <message>
         <source>File read error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Грешка при четене на файл</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Не може да се прочете файл %1:
+%2.</translation>
     </message>
     <message>
         <source>Loading World map data</source>
@@ -9114,7 +9215,7 @@ Installed LunaLUA partially extends than limits.</source>
     </message>
     <message>
         <source>Incorrect custom configs</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Неправилни персонализирани конфигурации</translation>
     </message>
     <message>
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
@@ -9125,11 +9226,12 @@ Installed LunaLUA partially extends than limits.</source>
     <message>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&apos;%1&apos; е променен.
+Искате ли да запазите промените?</translation>
     </message>
     <message>
         <source> not saved</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"> не е запазен</translation>
     </message>
     <message>
         <source>World title:</source>
@@ -9144,7 +9246,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Пейзажи</translation>
     </message>
     <message>
         <source>Paths</source>
@@ -9160,11 +9262,11 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Please, save file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Моля, запазете файла</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Моля, запазете файла, за да използвате персонализирана музика.</translation>
     </message>
     <message>
         <source>World Map Items browser</source>
@@ -9183,11 +9285,11 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Please, save file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Моля, запазете файла</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Моля, запазете файла, за да използвате персонализирана музика.</translation>
     </message>
 </context>
 <context>
@@ -9230,7 +9332,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Преглед</translation>
     </message>
     <message>
         <source>Counting...</source>
@@ -9238,15 +9340,15 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Calculating total star count in accessible levels</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Изчисляване на общия брой звезди в достъпни нива</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Прекратяване</translation>
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Преброяване на звезди…</translation>
     </message>
     <message>
         <source>The name of the level that will be loaded when the game first loads.</source>

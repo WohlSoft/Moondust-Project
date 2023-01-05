@@ -690,17 +690,17 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation type="vanished">Saved</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="334"/>
+        <location filename="../main/calibration_file.cpp" line="336"/>
         <source>Configuration saved in file</source>
         <translation>Configuration saved in file</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="637"/>
+        <location filename="../main/calibration_file.cpp" line="639"/>
         <source>Bad data generated</source>
         <translation>Bad data generated</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="638"/>
+        <location filename="../main/calibration_file.cpp" line="640"/>
         <source>Some generated values are out of range, SMBX-38A may crash. File will not be patched.</source>
         <translation>Some generated values are out of range, SMBX-38A may crash. File will not be patched.</translation>
     </message>
@@ -907,17 +907,17 @@ If you want to use this sprite in vanilla SMBX, please, don&apos;t edit these se
 Do you want to continue?</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="79"/>
+        <location filename="../main/settings.cpp" line="81"/>
         <source>Graphical editor is not specified</source>
         <translation>Graphical editor is not specified</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="80"/>
+        <location filename="../main/settings.cpp" line="82"/>
         <source>External graphics editor application is not specified. Do you want to select it now?</source>
         <translation>External graphics editor application is not specified. Do you want to select it now?</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="102"/>
+        <location filename="../main/settings.cpp" line="104"/>
         <source>Select a path to the graphical editor executable</source>
         <comment>File dialog title</comment>
         <translation>Select a path to the graphical editor executable</translation>

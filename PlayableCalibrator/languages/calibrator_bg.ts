@@ -610,17 +610,17 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>Записване на картата на хитбокса като изображение</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="334"/>
+        <location filename="../main/calibration_file.cpp" line="336"/>
         <source>Configuration saved in file</source>
         <translation>Конфигурацията е запазена във файл</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="637"/>
+        <location filename="../main/calibration_file.cpp" line="639"/>
         <source>Bad data generated</source>
         <translation>Генерирани лоши данни</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="638"/>
+        <location filename="../main/calibration_file.cpp" line="640"/>
         <source>Some generated values are out of range, SMBX-38A may crash. File will not be patched.</source>
         <translation>Някои генерирани стойности са извън обхвата, SMBX-38A може да се срине. Файлът няма да бъде поправен.</translation>
     </message>
@@ -815,17 +815,17 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>Конфигурацията е променена и не е запазена. Искате ли да я запазите?</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="79"/>
+        <location filename="../main/settings.cpp" line="81"/>
         <source>Graphical editor is not specified</source>
         <translation>Не е посочен графичен редактор</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="80"/>
+        <location filename="../main/settings.cpp" line="82"/>
         <source>External graphics editor application is not specified. Do you want to select it now?</source>
         <translation>Не е зададено външно приложение за графичен редактор. Искате ли да го изберете сега?</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="102"/>
+        <location filename="../main/settings.cpp" line="104"/>
         <source>Select a path to the graphical editor executable</source>
         <comment>File dialog title</comment>
         <translation>Изберете път до изпълнимия файл на графичния редактор</translation>

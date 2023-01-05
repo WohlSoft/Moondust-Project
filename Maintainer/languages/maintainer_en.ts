@@ -986,7 +986,7 @@ Supported formats:
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
-        <location filename="../Graphics/gifs2png.cpp" line="283"/>
+        <location filename="../Graphics/gifs2png.cpp" line="285"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
@@ -1079,7 +1079,7 @@ Supported formats:
         <translation>Conversion has been completed with errors. Please look the output log for more detailed information.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="281"/>
+        <location filename="../Graphics/gifs2png.cpp" line="283"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>

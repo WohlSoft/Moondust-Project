@@ -860,6 +860,13 @@ Please save them before doing anything else.</source>
         <source>Join the official Moondust Discord server to submit the report</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>While making a report, please explain what you did to cause a crash error.
+- Please give a list of actions you did to cause a crash. 
+- If a crash happened with editing a specific file, please attach it to the report.
+- What operating system you are using?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CustomCounterGUI</name>
@@ -1754,6 +1761,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Edit raw user data...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1892,6 +1903,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2050,6 +2065,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <comment>Direction of pipe</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -2119,6 +2138,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2198,6 +2221,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2335,6 +2362,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Edit raw user data...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemPath</name>
@@ -2384,6 +2415,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2501,6 +2536,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemPlayerPoint</name>
@@ -2573,6 +2612,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2703,6 +2746,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3326,6 +3373,12 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4790,6 +4843,12 @@ Please, select necessary world map in a list:</source>
         <source>Do you really want to apply this setting to all objects?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -6237,6 +6296,18 @@ Expected config pack ID: %4</source>
         <source>Bulk convert and repair of level and world files...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Can&apos;t start testing, engine is not found: 
+%1
+Please, choose the engine application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -7259,6 +7330,29 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Needs floor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
