@@ -1800,7 +1800,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID в массиве: %1</translation>
     </message>
 </context>
 <context>
@@ -1946,7 +1946,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID в массиве: %1</translation>
     </message>
 </context>
 <context>
@@ -2106,7 +2106,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID в массиве: %1</translation>
     </message>
 </context>
 <context>
@@ -2181,7 +2181,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID в массиве: %1</translation>
     </message>
 </context>
 <context>
@@ -2265,7 +2265,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID в массиве: %1</translation>
     </message>
 </context>
 <context>
@@ -2405,7 +2405,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID в массиве: %1</translation>
     </message>
 </context>
 <context>
@@ -2460,7 +2460,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID в массиве: %1</translation>
     </message>
 </context>
 <context>
@@ -2579,7 +2579,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID в массиве: %1</translation>
     </message>
 </context>
 <context>
@@ -2657,7 +2657,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID в массиве: %1</translation>
     </message>
 </context>
 <context>
@@ -2791,7 +2791,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID в массиве: %1</translation>
     </message>
 </context>
 <context>
