@@ -1797,7 +1797,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -1942,7 +1942,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -2102,7 +2102,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -2177,7 +2177,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -2261,7 +2261,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -2400,7 +2400,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -2455,7 +2455,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -2574,7 +2574,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -2652,7 +2652,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -2786,7 +2786,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -6437,11 +6437,11 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>Adjust pictures colors to pallete (PalleteFilter)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Підігнати кольори зображень під палітру (PaletteFilter)...</translation>
     </message>
     <message>
         <source>Bulk convert and repair of level and world files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Масове виправ./віднов. рівнів та світів...</translation>
     </message>
 </context>
 <context>
