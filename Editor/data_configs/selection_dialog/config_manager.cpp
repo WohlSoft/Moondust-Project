@@ -566,7 +566,7 @@ bool ConfigManager::runConfigureTool()
     if(ConfStatus::configIsIntegrational)
     {
         PGE_JsEngine js;
-        QString cpDirName = QDir(m_currentConfigPath).dirName();
+        // QString cpDirName = QDir(m_currentConfigPath).dirName();
         QString cpSetupFile = DataConfig::buildLocalConfigPath(m_currentConfigPath);
 
         js.bindProxy(new PGE_JS_Common(parentW), "PGE");
