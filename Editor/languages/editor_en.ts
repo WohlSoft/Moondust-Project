@@ -837,11 +837,6 @@ File path: %3</translation>
         <translation>Crash</translation>
     </message>
     <message>
-        <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translatorcomment>&quot;Information data&quot; is somewhat redundant</translatorcomment>
-        <translation>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</translation>
-    </message>
-    <message>
         <source>Exit from application</source>
         <translation>Exit from application</translation>
     </message>
@@ -865,14 +860,6 @@ Please save them before doing anything else.</translation>
         <translation>Copy report into clipboard</translation>
     </message>
     <message>
-        <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</translation>
-    </message>
-    <message>
-        <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</translation>
-    </message>
-    <message>
         <source>While making a report, please explain what you did to cause a crash error.
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
@@ -889,6 +876,22 @@ Please save them before doing anything else.</translation>
     <message>
         <source>Join the official Moondust Discord server to submit the report</source>
         <translation>Join the official Moondust Discord server to submit the report</translation>
+    </message>
+    <message>
+        <source>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Important note:&lt;/b&gt; please don&apos;t post this report at third-party forums and chat servers (including ANY SMBX-related community servers with no exceptions). Otherwise, you have &lt;b&gt;an extremely small chance of getting the proper support&lt;/b&gt;. We can give you a support at official resources listed above only.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

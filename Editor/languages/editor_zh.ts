@@ -833,10 +833,6 @@ File path: %3</source>
         <translation>月尘引擎崩溃</translation>
     </message>
     <message>
-        <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>啊！月尘引擎编辑器程序异常终止！&lt;br&gt;详细信息:</translation>
-    </message>
-    <message>
         <source>Exit from application</source>
         <translation>退出应用</translation>
     </message>
@@ -860,14 +856,6 @@ Please save them before doing anything else.</source>
         <translation>复制报告到剪贴板</translation>
     </message>
     <message>
-        <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>在 WohlSoft 论坛中反馈问题（wohlsoft.ru/forum/，需英文）</translation>
-    </message>
-    <message>
-        <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation>在 Github 仓库中反馈问题（WohlSoft/Moondust-Project，需英文）</translation>
-    </message>
-    <message>
         <source>Copied!</source>
         <translation>已复制！</translation>
     </message>
@@ -884,6 +872,22 @@ Please save them before doing anything else.</source>
 - 请列出造成程序异常终止的行为。
 - 如果是编辑指定文件造成的异常终止，请附上相关文件。
 - 您使用的操作系统？</translation>
+    </message>
+    <message>
+        <source>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Important note:&lt;/b&gt; please don&apos;t post this report at third-party forums and chat servers (including ANY SMBX-related community servers with no exceptions). Otherwise, you have &lt;b&gt;an extremely small chance of getting the proper support&lt;/b&gt;. We can give you a support at official resources listed above only.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1037,17 +1037,22 @@ Bestandspad: %3</translation>
         <translation>Crash</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="57"/>
+        <location filename="../common_features/crashhandler.ui" line="69"/>
         <source>You might want to report this data to developers:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="74"/>
+        <location filename="../common_features/crashhandler.ui" line="27"/>
         <source>Copy report into clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="94"/>
+        <location filename="../common_features/crashhandler.ui" line="34"/>
+        <source>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.ui" line="41"/>
         <source>While making a report, please explain what you did to cause a crash error.
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
@@ -1055,45 +1060,45 @@ Bestandspad: %3</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="127"/>
+        <location filename="../common_features/crashhandler.ui" line="54"/>
         <source>Join the official Moondust Discord server to submit the report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="24"/>
-        <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
+        <location filename="../common_features/crashhandler.ui" line="89"/>
+        <source>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="41"/>
-        <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
+        <location filename="../common_features/crashhandler.ui" line="109"/>
+        <source>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="64"/>
-        <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished">Oh nee, het PGE bewerkingsprogramma is gecrasht :(&lt;br&gt;Gedetailleerde crashrapport:</translation>
+        <location filename="../common_features/crashhandler.ui" line="123"/>
+        <source>&lt;b&gt;Important note:&lt;/b&gt; please don&apos;t post this report at third-party forums and chat servers (including ANY SMBX-related community servers with no exceptions). Otherwise, you have &lt;b&gt;an extremely small chance of getting the proper support&lt;/b&gt;. We can give you a support at official resources listed above only.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="107"/>
+        <location filename="../common_features/crashhandler.ui" line="116"/>
         <source>Exit from application</source>
         <translation>Applicatie sluiten</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="438"/>
+        <location filename="../common_features/crashhandler.cpp" line="444"/>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
         <translation>Crash herstel</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="439"/>
+        <location filename="../common_features/crashhandler.cpp" line="445"/>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
         <translation>Het programma heeft een paar bestanden kunnen redden van de laatste crash.
 Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="473"/>
+        <location filename="../common_features/crashhandler.cpp" line="479"/>
         <source>Copied!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1538,7 +1543,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
 <context>
     <name>DataConfig</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="342"/>
+        <location filename="../data_configs/data_configs.cpp" line="348"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;
@@ -9215,7 +9220,7 @@ Foutbeschrijving:
         <translation>Totaal aantal sterren</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="204"/>
+        <location filename="../common_features/crashhandler.cpp" line="210"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Out of memory!
 
@@ -9223,7 +9228,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="210"/>
+        <location filename="../common_features/crashhandler.cpp" line="216"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Unhandled Exception
 
@@ -9233,52 +9238,52 @@ Forum link: wohlsoft.ru/forum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="222"/>
+        <location filename="../common_features/crashhandler.cpp" line="228"/>
         <source>Terminal was closed [SIGHUP]</source>
         <translation>Terminaal was gesloten [SIGHUP]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="226"/>
+        <location filename="../common_features/crashhandler.cpp" line="232"/>
         <source>Quit command [SIGQUIT]</source>
         <translation>Afsluit opdracht [SIGQUIT]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="230"/>
+        <location filename="../common_features/crashhandler.cpp" line="236"/>
         <source>Editor was abourted because alarm() time out! [SIGALRM]</source>
         <translation>Programma was beëindigd wegens alarm() time out! [SIGALRM]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="234"/>
+        <location filename="../common_features/crashhandler.cpp" line="240"/>
         <source>Editor was abourted because physical memory error! [SIGBUS]</source>
         <translation>Programma was beëindigd wegens fysieke geheugenfout! [SIGBUS]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="244"/>
+        <location filename="../common_features/crashhandler.cpp" line="250"/>
         <source>Wrong CPU Instruction [SIGILL]</source>
         <translation>Verkeerde CPU instructie [SIGILL]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="248"/>
+        <location filename="../common_features/crashhandler.cpp" line="254"/>
         <source>Floating-point exception [SIGFPE]</source>
         <translation>Zwevendekommagetal uitzondering [SIGFPE]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="252"/>
+        <location filename="../common_features/crashhandler.cpp" line="258"/>
         <source>Aborted! [SIGABRT]</source>
         <translation>Beëindigd! [SIGABRT]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="256"/>
+        <location filename="../common_features/crashhandler.cpp" line="262"/>
         <source>Signal Segmentation Violation [SIGSEGV]</source>
         <translation>Signaal Segmentatie Overtreding [SIGSEGV]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="260"/>
+        <location filename="../common_features/crashhandler.cpp" line="266"/>
         <source>Interrupted! [SIGINT]</source>
         <translation>Onderbroken! [SIGINT]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="267"/>
+        <location filename="../common_features/crashhandler.cpp" line="273"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: %1
 
@@ -9538,7 +9543,7 @@ Het maximum aantal muziekdozen is %2.</translation>
         <translation>Tegelset categoriën aan het initialiseren...</translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="675"/>
+        <location filename="../data_configs/data_configs.cpp" line="681"/>
         <source>Finishing loading...</source>
         <translation>Lading aan het finaliseren...</translation>
     </message>

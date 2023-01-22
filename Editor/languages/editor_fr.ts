@@ -834,10 +834,6 @@ Chemin d&apos;accès : %3</translation>
         <translation>Plantage</translation>
     </message>
     <message>
-        <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>Oh non, Éditeur Moondust a planté :(&lt;br&gt;Informations détaillées sur le plantage :</translation>
-    </message>
-    <message>
         <source>Exit from application</source>
         <translation>Quitter l&apos;application</translation>
     </message>
@@ -861,14 +857,6 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
         <translation>Copier le rapport dans le presse-papiers</translation>
     </message>
     <message>
-        <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>Publier un rapport sur le forum de WohlSoft (wohlsoft.ru/forum/)</translation>
-    </message>
-    <message>
-        <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation>Déposer un ticket sur le dépôt GitHub (WohlSoft/Moondust-Project)</translation>
-    </message>
-    <message>
         <source>Copied!</source>
         <translation>Copié !</translation>
     </message>
@@ -881,6 +869,22 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
 - What operating system you are using?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Important note:&lt;/b&gt; please don&apos;t post this report at third-party forums and chat servers (including ANY SMBX-related community servers with no exceptions). Otherwise, you have &lt;b&gt;an extremely small chance of getting the proper support&lt;/b&gt;. We can give you a support at official resources listed above only.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

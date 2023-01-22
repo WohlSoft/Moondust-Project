@@ -1036,22 +1036,22 @@ File path: %3</source>
         <translation>크래시</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="64"/>
-        <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished">어-오, PGE 편집기가 충돌했습니다 :( &lt;br&gt; 자세한 충돌 정보 :</translation>
-    </message>
-    <message>
-        <location filename="../common_features/crashhandler.ui" line="57"/>
+        <location filename="../common_features/crashhandler.ui" line="69"/>
         <source>You might want to report this data to developers:</source>
         <translation>이 데이터를 개발자에게보고 할 수 있습니다:</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="74"/>
+        <location filename="../common_features/crashhandler.ui" line="27"/>
         <source>Copy report into clipboard</source>
         <translation>보고서를 클립 보드로 복사</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="94"/>
+        <location filename="../common_features/crashhandler.ui" line="34"/>
+        <source>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.ui" line="41"/>
         <source>While making a report, please explain what you did to cause a crash error.
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
@@ -1059,40 +1059,45 @@ File path: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="107"/>
+        <location filename="../common_features/crashhandler.ui" line="89"/>
+        <source>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.ui" line="109"/>
+        <source>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.ui" line="116"/>
         <source>Exit from application</source>
         <translation>응용 프로그램 종료</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="127"/>
+        <location filename="../common_features/crashhandler.ui" line="123"/>
+        <source>&lt;b&gt;Important note:&lt;/b&gt; please don&apos;t post this report at third-party forums and chat servers (including ANY SMBX-related community servers with no exceptions). Otherwise, you have &lt;b&gt;an extremely small chance of getting the proper support&lt;/b&gt;. We can give you a support at official resources listed above only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.ui" line="54"/>
         <source>Join the official Moondust Discord server to submit the report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="24"/>
-        <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished">PGE 포럼 (wohlsoft.ru/forum/)에 보고서 게시</translation>
-    </message>
-    <message>
-        <location filename="../common_features/crashhandler.ui" line="41"/>
-        <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation type="unfinished">GitHub 저장소 (WohlSoft / PGE-Project)에서 문제 제기</translation>
-    </message>
-    <message>
-        <location filename="../common_features/crashhandler.cpp" line="438"/>
+        <location filename="../common_features/crashhandler.cpp" line="444"/>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
         <translation>충돌 복구</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="439"/>
+        <location filename="../common_features/crashhandler.cpp" line="445"/>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
         <translation>마지막 충돌 이후 편집기는 일부 파일을 복구했습니다.
 다른 작업을 수행하기 전에 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="473"/>
+        <location filename="../common_features/crashhandler.cpp" line="479"/>
         <source>Copied!</source>
         <translation>복사되었습니다!</translation>
     </message>
@@ -1537,7 +1542,7 @@ Please save them before doing anything else.</source>
 <context>
     <name>DataConfig</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="342"/>
+        <location filename="../data_configs/data_configs.cpp" line="348"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;
@@ -8736,7 +8741,7 @@ Error description:
         <translation>진한 파란색</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="204"/>
+        <location filename="../common_features/crashhandler.cpp" line="210"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Out of memory!
 
@@ -8744,7 +8749,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="210"/>
+        <location filename="../common_features/crashhandler.cpp" line="216"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Unhandled Exception
 
@@ -8754,52 +8759,52 @@ Forum link: wohlsoft.ru/forum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="222"/>
+        <location filename="../common_features/crashhandler.cpp" line="228"/>
         <source>Terminal was closed [SIGHUP]</source>
         <translation>터미널이 폐쇄 됨 [SIGHUP]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="226"/>
+        <location filename="../common_features/crashhandler.cpp" line="232"/>
         <source>Quit command [SIGQUIT]</source>
         <translation>종료 명령 [SIGQUIT]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="230"/>
+        <location filename="../common_features/crashhandler.cpp" line="236"/>
         <source>Editor was abourted because alarm() time out! [SIGALRM]</source>
         <translation>alarm () 시간이 초과되어 편집기가 중단되었습니다! [SIGALRM]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="234"/>
+        <location filename="../common_features/crashhandler.cpp" line="240"/>
         <source>Editor was abourted because physical memory error! [SIGBUS]</source>
         <translation>물리적 메모리 오류로 인해 편집기가 중단되었습니다! [SIGBUS]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="244"/>
+        <location filename="../common_features/crashhandler.cpp" line="250"/>
         <source>Wrong CPU Instruction [SIGILL]</source>
         <translation>잘못된 CPU 명령어 [SIGILL]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="248"/>
+        <location filename="../common_features/crashhandler.cpp" line="254"/>
         <source>Floating-point exception [SIGFPE]</source>
         <translation>부동 소수점 예외 [SIGFPE]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="252"/>
+        <location filename="../common_features/crashhandler.cpp" line="258"/>
         <source>Aborted! [SIGABRT]</source>
         <translation>중단되었습니다! [SIGABRT]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="256"/>
+        <location filename="../common_features/crashhandler.cpp" line="262"/>
         <source>Signal Segmentation Violation [SIGSEGV]</source>
         <translation>신호 분할 위반 [SIGSEGV]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="260"/>
+        <location filename="../common_features/crashhandler.cpp" line="266"/>
         <source>Interrupted! [SIGINT]</source>
         <translation>중단되었습니다! [SIGINT]</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="267"/>
+        <location filename="../common_features/crashhandler.cpp" line="273"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: %1
 
@@ -9401,7 +9406,7 @@ Reason: %1
         <translation>타일로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="675"/>
+        <location filename="../data_configs/data_configs.cpp" line="681"/>
         <source>Finishing loading...</source>
         <translation>로드 완료 중 ...</translation>
     </message>

@@ -835,10 +835,6 @@ File path: %3</source>
         <translation>Авария</translation>
     </message>
     <message>
-        <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>Упс, Редактор Moondust сломался :(&lt;br&gt;Подробная аварийная информация:</translation>
-    </message>
-    <message>
         <source>Exit from application</source>
         <translation>Выйти из приложения</translation>
     </message>
@@ -862,14 +858,6 @@ Please save them before doing anything else.</source>
         <translation>Скопировать отчёт</translation>
     </message>
     <message>
-        <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>Отправить репорт на форуме WohlSoft (wohlsoft.ru/forum/)</translation>
-    </message>
-    <message>
-        <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation>Создать задачу на репозитории GitHub (WohlSoft/Moondust-Project)</translation>
-    </message>
-    <message>
         <source>While making a report, please explain what you did to cause a crash error.
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
@@ -886,6 +874,22 @@ Please save them before doing anything else.</source>
     <message>
         <source>Join the official Moondust Discord server to submit the report</source>
         <translation>Зайти на официальный Discord-сервер, чтобы отправить отчёт</translation>
+    </message>
+    <message>
+        <source>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Important note:&lt;/b&gt; please don&apos;t post this report at third-party forums and chat servers (including ANY SMBX-related community servers with no exceptions). Otherwise, you have &lt;b&gt;an extremely small chance of getting the proper support&lt;/b&gt;. We can give you a support at official resources listed above only.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
