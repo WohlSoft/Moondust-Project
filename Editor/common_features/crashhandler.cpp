@@ -68,7 +68,13 @@ static const char *g_messageToUser =
     " Please send this log file to the developers by one of ways:\n"
     " - Via contact form:          https://wohlsoft.ru/contacts/\n"
     " - Official forums:           https://wohlsoft.ru/forum/\n"
-    " - Make issue at GitHub repo: https://github.com/WohlSoft/PGE-Project\n\n"
+    " - Make issue at GitHub repo: https://github.com/WohlSoft/Moondust-Project\n"
+    "================================================\n"
+    "Important note: please don't post this report at third-party forums\n"
+    "and chat servers (including ANY SMBX-related community servers with\n"
+    "no exceptions). Otherwise, you have an EXTREMELY SMALL CHANCE of\n"
+    "getting the proper support. We can give you a support at OFFICIAL\n"
+    "RESOURCES listed above only.\n"
     "================================================\n";
 
 #ifdef _WIN32
@@ -469,13 +475,13 @@ void CrashHandler::initCrashHandlers()
 void CrashHandler::on_copyReport_clicked()
 {
     auto *clipboard = QApplication::clipboard();
-    clipboard->setText(ui->crashData->toPlainText());
+    clipboard->setText(QStringLiteral("```\n") + ui->crashData->toPlainText() + QStringLiteral("\n```\n"));
     ui->copyReport->setText(tr("Copied!"));
 }
 
 void CrashHandler::on_pgeRepoButton_clicked()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/WohlSoft/PGE-Project/issues/new/choose"));
+    QDesktopServices::openUrl(QUrl("https://github.com/WohlSoft/Moondust-Project/issues/new/choose"));
 }
 
 void CrashHandler::on_pgeForumButton_clicked()
