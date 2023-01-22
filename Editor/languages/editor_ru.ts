@@ -877,19 +877,19 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished"></translation>
+        <translation>Вот незадача! Редактор Moondust таки сломался... :(&lt;br&gt;Подробная информация об аварии:</translation>
     </message>
     <message>
         <source>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation>Отправить отчёт на форуме WohlSoft (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать задачу на GitHub-репозитории (WohlSoft/Moondust-Project)</translation>
     </message>
     <message>
         <source>&lt;b&gt;Important note:&lt;/b&gt; please don&apos;t post this report at third-party forums and chat servers (including ANY SMBX-related community servers with no exceptions). Otherwise, you have &lt;b&gt;an extremely small chance of getting the proper support&lt;/b&gt;. We can give you a support at official resources listed above only.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Важное замечание:&lt;/b&gt; Пожалуйста, не отправляйте данный отчёт на сторонние форумы и чат-серверы (включая ЛЮБЫЕ сервера сообщества SMBX без исключений). Иначе, у вас будет &lt;b&gt;предельно низкий шанс получить правильную помощь&lt;/b&gt;. Мы сможем помочь вам только на официальных ресурсах, указанных выше.</translation>
     </message>
 </context>
 <context>
