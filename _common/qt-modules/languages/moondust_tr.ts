@@ -5,19 +5,19 @@
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Boş bir WOPL dosyası seçiniz</translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Lütfen boş bir WOPL enstrüman dosyası seçiniz</translation>
     </message>
     <message>
         <source>Select WOPN bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Boş bir WOPN dosyası seçiniz</translation>
     </message>
     <message>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Lütfen boş bir WOPN enstrüman dosyası seçiniz</translation>
     </message>
     <message>
         <source>Select SoundFont bank file</source>
@@ -32,11 +32,11 @@
     <name>CustomMusicSetup</name>
     <message>
         <source>Music setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Müzik kurulumu</translation>
     </message>
     <message>
         <source>Play music</source>
-        <translation type="unfinished"></translation>
+        <translation>Müziği oynat</translation>
     </message>
     <message>
         <source>Synthesizer type:</source>
@@ -48,15 +48,15 @@
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıfırla</translation>
     </message>
     <message>
         <source>Tempo:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tempo:</translation>
     </message>
     <message>
         <source>Extra settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekstra ayarlar</translation>
     </message>
     <message>
         <source>Custom bank:</source>
@@ -68,7 +68,7 @@
     </message>
     <message>
         <source>Deep vibrato</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Derin vibrato</translation>
     </message>
     <message>
         <source>Bank:</source>
@@ -77,11 +77,11 @@
     </message>
     <message>
         <source>Deep tremolo</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Derin tremolo</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ara...</translation>
     </message>
     <message>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
@@ -97,11 +97,11 @@
     </message>
     <message>
         <source>Chips number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çip numarası:</translation>
     </message>
     <message>
         <source>Chiptune</source>
-        <translation type="unfinished"></translation>
+        <translation>Chiptune</translation>
     </message>
     <message>
         <source>Track number</source>
@@ -109,31 +109,31 @@
     </message>
     <message>
         <source>To begin</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlamak için</translation>
     </message>
     <message>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Önceki</translation>
     </message>
     <message>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonraki</translation>
     </message>
     <message>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tiyo: ayarların sonuçlarını görmek için lütfen müzik aynatıcıyı açın. (Ana menü araç çubuğundaki başlat/durdur ikonuna bakın).</translation>
     </message>
     <message>
         <source>MIDI</source>
-        <translation type="unfinished"></translation>
+        <translation>MIDI</translation>
     </message>
     <message>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">libADLMIDI (OPL3 Synth emulasyonu)</translation>
     </message>
     <message>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation>libOPNMIDI (YM2612 Synth emulasyonu)</translation>
     </message>
     <message>
         <source>Timidity (needed a bank)</source>
@@ -141,16 +141,16 @@
     </message>
     <message>
         <source>Native MIDI (Not recommended, buggy)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Native MIDI (Tavsiye edilmez, buglı)</translation>
     </message>
     <message>
         <source>[Auto]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Otomatik]</translation>
     </message>
     <message>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Generic</translation>
     </message>
     <message>
         <source>Native OPL3</source>
@@ -159,12 +159,12 @@
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaldır</translation>
     </message>
     <message>
         <source>General</source>
         <comment>FluidSynth general options group</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Genel</translation>
     </message>
     <message>
         <source>Max polyphony</source>
@@ -177,12 +177,12 @@
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekle</translation>
     </message>
     <message>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Reverb</translation>
     </message>
     <message>
         <source>Room size</source>
@@ -217,7 +217,7 @@
     <message>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hız</translation>
     </message>
     <message>
         <source>Depth (ms)</source>
@@ -232,7 +232,7 @@
     <message>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tip</translation>
     </message>
     <message>
         <source>FluidSynth (needed an SF2-bank)</source>
@@ -257,11 +257,11 @@
         <source>When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</source>
         <comment>Tool tip for the &quot;Automatic arpeggio&quot; checkbox</comment>
         <extracomment>There is a term of the sound generator chip that has limited polyphony: each channel of chip is able to play only one parallel note. So, if one chip supports 6 channels, you can play 6 notes at the same time.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Yeterince boş ses kanalı --çip buraya gelicek-- olmadığı zaman bazı akortlar arpej haline gelip tek bir ses kanalı kullanırlar. Ancak bu metot kirli ve bozuk seslere yol açabilir. Kullanmak size kalmış.</translation>
     </message>
     <message>
         <source>Automatic arpeggio</source>
-        <translation type="unfinished"></translation>
+        <translation>Otomatik arpej</translation>
     </message>
     <message>
         <source>Channel allocation mode:</source>
@@ -274,16 +274,18 @@
 - Same instrument: Any first released channel of the same instrument will be taken (or any if no channels of the same instrument played before)
 - Any first released: Any first released channel will be taken without bothering about properties.</source>
         <comment>Tooltip for the &quot;Channel allocation mode&quot; combo box</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir --chanel allocation algoritması seçiniz:
+-[Otomatik]: Algoritma şu an kullanlan --bank--a yada çalan müziğe göre seçecektir.
+- falan filan.</translation>
     </message>
     <message>
         <source>Disable the echo effect while playing files of SPC format</source>
         <comment>Tooltip for the &quot;Disable SPC echo&quot; checkbox</comment>
-        <translation type="unfinished"></translation>
+        <translation>SPC formatında oynatırken eko efektini kapat</translation>
     </message>
     <message>
         <source>Disable SPC echo</source>
-        <translation type="unfinished"></translation>
+        <translation>SPC ekosunu kapat</translation>
     </message>
     <message>
         <source>Sounding off delay based</source>
@@ -293,7 +295,7 @@
     <message>
         <source>Same instrument</source>
         <comment>Channel allocation mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Aynı enstrüman</translation>
     </message>
     <message>
         <source>Any free released</source>
@@ -305,7 +307,7 @@
     <name>FileListBrowser</name>
     <message>
         <source>Files list</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya listesi</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -313,7 +315,7 @@
     </message>
     <message>
         <source>Please select a file from the list:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lütfen listeden bir dosya seçiniz:</translation>
     </message>
 </context>
 <context>
@@ -331,19 +333,19 @@
     <name>MusicFileList</name>
     <message>
         <source>Select Custom music</source>
-        <translation type="unfinished"></translation>
+        <translation>Custom müzik seçiniz</translation>
     </message>
     <message>
         <source>Select SFX file</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir SFX dosyası seçiniz</translation>
     </message>
     <message>
         <source>Please select SFX file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Lütfen kullanmak için bir SFX dosyası seçiniz</translation>
     </message>
     <message>
         <source>Please select music file to use as custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Lütfen custom olarak kullanmak için bir dosya seçiniz</translation>
     </message>
 </context>
 </TS>
