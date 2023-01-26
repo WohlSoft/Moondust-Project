@@ -875,19 +875,19 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished"></translation>
+        <translation>抱歉，月尘编辑器遭到异常终止 :(&lt;br&gt;详细信息：</translation>
     </message>
     <message>
         <source>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation>发布至 Wohlsoft 社区（wohlsoft.ru/forum/，需要英文）</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</source>
-        <translation type="unfinished"></translation>
+        <translation>在 GitHub 仓库发起 Issue (WohlSoft/Moondust-Project)</translation>
     </message>
     <message>
         <source>&lt;b&gt;Important note:&lt;/b&gt; please don&apos;t post this report at third-party forums and chat servers (including ANY SMBX-related community servers with no exceptions). Otherwise, you have &lt;b&gt;an extremely small chance of getting the proper support&lt;/b&gt;. We can give you a support at official resources listed above only.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;重要提示：&lt;/b&gt;请勿将此报告发布至第三方社区或群组（包括与&lt;b&gt;任何&lt;/b&gt; SMBX 相关的社区或群组）， &lt;b&gt;否则您将无法获得支持&lt;/b&gt;。我们只能在以上列出的地点提供支持。</translation>
     </message>
 </context>
 <context>
