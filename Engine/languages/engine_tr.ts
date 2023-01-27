@@ -26,7 +26,7 @@
     <message id="CRASH_TIMEOUT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="424"/>
         <source>Time out!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zaman doldu!</translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="426"/>
@@ -36,12 +36,12 @@
     <message id="CRASH_BUS_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="471"/>
         <source>Physical memory address error!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiziksel hafıza adres hatası!</translation>
     </message>
     <message id="CRASH_BUS_MSG">
         <location filename="../common_features/crash_handler.cpp" line="473"/>
         <source>Engine has crashed because a physical memory address error</source>
-        <translation type="unfinished"></translation>
+        <translation>Motor, fiziksel hafıza adres hatası yüzünden çöktü</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="490"/>
@@ -56,22 +56,22 @@
     <message id="CRASH_FPE_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="547"/>
         <source>Wrong arithmetical operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Aritmetik işlem yanlış</translation>
     </message>
     <message id="CRASH_FPE_MSG">
         <location filename="../common_features/crash_handler.cpp" line="549"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
-        <translation type="unfinished"></translation>
+        <translation>Motor, aritmetik işlem yanlışı yüzünden çöktü!</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="561"/>
         <source>Aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Başarısız oldu</translation>
     </message>
     <message id="CRASH_ABORT_TITLE.">
         <location filename="../common_features/crash_handler.cpp" line="563"/>
         <source>Engine has been aborted because critical error was occouped.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kritik bir hatadan dolayı motor başarısız oldu.</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="608"/>
@@ -88,12 +88,12 @@ and retry your recent actions to get more detailed information.</source>
     <message id="CRASH_INT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="621"/>
         <source>Interrupt</source>
-        <translation type="unfinished"></translation>
+        <translation>Yarıda kes</translation>
     </message>
     <message id="CRASH_INT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="623"/>
         <source>Engine has been interrupted</source>
-        <translation type="unfinished"></translation>
+        <translation>Motor yarıda kesildi</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING_TTL">
         <location filename="../data_configs/config_manager.cpp" line="117"/>
@@ -164,7 +164,7 @@ therefore you can use same link to get updated version.</source>
         <location filename="../main.cpp" line="295"/>
         <location filename="../main.cpp" line="480"/>
         <source>No opened files</source>
-        <translation type="unfinished"></translation>
+        <translation>Açık dosya yok</translation>
     </message>
     <message id="ERROR_FAIL_START_WLD">
         <location filename="../main.cpp" line="316"/>
@@ -172,7 +172,10 @@ therefore you can use same link to get updated version.</source>
 Fail to start world map
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata: 
+Dünya haritası açılamadı 
+ 
+%1</translation>
     </message>
     <message id="WARNING_INCOMPATIBLE_WORLDMAP">
         <location filename="../main.cpp" line="333"/>
@@ -183,18 +186,20 @@ Fail to start world map
         <location filename="../main.cpp" line="352"/>
         <source>World map was closed with error.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Dünya haritası hata ile kapatıldı.
+%1</translation>
     </message>
     <message id="MSG_START_LEVEL">
         <location filename="../main.cpp" line="370"/>
         <source>Start level
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Start level
+%1</translation>
     </message>
     <message id="MSG_WLDTEST_EXIT_CODE">
         <location filename="../main.cpp" line="372"/>
         <source>Type an exit code (signed integer)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir çıkış kodu yaz (atanmış tam sayı)</translation>
     </message>
     <message id="WARNING_INCOMPATIBLE_LEVEL">
         <location filename="../main.cpp" line="510"/>
@@ -215,7 +220,8 @@ Entrance point: %2</source>
         <location filename="../main.cpp" line="649"/>
         <source>Level was closed with error.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata ile seviye kapatıldı.
+%1</translation>
     </message>
     <message id="SDL_INIT_ERROR">
         <location filename="../main.cpp" line="729"/>
@@ -236,13 +242,13 @@ configuration packages are not found!</source>
     <message id="CONFIG_SELECT_TEST">
         <location filename="../main.cpp" line="803"/>
         <source>Choose a game to test:</source>
-        <translation type="unfinished"></translation>
+        <translation>Test etmek için oyun seçiniz:</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
         <location filename="../scenes/scene_world.cpp" line="557"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
         <source>Invalid playable character ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçer oynanılabilir karakter ID&apos;si</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
         <location filename="../scenes/scene_world.cpp" line="566"/>
@@ -536,22 +542,22 @@ Software renderer will be started.</source>
     <message id="MSGBOX_INFO">
         <location filename="../gui/pge_msgbox.cpp" line="249"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilgi</translation>
     </message>
     <message id="MSGBOX_WARN">
         <location filename="../gui/pge_msgbox.cpp" line="264"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Uyarı</translation>
     </message>
     <message id="MSGBOX_ERROR">
         <location filename="../gui/pge_msgbox.cpp" line="279"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message id="MSGBOX_FATAL">
         <location filename="../gui/pge_msgbox.cpp" line="294"/>
         <source>Fatal error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölümcül hata</translation>
     </message>
 </context>
 </TS>
