@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>translator.ico</file>
+        <file>translator.rc</file>
+        <file>icon/translator16.png</file>
+        <file>icon/translator32.png</file>
+        <file>icon/translator48.png</file>
+        <file>icon/translator256.png</file>
+    </qresource>
+</RCC>

@@ -186,6 +186,12 @@ if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)
         qtDeployAdd(pge_maintainer)
     endif()
 
+    option(PGE_BUILD_TRANSLATOR "Build the Translator utility component (Qt5 required)" ON)
+    if(PGE_BUILD_TRANSLATOR)
+        add_subdirectory(Translator)
+        qtDeployAdd(pge_translator)
+    endif()
+
     pgeSetupQtDeploymet(${PGE_ENABLE_STATIC_QT} ${PGE_SHARED_SDLMIXER})
 endif()
 
