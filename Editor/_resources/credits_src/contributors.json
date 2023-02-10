@@ -228,6 +228,16 @@
                         "avatar": "h2643.png"
                     }
                 ]
+            },
+            {
+                "name": "Turkish",
+                "people": [
+                    {
+                        "nickname": "seyimsiile",
+                        "real_name": "Şeyimsi İle Işığa Doğru",
+                        "home_page": "https://hosted.weblate.org/user/seyimsiile/"
+                    }
+                ]
             }
         ]
     },
