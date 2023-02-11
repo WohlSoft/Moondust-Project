@@ -23,6 +23,10 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QSettings>
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && QT_VERSION >= QT_VERSION_CHECK(5, 8, 0)
+#include <QLibraryInfo>
+#define MOONDUST_QSTYLERPOXY_WORKAROUND_NEEDED
+#endif
 
 #ifdef Q_OS_LINUX
 #include <QStyleFactory>
@@ -190,7 +194,16 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+#ifdef MOONDUST_QSTYLERPOXY_WORKAROUND_NEEDED
+    QVersionNumber qVer = QLibraryInfo::version();
+    // NOTE: GTK2 themes crash with the proxy style.
+    // This seems like an upstream bug, so there's not much else that can be done.
+    if(qVer.majorVersion() == 5 && qVer.minorVersion() == 15 && !QStyleFactory::keys().contains("gtk2"))
+        app->setStyle(new PGE_ProxyStyle(app->style()));
+#else
     app->setStyle(new PGE_ProxyStyle(app->style()));
+#endif
+
 //TODO: Implement a "view" setting like VLC has to change the view theme
 //#ifdef Q_OS_LINUX
 //    {
@@ -318,7 +331,13 @@ QuitFromEditor:
     LogDebugNC("--> Application closed <--");
 
     if(restart_requested) // Self-restart
+    {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+        QProcess::startDetached(QString::fromUtf8(argv[0]), {});
+#else
         QProcess::startDetached(QString::fromUtf8(argv[0]));
+#endif
+    }
 
     return ret;
 }
