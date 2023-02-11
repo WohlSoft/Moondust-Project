@@ -1751,7 +1751,7 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="46"/>
         <source>Force vertical background tiling</source>
-        <translation type="unfinished"></translation>
+        <translation>Függőleges háttérismétlés kényszerítése</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="53"/>
@@ -1766,17 +1766,17 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="88"/>
         <source>Export current section to image</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelenlegi szekció exportálása képbe</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="98"/>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Magasság</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="122"/>
         <source>Width</source>
-        <translation type="unfinished">Szélesség</translation>
+        <translation>Szélesség</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="129"/>
@@ -1849,27 +1849,27 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="72"/>
         <source>Modern</source>
-        <translation type="unfinished"></translation>
+        <translation>Modern</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="94"/>
         <source>Classic</source>
-        <translation type="unfinished"></translation>
+        <translation>Klasszikus</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="110"/>
         <source>Modern UI designed for convenience, works well on screens of various sizes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Modern, kényelmes felület, jól működik sok képernyőmérettel.</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="136"/>
         <source>A classic interface which will be familiar to long-time users of SMBX or the legacy editor.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Egy klasszikus felület, ami ismerős lesz azoknak, akik a régi SMBX szerkesztőt használták.</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="172"/>
         <source>Welcome to PGE Editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>Üdvözlünk a Moondust szerkesztőben!</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="191"/>
@@ -1888,7 +1888,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementaddlayer.cpp" line="19"/>
         <source>Add Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Réteg Hozzáadása</translation>
     </message>
 </context>
 <context>
@@ -1912,7 +1912,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementchangednewlayer.cpp" line="28"/>
         <source>New Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Új Réteg</translation>
     </message>
 </context>
 <context>
@@ -1936,7 +1936,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementmodification.cpp" line="34"/>
         <source>Simple Modification History</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyszerű Változtatáslista</translation>
     </message>
 </context>
 <context>
@@ -1944,12 +1944,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementmodifyevent.cpp" line="39"/>
         <source>Remove Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Esemény Törlése</translation>
     </message>
     <message>
         <location filename="../editing/_components/history/historyelementmodifyevent.cpp" line="41"/>
         <source>Add Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Esemény Hozzáadása</translation>
     </message>
 </context>
 <context>
@@ -1957,7 +1957,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementnewlayer.cpp" line="15"/>
         <source>New Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Új Réteg</translation>
     </message>
 </context>
 <context>
@@ -2199,7 +2199,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="150"/>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyers felhasználói adatok szerkesztése...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="153"/>
@@ -2235,7 +2235,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="428"/>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="439"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Beállítások másolva: %1</translation>
     </message>
 </context>
 <context>
@@ -2258,7 +2258,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="112"/>
         <source>Invisible</source>
-        <translation type="unfinished"></translation>
+        <translation>Láthatatlan</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="116"/>
@@ -2268,12 +2268,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="120"/>
         <source>Resize</source>
-        <translation type="unfinished"></translation>
+        <translation>Átméretezés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="124"/>
         <source>Change included NPC...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tartalmazott NJK megváltoztatása...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="126"/>
@@ -2294,7 +2294,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="130"/>
         <source>Make message box...</source>
-        <translation type="unfinished"></translation>
+        <translation>Üzenetdoboz létrehozása...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="134"/>
@@ -2329,17 +2329,17 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="142"/>
         <source>Copy</source>
-        <translation type="unfinished">Másolás</translation>
+        <translation>Másolás</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="143"/>
         <source>Cut</source>
-        <translation type="unfinished">Kivágás</translation>
+        <translation>Kivágás</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="146"/>
         <source>Remove</source>
-        <translation type="unfinished">Törlés</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="147"/>
@@ -2359,7 +2359,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="154"/>
         <source>Properties...</source>
-        <translation type="unfinished">Tulajdonságok...</translation>
+        <translation>Tulajdonságok...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="166"/>
@@ -2385,18 +2385,19 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="319"/>
         <source>Event name</source>
-        <translation type="unfinished"></translation>
+        <translation>Esemény neve</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="320"/>
         <source>Please enter the name of event:</source>
-        <translation type="unfinished"></translation>
+        <translation>Írd be az esemény nevét:</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="327"/>
         <source>Please enter the message which will be shown.
 (Max line length is 27 characters)</source>
-        <translation type="unfinished"></translation>
+        <translation>Írd be a megjeleníteni kívánt üzenet szövegét.
+(Egy sorba legfeljebb 27 karakter fér)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="328"/>
@@ -2406,12 +2407,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="358"/>
         <source>Event created</source>
-        <translation type="unfinished"></translation>
+        <translation>Esemény létrehozva</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="359"/>
         <source>Message event created!</source>
-        <translation type="unfinished"></translation>
+        <translation>Üzenetesemény létrehozva!</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="364"/>
@@ -2430,7 +2431,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../main_window/dock/itembox_list_model.cpp" line="30"/>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Keresés név szerint</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="34"/>
@@ -2454,7 +2455,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../main_window/dock/itembox_list_model.cpp" line="43"/>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished">Név</translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="47"/>
@@ -2512,41 +2513,41 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="165"/>
         <source>Jump to exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Kijárathoz ugrás</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="170"/>
         <source>Jump to entrance</source>
-        <translation type="unfinished"></translation>
+        <translation>Bejárathoz ugrás</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="182"/>
         <source>Direction</source>
-        <translation type="unfinished">Irány</translation>
+        <translation>Irány</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="184"/>
         <source>Left</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Bal</translation>
+        <translation>Balra</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="188"/>
         <source>Up</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="192"/>
         <source>Right</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Jobb</translation>
+        <translation>Jobbra</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="196"/>
         <source>Down</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished"></translation>
+        <translation>Le</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="247"/>
@@ -2556,7 +2557,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="251"/>
         <source>Allow NPC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tárgyak engedélyezése</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="255"/>
@@ -2566,12 +2567,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="258"/>
         <source>Need a bomb</source>
-        <translation type="unfinished"></translation>
+        <translation>Bomba szükséges</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="263"/>
         <source>Required special state</source>
-        <translation type="unfinished"></translation>
+        <translation>Speciális állapot szükséges</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="268"/>
@@ -2581,7 +2582,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="276"/>
         <source>Copy preferences</source>
-        <translation type="unfinished">Beállítások másolása</translation>
+        <translation>Beállítások másolása</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="277"/>
@@ -2606,7 +2607,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="284"/>
         <source>Remove</source>
-        <translation type="unfinished">Törlés</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="287"/>
@@ -2642,7 +2643,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="93"/>
         <source>Always Visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Mindig látható</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="98"/>
@@ -2682,7 +2683,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="107"/>
         <source>Cut</source>
-        <translation type="unfinished">Kivágás</translation>
+        <translation>Kivágás</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="109"/>
@@ -2697,17 +2698,17 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="112"/>
         <source>Remove</source>
-        <translation type="unfinished">Törlés</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="113"/>
         <source>Remove all %1</source>
-        <translation type="unfinished">Minden %1 törlése</translation>
+        <translation>Minden %1 törlése</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="115"/>
         <source>Properties...</source>
-        <translation type="unfinished">Tulajdonságok...</translation>
+        <translation>Tulajdonságok...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="227"/>
@@ -2724,7 +2725,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/itemmsgbox.ui" line="14"/>
         <source>Set message box</source>
-        <translation type="unfinished"></translation>
+        <translation>Üzenet szövegének beállítása</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/itemmsgbox.ui" line="27"/>
@@ -2741,7 +2742,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/itemmsgbox.ui" line="90"/>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
-        <translation type="unfinished"></translation>
+        <translation>Barátságos (Nem barátságos NJK-kal nem lehet beszélgetni)</translation>
     </message>
 </context>
 <context>
@@ -2789,12 +2790,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="103"/>
         <source>Copy</source>
-        <translation type="unfinished">Másolás</translation>
+        <translation>Másolás</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="104"/>
         <source>Cut</source>
-        <translation type="unfinished">Kivágás</translation>
+        <translation>Kivágás</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="106"/>
@@ -2809,12 +2810,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="111"/>
         <source>Remove</source>
-        <translation type="unfinished">Törlés</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="112"/>
         <source>Remove all %1</source>
-        <translation type="unfinished">Minden %1 törlése</translation>
+        <translation>Minden %1 törlése</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="129"/>

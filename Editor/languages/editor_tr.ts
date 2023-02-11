@@ -16,7 +16,7 @@
     <message>
         <location filename="../testing/abstract_engine.cpp" line="100"/>
         <source>This feature is not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu özellik henüz eklenmedi</translation>
     </message>
 </context>
 <context>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="20"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlar</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="69"/>
@@ -34,7 +34,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="83"/>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosyalar</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="97"/>
@@ -75,7 +75,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="239"/>
         <source>Performance</source>
-        <translation type="unfinished"></translation>
+        <translation>Performans</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="253"/>
@@ -91,7 +91,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="286"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Animasyon</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="298"/>
@@ -117,7 +117,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="374"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="383"/>
@@ -665,7 +665,7 @@ Please set SoX path first</source>
     <message>
         <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="35"/>
         <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Boş bir WOPL dosyası seçiniz</translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="36"/>
@@ -1371,7 +1371,7 @@ Please save them before doing anything else.</source>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="656"/>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hız</translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="692"/>
@@ -1405,7 +1405,7 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="815"/>
         <source>To begin</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlamak için</translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="829"/>
@@ -1426,7 +1426,7 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="856"/>
         <source>Disable SPC echo</source>
-        <translation type="unfinished"></translation>
+        <translation>SPC ekosunu kapat</translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="926"/>
@@ -1483,7 +1483,7 @@ Please save them before doing anything else.</source>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="849"/>
         <source>Same instrument</source>
         <comment>Channel allocation mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Aynı enstrüman</translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="842"/>
@@ -1794,7 +1794,7 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="20"/>
         <source>Files list</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya listesi</translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="30"/>
@@ -1805,7 +1805,7 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="33"/>
         <source>Please select a file from the list:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lütfen listeden bir dosya seçiniz:</translation>
     </message>
 </context>
 <context>
@@ -8175,22 +8175,22 @@ Please save the file first.</source>
     <message>
         <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="33"/>
         <source>Select SFX file</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir SFX dosyası seçiniz</translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="34"/>
         <source>Please select SFX file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Lütfen kullanmak için bir SFX dosyası seçiniz</translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="47"/>
         <source>Select Custom music</source>
-        <translation type="unfinished"></translation>
+        <translation>Custom müzik seçiniz</translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="48"/>
         <source>Please select music file to use as custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Lütfen custom olarak kullanmak için bir dosya seçiniz</translation>
     </message>
 </context>
 <context>
