@@ -5,22 +5,22 @@
     <name>AbstractRuntimeEngine</name>
     <message>
         <source>World map testing via IPC is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Pengujian peta dunia melalui IPC tidak didukung</translation>
     </message>
     <message>
         <source>World map testing is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Pengujian peta dunia tidak didukung</translation>
     </message>
     <message>
         <source>This feature is not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>Fitur ini tidak diimplementasikan</translation>
     </message>
 </context>
 <context>
     <name>AppSettings</name>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Pengaturan</translation>
     </message>
     <message>
         <source>Main</source>
@@ -383,7 +383,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <name>AudioCvt_Sox_gui</name>
     <message>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Konversi Audio (SoX)</translation>
     </message>
     <message>
         <source>SoX executable path:</source>
@@ -488,7 +488,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Don&apos;t change format</source>
-        <translation type="unfinished"></translation>
+        <translation>Jangan ubah format</translation>
     </message>
     <message>
         <source>The files&apos; format will not be changed</source>
@@ -496,7 +496,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Atur bitrate</translation>
     </message>
     <message>
         <source>Files will be converted into MP3</source>
@@ -528,11 +528,11 @@ Please set SoX path first</source>
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih file bank WOPL</translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih file bank instrumen WOPL yang akan digunakan</translation>
     </message>
     <message>
         <source>Select WOPN bank file</source>
