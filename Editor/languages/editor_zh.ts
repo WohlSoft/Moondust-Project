@@ -3713,7 +3713,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Autostart event</source>
-        <translation>自动开始事件</translation>
+        <translation>进入关卡时启动该事件</translation>
     </message>
     <message>
         <source>Create copy of event</source>
@@ -6954,7 +6954,7 @@ Error description:
     </message>
     <message>
         <source>Autostart</source>
-        <translation>自动开始</translation>
+        <translation>自动启动</translation>
     </message>
     <message>
         <source>Layer Smoke Effect</source>
