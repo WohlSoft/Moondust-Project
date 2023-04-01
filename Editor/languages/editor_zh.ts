@@ -844,8 +844,8 @@ File path: %3</source>
     <message>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
-        <translation>由于上次崩溃，因此编辑器已恢复了这些文件。
-请保存这些文件，以免丢失。</translation>
+        <translation>由于编辑器上次发生异常终止，已为您恢复这些文件。
+请您保存这些文件，以免丢失。</translation>
     </message>
     <message>
         <source>You might want to report this data to developers:</source>
