@@ -70,7 +70,7 @@ bool TextDataProcessor::loadProject(const QString &directory, TranslateProject &
                      QDirIterator::Subdirectories);
 
     // Fill the original language
-    auto &origin = proj["_origin"];
+    auto &origin = proj["origin"];
 
     while(dit.hasNext())
     {
@@ -91,6 +91,8 @@ bool TextDataProcessor::loadProject(const QString &directory, TranslateProject &
         else if(f.endsWith(".txt", Qt::CaseInsensitive))
             importScript(origin, f, rfp);
     }
+
+    saveJSONs(directory, proj);
 
     return true;
 }
@@ -180,7 +182,7 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
         if(!n.talk.isEmpty())
             d.push_back(dn);
 
-        if(n.talk_trigger >= 0)
+        if(n.talk_trigger >= 0 && tr.events.contains(n.talk_trigger))
         {
             QSet<int> triggered;
             int next_trigger = n.talk_trigger;
@@ -219,7 +221,7 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
         if(!e.message.isEmpty())
             d.push_back(dn);
 
-        if(e.trigger_next >= 0)
+        if(e.trigger_next >= 0 && tr.events.contains(e.trigger_next))
         {
             QSet<int> triggered;
             int next_trigger = e.trigger_next;
@@ -493,4 +495,108 @@ void TextDataProcessor::importScript(TranslationData &origin, const QString &pat
 
     if(hasStrings)
         origin.scripts.insert(shortPath, tr);
+}
+
+void TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &proj)
+{
+    auto &origin = proj["origin"];
+
+    for(auto it = proj.begin(); it != proj.end(); ++it)
+    {
+        QJsonObject o;
+
+        bool isOrigin = (it.key() == "origin");
+
+        for(auto l = it->levels.begin(); l != it->levels.end(); ++l)
+        {
+            QJsonObject lo;
+            auto &la = l.value();
+
+            for(auto &n : la.npc)
+            {
+                lo[QString("npc-%1-talk").arg(n.npc_index)] = n.talk;
+                if(!isOrigin)
+                    lo[QString("npc-%1-talk-orig").arg(n.npc_index)] = origin.levels[l.key()].npc[n.npc_index].talk;
+            }
+
+            for(auto &e : la.events)
+            {
+                lo[QString("event-%1-msg").arg(e.event_index)] = e.message;
+                if(!isOrigin)
+                    lo[QString("event-%1-msg-orig").arg(e.event_index)] = origin.levels[l.key()].events[e.event_index].message;
+            }
+
+            if(!la.glossary.isEmpty())
+            {
+                QJsonArray glo;
+                for(auto gli = la.glossary.begin(); gli != la.glossary.end(); ++gli)
+                {
+                    QJsonObject g;
+                    g[gli.key()] = gli.value();
+                    glo.append(g);
+                }
+
+                lo["glossary"] = glo;
+            }
+
+            if(!la.chains.isEmpty())
+            {
+                QJsonArray cho;
+
+                for(auto &e : la.chains)
+                {
+                    QJsonArray se;
+
+                    for(auto &ie : e)
+                    {
+                        switch(ie.type)
+                        {
+                        case TranslationData_DialogueNode::T_EVENT_MSG:
+                            se.push_back(QString("event-%1-msg").arg(ie.item_index));
+                            break;
+                        case TranslationData_DialogueNode::T_NPC_TALK:
+                            se.push_back(QString("npc-%1-talk").arg(ie.item_index));
+                            break;
+                        default:
+                        case TranslationData_DialogueNode::T_END:
+                            break;
+                        }
+                    }
+
+                    cho.append(se);
+                }
+
+                lo["chains"] = cho;
+            }
+
+            o[l.key()] = lo;
+        }
+
+        for(auto w = it->worlds.begin(); w != it->worlds.end(); ++w)
+        {
+            QJsonObject wo;
+            auto &wa = w.value();
+
+            wo["title"] = wa.title;
+            wo["credits"] = wa.credits;
+
+            for(auto &l : wa.level_titles)
+            {
+                wo[QString("level-%1-ttl").arg(l.level_index)] = l.title;
+                if(!isOrigin)
+                    wo[QString("level-%1-ttl-orig").arg(l.level_index)] = origin.worlds[w.key()].level_titles[l.level_index].title;
+            }
+
+            o[w.key()] = wo;
+        }
+
+        QFile f(QString("%1/translation_%2.json").arg(directory).arg(it.key()));
+        if(f.open(QIODevice::WriteOnly))
+        {
+            QJsonDocument d;
+            d.setObject(o);
+            f.write(d.toJson(QJsonDocument::Indented));
+            f.close();
+        }
+    }
 }
