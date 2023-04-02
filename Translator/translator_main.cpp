@@ -14,6 +14,7 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
     ui(new Ui::TranslatorMain)
 {
     ui->setupUi(this);
+    loadSetup();
 }
 
 TranslatorMain::~TranslatorMain()
@@ -37,7 +38,7 @@ void TranslatorMain::on_actionOpen_project_triggered()
 {
     QString d = QFileDialog::getExistingDirectory(this,
                                                   tr("Open Episode project"),
-                                                  QString(),
+                                                  m_recentPath,
                                                   c_dirDialogOptions);
     if(d.isEmpty())
         return;
@@ -51,4 +52,34 @@ void TranslatorMain::on_actionOpen_project_triggered()
                              tr("Failed to load project from the directory: %1").arg(d),
                              QMessageBox::Ok);
     }
+
+    m_recentPath = d;
+    m_currentPath = d;
+
+    saveSetup();
 }
+
+void TranslatorMain::on_actionRescan_triggered()
+{
+    if(m_currentPath.isEmpty())
+        return; // No opened project
+
+    TextDataProcessor t;
+    t.scanEpisode(m_currentPath, m_project);
+}
+
+void TranslatorMain::loadSetup()
+{
+    m_setup.beginGroup("Main");
+    m_recentPath = m_setup.value("recent-path").toString();
+    m_setup.endGroup();
+}
+
+void TranslatorMain::saveSetup()
+{
+    m_setup.beginGroup("Main");
+    m_setup.setValue("recent-path", m_recentPath);
+    m_setup.endGroup();
+    m_setup.sync();
+}
+

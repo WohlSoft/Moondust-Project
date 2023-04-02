@@ -3,6 +3,8 @@
 
 #include <QDir>
 #include <QFile>
+#include <QRegExp>
+#include <QFileInfo>
 #include <QTextStream>
 #include <QDirIterator>
 #include <QJsonDocument>
@@ -62,6 +64,32 @@ bool TextDataProcessor::loadProject(const QString &directory, TranslateProject &
     // Close current project
     proj.clear();
 
+    QDirIterator dit(directory,
+                     {"translation_*.json"},
+                     QDir::Files,
+                     QDirIterator::NoIteratorFlags);
+    bool hasTranslations = false;
+
+    while(dit.hasNext())
+    {
+        auto f = dit.next();
+        QFileInfo fi(f);
+        QRegExp fe("translation_(\\w*)\\.json", Qt::CaseInsensitive, QRegExp::RegExp2);
+        if(fe.exactMatch(fi.fileName()))
+        {
+            loadTranslation(proj, fe.cap(1), f);
+            hasTranslations = true;
+        }
+    }
+
+    if(!hasTranslations)
+        return scanEpisode(directory, proj);
+
+    return true;
+}
+
+bool TextDataProcessor::scanEpisode(const QString &directory, TranslateProject &proj)
+{
     QDir d(directory);
     QDirIterator dit(directory,
                      {
@@ -96,7 +124,6 @@ bool TextDataProcessor::loadProject(const QString &directory, TranslateProject &
     }
 
     updateTranslation(proj, "en");
-
     saveJSONs(directory, proj);
 
     return true;
@@ -565,7 +592,7 @@ void TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
                 {
                     QJsonObject entry;
                     entry["i"] = e.event_index;
-                    entry["talk"] = e.message;
+                    entry["msg"] = e.message;
 
                     if(!isOrigin)
                     {
@@ -755,6 +782,9 @@ void TextDataProcessor::updateTranslation(TranslateProject &proj, const QString 
     auto &origin = proj["origin"];
     auto &tr = proj[trName];
 
+
+    // Add missing entries at translation
+
     for(auto it = origin.levels.begin(); it != origin.levels.end(); ++it)
     {
         auto &ls = it.value();
@@ -816,4 +846,196 @@ void TextDataProcessor::updateTranslation(TranslateProject &proj, const QString 
             }
         }
     }
+
+
+    // Mark entries as vanished when origin is no longer exists
+
+    for(auto it = tr.levels.begin(); it != tr.levels.end(); ++it)
+    {
+        auto &ls = it.value();
+        auto &ld = origin.levels[it.key()];
+
+        for(auto nit = ls.npc.begin(); nit != ls.npc.end(); ++nit)
+        {
+            if(!ld.npc.contains(nit.key())) // Create empty entry with an "unfinished" entry
+            {
+                auto &n = ls.npc[nit.key()];
+                n.vanished = true;
+            }
+        }
+
+        for(auto eit = ls.events.begin(); eit != ls.events.end(); ++eit)
+        {
+            if(!ld.events.contains(eit.key())) // Create empty entry with an "unfinished" entry
+            {
+                auto &n = ls.events[eit.key()];
+                n.vanished = true;
+            }
+        }
+    }
+
+    for(auto it = tr.worlds.begin(); it != tr.worlds.end(); ++it)
+    {
+        auto &ls = it.value();
+        auto &ld = origin.worlds[it.key()];
+
+        for(auto eit = ls.level_titles.begin(); eit != ls.level_titles.end(); ++eit)
+        {
+            if(!ld.level_titles.contains(eit.key())) // Create empty entry with an "unfinished" entry
+            {
+                auto &n = ls.level_titles[eit.key()];
+                n.vanished = true;
+            }
+        }
+    }
+
+    for(auto it = tr.scripts.begin(); it != tr.scripts.end(); ++it)
+    {
+        auto &ls = it.value();
+        auto &ld = origin.scripts[it.key()];
+
+        for(auto lit = ls.lines.begin(); lit != ls.lines.end(); ++lit)
+        {
+            if(!ld.lines.contains(lit.key())) // Create empty entry with an "unfinished" entry
+            {
+                auto &n = ls.lines[lit.key()];
+                n.vanished = true;
+            }
+        }
+    }
+}
+
+void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &trName, const QString &filePath)
+{
+    QJsonParseError e;
+    QJsonDocument d;
+
+    QFile f(filePath);
+    if(!f.open(QIODevice::ReadOnly))
+    {
+        qWarning() << "Failed to open file" << filePath;
+        return;
+    }
+
+    auto inData = f.readAll();
+    f.close();
+
+    d = QJsonDocument::fromJson(inData, &e);
+    if(d.isNull())
+    {
+        qWarning() << "Failed to parse the file" << filePath
+                   << "error:" << e.errorString()
+                   << "offset:" << e.offset;
+        return;
+    }
+
+    QJsonObject r = d.object();
+
+    auto &tr = proj[trName];
+
+    for(auto &k : r.keys())
+    {
+        QJsonObject entry = r[k].toObject();
+        if(k.endsWith(".lvl", Qt::CaseInsensitive) || k.endsWith(".lvlx", Qt::CaseInsensitive))
+        {
+            auto &lvl = tr.levels[k];
+            lvl.title = entry.value("title").toString();
+
+            if(entry.contains("events"))
+            {
+                QJsonArray arr = entry["events"].toArray();
+                for(const auto &it : arr)
+                {
+                    auto ito = it.toObject();
+                    int i;
+                    TranslationData_EVENT et;
+                    i = ito["i"].toInt(-1);
+                    et.event_index = i;
+                    et.message = ito["msg"].toString();
+                    et.unfinished = ito["u"].toBool();
+                    et.vanished = ito["v"].toBool();
+
+                    if(ito.contains("by-npc"))
+                    {
+                        auto byNpc = ito["by-npc"].toArray();
+                        for(const auto &bn : byNpc)
+                            et.triggered_by_npc.push_back(bn.toInt(-1));
+                    }
+
+                    if(ito.contains("by-event"))
+                    {
+                        auto byEvent = ito["by-event"].toArray();
+                        for(const auto &be : byEvent)
+                            et.triggered_by_npc.push_back(be.toInt(-1));
+                    }
+
+                    lvl.events.insert(i, et);
+                }
+            }
+
+            if(entry.contains("npc"))
+            {
+                QJsonArray arr = entry["npc"].toArray();
+                for(const auto &it : arr)
+                {
+                    auto ito = it.toObject();
+                    int i;
+                    TranslationData_NPC et;
+                    i = ito["i"].toInt(-1);
+                    et.npc_index = i;
+                    et.npc_id = ito["t"].toInt();
+                    et.talk= ito["talk"].toString();
+                    et.unfinished = ito["u"].toBool();
+                    et.vanished = ito["v"].toBool();
+                    lvl.npc.insert(i, et);
+                }
+            }
+
+            if(entry.contains("chains"))
+            {
+                QJsonArray arr = entry["chains"].toArray();
+            }
+
+            if(entry.contains("glossary"))
+            {
+                QJsonArray arr = entry["glossary"].toArray();
+            }
+        }
+        else if(k.endsWith(".wld", Qt::CaseInsensitive) || k.endsWith(".wldx", Qt::CaseInsensitive))
+        {
+            auto &wld = tr.worlds[k];
+            wld.title = entry.value("title").toString();
+            wld.credits = entry.value("credits").toString();
+
+            if(entry.contains("levels"))
+            {
+                QJsonArray arr = entry["levels"].toArray();
+                for(const auto &it : arr)
+                {
+                    auto ito = it.toObject();
+                    int i;
+                    TranslationData_LEVEL et;
+                    i = ito["i"].toInt(-1);
+                    et.level_index = i;
+                    et.title = ito["tit"].toString();
+                    et.filename = ito["f"].toString("");
+                    et.unfinished = ito["u"].toBool(false);
+                    et.vanished = ito["v"].toBool(false);
+                    wld.level_titles.insert(i, et);
+                }
+            }
+        }
+        else if(k.endsWith("lunadll.txt", Qt::CaseInsensitive) || k.endsWith("lunaworld.txt", Qt::CaseInsensitive))
+        {
+            auto &script = tr.scripts[k];
+            script.title = entry.value("title").toString();
+
+            if(entry.contains("lines"))
+            {
+                QJsonArray arr = entry["lines"].toArray();
+
+            }
+        }
+    }
+
 }

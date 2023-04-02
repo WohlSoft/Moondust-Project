@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QMap>
+#include <QSettings>
 
 #include "textdata/textdata.h"
 
@@ -24,10 +25,17 @@ protected:
 
 private slots:
     void on_actionOpen_project_triggered();
+    void on_actionRescan_triggered();
 
 private:
     Ui::TranslatorMain *ui;
     TranslateProject m_project;
+    QSettings m_setup;
+    QString m_recentPath;
+    QString m_currentPath;
+
+    void loadSetup();
+    void saveSetup();
 };
 
 #endif // TRANSLATOR_MAIN_H

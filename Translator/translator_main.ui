@@ -33,10 +33,13 @@
     </property>
     <addaction name="actionOpen_project"/>
     <addaction name="separator"/>
+    <addaction name="actionRescan"/>
+    <addaction name="separator"/>
     <addaction name="actionSave_translation"/>
     <addaction name="actionSave_translation_as"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -71,6 +74,11 @@
   <action name="actionSave_translation_as">
    <property name="text">
     <string>Save translation as...</string>
+   </property>
+  </action>
+  <action name="actionRescan">
+   <property name="text">
+    <string>Rescan project</string>
    </property>
   </action>
  </widget>
