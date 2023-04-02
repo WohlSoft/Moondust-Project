@@ -2,6 +2,10 @@
 #define TRANSLATOR_MAIN_H
 
 #include <QMainWindow>
+#include <QMap>
+
+#include "textdata/textdata.h"
+
 
 namespace Ui {
 class TranslatorMain;
@@ -18,8 +22,12 @@ public:
 protected:
     void changeEvent(QEvent *e);
 
+private slots:
+    void on_actionOpen_project_triggered();
+
 private:
     Ui::TranslatorMain *ui;
+    TranslateProject m_project;
 };
 
 #endif // TRANSLATOR_MAIN_H
