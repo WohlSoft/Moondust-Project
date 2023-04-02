@@ -45,7 +45,10 @@ static int find_event_index(PGELIST<LevelSMBX64Event > &events,
                 return prev_j; // Avoid infinite loops
 
             if(e.msg.isEmpty() && !e.trigger.isEmpty()) // If this event contains no message, follow the chain
+            {
+                p_triggered->insert(j);
                 return find_event_index(events, e.trigger, p_triggered, j);
+            }
 
             return j;
         }
@@ -91,6 +94,8 @@ bool TextDataProcessor::loadProject(const QString &directory, TranslateProject &
         else if(f.endsWith(".txt", Qt::CaseInsensitive))
             importScript(origin, f, rfp);
     }
+
+    updateTranslation(proj, "en");
 
     saveJSONs(directory, proj);
 
@@ -512,18 +517,85 @@ void TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
             QJsonObject lo;
             auto &la = l.value();
 
-            for(auto &n : la.npc)
+            if(!la.npc.isEmpty())
             {
-                lo[QString("npc-%1-talk").arg(n.npc_index)] = n.talk;
-                if(!isOrigin)
-                    lo[QString("npc-%1-talk-orig").arg(n.npc_index)] = origin.levels[l.key()].npc[n.npc_index].talk;
+                QJsonArray npc_a;
+
+                for(auto &n : la.npc)
+                {
+                    QJsonObject entry;
+                    entry["i"] = n.npc_index;
+                    entry["talk"] = n.talk;
+
+                    if(!isOrigin)
+                    {
+                        entry["orig"] = origin.levels[l.key()].npc[n.npc_index].talk;
+
+                        if(n.unfinished)
+                            entry["u"] = true;
+
+                        if(n.vanished)
+                            entry["v"] = true;
+                    }
+                    else
+                    {
+                        entry["t"] = n.npc_id;
+                        if(n.talk_trigger >= 0)
+                            entry["trig"] = n.talk_trigger;
+                    }
+
+                    npc_a.append(entry);
+                }
+
+                lo["npc"] = npc_a;
             }
 
-            for(auto &e : la.events)
+            if(!la.events.isEmpty())
             {
-                lo[QString("event-%1-msg").arg(e.event_index)] = e.message;
-                if(!isOrigin)
-                    lo[QString("event-%1-msg-orig").arg(e.event_index)] = origin.levels[l.key()].events[e.event_index].message;
+                QJsonArray event_a;
+
+                for(auto &e : la.events)
+                {
+                    QJsonObject entry;
+                    entry["i"] = e.event_index;
+                    entry["talk"] = e.message;
+
+                    if(!isOrigin)
+                    {
+                        entry["orig"] = origin.levels[l.key()].events[e.event_index].message;
+
+                        if(e.unfinished)
+                            entry["u"] = true;
+
+                        if(e.vanished)
+                            entry["v"] = true;
+                    }
+                    else
+                    {
+                        if(e.trigger_next >= 0)
+                            entry["trig"] = e.trigger_next;
+
+                        if(!e.triggered_by_npc.isEmpty())
+                        {
+                            QJsonArray by_npc;
+                            for(auto &q : e.triggered_by_npc)
+                                by_npc.append(q);
+                            entry["by-npc"] = by_npc;
+                        }
+
+                        if(!e.triggered_by_event.isEmpty())
+                        {
+                            QJsonArray by_event;
+                            for(auto &q : e.triggered_by_event)
+                                by_event.append(q);
+                            entry["by-event"] = by_event;
+                        }
+                    }
+
+                    event_a.append(entry);
+                }
+
+                lo["events"] = event_a;
             }
 
             if(!la.glossary.isEmpty())
@@ -580,14 +652,72 @@ void TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
             wo["title"] = wa.title;
             wo["credits"] = wa.credits;
 
-            for(auto &l : wa.level_titles)
+            if(!wa.level_titles.isEmpty())
             {
-                wo[QString("level-%1-ttl").arg(l.level_index)] = l.title;
-                if(!isOrigin)
-                    wo[QString("level-%1-ttl-orig").arg(l.level_index)] = origin.worlds[w.key()].level_titles[l.level_index].title;
+                QJsonArray level_a;
+
+                for(auto &l : wa.level_titles)
+                {
+                    QJsonObject entry;
+                    entry["i"] = l.level_index;
+                    entry["tit"] = l.title;
+
+                    if(!isOrigin)
+                    {
+                        entry["orig"] = origin.worlds[w.key()].level_titles[l.level_index].title;
+
+                        if(l.unfinished)
+                            entry["u"] = true;
+
+                        if(l.vanished)
+                            entry["v"] = true;
+                    }
+                    else
+                    {
+                        entry["f"] = l.filename;
+                    }
+
+                    level_a.append(entry);
+                }
+
+                wo["levels"] = level_a;
             }
 
             o[w.key()] = wo;
+        }
+
+        for(auto s = it->scripts.begin(); s != it->scripts.end(); ++s)
+        {
+            QJsonObject so;
+            auto &sa = s.value();
+
+            so["title"] = sa.title;
+            if(!sa.lines.isEmpty())
+            {
+                QJsonArray lio;
+
+                for(auto &i : sa.lines)
+                {
+                    QJsonObject entry;
+                    entry["i"] = i.line;
+                    entry["src"] = i.source;
+                    entry["tr"] = i.translation;
+
+                    if(!isOrigin)
+                    {
+                        if(i.unfinished)
+                            entry["u"] = true;
+                        if(i.vanished)
+                            entry["v"] = true;
+                    }
+
+                    lio.append(entry);
+                }
+
+                so["lines"] = lio;
+            }
+
+            o[s.key()] = so;
         }
 
         QFile f(QString("%1/translation_%2.json").arg(directory).arg(it.key()));
@@ -597,6 +727,74 @@ void TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
             d.setObject(o);
             f.write(d.toJson(QJsonDocument::Indented));
             f.close();
+        }
+    }
+}
+
+void TextDataProcessor::updateTranslation(TranslateProject &proj, const QString &trName)
+{
+    auto &origin = proj["origin"];
+    auto &tr = proj[trName];
+
+    for(auto it = origin.levels.begin(); it != origin.levels.end(); ++it)
+    {
+        auto &ls = it.value();
+        auto &ld = tr.levels[it.key()];
+
+        for(auto nit = ls.npc.begin(); nit != ls.npc.end(); ++nit)
+        {
+            if(!ld.npc.contains(nit.key())) // Create empty entry with an "unfinished" entry
+            {
+                auto &n = ld.npc[nit.key()];
+                n.unfinished = true;
+                n.npc_id = nit->npc_id;
+                n.npc_index = nit->npc_index;
+                n.talk_trigger = nit->talk_trigger;
+            }
+        }
+
+        for(auto eit = ls.events.begin(); eit != ls.events.end(); ++eit)
+        {
+            if(!ld.events.contains(eit.key())) // Create empty entry with an "unfinished" entry
+            {
+                auto &n = ld.events[eit.key()];
+                n.unfinished = true;
+                n.event_index = eit->event_index;
+                n.trigger_next = eit->trigger_next;
+            }
+        }
+    }
+
+    for(auto it = origin.worlds.begin(); it != origin.worlds.end(); ++it)
+    {
+        auto &ls = it.value();
+        auto &ld = tr.worlds[it.key()];
+
+        for(auto eit = ls.level_titles.begin(); eit != ls.level_titles.end(); ++eit)
+        {
+            if(!ld.level_titles.contains(eit.key())) // Create empty entry with an "unfinished" entry
+            {
+                auto &n = ld.level_titles[eit.key()];
+                n.unfinished = true;
+                n.level_index = eit->level_index;
+            }
+        }
+    }
+
+    for(auto it = origin.scripts.begin(); it != origin.scripts.end(); ++it)
+    {
+        auto &ls = it.value();
+        auto &ld = tr.scripts[it.key()];
+
+        for(auto lit = ls.lines.begin(); lit != ls.lines.end(); ++lit)
+        {
+            if(!ld.lines.contains(lit.key())) // Create empty entry with an "unfinished" entry
+            {
+                auto &n = ld.lines[lit.key()];
+                n.unfinished = true;
+                n.source = lit->source;
+                n.line = lit->line;
+            }
         }
     }
 }
