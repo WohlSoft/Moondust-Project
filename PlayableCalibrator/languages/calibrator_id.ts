@@ -6,24 +6,24 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="20"/>
         <source>Animation editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor animasi</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="163"/>
         <location filename="../animator/animation_edit.ui" line="183"/>
         <location filename="../animator/animation_edit.ui" line="238"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Tambah</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="65"/>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Pratinjau</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="170"/>
         <source>Animation name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nama Animasi</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="252"/>

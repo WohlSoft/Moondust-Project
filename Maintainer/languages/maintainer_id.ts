@@ -6,22 +6,22 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Konversi Audio (SoX)</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="301"/>
         <source>Don&apos;t change format</source>
-        <translation type="unfinished"></translation>
+        <translation>Jangan ubah format</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="307"/>
         <source>Files will be in same format</source>
-        <translation type="unfinished"></translation>
+        <translation>File akan dalam format yang sama</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="330"/>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Atur bitrate</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="428"/>
