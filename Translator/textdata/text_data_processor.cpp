@@ -17,12 +17,38 @@
 TextDataProcessor::TextDataProcessor()
 {}
 
-static int find_event_index(PGELIST<LevelSMBX64Event > &events, const QString &trigger)
+
+/*!
+ * \brief Follow the chain of event triggers and find a first event with a message text if possible
+ * \param events Events list
+ * \param trigger Triggered event name
+ * \param p_triggered Registory of followed indeces used to break the loop
+ * \param prev_j (recursive use only): the event value where recursive call was sent
+ * \return Found index or -1 if found nothing
+ */
+static int find_event_index(PGELIST<LevelSMBX64Event > &events,
+                            const QString &trigger,
+                            QSet<int> *p_triggered = nullptr,
+                            int prev_j = -1)
 {
+    QSet<int> triggered;
+
+    if(!p_triggered)
+        p_triggered = &triggered;
+
     for(int j = 0; j < events.size(); ++j)
     {
-        if(events[j].name == trigger)
+        auto &e = events[j];
+        if(e.name.compare(trigger, Qt::CaseInsensitive) == 0)
+        {
+            if(p_triggered->contains(j))
+                return prev_j; // Avoid infinite loops
+
+            if(e.msg.isEmpty() && !e.trigger.isEmpty()) // If this event contains no message, follow the chain
+                return find_event_index(events, e.trigger, p_triggered, j);
+
             return j;
+        }
     }
 
     return -1;
@@ -95,7 +121,7 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
         TranslationData_EVENT e;
 
         if(ed.msg.isEmpty())
-            continue; // Don't include events with no messages
+            continue;
 
         hasStrings |= true;
 
@@ -104,7 +130,7 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
         if(!ed.trigger.isEmpty()) // Find index of the trigger
             e.trigger_next = find_event_index(l.events, ed.trigger);
         tr.events.insert(i, e);
-        qDebug() << "Event" << i << "message: [" << e.message << "]";
+        qDebug() << "Event" << i << "message: [" << e.message << "]" << "Trigger" << e.trigger_next;
     }
 
     for(int i = 0; i < l.npc.size(); ++i)
@@ -124,7 +150,7 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
             n.talk_trigger = find_event_index(l.events, nd.event_talk);
 
         tr.npc.insert(i, n);
-        qDebug() << "NPC-" << n.npc_id << "idx" << i << "talk: [" << n.talk << "]";
+        qDebug() << "NPC-" << n.npc_id << "idx" << i << "talk: [" << n.talk << "]" << "Trigger" << n.talk_trigger;
     }
 
     // Build relations
@@ -156,6 +182,7 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
 
         if(n.talk_trigger >= 0)
         {
+            QSet<int> triggered;
             int next_trigger = n.talk_trigger;
             do
             {
@@ -165,8 +192,9 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
                 de.item_index = e.event_index;
                 if(!e.message.isEmpty())
                     d.push_back(de);
+                triggered.insert(next_trigger);
                 next_trigger = e.trigger_next;
-            } while(next_trigger >= 0);
+            } while(next_trigger >= 0 && !triggered.contains(next_trigger));
         }
 
         if(!d.isEmpty())
@@ -193,6 +221,7 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
 
         if(e.trigger_next >= 0)
         {
+            QSet<int> triggered;
             int next_trigger = e.trigger_next;
             do
             {
@@ -202,8 +231,9 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
                 de.item_index = se.event_index;
                 if(!se.message.isEmpty())
                     d.push_back(de);
+                triggered.insert(next_trigger);
                 next_trigger = se.trigger_next;
-            } while(next_trigger >= 0);
+            } while(next_trigger >= 0 && !triggered.contains(next_trigger));
         }
 
         if(!d.isEmpty())
