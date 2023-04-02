@@ -26,17 +26,17 @@
     <message id="CRASH_TIMEOUT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="424"/>
         <source>Time out!</source>
-        <translation type="unfinished"></translation>
+        <translation>Waktu habis!</translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="426"/>
         <source>Engine has abourted because alarm() time out!</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesin telah dibatalkan karena alarm() waktu habis!</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="471"/>
         <source>Physical memory address error!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan alamat memori fisik!</translation>
     </message>
     <message id="CRASH_BUS_MSG">
         <location filename="../common_features/crash_handler.cpp" line="473"/>
