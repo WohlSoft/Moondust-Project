@@ -517,6 +517,13 @@ void TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
             QJsonObject lo;
             auto &la = l.value();
 
+            if(!la.title.isEmpty() || (!isOrigin && !origin.levels[l.key()].title.isEmpty()))
+            {
+                lo["title"] = la.title;
+                if(!isOrigin)
+                    lo["title-orig"] = origin.levels[l.key()].title;
+            }
+
             if(!la.npc.isEmpty())
             {
                 QJsonArray npc_a;
@@ -649,8 +656,19 @@ void TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
             QJsonObject wo;
             auto &wa = w.value();
 
-            wo["title"] = wa.title;
-            wo["credits"] = wa.credits;
+            if(!wa.title.isEmpty() || (!isOrigin && !origin.worlds[w.key()].title.isEmpty()))
+            {
+                wo["title"] = wa.title;
+                if(!isOrigin)
+                    wo["title-orig"] = origin.worlds[w.key()].title;
+            }
+
+            if(!wa.credits.isEmpty() || (!isOrigin && !origin.worlds[w.key()].credits.isEmpty()))
+            {
+                wo["credits"] = wa.credits;
+                if(!isOrigin)
+                    wo["credits-orig"] = origin.worlds[w.key()].credits;
+            }
 
             if(!wa.level_titles.isEmpty())
             {
@@ -692,6 +710,7 @@ void TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
             auto &sa = s.value();
 
             so["title"] = sa.title;
+
             if(!sa.lines.isEmpty())
             {
                 QJsonArray lio;
