@@ -634,15 +634,11 @@ void TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
 
             if(!la.glossary.isEmpty())
             {
-                QJsonArray glo;
+                QJsonObject g;
                 for(auto gli = la.glossary.begin(); gli != la.glossary.end(); ++gli)
-                {
-                    QJsonObject g;
                     g[gli.key()] = gli.value();
-                    glo.append(g);
-                }
 
-                lo["glossary"] = glo;
+                lo["glossary"] = g;
             }
 
             if(!la.chains.isEmpty())
@@ -728,6 +724,15 @@ void TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
                 wo["levels"] = level_a;
             }
 
+            if(!wa.glossary.isEmpty())
+            {
+                QJsonObject g;
+                for(auto gli = wa.glossary.begin(); gli != wa.glossary.end(); ++gli)
+                    g[gli.key()] = gli.value();
+
+                wo["glossary"] = g;
+            }
+
             o[w.key()] = wo;
         }
 
@@ -747,12 +752,14 @@ void TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
                     QJsonObject entry;
                     entry["i"] = i.line;
                     entry["src"] = i.source;
-                    entry["tr"] = i.translation;
 
                     if(!isOrigin)
                     {
+                        entry["tr"] = i.translation;
+
                         if(i.unfinished)
                             entry["u"] = true;
+
                         if(i.vanished)
                             entry["v"] = true;
                     }
@@ -994,11 +1001,44 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
             if(entry.contains("chains"))
             {
                 QJsonArray arr = entry["chains"].toArray();
+                for(const auto &pit : arr)
+                {
+                    TranslationData_Dialogue d;
+                    const auto &sarr = pit.toArray();
+
+                    for(const auto &it : sarr)
+                    {
+                        auto s = it.toString();
+                        TranslationData_DialogueNode n;
+                        QRegExp r_npc("npc-(\\d*)\\-talk", Qt::CaseInsensitive, QRegExp::RegExp2);
+                        QRegExp r_event("event-(\\d*)\\-msg", Qt::CaseInsensitive, QRegExp::RegExp2);
+
+                        if(r_npc.exactMatch(s))
+                        {
+                            n.item_index = r_npc.cap(1).toInt();
+                            n.type = TranslationData_DialogueNode::T_NPC_TALK;
+                            d.push_back(n);
+                        }
+                        else if(r_event.exactMatch(s))
+                        {
+                            n.item_index = r_event.cap(1).toInt();
+                            n.type = TranslationData_DialogueNode::T_EVENT_MSG;
+                            d.push_back(n);
+                        }
+                    }
+
+                    TranslationData_DialogueNode n;
+                    n.type = TranslationData_DialogueNode::T_END;
+                    d.push_back(n);
+                    lvl.chains.push_back(d);
+                }
             }
 
             if(entry.contains("glossary"))
             {
-                QJsonArray arr = entry["glossary"].toArray();
+                QJsonObject obj = entry["glossary"].toObject();
+                for(auto it : obj.keys())
+                    lvl.glossary[it] = obj[it].toString();
             }
         }
         else if(k.endsWith(".wld", Qt::CaseInsensitive) || k.endsWith(".wldx", Qt::CaseInsensitive))
@@ -1024,6 +1064,13 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                     wld.level_titles.insert(i, et);
                 }
             }
+
+            if(entry.contains("glossary"))
+            {
+                QJsonObject obj = entry["glossary"].toObject();
+                for(auto it : obj.keys())
+                    wld.glossary[it] = obj[it].toString();
+            }
         }
         else if(k.endsWith("lunadll.txt", Qt::CaseInsensitive) || k.endsWith("lunaworld.txt", Qt::CaseInsensitive))
         {
@@ -1033,9 +1080,18 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
             if(entry.contains("lines"))
             {
                 QJsonArray arr = entry["lines"].toArray();
-
+                for(const auto &it : arr)
+                {
+                    TranslationData_ScriptLine l;
+                    auto ito = it.toObject();
+                    l.line = ito["i"].toInt(-1);
+                    l.source = ito["src"].toString();
+                    l.translation = ito["tr"].toString();
+                    l.unfinished = ito["u"].toBool(false);
+                    l.vanished = ito["v"].toBool(false);
+                    script.lines[l.line] = l;
+                }
             }
         }
     }
-
 }

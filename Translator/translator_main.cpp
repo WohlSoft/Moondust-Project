@@ -3,6 +3,7 @@
 #include <QtDebug>
 
 #include "textdata/text_data_processor.h"
+#include "textdata/files_list_model.h"
 #include "qfile_dialogs_default_options.hpp"
 
 #include "translator_main.h"
@@ -15,6 +16,8 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
 {
     ui->setupUi(this);
     loadSetup();
+    m_filesListModel = new FilesListModel(&m_project, ui->filesListTable);
+    ui->filesListTable->setModel(m_filesListModel);
 }
 
 TranslatorMain::~TranslatorMain()
@@ -52,6 +55,8 @@ void TranslatorMain::on_actionOpen_project_triggered()
                              tr("Failed to load project from the directory: %1").arg(d),
                              QMessageBox::Ok);
     }
+
+    m_filesListModel->rebuildView();
 
     m_recentPath = d;
     m_currentPath = d;

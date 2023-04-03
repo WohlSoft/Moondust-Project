@@ -7,6 +7,8 @@
 
 #include "textdata/textdata.h"
 
+class FilesListModel;
+
 
 namespace Ui {
 class TranslatorMain;
@@ -30,6 +32,7 @@ private slots:
 private:
     Ui::TranslatorMain *ui;
     TranslateProject m_project;
+    FilesListModel *m_filesListModel = nullptr;
     QSettings m_setup;
     QString m_recentPath;
     QString m_currentPath;
