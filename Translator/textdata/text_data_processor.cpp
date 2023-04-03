@@ -59,6 +59,47 @@ static int find_event_index(PGELIST<LevelSMBX64Event > &events,
     return -1;
 }
 
+#ifdef DEBUG_BUILD
+static bool validate(const QMap<int, TranslationData_EVENT> &d)
+{
+    bool ret = true;
+    for(auto i = d.begin(); i != d.end(); ++i)
+    {
+        ret &= (i.key() == i.value().event_index);
+        Q_ASSERT(ret);
+        if(!ret)
+            qWarning() << QString("Caught an event entry %1 with %1 index inside").arg(i.key()).arg(i.value().event_index);
+    }
+
+    if(ret)
+        qDebug() << "Events array is valid";
+    else
+        qWarning() << "Events array is INVALID";
+
+    return ret;
+}
+
+static bool validate(const QMap<int, TranslationData_NPC> &d)
+{
+    bool ret = true;
+    for(auto i = d.begin(); i != d.end(); ++i)
+    {
+        ret &= (i.key() == i.value().npc_index);
+        Q_ASSERT(ret);
+        if(!ret)
+            qWarning() << QString("Caught an NPC entry %1 with %1 index inside").arg(i.key()).arg(i.value().npc_index);
+    }
+
+    if(ret)
+        qDebug() << "NPC array is valid";
+    else
+        qWarning() << "NPC array is INVALID";
+
+    return ret;
+}
+#endif
+
+
 bool TextDataProcessor::loadProject(const QString &directory, TranslateProject &proj)
 {
     // Close current project
@@ -86,6 +127,11 @@ bool TextDataProcessor::loadProject(const QString &directory, TranslateProject &
         return scanEpisode(directory, proj);
 
     return true;
+}
+
+bool TextDataProcessor::saveProject(const QString &directory, TranslateProject &proj)
+{
+    return saveJSONs(directory, proj);
 }
 
 bool TextDataProcessor::scanEpisode(const QString &directory, TranslateProject &proj)
@@ -187,6 +233,11 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
         qDebug() << "NPC-" << n.npc_id << "idx" << i << "talk: [" << n.talk << "]" << "Trigger" << n.talk_trigger;
     }
 
+#ifdef DEBUG_BUILD
+    validate(tr.npc);
+    validate(tr.events);
+#endif
+
     // Build relations
     for(auto &e : tr.events)
     {
@@ -202,6 +253,11 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
                 e.triggered_by_npc.push_back(n.npc_index);
         }
     }
+
+#ifdef DEBUG_BUILD
+    validate(tr.npc);
+    validate(tr.events);
+#endif
 
     // Build dialogues
     for(auto &n : tr.npc)
@@ -228,8 +284,13 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
                     d.push_back(de);
                 triggered.insert(next_trigger);
                 next_trigger = e.trigger_next;
-            } while(next_trigger >= 0 && !triggered.contains(next_trigger));
+            } while(next_trigger >= 0 && triggered.contains(next_trigger));
         }
+
+#ifdef DEBUG_BUILD
+        validate(tr.npc);
+        validate(tr.events);
+#endif
 
         if(!d.isEmpty())
         {
@@ -267,8 +328,11 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
                     d.push_back(de);
                 triggered.insert(next_trigger);
                 next_trigger = se.trigger_next;
-            } while(next_trigger >= 0 && !triggered.contains(next_trigger));
+            } while(next_trigger >= 0 && triggered.contains(next_trigger));
         }
+
+        validate(tr.npc);
+        validate(tr.events);
 
         if(!d.isEmpty())
         {
@@ -529,8 +593,9 @@ void TextDataProcessor::importScript(TranslationData &origin, const QString &pat
         origin.scripts.insert(shortPath, tr);
 }
 
-void TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &proj)
+bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &proj)
 {
+    bool ret = true;
     auto &origin = proj["origin"];
 
     for(auto it = proj.begin(); it != proj.end(); ++it)
@@ -780,8 +845,13 @@ void TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
             d.setObject(o);
             f.write(d.toJson(QJsonDocument::Indented));
             f.close();
+            ret &= true;
         }
+        else
+            ret &= false;
     }
+
+    return ret;
 }
 
 void TextDataProcessor::updateTranslation(TranslateProject &proj, const QString &trName)
@@ -959,6 +1029,7 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                     i = ito["i"].toInt(-1);
                     et.event_index = i;
                     et.message = ito["msg"].toString();
+                    et.trigger_next = ito["trig"].toInt(-1);
                     et.unfinished = ito["u"].toBool();
                     et.vanished = ito["v"].toBool();
 
@@ -973,7 +1044,7 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                     {
                         auto byEvent = ito["by-event"].toArray();
                         for(const auto &be : byEvent)
-                            et.triggered_by_npc.push_back(be.toInt(-1));
+                            et.triggered_by_event.push_back(be.toInt(-1));
                     }
 
                     lvl.events.insert(i, et);
@@ -990,8 +1061,9 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                     TranslationData_NPC et;
                     i = ito["i"].toInt(-1);
                     et.npc_index = i;
-                    et.npc_id = ito["t"].toInt();
-                    et.talk= ito["talk"].toString();
+                    et.npc_id = ito["t"].toInt(-1);
+                    et.talk = ito["talk"].toString();
+                    et.talk_trigger = ito["trig"].toInt(-1);
                     et.unfinished = ito["u"].toBool();
                     et.vanished = ito["v"].toBool();
                     lvl.npc.insert(i, et);

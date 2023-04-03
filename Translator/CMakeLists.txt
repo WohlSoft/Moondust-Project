@@ -151,6 +151,14 @@ target_compile_definitions(PGE_Translator_QtLibs
     -DPGE_FILES_QT
 )
 
+string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
+if(${CMAKE_BUILD_TYPE_LOWER} STREQUAL "debug")
+    target_compile_definitions(pge_translator
+        PRIVATE
+        -DDEBUG_BUILD
+    )
+endif()
+
 target_link_libraries(PGE_Translator_QtLibs INTERFACE
     ${QT_EXTRA_LIBS_PRE}
     PGE_FileFormatsQt

@@ -28,6 +28,9 @@ protected:
 private slots:
     void on_actionOpen_project_triggered();
     void on_actionRescan_triggered();
+    void on_actionSaveTranslations_triggered();
+    void on_actionCloseProject_triggered();
+    void on_actionQuit_triggered();
 
 private:
     Ui::TranslatorMain *ui;
@@ -39,6 +42,8 @@ private:
 
     void loadSetup();
     void saveSetup();
+
+    void updateActions();
 };
 
 #endif // TRANSLATOR_MAIN_H
