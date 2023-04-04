@@ -49,12 +49,15 @@ public:
     enum L_DType
     {
         LDT_EVENT = 0,
-        LDT_NPC
+        LDT_NPC,
+        LDT_TITLE
     };
 
     enum W_DType
     {
-        WDT_LEVEL = 0
+        WDT_LEVEL = 0,
+        WDT_TITLE,
+        WDT_CREDITS
     };
 
     enum S_DType

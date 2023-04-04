@@ -8,6 +8,7 @@
 
 #include <QString>
 #include <QMap>
+#include <QSet>
 #include <QVector>
 
 
@@ -49,6 +50,7 @@ typedef QVector<TranslationData_DialogueNode> TranslationData_Dialogue;
 struct TranslationData_Level
 {
     QString title;
+    bool title_unfinished = false;
     //! Text data stored at NPC entries
     QMap<int, TranslationData_NPC> npc;
     //! Text data stored at event entries
@@ -71,7 +73,9 @@ struct TranslationData_LEVEL
 struct TranslationData_World
 {
     QString title;
+    bool title_unfinished = false;
     QString credits;
+    bool credits_unfinished = false;
     QMap<int, TranslationData_LEVEL> level_titles;
     //! Stoirage of useful translations
     QMap<QString, QString> glossary;
@@ -79,7 +83,7 @@ struct TranslationData_World
 
 struct TranslationData_ScriptLine
 {
-    int line;
+    int line = -1;
     QString source;
     QString translation;
     bool unfinished = false;
@@ -94,6 +98,7 @@ struct TranslationData_Script
 
 struct TranslationData
 {
+    QSet<QString> directories;
     QMap<QString, TranslationData_Level> levels;
     QMap<QString, TranslationData_World> worlds;
     QMap<QString, TranslationData_Script> scripts;

@@ -42,7 +42,8 @@ public:
     {
         T_WORLD = 0,
         T_LEVEL,
-        T_SCRIPT
+        T_SCRIPT,
+        T_DIR
     };
 
     enum Roles

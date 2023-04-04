@@ -37,6 +37,40 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             m_view.push_back(e);
         }
 
+        if(!m_world->title.isEmpty())
+        {
+            TrView e;
+            e.source = s;
+            e.type = WDT_TITLE;
+            e.title = m_world->title;
+            e.key = 0;
+            if(e.title.isEmpty())
+                e.state = ST_BLANK;
+            else if(m_world->title_unfinished && !e.title.isEmpty())
+                e.state = ST_UNFINISHED;
+            else
+                e.state = ST_FINISHED;
+            e.note = tr("Episode title");
+            m_view.push_back(e);
+        }
+
+        if(!m_world->credits.isEmpty())
+        {
+            TrView e;
+            e.source = s;
+            e.type = WDT_TITLE;
+            e.title = m_world->credits;
+            e.key = 0;
+            if(e.title.isEmpty())
+                e.state = ST_BLANK;
+            else if(m_world->credits_unfinished && !e.title.isEmpty())
+                e.state = ST_UNFINISHED;
+            else
+                e.state = ST_FINISHED;
+            e.note = tr("Episode credits");
+            m_view.push_back(e);
+        }
+
         std::sort(m_view.begin(), m_view.end(),
                   [](const TrView&o1, const TrView&o2)->bool
         {
@@ -82,6 +116,23 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             else
                 e.state = ST_FINISHED;
             e.note = QString("NPC-%1 [idx=%2]").arg(w->npc_id).arg(w->npc_index);
+            m_view.push_back(e);
+        }
+
+        if(!m_level->title.isEmpty())
+        {
+            TrView e;
+            e.source = s;
+            e.type = LDT_TITLE;
+            e.title = m_level->title;
+            e.key = 0;
+            if(e.title.isEmpty())
+                e.state = ST_BLANK;
+            else if(m_level->title_unfinished && !e.title.isEmpty())
+                e.state = ST_UNFINISHED;
+            else
+                e.state = ST_FINISHED;
+            e.note = tr("Level title");
             m_view.push_back(e);
         }
 
@@ -281,6 +332,10 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
                 {
                 case WDT_LEVEL:
                     return tr("L");
+                case WDT_TITLE:
+                    return tr("T");
+                case WDT_CREDITS:
+                    return tr("C");
                 }
                 break;
             case S_LEVEL:
@@ -290,6 +345,8 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
                     return tr("E");
                 case LDT_NPC:
                     return tr("N");
+                case LDT_TITLE:
+                    return tr("T");
                 }
                 break;
             case S_SCRIPT:

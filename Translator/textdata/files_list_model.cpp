@@ -1,6 +1,7 @@
 #include <QIcon>
 #include <QFileInfo>
 #include <QDir>
+#include <QFileIconProvider>
 #include "files_list_model.h"
 
 
@@ -62,6 +63,27 @@ void FilesListModel::rebuildView(const QString &path)
         TrView e;
         e.type = T_SCRIPT;
         e.key = s.key();
+        e.parent = -1;
+        e.p = nullptr;
+        QFileInfo i(path + "/" + e.key);
+        e.title = i.fileName();
+        e.dir = i.completeBaseName();
+        e.path = i.path();
+        e.path.remove(m_path);
+        if(e.path.startsWith('/'))
+            e.path.remove(0, 1);
+
+        if(!e.path.isEmpty())
+            addChild(e);
+        else
+            m_view.push_back(e);
+    }
+
+    for(auto &s : origin.directories)
+    {
+        TrView e;
+        e.type = T_DIR;
+        e.key = s;
         e.parent = -1;
         e.p = nullptr;
         QFileInfo i(path + "/" + e.key);
@@ -234,6 +256,8 @@ QVariant FilesListModel::data(const QModelIndex &index, int role) const
                 return tr("Level");
             case T_SCRIPT:
                 return tr("Script");
+            case T_DIR:
+                return tr("Directory");
             }
         }
         else if(role == Qt::DecorationRole)
@@ -254,6 +278,11 @@ QVariant FilesListModel::data(const QModelIndex &index, int role) const
             }
             case T_SCRIPT:
                 return QIcon(":/images/scripts.png");
+            case T_DIR:
+            {
+                QFileIconProvider i;
+                return i.icon(QFileIconProvider::Folder);
+            }
             }
         }
         else if(role == Qt::DisplayRole)

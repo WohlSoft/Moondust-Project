@@ -281,6 +281,7 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
             int next_trigger = n.talk_trigger;
             do
             {
+                Q_ASSERT(next_trigger >= 0);
                 auto &e = tr.events[next_trigger];
                 TranslationData_DialogueNode de;
                 de.type = TranslationData_DialogueNode::T_EVENT_MSG;
@@ -325,6 +326,7 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
             int next_trigger = e.trigger_next;
             do
             {
+                Q_ASSERT(next_trigger >= 0);
                 auto &se = tr.events[next_trigger];
                 TranslationData_DialogueNode de;
                 de.type = TranslationData_DialogueNode::T_EVENT_MSG;
@@ -362,6 +364,7 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
                 {
                 case TranslationData_DialogueNode::T_EVENT_MSG:
                     qDebug() << "-" << "EVENT" << tr.events[m.item_index].message;
+                    Q_ASSERT(m.item_index >= 0);
                     break;
                 case TranslationData_DialogueNode::T_NPC_TALK:
                     qDebug() << "-" << "NPC" << tr.npc[m.item_index].talk;
@@ -383,6 +386,14 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
 
     if(hasStrings)
         origin.levels.insert(shortPath, tr);
+    else
+    {
+        QFileInfo f(path);
+        QString fp = f.absoluteDir().absolutePath() + "/" + f.completeBaseName();
+        QDir d(fp);
+        if(d.exists())
+            origin.directories.insert(shortPath);
+    }
 }
 
 void TextDataProcessor::importWorld(TranslationData &origin, const QString &path, const QString &shortPath)
@@ -430,6 +441,14 @@ void TextDataProcessor::importWorld(TranslationData &origin, const QString &path
 
     if(hasStrings)
         origin.worlds.insert(shortPath, tr);
+    else
+    {
+        QFileInfo f(path);
+        QString fp = f.absoluteDir().absolutePath() + "/" + f.completeBaseName();
+        QDir d(fp);
+        if(d.exists())
+            origin.directories.insert(shortPath);
+    }
 }
 
 void TextDataProcessor::importScript(TranslationData &origin, const QString &path, const QString &shortPath)
@@ -625,7 +644,11 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
             {
                 lo["title"] = la.title;
                 if(!isOrigin)
+                {
+                    if(la.title_unfinished)
+                        lo["title-u"] = true;
                     lo["title-orig"] = origin.levels[l.key()].title;
+                }
             }
 
             if(!la.npc.isEmpty())
@@ -673,6 +696,7 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
 
                     if(!isOrigin)
                     {
+                        Q_ASSERT(e.event_index >= 0);
                         entry["orig"] = origin.levels[l.key()].events[e.event_index].message;
 
                         if(e.unfinished)
@@ -708,6 +732,11 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
 
                 lo["events"] = event_a;
             }
+
+#ifdef DEBUG_BUILD
+            validate(la.npc);
+            validate(la.events);
+#endif
 
             if(!la.glossary.isEmpty())
             {
@@ -760,14 +789,22 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
             {
                 wo["title"] = wa.title;
                 if(!isOrigin)
+                {
+                    if(wa.title_unfinished)
+                        wo["title-u"] = true;
                     wo["title-orig"] = origin.worlds[w.key()].title;
+                }
             }
 
             if(!wa.credits.isEmpty() || (!isOrigin && !origin.worlds[w.key()].credits.isEmpty()))
             {
                 wo["credits"] = wa.credits;
                 if(!isOrigin)
+                {
+                    if(wa.credits_unfinished)
+                        wo["credits-u"] = true;
                     wo["credits-orig"] = origin.worlds[w.key()].credits;
+                }
             }
 
             if(!wa.level_titles.isEmpty())
@@ -850,6 +887,12 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
             o[s.key()] = so;
         }
 
+        if(!it->directories.isEmpty())
+        {
+            for(auto &s : it->directories)
+                o[s] = QJsonObject();
+        }
+
         QFile f(QString("%1/translation_%2.json").arg(directory).arg(it.key()));
         if(f.open(QIODevice::WriteOnly))
         {
@@ -871,13 +914,15 @@ void TextDataProcessor::updateTranslation(TranslateProject &proj, const QString 
     auto &origin = proj["origin"];
     auto &tr = proj[trName];
 
-
     // Add missing entries at translation
 
     for(auto it = origin.levels.begin(); it != origin.levels.end(); ++it)
     {
         auto &ls = it.value();
         auto &ld = tr.levels[it.key()];
+
+        if(ld.title.isEmpty())
+            ld.title_unfinished = true;
 
         for(auto nit = ls.npc.begin(); nit != ls.npc.end(); ++nit)
         {
@@ -912,6 +957,12 @@ void TextDataProcessor::updateTranslation(TranslateProject &proj, const QString 
     {
         auto &ls = it.value();
         auto &ld = tr.worlds[it.key()];
+
+        if(ld.title.isEmpty())
+            ld.title_unfinished = true;
+
+        if(ld.credits.isEmpty())
+            ld.credits_unfinished = true;
 
         for(auto eit = ls.level_titles.begin(); eit != ls.level_titles.end(); ++eit)
         {
@@ -962,7 +1013,7 @@ void TextDataProcessor::updateTranslation(TranslateProject &proj, const QString 
         {
             if(!ld.events.contains(eit.key())) // Create empty entry with an "unfinished" entry
             {
-                auto &n = ls.events[eit.key()];
+                auto &n = eit.value();
                 n.vanished = true;
             }
         }
@@ -1035,10 +1086,16 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
     for(auto &k : r.keys())
     {
         QJsonObject entry = r[k].toObject();
-        if(k.endsWith(".lvl", Qt::CaseInsensitive) || k.endsWith(".lvlx", Qt::CaseInsensitive))
+
+        if(entry.isEmpty()) // If blank object, it's a "directory"
+        {
+            tr.directories.insert(k);
+        }
+        else if(k.endsWith(".lvl", Qt::CaseInsensitive) || k.endsWith(".lvlx", Qt::CaseInsensitive))
         {
             auto &lvl = tr.levels[k];
             lvl.title = entry.value("title").toString();
+            lvl.title_unfinished = entry.value("title-u").toBool();
 
             if(entry.contains("events"))
             {
@@ -1049,6 +1106,8 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                     int i;
                     TranslationData_EVENT et;
                     i = ito["i"].toInt(-1);
+                    if(i < 0)
+                        continue; // Skip invalid entries
                     et.event_index = i;
                     et.message = ito["msg"].toString();
                     et.trigger_next = ito["trig"].toInt(-1);
@@ -1082,6 +1141,8 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                     int i;
                     TranslationData_NPC et;
                     i = ito["i"].toInt(-1);
+                    if(i < 0)
+                        continue; // Skip invalid entries
                     et.npc_index = i;
                     et.npc_id = ito["t"].toInt(-1);
                     et.talk = ito["talk"].toString();
@@ -1139,7 +1200,9 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
         {
             auto &wld = tr.worlds[k];
             wld.title = entry.value("title").toString();
+            wld.title_unfinished = entry.value("title-u").toBool();
             wld.credits = entry.value("credits").toString();
+            wld.credits_unfinished = entry.value("credits-u").toBool();
 
             if(entry.contains("levels"))
             {
@@ -1150,6 +1213,8 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                     int i;
                     TranslationData_LEVEL et;
                     i = ito["i"].toInt(-1);
+                    if(i < 0)
+                        continue; // Skip invalid entries
                     et.level_index = i;
                     et.title = ito["tit"].toString();
                     et.filename = ito["f"].toString("");
@@ -1179,6 +1244,8 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                     TranslationData_ScriptLine l;
                     auto ito = it.toObject();
                     l.line = ito["i"].toInt(-1);
+                    if(l.line < 0)
+                        continue; // Skip invalid entries
                     l.source = ito["src"].toString();
                     l.translation = ito["tr"].toString();
                     l.unfinished = ito["u"].toBool(false);
