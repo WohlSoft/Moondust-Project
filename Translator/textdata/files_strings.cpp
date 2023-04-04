@@ -194,19 +194,37 @@ void FilesStringsModel::clear()
 
 QVariant FilesStringsModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if(orientation == Qt::Horizontal && role != Qt::DisplayRole)
+    if(orientation == Qt::Horizontal && role != Qt::DisplayRole && role != Qt::DecorationRole)
         return QVariant();
 
-    switch(section)
+    switch(role)
     {
-    case C_TYPE:
-        return tr("Type");
-    case C_STATE:
-        return tr("Satate");
-    case C_TITLE:
-        return tr("Title");
-    case C_NOTE:
-        return tr("Note");
+    case Qt::DecorationRole:
+        switch(section)
+        {
+        case C_TYPE:
+            return tr("Type");
+        case C_STATE:
+            return QIcon(":/images/s_check_on.png");
+        case C_TITLE:
+            return tr("Title");
+        case C_NOTE:
+            return tr("Note");
+        }
+        break;
+    case Qt::DisplayRole:
+        switch(section)
+        {
+        case C_TYPE:
+            return tr("Type");
+//        case C_STATE:
+//            return tr("Satate");
+        case C_TITLE:
+            return tr("Title");
+        case C_NOTE:
+            return tr("Note");
+        }
+        break;
     }
 
     return QVariant();
@@ -365,20 +383,6 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
             }
             break;
 
-        case C_STATE:
-            switch(it.state)
-            {
-            case ST_BLANK:
-                return tr("B");
-            case ST_UNFINISHED:
-                return tr("U");
-            case ST_FINISHED:
-                return tr("F");
-            case ST_VANISHED:
-                return tr("V");
-            }
-            break;
-
         case C_TITLE:
             return it.title;
 
@@ -390,6 +394,26 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
             default:
                 return it.note;
             }
+        }
+
+        break;
+
+    case Qt::DecorationRole:
+        switch(index.column())
+        {
+        case C_STATE:
+            switch(it.state)
+            {
+            case ST_BLANK:
+                return QIcon(":/images/s_check_empty.png");
+            case ST_UNFINISHED:
+                return QIcon(":/images/s_check_off.png");
+            case ST_FINISHED:
+                return QIcon(":/images/s_check_on.png");
+            case ST_VANISHED:
+                return QIcon(":/images/s_check_obsolete.png");
+            }
+            break;
         }
 
         break;

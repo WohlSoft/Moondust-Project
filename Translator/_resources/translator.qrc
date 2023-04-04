@@ -16,5 +16,12 @@
         <file>images/file_wldx_48.png</file>
         <file>images/file_wldx_256.png</file>
         <file>PressStart2P.ttf</file>
+        <file>images/s_check_warning.png</file>
+        <file>images/s_check_on.png</file>
+        <file>images/s_check_off.png</file>
+        <file>images/s_check_obsolete.png</file>
+        <file>images/s_check_empty.png</file>
+        <file>images/s_check_danger.png</file>
+        <file>images/editdelete.png</file>
     </qresource>
 </RCC>
