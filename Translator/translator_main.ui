@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>852</width>
-    <height>666</height>
+    <width>927</width>
+    <height>654</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,13 +20,96 @@
   <property name="dockOptions">
    <set>QMainWindow::AllowNestedDocks|QMainWindow::AnimatedDocks|QMainWindow::GroupedDragging</set>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="title">
+        <string>Translation</string>
+       </property>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="title">
+        <string>Preview</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,1000">
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="previewFontSize">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="minimum">
+           <number>4</number>
+          </property>
+          <property name="value">
+           <number>14</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="previewFontSizeLabel">
+          <property name="text">
+           <string>Font size:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="0" colspan="3">
+         <widget class="MsgBoxPreview" name="previewZone" native="true"/>
+        </item>
+        <item row="0" column="0" colspan="3">
+         <widget class="QCheckBox" name="legacyLineBreak">
+          <property name="text">
+           <string>Use legacy linebreak algorithm</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>852</width>
+     <width>927</width>
      <height>20</height>
     </rect>
    </property>
@@ -107,6 +190,24 @@
     </attribute>
    </widget>
   </widget>
+  <widget class="QDockWidget" name="dialoguesListWidget">
+   <property name="windowTitle">
+    <string>Dialogues list</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>4</number>
+   </attribute>
+   <widget class="QWidget" name="dialoguesList"/>
+  </widget>
+  <widget class="QDockWidget" name="dialoguePreviewWidget">
+   <property name="windowTitle">
+    <string>Dialogue preview</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>4</number>
+   </attribute>
+   <widget class="QWidget" name="dialoguePreview"/>
+  </widget>
   <action name="actionOpen_project">
    <property name="text">
     <string>Open project...</string>
@@ -143,6 +244,14 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MsgBoxPreview</class>
+   <extends>QWidget</extends>
+   <header>msg_box_preview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="_resources/translator.qrc"/>
  </resources>

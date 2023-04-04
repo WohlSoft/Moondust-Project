@@ -38,6 +38,29 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
         m_filesStringsModel->setData("origin", type, key);
     });
 
+    QObject::connect(ui->fileStrings, &QAbstractItemView::clicked,
+    this,
+    [this](const QModelIndex &index)->void
+    {
+        if(!index.isValid())
+            return;
+
+        QString text = index.sibling(index.row(), FilesStringsModel::C_TITLE).data(Qt::DisplayRole).toString();
+        ui->previewZone->setText(text);
+    });
+
+    QObject::connect(ui->legacyLineBreak,
+                     static_cast<void(QCheckBox::*)(bool)>(&QCheckBox::clicked),
+                     ui->previewZone,
+                     &MsgBoxPreview::setVanillaMode);
+    ui->previewZone->setVanillaMode(ui->legacyLineBreak->isChecked());
+
+    ui->previewFontSize->setValue(ui->previewZone->fontSize());
+    QObject::connect(ui->previewFontSize,
+                     static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                     ui->previewZone,
+                     &MsgBoxPreview::setFontSize);
+
     updateActions();
 }
 

@@ -15,5 +15,6 @@
         <file>images/file_wldx_32.png</file>
         <file>images/file_wldx_48.png</file>
         <file>images/file_wldx_256.png</file>
+        <file>PressStart2P.ttf</file>
     </qresource>
 </RCC>

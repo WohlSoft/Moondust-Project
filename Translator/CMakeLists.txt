@@ -95,6 +95,7 @@ list(APPEND PGE_TRANSLATOR_SRCS
     textdata/files_list_model.h textdata/files_list_model.cpp
     textdata/files_strings.h textdata/files_strings.cpp
     translator_main.h translator_main.cpp
+    msg_box_preview.h msg_box_preview.cpp
     common_features/app_path.h common_features/app_path.cpp
     common_features/logger.h common_features/logger_sets.h common_features/logger.cpp
     ${UTF8MAIN_SRCS}
