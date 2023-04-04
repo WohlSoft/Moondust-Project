@@ -117,7 +117,7 @@ bool TextDataProcessor::loadProject(const QString &directory, TranslateProject &
     {
         auto f = dit.next();
         QFileInfo fi(f);
-        QRegExp fe("translation_(\\w*)\\.json", Qt::CaseInsensitive, QRegExp::RegExp2);
+        QRegExp fe("translation_([a-zA-Z-]*)\\.json", Qt::CaseInsensitive, QRegExp::RegExp2);
         if(fe.exactMatch(fi.fileName()))
         {
             loadTranslation(proj, fe.cap(1), f);
@@ -171,9 +171,16 @@ bool TextDataProcessor::scanEpisode(const QString &directory, TranslateProject &
             importScript(origin, f, rfp);
     }
 
-    updateTranslation(proj, "en");
+    updateTranslation(proj, "ru");
+    updateTranslation(proj, "zh-cn");
     saveJSONs(directory, proj);
 
+    return true;
+}
+
+bool TextDataProcessor::createTranslation(TranslateProject &proj, const QString &lang)
+{
+    updateTranslation(proj, lang);
     return true;
 }
 
