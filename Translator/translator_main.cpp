@@ -1,5 +1,9 @@
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QProgressDialog>
+#include <QAtomicInt>
+#include <QtConcurrent>
+#include <QFuture>
 #include <QtDebug>
 
 #include "textdata/text_data_processor.h"
@@ -216,12 +220,43 @@ void TranslatorMain::on_actionRescan_triggered()
     if(m_currentPath.isEmpty())
         return; // No opened project
 
-    TextDataProcessor t;
-    t.scanEpisode(m_currentPath, m_project);
     ui->previewZone->clearText();
     m_dialogueItems.clear();
     m_dialoguesListModel->clear();
     m_filesStringsModel->clear();
+
+    QFutureWatcher<bool> isOk;
+    QEventLoop waitLoop;
+    QAtomicInt waitLoopQuit(false);
+
+    QProgressDialog progress(this);
+    progress.setLabelText(tr("Scanning..."));
+    progress.setCancelButton(nullptr);
+    progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+    progress.reset();
+
+    QObject::connect(&isOk, &QFutureWatcher<bool>::finished,
+    [&waitLoop, &waitLoopQuit]()->void
+    {
+        waitLoop.quit();
+        waitLoopQuit = true;
+    });
+
+    progress.show();
+
+    // Do the loading in a thread
+    isOk.setFuture(QtConcurrent::run([this]()->bool
+    {
+        TextDataProcessor t;
+        return t.scanEpisode(m_currentPath, m_project);
+    }));
+
+    // Now wait until the config load in finished.
+    if(!waitLoopQuit)
+        waitLoop.exec();
+
+    progress.hide();
+
     m_filesListModel->rebuildView(m_currentPath);
 
     updateTranslateFields();
@@ -306,9 +341,39 @@ void TranslatorMain::saveSetup()
 
 void TranslatorMain::openProject(const QString &d)
 {
-    TextDataProcessor t;
+    QFutureWatcher<bool> isOk;
+    QEventLoop waitLoop;
+    QAtomicInt waitLoopQuit(false);
 
-    if(!t.loadProject(d, m_project))
+    QProgressDialog progress(this);
+    progress.setLabelText(tr("Loading..."));
+    progress.setCancelButton(nullptr);
+    progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+    progress.reset();
+
+    QObject::connect(&isOk, &QFutureWatcher<bool>::finished,
+    [&waitLoop, &waitLoopQuit]()->void
+    {
+        waitLoop.quit();
+        waitLoopQuit = true;
+    });
+
+    progress.show();
+
+    // Do the loading in a thread
+    isOk.setFuture(QtConcurrent::run([this, &d]()->bool
+    {
+        TextDataProcessor t;
+        return t.loadProject(d, m_project);
+    }));
+
+    // Now wait until the config load in finished.
+    if(!waitLoopQuit)
+        waitLoop.exec();
+
+    progress.hide();
+
+    if(!isOk.result())
     {
         QMessageBox::warning(this,
                              tr("Loading error"),
@@ -407,4 +472,3 @@ void TranslatorMain::on_actionClearRecentProjects_triggered()
     m_recentProjects.clear();
     updateRecent();
 }
-
