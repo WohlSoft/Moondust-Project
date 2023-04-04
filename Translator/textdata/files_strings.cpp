@@ -97,6 +97,7 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             else
                 e.state = ST_FINISHED;
             e.note = QString::number(w->event_index);
+            e.note = QString("Event-%1").arg(w->event_index);
             m_view.push_back(e);
         }
 
