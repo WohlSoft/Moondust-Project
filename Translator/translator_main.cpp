@@ -57,7 +57,7 @@ void TranslatorMain::on_actionOpen_project_triggered()
                              QMessageBox::Ok);
     }
 
-    m_filesListModel->rebuildView();
+    m_filesListModel->rebuildView(d);
 
     m_recentPath = d;
     m_currentPath = d;
@@ -74,7 +74,7 @@ void TranslatorMain::on_actionRescan_triggered()
 
     TextDataProcessor t;
     t.scanEpisode(m_currentPath, m_project);
-    m_filesListModel->rebuildView();
+    m_filesListModel->rebuildView(m_currentPath);
 }
 
 void TranslatorMain::on_actionSaveTranslations_triggered()
@@ -90,7 +90,7 @@ void TranslatorMain::on_actionSaveTranslations_triggered()
 void TranslatorMain::on_actionCloseProject_triggered()
 {
     m_project.clear();
-    m_filesListModel->rebuildView();
+    m_filesListModel->rebuildView(m_currentPath);
     m_currentPath.clear();
     updateActions();
 }
