@@ -1,0 +1,91 @@
+#ifndef FILESSTRINGS_H
+#define FILESSTRINGS_H
+
+#include <QAbstractTableModel>
+
+#include "files_list_model.h"
+
+class FilesStringsModel : public QAbstractTableModel
+{
+    Q_OBJECT
+
+    TranslateProject *m_project = nullptr;
+    TranslationData *m_language = nullptr;
+    TranslationData_Level *m_level = nullptr;
+    TranslationData_World *m_world = nullptr;
+    TranslationData_Script *m_script = nullptr;
+
+    struct TrView
+    {
+        int source;
+        int state;
+        int type;
+        int key;
+        QString title;
+        QString note;
+    };
+
+    typedef QVector<TrView> TrViewList;
+    TrViewList m_view;
+
+public:
+    explicit FilesStringsModel(TranslateProject *project, QObject *parent = nullptr);
+
+    enum SourceType
+    {
+        S_WORLD = 0,
+        S_LEVEL,
+        S_SCRIPT
+    };
+
+    enum State
+    {
+        ST_BLANK = 0,
+        ST_UNFINISHED,
+        ST_FINISHED,
+        ST_VANISHED
+    };
+
+    enum L_DType
+    {
+        LDT_EVENT = 0,
+        LDT_NPC
+    };
+
+    enum W_DType
+    {
+        WDT_LEVEL = 0
+    };
+
+    enum S_DType
+    {
+        SDT_LINE = 0
+    };
+
+    enum Columns
+    {
+        C_TYPE = 0,
+        C_STATE,
+        C_TITLE,
+        C_NOTE,
+        C_COUNT
+    };
+
+    void setData(const QString &lang, int s, const QString &key);
+    void clear();
+
+    // Header:
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+
+    void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
+
+    // Basic functionality:
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
+private:
+};
+
+#endif // FILESSTRINGS_H

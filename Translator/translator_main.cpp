@@ -4,6 +4,7 @@
 
 #include "textdata/text_data_processor.h"
 #include "textdata/files_list_model.h"
+#include "textdata/files_strings.h"
 #include "qfile_dialogs_default_options.hpp"
 
 #include "translator_main.h"
@@ -18,6 +19,25 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
     loadSetup();
     m_filesListModel = new FilesListModel(&m_project, ui->filesListTable);
     ui->filesListTable->setModel(m_filesListModel);
+
+    m_filesStringsModel = new FilesStringsModel(&m_project, ui->fileStrings);
+    ui->fileStrings->setModel(m_filesStringsModel);
+
+    QObject::connect(ui->filesListTable, &QAbstractItemView::clicked,
+    this,
+    [this](const QModelIndex &index)->void
+    {
+        if(!index.isValid())
+        {
+            m_filesStringsModel->clear();
+            return;
+        }
+
+        QString key = index.data(FilesListModel::R_KEY).toString();
+        int type = index.data(FilesListModel::R_TYPE).toInt();
+        m_filesStringsModel->setData("origin", type, key);
+    });
+
     updateActions();
 }
 
@@ -57,6 +77,7 @@ void TranslatorMain::on_actionOpen_project_triggered()
                              QMessageBox::Ok);
     }
 
+    m_filesStringsModel->clear();
     m_filesListModel->rebuildView(d);
 
     m_recentPath = d;
@@ -74,6 +95,7 @@ void TranslatorMain::on_actionRescan_triggered()
 
     TextDataProcessor t;
     t.scanEpisode(m_currentPath, m_project);
+    m_filesStringsModel->clear();
     m_filesListModel->rebuildView(m_currentPath);
 }
 
@@ -90,6 +112,7 @@ void TranslatorMain::on_actionSaveTranslations_triggered()
 void TranslatorMain::on_actionCloseProject_triggered()
 {
     m_project.clear();
+    m_filesStringsModel->clear();
     m_filesListModel->rebuildView(m_currentPath);
     m_currentPath.clear();
     updateActions();

@@ -65,6 +65,7 @@ static bool validate(const QMap<int, TranslationData_EVENT> &d)
     bool ret = true;
     for(auto i = d.begin(); i != d.end(); ++i)
     {
+        Q_ASSERT(i.key() >= 0);
         ret &= (i.key() == i.value().event_index);
         Q_ASSERT(ret);
         if(!ret)
@@ -84,6 +85,7 @@ static bool validate(const QMap<int, TranslationData_NPC> &d)
     bool ret = true;
     for(auto i = d.begin(); i != d.end(); ++i)
     {
+        Q_ASSERT(i.key() >= 0);
         ret &= (i.key() == i.value().npc_index);
         Q_ASSERT(ret);
         if(!ret)
@@ -213,6 +215,10 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
         qDebug() << "Event" << i << "message: [" << e.message << "]" << "Trigger" << e.trigger_next;
     }
 
+#ifdef DEBUG_BUILD
+    validate(tr.events);
+#endif
+
     for(int i = 0; i < l.npc.size(); ++i)
     {
         auto &nd = l.npc[i];
@@ -235,7 +241,6 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
 
 #ifdef DEBUG_BUILD
     validate(tr.npc);
-    validate(tr.events);
 #endif
 
     // Build relations
@@ -331,8 +336,10 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
             } while(next_trigger >= 0 && triggered.contains(next_trigger));
         }
 
+#ifdef DEBUG_BUILD
         validate(tr.npc);
         validate(tr.events);
+#endif
 
         if(!d.isEmpty())
         {
@@ -367,6 +374,11 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
                 }
             }
         }
+
+#ifdef DEBUG_BUILD
+        validate(tr.npc);
+        validate(tr.events);
+#endif
     }
 
     if(hasStrings)
@@ -889,6 +901,11 @@ void TextDataProcessor::updateTranslation(TranslateProject &proj, const QString 
                 n.trigger_next = eit->trigger_next;
             }
         }
+
+#ifdef DEBUG_BUILD
+        validate(ls.npc);
+        validate(ls.events);
+#endif
     }
 
     for(auto it = origin.worlds.begin(); it != origin.worlds.end(); ++it)
@@ -949,6 +966,11 @@ void TextDataProcessor::updateTranslation(TranslateProject &proj, const QString 
                 n.vanished = true;
             }
         }
+
+#ifdef DEBUG_BUILD
+        validate(ld.npc);
+        validate(ld.events);
+#endif
     }
 
     for(auto it = tr.worlds.begin(); it != tr.worlds.end(); ++it)

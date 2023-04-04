@@ -135,19 +135,8 @@ FilesListModel::FilesListModel(TranslateProject *project, QObject *parent)
     m_rootIcon.addFile(":/images/file_wldx_256.png");
 }
 
-QVariant FilesListModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant FilesListModel::headerData(int, Qt::Orientation, int) const
 {
-    if(orientation == Qt::Horizontal && role != Qt::DisplayRole)
-        return QVariant();
-
-    switch(section)
-    {
-    case 0: // type
-        return tr("Type");
-    case 1: // type
-        return tr("Title");
-    }
-
     return QVariant();
 }
 
@@ -271,6 +260,8 @@ QVariant FilesListModel::data(const QModelIndex &index, int role) const
             return it->title;
         else if(role == R_TYPE)
             return it->type;
+        else if(role == R_KEY)
+            return it->key;
 
         break;
     }

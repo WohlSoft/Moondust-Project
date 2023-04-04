@@ -8,6 +8,7 @@
 #include "textdata/textdata.h"
 
 class FilesListModel;
+class FilesStringsModel;
 
 
 namespace Ui {
@@ -36,9 +37,11 @@ private:
     Ui::TranslatorMain *ui;
     TranslateProject m_project;
     FilesListModel *m_filesListModel = nullptr;
+    FilesStringsModel * m_filesStringsModel = nullptr;
     QSettings m_setup;
     QString m_recentPath;
     QString m_currentPath;
+    QString m_curTranslation;
 
     void loadSetup();
     void saveSetup();
