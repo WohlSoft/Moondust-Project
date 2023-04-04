@@ -37,6 +37,8 @@ private slots:
     void on_actionCloseProject_triggered();
     void on_actionQuit_triggered();
 
+    void on_actionClearRecentProjects_triggered();
+
 private:
     Ui::TranslatorMain *ui;
     TranslateProject m_project;
@@ -45,6 +47,7 @@ private:
     DialoguesListModel *m_dialoguesListModel = nullptr;
     QSettings m_setup;
     QString m_recentPath;
+    QVector<QString> m_recentProjects;
     QString m_currentPath;
     QString m_curTranslation;
     QMap<QString, QSharedPointer<TranslateField>> m_translateFields;
@@ -53,7 +56,10 @@ private:
     void loadSetup();
     void saveSetup();
 
+    void openProject(const QString &d);
+
     void updateActions();
+    void updateRecent();
     void updateTranslateFields();
 };
 

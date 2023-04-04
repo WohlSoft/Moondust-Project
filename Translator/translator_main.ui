@@ -222,7 +222,16 @@ The new algorithm is only supported by TheXTech and Moondust Engine.</string>
     <property name="title">
      <string>File</string>
     </property>
+    <widget class="QMenu" name="menuOpenRecentProject">
+     <property name="title">
+      <string>Open recent project</string>
+     </property>
+     <addaction name="actionRecentNoProject"/>
+     <addaction name="separator"/>
+     <addaction name="actionClearRecentProjects"/>
+    </widget>
     <addaction name="actionOpen_project"/>
+    <addaction name="menuOpenRecentProject"/>
     <addaction name="separator"/>
     <addaction name="actionRescan"/>
     <addaction name="separator"/>
@@ -330,7 +339,7 @@ The new algorithm is only supported by TheXTech and Moondust Engine.</string>
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>111</width>
+       <width>80</width>
        <height>190</height>
       </rect>
      </property>
@@ -392,6 +401,19 @@ The new algorithm is only supported by TheXTech and Moondust Engine.</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="actionRecentNoProject">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&lt;No projects&gt;</string>
+   </property>
+  </action>
+  <action name="actionClearRecentProjects">
+   <property name="text">
+    <string>Clear recent projects...</string>
    </property>
   </action>
  </widget>

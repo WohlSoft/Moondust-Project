@@ -173,6 +173,7 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
                      &MsgBoxPreview::setFontSize);
     ui->previewZone->setFontSize(ui->previewFontSize->value());
 
+    updateRecent();
     updateActions();
 }
 
@@ -207,30 +208,7 @@ void TranslatorMain::on_actionOpen_project_triggered()
     if(d.isEmpty())
         return;
 
-    TextDataProcessor t;
-
-    if(!t.loadProject(d, m_project))
-    {
-        QMessageBox::warning(this,
-                             tr("Loading error"),
-                             tr("Failed to load project from the directory: %1").arg(d),
-                             QMessageBox::Ok);
-    }
-
-    ui->previewZone->clearText();
-    m_dialogueItems.clear();
-    m_dialoguesListModel->clear();
-    m_filesStringsModel->clear();
-    m_filesListModel->rebuildView(d);
-
-    m_recentPath = d;
-    m_currentPath = d;
-    updateActions();
-    saveSetup();
-
-    updateTranslateFields();
-
-    ui->statusbar->showMessage(tr("Project %1 has been loaded!").arg(d));
+    openProject(d);
 }
 
 void TranslatorMain::on_actionRescan_triggered()
@@ -275,32 +253,97 @@ void TranslatorMain::on_actionCloseProject_triggered()
 void TranslatorMain::loadSetup()
 {
     m_setup.beginGroup("Main");
-    m_recentPath = m_setup.value("recent-path").toString();
+    {
+        m_recentPath = m_setup.value("recent-path").toString();
+        int size = m_setup.beginReadArray("recent-files");
+        for(int i = 0; i < size; ++i)
+        {
+            m_setup.setArrayIndex(i);
+            m_recentProjects.push_back(m_setup.value("file").toString());
+        }
+        m_setup.endArray();
+    }
     m_setup.endGroup();
 
     m_setup.beginGroup("UI");
-    restoreState(m_setup.value("window-state").toByteArray());
-    restoreGeometry(m_setup.value("window-geometry").toByteArray());
-    ui->splitter->restoreState(m_setup.value("splitter-state").toByteArray());
-    ui->legacyLineBreak->setChecked(m_setup.value("preview-vanilla", false).toBool());
-    ui->previewFontSize->setValue(m_setup.value("preview-font-size", 14).toInt());
+    {
+        restoreState(m_setup.value("window-state").toByteArray());
+        restoreGeometry(m_setup.value("window-geometry").toByteArray());
+        ui->splitter->restoreState(m_setup.value("splitter-state").toByteArray());
+        ui->legacyLineBreak->setChecked(m_setup.value("preview-vanilla", false).toBool());
+        ui->previewFontSize->setValue(m_setup.value("preview-font-size", 14).toInt());
+    }
     m_setup.endGroup();
 }
 
 void TranslatorMain::saveSetup()
 {
     m_setup.beginGroup("Main");
-    m_setup.setValue("recent-path", m_recentPath);
+    {
+        m_setup.setValue("recent-path", m_recentPath);
+        m_setup.beginWriteArray("recent-files");
+        for(int i = 0; i < m_recentProjects.size(); ++i)
+        {
+            m_setup.setArrayIndex(i);
+            m_setup.setValue("file", m_recentProjects[i]);
+        }
+        m_setup.endArray();
+    }
     m_setup.endGroup();
-    m_setup.sync();
 
     m_setup.beginGroup("UI");
-    m_setup.setValue("window-state", saveState());
-    m_setup.setValue("window-geometry", saveGeometry());
-    m_setup.setValue("splitter-state", ui->splitter->saveState());
-    m_setup.setValue("preview-vanilla", ui->legacyLineBreak->isChecked());
-    m_setup.setValue("preview-font-size", ui->previewFontSize->value());
+    {
+        m_setup.setValue("window-state", saveState());
+        m_setup.setValue("window-geometry", saveGeometry());
+        m_setup.setValue("splitter-state", ui->splitter->saveState());
+        m_setup.setValue("preview-vanilla", ui->legacyLineBreak->isChecked());
+        m_setup.setValue("preview-font-size", ui->previewFontSize->value());
+    }
     m_setup.endGroup();
+
+    m_setup.sync();
+}
+
+void TranslatorMain::openProject(const QString &d)
+{
+    TextDataProcessor t;
+
+    if(!t.loadProject(d, m_project))
+    {
+        QMessageBox::warning(this,
+                             tr("Loading error"),
+                             tr("Failed to load project from the directory: %1").arg(d),
+                             QMessageBox::Ok);
+    }
+
+    ui->previewZone->clearText();
+    m_dialogueItems.clear();
+    m_dialoguesListModel->clear();
+    m_filesStringsModel->clear();
+    m_filesListModel->rebuildView(d);
+
+    m_recentPath = d;
+    m_currentPath = d;
+    if(!m_recentProjects.contains(d))
+    {
+        m_recentProjects.push_front(d);
+        if(m_recentProjects.size() > 10)
+            m_recentProjects.pop_back();
+    }
+    else
+    {
+        int i = m_recentProjects.indexOf(d);
+        if(i != 0)
+            m_recentProjects.swapItemsAt(i, 0);
+    }
+
+    updateRecent();
+    updateActions();
+    saveSetup();
+
+    updateTranslateFields();
+
+    ui->statusbar->showMessage(tr("Project %1 has been loaded!").arg(d));
 }
 
 void TranslatorMain::updateActions()
@@ -309,6 +352,32 @@ void TranslatorMain::updateActions()
     ui->actionRescan->setEnabled(isLoaded);
     ui->actionSaveTranslations->setEnabled(isLoaded);
     ui->actionCloseProject->setEnabled(isLoaded);
+}
+
+void TranslatorMain::updateRecent()
+{
+    ui->menuOpenRecentProject->clear();
+
+    if(m_recentProjects.isEmpty())
+        ui->menuOpenRecentProject->addAction(ui->actionRecentNoProject);
+    else
+    {
+        for(auto &r : m_recentProjects)
+        {
+            QFileInfo d(r);
+            auto *e = ui->menuOpenRecentProject->addAction(d.fileName());
+            QObject::connect(e,
+                             static_cast<void(QAction::*)(bool)>(&QAction::triggered),
+                             this,
+                             [this, r](bool)->void
+            {
+                openProject(r);
+            });
+        }
+    }
+
+    ui->menuOpenRecentProject->addSeparator();
+    ui->menuOpenRecentProject->addAction(ui->actionClearRecentProjects);
 }
 
 void TranslatorMain::updateTranslateFields()
@@ -332,3 +401,10 @@ void TranslatorMain::on_actionQuit_triggered()
 {
     this->close();
 }
+
+void TranslatorMain::on_actionClearRecentProjects_triggered()
+{
+    m_recentProjects.clear();
+    updateRecent();
+}
+
