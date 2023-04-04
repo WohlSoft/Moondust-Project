@@ -1,4 +1,9 @@
+#include <QColor>
+#include <QPalette>
+#include <QApplication>
+
 #include "dialogues_list_model.h"
+
 
 DialoguesListModel::DialoguesListModel(TranslateProject *project, QObject *parent)
     : QAbstractTableModel(parent)
@@ -91,8 +96,15 @@ QVariant DialoguesListModel::data(const QModelIndex &index, int role) const
             return it.i;
         break;
     case C_TITLE:
-        if(role == Qt::DisplayRole || role == Qt::EditRole)
+        switch(role)
+        {
+        case Qt::DisplayRole:
+            return it.note.isEmpty() ? tr("<Double-click to edit note>") : it.note;
+        case Qt::TextColorRole:
+            return it.note.isEmpty() ? QColor(Qt::gray) : QApplication::palette().text().color();
+        case Qt::EditRole:
             return it.note;
+        }
         break;
     }
 

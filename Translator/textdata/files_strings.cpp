@@ -1,3 +1,7 @@
+#include <QColor>
+#include <QPalette>
+#include <QApplication>
+
 #include "files_strings.h"
 
 FilesStringsModel::FilesStringsModel(TranslateProject *project, QObject *parent)
@@ -379,10 +383,23 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
             return it.title;
 
         case C_NOTE:
-            return it.note;
+            switch(it.source)
+            {
+            case S_WORLD:
+                return it.note.isEmpty() ? tr("<No filename>") : it.note;
+            default:
+                return it.note;
+            }
         }
 
+        break;
 
+    case Qt::TextColorRole:
+        switch(index.column())
+        {
+        case C_NOTE:
+            return it.note.isEmpty() ? QColor(Qt::gray) : QApplication::palette().text().color();
+        }
         break;
     }
 
