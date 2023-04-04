@@ -273,7 +273,7 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
         dn.item_index = n.npc_index;
 
         if(!n.talk.isEmpty())
-            d.push_back(dn);
+            d.messages.push_back(dn);
 
         if(n.talk_trigger >= 0 && tr.events.contains(n.talk_trigger))
         {
@@ -283,14 +283,18 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
             {
                 Q_ASSERT(next_trigger >= 0);
                 auto &e = tr.events[next_trigger];
+
                 TranslationData_DialogueNode de;
                 de.type = TranslationData_DialogueNode::T_EVENT_MSG;
                 de.item_index = e.event_index;
                 if(!e.message.isEmpty())
-                    d.push_back(de);
+                    d.messages.push_back(de);
+
                 triggered.insert(next_trigger);
+                if(e.trigger_next >= 0 && !tr.events.contains(e.trigger_next))
+                    e.trigger_next = -1;
                 next_trigger = e.trigger_next;
-            } while(next_trigger >= 0 && triggered.contains(next_trigger));
+            } while(next_trigger >= 0 && !triggered.contains(next_trigger));
         }
 
 #ifdef DEBUG_BUILD
@@ -298,12 +302,12 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
         validate(tr.events);
 #endif
 
-        if(!d.isEmpty())
+        if(!d.messages.isEmpty())
         {
             dn.type = TranslationData_DialogueNode::T_END;
             dn.item_index = -1;
-            d.push_back(dn);
-            tr.chains.append(d);
+            d.messages.push_back(dn);
+            tr.dialogues.append(d);
         }
     }
 
@@ -318,7 +322,7 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
         dn.item_index = e.event_index;
 
         if(!e.message.isEmpty())
-            d.push_back(dn);
+            d.messages.push_back(dn);
 
         if(e.trigger_next >= 0 && tr.events.contains(e.trigger_next))
         {
@@ -328,14 +332,19 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
             {
                 Q_ASSERT(next_trigger >= 0);
                 auto &se = tr.events[next_trigger];
+
                 TranslationData_DialogueNode de;
                 de.type = TranslationData_DialogueNode::T_EVENT_MSG;
                 de.item_index = se.event_index;
                 if(!se.message.isEmpty())
-                    d.push_back(de);
+                    d.messages.push_back(de);
+
                 triggered.insert(next_trigger);
+                if(se.trigger_next >= 0 && !tr.events.contains(se.trigger_next))
+                    se.trigger_next = -1;
                 next_trigger = se.trigger_next;
-            } while(next_trigger >= 0 && triggered.contains(next_trigger));
+
+            } while(next_trigger >= 0 && !triggered.contains(next_trigger));
         }
 
 #ifdef DEBUG_BUILD
@@ -343,22 +352,22 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
         validate(tr.events);
 #endif
 
-        if(!d.isEmpty())
+        if(!d.messages.isEmpty())
         {
             dn.type = TranslationData_DialogueNode::T_END;
             dn.item_index = -1;
-            d.push_back(dn);
-            tr.chains.append(d);
+            d.messages.push_back(dn);
+            tr.dialogues.append(d);
         }
     }
 
-    if(!tr.chains.isEmpty())
+    if(!tr.dialogues.isEmpty())
     {
         qDebug() << "\n=========== Dialogues: ===========\n";
-        for(auto &c : tr.chains)
+        for(auto &c : tr.dialogues)
         {
             qDebug() << "-------------------------------------";
-            for(auto &m : c)
+            for(auto &m : c.messages)
             {
                 switch(m.type)
                 {
@@ -747,15 +756,18 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
                 lo["glossary"] = g;
             }
 
-            if(!la.chains.isEmpty())
+            if(!la.dialogues.isEmpty())
             {
                 QJsonArray cho;
 
-                for(auto &e : la.chains)
+                for(auto &e : la.dialogues)
                 {
+                    QJsonObject dio;
                     QJsonArray se;
 
-                    for(auto &ie : e)
+                    dio["note"] = e.note;
+
+                    for(auto &ie : e.messages)
                     {
                         switch(ie.type)
                         {
@@ -771,10 +783,11 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
                         }
                     }
 
-                    cho.append(se);
+                    dio["messages"] = se;
+                    cho.append(dio);
                 }
 
-                lo["chains"] = cho;
+                lo["dialogues"] = cho;
             }
 
             o[l.key()] = lo;
@@ -1153,7 +1166,7 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                 }
             }
 
-            if(entry.contains("chains"))
+            if(entry.contains("chains")) // Fallback
             {
                 QJsonArray arr = entry["chains"].toArray();
                 for(const auto &pit : arr)
@@ -1172,20 +1185,58 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                         {
                             n.item_index = r_npc.cap(1).toInt();
                             n.type = TranslationData_DialogueNode::T_NPC_TALK;
-                            d.push_back(n);
+                            d.messages.push_back(n);
                         }
                         else if(r_event.exactMatch(s))
                         {
                             n.item_index = r_event.cap(1).toInt();
                             n.type = TranslationData_DialogueNode::T_EVENT_MSG;
-                            d.push_back(n);
+                            d.messages.push_back(n);
                         }
                     }
 
                     TranslationData_DialogueNode n;
                     n.type = TranslationData_DialogueNode::T_END;
-                    d.push_back(n);
-                    lvl.chains.push_back(d);
+                    d.messages.push_back(n);
+                    lvl.dialogues.push_back(d);
+                }
+            }
+
+            if(entry.contains("dialogues")) // Fallback
+            {
+                QJsonArray arr = entry["dialogues"].toArray();
+                for(const auto &pit : arr)
+                {
+                    TranslationData_Dialogue d;
+                    auto dio = pit.toObject();
+                    d.note = dio["note"].toString();
+                    const auto &sarr = dio["messages"].toArray();
+
+                    for(const auto &it : sarr)
+                    {
+                        auto s = it.toString();
+                        TranslationData_DialogueNode n;
+                        QRegExp r_npc("npc-(\\d*)\\-talk", Qt::CaseInsensitive, QRegExp::RegExp2);
+                        QRegExp r_event("event-(\\d*)\\-msg", Qt::CaseInsensitive, QRegExp::RegExp2);
+
+                        if(r_npc.exactMatch(s))
+                        {
+                            n.item_index = r_npc.cap(1).toInt();
+                            n.type = TranslationData_DialogueNode::T_NPC_TALK;
+                            d.messages.push_back(n);
+                        }
+                        else if(r_event.exactMatch(s))
+                        {
+                            n.item_index = r_event.cap(1).toInt();
+                            n.type = TranslationData_DialogueNode::T_EVENT_MSG;
+                            d.messages.push_back(n);
+                        }
+                    }
+
+                    TranslationData_DialogueNode n;
+                    n.type = TranslationData_DialogueNode::T_END;
+                    d.messages.push_back(n);
+                    lvl.dialogues.push_back(d);
                 }
             }
 

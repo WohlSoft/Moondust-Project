@@ -73,6 +73,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS} $
 
 qt5_wrap_ui(UIS_HDRS
     translator_main.ui
+    translate_field.ui
+    dialogue_item.ui
 )
 
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/translator.qrc)
@@ -93,9 +95,12 @@ list(APPEND PGE_TRANSLATOR_SRCS
     textdata/textdata.h
     textdata/text_data_processor.h textdata/text_data_processor.cpp
     textdata/files_list_model.h textdata/files_list_model.cpp
+    textdata/dialogues_list_model.h textdata/dialogues_list_model.cpp
     textdata/files_strings.h textdata/files_strings.cpp
     translator_main.h translator_main.cpp
     msg_box_preview.h msg_box_preview.cpp
+    translate_field.h translate_field.cpp
+    dialogue_item.h dialogue_item.cpp
     common_features/app_path.h common_features/app_path.cpp
     common_features/logger.h common_features/logger_sets.h common_features/logger.cpp
     ${UTF8MAIN_SRCS}

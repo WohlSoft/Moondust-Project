@@ -162,7 +162,7 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
                 e.state = ST_VANISHED;
             else
                 e.state = ST_FINISHED;
-            e.note = QString::number(w->line);
+            e.note = e.note = QString("Line %1").arg(w->line);
             m_view.push_back(e);
         }
 
@@ -184,6 +184,7 @@ void FilesStringsModel::clear()
     m_level = nullptr;
     m_world = nullptr;
     m_script = nullptr;
+    m_view.clear();
     endResetModel();
 }
 

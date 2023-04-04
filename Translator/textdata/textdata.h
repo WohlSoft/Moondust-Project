@@ -45,7 +45,11 @@ struct TranslationData_DialogueNode
     int item_index = -1;
 };
 
-typedef QVector<TranslationData_DialogueNode> TranslationData_Dialogue;
+struct TranslationData_Dialogue
+{
+    QString note;
+    QVector<TranslationData_DialogueNode> messages;
+};
 
 struct TranslationData_Level
 {
@@ -56,7 +60,7 @@ struct TranslationData_Level
     //! Text data stored at event entries
     QMap<int, TranslationData_EVENT> events;
     //! Dialogue sequences (used to make an order and see the order of messages)
-    QVector<TranslationData_Dialogue> chains;
+    QVector<TranslationData_Dialogue> dialogues;
     //! Stoirage of useful translations
     QMap<QString, QString> glossary;
 };

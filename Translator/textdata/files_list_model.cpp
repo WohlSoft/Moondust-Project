@@ -223,6 +223,7 @@ int FilesListModel::columnCount(const QModelIndex &parent) const
 
 Qt::ItemFlags FilesListModel::flags(const QModelIndex &index) const
 {
+    Q_UNUSED(index);
     return Qt::ItemIsEnabled|Qt::ItemIsSelectable;
 }
 

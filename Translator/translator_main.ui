@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>927</width>
-    <height>654</height>
+    <width>986</width>
+    <height>675</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,16 +42,121 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QGroupBox" name="groupBox">
+      <widget class="QGroupBox" name="translationGroup">
        <property name="title">
         <string>Translation</string>
        </property>
+       <layout class="QVBoxLayout" name="translationGroupLayout" stretch="0">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QScrollArea" name="translationArea">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>569</width>
+             <height>396</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="translationLayout" stretch="1,1000000">
+            <item>
+             <widget class="QFrame" name="translationFrame">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QVBoxLayout" name="translationFrameLayout">
+               <item>
+                <widget class="QLabel" name="sourceLineLabel">
+                 <property name="text">
+                  <string>Source line:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPlainTextEdit" name="sourceLineRO">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="sourceLineNoteLabel">
+                 <property name="text">
+                  <string>Note for translators:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="sourceLineNote">
+                 <property name="inputMask">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string notr="true"/>
+                 </property>
+                 <property name="readOnly">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::MinimumExpanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>238</width>
+                <height>158</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
       </widget>
-      <widget class="QGroupBox" name="groupBox_2">
+      <widget class="QGroupBox" name="previewGroup">
        <property name="title">
         <string>Preview</string>
        </property>
-       <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,1000">
+       <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0">
+        <item row="1" column="0">
+         <widget class="QLabel" name="previewFontSizeLabel">
+          <property name="text">
+           <string>Font size:</string>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="1">
          <widget class="QSpinBox" name="previewFontSize">
           <property name="minimumSize">
@@ -68,12 +173,8 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="previewFontSizeLabel">
-          <property name="text">
-           <string>Font size:</string>
-          </property>
-         </widget>
+        <item row="2" column="0" colspan="3">
+         <widget class="MsgBoxPreview" name="previewZone" native="true"/>
         </item>
         <item row="1" column="2">
          <spacer name="horizontalSpacer">
@@ -88,11 +189,15 @@
           </property>
          </spacer>
         </item>
-        <item row="2" column="0" colspan="3">
-         <widget class="MsgBoxPreview" name="previewZone" native="true"/>
-        </item>
         <item row="0" column="0" colspan="3">
          <widget class="QCheckBox" name="legacyLineBreak">
+          <property name="toolTip">
+           <string>Enable the legacy linebreak algorithm used by the original SMBX 1.3 to simulate 
+the rendering behaviour of this engine. Legacy algorithm doesn't support multiline
+messages and can't break too long words (longer than 27 characters).
+
+The new algorithm is only supported by TheXTech and Moondust Engine.</string>
+          </property>
           <property name="text">
            <string>Use legacy linebreak algorithm</string>
           </property>
@@ -109,7 +214,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>927</width>
+     <width>986</width>
      <height>20</height>
     </rect>
    </property>
@@ -197,7 +302,17 @@
    <attribute name="dockWidgetArea">
     <number>4</number>
    </attribute>
-   <widget class="QWidget" name="dialoguesList"/>
+   <widget class="QTableView" name="dialoguesList">
+    <property name="selectionMode">
+     <enum>QAbstractItemView::SingleSelection</enum>
+    </property>
+    <property name="selectionBehavior">
+     <enum>QAbstractItemView::SelectRows</enum>
+    </property>
+    <attribute name="horizontalHeaderStretchLastSection">
+     <bool>true</bool>
+    </attribute>
+   </widget>
   </widget>
   <widget class="QDockWidget" name="dialoguePreviewWidget">
    <property name="windowTitle">
@@ -206,31 +321,64 @@
    <attribute name="dockWidgetArea">
     <number>4</number>
    </attribute>
-   <widget class="QWidget" name="dialoguePreview"/>
+   <widget class="QScrollArea" name="dialoguePreview">
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="dialoguePreviewContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>111</width>
+       <height>190</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="dialoguePreviewLayout" stretch="0">
+      <item>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </widget>
   </widget>
   <action name="actionOpen_project">
    <property name="text">
     <string>Open project...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="actionQuit">
    <property name="text">
     <string>Quit</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+X</string>
+   </property>
   </action>
   <action name="actionSaveTranslations">
    <property name="text">
     <string>Save translations</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
-   </property>
-  </action>
-  <action name="actionSave_translation_as">
-   <property name="text">
-    <string>Save translation as...</string>
    </property>
   </action>
   <action name="actionRescan">
@@ -241,6 +389,9 @@
   <action name="actionCloseProject">
    <property name="text">
     <string>Close project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
    </property>
   </action>
  </widget>
