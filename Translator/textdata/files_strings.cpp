@@ -20,23 +20,23 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
 
     switch(s)
     {
-    case S_WORLD:
+    case TextTypes::S_WORLD:
         m_world = &(*m_project)[lang].worlds[key];
         for(auto w = m_world->level_titles.begin() ; w != m_world->level_titles.end(); ++w)
         {
             TrView e;
             e.source = s;
-            e.type = WDT_LEVEL;
+            e.type = TextTypes::WDT_LEVEL;
             e.title = w->title;
             e.key = w.key();
             if(e.title.isEmpty())
-                e.state = ST_BLANK;
+                e.state = TextTypes::ST_BLANK;
             else if(w->unfinished && !e.title.isEmpty())
-                e.state = ST_UNFINISHED;
+                e.state = TextTypes::ST_UNFINISHED;
             else if(w->vanished && !e.title.isEmpty())
-                e.state = ST_VANISHED;
+                e.state = TextTypes::ST_VANISHED;
             else
-                e.state = ST_FINISHED;
+                e.state = TextTypes::ST_FINISHED;
             e.note = w->filename;
             m_view.push_back(e);
         }
@@ -45,15 +45,15 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
         {
             TrView e;
             e.source = s;
-            e.type = WDT_TITLE;
+            e.type = TextTypes::WDT_TITLE;
             e.title = m_world->title;
             e.key = 0;
             if(e.title.isEmpty())
-                e.state = ST_BLANK;
+                e.state = TextTypes::ST_BLANK;
             else if(m_world->title_unfinished && !e.title.isEmpty())
-                e.state = ST_UNFINISHED;
+                e.state = TextTypes::ST_UNFINISHED;
             else
-                e.state = ST_FINISHED;
+                e.state = TextTypes::ST_FINISHED;
             e.note = tr("Episode title");
             m_view.push_back(e);
         }
@@ -62,15 +62,15 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
         {
             TrView e;
             e.source = s;
-            e.type = WDT_TITLE;
+            e.type = TextTypes::WDT_TITLE;
             e.title = m_world->credits;
             e.key = 0;
             if(e.title.isEmpty())
-                e.state = ST_BLANK;
+                e.state = TextTypes::ST_BLANK;
             else if(m_world->credits_unfinished && !e.title.isEmpty())
-                e.state = ST_UNFINISHED;
+                e.state = TextTypes::ST_UNFINISHED;
             else
-                e.state = ST_FINISHED;
+                e.state = TextTypes::ST_FINISHED;
             e.note = tr("Episode credits");
             m_view.push_back(e);
         }
@@ -83,23 +83,23 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
 
         break;
 
-    case S_LEVEL:
+    case TextTypes::S_LEVEL:
         m_level = &(*m_project)[lang].levels[key];
         for(auto w = m_level->events.begin() ; w != m_level->events.end(); ++w)
         {
             TrView e;
             e.source = s;
-            e.type = LDT_EVENT;
+            e.type = TextTypes::LDT_EVENT;
             e.title = w->message;
             e.key = w.key();
             if(e.title.isEmpty())
-                e.state = ST_BLANK;
+                e.state = TextTypes::ST_BLANK;
             else if(w->unfinished && !e.title.isEmpty())
-                e.state = ST_UNFINISHED;
+                e.state = TextTypes::ST_UNFINISHED;
             else if(w->vanished && !e.title.isEmpty())
-                e.state = ST_VANISHED;
+                e.state = TextTypes::ST_VANISHED;
             else
-                e.state = ST_FINISHED;
+                e.state = TextTypes::ST_FINISHED;
             e.note = QString::number(w->event_index);
             e.note = QString("Event-%1").arg(w->event_index);
             m_view.push_back(e);
@@ -109,17 +109,17 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
         {
             TrView e;
             e.source = s;
-            e.type = LDT_NPC;
+            e.type = TextTypes::LDT_NPC;
             e.title = w->talk;
             e.key = w.key();
             if(e.title.isEmpty())
-                e.state = ST_BLANK;
+                e.state = TextTypes::ST_BLANK;
             else if(w->unfinished && !e.title.isEmpty())
-                e.state = ST_UNFINISHED;
+                e.state = TextTypes::ST_UNFINISHED;
             else if(w->vanished && !e.title.isEmpty())
-                e.state = ST_VANISHED;
+                e.state = TextTypes::ST_VANISHED;
             else
-                e.state = ST_FINISHED;
+                e.state = TextTypes::ST_FINISHED;
             e.note = QString("NPC-%1 [idx=%2]").arg(w->npc_id).arg(w->npc_index);
             m_view.push_back(e);
         }
@@ -128,15 +128,15 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
         {
             TrView e;
             e.source = s;
-            e.type = LDT_TITLE;
+            e.type = TextTypes::LDT_TITLE;
             e.title = m_level->title;
             e.key = 0;
             if(e.title.isEmpty())
-                e.state = ST_BLANK;
+                e.state = TextTypes::ST_BLANK;
             else if(m_level->title_unfinished && !e.title.isEmpty())
-                e.state = ST_UNFINISHED;
+                e.state = TextTypes::ST_UNFINISHED;
             else
-                e.state = ST_FINISHED;
+                e.state = TextTypes::ST_FINISHED;
             e.note = tr("Level title");
             m_view.push_back(e);
         }
@@ -149,23 +149,23 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
 
         break;
 
-    case S_SCRIPT:
+    case TextTypes::S_SCRIPT:
         m_script = &(*m_project)[lang].scripts[key];
         for(auto w = m_script->lines.begin() ; w != m_script->lines.end(); ++w)
         {
             TrView e;
             e.source = s;
-            e.type = SDT_LINE;
+            e.type = TextTypes::SDT_LINE;
             e.title = w->source;
             e.key = w.key();
             if(e.title.isEmpty())
-                e.state = ST_BLANK;
+                e.state = TextTypes::ST_BLANK;
             else if(w->unfinished && !e.title.isEmpty())
-                e.state = ST_UNFINISHED;
+                e.state = TextTypes::ST_UNFINISHED;
             else if(w->vanished && !e.title.isEmpty())
-                e.state = ST_VANISHED;
+                e.state = TextTypes::ST_VANISHED;
             else
-                e.state = ST_FINISHED;
+                e.state = TextTypes::ST_FINISHED;
             e.note = e.note = QString("Line %1").arg(w->line);
             m_view.push_back(e);
         }
@@ -351,32 +351,32 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
         case C_TYPE:
             switch(it.source)
             {
-            case S_WORLD:
+            case TextTypes::S_WORLD:
                 switch(it.type)
                 {
-                case WDT_LEVEL:
+                case TextTypes::WDT_LEVEL:
                     return tr("L");
-                case WDT_TITLE:
+                case TextTypes::WDT_TITLE:
                     return tr("T");
-                case WDT_CREDITS:
+                case TextTypes::WDT_CREDITS:
                     return tr("C");
                 }
                 break;
-            case S_LEVEL:
+            case TextTypes::S_LEVEL:
                 switch(it.type)
                 {
-                case LDT_EVENT:
+                case TextTypes::LDT_EVENT:
                     return tr("E");
-                case LDT_NPC:
+                case TextTypes::LDT_NPC:
                     return tr("N");
-                case LDT_TITLE:
+                case TextTypes::LDT_TITLE:
                     return tr("T");
                 }
                 break;
-            case S_SCRIPT:
+            case TextTypes::S_SCRIPT:
                 switch(it.type)
                 {
-                case SDT_LINE:
+                case TextTypes::SDT_LINE:
                     return tr("L");
                 }
                 break;
@@ -389,7 +389,7 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
         case C_NOTE:
             switch(it.source)
             {
-            case S_WORLD:
+            case TextTypes::S_WORLD:
                 return it.note.isEmpty() ? tr("<No filename>") : it.note;
             default:
                 return it.note;
@@ -404,13 +404,13 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
         case C_STATE:
             switch(it.state)
             {
-            case ST_BLANK:
+            case TextTypes::ST_BLANK:
                 return QIcon(":/images/s_check_empty.png");
-            case ST_UNFINISHED:
+            case TextTypes::ST_UNFINISHED:
                 return QIcon(":/images/s_check_off.png");
-            case ST_FINISHED:
+            case TextTypes::ST_FINISHED:
                 return QIcon(":/images/s_check_on.png");
-            case ST_VANISHED:
+            case TextTypes::ST_VANISHED:
                 return QIcon(":/images/s_check_obsolete.png");
             }
             break;

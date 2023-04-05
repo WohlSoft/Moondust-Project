@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>498</width>
-    <height>158</height>
+    <height>162</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
     <widget class="QPlainTextEdit" name="translationText"/>
    </item>
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="commentOfTranslatorLabel">
      <property name="text">
       <string>Comment of translator:</string>
      </property>

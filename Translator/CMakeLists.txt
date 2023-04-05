@@ -93,6 +93,7 @@ list(APPEND PGE_TRANSLATOR_SRCS
     ${PGETRANSLATOR_SRCS}
     main.cpp
     textdata/textdata.h
+    textdata/text_types.h
     textdata/text_data_processor.h textdata/text_data_processor.cpp
     textdata/files_list_model.h textdata/files_list_model.cpp
     textdata/dialogues_list_model.h textdata/dialogues_list_model.cpp

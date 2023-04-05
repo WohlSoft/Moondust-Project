@@ -455,11 +455,11 @@ void TranslatorMain::updateTranslateFields()
             continue; // Ignore origin translation
 
         QSharedPointer<TranslateField> f(new TranslateField(ui->translationGroup));
+        f->setLang(k.key());
 
         ui->translationLayout->insertWidget(ui->translationLayout->count() - 1, f.data());
         m_translateFields.insert(k.key(), std::move(f));
     }
-
 }
 
 void TranslatorMain::on_actionQuit_triggered()

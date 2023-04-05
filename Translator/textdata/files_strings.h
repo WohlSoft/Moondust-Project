@@ -4,6 +4,8 @@
 #include <QAbstractTableModel>
 
 #include "files_list_model.h"
+#include "text_types.h"
+
 
 class FilesStringsModel : public QAbstractTableModel
 {
@@ -30,40 +32,6 @@ class FilesStringsModel : public QAbstractTableModel
 
 public:
     explicit FilesStringsModel(TranslateProject *project, QObject *parent = nullptr);
-
-    enum SourceType
-    {
-        S_WORLD = 0,
-        S_LEVEL,
-        S_SCRIPT
-    };
-
-    enum State
-    {
-        ST_BLANK = 0,
-        ST_UNFINISHED,
-        ST_FINISHED,
-        ST_VANISHED
-    };
-
-    enum L_DType
-    {
-        LDT_EVENT = 0,
-        LDT_NPC,
-        LDT_TITLE
-    };
-
-    enum W_DType
-    {
-        WDT_LEVEL = 0,
-        WDT_TITLE,
-        WDT_CREDITS
-    };
-
-    enum S_DType
-    {
-        SDT_LINE = 0
-    };
 
     enum Columns
     {
