@@ -28,6 +28,8 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             e.source = s;
             e.type = TextTypes::WDT_LEVEL;
             e.title = w->title;
+            e.tr_note = w->tr_note;
+            e.root = key;
             e.key = w.key();
             if(e.title.isEmpty())
                 e.state = TextTypes::ST_BLANK;
@@ -47,6 +49,8 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             e.source = s;
             e.type = TextTypes::WDT_TITLE;
             e.title = m_world->title;
+            e.tr_note = m_world->title_tr_note;
+            e.root = key;
             e.key = 0;
             if(e.title.isEmpty())
                 e.state = TextTypes::ST_BLANK;
@@ -64,6 +68,8 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             e.source = s;
             e.type = TextTypes::WDT_TITLE;
             e.title = m_world->credits;
+            e.tr_note = m_world->credits_tr_note;
+            e.root = key;
             e.key = 0;
             if(e.title.isEmpty())
                 e.state = TextTypes::ST_BLANK;
@@ -91,6 +97,8 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             e.source = s;
             e.type = TextTypes::LDT_EVENT;
             e.title = w->message;
+            e.tr_note = w->tr_note;
+            e.root = key;
             e.key = w.key();
             if(e.title.isEmpty())
                 e.state = TextTypes::ST_BLANK;
@@ -111,6 +119,8 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             e.source = s;
             e.type = TextTypes::LDT_NPC;
             e.title = w->talk;
+            e.root = key;
+            e.tr_note = w->tr_note;
             e.key = w.key();
             if(e.title.isEmpty())
                 e.state = TextTypes::ST_BLANK;
@@ -130,6 +140,8 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             e.source = s;
             e.type = TextTypes::LDT_TITLE;
             e.title = m_level->title;
+            e.tr_note = m_level->title_tr_note;
+            e.root = key;
             e.key = 0;
             if(e.title.isEmpty())
                 e.state = TextTypes::ST_BLANK;
@@ -157,6 +169,8 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             e.source = s;
             e.type = TextTypes::SDT_LINE;
             e.title = w->source;
+            e.tr_note = w->tr_note;
+            e.root = key;
             e.key = w.key();
             if(e.title.isEmpty())
                 e.state = TextTypes::ST_BLANK;
@@ -425,6 +439,18 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
             return it.note.isEmpty() ? QColor(Qt::gray) : QApplication::palette().text().color();
         }
         break;
+
+    case R_NOTE:
+        return it.tr_note;
+
+    case R_GROUP:
+        return it.source;
+    case R_ROOT:
+        return it.root;
+    case R_TYPE:
+        return it.type;
+    case R_KEY:
+        return it.key;
     }
 
     // FIXME: Implement me!

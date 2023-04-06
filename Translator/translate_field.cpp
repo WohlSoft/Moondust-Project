@@ -4,10 +4,12 @@
 #include "ui_translate_field.h"
 
 
-TranslateField::TranslateField(QWidget *parent) :
-    QFrame(parent),
-    ui(new Ui::TranslateField)
+TranslateField::TranslateField(TranslateProject *project, QWidget *parent) :
+    QFrame(parent)
+    , m_project(project)
+    , ui(new Ui::TranslateField)
 {
+    Q_ASSERT(m_project);
     ui->setupUi(this);
     QObject::connect(ui->translationText,
                      &QPlainTextEdit::textChanged,
@@ -30,6 +32,9 @@ TranslateField::TranslateField(QWidget *parent) :
 
     ui->translationText->installEventFilter(this);
     ui->note->installEventFilter(this);
+
+    ui->translationText->setDisabled(false);
+    ui->note->setDisabled(false);
 }
 
 TranslateField::~TranslateField()
@@ -37,43 +42,26 @@ TranslateField::~TranslateField()
     delete ui;
 }
 
-void TranslateField::setItem(int group, const QString &level, int type, int key)
+void TranslateField::setItem(int group, const QString &root, int type, int key)
 {
-    switch(group)
-    {
-    case TextTypes::S_WORLD:
-    {
-        break;
-    }
+    m_group = group;
+    m_type = type;
+    m_key = key;
+    m_root = root;
 
-    case TextTypes::S_LEVEL:
-    {
-        auto &l = (*m_project)[m_lang].levels[level];
-        switch(type)
-        {
-        case TextTypes::LDT_NPC:
-        {
-            auto &e = l.npc[key];
-            setText(e.talk, QString());
-            break;
-        }
-        case TextTypes::LDT_EVENT:
-        {
-            auto &e = l.events[key];
-            setText(e.message, QString());
-            break;
-        }
-        case TextTypes::LDT_TITLE:
-            setText(l.title, QString());
-            break;
-        }
+    reloadEntry();
+}
 
-        break;
-    }
-
-    case TextTypes::S_SCRIPT:
-        break;
-    }
+void TranslateField::clearItem()
+{
+    ui->translationText->blockSignals(true);
+    ui->translationText->clear();
+    ui->translationText->blockSignals(false);
+    ui->translationText->setEnabled(false);
+    ui->note->blockSignals(true);
+    ui->note->clear();
+    ui->note->blockSignals(false);
+    ui->note->setEnabled(false);
 }
 
 void TranslateField::setText(const QString &text, const QString &note)
@@ -81,9 +69,11 @@ void TranslateField::setText(const QString &text, const QString &note)
     ui->translationText->blockSignals(true);
     ui->translationText->setPlainText(text);
     ui->translationText->blockSignals(false);
+    ui->translationText->setEnabled(true);
     ui->note->blockSignals(true);
     ui->note->setText(note);
     ui->note->blockSignals(false);
+    ui->note->setEnabled(true);
 }
 
 void TranslateField::setLang(const QString &lang)
@@ -93,6 +83,101 @@ void TranslateField::setLang(const QString &lang)
     ui->translationLabel->setText(tr("Translation for: %1 (%2)")
                                   .arg(loc.nativeLanguageName())
                                   .arg(loc.nativeCountryName()));
+}
+
+void TranslateField::reloadEntry()
+{
+    if(m_group < 0 || m_type < 0 || m_root.isEmpty())
+        return;
+
+    m_string = nullptr;
+    m_note = nullptr;
+
+    switch(m_group)
+    {
+    case TextTypes::S_WORLD:
+    {
+        auto &l = (*m_project)[m_lang].worlds[m_root];
+        switch(m_type)
+        {
+        case TextTypes::WDT_LEVEL:
+        {
+            if(m_key < 0)
+                return;
+            auto &e = l.level_titles[m_key];
+            m_string = &e.title;
+            m_note = &e.tr_note;
+            setText(e.title, QString());
+            break;
+        }
+        case TextTypes::WDT_TITLE:
+        {
+            m_string = &l.title;
+            m_note = &l.title_tr_note;
+            setText(l.title, QString());
+            break;
+        }
+        case TextTypes::WDT_CREDITS:
+            m_string = &l.credits;
+            m_note = &l.credits_tr_note;
+            setText(l.title, QString());
+            break;
+        }
+        break;
+    }
+
+    case TextTypes::S_LEVEL:
+    {
+        auto &l = (*m_project)[m_lang].levels[m_root];
+        switch(m_type)
+        {
+        case TextTypes::LDT_NPC:
+        {
+            if(m_key < 0)
+                return;
+            auto &e = l.npc[m_key];
+            m_string = &e.talk;
+            m_note = &e.tr_note;
+            setText(e.talk, QString());
+            break;
+        }
+        case TextTypes::LDT_EVENT:
+        {
+            if(m_key < 0)
+                return;
+            auto &e = l.events[m_key];
+            m_string = &e.message;
+            m_note = &e.tr_note;
+            setText(e.message, QString());
+            break;
+        }
+        case TextTypes::LDT_TITLE:
+            m_string = &l.title;
+            m_note = &l.title_tr_note;
+            setText(l.title, QString());
+            break;
+        }
+
+        break;
+    }
+
+    case TextTypes::S_SCRIPT:
+        auto &l = (*m_project)[m_lang].scripts[m_root];
+        switch(m_type)
+        {
+        case TextTypes::SDT_LINE:
+        {
+            if(m_key < 0)
+                return;
+            auto &e = l.lines[m_key];
+            m_string = &e.translation;
+            m_note = &e.tr_note;
+            setText(e.translation, QString());
+            break;
+        }
+        }
+        break;
+    }
 }
 
 void TranslateField::changeEvent(QEvent *e)

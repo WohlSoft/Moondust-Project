@@ -46,12 +46,14 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
         auto ar = selected.indexes();
         if(ar.isEmpty() || !ar.first().isValid())
         {
+            resetTranslationFields();
             m_dialogueItems.clear();
             m_dialoguesListModel->clear();
             m_filesStringsModel->clear();
             return;
         }
 
+        resetTranslationFields();
         m_dialogueItems.clear();
         auto &index = ar.first();
         QString key = index.data(FilesListModel::R_KEY).toString();
@@ -72,16 +74,12 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
         auto ar = selected.indexes();
         if(ar.isEmpty() || !ar.first().isValid())
         {
-            ui->previewZone->clearText();
-            ui->sourceLineRO->clear();
+            resetTranslationFields();
             return;
         }
 
         auto &index = ar.first();
-
-        QString text = index.sibling(index.row(), FilesStringsModel::C_TITLE).data(Qt::DisplayRole).toString();
-        ui->previewZone->setText(text);
-        ui->sourceLineRO->setPlainText(text);
+        updateTranslationFields(index.sibling(index.row(), FilesStringsModel::C_TITLE));
     });
 
     QObject::connect(ui->dialoguesList->selectionModel(),
@@ -129,9 +127,13 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
                 [this, d, lk]()->void
                 {
                     auto &l = m_project["origin"].levels[lk];
-                    auto t = l.npc[d.item_index].talk;
-                    ui->previewZone->setText(t);
-                    ui->sourceLineRO->setPlainText(t);
+                    auto &it = l.npc[d.item_index];
+                    updateTranslationFields(TextTypes::S_LEVEL,
+                                            lk,
+                                            TextTypes::LDT_NPC,
+                                            d.item_index,
+                                            it.talk,
+                                            it.tr_note);
                 });
                 m_dialogueItems.push_back(std::move(dd));
                 break;
@@ -152,9 +154,13 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
                 [this, d, lk]()->void
                 {
                     auto &l = m_project["origin"].levels[lk];
-                    auto t = l.events[d.item_index].message;
-                    ui->previewZone->setText(t);
-                    ui->sourceLineRO->setPlainText(t);
+                    auto &it = l.events[d.item_index];
+                    updateTranslationFields(TextTypes::S_LEVEL,
+                                            lk,
+                                            TextTypes::LDT_EVENT,
+                                            d.item_index,
+                                            it.message,
+                                            it.tr_note);
                 });
                 m_dialogueItems.push_back(std::move(dd));
                 break;
@@ -411,6 +417,43 @@ void TranslatorMain::openProject(const QString &d)
     ui->statusbar->showMessage(tr("Project %1 has been loaded!").arg(d));
 }
 
+void TranslatorMain::resetTranslationFields()
+{
+    ui->previewZone->clearText();
+    ui->sourceLineRO->clear();
+    ui->sourceLineNote->clear();
+    ui->sourceLineNote->setEnabled(false);
+    for(auto &k : m_translateFields)
+        k->clearItem();
+}
+
+void TranslatorMain::updateTranslationFields(const QModelIndex &s)
+{
+    QString text = s.data(Qt::DisplayRole).toString();
+    QString root = s.data(FilesStringsModel::R_ROOT).toString();
+    QString note = s.data(FilesStringsModel::R_NOTE).toString();
+    int group = s.data(FilesStringsModel::R_GROUP).toInt();
+    int type = s.data(FilesStringsModel::R_TYPE).toInt();
+    int key = s.data(FilesStringsModel::R_KEY).toInt();
+
+    updateTranslationFields(group, root, type, key, text, note);
+}
+
+void TranslatorMain::updateTranslationFields(int group,
+                                             const QString &root,
+                                             int type,
+                                             int key,
+                                             const QString &text,
+                                             const QString &tr_note)
+{
+    ui->previewZone->setText(text);
+    ui->sourceLineRO->setPlainText(text);
+    ui->sourceLineNote->setText(tr_note);
+    ui->sourceLineNote->setEnabled(true);
+    for(auto &k : m_translateFields)
+        k->setItem(group, root, type, key);
+}
+
 void TranslatorMain::updateActions()
 {
     bool isLoaded = !m_currentPath.isEmpty();
@@ -454,8 +497,14 @@ void TranslatorMain::updateTranslateFields()
         if(k.key() == "origin")
             continue; // Ignore origin translation
 
-        QSharedPointer<TranslateField> f(new TranslateField(ui->translationGroup));
+        QSharedPointer<TranslateField> f(new TranslateField(&m_project, ui->translationGroup));
         f->setLang(k.key());
+        QObject::connect(f.data(), &TranslateField::textChanged,
+                         this,
+                         [this](const QString &nt)->void
+        {
+            ui->previewZone->setText(nt);
+        });
 
         ui->translationLayout->insertWidget(ui->translationLayout->count() - 1, f.data());
         m_translateFields.insert(k.key(), std::move(f));

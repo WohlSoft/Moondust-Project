@@ -58,6 +58,15 @@ private:
 
     void openProject(const QString &d);
 
+    void resetTranslationFields();
+    void updateTranslationFields(const QModelIndex &s);
+    void updateTranslationFields(int group,
+                                 const QString &root,
+                                 int type,
+                                 int key,
+                                 const QString &text,
+                                 const QString &tr_note);
+
     void updateActions();
     void updateRecent();
     void updateTranslateFields();

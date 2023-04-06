@@ -25,6 +25,8 @@ class FilesStringsModel : public QAbstractTableModel
         int key;
         QString title;
         QString note;
+        QString tr_note;
+        QString root;
     };
 
     typedef QVector<TrView> TrViewList;
@@ -40,6 +42,15 @@ public:
         C_TITLE,
         C_NOTE,
         C_COUNT
+    };
+
+    enum Roles
+    {
+        R_NOTE = Qt::UserRole,
+        R_ROOT,
+        R_GROUP,
+        R_TYPE,
+        R_KEY,
     };
 
     void setData(const QString &lang, int s, const QString &key);
