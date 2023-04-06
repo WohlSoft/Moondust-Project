@@ -107,9 +107,9 @@ void DialogueItem::updateLabel()
         if(B == 0)
             B = A;
 
-        if(!m_display.isEmpty())
+        if(!m_display.isEmpty() && !m_display.endsWith('\n'))
             m_display.push_back('\n');
-        m_display.append(tmpText.mid(0, size_t(B)).trimmed());
+        m_display.append(tmpText.mid(0, size_t(B)));
         tmpText.remove(0, size_t(B));
     } while(!tmpText.isEmpty());
 

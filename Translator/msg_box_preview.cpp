@@ -74,7 +74,7 @@ void MsgBoxPreview::paintEvent(QPaintEvent *e)
     int paddingR = m_letter_w / 2;
     int paddingT = m_letter_h / 4;
     int paddingB = m_letter_h / 4;
-    int boxW = paddingL + (28 * m_letter_w) + paddingR;
+    int boxW = paddingL + (27 * m_letter_w) + paddingR;
 
     boxX = (rect().width() / 2) - (boxW / 2);
 
@@ -158,7 +158,10 @@ void MsgBoxPreview::updateLines()
         if(B == 0)
             B = A;
 
-        m_shownLines.append(SuperText.mid(0, size_t(B)).trimmed());
+        auto lin = SuperText.mid(0, size_t(B));
+        if(lin.endsWith('\n'))
+            lin.remove(lin.size()-1, 1);
+        m_shownLines.append(lin);
         SuperText.remove(0, size_t(B));
     } while(!SuperText.isEmpty());
 }
