@@ -188,7 +188,7 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
                                             lk,
                                             TextTypes::LDT_EVENT,
                                             d.item_index,
-                                            it.message.note,
+                                            it.message.text,
                                             it.message.note);
                 });
                 m_dialogueItems.push_back(std::move(dd));
