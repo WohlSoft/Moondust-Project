@@ -317,7 +317,10 @@ void FilesStringsModel::sort(int column, Qt::SortOrder order)
             std::sort(m_view.begin(), m_view.end(),
                       [](const TrView&o1, const TrView&o2)->bool
             {
-                return o1.note.compare(o2.note, Qt::CaseInsensitive) < 0;
+                if(o1.source == TextTypes::S_SCRIPT)
+                    return o1.key < o2.key;
+                else
+                    return o1.note.compare(o2.note, Qt::CaseInsensitive) < 0;
             });
         }
         else
@@ -325,7 +328,10 @@ void FilesStringsModel::sort(int column, Qt::SortOrder order)
             std::sort(m_view.begin(), m_view.end(),
                       [](const TrView&o1, const TrView&o2)->bool
             {
-                return o1.note.compare(o2.note, Qt::CaseInsensitive) > 0;
+                if(o1.source == TextTypes::S_SCRIPT)
+                    return o1.key > o2.key;
+                else
+                    return o1.note.compare(o2.note, Qt::CaseInsensitive) > 0;
             });
         }
 

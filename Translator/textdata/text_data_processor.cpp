@@ -1133,8 +1133,8 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
         {
             auto &lvl = tr.levels[k];
             lvl.title.text = entry.value("title").toString();
-            lvl.title.unfinished = entry.value("title-u").toBool();
             lvl.title.note = entry.value("title-n").toString();
+            lvl.title.unfinished = entry.value("title-u").toBool();
 
             if(entry.contains("events"))
             {
@@ -1194,6 +1194,7 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                 }
             }
 
+            // DEPRECATED fallback
             if(entry.contains("chains")) // Fallback
             {
                 QJsonArray arr = entry["chains"].toArray();
@@ -1230,7 +1231,7 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                 }
             }
 
-            if(entry.contains("dialogues")) // Fallback
+            if(entry.contains("dialogues"))
             {
                 QJsonArray arr = entry["dialogues"].toArray();
                 for(const auto &pit : arr)
@@ -1279,8 +1280,10 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
         {
             auto &wld = tr.worlds[k];
             wld.title.text = entry.value("title").toString();
+            wld.title.note = entry.value("title-n").toString();
             wld.title.unfinished = entry.value("title-u").toBool();
             wld.credits.text = entry.value("credits").toString();
+            wld.credits.note = entry.value("credits-n").toString();
             wld.credits.unfinished = entry.value("credits-u").toBool();
 
             if(entry.contains("levels"))
@@ -1331,12 +1334,12 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                     if(isOrigin)
                     {
                         l.translation.text = l.source;
-                        l.translation.text = ito["src-n"].toString();
+                        l.translation.note = ito["src-n"].toString();
                     }
                     else
                     {
                         l.translation.text = ito["tr"].toString();
-                        l.translation.text = ito["tr-n"].toString();
+                        l.translation.note = ito["tr-n"].toString();
                         l.translation.unfinished = ito["u"].toBool(false);
                         l.translation.vanished = ito["v"].toBool(false);
                     }
