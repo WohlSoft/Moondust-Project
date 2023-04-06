@@ -33,6 +33,9 @@ public:
     void setText(const QString &text, const QString &note);
     void setLang(const QString &lang);
 
+    const QString &getLang() const;
+    const QString &getText() const;
+
     void reloadEntry();
 
 signals:

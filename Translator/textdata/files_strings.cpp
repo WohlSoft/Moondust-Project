@@ -66,7 +66,7 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
         {
             TrView e;
             e.source = s;
-            e.type = TextTypes::WDT_TITLE;
+            e.type = TextTypes::WDT_CREDITS;
             e.title = m_world->credits;
             e.tr_note = m_world->credits_tr_note;
             e.root = key;

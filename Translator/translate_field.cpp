@@ -29,6 +29,7 @@ TranslateField::TranslateField(TranslateProject *project, QWidget *parent) :
     {
         if(m_note)
             *m_note = e;
+        emit itemActivated(m_lang);
     });
 
     ui->translationText->installEventFilter(this);
@@ -84,6 +85,17 @@ void TranslateField::setLang(const QString &lang)
     ui->translationLabel->setText(tr("Translation for: %1 (%2)")
                                   .arg(loc.nativeLanguageName())
                                   .arg(loc.nativeCountryName()));
+}
+
+const QString &TranslateField::getLang() const
+{
+    return m_lang;
+}
+
+const QString &TranslateField::getText() const
+{
+    Q_ASSERT(m_string);
+    return *m_string;
 }
 
 void TranslateField::reloadEntry()

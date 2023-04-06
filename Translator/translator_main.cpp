@@ -124,11 +124,10 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
                                                                  d.item_index,
                                                                  ui->dialoguePreview));
                 ui->dialoguePreviewLayout->insertWidget(ui->dialoguePreviewLayout->count() - 1, dd.data());
-                auto *dd_p = dd.data();
-                QObject::connect(dd_p,
+                QObject::connect(dd.data(),
                                  &DialogueItem::clicked,
                                  this,
-                [this, d, lk, dd_p]()->void
+                [this, d, lk]()->void
                 {
                     auto &l = m_project["origin"].levels[lk];
                     auto &it = l.npc[d.item_index];
@@ -136,7 +135,7 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
                                             lk,
                                             TextTypes::LDT_NPC,
                                             d.item_index,
-                                            dd_p->getText(),
+                                            it.talk,
                                             it.tr_note);
                 });
                 m_dialogueItems.push_back(std::move(dd));
@@ -152,11 +151,10 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
                                                                  d.item_index,
                                                                  ui->dialoguePreview));
                 ui->dialoguePreviewLayout->insertWidget(ui->dialoguePreviewLayout->count() - 1, dd.data());
-                auto *dd_p = dd.data();
-                QObject::connect(dd_p,
+                QObject::connect(dd.data(),
                                  &DialogueItem::clicked,
                                  this,
-                [this, d, lk, dd_p]()->void
+                [this, d, lk]()->void
                 {
                     auto &l = m_project["origin"].levels[lk];
                     auto &it = l.events[d.item_index];
@@ -164,7 +162,7 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
                                             lk,
                                             TextTypes::LDT_EVENT,
                                             d.item_index,
-                                            dd_p->getText(),
+                                            it.message,
                                             it.tr_note);
                 });
                 m_dialogueItems.push_back(std::move(dd));
@@ -469,12 +467,27 @@ void TranslatorMain::updateTranslationFields(int group,
                                              const QString &text,
                                              const QString &tr_note)
 {
-    ui->previewZone->setText(text);
+    bool isOrigin = m_recentLang == "origin";
+    bool translated = false;
     ui->sourceLineRO->setPlainText(text);
     ui->sourceLineNote->setText(tr_note);
     ui->sourceLineNote->setEnabled(true);
     for(auto &k : m_translateFields)
+    {
         k->setItem(group, root, type, key);
+        if(!isOrigin && k->getLang() == m_recentLang)
+        {
+            auto &ss = k->getText();
+            if(!ss.isEmpty())
+            {
+                ui->previewZone->setText(ss);
+                translated = true;
+            }
+        }
+    }
+
+    if(!translated)
+        ui->previewZone->setText(text);
 }
 
 void TranslatorMain::updateActions()
@@ -533,9 +546,9 @@ void TranslatorMain::updateTranslateFields()
                          this,
                          [this](const QString &lang)->void
         {
-            if(m_recentLang == lang)
-                return;
-            m_recentLang = lang;
+            if(m_recentLang != lang)
+                m_recentLang = lang;
+
             for(auto &d : m_dialogueItems)
                 d->setLang(lang);
         });
