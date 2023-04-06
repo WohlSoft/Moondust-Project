@@ -158,7 +158,7 @@ void MsgBoxPreview::updateLines()
         if(B == 0)
             B = A;
 
-        m_shownLines.append(SuperText.mid(0, size_t(B)));
+        m_shownLines.append(SuperText.mid(0, size_t(B)).trimmed());
         SuperText.remove(0, size_t(B));
     } while(!SuperText.isEmpty());
 }
