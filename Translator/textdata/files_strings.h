@@ -51,6 +51,7 @@ public:
         R_GROUP,
         R_TYPE,
         R_KEY,
+        R_NOTE_PTR
     };
 
     void setData(const QString &lang, int s, const QString &key);

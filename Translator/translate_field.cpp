@@ -29,7 +29,6 @@ TranslateField::TranslateField(TranslateProject *project, QWidget *parent) :
     {
         if(m_note)
             *m_note = e;
-        emit itemActivated(m_lang);
     });
 
     ui->translationText->installEventFilter(this);
@@ -118,22 +117,22 @@ void TranslateField::reloadEntry()
             if(m_key < 0)
                 return;
             auto &e = l.level_titles[m_key];
-            m_string = &e.title;
-            m_note = &e.tr_note;
-            setText(e.title, QString());
+            m_string = &e.title.text;
+            m_note = &e.title.note;
+            setText(e.title.text, e.title.note);
             break;
         }
         case TextTypes::WDT_TITLE:
         {
-            m_string = &l.title;
-            m_note = &l.title_tr_note;
-            setText(l.title, QString());
+            m_string = &l.title.text;
+            m_note = &l.title.note;
+            setText(l.title.text, l.title.note);
             break;
         }
         case TextTypes::WDT_CREDITS:
-            m_string = &l.credits;
-            m_note = &l.credits_tr_note;
-            setText(l.title, QString());
+            m_string = &l.credits.text;
+            m_note = &l.credits.note;
+            setText(l.title.text, l.credits.note);
             break;
         }
         break;
@@ -149,9 +148,9 @@ void TranslateField::reloadEntry()
             if(m_key < 0)
                 return;
             auto &e = l.npc[m_key];
-            m_string = &e.talk;
-            m_note = &e.tr_note;
-            setText(e.talk, QString());
+            m_string = &e.talk.text;
+            m_note = &e.talk.note;
+            setText(e.talk.text, e.talk.note);
             break;
         }
         case TextTypes::LDT_EVENT:
@@ -159,15 +158,15 @@ void TranslateField::reloadEntry()
             if(m_key < 0)
                 return;
             auto &e = l.events[m_key];
-            m_string = &e.message;
-            m_note = &e.tr_note;
-            setText(e.message, QString());
+            m_string = &e.message.text;
+            m_note = &e.message.note;
+            setText(e.message.text, e.message.note);
             break;
         }
         case TextTypes::LDT_TITLE:
-            m_string = &l.title;
-            m_note = &l.title_tr_note;
-            setText(l.title, QString());
+            m_string = &l.title.text;
+            m_note = &l.title.note;
+            setText(l.title.text, l.title.note);
             break;
         }
 
@@ -183,9 +182,9 @@ void TranslateField::reloadEntry()
             if(m_key < 0)
                 return;
             auto &e = l.lines[m_key];
-            m_string = &e.translation;
-            m_note = &e.tr_note;
-            setText(e.translation, QString());
+            m_string = &e.translation.text;
+            m_note = &e.translation.note;
+            setText(e.translation.text, e.translation.note);
             break;
         }
         }

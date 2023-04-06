@@ -15,9 +15,9 @@
 struct TrLine
 {
     QString text;
+    QString note;
     bool unfinished = false;
     bool vanished = false;
-    QString note;
 };
 
 struct TranslationData_NPC
@@ -25,10 +25,7 @@ struct TranslationData_NPC
     int npc_index = -1;
     int talk_trigger = -1;
     int npc_id = -1;
-    QString talk;
-    bool unfinished = false;
-    bool vanished = false;
-    QString tr_note;
+    TrLine talk;
 };
 
 struct TranslationData_EVENT
@@ -37,10 +34,7 @@ struct TranslationData_EVENT
     int trigger_next = -1;
     QVector<int> triggered_by_npc;
     QVector<int> triggered_by_event;
-    QString message;
-    bool unfinished = false;
-    bool vanished = false;
-    QString tr_note;
+    TrLine message;
 };
 
 struct TranslationData_DialogueNode
@@ -63,10 +57,7 @@ struct TranslationData_Dialogue
 
 struct TranslationData_Level
 {
-    QString title;
-    bool title_unfinished = false;
-    QString title_tr_note;
-
+    TrLine title;
     //! Text data stored at NPC entries
     QMap<int, TranslationData_NPC> npc;
     //! Text data stored at event entries
@@ -80,23 +71,14 @@ struct TranslationData_Level
 struct TranslationData_LEVEL
 {
     int level_index = -1;
-    QString title;
+    TrLine title;
     QString filename;
-    bool unfinished = false;
-    bool vanished = false;
-    QString tr_note;
 };
 
 struct TranslationData_World
 {
-    QString title;
-    bool title_unfinished = false;
-    QString title_tr_note;
-
-    QString credits;
-    bool credits_unfinished = false;
-    QString credits_tr_note;
-
+    TrLine title;
+    TrLine credits;
     QMap<int, TranslationData_LEVEL> level_titles;
     //! Stoirage of useful translations
     QMap<QString, QString> glossary;
@@ -106,10 +88,7 @@ struct TranslationData_ScriptLine
 {
     int line = -1;
     QString source;
-    QString translation;
-    QString tr_note;
-    bool unfinished = false;
-    bool vanished = false;
+    TrLine translation;
 };
 
 struct TranslationData_Script

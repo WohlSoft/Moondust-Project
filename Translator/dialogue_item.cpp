@@ -52,10 +52,10 @@ void DialogueItem::updateLabel()
         Q_ASSERT(l.npc.contains(m_key));
         auto &n = l.npc[m_key];
         auto &on = orig.npc[m_key];
-        m_text = n.talk;
+        m_text = n.talk.text;
         ui->itemType->setText(QString("NPC-%1 [idx-%2]").arg(on.npc_id).arg(on.npc_index));
         if(!isOrigin && m_text.isEmpty())
-            m_text = on.talk;
+            m_text = on.talk.text;
         break;
     }
 
@@ -64,10 +64,10 @@ void DialogueItem::updateLabel()
         Q_ASSERT(l.events.contains(m_key));
         auto &e = l.events[m_key];
         auto &oe = orig.events[m_key];
-        m_text = e.message;
+        m_text = e.message.text;
         ui->itemType->setText(QString("Event-%1").arg(oe.event_index));
         if(!isOrigin && m_text.isEmpty())
-            m_text = oe.message;
+            m_text = oe.message.text;
         break;
     }
     }

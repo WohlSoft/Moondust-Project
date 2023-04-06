@@ -52,6 +52,7 @@ private:
     QString m_currentPath;
     QString m_curTranslation;
     QString m_recentLang = "origin";
+    QString *m_sourceNotePtr = nullptr;
     QMap<QString, QSharedPointer<TranslateField>> m_translateFields;
     QVector<QSharedPointer<DialogueItem>> m_dialogueItems;
 

@@ -262,6 +262,9 @@ The new algorithm is only supported by TheXTech and Moondust Engine.</string>
     <number>4</number>
    </attribute>
    <widget class="QTreeView" name="filesListTable">
+    <property name="contextMenuPolicy">
+     <enum>Qt::CustomContextMenu</enum>
+    </property>
     <property name="selectionMode">
      <enum>QAbstractItemView::SingleSelection</enum>
     </property>

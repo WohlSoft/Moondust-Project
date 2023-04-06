@@ -3,6 +3,7 @@
 #include <QProgressDialog>
 #include <QAtomicInt>
 #include <QtConcurrent>
+#include <QDesktopServices>
 #include <QFuture>
 #include <QtDebug>
 
@@ -39,6 +40,31 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
 
     ui->sourceLineRO->installEventFilter(this);
     ui->sourceLineNote->installEventFilter(this);
+
+    QObject::connect(ui->filesListTable,
+                     &QWidget::customContextMenuRequested,
+                     this,
+                     [this](const QPoint &pos)->void
+    {
+        const auto &i = ui->filesListTable->currentIndex();
+        if(!i.isValid())
+            return;
+
+        QMenu menu(this);
+        QAction *openFile = menu.addAction(tr("Open file..."));
+        QAction *openDir = menu.addAction(tr("Open containing directory"));
+        QAction *ret = menu.exec(mapToGlobal(pos));
+
+        QString path = m_currentPath + "/" + i.data(FilesListModel::R_KEY).toString();
+
+        if(ret == openFile)
+            QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+        else if(ret == openDir)
+        {
+            QFileInfo d(path);
+            QDesktopServices::openUrl(QUrl::fromLocalFile(d.absoluteDir().absolutePath()));
+        }
+    });
 
 
     QObject::connect(ui->filesListTable->selectionModel(),
@@ -135,8 +161,8 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
                                             lk,
                                             TextTypes::LDT_NPC,
                                             d.item_index,
-                                            it.talk,
-                                            it.tr_note);
+                                            it.talk.text,
+                                            it.talk.note);
                 });
                 m_dialogueItems.push_back(std::move(dd));
                 break;
@@ -162,8 +188,8 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
                                             lk,
                                             TextTypes::LDT_EVENT,
                                             d.item_index,
-                                            it.message,
-                                            it.tr_note);
+                                            it.message.note,
+                                            it.message.note);
                 });
                 m_dialogueItems.push_back(std::move(dd));
                 break;
@@ -444,6 +470,7 @@ void TranslatorMain::resetTranslationFields()
     ui->sourceLineRO->clear();
     ui->sourceLineNote->clear();
     ui->sourceLineNote->setEnabled(false);
+    m_sourceNotePtr = nullptr;
     for(auto &k : m_translateFields)
         k->clearItem();
 }
@@ -472,6 +499,7 @@ void TranslatorMain::updateTranslationFields(int group,
     ui->sourceLineRO->setPlainText(text);
     ui->sourceLineNote->setText(tr_note);
     ui->sourceLineNote->setEnabled(true);
+
     for(auto &k : m_translateFields)
     {
         k->setItem(group, root, type, key);

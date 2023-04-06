@@ -27,15 +27,15 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             TrView e;
             e.source = s;
             e.type = TextTypes::WDT_LEVEL;
-            e.title = w->title;
-            e.tr_note = w->tr_note;
+            e.title = w->title.text;
+            e.tr_note = w->title.note;
             e.root = key;
             e.key = w.key();
             if(e.title.isEmpty())
                 e.state = TextTypes::ST_BLANK;
-            else if(w->unfinished && !e.title.isEmpty())
+            else if(w->title.unfinished && !e.title.isEmpty())
                 e.state = TextTypes::ST_UNFINISHED;
-            else if(w->vanished && !e.title.isEmpty())
+            else if(w->title.vanished && !e.title.isEmpty())
                 e.state = TextTypes::ST_VANISHED;
             else
                 e.state = TextTypes::ST_FINISHED;
@@ -43,18 +43,18 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             m_view.push_back(e);
         }
 
-        if(!m_world->title.isEmpty())
+        if(!m_world->title.text.isEmpty())
         {
             TrView e;
             e.source = s;
             e.type = TextTypes::WDT_TITLE;
-            e.title = m_world->title;
-            e.tr_note = m_world->title_tr_note;
+            e.title = m_world->title.text;
+            e.tr_note = m_world->title.note;
             e.root = key;
             e.key = 0;
             if(e.title.isEmpty())
                 e.state = TextTypes::ST_BLANK;
-            else if(m_world->title_unfinished && !e.title.isEmpty())
+            else if(m_world->title.unfinished && !e.title.isEmpty())
                 e.state = TextTypes::ST_UNFINISHED;
             else
                 e.state = TextTypes::ST_FINISHED;
@@ -62,18 +62,18 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             m_view.push_back(e);
         }
 
-        if(!m_world->credits.isEmpty())
+        if(!m_world->credits.text.isEmpty())
         {
             TrView e;
             e.source = s;
             e.type = TextTypes::WDT_CREDITS;
-            e.title = m_world->credits;
-            e.tr_note = m_world->credits_tr_note;
+            e.title = m_world->credits.text;
+            e.tr_note = m_world->credits.note;
             e.root = key;
             e.key = 0;
             if(e.title.isEmpty())
                 e.state = TextTypes::ST_BLANK;
-            else if(m_world->credits_unfinished && !e.title.isEmpty())
+            else if(m_world->credits.unfinished && !e.title.isEmpty())
                 e.state = TextTypes::ST_UNFINISHED;
             else
                 e.state = TextTypes::ST_FINISHED;
@@ -96,15 +96,15 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             TrView e;
             e.source = s;
             e.type = TextTypes::LDT_EVENT;
-            e.title = w->message;
-            e.tr_note = w->tr_note;
+            e.title = w->message.text;
+            e.tr_note = w->message.note;
             e.root = key;
             e.key = w.key();
             if(e.title.isEmpty())
                 e.state = TextTypes::ST_BLANK;
-            else if(w->unfinished && !e.title.isEmpty())
+            else if(w->message.unfinished && !e.title.isEmpty())
                 e.state = TextTypes::ST_UNFINISHED;
-            else if(w->vanished && !e.title.isEmpty())
+            else if(w->message.vanished && !e.title.isEmpty())
                 e.state = TextTypes::ST_VANISHED;
             else
                 e.state = TextTypes::ST_FINISHED;
@@ -118,15 +118,15 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             TrView e;
             e.source = s;
             e.type = TextTypes::LDT_NPC;
-            e.title = w->talk;
+            e.title = w->talk.text;
             e.root = key;
-            e.tr_note = w->tr_note;
+            e.tr_note = w->talk.note;
             e.key = w.key();
             if(e.title.isEmpty())
                 e.state = TextTypes::ST_BLANK;
-            else if(w->unfinished && !e.title.isEmpty())
+            else if(w->talk.unfinished && !e.title.isEmpty())
                 e.state = TextTypes::ST_UNFINISHED;
-            else if(w->vanished && !e.title.isEmpty())
+            else if(w->talk.vanished && !e.title.isEmpty())
                 e.state = TextTypes::ST_VANISHED;
             else
                 e.state = TextTypes::ST_FINISHED;
@@ -134,18 +134,18 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             m_view.push_back(e);
         }
 
-        if(!m_level->title.isEmpty())
+        if(!m_level->title.text.isEmpty())
         {
             TrView e;
             e.source = s;
             e.type = TextTypes::LDT_TITLE;
-            e.title = m_level->title;
-            e.tr_note = m_level->title_tr_note;
+            e.title = m_level->title.text;
+            e.tr_note = m_level->title.note;
             e.root = key;
             e.key = 0;
             if(e.title.isEmpty())
                 e.state = TextTypes::ST_BLANK;
-            else if(m_level->title_unfinished && !e.title.isEmpty())
+            else if(m_level->title.unfinished && !e.title.isEmpty())
                 e.state = TextTypes::ST_UNFINISHED;
             else
                 e.state = TextTypes::ST_FINISHED;
@@ -168,15 +168,15 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             TrView e;
             e.source = s;
             e.type = TextTypes::SDT_LINE;
-            e.title = w->source;
-            e.tr_note = w->tr_note;
+            e.title = w->translation.text;
+            e.tr_note = w->translation.note;
             e.root = key;
             e.key = w.key();
             if(e.title.isEmpty())
                 e.state = TextTypes::ST_BLANK;
-            else if(w->unfinished && !e.title.isEmpty())
+            else if(w->translation.unfinished && !e.title.isEmpty())
                 e.state = TextTypes::ST_UNFINISHED;
-            else if(w->vanished && !e.title.isEmpty())
+            else if(w->translation.vanished && !e.title.isEmpty())
                 e.state = TextTypes::ST_VANISHED;
             else
                 e.state = TextTypes::ST_FINISHED;

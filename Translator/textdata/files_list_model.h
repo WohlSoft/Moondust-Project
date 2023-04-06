@@ -49,7 +49,7 @@ public:
     enum Roles
     {
         R_TYPE = Qt::UserRole,
-        R_KEY = Qt::UserRole + 1
+        R_KEY
     };
 
     void rebuildView(const QString &path);
