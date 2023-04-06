@@ -29,6 +29,7 @@ public:
 protected:
     void changeEvent(QEvent *e);
     void closeEvent(QCloseEvent *e);
+    bool eventFilter(QObject *object, QEvent *event);
 
 private slots:
     void on_actionOpen_project_triggered();
@@ -50,6 +51,7 @@ private:
     QVector<QString> m_recentProjects;
     QString m_currentPath;
     QString m_curTranslation;
+    QString m_recentLang = "origin";
     QMap<QString, QSharedPointer<TranslateField>> m_translateFields;
     QVector<QSharedPointer<DialogueItem>> m_dialogueItems;
 

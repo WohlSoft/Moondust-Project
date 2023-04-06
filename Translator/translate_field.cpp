@@ -18,7 +18,8 @@ TranslateField::TranslateField(TranslateProject *project, QWidget *parent) :
     {
         if(m_string)
             *m_string = ui->translationText->toPlainText();
-        emit TranslateField::textChanged(ui->translationText->toPlainText());
+        emit textChanged(ui->translationText->toPlainText());
+        emit itemActivated(m_lang);
     });
 
     QObject::connect(ui->note,
@@ -197,7 +198,10 @@ bool TranslateField::eventFilter(QObject *object, QEvent *event)
     if(event->type() == QEvent::FocusIn)
     {
         if(object == ui->translationText || object == ui->note)
-            emit TranslateField::textChanged(ui->translationText->toPlainText());
+        {
+            emit textChanged(ui->translationText->toPlainText());
+            emit itemActivated(m_lang);
+        }
     }
 
     return false;

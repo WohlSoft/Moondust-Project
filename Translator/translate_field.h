@@ -37,6 +37,7 @@ public:
 
 signals:
     void textChanged(const QString &newText);
+    void itemActivated(const QString &lang);
 
 protected:
     void changeEvent(QEvent *e);

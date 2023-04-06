@@ -37,6 +37,9 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
     ui->dialoguesList->setModel(m_dialoguesListModel);
     ui->dialoguesList->setColumnWidth(0, 24);
 
+    ui->sourceLineRO->installEventFilter(this);
+    ui->sourceLineNote->installEventFilter(this);
+
 
     QObject::connect(ui->filesListTable->selectionModel(),
                      &QItemSelectionModel::selectionChanged,
@@ -115,16 +118,17 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
             case TranslationData_DialogueNode::T_NPC_TALK:
             {
                 QSharedPointer<DialogueItem> dd(new DialogueItem(&m_project,
-                                                                 "origin",
+                                                                 m_recentLang,
                                                                  lk,
                                                                  DialogueItem::T_NPC,
                                                                  d.item_index,
                                                                  ui->dialoguePreview));
                 ui->dialoguePreviewLayout->insertWidget(ui->dialoguePreviewLayout->count() - 1, dd.data());
-                QObject::connect(dd.data(),
+                auto *dd_p = dd.data();
+                QObject::connect(dd_p,
                                  &DialogueItem::clicked,
                                  this,
-                [this, d, lk]()->void
+                [this, d, lk, dd_p]()->void
                 {
                     auto &l = m_project["origin"].levels[lk];
                     auto &it = l.npc[d.item_index];
@@ -132,7 +136,7 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
                                             lk,
                                             TextTypes::LDT_NPC,
                                             d.item_index,
-                                            it.talk,
+                                            dd_p->getText(),
                                             it.tr_note);
                 });
                 m_dialogueItems.push_back(std::move(dd));
@@ -142,16 +146,17 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
             case TranslationData_DialogueNode::T_EVENT_MSG:
             {
                 QSharedPointer<DialogueItem> dd(new DialogueItem(&m_project,
-                                                                 "origin",
+                                                                 m_recentLang,
                                                                  lk,
                                                                  DialogueItem::T_EVENT,
                                                                  d.item_index,
                                                                  ui->dialoguePreview));
                 ui->dialoguePreviewLayout->insertWidget(ui->dialoguePreviewLayout->count() - 1, dd.data());
-                QObject::connect(dd.data(),
+                auto *dd_p = dd.data();
+                QObject::connect(dd_p,
                                  &DialogueItem::clicked,
                                  this,
-                [this, d, lk]()->void
+                [this, d, lk, dd_p]()->void
                 {
                     auto &l = m_project["origin"].levels[lk];
                     auto &it = l.events[d.item_index];
@@ -159,7 +164,7 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
                                             lk,
                                             TextTypes::LDT_EVENT,
                                             d.item_index,
-                                            it.message,
+                                            dd_p->getText(),
                                             it.tr_note);
                 });
                 m_dialogueItems.push_back(std::move(dd));
@@ -207,6 +212,22 @@ void TranslatorMain::changeEvent(QEvent *e)
 void TranslatorMain::closeEvent(QCloseEvent *)
 {
     saveSetup();
+}
+
+bool TranslatorMain::eventFilter(QObject *object, QEvent *event)
+{
+    if(event->type() == QEvent::FocusIn)
+    {
+        if(object == ui->sourceLineRO || object == ui->sourceLineNote)
+        {
+            m_recentLang = "origin";
+            ui->previewZone->setText(ui->sourceLineRO->toPlainText());
+            for(auto &d : m_dialogueItems)
+                d->setLang(m_recentLang);
+        }
+    }
+
+    return false;
 }
 
 void TranslatorMain::on_actionOpen_project_triggered()
@@ -280,6 +301,7 @@ void TranslatorMain::on_actionSaveTranslations_triggered()
 
 void TranslatorMain::on_actionCloseProject_triggered()
 {
+    m_recentLang = "origin";
     m_translateFields.clear();
     m_project.clear();
     ui->previewZone->clearText();
@@ -387,6 +409,7 @@ void TranslatorMain::openProject(const QString &d)
                              QMessageBox::Ok);
     }
 
+    m_recentLang = "origin";
     ui->previewZone->clearText();
     m_dialogueItems.clear();
     m_dialoguesListModel->clear();
@@ -504,6 +527,17 @@ void TranslatorMain::updateTranslateFields()
                          [this](const QString &nt)->void
         {
             ui->previewZone->setText(nt);
+        });
+
+        QObject::connect(f.data(), &TranslateField::itemActivated,
+                         this,
+                         [this](const QString &lang)->void
+        {
+            if(m_recentLang == lang)
+                return;
+            m_recentLang = lang;
+            for(auto &d : m_dialogueItems)
+                d->setLang(lang);
         });
 
         ui->translationLayout->insertWidget(ui->translationLayout->count() - 1, f.data());

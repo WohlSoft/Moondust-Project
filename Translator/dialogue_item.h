@@ -16,6 +16,7 @@ class DialogueItem : public QFrame
     QString m_lang;
     QString m_level;
     QString m_text;
+    QString m_display;
     int m_type = -1;
     int m_key = -1;
     TranslationData_NPC *m_npc = nullptr;
@@ -36,6 +37,9 @@ public:
                           QWidget *parent = nullptr);
     ~DialogueItem();
 
+    void setLang(const QString &lang);
+    QString getText() const;
+
 signals:
     void clicked();
 
@@ -44,6 +48,7 @@ protected:
     void mousePressEvent(QMouseEvent *e);
 
 private:
+    void updateLabel();
     Ui::DialogueItem *ui;
 };
 
