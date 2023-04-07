@@ -132,7 +132,7 @@ void TranslateField::reloadEntry()
         case TextTypes::WDT_CREDITS:
             m_string = &l.credits.text;
             m_note = &l.credits.note;
-            setText(l.title.text, l.credits.note);
+            setText(l.credits.text, l.credits.note);
             break;
         }
         break;
