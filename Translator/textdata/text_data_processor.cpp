@@ -815,6 +815,8 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
             if(!wa.title.text.isEmpty() || (!isOrigin && !origin.worlds[w.key()].title.text.isEmpty()))
             {
                 wo["title"] = wa.title.text;
+                o["_episode_title"] = wa.title.text;
+                o["_episode_world"] = w.key();
                 if(!wa.title.note.isEmpty())
                     wo["title-n"] = wa.title.note;
 
