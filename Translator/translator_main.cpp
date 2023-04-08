@@ -315,7 +315,10 @@ void TranslatorMain::on_actionRescan_triggered()
     isOk.setFuture(QtConcurrent::run([this]()->bool
     {
         TextDataProcessor t;
-        return t.scanEpisode(m_currentPath, m_project);
+        if(m_isSingleLevel)
+            return t.scanSingleLevel(m_currentLevel, m_project);
+        else
+            return t.scanEpisode(m_currentPath, m_project);
     }));
 
     // Now wait until the config load in finished.

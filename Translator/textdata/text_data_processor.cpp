@@ -165,24 +165,7 @@ bool TextDataProcessor::loadProjectLevel(const QString &file, TranslateProject &
     }
 
     if(!hasTranslations)
-    {
-        // Fill the original language
-        auto &origin = proj["origin"];
-
-        // Import level
-        importLevel(origin, file, f_d.relativeFilePath(file));
-
-        // Import lunadll script if presented
-        QString lunaTxtPath = directory + "/lunadll.txt";
-        if(QFile::exists(lunaTxtPath))
-            importScript(origin, lunaTxtPath, f_d.relativeFilePath(lunaTxtPath));
-
-        // FIXME: Remove this after adding the "languages manager" module
-        updateTranslation(proj, "ru");
-        updateTranslation(proj, "zh-cn");
-
-        saveJSONs(directory, proj);
-    }
+        return scanSingleLevel(file, proj);
 
     return true;
 }
@@ -228,6 +211,32 @@ bool TextDataProcessor::scanEpisode(const QString &directory, TranslateProject &
         else if(f.endsWith(".txt", Qt::CaseInsensitive))
             importScript(origin, f, rfp);
     }
+
+    // FIXME: Remove this after adding the "languages manager" module
+    updateTranslation(proj, "ru");
+    updateTranslation(proj, "zh-cn");
+
+    saveJSONs(directory, proj);
+
+    return true;
+}
+
+bool TextDataProcessor::scanSingleLevel(const QString &file, TranslateProject &proj)
+{
+    QFileInfo f(file);
+    QDir f_d = f.absoluteDir();
+    QString directory = f_d.absolutePath() + "/" + f.completeBaseName();
+
+    // Fill the original language
+    auto &origin = proj["origin"];
+
+    // Import level
+    importLevel(origin, file, f_d.relativeFilePath(file));
+
+    // Import lunadll script if presented
+    QString lunaTxtPath = directory + "/lunadll.txt";
+    if(QFile::exists(lunaTxtPath))
+        importScript(origin, lunaTxtPath, f_d.relativeFilePath(lunaTxtPath));
 
     // FIXME: Remove this after adding the "languages manager" module
     updateTranslation(proj, "ru");
@@ -686,6 +695,7 @@ void TextDataProcessor::importScript(TranslationData &origin, const QString &pat
                 TranslationData_ScriptLine sline;
                 sline.line = lineNum;
                 sline.source = QString::fromStdString(ac_str);
+                sline.translation.text = sline.source;
                 tr.lines.insert(lineNum, sline);
                 hasStrings |= true;
                 qDebug() << "Command line" << command << lineNum << QString::fromStdString(ac_str);

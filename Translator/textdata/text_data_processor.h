@@ -12,6 +12,7 @@ public:
     bool loadProjectLevel(const QString &file, TranslateProject &proj);
     bool saveProjectLevel(const QString &file, TranslateProject &proj);
     bool scanEpisode(const QString &directory, TranslateProject &proj);
+    bool scanSingleLevel(const QString &file, TranslateProject &proj);
     bool createTranslation(TranslateProject &proj, const QString &lang);
 
 private:
