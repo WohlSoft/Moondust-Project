@@ -815,8 +815,8 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
             if(!wa.title.text.isEmpty() || (!isOrigin && !origin.worlds[w.key()].title.text.isEmpty()))
             {
                 wo["title"] = wa.title.text;
-                o["_episode_title"] = wa.title.text;
-                o["_episode_world"] = w.key();
+                o[" episode_title"] = QJsonValue(wa.title.text);
+                o[" episode_world"] = QJsonValue(w.key());
                 if(!wa.title.note.isEmpty())
                     wo["title-n"] = wa.title.note;
 
@@ -1125,7 +1125,12 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
 
     for(auto &k : r.keys())
     {
-        QJsonObject entry = r[k].toObject();
+        auto val = r.value(k);
+
+        if(!val.isObject())
+            continue; // Skip non-objects
+
+        QJsonObject entry = val.toObject();
 
         if(entry.isEmpty()) // If blank object, it's a "directory"
         {
