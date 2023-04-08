@@ -254,7 +254,7 @@ bool TranslatorMain::eventFilter(QObject *object, QEvent *event)
     return false;
 }
 
-void TranslatorMain::on_actionOpen_project_triggered()
+void TranslatorMain::on_actionOpenProject_triggered()
 {
     QString d = QFileDialog::getExistingDirectory(this,
                                                   tr("Open Episode project"),
@@ -264,6 +264,22 @@ void TranslatorMain::on_actionOpen_project_triggered()
         return;
 
     openProject(d);
+}
+
+void TranslatorMain::on_actionOpenSingleLevel_triggered()
+{
+    QString d = QFileDialog::getOpenFileName(this,
+                                             tr("Open single-level project"),
+                                             m_recentPath,
+                                             QString("%1 (*.lvl *.lvlx);;%2 (*.*)")
+                                                     .arg(tr("Level files")
+                                                     .arg(tr("All files"))),
+                                             nullptr,
+                                             c_fileDialogOptions);
+    if(d.isEmpty())
+        return;
+
+    openProject(d, true);
 }
 
 void TranslatorMain::on_actionRescan_triggered()
@@ -319,7 +335,10 @@ void TranslatorMain::on_actionSaveTranslations_triggered()
         return;
 
     TextDataProcessor t;
-    t.saveProject(m_currentPath, m_project);
+    if(m_isSingleLevel)
+        t.saveProjectLevel(m_currentLevel, m_project);
+    else
+        t.saveProject(m_currentPath, m_project);
     ui->statusbar->showMessage(tr("Project %1 has been saved!").arg(m_currentPath));
 }
 
@@ -333,6 +352,7 @@ void TranslatorMain::on_actionCloseProject_triggered()
     m_dialoguesListModel->clear();
     m_filesStringsModel->clear();
     m_filesListModel->rebuildView(m_currentPath);
+    m_currentLevel.clear();
     m_currentPath.clear();
     updateActions();
 }
@@ -391,11 +411,13 @@ void TranslatorMain::saveSetup()
     m_setup.sync();
 }
 
-void TranslatorMain::openProject(const QString &d)
+void TranslatorMain::openProject(const QString &d, bool singleLevel)
 {
     QFutureWatcher<bool> isOk;
     QEventLoop waitLoop;
     QAtomicInt waitLoopQuit(false);
+
+    m_isSingleLevel = singleLevel;
 
     QProgressDialog progress(this);
     progress.setLabelText(tr("Loading..."));
@@ -413,10 +435,13 @@ void TranslatorMain::openProject(const QString &d)
     progress.show();
 
     // Do the loading in a thread
-    isOk.setFuture(QtConcurrent::run([this, &d]()->bool
+    isOk.setFuture(QtConcurrent::run([this, &d, singleLevel]()->bool
     {
         TextDataProcessor t;
-        return t.loadProject(d, m_project);
+        if(singleLevel)
+            return t.loadProjectLevel(d, m_project);
+        else
+            return t.loadProject(d, m_project);
     }));
 
     // Now wait until the config load in finished.
@@ -441,7 +466,17 @@ void TranslatorMain::openProject(const QString &d)
     m_filesListModel->rebuildView(d);
 
     m_recentPath = d;
-    m_currentPath = d;
+    if(singleLevel)
+    {
+        QFileInfo f(d);
+        m_currentLevel = d;
+        m_currentPath = f.absoluteDir().absolutePath();
+    }
+    else
+    {
+        m_currentPath = d;
+    }
+
     if(!m_recentProjects.contains(d))
     {
         m_recentProjects.push_front(d);
@@ -537,13 +572,14 @@ void TranslatorMain::updateRecent()
         for(auto &r : m_recentProjects)
         {
             QFileInfo d(r);
+            bool singleLevel = d.isFile();
             auto *e = ui->menuOpenRecentProject->addAction(d.fileName());
             QObject::connect(e,
                              static_cast<void(QAction::*)(bool)>(&QAction::triggered),
                              this,
-                             [this, r](bool)->void
+                             [this, r, singleLevel](bool)->void
             {
-                openProject(r);
+                openProject(r, singleLevel);
             });
         }
     }

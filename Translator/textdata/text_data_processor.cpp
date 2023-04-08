@@ -136,6 +136,64 @@ bool TextDataProcessor::saveProject(const QString &directory, TranslateProject &
     return saveJSONs(directory, proj);
 }
 
+bool TextDataProcessor::loadProjectLevel(const QString &file, TranslateProject &proj)
+{
+    QFileInfo f(file);
+    QDir f_d = f.absoluteDir();
+    QString directory = f_d.absolutePath() + "/" + f.completeBaseName();
+
+    // Close current project
+    proj.clear();
+
+    QDirIterator dit(directory,
+                     {"translation_*.json"},
+                     QDir::Files,
+                     QDirIterator::NoIteratorFlags);
+
+    bool hasTranslations = false;
+
+    while(dit.hasNext())
+    {
+        auto f = dit.next();
+        QFileInfo fi(f);
+        QRegExp fe("translation_([a-zA-Z-]*)\\.json", Qt::CaseInsensitive, QRegExp::RegExp2);
+        if(fe.exactMatch(fi.fileName()))
+        {
+            loadTranslation(proj, fe.cap(1), f);
+            hasTranslations = true;
+        }
+    }
+
+    if(!hasTranslations)
+    {
+        // Fill the original language
+        auto &origin = proj["origin"];
+
+        // Import level
+        importLevel(origin, file, f_d.relativeFilePath(file));
+
+        // Import lunadll script if presented
+        QString lunaTxtPath = directory + "/lunadll.txt";
+        if(QFile::exists(lunaTxtPath))
+            importScript(origin, lunaTxtPath, f_d.relativeFilePath(lunaTxtPath));
+
+        // FIXME: Remove this after adding the "languages manager" module
+        updateTranslation(proj, "ru");
+        updateTranslation(proj, "zh-cn");
+
+        saveJSONs(directory, proj);
+    }
+
+    return true;
+}
+
+bool TextDataProcessor::saveProjectLevel(const QString &file, TranslateProject &proj)
+{
+    QFileInfo f(file);
+    QString directory = f.absoluteDir().absolutePath() + "/" + f.completeBaseName();
+    return saveJSONs(directory, proj);
+}
+
 bool TextDataProcessor::scanEpisode(const QString &directory, TranslateProject &proj)
 {
     QDir d(directory);
@@ -171,8 +229,10 @@ bool TextDataProcessor::scanEpisode(const QString &directory, TranslateProject &
             importScript(origin, f, rfp);
     }
 
+    // FIXME: Remove this after adding the "languages manager" module
     updateTranslation(proj, "ru");
     updateTranslation(proj, "zh-cn");
+
     saveJSONs(directory, proj);
 
     return true;

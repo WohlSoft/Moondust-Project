@@ -32,7 +32,8 @@ protected:
     bool eventFilter(QObject *object, QEvent *event);
 
 private slots:
-    void on_actionOpen_project_triggered();
+    void on_actionOpenProject_triggered();
+    void on_actionOpenSingleLevel_triggered();
     void on_actionRescan_triggered();
     void on_actionSaveTranslations_triggered();
     void on_actionCloseProject_triggered();
@@ -50,6 +51,8 @@ private:
     QString m_recentPath;
     QVector<QString> m_recentProjects;
     QString m_currentPath;
+    QString m_currentLevel;
+    bool    m_isSingleLevel = false;
     QString m_curTranslation;
     QString m_recentLang = "origin";
     QString *m_sourceNotePtr = nullptr;
@@ -59,7 +62,7 @@ private:
     void loadSetup();
     void saveSetup();
 
-    void openProject(const QString &d);
+    void openProject(const QString &d, bool singleLevel = false);
 
     void resetTranslationFields();
     void updateTranslationFields(const QModelIndex &s);

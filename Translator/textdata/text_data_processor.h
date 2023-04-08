@@ -9,6 +9,8 @@ public:
     TextDataProcessor();
     bool loadProject(const QString &directory, TranslateProject &proj);
     bool saveProject(const QString &directory, TranslateProject &proj);
+    bool loadProjectLevel(const QString &file, TranslateProject &proj);
+    bool saveProjectLevel(const QString &file, TranslateProject &proj);
     bool scanEpisode(const QString &directory, TranslateProject &proj);
     bool createTranslation(TranslateProject &proj, const QString &lang);
 

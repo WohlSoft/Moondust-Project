@@ -230,7 +230,8 @@ The new algorithm is only supported by TheXTech and Moondust Engine.</string>
      <addaction name="separator"/>
      <addaction name="actionClearRecentProjects"/>
     </widget>
-    <addaction name="actionOpen_project"/>
+    <addaction name="actionOpenProject"/>
+    <addaction name="actionOpenSingleLevel"/>
     <addaction name="menuOpenRecentProject"/>
     <addaction name="separator"/>
     <addaction name="actionRescan"/>
@@ -364,9 +365,9 @@ The new algorithm is only supported by TheXTech and Moondust Engine.</string>
     </widget>
    </widget>
   </widget>
-  <action name="actionOpen_project">
+  <action name="actionOpenProject">
    <property name="text">
-    <string>Open project...</string>
+    <string>Open episode project...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -417,6 +418,11 @@ The new algorithm is only supported by TheXTech and Moondust Engine.</string>
   <action name="actionClearRecentProjects">
    <property name="text">
     <string>Clear recent projects...</string>
+   </property>
+  </action>
+  <action name="actionOpenSingleLevel">
+   <property name="text">
+    <string>Open single level project...</string>
    </property>
   </action>
  </widget>
