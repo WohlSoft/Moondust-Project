@@ -20,8 +20,7 @@ class TranslateField : public QFrame
     int m_group = -1;
     int m_type = -1;
     int m_key = -1;
-    QString *m_string = nullptr;
-    QString *m_note = nullptr;
+    TrLine *m_tr = nullptr;
 
 public:
     explicit TranslateField(TranslateProject *project, QWidget *parent = nullptr);
@@ -30,7 +29,7 @@ public:
     void setItem(int group, const QString &root, int type, int key);
     void clearItem();
 
-    void setText(const QString &text, const QString &note);
+    void setText(const QString &text, const QString &note, bool finished);
     void setLang(const QString &lang);
 
     const QString &getLang() const;

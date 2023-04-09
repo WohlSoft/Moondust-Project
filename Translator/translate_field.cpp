@@ -16,8 +16,8 @@ TranslateField::TranslateField(TranslateProject *project, QWidget *parent) :
                      this,
                      [this]()->void
     {
-        if(m_string)
-            *m_string = ui->translationText->toPlainText();
+        if(m_tr)
+            m_tr->text = ui->translationText->toPlainText();
         emit textChanged(ui->translationText->toPlainText());
         emit itemActivated(m_lang);
     });
@@ -27,15 +27,25 @@ TranslateField::TranslateField(TranslateProject *project, QWidget *parent) :
                      this,
                      [this](const QString &e)->void
     {
-        if(m_note)
-            *m_note = e;
+        if(m_tr)
+            m_tr->note = e;
+    });
+
+    QObject::connect(ui->trIsComplete,
+                     static_cast<void(QCheckBox::*)(bool)>(&QCheckBox::toggled),
+                     this,
+                     [this](bool b)->void
+    {
+        if(m_tr)
+            m_tr->unfinished = !b;
     });
 
     ui->translationText->installEventFilter(this);
     ui->note->installEventFilter(this);
 
-    ui->translationText->setDisabled(false);
-    ui->note->setDisabled(false);
+    ui->translationText->setEnabled(false);
+    ui->note->setEnabled(false);
+    ui->trIsComplete->setEnabled(false);
 }
 
 TranslateField::~TranslateField()
@@ -59,13 +69,17 @@ void TranslateField::clearItem()
     ui->translationText->clear();
     ui->translationText->blockSignals(false);
     ui->translationText->setEnabled(false);
+    ui->trIsComplete->blockSignals(true);
+    ui->trIsComplete->setChecked(false);
+    ui->trIsComplete->blockSignals(false);
+    ui->trIsComplete->setEnabled(false);
     ui->note->blockSignals(true);
     ui->note->clear();
     ui->note->blockSignals(false);
     ui->note->setEnabled(false);
 }
 
-void TranslateField::setText(const QString &text, const QString &note)
+void TranslateField::setText(const QString &text, const QString &note, bool finished)
 {
     ui->translationText->blockSignals(true);
     ui->translationText->setPlainText(text);
@@ -75,6 +89,10 @@ void TranslateField::setText(const QString &text, const QString &note)
     ui->note->setText(note);
     ui->note->blockSignals(false);
     ui->note->setEnabled(true);
+    ui->trIsComplete->blockSignals(true);
+    ui->trIsComplete->setChecked(finished);
+    ui->trIsComplete->blockSignals(false);
+    ui->trIsComplete->setEnabled(true);
 }
 
 void TranslateField::setLang(const QString &lang)
@@ -93,8 +111,8 @@ const QString &TranslateField::getLang() const
 
 const QString &TranslateField::getText() const
 {
-    Q_ASSERT(m_string);
-    return *m_string;
+    Q_ASSERT(m_tr);
+    return m_tr->text;
 }
 
 void TranslateField::reloadEntry()
@@ -102,8 +120,7 @@ void TranslateField::reloadEntry()
     if(m_group < 0 || m_type < 0 || m_root.isEmpty())
         return;
 
-    m_string = nullptr;
-    m_note = nullptr;
+    m_tr = nullptr;
 
     switch(m_group)
     {
@@ -117,22 +134,19 @@ void TranslateField::reloadEntry()
             if(m_key < 0)
                 return;
             auto &e = l.level_titles[m_key];
-            m_string = &e.title.text;
-            m_note = &e.title.note;
-            setText(e.title.text, e.title.note);
+            m_tr = &e.title;
+            setText(e.title.text, e.title.note, !e.title.unfinished);
             break;
         }
         case TextTypes::WDT_TITLE:
         {
-            m_string = &l.title.text;
-            m_note = &l.title.note;
-            setText(l.title.text, l.title.note);
+            m_tr = &l.title;
+            setText(l.title.text, l.title.note, !l.title.unfinished);
             break;
         }
         case TextTypes::WDT_CREDITS:
-            m_string = &l.credits.text;
-            m_note = &l.credits.note;
-            setText(l.credits.text, l.credits.note);
+            m_tr = &l.credits;
+            setText(l.credits.text, l.credits.note, !l.credits.unfinished);
             break;
         }
         break;
@@ -148,9 +162,8 @@ void TranslateField::reloadEntry()
             if(m_key < 0)
                 return;
             auto &e = l.npc[m_key];
-            m_string = &e.talk.text;
-            m_note = &e.talk.note;
-            setText(e.talk.text, e.talk.note);
+            m_tr = &e.talk;
+            setText(e.talk.text, e.talk.note, !e.talk.unfinished);
             break;
         }
         case TextTypes::LDT_EVENT:
@@ -158,15 +171,13 @@ void TranslateField::reloadEntry()
             if(m_key < 0)
                 return;
             auto &e = l.events[m_key];
-            m_string = &e.message.text;
-            m_note = &e.message.note;
-            setText(e.message.text, e.message.note);
+            m_tr = &e.message;
+            setText(e.message.text, e.message.note, !e.message.unfinished);
             break;
         }
         case TextTypes::LDT_TITLE:
-            m_string = &l.title.text;
-            m_note = &l.title.note;
-            setText(l.title.text, l.title.note);
+            m_tr = &l.title;
+            setText(l.title.text, l.title.note, !l.title.unfinished);
             break;
         }
 
@@ -182,9 +193,8 @@ void TranslateField::reloadEntry()
             if(m_key < 0)
                 return;
             auto &e = l.lines[m_key];
-            m_string = &e.translation.text;
-            m_note = &e.translation.note;
-            setText(e.translation.text, e.translation.note);
+            m_tr = &e.translation;
+            setText(e.translation.text, e.translation.note, !e.translation.unfinished);
             break;
         }
         }
