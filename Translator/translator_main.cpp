@@ -53,7 +53,7 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
         QMenu menu(this);
         QAction *openFile = menu.addAction(tr("Open file..."));
         QAction *openDir = menu.addAction(tr("Open containing directory"));
-        QAction *ret = menu.exec(mapToGlobal(pos));
+        QAction *ret = menu.exec(ui->filesListTable->mapToGlobal(pos));
 
         QString path = m_currentPath + "/" + i.data(FilesListModel::R_KEY).toString();
 
