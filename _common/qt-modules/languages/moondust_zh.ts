@@ -5,27 +5,27 @@
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation>选择 WOPL 音色组文件</translation>
+        <translation>选择 WOPL 音色库文件</translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation>请选择要使用的 WOPL 音色组文件</translation>
+        <translation>请选择要使用的 WOPL 音色库文件</translation>
     </message>
     <message>
         <source>Select WOPN bank file</source>
-        <translation>选择 WOPN 音色组文件</translation>
+        <translation>选择 WOPN 音色库文件</translation>
     </message>
     <message>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation>请选择要使用的 WOPN 音色组文件</translation>
+        <translation>请选择要使用的 WOPN 音色库文件</translation>
     </message>
     <message>
         <source>Select SoundFont bank file</source>
-        <translation>选择 SF2 音源文件</translation>
+        <translation>选择 SF2 音色库文件</translation>
     </message>
     <message>
         <source>Please select the SoundFont bank file to add</source>
-        <translation>请选择要添加的 SF2 音源文件</translation>
+        <translation>请选择要添加的 SF2 音色库文件</translation>
     </message>
 </context>
 <context>
@@ -85,7 +85,7 @@
     </message>
     <message>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
-        <translation>MIDI 音乐中所使用的音色库，可使用不同的库对比音色差异。</translation>
+        <translation>MIDI 音乐所使用的音色库，可使用不同的库对比音色差异。</translation>
     </message>
     <message>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
@@ -141,7 +141,7 @@
     </message>
     <message>
         <source>Native MIDI (Not recommended, buggy)</source>
-        <translation>本地 MIDI (有 Bug，不推荐)</translation>
+        <translation>本地 MIDI (有 BUG，不推荐)</translation>
     </message>
     <message>
         <source>[Auto]</source>
@@ -173,7 +173,7 @@
     </message>
     <message>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation>SF2 音源列表（支持拖拽排序）</translation>
+        <translation>SF2 音色库列表（支持拖拽排序）</translation>
     </message>
     <message>
         <source>Add</source>
@@ -236,7 +236,7 @@
     </message>
     <message>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation>FluidSynth（需要 SF2 音源支持）</translation>
+        <translation>FluidSynth（需要 SF2 音色库支持）</translation>
     </message>
     <message>
         <source>Native OPN2</source>
@@ -287,7 +287,7 @@
     </message>
     <message>
         <source>Disable SPC echo</source>
-        <translation>禁用 SPC 回音效果</translation>
+        <translation>禁用 SPC 音乐回音效果</translation>
     </message>
     <message>
         <source>Sounding off delay based</source>
@@ -328,7 +328,7 @@
     </message>
     <message>
         <source>Please, select level file from list for use them:</source>
-        <translation>请从下列关卡文件中使用：</translation>
+        <translation>请从下方列表选择要使用的关卡文件：</translation>
     </message>
 </context>
 <context>

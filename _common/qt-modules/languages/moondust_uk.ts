@@ -5,7 +5,7 @@
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation>Вибрати файл банку WOPL</translation>
+        <translation>Обрати файл банку WOPL</translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
