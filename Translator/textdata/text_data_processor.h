@@ -7,6 +7,7 @@ class TextDataProcessor
 {
 public:
     TextDataProcessor();
+    void toI18N(const QString &directory);
     bool loadProject(const QString &directory, TranslateProject &proj);
     bool saveProject(const QString &directory, TranslateProject &proj);
     bool loadProjectLevel(const QString &file, TranslateProject &proj);

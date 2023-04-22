@@ -16,9 +16,6 @@
 
 #include "text_data_processor.h"
 
-TextDataProcessor::TextDataProcessor()
-{}
-
 
 /*!
  * \brief Follow the chain of event triggers and find a first event with a message text if possible
@@ -102,12 +99,40 @@ static bool validate(const QMap<int, TranslationData_NPC> &d)
 #endif
 
 
+TextDataProcessor::TextDataProcessor()
+{}
+
+void TextDataProcessor::toI18N(const QString &directory)
+{
+    QDir i18n(directory + "/i18n");
+    if(i18n.exists())
+        return;
+
+    i18n.cdUp();
+    i18n.mkdir("i18n");
+
+    QDirIterator dit(directory,
+                     {"translation_*.json"},
+                     QDir::Files,
+                     QDirIterator::NoIteratorFlags);
+
+    while(dit.hasNext())
+    {
+        auto f = dit.next();
+        QFileInfo fi(f);
+        QFile::rename(f, directory + "/i18n/" + fi.fileName());
+    }
+}
+
 bool TextDataProcessor::loadProject(const QString &directory, TranslateProject &proj)
 {
     // Close current project
     proj.clear();
 
-    QDirIterator dit(directory,
+    // Update the translation structure
+    toI18N(directory);
+
+    QDirIterator dit(directory + "/i18n",
                      {"translation_*.json"},
                      QDir::Files,
                      QDirIterator::NoIteratorFlags);
@@ -145,7 +170,10 @@ bool TextDataProcessor::loadProjectLevel(const QString &file, TranslateProject &
     // Close current project
     proj.clear();
 
-    QDirIterator dit(directory,
+    // Update the translation structure
+    toI18N(directory);
+
+    QDirIterator dit(directory + "/i18n",
                      {"translation_*.json"},
                      QDir::Files,
                      QDirIterator::NoIteratorFlags);
@@ -1002,7 +1030,11 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
                 o[s] = QJsonObject();
         }
 
-        QFile f(QString("%1/translation_%2.json").arg(directory).arg(it.key()));
+        QDir i18n(directory);
+        if(!i18n.exists("i18n"))
+            i18n.mkdir("i18n");
+
+        QFile f(QString("%1/i18n/translation_%2.json").arg(directory).arg(it.key()));
         if(f.open(QIODevice::WriteOnly))
         {
             QJsonDocument d;
