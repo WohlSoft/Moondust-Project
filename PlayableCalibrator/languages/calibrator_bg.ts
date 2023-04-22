@@ -477,7 +477,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="953"/>
         <source>Open the srite directory...</source>
-        <translation>Отворете директорията със спрайтове...</translation>
+        <translation>Отворете директорията със спрайтове…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="990"/>
