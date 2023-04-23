@@ -41,6 +41,8 @@ private slots:
 
     void on_actionClearRecentProjects_triggered();
 
+    void on_actionAbout_triggered();
+
 private:
     Ui::TranslatorMain *ui;
     TranslateProject m_project;

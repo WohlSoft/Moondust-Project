@@ -21,6 +21,18 @@
 #ifndef TRANSLATOR_VERSION_H
 #define TRANSLATOR_VERSION_H
 
+#ifdef GIT_VERSION
+#define V_BUILD_VER GIT_VERSION
+#else
+#define V_BUILD_VER "<empty>"
+#endif
+
+#ifdef GIT_BRANCH
+#define V_BUILD_BRANCH GIT_BRANCH
+#else
+#define V_BUILD_BRANCH "<unknown>"
+#endif
+
 //Version of this program
 
 #ifdef TRANSLATOR_VERSION_1

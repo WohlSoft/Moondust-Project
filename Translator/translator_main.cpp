@@ -14,6 +14,7 @@
 #include "qfile_dialogs_default_options.hpp"
 #include "translate_field.h"
 #include "dialogue_item.h"
+#include "about/about.h"
 
 #include "translator_main.h"
 #include "ui_translator_main.h"
@@ -634,4 +635,11 @@ void TranslatorMain::on_actionClearRecentProjects_triggered()
 {
     m_recentProjects.clear();
     updateRecent();
+}
+
+void TranslatorMain::on_actionAbout_triggered()
+{
+    about a(this);
+    a.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+    a.exec();
 }
