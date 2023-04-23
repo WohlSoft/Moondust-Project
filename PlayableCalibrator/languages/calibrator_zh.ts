@@ -94,7 +94,7 @@
     <message>
         <location filename="../animator/animator.ui" line="14"/>
         <source>Animator</source>
-        <translation>动画编辑器</translation>
+        <translation>动画师</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="24"/>
@@ -493,7 +493,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="953"/>
         <source>Open the srite directory...</source>
-        <translation>打开精灵目录……</translation>
+        <translation>打开精灵目录…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="990"/>
@@ -619,7 +619,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="981"/>
         <source>Animator</source>
-        <translation>动画编辑器</translation>
+        <translation>动画师</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="545"/>

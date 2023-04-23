@@ -607,7 +607,7 @@ Butonul din dreapta - Orientează colţurile din dreapta-jos</translation>
     <message>
         <location filename="../calibration_main.ui" line="953"/>
         <source>Open the srite directory...</source>
-        <translation>Deschide directorul cu sprite...</translation>
+        <translation>Deschide directorul cu sprite…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="981"/>

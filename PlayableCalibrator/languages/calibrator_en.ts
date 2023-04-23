@@ -668,7 +668,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
     <message>
         <location filename="../calibration_main.ui" line="953"/>
         <source>Open the srite directory...</source>
-        <translation>Open the sprite directory...</translation>
+        <translation>Open the sprite directory…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="990"/>
