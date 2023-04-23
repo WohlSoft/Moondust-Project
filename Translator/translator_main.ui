@@ -72,7 +72,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>569</width>
+             <width>434</width>
              <height>396</height>
             </rect>
            </property>
@@ -343,7 +343,7 @@ The new algorithm is only supported by TheXTech and Moondust Engine.</string>
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>80</width>
+       <width>193</width>
        <height>190</height>
       </rect>
      </property>
@@ -363,6 +363,41 @@ The new algorithm is only supported by TheXTech and Moondust Engine.</string>
       </item>
      </layout>
     </widget>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="languagesList">
+   <property name="windowTitle">
+    <string>Languages</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="0">
+      <spacer name="languagesSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>121</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="languagesAdd">
+       <property name="text">
+        <string>Add new</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="2">
+      <widget class="QListView" name="languagesListView"/>
+     </item>
+    </layout>
    </widget>
   </widget>
   <action name="actionOpenProject">
