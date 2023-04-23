@@ -1113,7 +1113,7 @@ Please save them before doing anything else.</source>
     <message>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation>房间大小</translation>
+        <translation>空间大小</translation>
     </message>
     <message>
         <source>Damping</source>
