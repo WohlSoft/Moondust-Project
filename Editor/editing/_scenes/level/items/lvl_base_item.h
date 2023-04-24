@@ -30,7 +30,8 @@
 
 class LvlScene;
 
-class LvlBaseItem: public QObject,
+class LvlBaseItem:
+    public QObject,
     public QGraphicsItem
 {
     Q_OBJECT

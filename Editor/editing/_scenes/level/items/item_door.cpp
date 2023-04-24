@@ -130,23 +130,26 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         dstLevelPath = m_scene->m_data->meta.path + "/" + dstLevelName;
     }
 
-    QAction *openLvl = itemMenu.addAction(tr("Open target level: %1").arg(dstLevelName).replace("&", "&&&"));
+    QAction *openLvl = itemMenu.addAction(tr("Open target level: %1").arg(dstLevelName).replace("&", "&&"));
     openLvl->setVisible((!dstLevelName.isEmpty()) && QFile::exists(dstLevelPath));
     openLvl->deleteLater();
 
     /*************Layers*******************/
-    QMenu *layerName =     itemMenu.addMenu(tr("Layer: ") + QString("[%1]").arg(m_data.layer).replace("&", "&&&"));
+    QMenu *layerName =     itemMenu.addMenu(tr("Layer: ") + QString("[%1]").arg(m_data.layer).replace("&", "&&"));
     QAction *setLayer;
     QList<QAction *> layerItems;
 
     QAction *newLayer =    layerName->addAction(tr("Add to new layer..."));
     layerName->addSeparator()->deleteLater();
-    for(LevelLayer &layer : m_scene->m_data->layers)
+
+    for(const LevelLayer &layer : m_scene->m_data->layers)
     {
         //Skip system layers
-        if((layer.name == "Destroyed Blocks") || (layer.name == "Spawned NPCs")) continue;
+        if((layer.name == "Destroyed Blocks") || (layer.name == "Spawned NPCs"))
+            continue;
 
-        setLayer = layerName->addAction(layer.name.replace("&", "&&&") + ((layer.hidden) ? "" + tr("[hidden]") : ""));
+        QString label = layer.name + ((layer.hidden) ? " " + tr("[hidden]") : "");
+        setLayer = layerName->addAction(label.replace("&", "&&"));
         setLayer->setData(layer.name);
         setLayer->setCheckable(true);
         setLayer->setEnabled(true);

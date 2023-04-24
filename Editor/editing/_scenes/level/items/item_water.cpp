@@ -88,18 +88,20 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QMenu ItemMenu;
 
     /*************Layers*******************/
-    QMenu *LayerName = ItemMenu.addMenu(tr("Layer: ") + QString("[%1]").arg(m_data.layer).replace("&", "&&&"));
+    QMenu *LayerName = ItemMenu.addMenu(tr("Layer: ") + QString("[%1]").arg(m_data.layer).replace("&", "&&"));
     QAction *setLayer;
     QList<QAction *> layerItems;
     QAction *newLayer = LayerName->addAction(tr("Add to new layer..."));
     LayerName->addSeparator();
 
-    for(LevelLayer &layer : m_scene->m_data->layers)
+    for(const LevelLayer &layer : m_scene->m_data->layers)
     {
         //Skip system layers
-        if((layer.name == "Destroyed Blocks") || (layer.name == "Spawned NPCs")) continue;
+        if((layer.name == "Destroyed Blocks") || (layer.name == "Spawned NPCs"))
+            continue;
 
-        setLayer = LayerName->addAction(layer.name.replace("&", "&&&") + ((layer.hidden) ? "" + tr("[hidden]") : ""));
+        QString label = layer.name + ((layer.hidden) ? " " + tr("[hidden]") : "");
+        setLayer = LayerName->addAction(label.replace("&", "&&"));
         setLayer->setData(layer.name);
         setLayer->setCheckable(true);
         setLayer->setEnabled(true);
