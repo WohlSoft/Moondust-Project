@@ -9290,58 +9290,58 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan</translation>
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation type="unfinished"></translation>
+        <translation>Menghitung bintang...</translation>
     </message>
     <message>
         <source>The name of the level that will be loaded when the game first loads.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nama level yang akan dimuat saat game pertama kali dimuat.</translation>
     </message>
     <message>
         <source>Main hub level:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tingkat hub utama:</translation>
     </message>
 </context>
 <context>
     <name>aboutDialog</name>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Tentang</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutup</translation>
     </message>
     <message>
         <source>By Wohlstand</source>
-        <translation type="unfinished"></translation>
+        <translation>Oleh Wohlstand</translation>
     </message>
     <message>
         <source>Editor, version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor, versi %1</translation>
     </message>
     <message>
         <source>Revision</source>
-        <translation type="unfinished"></translation>
+        <translation>Revisi</translation>
     </message>
     <message>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>Tanggal pembuatan</translation>
     </message>
     <message>
         <source>Our project site</source>
-        <translation type="unfinished"></translation>
+        <translation>Situs proyek kami</translation>
     </message>
     <message>
         <source>This program is distributed under %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Program ini didistribusikan di bawah %1</translation>
     </message>
     <message>
         <source>Architecture: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Arsitektur: %1</translation>
     </message>
 </context>
 <context>
@@ -9349,7 +9349,8 @@ Do you want to save your changes?</source>
     <message>
         <source>Drag &amp; Drop items into this box!
 Right-click to remove!</source>
-        <translation type="unfinished"></translation>
+        <translation>Seret &amp;amp; Jatuhkan item ke dalam kotak ini.
+Klik kanan untuk menghapus.</translation>
     </message>
 </context>
 </TS>

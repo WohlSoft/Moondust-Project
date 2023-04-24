@@ -534,11 +534,11 @@ Please set SoX path first</source>
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation>选择 WOPL 音色组文件</translation>
+        <translation>选择 WOPL 音色库文件</translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation>请选择要使用的 WOPL 音色组文件</translation>
+        <translation>请选择要使用的 WOPL 音色库文件</translation>
     </message>
     <message>
         <source>Select WOPN bank file</source>
@@ -546,15 +546,15 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation>请选择要使用的 WOPN 音色组文件</translation>
+        <translation>请选择要使用的 WOPN 音色库文件</translation>
     </message>
     <message>
         <source>Select SoundFont bank file</source>
-        <translation>选择 SF2 音源文件</translation>
+        <translation>选择 SF2 音色库文件</translation>
     </message>
     <message>
         <source>Please select the SoundFont bank file to add</source>
-        <translation>请选择要添加的 SF2 音源文件</translation>
+        <translation>请选择要添加的 SF2 音色库文件</translation>
     </message>
 </context>
 <context>
@@ -1011,7 +1011,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
-        <translation>MIDI 音乐中所使用的音色库，可使用不同的库对比音色差异。</translation>
+        <translation>MIDI 音乐所使用的音色库，可使用不同的库对比音色差异。</translation>
     </message>
     <message>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
@@ -1067,7 +1067,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Native MIDI (Not recommended, buggy)</source>
-        <translation>本地 MIDI (有 Bug，不推荐)</translation>
+        <translation>本地 MIDI (有 BUG，不推荐)</translation>
     </message>
     <message>
         <source>[Auto]</source>
@@ -1099,7 +1099,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation>SF2 音源列表（支持拖拽排序）</translation>
+        <translation>SF2 音色库列表（支持拖拽排序）</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1113,7 +1113,7 @@ Please save them before doing anything else.</source>
     <message>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation>房间大小</translation>
+        <translation>空间大小</translation>
     </message>
     <message>
         <source>Damping</source>
@@ -1162,7 +1162,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation>FluidSynth（需要 SF2 音源支持）</translation>
+        <translation>FluidSynth（需要 SF2 音色库支持）</translation>
     </message>
     <message>
         <source>Native OPN2</source>
@@ -1213,7 +1213,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Disable SPC echo</source>
-        <translation>禁用 SPC 回音效果</translation>
+        <translation>禁用 SPC 音乐回音效果</translation>
     </message>
     <message>
         <source>Sounding off delay based</source>
@@ -2993,7 +2993,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Please, select level file from list for use them:</source>
-        <translation>请从下列关卡文件中使用：</translation>
+        <translation>请从下方列表选择要使用的关卡文件：</translation>
     </message>
 </context>
 <context>
@@ -3227,7 +3227,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     </message>
     <message>
         <source>Please select a path to LunaTester:</source>
-        <translation>请选择 LunaTester 所在的文件夹：</translation>
+        <translation>请选择 LunaTester 所在的位置：</translation>
     </message>
     <message>
         <source>Use default</source>
@@ -3270,7 +3270,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     <message>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
-        <translation>更改 LunaTester 所在的文件夹……</translation>
+        <translation>更改 LunaTester 所在位置……</translation>
     </message>
     <message>
         <source>Select the location of LunaTester.</source>
@@ -3279,7 +3279,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     <message>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
-        <translation>LunaTester 文件夹</translation>
+        <translation>LunaTester 位置</translation>
     </message>
     <message>
         <source>Select a location of LunaTester</source>
@@ -4661,7 +4661,7 @@ They will be given back when player
 finishes the level or lose a life.</source>
         <translation>当进入此传送点时
 一切坐骑将被脱下。
-当关卡完成时或死命时
+当关卡完成时或玩家挂掉时
 坐骑将会回归。</translation>
     </message>
     <message>
@@ -4846,7 +4846,7 @@ If set to zero, the player will start at the pre-defined level start point.</sou
         <source>Create a new warp entry.
 Every warp point pair requires a warp entry.</source>
         <translation>新增传送点。
-两个传送点（入口和出口）作为一个传送点对。</translation>
+两个传送点（入口和出口）为一个传送点对。</translation>
     </message>
     <message>
         <source>Remove current warp entry with all placed points.</source>
@@ -6476,7 +6476,7 @@ Please, choose the engine application yourself!</source>
     </message>
     <message>
         <source>Physics</source>
-        <translation>物理区域</translation>
+        <translation>判定区域</translation>
     </message>
     <message>
         <source>Width</source>
@@ -7611,7 +7611,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
     </message>
     <message>
         <source>Please select a path to SMBX-38A executable:</source>
-        <translation>请选择 SMBX-38A 程序所在文件夹：</translation>
+        <translation>请选择 SMBX-38A 程序所在的位置：</translation>
     </message>
     <message>
         <source>Use default</source>
@@ -7634,7 +7634,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
     <message>
         <source>Select a path to SMBX-38A executable</source>
         <comment>File dialog title</comment>
-        <translation>选择 SMBX-38A 程序所在文件夹</translation>
+        <translation>选择 SMBX-38A 程序所在位置</translation>
     </message>
     <message>
         <source>SMBX-38A is still active</source>
@@ -7910,7 +7910,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
     </message>
     <message>
         <source>Please select a path to TheXTech executable:</source>
-        <translation>请选择 TheXTech 所在的文件夹：</translation>
+        <translation>请选择 TheXTech 所在的位置：</translation>
     </message>
     <message>
         <source>Use default</source>
@@ -7925,7 +7925,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
     <message>
         <source>Select a path to TheXTech executable</source>
         <comment>File dialog title</comment>
-        <translation>选择 TheXTech 所在文件夹</translation>
+        <translation>选择 TheXTech 所在位置</translation>
     </message>
     <message>
         <source>Test level in battle mode</source>
