@@ -85,6 +85,7 @@ void ItemMusic::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         QAction *title = ItemMenu.addAction(QString("[%1]").arg(tr("<Silence>")));
         title->setEnabled(false);
     }
+
     QAction *play = ItemMenu.addAction(tr("Play this"));
     ItemMenu.addSeparator();
 
