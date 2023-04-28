@@ -213,6 +213,22 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
                      &MsgBoxPreview::setFontSize);
     ui->previewZone->setFontSize(ui->previewFontSize->value());
 
+
+    QObject::connect(ui->preProcessorTest,
+                     static_cast<void(QGroupBox::*)(bool)>(&QGroupBox::clicked),
+                     ui->previewZone,
+                     &MsgBoxPreview::setEnableMacros);
+
+    QObject::connect(ui->macroPlayerNum,
+                     static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                     ui->previewZone,
+                     &MsgBoxPreview::setMacroPlayerNum);
+
+    QObject::connect(ui->macroStateNum,
+                     static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                     ui->previewZone,
+                     &MsgBoxPreview::setMacroPlayerState);
+
     updateRecent();
     updateActions();
 }

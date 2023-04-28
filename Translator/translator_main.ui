@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>986</width>
+    <width>1184</width>
     <height>675</height>
    </rect>
   </property>
@@ -72,7 +72,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>434</width>
+             <width>524</width>
              <height>396</height>
             </rect>
            </property>
@@ -149,11 +149,41 @@
        <property name="title">
         <string>Preview</string>
        </property>
-       <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0">
+       <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,1000000">
+        <item row="1" column="2">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item row="1" column="0">
          <widget class="QLabel" name="previewFontSizeLabel">
           <property name="text">
            <string>Font size:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="3">
+         <widget class="MsgBoxPreview" name="previewZone" native="true"/>
+        </item>
+        <item row="0" column="0" colspan="3">
+         <widget class="QCheckBox" name="legacyLineBreak">
+          <property name="toolTip">
+           <string>Enable the legacy linebreak algorithm used by the original SMBX 1.3 to simulate 
+the rendering behaviour of this engine. Legacy algorithm doesn't support multiline
+messages and can't break too long words (longer than 27 characters).
+
+The new algorithm is only supported by TheXTech and Moondust Engine.</string>
+          </property>
+          <property name="text">
+           <string>Use legacy linebreak algorithm</string>
           </property>
          </widget>
         </item>
@@ -174,33 +204,52 @@
          </widget>
         </item>
         <item row="2" column="0" colspan="3">
-         <widget class="MsgBoxPreview" name="previewZone" native="true"/>
-        </item>
-        <item row="1" column="2">
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+         <widget class="QGroupBox" name="preProcessorTest">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
+          <property name="title">
+           <string>Preprocessor test</string>
           </property>
-         </spacer>
-        </item>
-        <item row="0" column="0" colspan="3">
-         <widget class="QCheckBox" name="legacyLineBreak">
-          <property name="toolTip">
-           <string>Enable the legacy linebreak algorithm used by the original SMBX 1.3 to simulate 
-the rendering behaviour of this engine. Legacy algorithm doesn't support multiline
-messages and can't break too long words (longer than 27 characters).
-
-The new algorithm is only supported by TheXTech and Moondust Engine.</string>
+          <property name="checkable">
+           <bool>true</bool>
           </property>
-          <property name="text">
-           <string>Use legacy linebreak algorithm</string>
+          <property name="checked">
+           <bool>false</bool>
           </property>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Player number:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QSpinBox" name="macroPlayerNum">
+             <property name="maximum">
+              <number>100</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>State number:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="macroStateNum">
+             <property name="maximum">
+              <number>100</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
@@ -214,7 +263,7 @@ The new algorithm is only supported by TheXTech and Moondust Engine.</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>986</width>
+     <width>1184</width>
      <height>20</height>
     </rect>
    </property>
@@ -343,7 +392,7 @@ The new algorithm is only supported by TheXTech and Moondust Engine.</string>
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>193</width>
+       <width>97</width>
        <height>190</height>
       </rect>
      </property>

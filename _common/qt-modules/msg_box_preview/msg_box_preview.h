@@ -16,6 +16,18 @@ class MsgBoxPreview : public QWidget
     QStringList m_shownLines;
     bool doVanilla = true;
 
+    struct MacroCond
+    {
+        int player = 1;
+        int state = 1;
+        int coins = 0;
+        int lives = 0;
+    } m_macro;
+
+    bool m_macroEnable = false;
+
+    QString runPreProcessor();
+
 public:
     explicit MsgBoxPreview(QWidget *parent = nullptr);
     virtual ~MsgBoxPreview();
@@ -26,6 +38,11 @@ public:
     void setVanillaMode(bool vanilla);
 
     QSize sizeHint() const;
+
+    void setEnableMacros(bool en);
+
+    void setMacroPlayerNum(int plr);
+    void setMacroPlayerState(int state);
 
 protected:
     void paintEvent(QPaintEvent *e);
