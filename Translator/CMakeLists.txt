@@ -35,6 +35,7 @@ include(../_common/static_qt.cmake)
 
 include(../_common/translator-qt/translator.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
+include(../_common/qt-modules/msg_box_preview/msg_box_preview.cmake)
 
 pge_cxx_standard(14)
 
@@ -92,6 +93,7 @@ set(PGE_TRANSLATOR_SRCS)
 
 list(APPEND PGE_TRANSLATOR_SRCS
     ${PGETRANSLATOR_SRCS}
+    ${MSG_BOX_PREVIEW_SRC}
     main.cpp
     textdata/textdata.h
     textdata/text_types.h
@@ -101,7 +103,6 @@ list(APPEND PGE_TRANSLATOR_SRCS
     textdata/files_strings.h textdata/files_strings.cpp
     about/about.h about/about.cpp
     translator_main.h translator_main.cpp
-    msg_box_preview.h msg_box_preview.cpp
     translate_field.h translate_field.cpp
     dialogue_item.h dialogue_item.cpp
     common_features/app_path.h common_features/app_path.cpp
