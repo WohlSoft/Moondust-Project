@@ -660,6 +660,10 @@ void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
         ui->LVLPropsMusicCustom->setText(musicList.currentFile());
         ui->LVLPropsMusicCustom->setModified(true);
         on_LVLPropsMusicCustom_editingFinished();
+
+        // Call the music setup after picking it up
+        if(CustomMusicSetup::settingsNeeded(ui->LVLPropsMusicCustom->text()))
+            on_musicSetup_clicked();
     }
 }
 
