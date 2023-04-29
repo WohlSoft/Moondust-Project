@@ -109,7 +109,7 @@
     </message>
     <message>
         <source>To begin</source>
-        <translation>回到开始</translation>
+        <translation>编号归零</translation>
     </message>
     <message>
         <source>Previous</source>
@@ -121,7 +121,7 @@
     </message>
     <message>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
-        <translation>提示：请开启音乐播放以预览效果（见主工具栏中播放/停止图标）。</translation>
+        <translation>提示：请开启音乐播放以预览效果（参见主工具栏中的播放/停止图标）。</translation>
     </message>
     <message>
         <source>MIDI</source>
