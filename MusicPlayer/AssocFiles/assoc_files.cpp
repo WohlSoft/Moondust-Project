@@ -70,6 +70,9 @@ AssocFiles::AssocFiles(QWidget *parent) :
     formats << tentry{"uni",  "UNI - MikMod", tr("MikMod Music", "File Type Name")};
     formats << tentry{"xm",   "XM - FastTracker 2", tr("FastTracker 2 Music", "File Type Name")};
 
+    formats << tentry{"pttune",   "PTTUNE - PXTONE Tune", tr("PXTONE Tune", "File Type Name")};
+    formats << tentry{"ptcop",   "PTTUNE - PXTONE Collage Project", tr("PXTONE Collage Project", "File Type Name")};
+
     for(int i=0; i<formats.size(); i++)
     {
         const tentry& e = formats[i];
@@ -126,6 +129,9 @@ void AssocFiles::on_reset_clicked()
     defaultFormats["ult"] = true;
     defaultFormats["uni"] = true;
     defaultFormats["xm"]  = true;
+
+    defaultFormats["pttune"]  = true;
+    defaultFormats["ptcop"]  = true;
 
     for(int i=0; i<items.size(); i++)
     {
@@ -199,42 +205,41 @@ static bool xInstallIconResource(QString context, int iconSize, QString iconName
 {
     QStringList args;
     args << "install";
+
     args << "--context";
     args << context;
+
     if(context == "apps")
         args << "--novendor";
+
     args << "--size";
     args << QString::number(iconSize);
+
     args << QDir::home().absolutePath() + "/.local/share/icons/" + iconName.arg(iconSize);
     args << mimeName;
 
     return xRunCommand("xdg-icon-resource", args);
 }
 
-static bool xIconSize(QList<QListWidgetItem> &items, int iconSize)
+static bool xIconSize(int iconSize)
 {
     bool success = true;
     const QString home = QDir::home().absolutePath();
     if(success) success = xCopyFile(QString(":/cat_musplay/cat_musplay_%1x%1.png")
                                     .arg(iconSize),
-                                    QString("%1/.local/share/icons/PgeMusplay-%2.png")
+                                    QString("%1/.local/share/icons/MoondustMusplay-%2.png")
                                     .arg(home).arg(iconSize));
     if(success) success = xCopyFile(QString(":/file_musplay/file_musplay_%1x%1.png")
                                     .arg(iconSize),
-                                    QString("%1/.local/share/icons/pge_musplay_file-%2.png")
+                                    QString("%1/.local/share/icons/moondust-music-file-%2.png")
                                     .arg(home).arg(iconSize));
-    for(int i = 0; i < items.size(); i++)
-    {
-        if(items[i].checkState() == Qt::Checked)
-        {
-            auto &item = items[i];
-            if(success) success = xInstallIconResource("mimetypes",
-                                                       iconSize,
-                                                       "pge_musplay_file-%1.png",
-                                                       QString("x-application-music-%1").arg(item.data(Qt::UserRole).toString()));
-        }
-    }
-    if(success) success = xInstallIconResource("apps", iconSize, "PgeMusplay-%1.png", "PgeMusplay");
+
+    if(success) success = xInstallIconResource("mimetypes",
+                                               iconSize,
+                                               "moondust-music-file-%1.png",
+                                               "x-application-moondust-music");
+
+    if(success) success = xInstallIconResource("apps", iconSize, "MoondustMusplay-%1.png", "MoondustMusplay");
 
     return success;
 }
@@ -269,15 +274,68 @@ void AssocFiles::on_AssocFiles_accepted()
     if(success) success = QDir().mkpath(home + "/.local/share/applications");
     if(success) success = QDir().mkpath(home + "/.local/share/icons");
 
+    const QMap<QString, QString> magicTable =
+    {
+        {
+            "mid",
+            "        <magic priority=\"60\">\n"
+            "            <match type=\"string\" offset=\"0\" value=\"MThd\"/>\n"
+            "        </magic>\n"
+        },
+        {
+            "midi",
+            "        <magic priority=\"60\">\n"
+            "            <match type=\"string\" offset=\"0\" value=\"MThd\"/>\n"
+            "        </magic>\n"
+        },
+        {
+            "kar",
+            "        <magic priority=\"60\">\n"
+            "            <match type=\"string\" offset=\"0\" value=\"MThd\"/>\n"
+            "        </magic>\n"
+        },
+        {
+            "rmi",
+            "        <magic priority=\"60\">\n"
+            "            <match type=\"string\" offset=\"0\" value=\"RIFF\">\n"
+            "                <match type=\"string\" offset=\"8\" value=\"MThd\"/>\n"
+            "            </match>\n"
+            "        </magic>\n"
+        },
+        {
+            "ogg",
+            "        <magic priority=\"60\">\n"
+            "            <match type=\"string\" offset=\"0\" value=\"OggS\"/>\n"
+            "        </magic>\n"
+        },
+        {
+            "flac",
+            "        <magic priority=\"60\">\n"
+            "            <match type=\"string\" offset=\"0\" value=\"fLaC\"/>\n"
+            "        </magic>\n"
+        },
+        {
+            "ptcop",
+            "        <magic priority=\"60\">\n"
+            "            <match type=\"string\" offset=\"0\" value=\"PTCOLLAGE\"/>\n"
+            "        </magic>\n"
+        },
+        {
+            "pttune",
+            "        <magic priority=\"60\">\n"
+            "            <match type=\"string\" offset=\"0\" value=\"PTTUNE\"/>\n"
+            "        </magic>\n"
+        }
+    };
+
     QString mimeHead =
             "<?xml version=\"1.0\"?>\n"
             "<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>\n";
     QString entryTemplate =
-            "   <mime-type type=\"application/x-pge-music-%1\">"
-            "       <icon name=\"x-application-music-%1\"/>\n"
-            "       <comment>%2</comment>\n"
-            "       <glob pattern=\"*.%1\"/>\n"
-            "   </mime-type>\n";
+            "    <mime-type type=\"application/x-moondust-music-%1\">\n"
+            "        <icon name=\"x-application-moondust-music\"/>\n"
+            "        <comment>%2</comment>\n%3"
+            "    </mime-type>\n";
     QString mimeFoot = "</mime-info>\n";
     QStringList entries;
     QString minesForDesktopFile;
@@ -287,13 +345,22 @@ void AssocFiles::on_AssocFiles_accepted()
         if(items[i].checkState() == Qt::Checked)
         {
             auto &item = items[i];
-            entries.append(entryTemplate.arg(item.data(Qt::UserRole).toString(), item.data(Qt::UserRole + 1).toString()));
+            QString key = item.data(Qt::UserRole).toString();
+            QString comment = item.data(Qt::UserRole + 1).toString();
+            QString glob = QString("        <glob pattern=\"*.%1\"/>\n").arg(key);
+            QString magic = magicTable.contains(key) ? magicTable[key] : glob;
+            entries.append(entryTemplate.arg(key, comment, magic));
             minesForDesktopFile.append(QString("application/x-pge-music-%1;").arg(item.data(Qt::UserRole).toString()));
         }
     }
 
-    QFile outMime(home + "/.local/share/mime/packages/pge-musplay-mimeinfo.xml");
-    outMime.open(QIODevice::WriteOnly|QIODevice::Truncate|QIODevice::Text);
+    QString oldFile = home + "/.local/share/mime/packages/pge-musplay-mimeinfo.xml";
+    if(QFile::exists(oldFile))
+        QFile::remove(oldFile);
+
+    QString mimeFile = home + "/.local/share/mime/packages/moondust-musplay-mimeinfo.xml";
+    QFile outMime(mimeFile);
+    outMime.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text);
     QTextStream outMimeS(&outMime);
     outMimeS << mimeHead;
     for(const QString &s : entries)
@@ -302,10 +369,10 @@ void AssocFiles::on_AssocFiles_accepted()
     outMimeS.flush();
     outMime.close();
 
-    if(success) success = xIconSize(items, 16);
-    if(success) success = xIconSize(items, 32);
-    if(success) success = xIconSize(items, 48);
-    if(success) success = xIconSize(items, 256);
+    if(success) success = xIconSize(16);
+    if(success) success = xIconSize(32);
+    if(success) success = xIconSize(48);
+    if(success) success = xIconSize(256);
 
     QFile shortcut(":/PGE Music Player.desktop.template");
     if(success) success = shortcut.open(QFile::ReadOnly | QFile::Text);
@@ -313,10 +380,12 @@ void AssocFiles::on_AssocFiles_accepted()
     {
         QTextStream shtct(&shortcut);
         QString shortcut_text = shtct.readAll();
-        QFile saveAs(home + "/.local/share/applications/pge_musplay.desktop");
+        QFile saveAs(home + "/.local/share/applications/sdlmixer_musplay.desktop");
 
         if(success) success = saveAs.open(QFile::WriteOnly | QFile::Text);
-        if(success) QTextStream(&saveAs) << shortcut_text.arg(QApplication::applicationDirPath() + "/", minesForDesktopFile);
+        if(success) QTextStream(&saveAs) << shortcut_text.arg(QApplication::applicationFilePath(),
+                                                              QApplication::applicationDirPath() + "/",
+                                                              minesForDesktopFile);
     }
 
     for(int i = 0; i < items.size(); i++)
@@ -324,10 +393,16 @@ void AssocFiles::on_AssocFiles_accepted()
         if(items[i].checkState() == Qt::Checked)
         {
             auto &item = items[i];
-            if(success) success = xRunCommand("xdg-mime", {"default", "pge_musplay.desktop", QString("application/x-pge-music-%1").arg(item.data(Qt::UserRole).toString())});
+            if(success) success = xRunCommand("xdg-mime",
+                                              {
+                                                  "default",
+                                                  "sdlmixer_musplay.desktop",
+                                                  QString("application/x-moondust-music-%1").arg(item.data(Qt::UserRole).toString())
+                                              });
         }
     }
 
+    if(success) success = xRunCommand("xdg-mime", {"install", mimeFile});
     if(success) success = xRunCommand("update-desktop-database", {home + "/.local/share/applications"});
     if(success) success = xRunCommand("update-mime-database", {home + "/.local/share/mime"});
 #else

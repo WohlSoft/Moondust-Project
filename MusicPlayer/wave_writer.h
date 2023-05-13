@@ -19,7 +19,6 @@ void *ctx_wave_open(int chans_count,
                     int is_big_endian,
                     const char *filename);
 
-void ctx_wave_enable_stereo(void *ctx);
 void ctx_wave_write(void *ctx, const unsigned char *in, long count);
 long ctx_wave_sample_count(void *ctx);
 void ctx_wave_close(void *ctx);

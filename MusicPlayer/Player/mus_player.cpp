@@ -150,7 +150,12 @@ namespace PGE_MusicPlayer
                     .arg(channels);
             return false;
         }
+
+        // Retrieve back the actual characteristics
+        Mix_QuerySpec(&g_sample_rate, &g_sample_format, &g_channels);
+
         Mix_AllocateChannels(16);
+
         return true;
     }
 
@@ -202,6 +207,7 @@ namespace PGE_MusicPlayer
                     type == MUS_FLUIDLITE ? "MUS/XMI(Fluid)" :
                     type == MUS_NATIVEMIDI ? "MUS/XMI(Native)" :
                     type == MUS_FFMPEG ? "FFMPEG" :
+                    type == MUS_PXTONE ? "PXTONE" :
 #else
 #   if SDL_MIXER_MAJOR_VERSION > 2 || \
     (SDL_MIXER_MAJOR_VERSION == 2 && SDL_MIXER_MINOR_VERSION > 0) || \
@@ -436,7 +442,6 @@ namespace PGE_MusicPlayer
                                  hasSign,
                                  isBigEndian,
                                  target.toLocal8Bit().data());
-        ctx_wave_enable_stereo(s_wavCtx);
         Mix_SetPostMix(myMusicPlayer, s_wavCtx);
     }
 
