@@ -707,14 +707,14 @@ void CustomMusicSetup::updateVisibiltiy()
     ui->midiSetupOPN->setVisible(m_type == MIDI && synType == MIDI_OPNMIDI);
     ui->midiSetupFluid->setVisible(m_type == MIDI && synType == MIDI_Fluidsynth);
 
-    bool hasTempo = synType == MIDI_ADLMIDI || synType == MIDI_OPNMIDI || synType == MIDI_Fluidsynth || synType == MIDI_Native;
+    bool hasTempo = synType == MIDI_ADLMIDI || synType == MIDI_OPNMIDI || synType == MIDI_Fluidsynth || synType == MIDI_EDMIDI || synType == MIDI_Native;
 
     ui->midiTempoLabel->setVisible(hasTempo);
     ui->midiTempo->setVisible(hasTempo);
     ui->midiTempoAbs->setVisible(hasTempo);
     ui->midiTempoReset->setVisible(hasTempo);
 
-    bool hasGain = synType == MIDI_ADLMIDI || synType == MIDI_OPNMIDI || synType == MIDI_Fluidsynth;
+    bool hasGain = synType == MIDI_ADLMIDI || synType == MIDI_OPNMIDI || synType == MIDI_Fluidsynth || synType == MIDI_EDMIDI;
     ui->midiGainLabel->setVisible(hasGain);
     ui->midiGain->setVisible(hasGain);
     ui->midiGainAbs->setVisible(hasGain);
@@ -946,6 +946,7 @@ void CustomMusicSetup::retranslateLists()
     ui->midiSynth->addItem(tr("Timidity (needed a bank)"), MIDI_Timidity);
     ui->midiSynth->addItem(tr("Native MIDI (Not recommended, buggy)"), MIDI_Native);
     ui->midiSynth->addItem(tr("FluidSynth (needed an SF2-bank)"), MIDI_Fluidsynth);
+    ui->midiSynth->addItem(tr("libEDMIDI (OPLL, SCC, PSG)"), MIDI_EDMIDI);
     ui->midiSynth->setCurrentIndex(cache);
 
     cache = ui->midiExAdlChanAlloc->currentIndex();
