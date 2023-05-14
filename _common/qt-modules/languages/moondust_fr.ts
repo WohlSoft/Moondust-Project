@@ -300,6 +300,10 @@
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>libEDMIDI (OPLL, SCC, PSG)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileListBrowser</name>

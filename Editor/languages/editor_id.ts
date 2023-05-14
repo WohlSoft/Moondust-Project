@@ -372,11 +372,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Batalkan</translation>
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Menghitung bintang...</translation>
     </message>
 </context>
 <context>
@@ -1205,6 +1205,10 @@ Please save them before doing anything else.</source>
     <message>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>libEDMIDI (OPLL, SCC, PSG)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2867,7 +2871,7 @@ Installed LunaLUA partially extends than limits.</source>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Batalkan</translation>
     </message>
     <message>
         <source>Incorrect custom configs</source>
@@ -5090,7 +5094,7 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tutup</translation>
     </message>
     <message>
         <source>Save all</source>
@@ -5102,7 +5106,7 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tentang</translation>
     </message>
     <message>
         <source>Contents</source>
@@ -5726,7 +5730,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Batalkan</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</source>
@@ -6262,7 +6266,7 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>Editor, version %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Editor, versi %1</translation>
     </message>
     <message>
         <source>Moondust Maintainer is not found</source>
@@ -8122,7 +8126,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tutup</translation>
     </message>
     <message>
         <source>Tilesets list:</source>
@@ -8243,7 +8247,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tutup</translation>
     </message>
 </context>
 <context>
@@ -8293,7 +8297,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tutup</translation>
     </message>
     <message>
         <source>Click to check updates</source>
@@ -8585,7 +8589,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Batalkan</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -9142,7 +9146,7 @@ Installed LunaLUA partially extends than limits.</source>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Batalkan</translation>
     </message>
     <message>
         <source>Incorrect custom configs</source>

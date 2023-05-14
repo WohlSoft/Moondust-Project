@@ -304,6 +304,10 @@
         <comment>Channel allocation mode</comment>
         <translation>Any first released</translation>
     </message>
+    <message>
+        <source>libEDMIDI (OPLL, SCC, PSG)</source>
+        <translation>libEDMIDI (OPLL, SCC, PSG)</translation>
+    </message>
 </context>
 <context>
     <name>FileListBrowser</name>

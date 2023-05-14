@@ -1230,6 +1230,10 @@ Please save them before doing anything else.</source>
         <comment>Channel allocation mode</comment>
         <translation>Будь-який вільний</translation>
     </message>
+    <message>
+        <source>libEDMIDI (OPLL, SCC, PSG)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DataConfig</name>

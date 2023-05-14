@@ -1179,92 +1179,92 @@ Please save them before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="67"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="285"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="447"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="73"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="291"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="453"/>
         <source>Extra settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="126"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="317"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="132"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="323"/>
         <source>Custom bank:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="192"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="357"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="198"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="363"/>
         <source>Volume model:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="110"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="116"/>
         <source>Deep vibrato</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="76"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="82"/>
         <source>Bank:</source>
         <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="172"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="178"/>
         <source>Deep tremolo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="86"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="297"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="92"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="303"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="100"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="106"/>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="133"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="304"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="139"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="310"/>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="146"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="341"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="152"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="347"/>
         <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="162"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="331"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="168"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="337"/>
         <source>When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</source>
         <comment>Tool tip for the &quot;Automatic arpeggio&quot; checkbox</comment>
         <extracomment>There is a term of the sound generator chip that has limited polyphony: each channel of chip is able to play only one parallel note. So, if one chip supports 6 channels, you can play 6 notes at the same time.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="165"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="334"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="171"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="340"/>
         <source>Automatic arpeggio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="185"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="324"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="191"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="330"/>
         <source>Chips number:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="199"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="374"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="205"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="380"/>
         <source>Channel allocation mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="206"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="381"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="212"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="387"/>
         <source>Select one of the channel allocation algorithms:
 - [Auto]: The algorithm will be selected automatically depending on the bank or currently playing music format.
 - Sounding off delay based: The channel will be allocated regarding the remaining delay of releasing sound left to play (Shorted remaing delay will have the highest priority).
@@ -1274,251 +1274,260 @@ Please save them before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="220"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="226"/>
         <source>Synthesizer type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="227"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="278"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="771"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="846"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="233"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="284"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="777"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="852"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="977"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="1029"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="433"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="764"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="439"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="770"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="938"/>
         <source>Gain:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="440"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="863"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="446"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="869"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="984"/>
         <source>Tempo:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="456"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="462"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="463"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="469"/>
         <source>General</source>
         <comment>FluidSynth general options group</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="469"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="475"/>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="512"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="518"/>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="522"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="528"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="542"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="548"/>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="554"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="560"/>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="574"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="580"/>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="581"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="587"/>
         <source>Width</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="614"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="620"/>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="637"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="643"/>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="649"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="655"/>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="656"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="662"/>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="692"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="698"/>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="699"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="705"/>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="722"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="728"/>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="739"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="624"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="745"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="700"/>
         <source>Chiptune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="806"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="812"/>
         <source>Track number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="815"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="821"/>
         <source>To begin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="829"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="835"/>
         <source>Previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="836"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="842"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="853"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="859"/>
         <source>Disable the echo effect while playing files of SPC format</source>
         <comment>Tooltip for the &quot;Disable SPC echo&quot; checkbox</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="856"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="862"/>
         <source>Disable SPC echo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="926"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="1063"/>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="622"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="698"/>
         <source>MIDI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="830"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="944"/>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="831"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="945"/>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="832"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="946"/>
         <source>Timidity (needed a bank)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="833"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="947"/>
         <source>Native MIDI (Not recommended, buggy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="834"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="948"/>
         <source>FluidSynth (needed an SF2-bank)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="839"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="847"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="855"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="871"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="949"/>
+        <source>libEDMIDI (OPLL, SCC, PSG)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="954"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="962"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="970"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="986"/>
         <source>[Auto]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="840"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="848"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="955"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="963"/>
         <source>Sounding off delay based</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="841"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="849"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="956"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="964"/>
         <source>Same instrument</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="842"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="850"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="957"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="965"/>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="856"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="872"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="971"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="987"/>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="857"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="972"/>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="873"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="988"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="881"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="996"/>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="882"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="997"/>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>
@@ -2065,149 +2074,149 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="104"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="105"/>
         <source>Change Z-Offset...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="106"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="107"/>
         <source>Z-Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="109"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="110"/>
         <source>Background-2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="112"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="113"/>
         <source>Background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="115"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="116"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="118"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="119"/>
         <source>Foreground</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="121"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="122"/>
         <source>Foreground-2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="126"/>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="127"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="128"/>
         <source>Transform into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="128"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="129"/>
         <source>Transform all %1 in this section into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="129"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="130"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="133"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="134"/>
         <source>Copy preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="134"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="135"/>
         <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="135"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="136"/>
         <source>BGO-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="136"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="137"/>
         <source>Position: X, Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="137"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="138"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="138"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="139"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="141"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="142"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="142"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="143"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="145"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="146"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="146"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="147"/>
         <source>Remove all %1 in this section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="147"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="148"/>
         <source>Remove all %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="150"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="151"/>
         <source>Edit raw user data...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="153"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="154"/>
         <source>Properties...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="181"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="332"/>
-        <source>Margin of section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="182"/>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="333"/>
+        <source>Margin of section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="183"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="334"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="278"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="279"/>
         <source>Z-Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="279"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="280"/>
         <source>Please enter the Z-value offset:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="403"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="408"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="417"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="428"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="439"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="404"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="409"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="418"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="429"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="440"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2225,175 +2234,175 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="102"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="103"/>
         <source>[hidden]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="112"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="114"/>
         <source>Invisible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="116"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="118"/>
         <source>Slippery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="120"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="122"/>
         <source>Resize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="124"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="126"/>
         <source>Change included NPC...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="126"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="127"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="128"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="129"/>
         <source>Transform into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="128"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="130"/>
         <source>Transform all %1 in this section into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="129"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="131"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="130"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="132"/>
         <source>Make message box...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="134"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="136"/>
         <source>Copy preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="135"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="137"/>
         <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="136"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="138"/>
         <source>Block-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="137"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="139"/>
         <source>Position: X, Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="138"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="140"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="139"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="141"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="142"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="144"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="143"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="145"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="146"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="148"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="147"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="149"/>
         <source>Remove all %1 in this section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="148"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="150"/>
         <source>Remove all %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="151"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="153"/>
         <source>Edit raw user data...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="154"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="156"/>
         <source>Properties...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="166"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="171"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="180"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="191"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="202"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="168"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="173"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="182"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="193"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="204"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="243"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="447"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="245"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="449"/>
         <source>Margin of section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="244"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="448"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="246"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="450"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="319"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="321"/>
         <source>Event name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="320"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="322"/>
         <source>Please enter the name of event:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="327"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="329"/>
         <source>Please enter the message which will be shown.
 (Max line length is 27 characters)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="328"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="330"/>
         <source>Hit message text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="358"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="360"/>
         <source>Event created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="359"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="361"/>
         <source>Message event created!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="364"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="366"/>
         <source>&apos;Hit&apos; event slot is used</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="365"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="367"/>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2479,119 +2488,119 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="149"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="151"/>
         <source>[hidden]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="165"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="168"/>
         <source>Jump to exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="170"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="173"/>
         <source>Jump to entrance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="182"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="185"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="184"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="187"/>
         <source>Left</source>
         <comment>Direction of pipe</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="188"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="191"/>
         <source>Up</source>
         <comment>Direction of pipe</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="192"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="195"/>
         <source>Right</source>
         <comment>Direction of pipe</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="196"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="199"/>
         <source>Down</source>
         <comment>Direction of pipe</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="247"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="250"/>
         <source>No Vehicles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="251"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="254"/>
         <source>Allow NPC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="255"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="258"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="258"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="261"/>
         <source>Need a bomb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="263"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="266"/>
         <source>Required special state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="268"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="271"/>
         <source>Required stood state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="276"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="279"/>
         <source>Copy preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="277"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="280"/>
         <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="278"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="281"/>
         <source>Position: X, Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="279"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="282"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="280"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="283"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="284"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="287"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="287"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="290"/>
         <source>Properties...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="541"/>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="550"/>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="561"/>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="572"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="544"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="553"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="564"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="575"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2726,76 +2735,76 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="88"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="89"/>
         <source>Play this</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="91"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="92"/>
         <source>Copy preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="93"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="94"/>
         <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="94"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="95"/>
         <source>World-Music-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="96"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="97"/>
         <source>Position: X, Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="98"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="99"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="100"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="101"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="103"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="104"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="104"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="105"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="106"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="107"/>
         <source>Transform into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="107"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="108"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="111"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="112"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="112"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="113"/>
         <source>Remove all %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="129"/>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="134"/>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="143"/>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="154"/>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="165"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="130"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="135"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="144"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="155"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="166"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2813,168 +2822,168 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="129"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="130"/>
         <source>[hidden]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="144"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="146"/>
         <source>Edit NPC-Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="146"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="148"/>
         <source>New NPC-Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="151"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="153"/>
         <source>Set %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="151"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="153"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="152"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="154"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="156"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="158"/>
         <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="161"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="163"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="167"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="169"/>
         <source>Friendly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="171"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="173"/>
         <source>Doesn&apos;t move</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="175"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="177"/>
         <source>Set message...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="178"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="180"/>
         <source>Set as Boss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="183"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="185"/>
         <source>Transform into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="184"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="186"/>
         <source>Transform all %1 in this section into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="185"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="187"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="191"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="193"/>
         <source>Change included NPC...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="196"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="198"/>
         <source>Copy preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="197"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="199"/>
         <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="198"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
         <source>NPC-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="199"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="201"/>
         <source>Position: X, Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="202"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="201"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="203"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="204"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="206"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="205"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="209"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="208"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="210"/>
         <source>Remove all %1 in this section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="209"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="211"/>
         <source>Remove all %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="211"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="213"/>
         <source>Edit raw user data...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="215"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="217"/>
         <source>Properties...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="255"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="489"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="257"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="491"/>
         <source>Margin of section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="256"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="490"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="258"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="492"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="319"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="324"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="333"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="344"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="355"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="321"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="326"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="335"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="346"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="357"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3064,139 +3073,139 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="102"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="103"/>
         <source>[hidden]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="112"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="114"/>
         <source>Environment type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="128"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="130"/>
         <source>Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="129"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="131"/>
         <source>Quicksand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="130"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="132"/>
         <source>Custom liquid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="131"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="133"/>
         <source>Gravity Field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="132"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="134"/>
         <source>Touch Event (Once)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="133"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="135"/>
         <source>Touch Event (Every frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="134"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="136"/>
         <source>NPC/Player Touch Event (Once)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="135"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="137"/>
         <source>NPC/Player Touch Event (Every frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="136"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="138"/>
         <source>Mouse click Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="137"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="139"/>
         <source>Collision script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="138"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="140"/>
         <source>Mouse click Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="139"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="141"/>
         <source>Collision Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="140"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="142"/>
         <source>Air chamber</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="141"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="143"/>
         <source>NPC Touch Event (Once)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="142"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="144"/>
         <source>NPC Touch Event (Every frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="143"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="145"/>
         <source>NPC Hurting Field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="149"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="151"/>
         <source>Copy preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="150"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="152"/>
         <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="151"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="153"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="152"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="154"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="155"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="157"/>
         <source>Resize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="159"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="161"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="160"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="162"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="162"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="164"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="179"/>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="190"/>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="201"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="181"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="192"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="203"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11874,12 +11883,12 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="370"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="371"/>
         <source>Please, save file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="370"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="371"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11897,12 +11906,12 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_musicbox_itemset.cpp" line="146"/>
+        <location filename="../main_window/dock/wld_musicbox_itemset.cpp" line="147"/>
         <source>Please, save file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_musicbox_itemset.cpp" line="146"/>
+        <location filename="../main_window/dock/wld_musicbox_itemset.cpp" line="147"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation type="unfinished"></translation>
     </message>

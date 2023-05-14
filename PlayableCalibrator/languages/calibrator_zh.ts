@@ -880,92 +880,92 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="67"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="285"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="447"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="73"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="291"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="453"/>
         <source>Extra settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="76"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="82"/>
         <source>Bank:</source>
         <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="86"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="297"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="92"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="303"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="100"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="106"/>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="110"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="116"/>
         <source>Deep vibrato</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="126"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="317"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="132"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="323"/>
         <source>Custom bank:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="133"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="304"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="139"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="310"/>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="146"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="341"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="152"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="347"/>
         <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="162"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="331"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="168"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="337"/>
         <source>When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</source>
         <comment>Tool tip for the &quot;Automatic arpeggio&quot; checkbox</comment>
         <extracomment>There is a term of the sound generator chip that has limited polyphony: each channel of chip is able to play only one parallel note. So, if one chip supports 6 channels, you can play 6 notes at the same time.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="165"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="334"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="171"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="340"/>
         <source>Automatic arpeggio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="172"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="178"/>
         <source>Deep tremolo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="185"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="324"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="191"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="330"/>
         <source>Chips number:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="192"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="357"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="198"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="363"/>
         <source>Volume model:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="199"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="374"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="205"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="380"/>
         <source>Channel allocation mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="206"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="381"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="212"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="387"/>
         <source>Select one of the channel allocation algorithms:
 - [Auto]: The algorithm will be selected automatically depending on the bank or currently playing music format.
 - Sounding off delay based: The channel will be allocated regarding the remaining delay of releasing sound left to play (Shorted remaing delay will have the highest priority).
@@ -975,251 +975,260 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="220"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="226"/>
         <source>Synthesizer type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="227"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="278"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="771"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="846"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="233"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="284"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="777"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="852"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="977"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="1029"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="433"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="764"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="439"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="770"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="938"/>
         <source>Gain:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="440"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="863"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="446"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="869"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="984"/>
         <source>Tempo:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="456"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="462"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="463"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="469"/>
         <source>General</source>
         <comment>FluidSynth general options group</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="469"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="475"/>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="512"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="518"/>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="522"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="528"/>
         <source>Add</source>
         <translation type="unfinished">增加</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="542"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="548"/>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="554"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="560"/>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="574"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="580"/>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="581"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="587"/>
         <source>Width</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished">宽</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="614"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="620"/>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="637"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="643"/>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="649"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="655"/>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="656"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="662"/>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="692"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="698"/>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="699"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="705"/>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="722"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="728"/>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="739"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="624"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="745"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="700"/>
         <source>Chiptune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="806"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="812"/>
         <source>Track number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="815"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="821"/>
         <source>To begin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="829"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="835"/>
         <source>Previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="836"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="842"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="853"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="859"/>
         <source>Disable the echo effect while playing files of SPC format</source>
         <comment>Tooltip for the &quot;Disable SPC echo&quot; checkbox</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="856"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="862"/>
         <source>Disable SPC echo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="926"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="1063"/>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="622"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="698"/>
         <source>MIDI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="830"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="944"/>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="831"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="945"/>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="832"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="946"/>
         <source>Timidity (needed a bank)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="833"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="947"/>
         <source>Native MIDI (Not recommended, buggy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="834"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="948"/>
         <source>FluidSynth (needed an SF2-bank)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="839"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="847"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="855"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="871"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="949"/>
+        <source>libEDMIDI (OPLL, SCC, PSG)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="954"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="962"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="970"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="986"/>
         <source>[Auto]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="840"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="848"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="955"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="963"/>
         <source>Sounding off delay based</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="841"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="849"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="956"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="964"/>
         <source>Same instrument</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="842"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="850"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="957"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="965"/>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="856"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="872"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="971"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="987"/>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="857"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="972"/>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="873"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="988"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="881"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="996"/>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="882"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="997"/>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>

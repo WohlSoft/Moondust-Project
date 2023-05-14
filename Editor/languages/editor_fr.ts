@@ -1223,6 +1223,10 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>libEDMIDI (OPLL, SCC, PSG)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DataConfig</name>
