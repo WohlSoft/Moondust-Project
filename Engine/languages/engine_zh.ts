@@ -141,12 +141,12 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_ILL_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="490"/>
         <source>Wrong CPU Instruction!</source>
-        <translation>CPU 命令错误！</translation>
+        <translation>CPU 指令错误！</translation>
     </message>
     <message id="CRASH_ILL_MSG">
         <location filename="../common_features/crash_handler.cpp" line="492"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
-        <translation>由于 CPU 命令错误，因此引擎已停止运行</translation>
+        <translation>由于 CPU 指令错误，因此引擎已停止运行</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="547"/>

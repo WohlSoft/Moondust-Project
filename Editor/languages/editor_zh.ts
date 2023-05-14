@@ -1035,7 +1035,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>To begin</source>
-        <translation>回到开始</translation>
+        <translation>编号归零</translation>
     </message>
     <message>
         <source>Previous</source>
@@ -1047,7 +1047,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
-        <translation>提示：请开启音乐播放以预览效果（见主工具栏中播放/停止图标）。</translation>
+        <translation>提示：请开启音乐播放以预览效果（参见主工具栏中的播放/停止图标）。</translation>
     </message>
     <message>
         <source>MIDI</source>
@@ -1507,7 +1507,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</source>
         <translatorcomment>不知道怎么翻译……</translatorcomment>
-        <translation>&lt;p&gt;&lt;b&gt;提示1：&lt;/b&gt; 您可以从&lt;u&gt;帮助&lt;/u&gt; 菜单、&lt;u&gt;查看&lt;/u&gt;菜单中的工具箱和&lt;u&gt;窗口&lt;/u&gt;菜单中的下拉菜单项随时更换界面样式。&lt;br&gt;
+        <translation>&lt;p&gt;&lt;b&gt;提示1：&lt;/b&gt; 您可以从&lt;u&gt;帮助&lt;/u&gt; 菜单、&lt;u&gt;查看&lt;/u&gt;菜单中的工具箱和&lt;u&gt;窗口&lt;/u&gt;菜单中的下拉菜单项随时更改界面样式。&lt;br&gt;
 &lt;br&gt;
 &lt;b&gt;提示2:&lt;/b&gt; 此编辑器不像原版 SMBX1.3 那样，许多功能可以在鼠标右击时弹出菜单后打开，
 也可以从工具栏和菜单里打开，使用此编辑器还可以一次选择多个对象！&lt;br&gt;
@@ -1547,7 +1547,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>HistoryElementLayerChanged</name>
     <message>
         <source>Change Layer</source>
-        <translation>更换图层</translation>
+        <translation>更改为</translation>
     </message>
 </context>
 <context>
@@ -1688,7 +1688,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation>增加到新图层……</translation>
+        <translation>添加到新图层……</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -1724,15 +1724,15 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 in this section into</source>
-        <translation>在此场景中更换所有 %1 为</translation>
+        <translation>更改当前场景中所有 %1 为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation>更换所有 %1 为</translation>
+        <translation>更改所有 %1 为</translation>
     </message>
     <message>
         <source>Copy preferences</source>
@@ -1815,7 +1815,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation>增加到新图层……</translation>
+        <translation>添加到新图层……</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -1835,19 +1835,19 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Change included NPC...</source>
-        <translation>更换包含 NPC……</translation>
+        <translation>更改包含 NPC……</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 in this section into</source>
-        <translation>在此场景中更换所有 %1 为</translation>
+        <translation>更改当前场景中所有 %1 为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation>更换所有 %1 为</translation>
+        <translation>更改所有 %1 为</translation>
     </message>
     <message>
         <source>Make message box...</source>
@@ -1920,8 +1920,8 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Please enter the message which will be shown.
 (Max line length is 27 characters)</source>
-        <translation>请输入信息。
-（每行最大长度为 27 个字）</translation>
+        <translation>请输入信息：
+（每行不超过 27 个字符）</translation>
     </message>
     <message>
         <source>Hit message text</source>
@@ -2018,7 +2018,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation>增加到新图层……</translation>
+        <translation>添加到新图层……</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -2161,11 +2161,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation>更换所有 %1 为</translation>
+        <translation>更改所有 %1 为</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2201,8 +2201,8 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Enter the NPC&apos;s dialog message:
 (Max length per line is 27 characters)</source>
-        <translation>输入 NPC 对话：
-（每行最大长度为 27 个字）</translation>
+        <translation>请输入 NPC 对话信息：
+（每行不超过 27 个字符）</translation>
     </message>
     <message>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
@@ -2249,11 +2249,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation>更换所有 %1 为</translation>
+        <translation>更改所有 %1 为</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2280,7 +2280,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation>增加到新图层……</translation>
+        <translation>添加到新图层……</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -2332,19 +2332,19 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 in this section into</source>
-        <translation>在此场景中更换所有 %1 为</translation>
+        <translation>更改当前场景中所有 %1 为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation>更换所有 %1 为</translation>
+        <translation>更改所有 %1 为</translation>
     </message>
     <message>
         <source>Change included NPC...</source>
-        <translation>更换包含 NPC……</translation>
+        <translation>更改包含 NPC……</translation>
     </message>
     <message>
         <source>Copy preferences</source>
@@ -2443,7 +2443,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
@@ -2474,7 +2474,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation>增加到新图层……</translation>
+        <translation>添加到新图层……</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -2640,11 +2640,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation>更换所有 %1 为</translation>
+        <translation>更改所有 %1 为</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2774,11 +2774,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation>更换所有 %1 为</translation>
+        <translation>更改所有 %1 为</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -3625,11 +3625,11 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Set music</source>
-        <translation>更换音乐</translation>
+        <translation>更改音乐</translation>
     </message>
     <message>
         <source>Replace music to:</source>
-        <translation>更换音乐为：</translation>
+        <translation>更改音乐为：</translation>
     </message>
     <message>
         <source>Set background</source>
@@ -3747,7 +3747,7 @@ Do you want to continue?</source>
         <source>Please, enter message
 (Max line length is 27 characters)</source>
         <translation>请输入信息：
-（每行最大长度为 27 个字）</translation>
+（每行不超过 27 个字符）</translation>
     </message>
     <message>
         <source>Autoscroll section (Legacy)</source>
@@ -3814,7 +3814,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Transform</source>
-        <translation>更换</translation>
+        <translation>更改</translation>
     </message>
     <message>
         <source>Undone: %1</source>
@@ -6322,7 +6322,7 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
     </message>
     <message>
         <source>Music change points</source>
-        <translation>音乐更换地点</translation>
+        <translation>音乐更改点</translation>
     </message>
     <message>
         <source>Configuration can&apos;t be loaded:
@@ -6814,7 +6814,7 @@ Error description:
     </message>
     <message>
         <source>Included NPC</source>
-        <translation>更换包含 NPC</translation>
+        <translation>更改包含 NPC</translation>
     </message>
     <message>
         <source>Water Type</source>
@@ -8439,7 +8439,7 @@ Data may be corrupted!</source>
     <name>ToNewLayerBox</name>
     <message>
         <source>Add to new layer</source>
-        <translation>增加到新图层</translation>
+        <translation>添加到新图层</translation>
     </message>
     <message>
         <source>New layer name</source>
@@ -8746,7 +8746,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>You will change current position to the last selected point. If point is not set, position will not be changed.</source>
-        <translation>更换当前位置到最后所选的地点，如果没有指定地点，位置将不会改变。</translation>
+        <translation>更改当前位置到最后所选的地点，如果未设置地点，将不会更改位置。</translation>
     </message>
     <message>
         <source>Go to point</source>
@@ -8955,7 +8955,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Transform</source>
-        <translation>更换</translation>
+        <translation>更改</translation>
     </message>
     <message>
         <source>Undone: %1</source>
