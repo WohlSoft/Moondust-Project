@@ -62,7 +62,9 @@ MusicFileList::MusicFileList(QString searchDirectory, QString curFile, QWidget *
                 << "*.okt" << "*.stm" << "*.stx" << "*.ult" << "*.uni" << "*.mptm"
                 // GAME EMU (Chiptunes)
                 << "*.ay" << "*.gbs" << "*.gym" << "*.hes" << "*.kss" << "*.nsf"
-                << "*.nsfe" << "*.sap" << "*.spc" << "*.vgm" << "*.vgz";
+                << "*.nsfe" << "*.sap" << "*.spc" << "*.vgm" << "*.vgz"
+                // PXTONE
+                << "*.pttune" << "*.ptcop";
         setFilters(filters);
     }
 

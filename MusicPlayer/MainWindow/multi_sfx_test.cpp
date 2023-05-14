@@ -7,6 +7,14 @@
 #include <QMessageBox>
 #include <ctime>
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+#include <QRandomGenerator>
+#define HAS_QRANDOM_GENERATOR
+#define XX_QRAND QRandomGenerator::global()->generate
+#else
+#define XX_QRAND qrand
+#endif
+
 #include "multi_sfx_test.h"
 #include "multi_sfx_item.h"
 #include "ui_multi_sfx_test.h"
@@ -28,7 +36,9 @@ MultiSfxTester::MultiSfxTester(QWidget* parent) :
                      &QTimer::timeout,
                      this,
                      &MultiSfxTester::playRandom);
+#ifndef HAS_QRANDOM_GENERATOR
     qsrand((uint)std::time(nullptr));
+#endif
 }
 
 MultiSfxTester::~MultiSfxTester()
@@ -136,13 +146,13 @@ void MultiSfxTester::on_randomPlaying_clicked(bool checked)
 
 void MultiSfxTester::playRandom()
 {
-    m_randomPlayTrigger.setInterval(100 + (qrand() % ui->maxRandomDelay->value()));
+    m_randomPlayTrigger.setInterval(100 + (XX_QRAND() % ui->maxRandomDelay->value()));
 
     if(m_items.isEmpty())
         return;
 
     int len = m_items.size();
-    int select = qrand() % len;
+    int select = XX_QRAND() % len;
     m_items[select]->on_play_clicked();
 }
 
