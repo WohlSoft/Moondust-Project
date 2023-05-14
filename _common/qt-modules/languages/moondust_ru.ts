@@ -304,6 +304,10 @@
         <comment>Channel allocation mode</comment>
         <translation>Любой свободный</translation>
     </message>
+    <message>
+        <source>libEDMIDI (OPLL, SCC, PSG)</source>
+        <translation>libEDMIDI (Эмуляция OPLL, SCC и PSG)</translation>
+    </message>
 </context>
 <context>
     <name>FileListBrowser</name>
