@@ -30,6 +30,11 @@ FileListBrowser::FileListBrowser(QString searchDirectory, QString currentFile, Q
     m_filters.append("*.*");
     m_parentDirectory = searchDirectory;
     m_lastCurrentFile = currentFile;
+
+    int args = m_lastCurrentFile.indexOf('|');
+    if(args >= 0) // Remove possible music arguments
+        m_lastCurrentFile.remove(args, (m_lastCurrentFile.size() - args));
+
     ui->setupUi(this);
     connect(this, &FileListBrowser::itemAdded, this, &FileListBrowser::addItem);
     connect(this, &FileListBrowser::digFinished, this, &FileListBrowser::finalizeDig);
