@@ -46,6 +46,11 @@ CustomMusicSetup::MusicType CustomMusicSetup::detectType(const QString &music)
         "nsf", "nsfe", "vgm", "vgz", "gbs", "gym", "kss", "hes", "spc", "ay", "sap"
     };
 
+    const QStringList pxtoneSuffix =
+    {
+        "pttune", "ptcop"
+    };
+
     QString fName;
     if(music.contains('|'))
         fName = music.split('|').front();
@@ -61,6 +66,8 @@ CustomMusicSetup::MusicType CustomMusicSetup::detectType(const QString &music)
         return ADLMIDI;
     else if(gmeSuffix.contains(suffix))
         return GME;
+    else if(pxtoneSuffix.contains(suffix))
+        return PXTONE;
     else
         return Unsupported;
 }
@@ -75,6 +82,8 @@ void CustomMusicSetup::initSetup()
     on_midiTempoReset_clicked();
     on_gmeGainReset_clicked();
     on_gmeTempoReset_clicked();
+    on_pxtoneGainReset_clicked();
+    on_pxtoneTempoReset_clicked();
 
     ui->gmeTrackNumber->setValue(0);
 
@@ -242,10 +251,66 @@ void CustomMusicSetup::parseSettings()
         }
         break;
 
+    case PXTONE:
+        value_opened = 0;
+
+        for(i = 0; i < maxlen && keepLoop; i++)
+        {
+            char c = args[i];
+            if(value_opened == 1)
+            {
+                if((c == ';') || (c == '\0'))
+                {
+                    arg[j] = '\0';
+                    switch(type)
+                    {
+                    case 't':
+                        if(arg[0] == '=')
+                        {
+                            double tempo = QString(arg + 1).toDouble();
+                            if(tempo <= 0.0)
+                                tempo = 1.0;
+                            ui->pxtoneTempoAbs->setValue(tempo);
+                            ui->pxtoneTempo->setValue(tempo * 100);
+                        }
+                        break;
+                    case 'g':
+                        if(arg[0] == '=')
+                        {
+                            double gain = QString(arg + 1).toDouble();
+                            if(gain <= 0.0)
+                                gain = 1.0;
+                            ui->pxtoneGainAbs->setValue(gain);
+                            ui->pxtoneGain->setValue(gain * 100);
+                        }
+                        break;
+                    case '\0':
+                        break;
+                    default:
+                        break;
+                    }
+                    value_opened = 0;
+                }
+                arg[j++] = c;
+            }
+            else
+            {
+                if(c == '\0')
+                {
+                    keepLoop = false;
+                    break;
+                }
+                type = c;
+                value_opened = 1;
+                j = 0;
+            }
+        }
+        break;
+
     case MIDI:
     case ADLMIDI:
-
         value_opened = 0;
+
         for(i = 0; i < maxlen && keepLoop; i++)
         {
             char c = args[i];
@@ -605,6 +670,16 @@ void CustomMusicSetup::buildSettings()
 
         m_music = m_musicName + (m_musicArgs.isEmpty() ? QString() : "|" + m_musicArgs);
     }
+    else if(m_type == PXTONE)
+    {
+        if(int(ui->pxtoneTempoAbs->value() * 100) != 100)
+            m_musicArgs += "t=" + QString::number(ui->pxtoneTempoAbs->value()) + ";";
+
+        if(int(ui->pxtoneGainAbs->value() * 100) != 100)
+            m_musicArgs += "g=" + QString::number(ui->pxtoneGainAbs->value()) + ";";
+
+        m_music = m_musicName + (m_musicArgs.isEmpty() ? QString() : "|" + m_musicArgs);
+    }
     else
         m_music = m_musicName;
 
@@ -617,11 +692,14 @@ void CustomMusicSetup::updateVisibiltiy()
 
     ui->setupZone->removeTab(0);
     ui->setupZone->removeTab(0);
+    ui->setupZone->removeTab(0);
 
     if(m_type == MIDI || m_type == ADLMIDI)
         ui->setupZone->insertTab(0, ui->tabMidi, tr("MIDI"));
     if(m_type == GME)
         ui->setupZone->insertTab(0, ui->tabChiptune, tr("Chiptune"));
+    if(m_type == PXTONE)
+        ui->setupZone->insertTab(0, ui->tabPxTone, "PXTONE");
 
     ui->midiSetupADL->setVisible((m_type == MIDI && synType == MIDI_ADLMIDI) ||
                                  m_type == ADLMIDI);
@@ -711,7 +789,7 @@ CustomMusicSetup::CustomMusicSetup(QWidget *parent) :
         ui->gmeGainAbs->blockSignals(true);
         ui->gmeGainAbs->setValue(double(v) / 100.0);
         ui->gmeGainAbs->blockSignals(false);
-        on_gmeGainAbs_valueChanged(ui->midiGainAbs->value());
+        on_gmeGainAbs_valueChanged(ui->gmeGainAbs->value());
     });
 
 
@@ -730,6 +808,42 @@ CustomMusicSetup::CustomMusicSetup(QWidget *parent) :
         ui->gmeTempoAbs->setValue(double(v) / 100.0);
         ui->gmeTempoAbs->blockSignals(false);
         on_gmeTempoAbs_valueChanged(ui->gmeTempoAbs->value());
+    });
+
+
+    QObject::connect(ui->pxtoneGainAbs, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+    [this](double v)->void
+    {
+        ui->pxtoneGain->blockSignals(true);
+        ui->pxtoneGain->setValue(v * 100);
+        ui->pxtoneGain->blockSignals(false);
+    });
+
+    QObject::connect(ui->pxtoneGain, static_cast<void(QSlider::*)(int)>(&QSlider::valueChanged),
+    [this](int v)->void
+    {
+        ui->pxtoneGainAbs->blockSignals(true);
+        ui->pxtoneGainAbs->setValue(double(v) / 100.0);
+        ui->pxtoneGainAbs->blockSignals(false);
+        on_pxtoneGainAbs_valueChanged(ui->pxtoneGainAbs->value());
+    });
+
+
+    QObject::connect(ui->pxtoneTempoAbs, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+    [this](double v)->void
+    {
+        ui->pxtoneTempo->blockSignals(true);
+        ui->pxtoneTempo->setValue(v * 100);
+        ui->pxtoneTempo->blockSignals(false);
+    });
+
+    QObject::connect(ui->pxtoneTempo, static_cast<void(QSlider::*)(int)>(&QSlider::valueChanged),
+    [this](int v)->void
+    {
+        ui->pxtoneTempoAbs->blockSignals(true);
+        ui->pxtoneTempoAbs->setValue(double(v) / 100.0);
+        ui->pxtoneTempoAbs->blockSignals(false);
+        on_pxtoneTempoAbs_valueChanged(ui->pxtoneTempoAbs->value());
     });
 }
 
@@ -1120,6 +1234,42 @@ void CustomMusicSetup::on_gmeDisableSpcEcho_clicked(bool)
 {
     buildSettings();
     emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_pxtoneGain_valueChanged(int)
+{}
+
+void CustomMusicSetup::on_pxtoneGainAbs_valueChanged(double)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_pxtoneGainReset_clicked()
+{
+    ui->pxtoneGain->setValue(100);
+    ui->pxtoneGainAbs->setValue(1.0);
+    if(!signalsBlocked())
+        buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_pxtoneTempo_valueChanged(int)
+{}
+
+void CustomMusicSetup::on_pxtoneTempoAbs_valueChanged(double arg1)
+{
+    buildSettings();
+    emit updateSongTempo(arg1);
+}
+
+void CustomMusicSetup::on_pxtoneTempoReset_clicked()
+{
+    ui->pxtoneTempo->setValue(100);
+    ui->pxtoneTempoAbs->setValue(1.0);
+    if(!signalsBlocked())
+        buildSettings();
+    emit updateSongTempo(ui->pxtoneTempoAbs->value());
 }
 
 void CustomMusicSetup::on_playMusicProxy_clicked(bool checked)

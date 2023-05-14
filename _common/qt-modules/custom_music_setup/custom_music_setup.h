@@ -34,7 +34,8 @@ class CustomMusicSetup : public QDialog
         Unsupported = 0,
         MIDI,
         GME,
-        ADLMIDI
+        ADLMIDI,
+        PXTONE
     };
 
     int     adlDefaultBank = -1;
@@ -145,6 +146,14 @@ private slots:
     void on_gmeTempoAbs_valueChanged(double arg1);
     void on_gmeTempoReset_clicked();
     void on_gmeDisableSpcEcho_clicked(bool checked);
+
+    void on_pxtoneGain_valueChanged(int value);
+    void on_pxtoneGainAbs_valueChanged(double arg1);
+    void on_pxtoneGainReset_clicked();
+
+    void on_pxtoneTempo_valueChanged(int value);
+    void on_pxtoneTempoAbs_valueChanged(double arg1);
+    void on_pxtoneTempoReset_clicked();
 
     void on_playMusicProxy_clicked(bool checked);
 
