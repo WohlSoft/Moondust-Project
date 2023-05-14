@@ -32,6 +32,10 @@
 
 #include "qfile_dialogs_default_options.hpp"
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 7, 0)
+#   define qAsConst(x)  x
+#endif
+
 
 MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     MusPlayerBase(),
