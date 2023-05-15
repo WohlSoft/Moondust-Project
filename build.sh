@@ -238,6 +238,12 @@ do
         update-submodules)
             PATH=${PATH}:$PWD/_common
             git submodule foreach submodule-update.sh
+
+            # EXTRA update Java files of Android project
+            printf "\n\n"
+            echo "Synchronize SDL Java headers..."
+            rm -vf Engine/android-project/moondust/src/main/java/org/libsdl/app/*.java
+            cp -v _Libs/AudioCodecs/SDL2/android-java-files/*.java Engine/android-project/moondust/src/main/java/org/libsdl/app
             exit 0
             ;;
         repair-submodules)
