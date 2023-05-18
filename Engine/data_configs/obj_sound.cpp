@@ -193,14 +193,14 @@ void ConfigManager::buildSoundIndex()
 
     //else
     //    need_to_reserve=set_channel;
-#ifndef DEBUG_BUILD
-    Mix_ReserveChannels(need_to_reserve)
-#endif
-#define RESERVE_CHANS_COMMAND Mix_ReserveChannels(need_to_reserve)
     D_pLogDebug("Loading of sounds passed in %d milliseconds", static_cast<int>(loadingTime.elapsed()));
-    D_pLogDebug("Reserved audio channels: %d", RESERVE_CHANS_COMMAND);
+#ifdef DEBUG_BUILD
+    int reserved = Mix_ReserveChannels(need_to_reserve);
+    D_pLogDebug("Reserved audio channels: %d", reserved);
+#else
+    Mix_ReserveChannels(need_to_reserve);
+#endif
     D_pLogDebug("SFX Index entries: %d", main_sfx_index.size());
-#undef RESERVE_CHANS_COMMAND
     SDL_ClearError();
 }
 
