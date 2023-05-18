@@ -103,7 +103,7 @@ void ConfigManager::buildSoundIndex()
 #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32) || defined(__HAIKU__)
                 FileMapper fileMap;
 
-                if(!snd.silent && fileMap.open_file(snd.absPath.c_str()))
+                if(!snd.silent && fileMap.open_file(snd.absPath))
                 {
                     sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data(),
                                                  static_cast<int>(fileMap.size())), 1);
