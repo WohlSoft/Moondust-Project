@@ -24,7 +24,7 @@
 
 #include <common_features/app_path.h>
 #include <common_features/graphics_funcs.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <data_configs/config_manager.h>
 #include <graphics/gl_renderer.h>
 

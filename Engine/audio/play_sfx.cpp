@@ -23,7 +23,7 @@
 #include <gui/pge_msgbox.h>
 #include <common_features/app_path.h>
 #include <FileMapper/file_mapper.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 
 /***********************************PGE_Sounds********************************************/
 std::unordered_map<std::string, Mix_Chunk *> PGE_SfxPlayer::chunksBuffer;

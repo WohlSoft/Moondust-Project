@@ -24,7 +24,7 @@
 #include <gui/pge_msgbox.h>
 #include <settings/global_settings.h>
 #include <common_features/graphics_funcs.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <common_features/pge_delay.h>
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>

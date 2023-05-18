@@ -18,7 +18,7 @@
  */
 
 #include "matrix_animator.h"
-#include "logger.h"
+#include <Logger/logger.h>
 #include <gui/pge_msgbox.h>
 
 #include <cassert>

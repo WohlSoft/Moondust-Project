@@ -20,12 +20,12 @@
 #include <graphics/gl_renderer.h>
 #include <graphics/window.h>
 #include <common_features/graphics_funcs.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <common_features/pge_delay.h>
 #include <settings/global_settings.h>
 #include <data_configs/config_manager.h>
 #include <gui/pge_msgbox.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 #include <Utils/maths.h>
 
 #include <fontman/font_manager.h>

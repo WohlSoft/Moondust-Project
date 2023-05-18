@@ -33,7 +33,7 @@
 #include <Utils/open_url.h>
 #include <DirManager/dirman.h>
 #include <IniProcessor/ini_processing.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 
 #include <DirManager/dirman.h>
 #include <Utils/files.h>

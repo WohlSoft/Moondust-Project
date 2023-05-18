@@ -17,31 +17,30 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef LOGGER_SETS_H
-#define LOGGER_SETS_H
+#define LOGGER_INTERNAL
+#include "logger_sets.h"
 
-#include <SDL2/SDL_rwops.h>
-#include <string>
-#include <memory>
 
-#include "logger.h"
+void LogWriter::OpenLogFile()
+{}
 
-class LogWriter
+void LogWriter::CloseLog()
+{}
+
+void LoggerPrivate_pLogConsole(int level, const char *label, const char *format, va_list arg)
 {
-public:
-    static std::string  m_logFilePath;
-    static PGE_LogLevel m_logLevel;
-    //! Is logging system is enabled
-    static bool  m_enabled;
-    //! Is logging system allowed to output into `stdout`
-    static bool  m_enabledStdOut;
-    //! Is log file is opened
-    static bool  m_logIsOpened;
-    //! Output file
-    static SDL_RWops *m_logout;
+    (void)level;
+    (void)label;
+    (void)format;
+    (void)arg;
+}
 
-    static void WriteToLog(PGE_LogLevel type, const std::string &msg);
-    static void LoadLogSettings(bool disableStdOut = false);
-};
-
-#endif // LOGGER_SETS_H
+#ifndef NO_FILE_LOGGING
+void LoggerPrivate_pLogFile(int level, const char *label, const char *format, va_list arg)
+{
+    (void)level;
+    (void)label;
+    (void)format;
+    (void)arg;
+}
+#endif

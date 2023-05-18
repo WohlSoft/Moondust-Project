@@ -22,8 +22,8 @@
 
 #include "../window.h"
 #include <common_features/graphics_funcs.h>
-#include <common_features/logger.h>
-#include <common_features/fmt_format_ne.h>
+#include <Logger/logger.h>
+#include <fmt_format_ne.h>
 #include <Utils/maths.h>
 #include <cmath>
 

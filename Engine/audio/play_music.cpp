@@ -21,7 +21,7 @@
 #include "play_music.h"
 
 #include <gui/pge_msgbox.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 #include <data_configs/config_manager.h>
 #include <Utils/strings.h>
 

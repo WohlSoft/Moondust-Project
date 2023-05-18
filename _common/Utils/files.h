@@ -30,6 +30,16 @@
 namespace Files
 {
     FILE *utf8_fopen(const char *filePath, const char *modes);
+    enum Charsets
+    {
+        CHARSET_UTF8 = 0,
+        CHARSET_UTF16BE,
+        CHARSET_UTF16LE,
+        CHARSET_UTF32BE,
+        CHARSET_UTF32LE
+    };
+
+    int skipBom(FILE *file, const char **charset = nullptr);
     bool fileExists(const std::string &path);
     bool deleteFile(const std::string &path);
     bool copyFile(const std::string &to, const std::string &from, bool override = false);
@@ -42,6 +52,7 @@ namespace Files
     bool hasSuffix(const std::string &path, const std::string &suffix);
     //Appends "m" into basename of the file name before last dot
     void getGifMask(std::string &mask, const std::string &front);
+    bool dumpFile(const std::string &inPath, std::string &outData);
 }
 
 #endif // FILES_H

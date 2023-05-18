@@ -21,7 +21,7 @@
 #include <FileMapper/file_mapper.h>
 
 #include "graphics_funcs.h"
-#include "logger.h"
+#include <Logger/logger.h>
 
 #ifdef DEBUG_BUILD
 #include <Utils/elapsed_timer.h>

@@ -25,7 +25,7 @@
 
 #include <Utils/files.h>
 #include <IniProcessor/ini_processing.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 
 uint64_t        ConfigManager::music_custom_id;
 uint64_t        ConfigManager::music_w_custom_id;

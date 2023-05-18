@@ -19,7 +19,7 @@
 
 #include <common_features/pge_texture.h>
 #include <common_features/version_cmp.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <common_features/tr.h>
 #include "config_manager.h"
 #include "config_manager_private.h"

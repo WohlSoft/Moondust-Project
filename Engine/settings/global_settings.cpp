@@ -25,10 +25,10 @@
 #if __ANDROID__
 #   include <controls/controller_touchscreen.h>
 #endif
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <common_features/number_limiter.h>
 #include <IniProcessor/ini_processing.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 
 GlobalSettings g_AppSettings;
 

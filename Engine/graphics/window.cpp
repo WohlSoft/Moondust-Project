@@ -21,9 +21,9 @@
 #include <iostream>
 
 #include <common_features/graphics_funcs.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <common_features/tr.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 
 #include <settings/global_settings.h>
 #include <settings/debugger.h>

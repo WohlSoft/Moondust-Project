@@ -21,7 +21,7 @@
 #include "config_manager.h"
 #include "config_manager_private.h"
 
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 
 LoadingScreenSetup  ConfigManager::setup_LoadingScreen;
 

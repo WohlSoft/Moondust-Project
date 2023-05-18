@@ -25,7 +25,7 @@
 
 #include "translator.h"
 #include "app_path.h"
-#include "logger.h"
+#include <Logger/logger.h>
 
 #ifdef __ANDROID__
 #   include <SDL2/SDL_rwops.h>

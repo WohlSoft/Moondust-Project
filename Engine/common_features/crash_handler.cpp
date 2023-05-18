@@ -42,7 +42,7 @@
 #endif
 
 #include "crash_handler.h"
-#include "logger.h"
+#include <Logger/logger.h>
 
 #include <version.h>
 #include <graphics/window.h>

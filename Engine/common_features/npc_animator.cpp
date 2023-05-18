@@ -17,7 +17,7 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 
-#include "logger.h"
+#include <Logger/logger.h>
 #include "npc_animator.h"
 #include <cmath>
 #include <cstdlib>

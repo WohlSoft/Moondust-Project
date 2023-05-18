@@ -31,6 +31,7 @@ public:
     static std::string settingsFileSTD();
     static std::string userAppDirSTD();
     static std::string languagesDir();
+    static std::string logsDir();
     static std::string screenshotsDir();
     static std::string gameSaveRootDir();
     static void install();

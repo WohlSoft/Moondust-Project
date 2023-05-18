@@ -23,7 +23,7 @@
 
 #include <audio/pge_audio.h>
 #include <settings/debugger.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 
 void LVL_Player::lua_updateKey(bool &target_key, ControllableObject::KeyType ktype, bool &state)
 {

@@ -18,7 +18,7 @@
  */
 
 #include "luafuncs_core_logger.h"
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 
 void Binding_Core_GlobalFuncs_Logger::debug(const std::string &msg)
 {

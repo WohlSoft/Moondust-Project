@@ -23,7 +23,7 @@
 #include "version.h"
 
 #include <audio/play_music.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <common_features/tr.h>
 #include <common_features/pge_delay.h>
 
@@ -31,7 +31,7 @@
 
 #include <Utils/files.h>
 #include <DirManager/dirman.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 #include <fmt/fmt_qformat.h>
 
 #include <gui/pge_msgbox.h>

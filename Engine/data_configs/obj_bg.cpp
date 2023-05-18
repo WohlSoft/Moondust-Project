@@ -21,7 +21,7 @@
 #include "config_manager_private.h"
 #include <common_features/number_limiter.h>
 #include <common_features/util.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 #include <Utils/files.h>
 #include <graphics/gl_color.h>
 #include <graphics/gl_renderer.h>

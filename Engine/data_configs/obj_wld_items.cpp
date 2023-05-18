@@ -22,7 +22,7 @@
 #include "config_manager_private.h"
 #include "../gui/pge_msgbox.h"
 #include <common_features/graphics_funcs.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 #include <Utils/files.h>
 
 /*****World Tiles************/

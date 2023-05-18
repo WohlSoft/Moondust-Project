@@ -24,10 +24,10 @@
 #include <gui/pge_msgbox.h>
 #include <SDL2/SDL_mixer_ext.h>
 #include <vector>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <FileMapper/file_mapper.h>
 
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 #include <IniProcessor/ini_processing.h>
 #include <Utils/files.h>
 

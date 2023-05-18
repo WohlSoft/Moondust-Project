@@ -23,7 +23,7 @@
 #include <audio/pge_audio.h>
 #include "pge_keygrab_menuitem.h"
 #include <controls/controller_joystick.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 
 #include "../pge_menu.h"
 
