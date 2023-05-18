@@ -28,7 +28,7 @@
 #include "../common_features/app_path.h"
 
 #include <common_features/graphics_funcs.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <common_features/gif-h/gif.h>
 #include <gui/pge_msgbox.h>
 
@@ -48,8 +48,8 @@
 
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
-#include <common_features/fmt_format_ne.h>
-#include <common_features/fmt_time_ne.h>
+#include <fmt_format_ne.h>
+#include <fmt_time_ne.h>
 
 #include <ctime>
 #include <chrono>

@@ -41,8 +41,8 @@
 
 #include <Utils/files.h>
 #include <Utils/sdl_file.h>
-#include <common_features/logger.h>
-#include <common_features/fmt_format_ne.h>
+#include <Logger/logger.h>
+#include <fmt_format_ne.h>
 
 #include <sstream>
 

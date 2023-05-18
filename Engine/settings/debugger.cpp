@@ -18,7 +18,7 @@
  */
 
 #include "debugger.h"
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <data_configs/config_manager.h>
 #include <gui/pge_textinputbox.h>
 #include <gui/pge_msgbox.h>

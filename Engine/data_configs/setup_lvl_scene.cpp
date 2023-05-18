@@ -23,7 +23,7 @@
 #include "config_manager.h"
 #include "config_manager_private.h"
 #include <fontman/font_manager.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 
 LevelSetup ConfigManager::setup_Level;
 

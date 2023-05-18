@@ -21,7 +21,7 @@
 #include <Utils/files.h>
 #include <fmt/fmt_qformat.h>
 
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <common_features/tr.h>
 #include <audio/pge_audio.h>
 #include <audio/play_music.h>

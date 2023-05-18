@@ -40,11 +40,11 @@
 
 #include <algorithm>
 
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 
 #include <script/lua_event.h>
 #include <script/bindings/core/events/luaevents_core_engine.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 #include <Utils/files.h>
 #include <Utils/maths.h>
 

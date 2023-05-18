@@ -19,7 +19,7 @@
 
 #include "controller_touchscreen.h"
 #include <graphics/window.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 
 #ifdef __ANDROID__
 #   include <jni.h>

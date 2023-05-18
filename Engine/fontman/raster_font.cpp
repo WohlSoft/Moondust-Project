@@ -20,8 +20,8 @@
 #include "raster_font.h"
 
 #include <graphics/gl_renderer.h>
-#include <common_features/fmt_format_ne.h>
-#include <common_features/logger.h>
+#include <fmt_format_ne.h>
+#include <Logger/logger.h>
 #include <IniProcessor/ini_processing.h>
 #include <Utils/files.h>
 #include <DirManager/dirman.h>

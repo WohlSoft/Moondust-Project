@@ -24,7 +24,7 @@
 #include <Utils/files.h>
 #include <DirManager/dirman.h>
 #include <common_features/app_path.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 
 
 void GameUserDataManager::importData(const saveUserData &in)

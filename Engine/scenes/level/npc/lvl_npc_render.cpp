@@ -23,7 +23,7 @@
 #include <data_configs/config_manager.h>
 #include <graphics/window.h>
 #include <fontman/font_manager.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 
 void LVL_Npc::render(double camX, double camY)
 {

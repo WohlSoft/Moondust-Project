@@ -21,7 +21,7 @@
 #ifdef Q_OS_MACX
 #include <QFileOpenEvent>
 #endif
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 
 PGE_OSXApplication::PGE_OSXApplication(int &argc, char **argv)
     : QCoreApplication(argc, argv)

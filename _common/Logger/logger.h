@@ -24,17 +24,20 @@
 #ifdef __cplusplus
 #include <string>
 
-enum class PGE_LogLevel
+struct PGE_LogLevel
 {
-    Debug    = 5,
-    Warning  = 4,
-    Critical = 3,
-    Info     = 2,
-    Fatal    = 1,
-    NoLog    = 0,
+    enum Level : int
+    {
+        Debug    = 5,
+        Warning  = 4,
+        Critical = 3,
+        Info     = 2,
+        Fatal    = 1,
+        NoLog    = 0,
+    };
 };
 
-extern void LoadLogSettings(bool disableStdOut = false);
+extern void LoadLogSettings(bool disableStdOut = false, bool verboseLogs = false);
 extern void CloseLog();
 #endif//__cplusplus
 
@@ -52,16 +55,16 @@ extern void pLogFatal(const char *format, ...);
 #endif
 
 #ifdef __cplusplus
-extern void WriteToLog(PGE_LogLevel type, const std::string &msg);
+extern std::string getLogFilePath();
 #endif
 
 #ifdef DEBUG_BUILD
 // Variadic with arguments
-#define D_pLogDebug(fmt, ...) pLogDebug(fmt, ##__VA_ARGS__)
-#define D_pLogWarning(fmt, ...) pLogWarning(fmt, ##__VA_ARGS__)
-#define D_pLogCritical(fmt, ...) pLogCritical(fmt, ##__VA_ARGS__)
-#define D_pLogInfo(fmt, ...) pLogInfo(fmt, ##__VA_ARGS__)
-#define D_pLogFatal(fmt, ...) pLogFatal(fmt, ##__VA_ARGS__)
+#define D_pLogDebug(fmt, ...) pLogDebug(fmt, __VA_ARGS__)
+#define D_pLogWarning(fmt, ...) pLogWarning(fmt, __VA_ARGS__)
+#define D_pLogCritical(fmt, ...) pLogCritical(fmt, __VA_ARGS__)
+#define D_pLogInfo(fmt, ...) pLogInfo(fmt, __VA_ARGS__)
+#define D_pLogFatal(fmt, ...) pLogFatal(fmt, __VA_ARGS__)
 // Standard without arguments to avoid "ISO C++11 requires at least one argument of the '...' in a variadic macro"
 #define D_pLogDebugNA(fmt) pLogDebug(fmt)
 #define D_pLogWarningNA(fmt) pLogWarning(fmt)
@@ -69,23 +72,16 @@ extern void WriteToLog(PGE_LogLevel type, const std::string &msg);
 #define D_pLogInfoNA(fmt) pLogInfo(fmt)
 #define D_pLogFatalNA(fmt) pLogFatal(fmt)
 #else
-#define D_pLogDebug(fmt, ...)
-#define D_pLogWarning(fmt, ...)
-#define D_pLogCritical(fmt, ...)
-#define D_pLogFatal(fmt, ...)
-#define D_pLogInfo(fmt, ...)
-#define D_pLogDebugNA(fmt)
-#define D_pLogWarningNA(fmt)
-#define D_pLogCriticalNA(fmt)
-#define D_pLogFatalNA(fmt)
-#define D_pLogInfoNA(fmt)
+#define D_pLogDebug(fmt, ...) (void)0;
+#define D_pLogWarning(fmt, ...) (void)0;
+#define D_pLogCritical(fmt, ...) (void)0;
+#define D_pLogFatal(fmt, ...) (void)0;
+#define D_pLogInfo(fmt, ...) (void)0;
+#define D_pLogDebugNA(fmt) (void)0;
+#define D_pLogWarningNA(fmt) (void)0;
+#define D_pLogCriticalNA(fmt) (void)0;
+#define D_pLogFatalNA(fmt) (void)0;
+#define D_pLogInfoNA(fmt) (void)0;
 #endif
-
-#ifdef __cplusplus
-#define LogDebug(msg) WriteToLog(PGE_LogLevel::Debug, msg)
-#define LogWarning(msg) WriteToLog(PGE_LogLevel::Warning, msg)
-#define LogCritical(msg) WriteToLog(PGE_LogLevel::Critical, msg)
-#define LogFatal(msg) WriteToLog(PGE_LogLevel::Fatal, msg)
-#endif//__cplusplus
 
 #endif // LOGGER_H

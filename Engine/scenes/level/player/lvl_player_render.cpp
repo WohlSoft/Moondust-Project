@@ -21,7 +21,7 @@
 #include <graphics/gl_renderer.h>
 #include <graphics/window.h>
 #include <fontman/font_manager.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 #include <scenes/scene_level.h>
 
 void LVL_Player::render(double camX, double camY)

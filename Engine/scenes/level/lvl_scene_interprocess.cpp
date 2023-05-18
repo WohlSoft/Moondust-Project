@@ -21,7 +21,7 @@
 
 #include <data_configs/config_manager.h>
 #include <networking/intproc.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <audio/pge_audio.h>
 #include <fontman/font_manager.h>
 
@@ -65,7 +65,7 @@ void LevelScene::process_InterprocessCommands()
 
             if(!got.meta.ReadFileValid)
             {
-                LogDebug(got.meta.ERROR_info);
+                pLogDebug(got.meta.ERROR_info.c_str());
                 break;
             }
 

@@ -25,7 +25,7 @@
 #include <common_features/app_path.h>
 #include <audio/pge_audio.h>
 #include <settings/global_settings.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 
 #include "../data_configs/config_select_scene/scene_config_select.h"
 #include "../scenes/scene_level.h"

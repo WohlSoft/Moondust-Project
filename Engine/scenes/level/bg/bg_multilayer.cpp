@@ -19,7 +19,7 @@
 
 #include "bg_multilayer.h"
 #include <data_configs/config_manager.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <graphics/gl_renderer.h>
 #include <Utils/maths.h>
 #include <scenes/scene_level.h>

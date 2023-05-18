@@ -19,7 +19,7 @@
 
 #include "simple_animator.h"
 #include <Utils/maths.h>
-#include "logger.h"
+#include <Logger/logger.h>
 
 SimpleAnimator::SimpleAnimator()
 {

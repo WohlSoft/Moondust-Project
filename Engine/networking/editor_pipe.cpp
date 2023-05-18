@@ -1,5 +1,5 @@
 #include "editor_pipe.h"
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <common_features/util.h>
 
 #include <Utils/files.h>
@@ -9,7 +9,7 @@
 #include <cstdio>
 #include "../common_features/app_path.h"
 #include <networking/intproc.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 
 /**************************************************************************************************************/
 

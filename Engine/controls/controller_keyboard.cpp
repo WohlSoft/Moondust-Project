@@ -18,7 +18,7 @@
  */
 
 #include "controller_keyboard.h"
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 
 KeyboardController::KeyboardController() :
         Controller(type_keyboard)

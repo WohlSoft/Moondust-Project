@@ -19,13 +19,13 @@
 
 #include "render_opengl31.h"
 
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 
 #ifdef RENDER_SUPORT_OPENGL3
 
 #include "../window.h"
 #include <common_features/graphics_funcs.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
@@ -91,7 +91,7 @@ unsigned int Render_OpenGL31::SDL_InitFlags()
 
 bool Render_OpenGL31::init()
 {
-    LogDebug("Create OpenGL context...");
+    pLogDebug("Create OpenGL context...");
     //Creating of the OpenGL Context
     PGE_Window::glcontext = SDL_GL_CreateContext(PGE_Window::window);
 

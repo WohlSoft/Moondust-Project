@@ -18,7 +18,7 @@
  */
 
 #include "controller_joystick.h"
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 
 JoystickController::JoystickController() :
     Controller(type_other),

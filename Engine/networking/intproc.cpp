@@ -18,7 +18,7 @@
  */
 
 #include "intproc.h"
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 
 EditorPipe              *IntProc::editor = nullptr;
 static bool             ipc_enabled = false;

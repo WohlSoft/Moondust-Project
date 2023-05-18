@@ -22,10 +22,10 @@
 #include "../gui/pge_msgbox.h"
 #include <common_features/graphics_funcs.h>
 #include <common_features/number_limiter.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <scenes/level/lvl_physenv.h>
 #include <Utils/files.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 
 /*****Playable Characters************/
 PGE_DataArray<obj_player > ConfigManager::playable_characters;

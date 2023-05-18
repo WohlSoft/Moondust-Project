@@ -39,7 +39,7 @@
 #include <DirManager/dirman.h>
 
 #include <common_features/crash_handler.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <common_features/translator.h>
 #include <common_features/number_limiter.h>
 

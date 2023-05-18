@@ -265,6 +265,11 @@ std::string AppPathManager::languagesDir()
 #endif
 }
 
+std::string AppPathManager::logsDir()
+{
+    return ApplicationPathSTD + "logs";
+}
+
 std::string AppPathManager::screenshotsDir()
 {
 #ifndef __APPLE__
