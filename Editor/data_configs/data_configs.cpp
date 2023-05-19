@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -270,32 +270,38 @@ bool DataConfig::loadBasics()
                 {"hidden", EditorSetup::FeaturesSupport::F_HIDDEN},
                 {"2", EditorSetup::FeaturesSupport::F_HIDDEN}
         };
-        guiset.readEnum("level-section-vertical-wrap", editor.supported_features.level_section_vertical_wrap, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
 
-        guiset.readEnum("level-section-21-plus", editor.supported_features.level_section_21plus, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        EditorSetup::FeaturesSupport::State defaultState = EditorSetup::FeaturesSupport::F_ENABLED;
+        // Default state for all fields listed below
+        guiset.readEnum("default", defaultState, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
 
-        guiset.readEnum("level-phys-ez-new-types", editor.supported_features.level_phys_ez_new_types, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-section-vertical-wrap", editor.supported_features.level_section_vertical_wrap, defaultState, formatEnum);
 
-        guiset.readEnum("level-bgo-z-layer", editor.supported_features.level_bgo_z_layer, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
-        guiset.readEnum("level-bgo-z-position", editor.supported_features.level_bgo_z_position, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
-        guiset.readEnum("level-bgo-smbx64-sp", editor.supported_features.level_bgo_smbx64_sp, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-section-21-plus", editor.supported_features.level_section_21plus, defaultState, formatEnum);
 
-        guiset.readEnum("level-warp-transition-type", editor.supported_features.level_warp_transit_type, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-phys-ez-new-types", editor.supported_features.level_phys_ez_new_types, defaultState, formatEnum);
 
-        guiset.readEnum("level-warp-two-way", editor.supported_features.level_warp_two_way, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
-        guiset.readEnum("level-warp-portal", editor.supported_features.level_warp_portal, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
-        guiset.readEnum("level-warp-bomb-exit", editor.supported_features.level_warp_bomb_exit, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
-        guiset.readEnum("level-warp-allow-special-state-only", editor.supported_features.level_warp_allow_sp_state_only, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
-        guiset.readEnum("level-warp-allow-needs-floor", editor.supported_features.level_warp_allow_needs_floor, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
-        guiset.readEnum("level-warp-hide-interlevel-scene", editor.supported_features.level_warp_hide_interlevel_scene, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
-        guiset.readEnum("level-warp-allow-interlevel-npc", editor.supported_features.level_warp_allow_interlevel_npc, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
-        guiset.readEnum("level-warp-hide-stars", editor.supported_features.level_warp_hide_stars, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
-        guiset.readEnum("level-warp-needed-stars-message", editor.supported_features.level_warp_needstars_message, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
-        guiset.readEnum("level-warp-on-enter-event", editor.supported_features.level_warp_on_enter_event, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
-        guiset.readEnum("level-warp-cannon-exit", editor.supported_features.level_warp_cannon_exit, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-bgo-z-layer", editor.supported_features.level_bgo_z_layer, defaultState, formatEnum);
+        guiset.readEnum("level-bgo-z-position", editor.supported_features.level_bgo_z_position, defaultState, formatEnum);
+        guiset.readEnum("level-bgo-smbx64-sp", editor.supported_features.level_bgo_smbx64_sp, defaultState, formatEnum);
 
-        guiset.readEnum("level-event-new-autoscroll", editor.supported_features.level_event_new_autoscroll, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-transition-type", editor.supported_features.level_warp_transit_type, defaultState, formatEnum);
 
+        guiset.readEnum("level-warp-two-way", editor.supported_features.level_warp_two_way, defaultState, formatEnum);
+        guiset.readEnum("level-warp-portal", editor.supported_features.level_warp_portal, defaultState, formatEnum);
+        guiset.readEnum("level-warp-bomb-exit", editor.supported_features.level_warp_bomb_exit, defaultState, formatEnum);
+        guiset.readEnum("level-warp-allow-special-state-only", editor.supported_features.level_warp_allow_sp_state_only, defaultState, formatEnum);
+        guiset.readEnum("level-warp-allow-needs-floor", editor.supported_features.level_warp_allow_needs_floor, defaultState, formatEnum);
+        guiset.readEnum("level-warp-hide-interlevel-scene", editor.supported_features.level_warp_hide_interlevel_scene, defaultState, formatEnum);
+        guiset.readEnum("level-warp-allow-interlevel-npc", editor.supported_features.level_warp_allow_interlevel_npc, defaultState, formatEnum);
+        guiset.readEnum("level-warp-hide-stars", editor.supported_features.level_warp_hide_stars, defaultState, formatEnum);
+        guiset.readEnum("level-warp-needed-stars-message", editor.supported_features.level_warp_needstars_message, defaultState, formatEnum);
+        guiset.readEnum("level-warp-on-enter-event", editor.supported_features.level_warp_on_enter_event, defaultState, formatEnum);
+        guiset.readEnum("level-warp-cannon-exit", editor.supported_features.level_warp_cannon_exit, defaultState, formatEnum);
+
+        guiset.readEnum("level-event-new-autoscroll", editor.supported_features.level_event_new_autoscroll, defaultState, formatEnum);
+
+        // Not so used field
         guiset.readEnum("world-hawkmouth-exit", editor.supported_features.world_hawkmouth_exit, EditorSetup::FeaturesSupport::F_HIDDEN, formatEnum);
     }
     guiset.endGroup();

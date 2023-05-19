@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -20,11 +20,11 @@
 #include <regex>
 #include <set>
 
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 #include <IniProcessor/ini_processing.h>
 #include <Utils/files.h>
 #include <DirManager/dirman.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include "player_calibration.h"
 
 template <class T>

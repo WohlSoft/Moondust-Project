@@ -112,12 +112,6 @@ void *ctx_wave_open(int chans_count,
     return ctx;
 }
 
-void ctx_wave_enable_stereo(void *ctx)
-{
-    struct Context *wWriter = (struct Context *)ctx;
-    wWriter->m_chan_count = 2;
-}
-
 
 static void flush_(struct Context *ctx)
 {
@@ -129,11 +123,14 @@ static void flush_(struct Context *ctx)
 void ctx_wave_write(void *ctx, const unsigned char *in, long remain)
 {
     struct Context *wWriter = (struct Context *)ctx;
+
     wWriter->m_sample_count += remain / wWriter->m_sample_size;
+
     while(remain)
     {
         if(wWriter->m_buf_pos >= buf_size)
             flush_(wWriter);
+
         {
             unsigned char *p = &wWriter->m_buf[wWriter->m_buf_pos];
             long n = (buf_size - (unsigned long)wWriter->m_buf_pos);
@@ -211,5 +208,6 @@ void ctx_wave_close(void *ctx)
         free(wWriter->m_buf);
         wWriter->m_buf = 0;
     }
+
     free(wWriter);
 }

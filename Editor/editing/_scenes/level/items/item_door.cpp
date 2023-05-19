@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -130,23 +130,26 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         dstLevelPath = m_scene->m_data->meta.path + "/" + dstLevelName;
     }
 
-    QAction *openLvl = itemMenu.addAction(tr("Open target level: %1").arg(dstLevelName).replace("&", "&&&"));
+    QAction *openLvl = itemMenu.addAction(tr("Open target level: %1").arg(dstLevelName).replace("&", "&&"));
     openLvl->setVisible((!dstLevelName.isEmpty()) && QFile::exists(dstLevelPath));
     openLvl->deleteLater();
 
     /*************Layers*******************/
-    QMenu *layerName =     itemMenu.addMenu(tr("Layer: ") + QString("[%1]").arg(m_data.layer).replace("&", "&&&"));
+    QMenu *layerName =     itemMenu.addMenu(tr("Layer: ") + QString("[%1]").arg(m_data.layer).replace("&", "&&"));
     QAction *setLayer;
     QList<QAction *> layerItems;
 
     QAction *newLayer =    layerName->addAction(tr("Add to new layer..."));
     layerName->addSeparator()->deleteLater();
-    for(LevelLayer &layer : m_scene->m_data->layers)
+
+    for(const LevelLayer &layer : m_scene->m_data->layers)
     {
         //Skip system layers
-        if((layer.name == "Destroyed Blocks") || (layer.name == "Spawned NPCs")) continue;
+        if((layer.name == "Destroyed Blocks") || (layer.name == "Spawned NPCs"))
+            continue;
 
-        setLayer = layerName->addAction(layer.name.replace("&", "&&&") + ((layer.hidden) ? "" + tr("[hidden]") : ""));
+        QString label = layer.name + ((layer.hidden) ? " " + tr("[hidden]") : "");
+        setLayer = layerName->addAction(label.replace("&", "&&"));
         setLayer->setData(layer.name);
         setLayer->setCheckable(true);
         setLayer->setEnabled(true);
@@ -274,6 +277,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     /*************Copy Preferences*******************/
     itemMenu.addSeparator();
     QMenu *copyPreferences =   itemMenu.addMenu(tr("Copy preferences"));
+    QAction *copyArrayID =      copyPreferences->addAction(tr("Array-ID: %1").arg(m_data.meta.array_id));
     QAction *copyPosXY =        copyPreferences->addAction(tr("Position: X, Y"));
     QAction *copyPosXYWH =      copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
     QAction *copyPosLTRB =      copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
@@ -533,6 +537,11 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         }
         m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_W_NEEDS_FLOOR, QVariant(floorReq->isChecked()));
         m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
+    }
+    else if(selected == copyArrayID)
+    {
+        QApplication::clipboard()->setText(QString("%1").arg(m_data.meta.array_id));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXY)
     {

@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -20,7 +20,7 @@
 #include "wld_pathopener.h"
 #include "wld_tilebox.h"
 #include <audio/pge_audio.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <Utils/maths.h>
 
 #include "../scene_world.h"
@@ -133,7 +133,7 @@ void WldPathOpener::doFetch()
     bool found = false;
     double x, y;
     #ifdef DEBUG_BUILD
-    LogDebug("Fetch leaf....");
+    pLogDebug("Fetch leaf....");
     #endif
 
     while(!next.empty())
@@ -301,7 +301,7 @@ void WldPathOpener::initFetcher()
                 bool found = false;
                 double x, y;
                 #ifdef DEBUG_BUILD
-                LogDebug("FETCH LEFT");
+                pLogDebug("FETCH LEFT");
                 #endif
 
                 if(isAllowedSide(wl->data.left_exit, exitCode))
@@ -353,7 +353,7 @@ void WldPathOpener::initFetcher()
 
                 #ifdef DEBUG_BUILD
                 else
-                    LogDebug("Right side skipped");
+                    pLogDebug("Right side skipped");
 
                 #endif
                 D_pLogDebugNA("FETCH TOP");

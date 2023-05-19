@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <audio/music_player.h>
 #include "file_list_browser/musicfilelist.h"
+#include "custom_music_setup/custom_music_setup.h"
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -389,6 +390,63 @@ void WorldItemBox::MusicList_itemClicked(const QModelIndex &item)
                              edit->currentMusic,
                              edit->currentCustomMusic);
         mw()->setMusic();
+
+        // Set music properties if needed
+        if(CustomMusicSetup::settingsNeeded(customMusicFile))
+        {
+            CustomMusicSetup set(mw());
+            set.initLists();
+
+            QString musicPath = customMusicFile;
+            set.setMusicPath(musicPath);
+            set.setDirectory(edit->WldData.meta.path, edit->WldData.meta.filename);
+            set.setMusicPlayState(mw()->ui->actionPlayMusic->isChecked());
+
+            QObject::connect(&set, &CustomMusicSetup::musicSetupChanged, [&musicPath](const QString &music)->void
+            {
+                musicPath = music;
+            });
+
+            QObject::connect(&set, &CustomMusicSetup::updateSongPlay, [this,edit, &musicPath]()->void
+            {
+                LvlMusPlay::setMusic(mw(), LvlMusPlay::WorldMusic,
+                                     edit->currentMusic,
+                                     musicPath);
+                mw()->setMusic();
+            });
+
+            QObject::connect(&set, &CustomMusicSetup::updateSongTempo, [](double tempo)->void
+            {
+                LvlMusPlay::setTempo(tempo);
+            });
+
+            QObject::connect(&set, &CustomMusicSetup::musicButtonClicked, [this](bool)->void
+            {
+                mw()->ui->actionPlayMusic->trigger();
+            });
+
+            set.show();
+            set.adjustSize();
+            int ret = set.exec();
+
+            if(ret == QDialog::Accepted)
+            {
+                // Apply the new music state if changed
+                if(customMusicFile != musicPath)
+                {
+                    customMusicFile = musicPath;
+                    edit->currentCustomMusic = musicPath;
+                    WldPlacingItems::musicSet.music_file = customMusicFile;
+                }
+            }
+            else
+            {
+                // Reset music without changing of properties
+                LvlMusPlay::setMusic(mw(), LvlMusPlay::WorldMusic,
+                                     edit->currentMusic,
+                                     edit->currentCustomMusic);
+                mw()->setMusic();
+            }
+        }
     }
 }
-

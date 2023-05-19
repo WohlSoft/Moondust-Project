@@ -62,11 +62,11 @@
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation>单关卡中最多的动画对象数量，若超出上限，将会暂停。</translation>
+        <translation>单关卡中的动画对象上限。若超出上限，将会暂停。</translation>
     </message>
     <message>
         <source>Animation items limit</source>
-        <translation>动画最大数量</translation>
+        <translation>动画上限</translation>
     </message>
     <message>
         <source>Collision detection</source>
@@ -284,7 +284,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Tileset Item toolbox</source>
-        <translation>图块工具箱</translation>
+        <translation>图块集工具箱</translation>
     </message>
     <message>
         <source>Logging</source>
@@ -387,7 +387,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>SoX executable path:</source>
-        <translation>SoX 目录：</translation>
+        <translation>SoX 程序所在文件夹：</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -412,14 +412,14 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>SoX executable path is not defined.
 Please set SoX path first</source>
-        <translation>未设置 SoX 目录。
-请先设置 SoX 目录</translation>
+        <translation>未设置 SoX 文件夹。
+请先设置 SoX 文件夹</translation>
     </message>
     <message>
         <source>SoX executable path is invalid.
 Please set SoX path first</source>
-        <translation>SoX 目录错误。
-请检查 SoX 目录是否正确</translation>
+        <translation>SoX 文件夹错误。
+请检查 SoX 文件夹是否正确</translation>
     </message>
     <message>
         <source>Nothing to do.</source>
@@ -463,7 +463,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Open SoX executable path</source>
-        <translation>打开 SoX 目录</translation>
+        <translation>打开 SoX 文件夹</translation>
     </message>
     <message>
         <source>Select file to convert</source>
@@ -534,11 +534,11 @@ Please set SoX path first</source>
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation>选择 WOPL 音色组文件</translation>
+        <translation>选择 WOPL 音色库文件</translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation>请选择要使用的 WOPL 音色组文件</translation>
+        <translation>请选择要使用的 WOPL 音色库文件</translation>
     </message>
     <message>
         <source>Select WOPN bank file</source>
@@ -546,15 +546,15 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation>请选择要使用的 WOPN 音色组文件</translation>
+        <translation>请选择要使用的 WOPN 音色库文件</translation>
     </message>
     <message>
         <source>Select SoundFont bank file</source>
-        <translation>选择 SF2 音源文件</translation>
+        <translation>选择 SF2 音色库文件</translation>
     </message>
     <message>
         <source>Please select the SoundFont bank file to add</source>
-        <translation>请选择要添加的 SF2 音源文件</translation>
+        <translation>请选择要添加的 SF2 音色库文件</translation>
     </message>
 </context>
 <context>
@@ -652,7 +652,7 @@ Please download and install them into this directory&lt;br&gt;
 &lt;br&gt;
 You can use any configuration package here:&lt;br&gt;%2</source>
         <translation>未找到任何配置包！&lt;br&gt;
-请下载并安装到此目录：&lt;br&gt;
+请先下载配置包并安装到此文件夹：&lt;br&gt;
 &lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
@@ -676,7 +676,7 @@ Do you want to configure it?</source>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
         <translation>配置工具发生错误： %1 于第 %2 行。
-文件目录： %3</translation>
+文件位置： %3</translation>
     </message>
     <message>
         <source>No configuration needed</source>
@@ -715,15 +715,15 @@ File path: %3</source>
     </message>
     <message>
         <source>Configuration path:</source>
-        <translation>配置目录：</translation>
+        <translation>配置包所在文件夹：</translation>
     </message>
     <message>
         <source>Directories</source>
-        <translation>目录</translation>
+        <translation>文件夹</translation>
     </message>
     <message>
         <source>Configuration directories:</source>
-        <translation>配置包目录：</translation>
+        <translation>配置包文件夹：</translation>
     </message>
     <message>
         <source>Name</source>
@@ -833,10 +833,6 @@ File path: %3</source>
         <translation>月尘引擎崩溃</translation>
     </message>
     <message>
-        <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>啊！月尘引擎编辑器程序异常终止！&lt;br&gt;详细信息:</translation>
-    </message>
-    <message>
         <source>Exit from application</source>
         <translation>退出应用</translation>
     </message>
@@ -848,8 +844,8 @@ File path: %3</source>
     <message>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
-        <translation>由于上次崩溃，因此编辑器已恢复了这些文件。
-请保存这些文件，以免丢失。</translation>
+        <translation>由于编辑器上次发生异常终止，已为您恢复这些文件。
+请您保存这些文件，以免丢失。</translation>
     </message>
     <message>
         <source>You might want to report this data to developers:</source>
@@ -858,14 +854,6 @@ Please save them before doing anything else.</source>
     <message>
         <source>Copy report into clipboard</source>
         <translation>复制报告到剪贴板</translation>
-    </message>
-    <message>
-        <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>在 WohlSoft 论坛中反馈问题（wohlsoft.ru/forum/，需英文）</translation>
-    </message>
-    <message>
-        <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation>在 Github 仓库中反馈问题（WohlSoft/Moondust-Project，需英文）</translation>
     </message>
     <message>
         <source>Copied!</source>
@@ -884,6 +872,22 @@ Please save them before doing anything else.</source>
 - 请列出造成程序异常终止的行为。
 - 如果是编辑指定文件造成的异常终止，请附上相关文件。
 - 您使用的操作系统？</translation>
+    </message>
+    <message>
+        <source>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
+        <translation>抱歉，月尘编辑器遭到异常终止 :(&lt;br&gt;详细信息：</translation>
+    </message>
+    <message>
+        <source>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</source>
+        <translation>发布至 Wohlsoft 社区（wohlsoft.ru/forum/，需要英文）</translation>
+    </message>
+    <message>
+        <source>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</source>
+        <translation>在 GitHub 仓库发起 Issue (WohlSoft/Moondust-Project)</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Important note:&lt;/b&gt; please don&apos;t post this report at third-party forums and chat servers (including ANY SMBX-related community servers with no exceptions). Otherwise, you have &lt;b&gt;an extremely small chance of getting the proper support&lt;/b&gt;. We can give you a support at official resources listed above only.</source>
+        <translation>&lt;b&gt;重要提示：&lt;/b&gt;请勿将此报告发布至第三方社区或群组（包括与&lt;b&gt;任何&lt;/b&gt; SMBX 相关的社区或群组）， &lt;b&gt;否则您将无法获得支持&lt;/b&gt;。我们只能在以上列出的地点提供支持。</translation>
     </message>
 </context>
 <context>
@@ -1007,7 +1011,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
-        <translation>MIDI 音乐中所使用的音色库，可使用不同的库对比音色差异。</translation>
+        <translation>MIDI 音乐所使用的音色库，可使用不同的库对比音色差异。</translation>
     </message>
     <message>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
@@ -1031,7 +1035,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>To begin</source>
-        <translation>回到开始</translation>
+        <translation>编号归零</translation>
     </message>
     <message>
         <source>Previous</source>
@@ -1043,7 +1047,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
-        <translation>提示：请开启音乐播放以预览效果（见主工具栏中播放/停止图标）。</translation>
+        <translation>提示：请开启音乐播放以预览效果（参见主工具栏中的播放/停止图标）。</translation>
     </message>
     <message>
         <source>MIDI</source>
@@ -1063,7 +1067,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Native MIDI (Not recommended, buggy)</source>
-        <translation>本地 MIDI (有 Bug，不推荐)</translation>
+        <translation>本地 MIDI (有 BUG，不推荐)</translation>
     </message>
     <message>
         <source>[Auto]</source>
@@ -1095,7 +1099,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation>SF2 音源列表（支持拖拽排序）</translation>
+        <translation>SF2 音色库列表（支持拖拽排序）</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1109,7 +1113,7 @@ Please save them before doing anything else.</source>
     <message>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation>房间大小</translation>
+        <translation>空间大小</translation>
     </message>
     <message>
         <source>Damping</source>
@@ -1158,7 +1162,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation>FluidSynth（需要 SF2 音源支持）</translation>
+        <translation>FluidSynth（需要 SF2 音色库支持）</translation>
     </message>
     <message>
         <source>Native OPN2</source>
@@ -1209,7 +1213,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Disable SPC echo</source>
-        <translation>禁用 SPC 回音效果</translation>
+        <translation>禁用 SPC 音乐回音效果</translation>
     </message>
     <message>
         <source>Sounding off delay based</source>
@@ -1225,6 +1229,10 @@ Please save them before doing anything else.</source>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
         <translation>首个任意释放信道</translation>
+    </message>
+    <message>
+        <source>libEDMIDI (OPLL, SCC, PSG)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1457,7 +1465,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是当前文件所在目录中的所有关卡文件。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;这是当前文件所在文件夹中的所有关卡文件。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Please select a file from the list:</source>
@@ -1503,7 +1511,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</source>
         <translatorcomment>不知道怎么翻译……</translatorcomment>
-        <translation>&lt;p&gt;&lt;b&gt;提示1：&lt;/b&gt; 您可以从&lt;u&gt;帮助&lt;/u&gt; 菜单、&lt;u&gt;查看&lt;/u&gt;菜单中的工具箱和&lt;u&gt;窗口&lt;/u&gt;菜单中的下拉菜单项随时更换界面样式。&lt;br&gt;
+        <translation>&lt;p&gt;&lt;b&gt;提示1：&lt;/b&gt; 您可以从&lt;u&gt;帮助&lt;/u&gt; 菜单、&lt;u&gt;查看&lt;/u&gt;菜单中的工具箱和&lt;u&gt;窗口&lt;/u&gt;菜单中的下拉菜单项随时更改界面样式。&lt;br&gt;
 &lt;br&gt;
 &lt;b&gt;提示2:&lt;/b&gt; 此编辑器不像原版 SMBX1.3 那样，许多功能可以在鼠标右击时弹出菜单后打开，
 也可以从工具栏和菜单里打开，使用此编辑器还可以一次选择多个对象！&lt;br&gt;
@@ -1543,7 +1551,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>HistoryElementLayerChanged</name>
     <message>
         <source>Change Layer</source>
-        <translation>更换图层</translation>
+        <translation>更改为</translation>
     </message>
 </context>
 <context>
@@ -1684,7 +1692,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation>增加到新图层……</translation>
+        <translation>添加到新图层……</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -1720,15 +1728,15 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 in this section into</source>
-        <translation>在此场景中更换所有 %1 为</translation>
+        <translation>更改当前场景中所有 %1 为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation>更换所有 %1 为</translation>
+        <translation>更改所有 %1 为</translation>
     </message>
     <message>
         <source>Copy preferences</source>
@@ -1798,6 +1806,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Edit raw user data...</source>
         <translation>编辑原始用户数据……</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>数组编号：%1</translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1807,7 +1819,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation>增加到新图层……</translation>
+        <translation>添加到新图层……</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -1827,19 +1839,19 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Change included NPC...</source>
-        <translation>更换包含 NPC……</translation>
+        <translation>更改包含 NPC……</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 in this section into</source>
-        <translation>在此场景中更换所有 %1 为</translation>
+        <translation>更改当前场景中所有 %1 为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation>更换所有 %1 为</translation>
+        <translation>更改所有 %1 为</translation>
     </message>
     <message>
         <source>Make message box...</source>
@@ -1912,8 +1924,8 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Please enter the message which will be shown.
 (Max line length is 27 characters)</source>
-        <translation>请输入信息。
-（每行最大长度为 27 个字）</translation>
+        <translation>请输入信息：
+（每行不超过 27 个字符）</translation>
     </message>
     <message>
         <source>Hit message text</source>
@@ -1921,7 +1933,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Event created</source>
-        <translation>事件已创建</translation>
+        <translation>已创建事件</translation>
     </message>
     <message>
         <source>Message event created!</source>
@@ -1938,6 +1950,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Edit raw user data...</source>
         <translation>编辑原始用户数据……</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>数组编号：%1</translation>
     </message>
 </context>
 <context>
@@ -2006,7 +2022,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation>增加到新图层……</translation>
+        <translation>添加到新图层……</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -2096,6 +2112,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <comment>Direction of pipe</comment>
         <translation>下</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>数组编号：%1</translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -2145,11 +2165,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation>更换所有 %1 为</translation>
+        <translation>更改所有 %1 为</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2167,6 +2187,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation>偏好已复制：%1</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>数组编号：%1</translation>
+    </message>
 </context>
 <context>
     <name>ItemMsgBox</name>
@@ -2181,8 +2205,8 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Enter the NPC&apos;s dialog message:
 (Max length per line is 27 characters)</source>
-        <translation>输入 NPC 对话：
-（每行最大长度为 27 个字）</translation>
+        <translation>请输入 NPC 对话信息：
+（每行不超过 27 个字符）</translation>
     </message>
     <message>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
@@ -2229,11 +2253,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation>更换所有 %1 为</translation>
+        <translation>更改所有 %1 为</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2247,6 +2271,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation>偏好已复制：%1</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>数组编号：%1</translation>
+    </message>
 </context>
 <context>
     <name>ItemNPC</name>
@@ -2256,7 +2284,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation>增加到新图层……</translation>
+        <translation>添加到新图层……</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -2308,19 +2336,19 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 in this section into</source>
-        <translation>在此场景中更换所有 %1 为</translation>
+        <translation>更改当前场景中所有 %1 为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation>更换所有 %1 为</translation>
+        <translation>更改所有 %1 为</translation>
     </message>
     <message>
         <source>Change included NPC...</source>
-        <translation>更换包含 NPC……</translation>
+        <translation>更改包含 NPC……</translation>
     </message>
     <message>
         <source>Copy preferences</source>
@@ -2382,6 +2410,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Edit raw user data...</source>
         <translation>编辑原始用户数据……</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>数组编号：%1</translation>
+    </message>
 </context>
 <context>
     <name>ItemPath</name>
@@ -2415,7 +2447,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
@@ -2433,6 +2465,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation>偏好已复制：%1</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>数组编号：%1</translation>
+    </message>
 </context>
 <context>
     <name>ItemPhysEnv</name>
@@ -2442,7 +2478,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation>增加到新图层……</translation>
+        <translation>添加到新图层……</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -2548,6 +2584,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation>偏好已复制：%1</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>数组编号：%1</translation>
+    </message>
 </context>
 <context>
     <name>ItemPlayerPoint</name>
@@ -2604,11 +2644,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation>更换所有 %1 为</translation>
+        <translation>更改所有 %1 为</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2621,6 +2661,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>偏好已复制：%1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>数组编号：%1</translation>
     </message>
 </context>
 <context>
@@ -2734,11 +2778,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform into</source>
-        <translation>更换为</translation>
+        <translation>更改为</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation>更换所有 %1 为</translation>
+        <translation>更改所有 %1 为</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2751,6 +2795,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>偏好已复制：%1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>数组编号：%1</translation>
     </message>
 </context>
 <context>
@@ -2822,7 +2870,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Make custom folder</source>
-        <translation>生成自定义目录</translation>
+        <translation>生成自定义文件夹</translation>
     </message>
     <message>
         <source>Save As</source>
@@ -2897,7 +2945,7 @@ Installed LunaLUA partially extends than limits.</source>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
-        <translation>该关卡中有一些无法读取的错误配置文件。如果不想再弹出此对话框，请在当前目录和自定义目录里找到错误的配置文件并修复：
+        <translation>该关卡中有一些无法读取的错误配置文件。如果不想再弹出此对话框，请在当前文件夹和自定义文件夹里找到错误的配置文件并修复：
 
 %1</translation>
     </message>
@@ -2949,7 +2997,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Please, select level file from list for use them:</source>
-        <translation>请从下列关卡文件中使用：</translation>
+        <translation>请从下方列表选择要使用的关卡文件：</translation>
     </message>
 </context>
 <context>
@@ -2976,11 +3024,11 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Copy graphic to custom folder</source>
-        <translation>复制素材到自定义目录</translation>
+        <translation>复制素材到自定义文件夹</translation>
     </message>
     <message>
         <source>Copy graphic to episode folder</source>
-        <translation>复制素材到地图目录</translation>
+        <translation>复制素材到地图文件夹</translation>
     </message>
     <message>
         <source>Level items browser</source>
@@ -3183,7 +3231,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     </message>
     <message>
         <source>Please select a path to LunaTester:</source>
-        <translation>请选择 LunaTester 目录：</translation>
+        <translation>请选择 LunaTester 所在的位置：</translation>
     </message>
     <message>
         <source>Use default</source>
@@ -3226,7 +3274,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     <message>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
-        <translation>更改 LunaTester 目录……</translation>
+        <translation>更改 LunaTester 所在位置……</translation>
     </message>
     <message>
         <source>Select the location of LunaTester.</source>
@@ -3235,7 +3283,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     <message>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
-        <translation>LunaTester 目录</translation>
+        <translation>LunaTester 位置</translation>
     </message>
     <message>
         <source>Select a location of LunaTester</source>
@@ -3261,7 +3309,7 @@ Do you want to continue the process?</source>
     <message>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
-        <translation>LunaTester 目录检测失败</translation>
+        <translation>LunaTester 文件夹检测失败</translation>
     </message>
     <message>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
@@ -3273,9 +3321,9 @@ Do you want to continue the process?</source>
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
-        <translation>- LunaTester 目录（或 SMBX2 根目录）设置错误，请检查 LunaTester 目录是否正确。
+        <translation>- LunaTester 文件夹（或 SMBX2 根文件夹）设置错误，请检查 LunaTester 目录是否正确。
 - 可能由于杀毒软件误报而被移除，请检查您的杀毒软件中隔离区是否有对应文件。
-- 错误的 SMBX2 安装方式造成文件丢失，请重新安装 SMBX2 以修复您的问题。</translation>
+- SMBX2 安装方式错误，导致文件丢失，请重新安装 SMBX2 以修复您的问题。</translation>
     </message>
     <message>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
@@ -3340,11 +3388,11 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
-        <translation>无法识别所选的 LunaLua 目录，因此游戏无法运行，请选择其他目录。</translation>
+        <translation>无法识别 LunaLua 所在文件夹中的内容，因此无法运行游戏，请选择其他文件夹。</translation>
     </message>
     <message>
         <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
-        <translation>您必须关闭正在运行的 LunaTester 进程才能更改 Wine 目录。您现在要关闭 LunaTester 吗？</translation>
+        <translation>您必须关闭正在运行的 LunaTester 进程才能更改 Wine 所在文件夹。您现在要关闭 LunaTester 吗？</translation>
     </message>
     <message>
         <source>Incompatible LunaDll found</source>
@@ -3364,7 +3412,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
-        <translation>启动地图失败，worlds 根目录中数量超出上限。</translation>
+        <translation>无法在 worlds 根文件夹以外的位置启动地图。</translation>
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid world file.</source>
@@ -3372,7 +3420,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
-        <translation>您必须关闭正在运行的游戏才能更改 LunaTester 目录。您现在要关闭 LunaTester 吗？</translation>
+        <translation>您必须关闭正在运行的游戏才能更改 LunaTester 文件夹。您现在要关闭 LunaTester 吗？</translation>
     </message>
     <message>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
@@ -3581,11 +3629,11 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Set music</source>
-        <translation>更换音乐</translation>
+        <translation>更改音乐</translation>
     </message>
     <message>
         <source>Replace music to:</source>
-        <translation>更换音乐为：</translation>
+        <translation>更改音乐为：</translation>
     </message>
     <message>
         <source>Set background</source>
@@ -3669,7 +3717,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Autostart event</source>
-        <translation>自动开始事件</translation>
+        <translation>进入关卡时启动该事件</translation>
     </message>
     <message>
         <source>Create copy of event</source>
@@ -3703,7 +3751,7 @@ Do you want to continue?</source>
         <source>Please, enter message
 (Max line length is 27 characters)</source>
         <translation>请输入信息：
-（每行最大长度为 27 个字）</translation>
+（每行不超过 27 个字符）</translation>
     </message>
     <message>
         <source>Autoscroll section (Legacy)</source>
@@ -3770,7 +3818,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Transform</source>
-        <translation>更换</translation>
+        <translation>更改</translation>
     </message>
     <message>
         <source>Undone: %1</source>
@@ -4162,7 +4210,7 @@ NPC 数量：	 %4
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
         <translation>本关卡中含有错误的自定义素材文件。
-你将看到的是“幽灵”或空白图像而不是自定义素材，这是由于进行错误的转换所造成的问题，例如将扩展名从 BMP 重命名为 GIF。
+你将看到的是“幽灵”或空白图像而不是自定义素材，这是由于进行了错误的转换而造成的问题，例如将扩展名从 BMP 重命名为 GIF。
 请重新转换为支持的格式并重新加载此关卡。</translation>
     </message>
 </context>
@@ -4617,7 +4665,7 @@ They will be given back when player
 finishes the level or lose a life.</source>
         <translation>当进入此传送点时
 一切坐骑将被脱下。
-当关卡完成时或死命时
+当关卡完成时或玩家挂掉时
 坐骑将会回归。</translation>
     </message>
     <message>
@@ -4802,7 +4850,7 @@ If set to zero, the player will start at the pre-defined level start point.</sou
         <source>Create a new warp entry.
 Every warp point pair requires a warp entry.</source>
         <translation>新增传送点。
-每对传送点需要一个传送入口。</translation>
+两个传送点（入口和出口）为一个传送点对。</translation>
     </message>
     <message>
         <source>Remove current warp entry with all placed points.</source>
@@ -4817,8 +4865,8 @@ Every warp point pair requires a warp entry.</source>
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
         <translation>你还未在当前文件夹中放置大地图文件，
-请在当前关卡所在文件夹中创建大地图文件。
-文件目录：%1</translation>
+请在当前关卡所在文件夹中新建大地图文件。
+文件位置：%1</translation>
     </message>
     <message>
         <source>Select world map file</source>
@@ -4957,7 +5005,7 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>Palettes and tilesets</source>
-        <translation>调色板与图块组</translation>
+        <translation>调色板与图块集</translation>
     </message>
     <message>
         <source>External tools</source>
@@ -5077,7 +5125,7 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>Tileset Item Box</source>
-        <translation>图块工具箱</translation>
+        <translation>图块集工具箱</translation>
     </message>
     <message>
         <source>Debugger</source>
@@ -5349,7 +5397,7 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>Reload file data</source>
-        <translation>重新加载文件数据</translation>
+        <translation>重新加载当前文件</translation>
     </message>
     <message>
         <source>Reload current file data</source>
@@ -5459,7 +5507,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Tilesets Editor</source>
-        <translation>图块组编辑器</translation>
+        <translation>图块集编辑器</translation>
     </message>
     <message>
         <source>Fix Lazily-made graphics (LazyFixTool)...</source>
@@ -5614,7 +5662,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Tileset Groups Editor</source>
-        <translation>图块分组编辑器</translation>
+        <translation>图块组编辑器</translation>
     </message>
     <message>
         <source>Zoom In</source>
@@ -5754,19 +5802,19 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Open folder of current file</source>
-        <translation>打开地图目录</translation>
+        <translation>打开地图文件夹</translation>
     </message>
     <message>
         <source>Open folder which contains currently opened file</source>
-        <translation>打开当前关卡所在的地图目录。</translation>
+        <translation>打开当前关卡所在的地图文件夹。</translation>
     </message>
     <message>
         <source>Open custom data folder</source>
-        <translation>打开关卡目录</translation>
+        <translation>打开关卡文件夹</translation>
     </message>
     <message>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation>打开关卡目录。</translation>
+        <translation>打开关卡文件夹。</translation>
     </message>
     <message>
         <source>Wrap Vertically</source>
@@ -5810,7 +5858,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Configuration successfully reloaded!</source>
-        <translation>配置包已成功重新加载！</translation>
+        <translation>重新加载配置包已完成！</translation>
     </message>
     <message>
         <source>Configuration changed</source>
@@ -5848,15 +5896,15 @@ File not exist.</source>
     </message>
     <message>
         <source>Reloading error</source>
-        <translation>重新加载出现错误</translation>
+        <translation>重新加载时发生错误</translation>
     </message>
     <message>
         <source>Level file reloaded</source>
-        <translation>已重新加载关卡文件</translation>
+        <translation>关卡文件已重新加载</translation>
     </message>
     <message>
         <source>NPC Config reloaded</source>
-        <translation>已重新加载 NPC 设置</translation>
+        <translation>NPC 设置已重新加载</translation>
     </message>
     <message>
         <source>World map file loaded</source>
@@ -5870,7 +5918,7 @@ File not exist.</source>
         <source>Cannot create NPC config file:
 The configuration pack was loaded, but contains errors.</source>
         <translation>无法创建 NPC 设置文件：
-该配置包有错误。</translation>
+该配置包存在错误。</translation>
     </message>
     <message>
         <source>Create new NPC.txt configuration file</source>
@@ -5880,13 +5928,13 @@ The configuration pack was loaded, but contains errors.</source>
         <source>Cannot create level file:
 The configuration pack was loaded, but contains errors.</source>
         <translation>无法创建关卡文件：
-该配置包有错误。</translation>
+该配置包存在错误。</translation>
     </message>
     <message>
         <source>Cannot create world map file:
 The configuration pack was loaded, but contains errors.</source>
         <translation>无法创建大地图文件：
-该配置包有错误。</translation>
+该配置包存在错误。</translation>
     </message>
     <message>
         <source>Untitled file</source>
@@ -6080,7 +6128,7 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>Select directory with custom data to import.</source>
-        <translation>选择包含自定义数据的目录。</translation>
+        <translation>选择包含自定义数据的文件夹。</translation>
     </message>
     <message>
         <source>File is untitled</source>
@@ -6278,7 +6326,7 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
     </message>
     <message>
         <source>Music change points</source>
-        <translation>音乐更换地点</translation>
+        <translation>音乐更改点</translation>
     </message>
     <message>
         <source>Configuration can&apos;t be loaded:
@@ -6318,7 +6366,7 @@ See %2 for more information.</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation>该关卡文件使用无法识别的配置包创建。这是因为该关卡使用的是另一个引擎而非 %1，因此可能造成部分砖块、NPC、脚本或其他的对象不兼容，且您可能会遇到未如预期的结果或错误。
+        <translation>该关卡文件使用无法识别的配置包创建。这是因为该关卡使用的是另一个引擎而非 %1，因此可能造成部分砖块、NPC、脚本或其他对象不兼容，且您可能会遇到未如预期的结果或错误。
 
 文件名：%2
 关卡配置包编号：%3
@@ -6334,7 +6382,7 @@ Expected config pack ID: %4</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation>该大地图文件使用无法识别的配置包创建。这是因为该大地图使用的是另一个引擎而非 %1，因此可能造成部分地形、关卡、脚本或其他的对象不兼容，且您可能会遇到未如预期的结果或错误。
+        <translation>该大地图文件使用无法识别的配置包创建。这是因为该大地图使用的是另一个引擎而非 %1，因此可能造成部分地形、关卡对象、脚本或其他对象不兼容，且您可能会遇到未如预期的结果或错误。
 
 文件名：%2
 关卡配置包编号：%3
@@ -6358,7 +6406,7 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>Choose the Moondust Maintainer application</source>
-        <translation>选择月尘引擎管理器目录</translation>
+        <translation>选择月尘管理器所在文件夹</translation>
     </message>
     <message>
         <source>Grid size: changed into %1x%1</source>
@@ -6432,7 +6480,7 @@ Please, choose the engine application yourself!</source>
     </message>
     <message>
         <source>Physics</source>
-        <translation>物理区域</translation>
+        <translation>判定区域</translation>
     </message>
     <message>
         <source>Width</source>
@@ -6770,7 +6818,7 @@ Error description:
     </message>
     <message>
         <source>Included NPC</source>
-        <translation>更换包含 NPC</translation>
+        <translation>更改包含 NPC</translation>
     </message>
     <message>
         <source>Water Type</source>
@@ -6910,7 +6958,7 @@ Error description:
     </message>
     <message>
         <source>Autostart</source>
-        <translation>自动开始</translation>
+        <translation>自动启动</translation>
     </message>
     <message>
         <source>Layer Smoke Effect</source>
@@ -7375,11 +7423,11 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Loading Tilesets...</source>
-        <translation>加载图块组中……</translation>
+        <translation>加载图块集中……</translation>
     </message>
     <message>
         <source>Loading Tileset groups...</source>
-        <translation>加载图块分组中……</translation>
+        <translation>加载图块组中……</translation>
     </message>
     <message>
         <source>Finishing loading...</source>
@@ -7423,7 +7471,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Initializing tileset categories...</source>
-        <translation>正在初始化图块组目录……</translation>
+        <translation>正在初始化图块集文件夹……</translation>
     </message>
     <message>
         <source>LTR</source>
@@ -7536,11 +7584,11 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
     <message>
         <source>Change the path to SMBX-38A...</source>
         <comment>Select the path to SMBX-38A executable.</comment>
-        <translation>更改 SMBX-38A 目录……</translation>
+        <translation>更改 SMBX-38A 位置……</translation>
     </message>
     <message>
         <source>Select the path to SMBX-38A executable.</source>
-        <translation>选择 SMBX-38A 程序所在的目录。</translation>
+        <translation>选择 SMBX-38A 程序所在的位置。</translation>
     </message>
     <message>
         <source>Wine settings...</source>
@@ -7563,11 +7611,11 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
     <message>
         <source>Path to SMBX-38A</source>
         <comment>Title of dialog</comment>
-        <translation>SMBX-38A 目录</translation>
+        <translation>选择 SMBX-38A 所在位置</translation>
     </message>
     <message>
         <source>Please select a path to SMBX-38A executable:</source>
-        <translation>请选择 SMBX-38A 程序所在目录：</translation>
+        <translation>请选择 SMBX-38A 程序所在的位置：</translation>
     </message>
     <message>
         <source>Use default</source>
@@ -7590,7 +7638,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
     <message>
         <source>Select a path to SMBX-38A executable</source>
         <comment>File dialog title</comment>
-        <translation>选择 SMBX-38A 程序目录</translation>
+        <translation>选择 SMBX-38A 程序所在位置</translation>
     </message>
     <message>
         <source>SMBX-38A is still active</source>
@@ -7638,7 +7686,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
     </message>
     <message>
         <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
-        <translation>由于 %1 未找到，因此无法启动 SMBX-38A。可能的原因是 SMBX-38A 程序所在目录设置错误，请检查 SMBX-38A 目录设置是否正确。</translation>
+        <translation>由于 %1 未找到，因此无法启动 SMBX-38A。可能的原因是：SMBX-38A 程序所在文件夹设置错误，请检查 SMBX-38A 程序所在文件夹设置是否正确。</translation>
     </message>
 </context>
 <context>
@@ -7866,7 +7914,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
     </message>
     <message>
         <source>Please select a path to TheXTech executable:</source>
-        <translation>请选择 TheXTech 目录：</translation>
+        <translation>请选择 TheXTech 所在的位置：</translation>
     </message>
     <message>
         <source>Use default</source>
@@ -7881,7 +7929,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
     <message>
         <source>Select a path to TheXTech executable</source>
         <comment>File dialog title</comment>
-        <translation>选择 TheXTech 目录</translation>
+        <translation>选择 TheXTech 所在位置</translation>
     </message>
     <message>
         <source>Test level in battle mode</source>
@@ -7943,16 +7991,16 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
     <message>
         <source>Path to TheXTech</source>
         <comment>Title of dialog</comment>
-        <translation>TheXTech 目录</translation>
+        <translation>选择 TheXTech 所在位置</translation>
     </message>
     <message>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
-        <translation>更改 TheXTech 目录……</translation>
+        <translation>更改 TheXTech 路径……</translation>
     </message>
     <message>
         <source>Select the path to TheXTech executable.</source>
-        <translation>选择 TheXTech 目录。</translation>
+        <translation>选择 TheXTech 所在的位置。</translation>
     </message>
     <message>
         <source>Executable not found</source>
@@ -8038,7 +8086,7 @@ Arguments: %2</source>
     <name>TilesetEditor</name>
     <message>
         <source>Tileset Editor</source>
-        <translation>图块组编辑器</translation>
+        <translation>图块集编辑器</translation>
     </message>
     <message>
         <source>Items</source>
@@ -8086,7 +8134,7 @@ Arguments: %2</source>
     </message>
     <message>
         <source>Tileset name:</source>
-        <translation>图块组名称：</translation>
+        <translation>图块集名称：</translation>
     </message>
     <message>
         <source>Open</source>
@@ -8110,7 +8158,7 @@ Arguments: %2</source>
     </message>
     <message>
         <source>Delete this tileset</source>
-        <translation>删除此图块组</translation>
+        <translation>删除此图块集</translation>
     </message>
     <message>
         <source>Show default only</source>
@@ -8161,11 +8209,11 @@ Arguments: %2</source>
     </message>
     <message>
         <source>Clean tileset editor</source>
-        <translation>清除图块组</translation>
+        <translation>清除图块集</translation>
     </message>
     <message>
         <source>Do you want to clean tileset editor to create a new tileset?</source>
-        <translation>要清除并新建图块组吗？未保存的数据将会丢失。</translation>
+        <translation>要清除并新建图块集吗？未保存的数据将会丢失。</translation>
     </message>
     <message>
         <source>Please enter a filename!</source>
@@ -8177,21 +8225,21 @@ Arguments: %2</source>
     </message>
     <message>
         <source>Open Tileset</source>
-        <translation>打开图块组</translation>
+        <translation>打开图块集</translation>
     </message>
     <message>
         <source>Failed to load tileset!</source>
-        <translation>图块组加载失败！</translation>
+        <translation>加载图块集失败！</translation>
     </message>
     <message>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
-        <translation>图块组加载失败！
+        <translation>加载图块集失败！
 数据可能已损坏！</translation>
     </message>
     <message>
         <source>Tileset box editor</source>
-        <translation>图块编辑器</translation>
+        <translation>图块集编辑器</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
@@ -8206,36 +8254,36 @@ All tilesets which made here will be saved in this folder:
 I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
 
 If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
-        <translation>欢迎来到图块组编辑器！
+        <translation>欢迎来到图块集编辑器！
 
-你可以使用本工具创建图块组，将会保存在下方目录：
+您可以使用本工具创建图块集。图块集文件将保存在以下文件夹：
 %1
-它们可以作为此配置包的全局图块组使用。
+可以作为此配置包的全局图块集使用。
 
-如果你要创建的是包含自定义素材的关卡或大地图图块组，请使用打开工具箱，然后找到“自定义”标签中的“新增图块组”。</translation>
+如果您要创建的是包含自定义素材的关卡或大地图图块集，请打开图块集工具箱，然后找到“自定义”标签中的“新增图块集”。</translation>
     </message>
     <message>
         <source>Remove tileset</source>
-        <translation>删除图块组</translation>
+        <translation>删除图块集</translation>
     </message>
     <message>
         <source>Do you want to remove this tileset?</source>
-        <translation>要删除此图块组吗？</translation>
+        <translation>要删除此图块集吗？</translation>
     </message>
     <message>
         <source>Tileset removed</source>
-        <translation>图块组已删除</translation>
+        <translation>图块集已删除</translation>
     </message>
     <message>
         <source>Tileset has been removed!</source>
-        <translation>图块组已删除！</translation>
+        <translation>图块集已删除！</translation>
     </message>
 </context>
 <context>
     <name>TilesetGroupEditor</name>
     <message>
         <source>Tileset Group editor</source>
-        <translation>图块分组编辑器</translation>
+        <translation>图块组编辑器</translation>
     </message>
     <message>
         <source>Up</source>
@@ -8248,7 +8296,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Tileset group name:</source>
-        <translation>图块分组名称：</translation>
+        <translation>图块组名称：</translation>
     </message>
     <message>
         <source>Category:</source>
@@ -8256,7 +8304,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Defines the custom order priority. If weight values are equal between of different tileset group or equal to -1, tileset groups will be ordered alphabetically.</source>
-        <translation>确定分组顺序，若顺序等于 -1 或两个不同图块分组之间则按字母排序。</translation>
+        <translation>确定分组顺序，若顺序为 -1 或两个不同图块组之间，则按字母排序。</translation>
     </message>
     <message>
         <source>Open</source>
@@ -8268,7 +8316,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Tilesets list:</source>
-        <translation>图块组列表：</translation>
+        <translation>图块集列表：</translation>
     </message>
     <message>
         <source>Preview</source>
@@ -8280,11 +8328,11 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Remove tileset</source>
-        <translation>删除图块组</translation>
+        <translation>删除图块集</translation>
     </message>
     <message>
         <source>Add tileset</source>
-        <translation>新增图块组</translation>
+        <translation>新增图块集</translation>
     </message>
     <message>
         <source>Save</source>
@@ -8292,7 +8340,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Select Tileset</source>
-        <translation>选择图块组</translation>
+        <translation>选择图块集</translation>
     </message>
     <message>
         <source>There is already a file called &apos;%1&apos;!
@@ -8302,26 +8350,26 @@ Import anyway and overwrite?</source>
     </message>
     <message>
         <source>Failed to load tileset!</source>
-        <translation>图块组加载失败！</translation>
+        <translation>加载图块集失败！</translation>
     </message>
     <message>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
-        <translation>图块组加载失败！
+        <translation>加载图块集失败！
 数据可能已损坏！</translation>
     </message>
     <message>
         <source>Select Tileset Group</source>
-        <translation>选择图块分组</translation>
+        <translation>选择图块组</translation>
     </message>
     <message>
         <source>Failed to load tileset group!</source>
-        <translation>图块分组加载失败！</translation>
+        <translation>加载图块组失败！</translation>
     </message>
     <message>
         <source>Failed to load tileset group!
 Data may be corrupted!</source>
-        <translation>图块分组加载失败！
+        <translation>加载图块组失败！
 数据可能已损坏！</translation>
     </message>
     <message>
@@ -8341,7 +8389,7 @@ Data may be corrupted!</source>
     <name>TilesetItemBox</name>
     <message>
         <source>Tileset Item Box</source>
-        <translation>图块工具箱</translation>
+        <translation>图块集工具箱</translation>
     </message>
     <message>
         <source>Search: </source>
@@ -8349,7 +8397,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>New tileset</source>
-        <translation>新增图块组</translation>
+        <translation>新增图块集</translation>
     </message>
     <message>
         <source>File not saved</source>
@@ -8395,7 +8443,7 @@ Data may be corrupted!</source>
     <name>ToNewLayerBox</name>
     <message>
         <source>Add to new layer</source>
-        <translation>增加到新图层</translation>
+        <translation>添加到新图层</translation>
     </message>
     <message>
         <source>New layer name</source>
@@ -8702,7 +8750,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>You will change current position to the last selected point. If point is not set, position will not be changed.</source>
-        <translation>更换当前位置到最后所选的地点，如果没有指定地点，位置将不会改变。</translation>
+        <translation>更改当前位置到最后所选的地点，如果未设置地点，将不会更改位置。</translation>
     </message>
     <message>
         <source>Go to point</source>
@@ -8809,7 +8857,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Wine home prefix</source>
-        <translation>Wine 主目录</translation>
+        <translation>Wine 主文件夹</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -8841,11 +8889,11 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Select a Wine install prefix path</source>
-        <translation>选择 Wine 安装目录</translation>
+        <translation>选择 Wine 安装时所在位置</translation>
     </message>
     <message>
         <source>Select a Wine home prefix path</source>
-        <translation>选择 Wine 主目录</translation>
+        <translation>选择 Wine 主文件夹</translation>
     </message>
     <message>
         <source>Error</source>
@@ -8872,7 +8920,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.</source>
-        <translation>Wine 目录，包含设置、C 盘根目录以及其他一些要素。</translation>
+        <translation>Wine 所在文件夹，包含设置、C 盘根目录以及其他一些要素。</translation>
     </message>
     <message>
         <source>Use a system-wide installed Wine from a PATH environment.</source>
@@ -8880,7 +8928,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</source>
-        <translation>确定自定义 Wine 安装目录（包含“Bin”、“Lib”、“Share”三个子目录和一个工作中的 Wine 工具链）。</translation>
+        <translation>指定自定义 Wine 安装文件夹（包含“Bin”、“Lib”、“Share”三个子目录和一个工作中的 Wine 工具链）。</translation>
     </message>
 </context>
 <context>
@@ -8911,7 +8959,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Transform</source>
-        <translation>更换</translation>
+        <translation>更改</translation>
     </message>
     <message>
         <source>Undone: %1</source>
@@ -9033,8 +9081,8 @@ Music boxes:		%5
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
-        <translation>本关卡含有错误的自定义素材文件。
-你将看到的是“幽灵”或空白图像而不是自定义素材，这是由于进行错误的转换所造成的问题，例如将扩展名从 BMP 重命名为 GIF。
+        <translation>本关卡中含有错误的自定义素材文件。
+你将看到的是“幽灵”或空白图像而不是自定义素材，这是由于进行了错误的转换而造成的问题，例如将扩展名从 BMP 重命名为 GIF。
 请重新转换为支持的格式并重新加载此关卡。</translation>
     </message>
 </context>
@@ -9257,11 +9305,11 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Make custom folder</source>
-        <translation>生成自定义目录</translation>
+        <translation>生成自定义文件夹</translation>
     </message>
     <message>
         <source>Note: Custom folders are not supported for legacy SMBX Engine!</source>
-        <translation>警告：SMBX 1.3 不支持生成自定义目录！</translation>
+        <translation>警告：SMBX 1.3 不支持在大地图上使用自定义文件夹！</translation>
     </message>
     <message>
         <source>Save As</source>
@@ -9329,7 +9377,7 @@ Installed LunaLUA partially extends than limits.</source>
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
 
 %1</source>
-        <translation>该大地图中有一些无法读取的错误配置文件。如果不想再弹出此对话框，请在当前目录和自定义目录里找到错误的配置文件并修复：
+        <translation>该大地图中有一些无法读取的错误配置文件。如果不想再弹出此对话框，请在当前文件夹和自定义文件夹里找到错误的配置文件并修复：
 
 %1</translation>
     </message>

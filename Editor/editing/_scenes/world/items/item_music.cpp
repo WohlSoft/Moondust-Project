@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -85,11 +85,13 @@ void ItemMusic::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         QAction *title = ItemMenu.addAction(QString("[%1]").arg(tr("<Silence>")));
         title->setEnabled(false);
     }
+
     QAction *play = ItemMenu.addAction(tr("Play this"));
     ItemMenu.addSeparator();
 
     QMenu *copyPreferences = ItemMenu.addMenu(tr("Copy preferences"));
     copyPreferences->deleteLater();
+    QAction *copyArrayID =      copyPreferences->addAction(tr("Array-ID: %1").arg(m_data.meta.array_id));
     QAction *copyItemID = copyPreferences->addAction(tr("World-Music-ID: %1").arg(m_data.id));
     copyItemID->deleteLater();
     QAction *copyPosXY = copyPreferences->addAction(tr("Position: X, Y"));
@@ -113,12 +115,7 @@ void ItemMusic::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 
     if(!selected)
-    {
-#ifdef _DEBUG_
-        WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-#endif
         return;
-    }
 
     if(selected == play)
     {
@@ -126,6 +123,11 @@ void ItemMusic::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         LvlMusPlay::setMusic(MainWinConnect::pMainWin, LvlMusPlay::WorldMusic, m_data.id, m_data.music_file);
         LvlMusPlay::updatePlayerState(MainWinConnect::pMainWin, true);
         MainWinConnect::pMainWin->setMusicButton(true);
+    }
+    else if(selected == copyArrayID)
+    {
+        QApplication::clipboard()->setText(QString("%1").arg(m_data.meta.array_id));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyItemID)
     {

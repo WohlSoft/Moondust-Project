@@ -1,7 +1,7 @@
 /*
  * INI Processor - a small library which allows you parsing INI-files
  *
- * Copyright (c) 2015-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the "Software"),
@@ -58,14 +58,17 @@ public:
     IniProcessingVariant(const std::string &data):
         m_data(data),
         m_dataP(nullptr) {}
+
     IniProcessingVariant(const char *data):
         m_data(data),
         m_dataP(nullptr) {}
-    #ifdef INI_PROCESSING_ALLOW_QT_TYPES
+
+#ifdef INI_PROCESSING_ALLOW_QT_TYPES
     IniProcessingVariant(const QString &data):
         m_data(data.toStdString()),
         m_dataP(nullptr) {}
-    #endif
+#endif
+
     IniProcessingVariant(std::string *dataPointer):
         m_data(""),
         m_dataP(dataPointer) {}
@@ -73,6 +76,13 @@ public:
     IniProcessingVariant(const IniProcessingVariant &v):
         m_data(v.m_data),
         m_dataP(v.m_dataP) {}
+
+    IniProcessingVariant& operator=(const IniProcessingVariant &o)
+    {
+        m_data = o.m_data;
+        m_dataP = o.m_dataP;
+        return *this;
+    }
 
     IniProcessingVariant(char data):
         m_data(std::to_string(data)),
@@ -150,12 +160,12 @@ public:
         return out;
     }
 
-    #ifdef INI_PROCESSING_ALLOW_QT_TYPES
+#ifdef INI_PROCESSING_ALLOW_QT_TYPES
     QString toQString()
     {
         return QString::fromStdString(toString());
     }
-    #endif
+#endif
 
     bool toBool()
     {

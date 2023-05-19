@@ -1,19 +1,19 @@
-﻿Editor 0.3.2.1
-- Fixed the inproper file dialog on Windows
+﻿Editor 0.3.2.2-beta
+- Fixed the improper file dialogue on Windows
 - Fixed the unwanted music file locking on Windows
-- Default audio output format has been changed into float32 to improve the quality and prevent any possible clipping distortions
+- Default audio output format has been changed to float32 to improve the quality and prevent any possible clipping distortions
 - Changed the title of the main window
 - Fixed the unexpected width limitation when warps and debugger toolboxes docked into the same area
 - Added an ability to define the initial geometry and dock area of toolboxes by the config pack side
-- Fixed the logic of initial open/save paths while opening any file dialogs
+- Fixed the logic of initial open/save paths while opening any file dialogues
 - Fixed the missing "modified" level file flag when the custom music path was changed
-- Physical environment zones now have the taller hit-border to make the box is selected by the mouse easier
+- Physical environment zones now have the taller hit border to make the box selected by the mouse easier
 - Added the support for custom WOPL bank files at libADLMIDI synthesizer
 - Added the support for custom WOPN bank files at libOPNMIDI synthesizer
 - Added the support for the FluidSynth at MixerX library
-- All GUI overlays for console tools has been removed (except the audio converter) in favor of the Moondust Maintainer tool being executed instead
+- All GUI overlays for console tools have been removed (except the audio converter) in favour of the Moondust Maintainer tool being executed instead
 - The "lvl" or "lvlx" extension will be passed into the testing engines with the LVLX support depending on the SMBX64 strict mode
-- Extended the level testing support for the TheXTech engine
+- Extended the level of testing support for the TheXTech engine
 - Added an ability to change the grid size option using braces keys
 - Added an ability to control the modern section auto-scrolling settings
 - Added the notice for the legacy auto-scroll settings block when the modern mode is enabled
@@ -21,14 +21,17 @@
 - The Ctrl+Wheel and Alt+Wheel behaviour has been swapped: a Ctrl+Wheel will zoom in/out while Alt+Wheel will scroll horizontally
 - Reworked the logic of integrational configuration packages work: the new local settings file will be used instead of the "main.ini" overriding.
 - Fixed a dead freeze on configuration package loading fatal errors
-- Added the compatibility mode and speedrunner's stopwatch settings for TheXTech tester
+- Added the compatibility mode and speedrunner's stopwatch settings for the TheXTech tester
 - Fixed an unexpected grid offset changes at NPC with custom graphics but no custom configs
 - All BAK files will be removed when closing the Editor without the 4-second wait
-- Added "Transltion type" and "Stood required" fields to the Warps and Doors toolbox
+- Added "Transition type" and "Stood required" fields to the Warps and Doors toolbox
 - Added an autosave functionality
 - Fixed an appearance of a junk slash at begin of the opened directory path
 - The level/world data directory will be auto-created if it doesn't exist on an attempt to open it via the "Open level directory" menu item.
 - Fixed the problem where invisible objects get ignored when performing a section cloning/deleting/rotating operation using the "Level" menu
+beta2
+- Fixed the deadlock happening on config initial loading errors
+- Fixed processing of paths while reading/writing INI files
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

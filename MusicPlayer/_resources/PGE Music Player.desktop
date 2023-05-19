@@ -7,4 +7,4 @@ Exec=pge_musplay
 Categories=AudioVideo;Audio
 Type=Application
 MimeType=audio/x-gme-vgm;audio/x-gme-vgz;audio/x-gme-spc700
-Name[ru_RU]=PGE Music Player.desktop
+Name[ru_RU]=Проигрыватель SDL Mixer X

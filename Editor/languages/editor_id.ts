@@ -5,22 +5,22 @@
     <name>AbstractRuntimeEngine</name>
     <message>
         <source>World map testing via IPC is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Pengujian peta dunia melalui IPC tidak didukung</translation>
     </message>
     <message>
         <source>World map testing is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Pengujian peta dunia tidak didukung</translation>
     </message>
     <message>
         <source>This feature is not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>Fitur ini tidak diimplementasikan</translation>
     </message>
 </context>
 <context>
     <name>AppSettings</name>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Pengaturan</translation>
     </message>
     <message>
         <source>Main</source>
@@ -372,18 +372,18 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Batalkan</translation>
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Menghitung bintang...</translation>
     </message>
 </context>
 <context>
     <name>AudioCvt_Sox_gui</name>
     <message>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Konversi Audio (SoX)</translation>
     </message>
     <message>
         <source>SoX executable path:</source>
@@ -488,7 +488,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Don&apos;t change format</source>
-        <translation type="unfinished"></translation>
+        <translation>Jangan ubah format</translation>
     </message>
     <message>
         <source>The files&apos; format will not be changed</source>
@@ -496,7 +496,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Atur bitrate</translation>
     </message>
     <message>
         <source>Files will be converted into MP3</source>
@@ -528,11 +528,11 @@ Please set SoX path first</source>
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih file bank WOPL</translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih file bank instrumen WOPL yang akan digunakan</translation>
     </message>
     <message>
         <source>Select WOPN bank file</source>
@@ -819,10 +819,6 @@ File path: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Exit from application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -845,19 +841,34 @@ Please save them before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copied!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Join the official Moondust Discord server to submit the report</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>While making a report, please explain what you did to cause a crash error.
+- Please give a list of actions you did to cause a crash. 
+- If a crash happened with editing a specific file, please attach it to the report.
+- What operating system you are using?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Important note:&lt;/b&gt; please don&apos;t post this report at third-party forums and chat servers (including ANY SMBX-related community servers with no exceptions). Otherwise, you have &lt;b&gt;an extremely small chance of getting the proper support&lt;/b&gt;. We can give you a support at official resources listed above only.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1194,6 +1205,10 @@ Please save them before doing anything else.</source>
     <message>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>libEDMIDI (OPLL, SCC, PSG)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1754,6 +1769,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Edit raw user data...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1892,6 +1911,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2050,6 +2073,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <comment>Direction of pipe</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -2119,6 +2146,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2198,6 +2229,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2335,6 +2370,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Edit raw user data...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemPath</name>
@@ -2384,6 +2423,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2501,6 +2544,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemPlayerPoint</name>
@@ -2573,6 +2620,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2705,6 +2756,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>JsonSettingsWidget</name>
@@ -2816,7 +2871,7 @@ Installed LunaLUA partially extends than limits.</source>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Batalkan</translation>
     </message>
     <message>
         <source>Incorrect custom configs</source>
@@ -3326,6 +3381,12 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4790,6 +4851,12 @@ Please, select necessary world map in a list:</source>
         <source>Do you really want to apply this setting to all objects?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -5027,7 +5094,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tutup</translation>
     </message>
     <message>
         <source>Save all</source>
@@ -5039,7 +5106,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tentang</translation>
     </message>
     <message>
         <source>Contents</source>
@@ -5663,7 +5730,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Batalkan</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</source>
@@ -6199,7 +6266,7 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>Editor, version %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Editor, versi %1</translation>
     </message>
     <message>
         <source>Moondust Maintainer is not found</source>
@@ -6235,6 +6302,18 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>Bulk convert and repair of level and world files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start testing, engine is not found: 
+%1
+Please, choose the engine application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7261,6 +7340,29 @@ The maximum number of Music Boxes is %2.</source>
         <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SanBaEiRuntimeEngine</name>
@@ -8024,7 +8126,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tutup</translation>
     </message>
     <message>
         <source>Tilesets list:</source>
@@ -8145,7 +8247,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tutup</translation>
     </message>
 </context>
 <context>
@@ -8195,7 +8297,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tutup</translation>
     </message>
     <message>
         <source>Click to check updates</source>
@@ -8487,7 +8589,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Batalkan</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -9044,7 +9146,7 @@ Installed LunaLUA partially extends than limits.</source>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Batalkan</translation>
     </message>
     <message>
         <source>Incorrect custom configs</source>
@@ -9192,58 +9294,58 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan</translation>
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation type="unfinished"></translation>
+        <translation>Menghitung bintang...</translation>
     </message>
     <message>
         <source>The name of the level that will be loaded when the game first loads.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nama level yang akan dimuat saat game pertama kali dimuat.</translation>
     </message>
     <message>
         <source>Main hub level:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tingkat hub utama:</translation>
     </message>
 </context>
 <context>
     <name>aboutDialog</name>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Tentang</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutup</translation>
     </message>
     <message>
         <source>By Wohlstand</source>
-        <translation type="unfinished"></translation>
+        <translation>Oleh Wohlstand</translation>
     </message>
     <message>
         <source>Editor, version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor, versi %1</translation>
     </message>
     <message>
         <source>Revision</source>
-        <translation type="unfinished"></translation>
+        <translation>Revisi</translation>
     </message>
     <message>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>Tanggal pembuatan</translation>
     </message>
     <message>
         <source>Our project site</source>
-        <translation type="unfinished"></translation>
+        <translation>Situs proyek kami</translation>
     </message>
     <message>
         <source>This program is distributed under %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Program ini didistribusikan di bawah %1</translation>
     </message>
     <message>
         <source>Architecture: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Arsitektur: %1</translation>
     </message>
 </context>
 <context>
@@ -9251,7 +9353,8 @@ Do you want to save your changes?</source>
     <message>
         <source>Drag &amp; Drop items into this box!
 Right-click to remove!</source>
-        <translation type="unfinished"></translation>
+        <translation>Seret &amp;amp; Jatuhkan item ke dalam kotak ini.
+Klik kanan untuk menghapus.</translation>
     </message>
 </context>
 </TS>

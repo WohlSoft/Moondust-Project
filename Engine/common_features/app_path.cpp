@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -263,6 +263,11 @@ std::string AppPathManager::languagesDir()
 #else
     return ApplicationPathSTD + "languages";
 #endif
+}
+
+std::string AppPathManager::logsDir()
+{
+    return ApplicationPathSTD + "logs";
 }
 
 std::string AppPathManager::screenshotsDir()

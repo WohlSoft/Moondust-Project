@@ -3,7 +3,7 @@
  * a black background) and mask (a dark shape of image on a white background)
  * into RGBA with a transparent background
  *
- * Copyright (c) 2020-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2020-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software
@@ -27,6 +27,7 @@
 
 #include "bitmask2rgba.h"
 
+static RGBQUAD s_bitblitBG = {0, 0, 0, 0xFF};
 
 void bitmask_to_rgba(FIBITMAP *front, FIBITMAP *mask)
 {
@@ -34,7 +35,7 @@ void bitmask_to_rgba(FIBITMAP *front, FIBITMAP *mask)
 
     BYTE *img_bits, *mask_bits, *FPixP, *SPixP;
     RGBQUAD Npix = {0x00, 0x00, 0x00, 0xFF};   /* Destination pixel color */
-    BYTE Bpix[] = {0x00, 0x0, 0x00, 0xFF};   /* Dummy black pixel */
+    BYTE Wpix[] = {0xFF, 0xFF, 0xFF, 0xFF};   /* Dummy white pixel */
     unsigned short newAlpha = 0xFF; /* Calculated destination alpha-value*/
 
     BOOL endOfY = FALSE;
@@ -65,9 +66,9 @@ void bitmask_to_rgba(FIBITMAP *front, FIBITMAP *mask)
 
         for(x = 0; (x < img_w); x++)
         {
-            Npix.rgbBlue = ((SPixP[FI_RGBA_BLUE] & 0x7F) | FPixP[FI_RGBA_BLUE]);
-            Npix.rgbGreen = ((SPixP[FI_RGBA_GREEN] & 0x7F) | FPixP[FI_RGBA_GREEN]);
-            Npix.rgbRed = ((SPixP[FI_RGBA_RED] & 0x7F) | FPixP[FI_RGBA_RED]);
+            Npix.rgbBlue = ((SPixP[FI_RGBA_BLUE] & s_bitblitBG.rgbBlue) | FPixP[FI_RGBA_BLUE]);
+            Npix.rgbGreen = ((SPixP[FI_RGBA_GREEN] & s_bitblitBG.rgbGreen) | FPixP[FI_RGBA_GREEN]);
+            Npix.rgbRed = ((SPixP[FI_RGBA_RED] & s_bitblitBG.rgbRed) | FPixP[FI_RGBA_RED]);
             newAlpha = 255 - (((unsigned short)(SPixP[FI_RGBA_RED]) +
                                (unsigned short)(SPixP[FI_RGBA_GREEN]) +
                                (unsigned short)(SPixP[FI_RGBA_BLUE])) / 3);
@@ -91,7 +92,7 @@ void bitmask_to_rgba(FIBITMAP *front, FIBITMAP *mask)
             FPixP += 4;
 
             if(x >= mask_w - 1 || endOfY)
-                SPixP = Bpix;
+                SPixP = Wpix;
             else
                 SPixP += 4;
         }
@@ -99,7 +100,7 @@ void bitmask_to_rgba(FIBITMAP *front, FIBITMAP *mask)
         if(ym == 0)
         {
             endOfY = TRUE;
-            SPixP = Bpix;
+            SPixP = Wpix;
         }
         else
             ym--;
@@ -144,4 +145,18 @@ void bitmask_get_mask_from_rgba(FIBITMAP *image, FIBITMAP **outmask)
             FreeImage_SetPixelColor(*outmask,  x, y, &Npix);
         }
     }
+}
+
+void bitmask_set_bitblit_bg(uint8_t red, uint8_t green, uint8_t blue)
+{
+    s_bitblitBG.rgbRed = red;
+    s_bitblitBG.rgbGreen = green;
+    s_bitblitBG.rgbBlue = blue;
+}
+
+void bitmask_reset_bitblit_bg()
+{
+    s_bitblitBG.rgbRed = 0;
+    s_bitblitBG.rgbGreen = 0;
+    s_bitblitBG.rgbBlue = 0;
 }

@@ -239,19 +239,25 @@ do
                 exit 0;
             ;;
         update-submodules)
-            git submodule foreach git checkout master
-            git submodule foreach git pull origin master
+            PATH=${PATH}:$PWD/_common
+            git submodule foreach submodule-update.sh
+
+            # EXTRA update Java files of Android project
+            printf "\n\n"
+            echo "Synchronize SDL Java headers..."
+            rm -vf Engine/android-project/moondust/src/main/java/org/libsdl/app/*.java
+            cp -v _Libs/AudioCodecs/SDL2/android-java-files/*.java Engine/android-project/moondust/src/main/java/org/libsdl/app
             exit 0
             ;;
         repair-submodules)
+            PATH=${PATH}:$PWD/_common
             echo "=== Cleaning-up old state..."
             git submodule foreach 'pwd; rm -Rf * .git*;'
             echo "=== Fetching new submodules..."
             git submodule init
             git submodule update
             echo ""
-            git submodule foreach git checkout master
-            git submodule foreach git pull origin master
+            git submodule foreach submodule-update.sh
             echo ""
             echo "==== Fixed! ===="
             exit 0;
@@ -371,7 +377,7 @@ do
             echo ""
             echo "Running translation refreshing...";
 
-            LANGS_LIST="bg bs de en es fr hu he-il id it ja ko nl nb-no pl pt-br pt-pt ru ro sv sr uk zh"
+            LANGS_LIST="bg bs de en es fr hu he-il id it ja ko nl nb-no pl pt-br pt-pt ru ro sv sr tr uk zh"
 
             printLine "Common Qt modules" "\E[0;42;37m" "\E[0;34m"
             cd _common/qt-modules

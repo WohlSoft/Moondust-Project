@@ -190,6 +190,11 @@
                             "Yingchun Soul"
                         ],
                         "email": "lovebodhi@foxmail.com"
+                    },
+                    {
+                        "nickname": "yangyangdaji",
+                        "email" : "1504305527@qq.com",
+                        "home_page": "https://github.com/yangyangdaji"
                     }
                 ]
             },
@@ -226,6 +231,16 @@
                         ],
                         "home_page": "https://youtube.com/c/h2643",
                         "avatar": "h2643.png"
+                    }
+                ]
+            },
+            {
+                "name": "Turkish",
+                "people": [
+                    {
+                        "nickname": "seyimsiile",
+                        "real_name": "Şeyimsi İle Işığa Doğru",
+                        "home_page": "https://hosted.weblate.org/user/seyimsiile/"
                     }
                 ]
             }
@@ -303,6 +318,9 @@
                         "nickname": "Valtteri",
                         "description": "Some graphics help",
                         "avatar": "Valtteri.png"
+                    },
+                    {
+                        "nickname": "Zavod59"
                     }
                 ]
             }

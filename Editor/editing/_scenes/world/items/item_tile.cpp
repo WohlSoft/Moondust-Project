@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,6 +66,7 @@ void ItemTile::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QMenu ItemMenu;
 
     QMenu *copyPreferences =   ItemMenu.addMenu(tr("Copy preferences"));
+    QAction *copyArrayID =      copyPreferences->addAction(tr("Array-ID: %1").arg(m_data.meta.array_id));
     QAction *copyItemID =       copyPreferences->addAction(tr("Tile-ID: %1").arg(m_data.id));
     QAction *copyPosXY =        copyPreferences->addAction(tr("Position: X, Y"));
     QAction *copyPosXYWH =      copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
@@ -82,9 +83,15 @@ void ItemTile::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
     QAction *selected =         ItemMenu.exec(mouseEvent->screenPos());
 
-    if(!selected) return;
+    if(!selected)
+        return;
 
-    if(selected == copyItemID)
+    if(selected == copyArrayID)
+    {
+        QApplication::clipboard()->setText(QString("%1").arg(m_data.meta.array_id));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+    }
+    else if(selected == copyItemID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.id));
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));

@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -17,31 +17,30 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 
-#include <fmt/fmt_time.h>
-#include <fmt/fmt_printf.h>
-#include "logger.h"
+#define LOGGER_INTERNAL
+#include "logger_sets.h"
 
-namespace fmt
-{
 
-inline std::tm localtime_ne(std::time_t time)
+void LogWriter::OpenLogFile()
+{}
+
+void LogWriter::CloseLog()
+{}
+
+void LoggerPrivate_pLogConsole(int level, const char *label, const char *format, va_list arg)
 {
-    try
-    {
-        return localtime(time);
-    }
-    catch(const FormatError &e)
-    {
-        std::tm t;
-        pLogFatal("fmt::format error: Thrown exception [%s] on attempt to process localtime", e.what());
-        return t;
-    }
-    catch(...)
-    {
-        std::tm t;
-        pLogFatal("fmt::format error: Thrown unknown exception on attempt to process localtime");
-        return t;
-    }
+    (void)level;
+    (void)label;
+    (void)format;
+    (void)arg;
 }
 
+#ifndef NO_FILE_LOGGING
+void LoggerPrivate_pLogFile(int level, const char *label, const char *format, va_list arg)
+{
+    (void)level;
+    (void)label;
+    (void)format;
+    (void)arg;
 }
+#endif

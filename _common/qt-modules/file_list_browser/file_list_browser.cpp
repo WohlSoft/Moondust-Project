@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,11 @@ FileListBrowser::FileListBrowser(QString searchDirectory, QString currentFile, Q
     m_filters.append("*.*");
     m_parentDirectory = searchDirectory;
     m_lastCurrentFile = currentFile;
+
+    int args = m_lastCurrentFile.indexOf('|');
+    if(args >= 0) // Remove possible music arguments
+        m_lastCurrentFile.remove(args, (m_lastCurrentFile.size() - args));
+
     ui->setupUi(this);
     connect(this, &FileListBrowser::itemAdded, this, &FileListBrowser::addItem);
     connect(this, &FileListBrowser::digFinished, this, &FileListBrowser::finalizeDig);

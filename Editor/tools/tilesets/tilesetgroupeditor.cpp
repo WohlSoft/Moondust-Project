@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,6 +98,7 @@ void TilesetGroupEditor::SaveSimpleTilesetGroup(const QString &path, const Simpl
 
     QSettings simpleTilesetGroupINI(modifiedPath, QSettings::IniFormat);
     simpleTilesetGroupINI.setIniCodec("UTF-8");
+
     simpleTilesetGroupINI.clear();
     simpleTilesetGroupINI.beginGroup("tileset-group"); //HEADER
     simpleTilesetGroupINI.setValue("category", tilesetGroup.groupCat);
@@ -115,6 +116,7 @@ bool TilesetGroupEditor::OpenSimpleTilesetGroup(const QString &path, SimpleTiles
 {
     QSettings simpleTilesetINI(path, QSettings::IniFormat);
     simpleTilesetINI.setIniCodec("UTF-8");
+
     simpleTilesetINI.beginGroup("tileset-group");
     if(!simpleTilesetINI.contains("tilesets-count"))
         return false;
@@ -228,6 +230,8 @@ void TilesetGroupEditor::on_Open_clicked()
         lastFileName = pathInfo.baseName();
         QString dirPath = pathInfo.absoluteDir().absolutePath();
         m_categories.reset(new QSettings(dirPath + "/categories.ini", QSettings::IniFormat, this));
+        if(!m_categories.isNull())
+            m_categories->setIniCodec("UTF-8");
 
         for(QString &tarName : t.tilesets)
         {

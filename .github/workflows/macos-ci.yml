@@ -35,9 +35,7 @@ jobs:
         fetch-depth: 3
         submodules: recursive
 
-    - name: Set output
-      id: vars
-      run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+    - uses: Wohlstand/branch-name@v1.0.1-wohl
 
     - name: Install dependencies
       shell: bash
@@ -96,8 +94,14 @@ jobs:
     - name: Build
       shell: bash
       run: |
+        if [[ "${BRANCH_NAME}" == *"merge"* ]]; then
+            BRANCH_NAME_RES="pull-request"
+            echo "-- Pull-request detected!"
+        else
+            BRANCH_NAME_RES=${BRANCH_NAME}
+        fi
         export PATH=${{ matrix.config.qt_dir }}:${{ matrix.config.qt_lib_dir }}:/usr/local/opt/coreutils/libexec/gnubin:${PATH}
-        TZ=Europe/Moscow date +"%Y-%m-%d %H:%M:%S" > build-temp/build_date_${{ steps.vars.outputs.short_ref }}_osx.txt
+        TZ=Europe/Moscow date +"%Y-%m-%d %H:%M:%S" > build-temp/build_date_${BRANCH_NAME_RES}_osx.txt
         ./build.sh no-pause ninja deploy static-qt
 
     - name: Deploy to builds.wohlsoft.ru
@@ -108,11 +112,18 @@ jobs:
           export PATH=${{ matrix.config.extra_path }}:${PATH}
         fi
 
+        if [[ "${BRANCH_NAME}" == *"merge"* ]]; then
+            BRANCH_NAME_RES="pull-request"
+            echo "-- Pull-request detected!"
+        else
+            BRANCH_NAME_RES=${BRANCH_NAME}
+        fi
+
         UPLOAD_LIST="set ssl:verify-certificate no;"
         for q in ./bin-cmake-release/*.dmg; do
             UPLOAD_LIST="${UPLOAD_LIST} put -O ${{ matrix.config.upload_directory }} $q;"
         done
-        UPLOAD_LIST="${UPLOAD_LIST} put -O ./www/_versions build-temp/build_date_${{ steps.vars.outputs.short_ref }}_osx.txt;"
+        UPLOAD_LIST="${UPLOAD_LIST} put -O ./www/_versions build-temp/build_date_${BRANCH_NAME_RES}_osx.txt;"
 
         lftp -e "${UPLOAD_LIST} exit" -u ${{ secrets.builds_login }},${{ secrets.builds_password }} ${{ secrets.builds_host }}
 

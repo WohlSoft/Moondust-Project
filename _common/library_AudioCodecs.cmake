@@ -61,6 +61,7 @@ ExternalProject_Add(
         "-DBUILD_OGG_VORBIS=OFF"
         "-DBUILD_FLAC=OFF"
         "-DBUILD_MPG123=OFF"
+        "-DBUILD_WAVPACK=OFF"
         ${ANDROID_CMAKE_FLAGS}
         $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DADLMIDI_USE_DOSBOX_EMULATOR=ON>
     DEPENDS ${AudioCodecs_Deps}

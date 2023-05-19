@@ -32,6 +32,10 @@
 
 #include "qfile_dialogs_default_options.hpp"
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 7, 0)
+#   define qAsConst(x)  x
+#endif
+
 
 MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     MusPlayerBase(),
@@ -168,7 +172,9 @@ void MusPlayer_Qt::dropEvent(QDropEvent *e)
     if(ui->recordWav->isChecked())
         return;
 
-    for(const QUrl &url : e->mimeData()->urls())
+    auto l = e->mimeData()->urls();
+
+    for(const QUrl &url : qAsConst(l))
     {
         const QString &fileName = url.toLocalFile();
         m_currentMusic = fileName;
@@ -407,7 +413,7 @@ void MusPlayer_Qt::on_play_clicked()
     QString musicPath = m_currentMusic;
 #ifdef SDL_MIXER_GE21
     QString midiRawArgs = m_setupMidi->getRawMidiArgs();
-    if(ui->gme_setup->isEnabled())
+    if(ui->gme_setup->isEnabled() || PGE_MusicPlayer::type == MUS_PXTONE)
         musicPath += "|" + ui->trackID->text() + ";" + midiRawArgs;
     else if((PGE_MusicPlayer::type == MUS_MID || PGE_MusicPlayer::type == MUS_ADLMIDI))
     {
@@ -530,6 +536,11 @@ void MusPlayer_Qt::refreshMetaData()
 
     double loopStart = Mix_GetMusicLoopStartTime(PGE_MusicPlayer::s_playMus);
     double loopEnd = Mix_GetMusicLoopEndTime(PGE_MusicPlayer::s_playMus);
+
+    qDebug() << "Duration:" << total
+             << "Position:" << curPos
+             << "loopStart:" << loopStart
+             << "loopEnd:" << loopEnd;
 
     m_seekBar->clearLoopPoints();
     m_seekBar->setEnabled(false);

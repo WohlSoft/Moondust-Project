@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,6 +61,7 @@ static void pge_engine_alphatestingNotify(MainWindow *parent)
     /************************Alpha-testing notify*****************************/
     QSettings cCounters(AppPathManager::settingsFile(), QSettings::IniFormat);
     cCounters.setIniCodec("UTF-8");
+
     cCounters.beginGroup("message-boxes");
     bool showNotice = cCounters.value("pge-engine-test-launch", true).toBool();
     if(showNotice)

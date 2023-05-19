@@ -1,7 +1,7 @@
 /*
  * INI Processor - a small library which allows you parsing INI-files
  *
- * Copyright (c) 2015-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the "Software"),
@@ -92,11 +92,13 @@ private:
         if(!m_params.currentGroup)
             return params::IniKeys::iterator();
 
-        #ifndef CASE_SENSITIVE_KEYS
+#ifndef CASE_SENSITIVE_KEYS
         std::string key1(key);
         for(char *iter = &key1[0]; *iter != '\0'; ++iter)
             *iter = (char)tolower(*iter);
-        #endif
+#else
+        auto &key1 = key;
+#endif
 
         params::IniKeys::iterator e = m_params.currentGroup->find(key1);
 
@@ -142,18 +144,18 @@ public:
      * @brief Returns last happen error code
      * @return Error code
      */
-    ErrCode lastError();
+    ErrCode lastError() const;
     /**
      * @brief Line number which contains error
      * @return line number wit herror
      */
-    int  lineWithError();
+    int  lineWithError() const;
 
     /**
      * @brief State of INI Processor
      * @return true if any file is opened
      */
-    bool isOpened();
+    bool isOpened() const;
 
     /**
      * @brief Select a section to process
@@ -173,13 +175,13 @@ public:
      * @brief Currently opened file name
      * @return path to currently opened file
      */
-    std::string fileName();
+    std::string fileName() const;
 
     /**
      * @brief Currently processing section
      * @return name of current section
      */
-    std::string group();
+    std::string group() const;
 
     /**
      * @brief Get list of available groups
@@ -192,13 +194,28 @@ public:
      * @param keyName name of key
      * @return true if key is presented in this section
      */
-    bool hasKey(const std::string &keyName);
+    bool hasKey(const std::string &keyName) const;
+
+    /**
+     * @brief Renames key to a new name, clobbering existing key at newName
+     * @param oldName current name of key
+     * @param newName new name of key
+     * @return true if rename is successful, false if oldName is not present in this section
+     */
+    bool renameKey(const std::string &oldName, const std::string &newName);
+
+    /**
+     * @brief Deletes key at keyName from current section
+     * @param keyName name of key to delete
+     * @return true if delete is successful, false if keyName is not present in this section
+     */
+    bool deleteKey(const std::string &keyName);
 
     /**
      * @brief Get list of available keys in current groul
      * @return Array of strings
      */
-    std::vector<std::string> allKeys();
+    std::vector<std::string> allKeys() const;
 
     /**
      * @brief Release current section to choice another for process

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,18 +88,20 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QMenu ItemMenu;
 
     /*************Layers*******************/
-    QMenu *LayerName = ItemMenu.addMenu(tr("Layer: ") + QString("[%1]").arg(m_data.layer).replace("&", "&&&"));
+    QMenu *LayerName = ItemMenu.addMenu(tr("Layer: ") + QString("[%1]").arg(m_data.layer).replace("&", "&&"));
     QAction *setLayer;
     QList<QAction *> layerItems;
     QAction *newLayer = LayerName->addAction(tr("Add to new layer..."));
     LayerName->addSeparator();
 
-    for(LevelLayer &layer : m_scene->m_data->layers)
+    for(const LevelLayer &layer : m_scene->m_data->layers)
     {
         //Skip system layers
-        if((layer.name == "Destroyed Blocks") || (layer.name == "Spawned NPCs")) continue;
+        if((layer.name == "Destroyed Blocks") || (layer.name == "Spawned NPCs"))
+            continue;
 
-        setLayer = LayerName->addAction(layer.name.replace("&", "&&&") + ((layer.hidden) ? "" + tr("[hidden]") : ""));
+        QString label = layer.name + ((layer.hidden) ? " " + tr("[hidden]") : "");
+        setLayer = LayerName->addAction(label.replace("&", "&&"));
         setLayer->setData(layer.name);
         setLayer->setCheckable(true);
         setLayer->setEnabled(true);
@@ -147,6 +149,7 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     ItemMenu.addSeparator();
 
     QMenu *copyPreferences =    ItemMenu.addMenu(tr("Copy preferences"));
+    QAction *copyArrayID =      copyPreferences->addAction(tr("Array-ID: %1").arg(m_data.meta.array_id));
     QAction *copyPosXYWH =      copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
     QAction *copyPosLTRB =      copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
     ItemMenu.addSeparator();
@@ -172,6 +175,11 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         m_scene->m_mw->on_actionCut_triggered();
     else if(selected == copyWater)
         m_scene->m_mw->on_actionCopy_triggered();
+    else if(selected == copyArrayID)
+    {
+        QApplication::clipboard()->setText(QString("%1").arg(m_data.meta.array_id));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+    }
     else if(selected == copyPosXYWH)
     {
         QApplication::clipboard()->setText(

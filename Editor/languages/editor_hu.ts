@@ -802,12 +802,12 @@ Egy elemre való duplakattintással annak könyvjelzőzött pozíciójára ugorh
         <translation>Kérdezze meg minden indításkor</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="359"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="363"/>
         <source>No config packs were found</source>
         <translation>Nem találhatók konfigurációs csomagok</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="365"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="369"/>
         <source>No configuration packages were found!&lt;br&gt;
 Please download and install them into this directory&lt;br&gt;
 &lt;br&gt;
@@ -822,46 +822,46 @@ Kérjük töltsd le és másold azokat ebbe a könyvtárba&lt;br&gt;
 Itt bármely konfigurációs csomagot használhatod:&lt;br&gt;%2</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="521"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="529"/>
         <source>Integrational configuration package is incompatible</source>
         <translation>Az integrált konfigurációs csomag nem kompatibilis</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="522"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="530"/>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
         <translation>Az integrált konfigurációs csomag API verziója régebbi, mint 42, ezért nem kompatibilis a Moondust szerkesztő jelenlegi verziójával mert a 42-es verziótól az integráét konfigurációs csomagok a helyi beállítófájlt használják a main.ini helyett.</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="532"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="540"/>
         <source>Configuration package is not configured!</source>
         <translation>Nincs beállítva konfigurációs csomag!</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="533"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="541"/>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
         <translation>&quot;%1&quot; nincs beállítva konfigurációs csomag.
 Szeretnéd beállítani?</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="587"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="596"/>
         <source>Configuration script failed</source>
         <translation>Konfigurációs szkript hiba</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="588"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="597"/>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
         <translation>A konfigurációs eszköz hibával tért vissza: %1 a %2 sorban.
 Fájl útvonala: %3</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="600"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="609"/>
         <source>No configuration needed</source>
         <translation>Konfiguráció nem szükséges</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="601"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="610"/>
         <source>This config pack has no configuring tool.</source>
         <translation>Ennek a csomagnak nincs beállítóeszköze.</translation>
     </message>
@@ -1037,32 +1037,22 @@ Fájl útvonala: %3</translation>
         <translation>Összeomlás</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="24"/>
-        <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>Jelentés közzététele a WohlSoft fórumon (wohlsoft.ru/forum/)</translation>
-    </message>
-    <message>
-        <location filename="../common_features/crashhandler.ui" line="41"/>
-        <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation>Hibajelentés tétele a GitHub tárolóban (WohlSoft/Moondust-Project)</translation>
-    </message>
-    <message>
-        <location filename="../common_features/crashhandler.ui" line="57"/>
+        <location filename="../common_features/crashhandler.ui" line="69"/>
         <source>You might want to report this data to developers:</source>
         <translation>Lehet, hogy szeretnéd jelenteni ezeket az adatokat a fejlesztőknek:</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="64"/>
-        <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>Ó, jajj! A szerkesztő összeomlott :( &lt;br&gt; Részletes összeomlás-információ:</translation>
-    </message>
-    <message>
-        <location filename="../common_features/crashhandler.ui" line="74"/>
+        <location filename="../common_features/crashhandler.ui" line="27"/>
         <source>Copy report into clipboard</source>
         <translation>Jelentés másolása a vágólapra</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="94"/>
+        <location filename="../common_features/crashhandler.ui" line="34"/>
+        <source>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.ui" line="41"/>
         <source>While making a report, please explain what you did to cause a crash error.
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
@@ -1073,30 +1063,45 @@ Fájl útvonala: %3</translation>
 - És térj ki arra is, hogy milyen operációs rendszert használtál.</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="107"/>
+        <location filename="../common_features/crashhandler.ui" line="89"/>
+        <source>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.ui" line="109"/>
+        <source>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.ui" line="116"/>
         <source>Exit from application</source>
         <translation>Kilépés a programból</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="127"/>
+        <location filename="../common_features/crashhandler.ui" line="123"/>
+        <source>&lt;b&gt;Important note:&lt;/b&gt; please don&apos;t post this report at third-party forums and chat servers (including ANY SMBX-related community servers with no exceptions). Otherwise, you have &lt;b&gt;an extremely small chance of getting the proper support&lt;/b&gt;. We can give you a support at official resources listed above only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.ui" line="54"/>
         <source>Join the official Moondust Discord server to submit the report</source>
         <translation>Csatlakozz a projekt hovatalos Discord szerveréhez, hogy jelentést tegyél</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="438"/>
+        <location filename="../common_features/crashhandler.cpp" line="444"/>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
         <translation>Összeomlás helyreállítás</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="439"/>
+        <location filename="../common_features/crashhandler.cpp" line="445"/>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
         <translation>Az utolsó összeomlás óta a szerkesztő helyreállított néhány fájlt.
 Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="473"/>
+        <location filename="../common_features/crashhandler.cpp" line="479"/>
         <source>Copied!</source>
         <translation>Másolva!</translation>
     </message>
@@ -1193,92 +1198,92 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
         <translation>Zene lejátszása</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="67"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="285"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="447"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="73"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="291"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="453"/>
         <source>Extra settings</source>
         <translation>További beállítások</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="126"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="317"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="132"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="323"/>
         <source>Custom bank:</source>
         <translation>Egyedi tár:</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="192"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="357"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="198"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="363"/>
         <source>Volume model:</source>
         <translation>Hangmodell:</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="110"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="116"/>
         <source>Deep vibrato</source>
         <translation>Mély Vibrato</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="76"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="82"/>
         <source>Bank:</source>
         <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
         <translation>Tár:</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="172"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="178"/>
         <source>Deep tremolo</source>
         <translation>Mély Tremolo</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="86"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="297"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="92"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="303"/>
         <source>Browse...</source>
         <translation>Kiválasztás...</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="100"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="106"/>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
         <translation>A timbre tár definiálja a MIDI zene hangzását. Használj külömböző tárakat a hangzások összehasonlításához.</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="133"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="304"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="139"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="310"/>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
         <translation>A hangmodell határozza meg, hogy a zene hangerői, hang sebességei és megszólalása hogyan lesz definiálva.</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="146"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="341"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="152"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="347"/>
         <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="162"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="331"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="168"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="337"/>
         <source>When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</source>
         <comment>Tool tip for the &quot;Automatic arpeggio&quot; checkbox</comment>
         <extracomment>There is a term of the sound generator chip that has limited polyphony: each channel of chip is able to play only one parallel note. So, if one chip supports 6 channels, you can play 6 notes at the same time.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="165"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="334"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="171"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="340"/>
         <source>Automatic arpeggio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="185"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="324"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="191"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="330"/>
         <source>Chips number:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="199"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="374"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="205"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="380"/>
         <source>Channel allocation mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="206"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="381"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="212"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="387"/>
         <source>Select one of the channel allocation algorithms:
 - [Auto]: The algorithm will be selected automatically depending on the bank or currently playing music format.
 - Sounding off delay based: The channel will be allocated regarding the remaining delay of releasing sound left to play (Shorted remaing delay will have the highest priority).
@@ -1288,251 +1293,260 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="220"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="226"/>
         <source>Synthesizer type:</source>
         <translation>Szintetizátor típusa:</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="227"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="278"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="771"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="846"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="233"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="284"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="777"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="852"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="977"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="1029"/>
         <source>Reset</source>
         <translation>Visszaállítás</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="433"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="764"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="439"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="770"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="938"/>
         <source>Gain:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="440"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="863"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="446"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="869"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="984"/>
         <source>Tempo:</source>
         <translation>Tempó:</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="456"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="462"/>
         <source>Remove</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="463"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="469"/>
         <source>General</source>
         <comment>FluidSynth general options group</comment>
         <translation>Központi</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="469"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="475"/>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
         <translation>Maximális polifónia</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="512"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="518"/>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="522"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="528"/>
         <source>Add</source>
         <translation>Hozzáadás</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="542"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="548"/>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="554"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="560"/>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation>Szoba mérete</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="574"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="580"/>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="581"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="587"/>
         <source>Width</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation>Szélesség</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="614"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="620"/>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation>Szint</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="637"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="643"/>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="649"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="655"/>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation>Szint</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="656"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="662"/>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation>Sebesség</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="692"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="698"/>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="699"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="705"/>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="722"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="728"/>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation>Típus</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="739"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="624"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="745"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="700"/>
         <source>Chiptune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="806"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="812"/>
         <source>Track number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="815"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="821"/>
         <source>To begin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="829"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="835"/>
         <source>Previous</source>
         <translation>Előző</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="836"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="842"/>
         <source>Next</source>
         <translation>Következő</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="853"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="859"/>
         <source>Disable the echo effect while playing files of SPC format</source>
         <comment>Tooltip for the &quot;Disable SPC echo&quot; checkbox</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="856"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="862"/>
         <source>Disable SPC echo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="926"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="1063"/>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
         <translation>Tipp: hogy halkd a beállítás eredményét engedélyezd a zenelejátszást. (Keresd meg az indítás/megállítás ikont a központi ablak eszköztárán).</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="622"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="698"/>
         <source>MIDI</source>
         <translation>MIDI</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="830"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="944"/>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
         <translation>libADLMIDI (OPL3 Synth emuláció)</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="831"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="945"/>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
         <translation>libOPNMIDI (YM2612 Synth emuláció)</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="832"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="946"/>
         <source>Timidity (needed a bank)</source>
         <translation>Timidity (bank szükséges)</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="833"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="947"/>
         <source>Native MIDI (Not recommended, buggy)</source>
         <translation>Natív MIDI (Nem ajánlott, hibás)</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="834"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="948"/>
         <source>FluidSynth (needed an SF2-bank)</source>
         <translation>FluidSynth (SF2 bank szükséges)</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="839"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="847"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="855"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="871"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="949"/>
+        <source>libEDMIDI (OPLL, SCC, PSG)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="954"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="962"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="970"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="986"/>
         <source>[Auto]</source>
         <translation>[Automatikus]</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="840"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="848"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="955"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="963"/>
         <source>Sounding off delay based</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="841"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="849"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="956"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="964"/>
         <source>Same instrument</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="842"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="850"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="957"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="965"/>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="856"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="872"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="971"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="987"/>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation>Generikus</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="857"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="972"/>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation>Natív OPL3</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="873"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="988"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
         <translation>Natív OPN2</translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="881"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="996"/>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="882"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="997"/>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>
@@ -1541,7 +1555,7 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
 <context>
     <name>DataConfig</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="342"/>
+        <location filename="../data_configs/data_configs.cpp" line="348"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;
@@ -1646,87 +1660,87 @@ therefore you can use same link to get updated version</source>
         <translation>Rendszernapló ürítése</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="200"/>
+        <location filename="../dev_console/devconsole.cpp" line="201"/>
         <source>Clear %1 Log</source>
         <translation>%1 napló ürítése</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="278"/>
+        <location filename="../dev_console/devconsole.cpp" line="280"/>
         <source>Prints this help text</source>
         <translation>Segítség szöveget ír ki</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="279"/>
+        <location filename="../dev_console/devconsole.cpp" line="281"/>
         <source>Prints a test command</source>
         <translation>Tesztparancsot ír ki</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="280"/>
+        <location filename="../dev_console/devconsole.cpp" line="282"/>
         <source>Prints the editor version</source>
         <translation>Kiírja a szerkesztő verziószámát</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="281"/>
+        <location filename="../dev_console/devconsole.cpp" line="283"/>
         <source>Quits the program</source>
         <translation>Kilép a programból</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="282"/>
+        <location filename="../dev_console/devconsole.cpp" line="284"/>
         <source>Saves the application settings</source>
         <translation>Menti az alkalmazás beállításait</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="283"/>
+        <location filename="../dev_console/devconsole.cpp" line="285"/>
         <source>Args: {SomeString} Calculates MD5 hash of string</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="284"/>
+        <location filename="../dev_console/devconsole.cpp" line="286"/>
         <source>Arg: {String array} validates the PGE-X string array</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="287"/>
+        <location filename="../dev_console/devconsole.cpp" line="289"/>
         <source>Simulates crash signal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="288"/>
+        <location filename="../dev_console/devconsole.cpp" line="290"/>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="289"/>
+        <location filename="../dev_console/devconsole.cpp" line="291"/>
         <source>Throws an unhandled exception to crash the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="290"/>
+        <location filename="../dev_console/devconsole.cpp" line="292"/>
         <source>Does a segmentation violation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="291"/>
+        <location filename="../dev_console/devconsole.cpp" line="293"/>
         <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="293"/>
+        <location filename="../dev_console/devconsole.cpp" line="295"/>
         <source>Arg: {Path to file} tests if the file is in the PGE-X file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="294"/>
+        <location filename="../dev_console/devconsole.cpp" line="296"/>
         <source>Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="295"/>
+        <location filename="../dev_console/devconsole.cpp" line="297"/>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="296"/>
+        <location filename="../dev_console/devconsole.cpp" line="298"/>
         <source>Shows various important paths!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1746,7 +1760,7 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="46"/>
         <source>Force vertical background tiling</source>
-        <translation type="unfinished"></translation>
+        <translation>Függőleges háttérismétlés kényszerítése</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="53"/>
@@ -1761,17 +1775,17 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="88"/>
         <source>Export current section to image</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelenlegi szekció exportálása képbe</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="98"/>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Magasság</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="122"/>
         <source>Width</source>
-        <translation type="unfinished">Szélesség</translation>
+        <translation>Szélesség</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="129"/>
@@ -1844,27 +1858,27 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="72"/>
         <source>Modern</source>
-        <translation type="unfinished"></translation>
+        <translation>Modern</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="94"/>
         <source>Classic</source>
-        <translation type="unfinished"></translation>
+        <translation>Klasszikus</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="110"/>
         <source>Modern UI designed for convenience, works well on screens of various sizes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Modern, kényelmes felület, jól működik sok képernyőmérettel.</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="136"/>
         <source>A classic interface which will be familiar to long-time users of SMBX or the legacy editor.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Egy klasszikus felület, ami ismerős lesz azoknak, akik a régi SMBX szerkesztőt használták.</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="172"/>
         <source>Welcome to PGE Editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>Üdvözlünk a Moondust szerkesztőben!</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="191"/>
@@ -1883,7 +1897,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementaddlayer.cpp" line="19"/>
         <source>Add Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Réteg Hozzáadása</translation>
     </message>
 </context>
 <context>
@@ -1907,7 +1921,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementchangednewlayer.cpp" line="28"/>
         <source>New Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Új Réteg</translation>
     </message>
 </context>
 <context>
@@ -1931,7 +1945,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementmodification.cpp" line="34"/>
         <source>Simple Modification History</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyszerű Változtatáslista</translation>
     </message>
 </context>
 <context>
@@ -1939,12 +1953,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementmodifyevent.cpp" line="39"/>
         <source>Remove Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Esemény Törlése</translation>
     </message>
     <message>
         <location filename="../editing/_components/history/historyelementmodifyevent.cpp" line="41"/>
         <source>Add Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Esemény Hozzáadása</translation>
     </message>
 </context>
 <context>
@@ -1952,7 +1966,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementnewlayer.cpp" line="15"/>
         <source>New Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Új Réteg</translation>
     </message>
 </context>
 <context>
@@ -2038,31 +2052,31 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>Installer</name>
     <message>
-        <location filename="../common_features/installer.cpp" line="165"/>
-        <location filename="../common_features/installer.cpp" line="166"/>
+        <location filename="../common_features/installer.cpp" line="167"/>
+        <location filename="../common_features/installer.cpp" line="168"/>
         <source>Please wait...</source>
         <translation>Kérjük várjon...</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="256"/>
+        <location filename="../common_features/installer.cpp" line="258"/>
         <source>PGE Level file</source>
         <comment>File Types</comment>
         <translation>Moondust pályaállomány</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="261"/>
+        <location filename="../common_features/installer.cpp" line="263"/>
         <source>PGE World Map</source>
         <comment>File Types</comment>
         <translation>Moondust világtérkép</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="266"/>
+        <location filename="../common_features/installer.cpp" line="268"/>
         <source>SMBX Level file</source>
         <comment>File Types</comment>
         <translation>SMBX pályaállomány</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="271"/>
+        <location filename="../common_features/installer.cpp" line="273"/>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
         <translation>SMBX világtérkép</translation>
@@ -2086,145 +2100,151 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation>[rejtett]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="104"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="105"/>
         <source>Change Z-Offset...</source>
         <translation>Z küszöbérték megváltoztatása...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="106"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="107"/>
         <source>Z-Layer</source>
         <translation>Z-réteg</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="109"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="110"/>
         <source>Background-2</source>
         <translation>Háttér-2</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="112"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="113"/>
         <source>Background</source>
         <translation>Háttér</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="115"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="116"/>
         <source>Default</source>
         <translation>Alapértelmezett</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="118"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="119"/>
         <source>Foreground</source>
         <translation>Előtér</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="121"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="122"/>
         <source>Foreground-2</source>
         <translation>Előtér-2</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="126"/>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="127"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="128"/>
         <source>Transform into</source>
         <translation>Átalakítás ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="128"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="129"/>
         <source>Transform all %1 in this section into</source>
         <translation>Átalakítás minden %1 ebben a szekcióban ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="129"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="130"/>
         <source>Transform all %1 into</source>
         <translation>Átakakítás minden %1 ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="133"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="134"/>
         <source>Copy preferences</source>
         <translation>Beállítások másolása</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="134"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="135"/>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="136"/>
         <source>BGO-ID: %1</source>
         <translation>Háttérelemazonosító: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="135"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="137"/>
         <source>Position: X, Y</source>
         <translation>Hely (X, Y):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="136"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="138"/>
         <source>Position: X, Y, Width, Height</source>
         <translation>Hely (X, Y, Szélesség, Magasság):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="137"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="139"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation>Hely (Bal, Teteje, Jobb, Alja):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="140"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="142"/>
         <source>Copy</source>
         <translation>Másolás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="141"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="143"/>
         <source>Cut</source>
         <translation>Kivágás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="144"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="146"/>
         <source>Remove</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="145"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="147"/>
         <source>Remove all %1 in this section</source>
         <translation>Minden %1 törlése ebben a szekcióban</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="146"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="148"/>
         <source>Remove all %1</source>
         <translation>Minden %1 törlése</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="149"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="151"/>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyers felhasználói adatok szerkesztése...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="152"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="154"/>
         <source>Properties...</source>
         <translation>Tulajdonságok...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="180"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="331"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="182"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="333"/>
         <source>Margin of section</source>
         <translation>Szekciómargó</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="181"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="332"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="183"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="334"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="277"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="279"/>
         <source>Z-Offset</source>
         <translation>Z-Küszöbérték</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="278"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="280"/>
         <source>Please enter the Z-value offset:</source>
         <translation>Add meg a Z-küszöbértéket:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="402"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="411"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="422"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="433"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="404"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="409"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="418"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="429"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="440"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Beállítások másolva: %1</translation>
     </message>
 </context>
 <context>
@@ -2240,169 +2260,176 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished">Hozzáadás új réteghez</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="102"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="103"/>
         <source>[hidden]</source>
         <translation type="unfinished">[rejtett]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="112"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="114"/>
         <source>Invisible</source>
-        <translation type="unfinished"></translation>
+        <translation>Láthatatlan</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="116"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="118"/>
         <source>Slippery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="120"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="122"/>
         <source>Resize</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="124"/>
-        <source>Change included NPC...</source>
-        <translation type="unfinished"></translation>
+        <translation>Átméretezés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="126"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="127"/>
+        <source>Change included NPC...</source>
+        <translation>Tartalmazott NJK megváltoztatása...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="128"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="129"/>
         <source>Transform into</source>
         <translation type="unfinished">Átalakítás ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="128"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="130"/>
         <source>Transform all %1 in this section into</source>
         <translation type="unfinished">Átalakítás minden %1 ebben a szekcióban ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="129"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="131"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished">Átakakítás minden %1 ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="130"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="132"/>
         <source>Make message box...</source>
-        <translation type="unfinished"></translation>
+        <translation>Üzenetdoboz létrehozása...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="134"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="136"/>
         <source>Copy preferences</source>
         <translation type="unfinished">Beállítások másolása</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="135"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="137"/>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="138"/>
         <source>Block-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="136"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="139"/>
         <source>Position: X, Y</source>
         <translation type="unfinished">Hely (X, Y):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="137"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="140"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished">Hely (X, Y, Szélesség, Magasság):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="138"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="141"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished">Hely (Bal, Teteje, Jobb, Alja):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="141"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="144"/>
         <source>Copy</source>
-        <translation type="unfinished">Másolás</translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="142"/>
-        <source>Cut</source>
-        <translation type="unfinished">Kivágás</translation>
+        <translation>Másolás</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="145"/>
-        <source>Remove</source>
-        <translation type="unfinished">Törlés</translation>
+        <source>Cut</source>
+        <translation>Kivágás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="146"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="148"/>
+        <source>Remove</source>
+        <translation>Törlés</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="149"/>
         <source>Remove all %1 in this section</source>
         <translation type="unfinished">Minden %1 törlése ebben a szekcióban</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="147"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="150"/>
         <source>Remove all %1</source>
         <translation type="unfinished">Minden %1 törlése</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="150"/>
-        <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="153"/>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished">Nyers felhasználói adatok szerkesztése...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="156"/>
         <source>Properties...</source>
-        <translation type="unfinished">Tulajdonságok...</translation>
+        <translation>Tulajdonságok...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="166"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="175"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="186"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="197"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="168"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="173"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="182"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="193"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="204"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beállítások másolva: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="238"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="442"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="245"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="449"/>
         <source>Margin of section</source>
         <translation type="unfinished">Szekciómargó</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="239"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="443"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="246"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="450"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="314"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="321"/>
         <source>Event name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="315"/>
-        <source>Please enter the name of event:</source>
-        <translation type="unfinished"></translation>
+        <translation>Esemény neve</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="322"/>
-        <source>Please enter the message which will be shown.
-(Max line length is 27 characters)</source>
-        <translation type="unfinished"></translation>
+        <source>Please enter the name of event:</source>
+        <translation>Írd be az esemény nevét:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="323"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="329"/>
+        <source>Please enter the message which will be shown.
+(Max line length is 27 characters)</source>
+        <translation>Írd be a megjeleníteni kívánt üzenet szövegét.
+(Egy sorba legfeljebb 27 karakter fér)</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="330"/>
         <source>Hit message text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="353"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="360"/>
         <source>Event created</source>
-        <translation type="unfinished"></translation>
+        <translation>Esemény létrehozva</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="354"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="361"/>
         <source>Message event created!</source>
-        <translation type="unfinished"></translation>
+        <translation>Üzenetesemény létrehozva!</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="359"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="366"/>
         <source>&apos;Hit&apos; event slot is used</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="360"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="367"/>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2413,7 +2440,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../main_window/dock/itembox_list_model.cpp" line="30"/>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Keresés név szerint</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="34"/>
@@ -2437,7 +2464,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../main_window/dock/itembox_list_model.cpp" line="43"/>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished">Név</translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="47"/>
@@ -2488,115 +2515,121 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished">Hozzáadás új réteghez</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="149"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="151"/>
         <source>[hidden]</source>
         <translation type="unfinished">[rejtett]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="165"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="168"/>
         <source>Jump to exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Kijárathoz ugrás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="170"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="173"/>
         <source>Jump to entrance</source>
-        <translation type="unfinished"></translation>
+        <translation>Bejárathoz ugrás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="182"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="185"/>
         <source>Direction</source>
-        <translation type="unfinished">Irány</translation>
+        <translation>Irány</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="184"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="187"/>
         <source>Left</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Bal</translation>
+        <translation>Balra</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="188"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="191"/>
         <source>Up</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fel</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="192"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="195"/>
         <source>Right</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Jobb</translation>
+        <translation>Jobbra</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="196"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="199"/>
         <source>Down</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished"></translation>
+        <translation>Le</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="247"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="250"/>
         <source>No Vehicles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="251"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="254"/>
         <source>Allow NPC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tárgyak engedélyezése</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="255"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="258"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="258"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="261"/>
         <source>Need a bomb</source>
-        <translation type="unfinished"></translation>
+        <translation>Bomba szükséges</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="263"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="266"/>
         <source>Required special state</source>
-        <translation type="unfinished"></translation>
+        <translation>Speciális állapot szükséges</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="268"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="271"/>
         <source>Required stood state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="276"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="279"/>
         <source>Copy preferences</source>
-        <translation type="unfinished">Beállítások másolása</translation>
+        <translation>Beállítások másolása</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="277"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="280"/>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="281"/>
         <source>Position: X, Y</source>
         <translation type="unfinished">Hely (X, Y):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="278"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="282"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished">Hely (X, Y, Szélesség, Magasság):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="279"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="283"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished">Hely (Bal, Teteje, Jobb, Alja):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="283"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="287"/>
         <source>Remove</source>
-        <translation type="unfinished">Törlés</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="286"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="290"/>
         <source>Properties...</source>
         <translation type="unfinished">Tulajdonságok...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="544"/>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="555"/>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="566"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="553"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="564"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="575"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beállítások másolva: %1</translation>
     </message>
 </context>
 <context>
@@ -2619,7 +2652,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="93"/>
         <source>Always Visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Mindig látható</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="98"/>
@@ -2628,66 +2661,72 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="100"/>
-        <source>Level-ID: %1</source>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="101"/>
+        <source>Level-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="102"/>
         <source>Position: X, Y</source>
         <translation type="unfinished">Hely (X, Y):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="102"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="103"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished">Hely (X, Y, Szélesség, Magasság):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="103"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="104"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished">Hely (Bal, Teteje, Jobb, Alja):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="105"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="106"/>
         <source>Copy</source>
         <translation type="unfinished">Másolás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="106"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="107"/>
         <source>Cut</source>
-        <translation type="unfinished">Kivágás</translation>
+        <translation>Kivágás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="108"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="109"/>
         <source>Transform into</source>
         <translation type="unfinished">Átalakítás ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="109"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="110"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished">Átakakítás minden %1 ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="111"/>
-        <source>Remove</source>
-        <translation type="unfinished">Törlés</translation>
-    </message>
-    <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="112"/>
+        <source>Remove</source>
+        <translation>Törlés</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="113"/>
         <source>Remove all %1</source>
-        <translation type="unfinished">Minden %1 törlése</translation>
+        <translation>Minden %1 törlése</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="114"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="115"/>
         <source>Properties...</source>
-        <translation type="unfinished">Tulajdonságok...</translation>
+        <translation>Tulajdonságok...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="225"/>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="234"/>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="245"/>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="256"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="227"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="232"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="241"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="252"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="263"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beállítások másolva: %1</translation>
     </message>
 </context>
 <context>
@@ -2695,7 +2734,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/itemmsgbox.ui" line="14"/>
         <source>Set message box</source>
-        <translation type="unfinished"></translation>
+        <translation>Üzenet szövegének beállítása</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/itemmsgbox.ui" line="27"/>
@@ -2712,7 +2751,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/itemmsgbox.ui" line="90"/>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
-        <translation type="unfinished"></translation>
+        <translation>Barátságos (Nem barátságos NJK-kal nem lehet beszélgetni)</translation>
     </message>
 </context>
 <context>
@@ -2723,72 +2762,78 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="88"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="89"/>
         <source>Play this</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="91"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="92"/>
         <source>Copy preferences</source>
         <translation type="unfinished">Beállítások másolása</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="93"/>
-        <source>World-Music-ID: %1</source>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="94"/>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="95"/>
+        <source>World-Music-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="97"/>
         <source>Position: X, Y</source>
         <translation type="unfinished">Hely (X, Y):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="97"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="99"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished">Hely (X, Y, Szélesség, Magasság):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="99"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="101"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished">Hely (Bal, Teteje, Jobb, Alja):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="102"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="104"/>
         <source>Copy</source>
-        <translation type="unfinished">Másolás</translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="103"/>
-        <source>Cut</source>
-        <translation type="unfinished">Kivágás</translation>
+        <translation>Másolás</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="105"/>
+        <source>Cut</source>
+        <translation>Kivágás</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="107"/>
         <source>Transform into</source>
         <translation type="unfinished">Átalakítás ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="106"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="108"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished">Átakakítás minden %1 ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="110"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="112"/>
         <source>Remove</source>
-        <translation type="unfinished">Törlés</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="111"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="113"/>
         <source>Remove all %1</source>
-        <translation type="unfinished">Minden %1 törlése</translation>
+        <translation>Minden %1 törlése</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="133"/>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="142"/>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="153"/>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="164"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="130"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="135"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="144"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="155"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="166"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beállítások másolva: %1</translation>
     </message>
 </context>
 <context>
@@ -2804,164 +2849,170 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished">Hozzáadás új réteghez</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="129"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="130"/>
         <source>[hidden]</source>
         <translation type="unfinished">[rejtett]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="144"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="146"/>
         <source>Edit NPC-Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="146"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="148"/>
         <source>New NPC-Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="151"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="153"/>
         <source>Set %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="151"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="153"/>
         <source>Direction</source>
         <translation type="unfinished">Irány</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="152"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="154"/>
         <source>Left</source>
         <translation type="unfinished">Bal</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="156"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="158"/>
         <source>Random</source>
         <translation type="unfinished">Véletlen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="161"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="163"/>
         <source>Right</source>
         <translation type="unfinished">Jobb</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="167"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="169"/>
         <source>Friendly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="171"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="173"/>
         <source>Doesn&apos;t move</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="175"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="177"/>
         <source>Set message...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="178"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="180"/>
         <source>Set as Boss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="183"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="185"/>
         <source>Transform into</source>
         <translation type="unfinished">Átalakítás ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="184"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="186"/>
         <source>Transform all %1 in this section into</source>
         <translation type="unfinished">Átalakítás minden %1 ebben a szekcióban ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="185"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="187"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished">Átakakítás minden %1 ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="191"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="193"/>
         <source>Change included NPC...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tartalmazott NJK megváltoztatása...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="196"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="198"/>
         <source>Copy preferences</source>
         <translation type="unfinished">Beállítások másolása</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="197"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="199"/>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
         <source>NPC-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="198"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="201"/>
         <source>Position: X, Y</source>
         <translation type="unfinished">Hely (X, Y):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="199"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="202"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished">Hely (X, Y, Szélesség, Magasság):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="203"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished">Hely (Bal, Teteje, Jobb, Alja):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="203"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="206"/>
         <source>Copy</source>
         <translation type="unfinished">Másolás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="204"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
         <source>Cut</source>
         <translation type="unfinished">Kivágás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="206"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="209"/>
         <source>Remove</source>
         <translation type="unfinished">Törlés</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="210"/>
         <source>Remove all %1 in this section</source>
         <translation type="unfinished">Minden %1 törlése ebben a szekcióban</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="208"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="211"/>
         <source>Remove all %1</source>
         <translation type="unfinished">Minden %1 törlése</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="210"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="213"/>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nyers felhasználói adatok szerkesztése...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="214"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="217"/>
         <source>Properties...</source>
         <translation type="unfinished">Tulajdonságok...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="254"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="483"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="257"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="491"/>
         <source>Margin of section</source>
         <translation type="unfinished">Szekciómargó</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="255"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="484"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="258"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="492"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="318"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="327"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="338"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="349"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="321"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="326"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="335"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="346"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="357"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beállítások másolva: %1</translation>
     </message>
 </context>
 <context>
@@ -2973,61 +3024,67 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="69"/>
-        <source>Path-ID: %1</source>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="70"/>
+        <source>Path-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="71"/>
         <source>Position: X, Y</source>
         <translation type="unfinished">Hely (X, Y):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="71"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="72"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished">Hely (X, Y, Szélesség, Magasság):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="72"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="73"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished">Hely (Bal, Teteje, Jobb, Alja):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="74"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="75"/>
         <source>Copy</source>
         <translation type="unfinished">Másolás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="75"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="76"/>
         <source>Cut</source>
         <translation type="unfinished">Kivágás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="77"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="78"/>
         <source>Transform into</source>
         <translation type="unfinished">Átalakítás ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="78"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="79"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished">Átakakítás minden %1 ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="80"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="81"/>
         <source>Remove</source>
         <translation type="unfinished">Törlés</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="81"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="82"/>
         <source>Remove all %1</source>
         <translation type="unfinished">Minden %1 törlése</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="90"/>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="99"/>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="110"/>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="121"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="93"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="98"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="107"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="118"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="129"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beállítások másolva: %1</translation>
     </message>
 </context>
 <context>
@@ -3043,135 +3100,141 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished">Hozzáadás új réteghez</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="102"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="103"/>
         <source>[hidden]</source>
         <translation type="unfinished">[rejtett]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="112"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="114"/>
         <source>Environment type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="128"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="130"/>
         <source>Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="129"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="131"/>
         <source>Quicksand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="130"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="132"/>
         <source>Custom liquid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="131"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="133"/>
         <source>Gravity Field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="132"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="134"/>
         <source>Touch Event (Once)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="133"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="135"/>
         <source>Touch Event (Every frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="134"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="136"/>
         <source>NPC/Player Touch Event (Once)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="135"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="137"/>
         <source>NPC/Player Touch Event (Every frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="136"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="138"/>
         <source>Mouse click Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="137"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="139"/>
         <source>Collision script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="138"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="140"/>
         <source>Mouse click Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="139"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="141"/>
         <source>Collision Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="140"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="142"/>
         <source>Air chamber</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="141"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="143"/>
         <source>NPC Touch Event (Once)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="142"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="144"/>
         <source>NPC Touch Event (Every frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="143"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="145"/>
         <source>NPC Hurting Field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="149"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="151"/>
         <source>Copy preferences</source>
         <translation type="unfinished">Beállítások másolása</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="150"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="152"/>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="153"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished">Hely (X, Y, Szélesség, Magasság):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="151"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="154"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished">Hely (Bal, Teteje, Jobb, Alja):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="154"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="157"/>
         <source>Resize</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Átméretezés</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="158"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="161"/>
         <source>Copy</source>
         <translation type="unfinished">Másolás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="159"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="162"/>
         <source>Cut</source>
         <translation type="unfinished">Kivágás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="161"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="164"/>
         <source>Remove</source>
         <translation type="unfinished">Törlés</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="184"/>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="195"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="181"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="192"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="203"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beállítások másolva: %1</translation>
     </message>
 </context>
 <context>
@@ -3211,61 +3274,67 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="78"/>
+        <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="79"/>
         <source>Scenery-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="80"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="81"/>
         <source>Position: X, Y</source>
         <translation type="unfinished">Hely (X, Y):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="82"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="83"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished">Hely (X, Y, Szélesség, Magasság):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="84"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="85"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished">Hely (Bal, Teteje, Jobb, Alja):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="87"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="88"/>
         <source>Copy</source>
         <translation type="unfinished">Másolás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="88"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="89"/>
         <source>Cut</source>
         <translation type="unfinished">Kivágás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="90"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="91"/>
         <source>Transform into</source>
         <translation type="unfinished">Átalakítás ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="91"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="92"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished">Átakakítás minden %1 ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="93"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="94"/>
         <source>Remove</source>
         <translation type="unfinished">Törlés</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="94"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="95"/>
         <source>Remove all %1</source>
         <translation type="unfinished">Minden %1 törlése</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="109"/>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="118"/>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="129"/>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="140"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="105"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="110"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="119"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="130"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="141"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beállítások másolva: %1</translation>
     </message>
 </context>
 <context>
@@ -3411,61 +3480,67 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="69"/>
-        <source>Tile-ID: %1</source>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="70"/>
+        <source>Tile-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="71"/>
         <source>Position: X, Y</source>
         <translation type="unfinished">Hely (X, Y):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="71"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="72"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished">Hely (X, Y, Szélesség, Magasság):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="72"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="73"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished">Hely (Bal, Teteje, Jobb, Alja):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="74"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="75"/>
         <source>Copy</source>
         <translation type="unfinished">Másolás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="75"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="76"/>
         <source>Cut</source>
         <translation type="unfinished">Kivágás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="77"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="78"/>
         <source>Transform into</source>
         <translation type="unfinished">Átalakítás ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="78"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="79"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished">Átakakítás minden %1 ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="80"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="81"/>
         <source>Remove</source>
         <translation type="unfinished">Törlés</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="81"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="82"/>
         <source>Remove all %1</source>
         <translation type="unfinished">Minden %1 törlése</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="90"/>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="99"/>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="110"/>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="121"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="92"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="97"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="106"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="117"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="128"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beállítások másolva: %1</translation>
     </message>
 </context>
 <context>
@@ -3519,28 +3594,28 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>LevelEdit</name>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="136"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="138"/>
         <source>Export current section to image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jelenlegi szekció exportálása képbe</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="141"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="143"/>
         <source>PNG Image (*.png)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="149"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="151"/>
         <source>Saving section image...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="149"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="151"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="577"/>
         <source>Abort</source>
         <translation type="unfinished">Megszakítás</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="150"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="152"/>
         <source>Please wait...</source>
         <translation type="unfinished">Kérjük várjon...</translation>
     </message>
@@ -3865,12 +3940,12 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="220"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fel</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="227"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Le</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="240"/>
@@ -4248,12 +4323,12 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1624"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1626"/>
         <source>SMBX64 limits are exceeded!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1625"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1627"/>
         <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
@@ -4262,17 +4337,17 @@ Do you want to continue the process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1757"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1759"/>
         <source>Impossible to launch an episode because of an invalid world file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1766"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1768"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1801"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1803"/>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4618,7 +4693,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1426"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fel</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1433"/>
@@ -4628,7 +4703,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1440"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Le</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1454"/>
@@ -4776,7 +4851,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="111"/>
         <source>Invisible</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Láthatatlan</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="131"/>
@@ -4809,7 +4884,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="278"/>
         <source>Resize</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Átméretezés</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="297"/>
@@ -5025,13 +5100,13 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="188"/>
         <source>Up</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fel</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="189"/>
         <source>Down</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Le</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="190"/>
@@ -5914,7 +5989,7 @@ finishes the level or lose a life.</source>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="640"/>
         <source>Allow NPC</source>
         <comment>Please, translate as &quot;Allow items&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tárgyak engedélyezése</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="650"/>
@@ -6144,13 +6219,13 @@ If this flag is enabled, you can only place a warp exit.</source>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="122"/>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="127"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Le</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="123"/>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="126"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fel</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="811"/>
@@ -7378,36 +7453,36 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="69"/>
+        <location filename="../testing/pge_engine.cpp" line="70"/>
         <source>PGE Engine testing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="72"/>
-        <location filename="../mainwindow.cpp" line="137"/>
+        <location filename="../testing/pge_engine.cpp" line="73"/>
+        <location filename="../mainwindow.cpp" line="138"/>
         <source>Don&apos;t show this message again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="74"/>
+        <location filename="../testing/pge_engine.cpp" line="75"/>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="128"/>
+        <location filename="../testing/pge_engine.cpp" line="129"/>
         <source>Engine is not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="129"/>
+        <location filename="../testing/pge_engine.cpp" line="130"/>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, choose the engine application yourself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="133"/>
+        <location filename="../testing/pge_engine.cpp" line="134"/>
         <source>Choose the Engine application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7439,58 +7514,58 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="133"/>
+        <location filename="../mainwindow.cpp" line="134"/>
         <source>Running the 32-bit Editor a 64-bit processor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="141"/>
+        <location filename="../mainwindow.cpp" line="142"/>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="225"/>
-        <location filename="../mainwindow.cpp" line="269"/>
-        <location filename="../mainwindow.cpp" line="284"/>
+        <location filename="../mainwindow.cpp" line="238"/>
+        <location filename="../mainwindow.cpp" line="282"/>
+        <location filename="../mainwindow.cpp" line="297"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="196"/>
         <source>Configuration error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="226"/>
+        <location filename="../mainwindow.cpp" line="239"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="197"/>
         <source>Configuration package is loaded with errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="231"/>
+        <location filename="../mainwindow.cpp" line="244"/>
         <source>Initializing dock widgets...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="248"/>
+        <location filename="../mainwindow.cpp" line="261"/>
         <source>Initalizing plugins...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="258"/>
+        <location filename="../mainwindow.cpp" line="271"/>
         <source>Loading theme...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="262"/>
+        <location filename="../mainwindow.cpp" line="275"/>
         <source>Finishing loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="270"/>
+        <location filename="../mainwindow.cpp" line="283"/>
         <source>Configuration can&apos;t be loaded:
 %1.
 See %2 for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="285"/>
+        <location filename="../mainwindow.cpp" line="298"/>
         <source>Configuration can&apos;t be loaded.
 See %1 for more information.</source>
         <translation type="unfinished"></translation>
@@ -8016,7 +8091,7 @@ Do you want to clone another section?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="307"/>
+        <location filename="../main_window/translator.cpp" line="308"/>
         <source>Current Language changed to %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8181,7 +8256,7 @@ Please save the file first.</source>
         <location filename="../editing/edit_npc/npcedit.ui" line="142"/>
         <location filename="../editing/edit_npc/npcedit.ui" line="542"/>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Magasság</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="181"/>
@@ -8494,30 +8569,30 @@ Error description:
 <context>
     <name>PgeEngine</name>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="250"/>
+        <location filename="../testing/pge_engine.cpp" line="251"/>
         <source>Test level/world</source>
         <comment>Run the testing of current file in PGE Engine via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="255"/>
+        <location filename="../testing/pge_engine.cpp" line="256"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in PGE Engine from disk.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="260"/>
+        <location filename="../testing/pge_engine.cpp" line="261"/>
         <source>Start Game</source>
         <comment>Launch PGE Engine as a normal game</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="281"/>
+        <location filename="../testing/pge_engine.cpp" line="282"/>
         <source>Unsupported yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="282"/>
+        <location filename="../testing/pge_engine.cpp" line="283"/>
         <source>Currently this is not supported for world maps yet. Please use &apos;Test saved level/world&apos; action tu run a world map test.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8575,7 +8650,7 @@ Error description:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="204"/>
+        <location filename="../common_features/crashhandler.cpp" line="210"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Out of memory!
 
@@ -8583,7 +8658,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="210"/>
+        <location filename="../common_features/crashhandler.cpp" line="216"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Unhandled Exception
 
@@ -8593,52 +8668,52 @@ Forum link: wohlsoft.ru/forum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="222"/>
+        <location filename="../common_features/crashhandler.cpp" line="228"/>
         <source>Terminal was closed [SIGHUP]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="226"/>
+        <location filename="../common_features/crashhandler.cpp" line="232"/>
         <source>Quit command [SIGQUIT]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="230"/>
+        <location filename="../common_features/crashhandler.cpp" line="236"/>
         <source>Editor was abourted because alarm() time out! [SIGALRM]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="234"/>
+        <location filename="../common_features/crashhandler.cpp" line="240"/>
         <source>Editor was abourted because physical memory error! [SIGBUS]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="244"/>
+        <location filename="../common_features/crashhandler.cpp" line="250"/>
         <source>Wrong CPU Instruction [SIGILL]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="248"/>
+        <location filename="../common_features/crashhandler.cpp" line="254"/>
         <source>Floating-point exception [SIGFPE]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="252"/>
+        <location filename="../common_features/crashhandler.cpp" line="258"/>
         <source>Aborted! [SIGABRT]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="256"/>
+        <location filename="../common_features/crashhandler.cpp" line="262"/>
         <source>Signal Segmentation Violation [SIGSEGV]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="260"/>
+        <location filename="../common_features/crashhandler.cpp" line="266"/>
         <source>Interrupted! [SIGINT]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="267"/>
+        <location filename="../common_features/crashhandler.cpp" line="273"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: %1
 
@@ -8749,7 +8824,7 @@ Reason: %1
     <message>
         <location filename="../defines.h" line="193"/>
         <source>Allow NPC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tárgyak engedélyezése</translation>
     </message>
     <message>
         <location filename="../defines.h" line="194"/>
@@ -8764,7 +8839,7 @@ Reason: %1
     <message>
         <location filename="../defines.h" line="196"/>
         <source>Need a bomb</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bomba szükséges</translation>
     </message>
     <message>
         <location filename="../defines.h" line="197"/>
@@ -9122,7 +9197,7 @@ Reason: %1
     <message>
         <location filename="../defines.h" line="276"/>
         <source>Always Visible</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mindig látható</translation>
     </message>
     <message>
         <location filename="../defines.h" line="277"/>
@@ -9240,22 +9315,22 @@ Reason: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="675"/>
+        <location filename="../data_configs/data_configs.cpp" line="681"/>
         <source>Finishing loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_tilesets.cpp" line="43"/>
+        <location filename="../data_configs/obj_tilesets.cpp" line="44"/>
         <source>Loading Tilesets...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_tilesets.cpp" line="70"/>
+        <location filename="../data_configs/obj_tilesets.cpp" line="71"/>
         <source>Loading Tileset groups...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_tilesets.cpp" line="96"/>
+        <location filename="../data_configs/obj_tilesets.cpp" line="97"/>
         <source>Initializing tileset categories...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9285,23 +9360,23 @@ Reason: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="336"/>
+        <location filename="../mainwindow.cpp" line="349"/>
         <source>Bad File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="337"/>
+        <location filename="../mainwindow.cpp" line="350"/>
         <source>Bad file format
 File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="339"/>
+        <location filename="../mainwindow.cpp" line="352"/>
         <source>Line Number: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="340"/>
+        <location filename="../mainwindow.cpp" line="353"/>
         <source>Line Data: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9323,7 +9398,7 @@ File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="146"/>
+        <location filename="../main_window/translator.cpp" line="147"/>
         <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
         <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
@@ -9519,107 +9594,107 @@ The maximum number of Music Boxes is %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="554"/>
+        <location filename="../testing/38a_engine.cpp" line="556"/>
         <source>Checkpoints successfully reseted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="566"/>
+        <location filename="../testing/38a_engine.cpp" line="568"/>
         <source>Path to SMBX-38A</source>
         <comment>Title of dialog</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="573"/>
+        <location filename="../testing/38a_engine.cpp" line="575"/>
         <source>Please select a path to SMBX-38A executable:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="582"/>
+        <location filename="../testing/38a_engine.cpp" line="584"/>
         <source>Use default</source>
         <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
         <translation type="unfinished">Alapértelmezett használata</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="585"/>
+        <location filename="../testing/38a_engine.cpp" line="587"/>
         <source>Custom</source>
         <comment>Using a user selected SMBX-38A path</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="589"/>
+        <location filename="../testing/38a_engine.cpp" line="591"/>
         <source>Browse...</source>
         <translation type="unfinished">Kiválasztás...</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="613"/>
+        <location filename="../testing/38a_engine.cpp" line="615"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="627"/>
+        <location filename="../testing/38a_engine.cpp" line="629"/>
         <source>Select a path to SMBX-38A executable</source>
         <comment>File dialog title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="653"/>
+        <location filename="../testing/38a_engine.cpp" line="655"/>
         <source>SMBX-38A is still active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="654"/>
+        <location filename="../testing/38a_engine.cpp" line="656"/>
         <source>To change a setup of Wine, you will need to shut down a currently working SMBX-38A. Do you want to shut down the SMBX-38A now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="803"/>
+        <location filename="../testing/38a_engine.cpp" line="805"/>
         <source>Executable not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="804"/>
+        <location filename="../testing/38a_engine.cpp" line="806"/>
         <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="830"/>
+        <location filename="../testing/38a_engine.cpp" line="832"/>
         <source>Impossible to prepare a temp file for a test run.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="892"/>
+        <location filename="../testing/38a_engine.cpp" line="894"/>
         <source>Impossible to launch a level because of an invalid file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="902"/>
+        <location filename="../testing/38a_engine.cpp" line="904"/>
         <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="911"/>
-        <location filename="../testing/38a_engine.cpp" line="976"/>
+        <location filename="../testing/38a_engine.cpp" line="913"/>
+        <location filename="../testing/38a_engine.cpp" line="978"/>
         <source>Caution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="912"/>
+        <location filename="../testing/38a_engine.cpp" line="914"/>
         <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="957"/>
+        <location filename="../testing/38a_engine.cpp" line="959"/>
         <source>Impossible to launch an episode because of an invalid file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="967"/>
+        <location filename="../testing/38a_engine.cpp" line="969"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="977"/>
+        <location filename="../testing/38a_engine.cpp" line="979"/>
         <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9878,225 +9953,225 @@ The maximum number of Music Boxes is %2.</source>
 <context>
     <name>TheXTechEngine</name>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="164"/>
+        <location filename="../testing/thextech_engine.cpp" line="169"/>
         <source>Path to TheXTech</source>
         <comment>Title of dialog</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="171"/>
+        <location filename="../testing/thextech_engine.cpp" line="176"/>
         <source>Please select a path to TheXTech executable:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="180"/>
+        <location filename="../testing/thextech_engine.cpp" line="185"/>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
         <translation type="unfinished">Alapértelmezett használata</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="183"/>
+        <location filename="../testing/thextech_engine.cpp" line="188"/>
         <source>Custom</source>
         <comment>Using a user selected TheXTech path</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="187"/>
+        <location filename="../testing/thextech_engine.cpp" line="192"/>
         <source>Browse...</source>
         <translation type="unfinished">Kiválasztás...</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="211"/>
+        <location filename="../testing/thextech_engine.cpp" line="216"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="224"/>
+        <location filename="../testing/thextech_engine.cpp" line="229"/>
         <source>Select a path to TheXTech executable</source>
         <comment>File dialog title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="648"/>
+        <location filename="../testing/thextech_engine.cpp" line="653"/>
         <source>Test level</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="653"/>
+        <location filename="../testing/thextech_engine.cpp" line="658"/>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="658"/>
+        <location filename="../testing/thextech_engine.cpp" line="663"/>
         <source>Test saved level</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="664"/>
+        <location filename="../testing/thextech_engine.cpp" line="669"/>
         <source>Graphics type</source>
         <comment>Choose a rendering system: software or accelerated</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="669"/>
+        <location filename="../testing/thextech_engine.cpp" line="674"/>
         <source>Default</source>
         <comment>Automatically selected rendering engine</comment>
         <translation type="unfinished">Alapértelmezett</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="674"/>
+        <location filename="../testing/thextech_engine.cpp" line="679"/>
         <source>Software</source>
         <comment>Software rendering</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="679"/>
+        <location filename="../testing/thextech_engine.cpp" line="684"/>
         <source>Accelerated</source>
         <comment>Hardware accelerated rendering</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="684"/>
+        <location filename="../testing/thextech_engine.cpp" line="689"/>
         <source>Accelerated with V-Sync</source>
         <comment>Hardware accelerated rendering with vertical synchronization support</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="691"/>
+        <location filename="../testing/thextech_engine.cpp" line="696"/>
         <source>Compatibility level</source>
         <comment>Choose the compatibility level used by the game</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="696"/>
+        <location filename="../testing/thextech_engine.cpp" line="701"/>
         <source>Default</source>
         <comment>Use preferred compatibility level</comment>
         <translation type="unfinished">Alapértelmezett</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="701"/>
+        <location filename="../testing/thextech_engine.cpp" line="706"/>
         <source>Modern</source>
         <comment>Prefer all updates and bugfixes enabled</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Modern</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="706"/>
+        <location filename="../testing/thextech_engine.cpp" line="711"/>
         <source>X2</source>
         <comment>Disable all bugfixes and updates exceot these made at X2</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="711"/>
+        <location filename="../testing/thextech_engine.cpp" line="716"/>
         <source>Strict SMBX 1.3</source>
         <comment>Strict compatibility mode, all bugfixes and updates will be disabled to prepresent an old behaviour.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="718"/>
+        <location filename="../testing/thextech_engine.cpp" line="723"/>
         <source>Speedruner&apos;s stopwatch</source>
         <comment>Speedrun mode menu</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="723"/>
+        <location filename="../testing/thextech_engine.cpp" line="728"/>
         <source>Disabled</source>
         <comment>Speedrun mode disabled</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="728"/>
+        <location filename="../testing/thextech_engine.cpp" line="733"/>
         <source>Mode 1 (Modern)</source>
         <comment>Enable speedrun with mode 1 (modern compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="733"/>
+        <location filename="../testing/thextech_engine.cpp" line="738"/>
         <source>Mode 2 (X2)</source>
         <comment>Enable speedrun with mode 2 (X2 compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="738"/>
+        <location filename="../testing/thextech_engine.cpp" line="743"/>
         <source>Mode 3 (Strict SMBX 1.3)</source>
         <comment>Enable speedrun with mode 3 (strict SMBX 1.3 compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="743"/>
+        <location filename="../testing/thextech_engine.cpp" line="748"/>
         <source>Semi-transparent stopwatch</source>
         <comment>Show the speedrun stopwatch with a semi-transparent font.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="750"/>
+        <location filename="../testing/thextech_engine.cpp" line="755"/>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="752"/>
+        <location filename="../testing/thextech_engine.cpp" line="757"/>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="758"/>
+        <location filename="../testing/thextech_engine.cpp" line="763"/>
         <source>Enable max FPS</source>
         <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="760"/>
+        <location filename="../testing/thextech_engine.cpp" line="765"/>
         <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="764"/>
+        <location filename="../testing/thextech_engine.cpp" line="769"/>
         <source>Enable grab all</source>
         <comment>Allow player to grab absolutely any NPCs in a game.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="766"/>
+        <location filename="../testing/thextech_engine.cpp" line="771"/>
         <source>Allow player to grab any NPCs in a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="773"/>
+        <location filename="../testing/thextech_engine.cpp" line="778"/>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="775"/>
+        <location filename="../testing/thextech_engine.cpp" line="780"/>
         <source>Select the path to TheXTech executable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="779"/>
+        <location filename="../testing/thextech_engine.cpp" line="784"/>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="788"/>
+        <location filename="../testing/thextech_engine.cpp" line="793"/>
         <source>Executable not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="789"/>
+        <location filename="../testing/thextech_engine.cpp" line="794"/>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="798"/>
+        <location filename="../testing/thextech_engine.cpp" line="803"/>
         <source>TheXtech start failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="799"/>
+        <location filename="../testing/thextech_engine.cpp" line="804"/>
         <source>Can&apos;t start TheXTech because of following reason:
 %3.
 
@@ -10221,7 +10296,7 @@ Arguments: %2</source>
         <location filename="../tools/tilesets/tileset_editor.cpp" line="111"/>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Keresés név szerint</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tileset_editor.cpp" line="115"/>
@@ -10296,17 +10371,17 @@ Data may be corrupted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tileset_editor.cpp" line="674"/>
+        <location filename="../tools/tilesets/tileset_editor.cpp" line="675"/>
         <source>Tileset box editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tileset_editor.cpp" line="679"/>
+        <location filename="../tools/tilesets/tileset_editor.cpp" line="680"/>
         <source>Don&apos;t show this message again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tileset_editor.cpp" line="681"/>
+        <location filename="../tools/tilesets/tileset_editor.cpp" line="682"/>
         <source>Welcome to tileset editor!
 
 This is an editor of global tilesets.
@@ -10318,22 +10393,22 @@ If you wish to create level/world specific tilesets with using of custom graphic
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tileset_editor.cpp" line="698"/>
+        <location filename="../tools/tilesets/tileset_editor.cpp" line="699"/>
         <source>Remove tileset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tileset_editor.cpp" line="699"/>
+        <location filename="../tools/tilesets/tileset_editor.cpp" line="700"/>
         <source>Do you want to remove this tileset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tileset_editor.cpp" line="705"/>
+        <location filename="../tools/tilesets/tileset_editor.cpp" line="706"/>
         <source>Tileset removed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tileset_editor.cpp" line="705"/>
+        <location filename="../tools/tilesets/tileset_editor.cpp" line="706"/>
         <source>Tileset has been removed!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10348,7 +10423,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     <message>
         <location filename="../tools/tilesets/tilesetgroupeditor.ui" line="27"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fel</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetgroupeditor.ui" line="36"/>
@@ -10398,7 +10473,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     <message>
         <location filename="../tools/tilesets/tilesetgroupeditor.ui" line="219"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Le</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetgroupeditor.ui" line="226"/>
@@ -10416,51 +10491,51 @@ If you wish to create level/world specific tilesets with using of custom graphic
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="146"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="148"/>
         <source>Select Tileset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="157"/>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="210"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="159"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="212"/>
         <source>There is already a file called &apos;%1&apos;!
 Import anyway and overwrite?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="180"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="182"/>
         <source>Failed to load tileset!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="181"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="183"/>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="197"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="199"/>
         <source>Select Tileset Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="252"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="256"/>
         <source>Failed to load tileset group!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="253"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="257"/>
         <source>Failed to load tileset group!
 Data may be corrupted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="263"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="267"/>
         <source>Please enter a filename!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="264"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="268"/>
         <source>Filename:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11259,7 +11334,7 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="147"/>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Magasság</translation>
     </message>
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="167"/>
@@ -11272,7 +11347,7 @@ Data may be corrupted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="293"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="295"/>
         <source>Will be exported:
 Top:	%1
 Left:	%2
@@ -11506,7 +11581,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="592"/>
         <source>Always Visible</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mindig látható</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="652"/>
@@ -11617,28 +11692,28 @@ Please, reconvert your images to valid format and try to reload this level.</sou
 <context>
     <name>WorldEdit</name>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="114"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="116"/>
         <source>Export selected area to image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="118"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="120"/>
         <source>PNG Image (*.png)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="127"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="129"/>
         <source>Saving section image...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="127"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="129"/>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="477"/>
         <source>Abort</source>
         <translation type="unfinished">Megszakítás</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="128"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="130"/>
         <source>Please wait...</source>
         <translation type="unfinished">Kérjük várjon...</translation>
     </message>
@@ -11835,12 +11910,12 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="370"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="371"/>
         <source>Please, save file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="370"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="371"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11858,12 +11933,12 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_musicbox_itemset.cpp" line="146"/>
+        <location filename="../main_window/dock/wld_musicbox_itemset.cpp" line="147"/>
         <source>Please, save file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_musicbox_itemset.cpp" line="146"/>
+        <location filename="../main_window/dock/wld_musicbox_itemset.cpp" line="147"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation type="unfinished"></translation>
     </message>

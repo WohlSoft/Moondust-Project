@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -123,6 +123,7 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
     {
         QSettings cCounters(AppPathManager::settingsFile(), QSettings::IniFormat);
         cCounters.setIniCodec("UTF-8");
+
         cCounters.beginGroup("message-boxes");
         bool showNotice = cCounters.value("cpu-architecture-warning", true).toBool();
 
@@ -198,8 +199,19 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         /*********************Loading of config pack**********************/
         QFutureWatcher<bool> isOk;
         QEventLoop waitLoop;
-        QObject::connect(&isOk, &QFutureWatcher<bool>::finished, &waitLoop, &QEventLoop::quit);
-        QObject::connect(&configs, &DataConfig::errorOccured, &waitLoop, &QEventLoop::quit);
+        QAtomicInt waitLoopQuit(false);
+        QObject::connect(&isOk, &QFutureWatcher<bool>::finished,
+        [&waitLoop, &waitLoopQuit]()->void
+        {
+            waitLoop.quit();
+            waitLoopQuit = true;
+        });
+        QObject::connect(&configs, &DataConfig::errorOccured,
+        [&waitLoop, &waitLoopQuit]()->void
+        {
+            waitLoop.exit(1);
+            waitLoopQuit = true;
+        });
         // Do the loading in a thread
         isOk.setFuture(QtConcurrent::run(&this->configs, &DataConfig::loadFullConfig));
         /*********************Loading of config pack**********************/
@@ -210,7 +222,8 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         splash.startAnimations();
 
         // Now wait until the config load in finished.
-        waitLoop.exec();
+        if(!waitLoopQuit)
+            waitLoop.exec();
 
         /*********************Splash Screen end**********************/
         splash.finish(this);

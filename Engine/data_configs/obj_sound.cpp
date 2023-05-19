@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -24,10 +24,10 @@
 #include <gui/pge_msgbox.h>
 #include <SDL2/SDL_mixer_ext.h>
 #include <vector>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <FileMapper/file_mapper.h>
 
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 #include <IniProcessor/ini_processing.h>
 #include <Utils/files.h>
 
@@ -103,7 +103,7 @@ void ConfigManager::buildSoundIndex()
 #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32) || defined(__HAIKU__)
                 FileMapper fileMap;
 
-                if(!snd.silent && fileMap.open_file(snd.absPath.c_str()))
+                if(!snd.silent && fileMap.open_file(snd.absPath))
                 {
                     sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data(),
                                                  static_cast<int>(fileMap.size())), 1);
@@ -193,14 +193,14 @@ void ConfigManager::buildSoundIndex()
 
     //else
     //    need_to_reserve=set_channel;
-#ifndef DEBUG_BUILD
-    Mix_ReserveChannels(need_to_reserve)
-#endif
-#define RESERVE_CHANS_COMMAND Mix_ReserveChannels(need_to_reserve)
     D_pLogDebug("Loading of sounds passed in %d milliseconds", static_cast<int>(loadingTime.elapsed()));
-    D_pLogDebug("Reserved audio channels: %d", RESERVE_CHANS_COMMAND);
+#ifdef DEBUG_BUILD
+    int reserved = Mix_ReserveChannels(need_to_reserve);
+    D_pLogDebug("Reserved audio channels: %d", reserved);
+#else
+    Mix_ReserveChannels(need_to_reserve);
+#endif
     D_pLogDebug("SFX Index entries: %d", main_sfx_index.size());
-#undef RESERVE_CHANS_COMMAND
     SDL_ClearError();
 }
 

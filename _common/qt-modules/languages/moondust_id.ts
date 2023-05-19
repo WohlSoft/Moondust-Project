@@ -5,15 +5,15 @@
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih file bank WOPL</translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih file bank instrumen WOPL yang akan digunakan</translation>
     </message>
     <message>
         <source>Select WOPN bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih file bank WOPL</translation>
     </message>
     <message>
         <source>Please select the WOPN instruments bank file to use</source>
@@ -298,6 +298,10 @@
     <message>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>libEDMIDI (OPLL, SCC, PSG)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

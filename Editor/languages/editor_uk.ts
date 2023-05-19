@@ -534,7 +534,7 @@ Please set SoX path first</source>
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation>Вибрати файл банку WOPL</translation>
+        <translation>Обрати файл банку WOPL</translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
@@ -834,10 +834,6 @@ File path: %3</source>
         <translation>Аварія</translation>
     </message>
     <message>
-        <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>Ой-йой, Moondust Редагувач зламався :(&lt;br&gt;Детальна інформація аварії:</translation>
-    </message>
-    <message>
         <source>Exit from application</source>
         <translation>Вийти з програми</translation>
     </message>
@@ -861,14 +857,6 @@ Please save them before doing anything else.</source>
         <translation>Скопіювати звіт</translation>
     </message>
     <message>
-        <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>Відправити рапорт у форум WohlSoft (wohlsoft.ru/forum/)</translation>
-    </message>
-    <message>
-        <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation>Створити задачу на репозиторії GitHub (WohlSoft/Moondust-Project)</translation>
-    </message>
-    <message>
         <source>While making a report, please explain what you did to cause a crash error.
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
@@ -885,6 +873,22 @@ Please save them before doing anything else.</source>
     <message>
         <source>Join the official Moondust Discord server to submit the report</source>
         <translation>Приєднуйся до офіційного Discord-серверу, щоб відправити звіт</translation>
+    </message>
+    <message>
+        <source>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
+        <translation>Ой-йой, Moondust Редагувач зламався :(&lt;br&gt;Детальна інформація аварії:</translation>
+    </message>
+    <message>
+        <source>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</source>
+        <translation>Відправити звіт у форумі WohlSoft (wohlsoft.ru/forum/)</translation>
+    </message>
+    <message>
+        <source>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</source>
+        <translation>Створити задачу на GitHub репозиторії (WohlSoft/Moondust-Project)</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Important note:&lt;/b&gt; please don&apos;t post this report at third-party forums and chat servers (including ANY SMBX-related community servers with no exceptions). Otherwise, you have &lt;b&gt;an extremely small chance of getting the proper support&lt;/b&gt;. We can give you a support at official resources listed above only.</source>
+        <translation>&lt;b&gt;Важливе попередження:&lt;/b&gt; будь ласка, не відправляйте даний звіт на сторонні форуми та чат-сервера. (це стосується БУДЬ-ЯКИХ серверів спільноти SMBX без винятків) Інакше, ви матимете &lt;b&gt;малоймовірний шанс отримати коректну допомогу&lt;/b&gt;. Ми зможемо вам допомогти лише на офіційних ресурсах, вказаних вище.</translation>
     </message>
 </context>
 <context>
@@ -1225,6 +1229,10 @@ Please save them before doing anything else.</source>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
         <translation>Будь-який вільний</translation>
+    </message>
+    <message>
+        <source>libEDMIDI (OPLL, SCC, PSG)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1795,6 +1803,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Edit raw user data...</source>
         <translation>Редагувати дані користувача...</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>ID масиву: %1</translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1935,6 +1947,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Edit raw user data...</source>
         <translation>Редагувати дані користувача...</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -2092,6 +2108,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <comment>Direction of pipe</comment>
         <translation>Вниз</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>ID масиву: %1</translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -2162,6 +2182,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Властивості скопійовані: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -2242,6 +2266,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Властивості скопійовані: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -2378,6 +2406,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Edit raw user data...</source>
         <translation>Редагувати дані користувача...</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>ID масиву: %1</translation>
+    </message>
 </context>
 <context>
     <name>ItemPath</name>
@@ -2428,6 +2460,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Властивості скопійовані: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -2544,6 +2580,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation>Властивості скопійовані: %1</translation>
     </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>ID масиву: %1</translation>
+    </message>
 </context>
 <context>
     <name>ItemPlayerPoint</name>
@@ -2617,6 +2657,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Властивості скопійовані: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -2747,6 +2791,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Властивості скопійовані: %1</translation>
+    </message>
+    <message>
+        <source>Array-ID: %1</source>
+        <translation>ID масиву: %1</translation>
     </message>
 </context>
 <context>
@@ -6397,11 +6445,11 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>Adjust pictures colors to pallete (PalleteFilter)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Підігнати кольори зображень під палітру (PaletteFilter)...</translation>
     </message>
     <message>
         <source>Bulk convert and repair of level and world files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Масове виправ./віднов. рівнів та світів...</translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -19,10 +19,10 @@
 
 #include "gfx_effect.h"
 #include <data_configs/config_manager.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <graphics/gl_renderer.h>
 #include <gui/pge_msgbox.h>
-#include <common_features/fmt_format_ne.h>
+#include <fmt_format_ne.h>
 #include <Utils/maths.h>
 
 void Scene::launchEffect(unsigned long effectID,

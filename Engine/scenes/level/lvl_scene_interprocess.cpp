@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -21,7 +21,7 @@
 
 #include <data_configs/config_manager.h>
 #include <networking/intproc.h>
-#include <common_features/logger.h>
+#include <Logger/logger.h>
 #include <audio/pge_audio.h>
 #include <fontman/font_manager.h>
 
@@ -65,7 +65,7 @@ void LevelScene::process_InterprocessCommands()
 
             if(!got.meta.ReadFileValid)
             {
-                LogDebug(got.meta.ERROR_info);
+                pLogDebug(got.meta.ERROR_info.c_str());
                 break;
             }
 

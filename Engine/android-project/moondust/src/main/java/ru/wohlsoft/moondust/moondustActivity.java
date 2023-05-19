@@ -41,7 +41,7 @@ public class moondustActivity extends SDLActivity
     protected String[] getLibraries()
     {
         return new String[] {
-            "SDL2",
+//          "SDL2",
             "pge_engine"
         };
     }

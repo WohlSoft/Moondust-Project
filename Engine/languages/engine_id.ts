@@ -6,7 +6,7 @@
     <message id="CRASH_UNHEXC_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="372"/>
         <source>Unhandled exception!</source>
-        <translation type="unfinished"></translation>
+        <translation>Pengecualian yang tidak ditangani!</translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
         <location filename="../common_features/crash_handler.cpp" line="374"/>
@@ -16,27 +16,27 @@
     <message id="CRASH_OUT_OF_MEM_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="386"/>
         <source>Out of memory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kehabisan memori!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <location filename="../common_features/crash_handler.cpp" line="388"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation type="unfinished"></translation>
+        <translation>Engine mengalami kerusakan karena kehabisan memori! Coba tutup aplikasi lain dan mulai ulang game.</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="424"/>
         <source>Time out!</source>
-        <translation type="unfinished"></translation>
+        <translation>Waktu habis!</translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="426"/>
         <source>Engine has abourted because alarm() time out!</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesin telah dibatalkan karena alarm() waktu habis!</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="471"/>
         <source>Physical memory address error!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan alamat memori fisik!</translation>
     </message>
     <message id="CRASH_BUS_MSG">
         <location filename="../common_features/crash_handler.cpp" line="473"/>

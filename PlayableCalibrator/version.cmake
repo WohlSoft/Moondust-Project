@@ -7,7 +7,7 @@ set(CALIBRATOR_VERSION_3 0)
 # Patch
 set(CALIBRATOR_VERSION_4 0)
 # Type of version: "-alpha","-beta","-dev", or "" aka "release"
-set(CALIBRATOR_VERSION_REL "")
+set(CALIBRATOR_VERSION_REL "-beta2")
 
 add_definitions(-DCALIBRATOR_VERSION_1=${CALIBRATOR_VERSION_1})
 add_definitions(-DCALIBRATOR_VERSION_2=${CALIBRATOR_VERSION_2})
@@ -30,4 +30,3 @@ if(NOT "${CALIBRATOR_VERSION_REL}" STREQUAL "")
 endif()
 
 message("== Playable character Calibrator version ${CALIBRATOR_VERSION_STRING} ==")
-

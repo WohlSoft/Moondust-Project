@@ -47,6 +47,7 @@ include(../_common/FileMapper/FileMapper.cmake)
 include(../_common/fmt/fmt.cmake)
 include(../_common/IniProcessor/IniProcessor.cmake)
 include(../_common/tclap/tclap.cmake)
+include(../_common/Logger/logger.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/Utils/Utils.cmake)
 include(../_common/Utils/UtilsSDL.cmake)
@@ -55,6 +56,8 @@ include(../_common/Graphics/bitmask2rgba.cmake)
 if(WIN32)
     include(../_common/StackWalker/StackWalker.cmake)
 endif()
+
+add_definitions("-DMOONDUST_LOGGER_FILENAME_PREFIX=\"PGE_Engine\"")
 
 pge_cxx_standard(14)
 
@@ -123,7 +126,6 @@ list(APPEND PGE_ENGINE_SRCS
     common_features/episode_state.cpp
     common_features/fader.cpp
     common_features/graphics_funcs.cpp
-    common_features/logger_sets.cpp
     common_features/matrix_animator.cpp
     common_features/md5.cpp
     common_features/npc_animator.cpp
@@ -352,6 +354,7 @@ set(PGE_ENGINE_SRC_ARGS
     ${FILEMAPPER_SRCS}
     ${FMT_SRCS}
     ${INIPROCESSOR_SRCS}
+    ${LOGGER_SRCS}
     ${PGE_GAMESAVE_SRCS}
     ${STACK_WALKER_SRCS}
     ${UTF8MAIN_SRCS}
@@ -471,12 +474,7 @@ list(APPEND PGE_ENGINE_LINK_LIBS
 )
 
 if(PGE_STATIC_SDLMIXER)
-    list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDLMixerX_static)
-    if(ANDROID)
-        list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDL2)
-    else()
-        list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDL2_static)
-    endif()
+    list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDLMixerX_static PGE_SDL2_static)
 else()
     list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDLMixerX PGE_SDL2)
 endif()

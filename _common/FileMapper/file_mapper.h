@@ -1,6 +1,6 @@
 /*
  * FileMapper - a small C++ class which providing a cross-platform read-only file mapping interface
- * Copyright (c) 2017-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software
@@ -50,7 +50,7 @@ public:
     /*!
      * \brief Constructor with pre-opened file
      */
-    FileMapper(std::string file);
+    FileMapper(const std::string& file);
 
     /*!
      * \brief Copy Constructor
@@ -67,7 +67,7 @@ public:
      * \param path to file
      * \return True if success. False if error occouped
      */
-    bool open_file(std::string path);
+    bool open_file(const std::string& path);
 
     /*!
      * \brief Closes opened file

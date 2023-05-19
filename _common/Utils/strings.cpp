@@ -1,7 +1,7 @@
 /*
  * A small set of extra string processing functions
  *
- * Copyright (c) 2017-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software
@@ -29,6 +29,21 @@
 #include <cctype>
 #include <locale>
 
+
+bool Strings::startsWith(const std::string &str, char what)
+{
+    if(str.empty())
+        return false;
+    return (str.front() == what);
+}
+
+bool Strings::startsWith(const std::string &str, const std::string &what)
+{
+    if(str.size() < what.size())
+        return false;
+    return (str.substr(0, what.size()).compare(what) == 0);
+}
+
 bool Strings::endsWith(const std::string& str, char what)
 {
     if(str.empty())
@@ -44,16 +59,24 @@ bool Strings::endsWith(const std::string& str, const std::string& what)
 }
 
 // trim from start (in place)
-static inline void ltrim(std::string &s) {
+static inline void ltrim(std::string &s)
+{
     s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-        [](int c) {return !std::isspace(c); }
+        [](int c)
+        {
+            return !std::isspace(c);
+        }
     ));
 }
 
 // trim from end (in place)
-static inline void rtrim(std::string &s) {
+static inline void rtrim(std::string &s)
+{
     s.erase(std::find_if(s.rbegin(), s.rend(),
-        [](int c) {return !std::isspace(c); }
+        [](int c)
+        {
+            return !std::isspace(c);
+        }
     ).base(), s.end());
 }
 
@@ -63,7 +86,6 @@ std::string Strings::trim(std::string str)
     ::rtrim(str);
     return str;
 }
-
 std::string Strings::ltrim(std::string str)
 {
     ::rtrim(str);
@@ -76,7 +98,6 @@ std::string Strings::rtrim(std::string str)
     ::rtrim(str);
     return str;
 }
-
 
 void Strings::doTrim(std::string& str)
 {
@@ -104,7 +125,7 @@ void Strings::split(Strings::List& out, const std::string& str, char delimiter)
         end = str.find(delimiter, beg);
         if(end == std::string::npos)
             end = str.size();
-        out.push_back( str.substr(beg, end-beg) );
+        out.emplace_back(str.substr(beg, end-beg));
         beg = end + 1;
     }
     while(end < str.size() - 1);
@@ -119,7 +140,7 @@ void Strings::split(Strings::List& out, const std::string& str, const std::strin
         end = str.find(delimiter, beg);
         if(end == std::string::npos)
             end = str.size();
-        out.push_back( str.substr(beg, end-beg) );
+        out.emplace_back(str.substr(beg, end-beg));
         beg = end + delimiter.size();
     }
     while(end < str.size() - 1);
@@ -139,7 +160,7 @@ Strings::List Strings::split(const std::string& str, const std::string& delimite
     return res;
 }
 
-void Strings::replaceInAll(std::string &src, std::string from, std::string to)
+void Strings::replaceInAll(std::string &src, const std::string &from, const std::string &to)
 {
     if(from.empty())
         return;
@@ -152,7 +173,7 @@ void Strings::replaceInAll(std::string &src, std::string from, std::string to)
     }
 }
 
-void Strings::removeInAll(std::string &src, std::string substr)
+void Strings::removeInAll(std::string &src, const std::string &substr)
 {
     std::string::size_type foundpos = src.find(substr);
     if(foundpos != std::string::npos)
@@ -160,13 +181,13 @@ void Strings::removeInAll(std::string &src, std::string substr)
                      src.begin() + std::string::difference_type(foundpos + substr.length()));
 }
 
-std::string Strings::removeAll(std::string src, std::string substr)
+std::string Strings::removeAll(std::string src, const std::string &substr)
 {
     removeInAll(src, substr);
     return src;
 }
 
-std::string Strings::replaceAll(std::string src, std::string from, std::string to)
+std::string Strings::replaceAll(std::string src, const std::string &from, const std::string &to)
 {
     replaceInAll(src, from, to);
     return src;

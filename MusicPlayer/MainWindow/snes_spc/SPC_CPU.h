@@ -57,19 +57,19 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA */
 #define TIME_ADJ( n )   (n)
 
 #define READ_TIMER( time, addr, out )       CPU_READ_TIMER( rel_time, TIME_ADJ(time), (addr), out )
-#define READ(  time, addr )                 CPU_READ ( rel_time, TIME_ADJ(time), (addr) )
-#define WRITE( time, addr, data )           CPU_WRITE( rel_time, TIME_ADJ(time), (addr), (data) )
+#define READ(  time, addr )				 CPU_READ ( rel_time, TIME_ADJ(time), (addr) )
+#define WRITE( time, addr, data )		   CPU_WRITE( rel_time, TIME_ADJ(time), (addr), (data) )
 
-#define DP_ADDR( addr )                     (dp + (addr))
+#define DP_ADDR( addr )				     (dp + (addr))
 
 #define READ_DP_TIMER(  time, addr, out )   CPU_READ_TIMER( rel_time, TIME_ADJ(time), DP_ADDR( addr ), out )
-#define READ_DP(  time, addr )              READ ( time, DP_ADDR( addr ) )
-#define WRITE_DP( time, addr, data )        WRITE( time, DP_ADDR( addr ), data )
+#define READ_DP(  time, addr )		      READ ( time, DP_ADDR( addr ) )
+#define WRITE_DP( time, addr, data )		WRITE( time, DP_ADDR( addr ), data )
 
-#define READ_PROG16( addr )                 GET_LE16( ram + (addr) )
+#define READ_PROG16( addr )				 GET_LE16( ram + (addr) )
 
 #define SET_PC( n )     (pc = ram + (n))
-#define GET_PC()        (pc - ram)
+#define GET_PC()		(pc - ram)
 #define READ_PC( pc )   (*(pc))
 #define READ_PC16( pc ) GET_LE16( pc )
 
@@ -77,7 +77,7 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA */
 #define SPC_NO_SP_WRAPAROUND 0
 
 #define SET_SP( v )     (sp = ram + 0x101 + (v))
-#define GET_SP()        (sp - 0x101 - ram)
+#define GET_SP()		(sp - 0x101 - ram)
 
 #if SPC_NO_SP_WRAPAROUND
 #define PUSH16( v )     (sp -= 2, SET_LE16( sp, v ))
@@ -295,7 +295,7 @@ loop:
 
 				// Registers other than $F2 and $F4-$F7
 				//if ( i != 2 && i != 4 && i != 5 && i != 6 && i != 7 )
-				if ( ((~0x2F00 << (bits_in_int - 16)) << i) < 0 ) // 12%
+				if ( (int)((unsigned int)(~0x2F00 << (bits_in_int - 16)) << i) < 0 ) // 12%
 					cpu_write_smp_reg( data, rel_time, i );
 			}
 		}
@@ -328,7 +328,9 @@ loop:
 		#endif
 		goto loop;
 
-#define CASE( n )   case n:
+#define CASE( n )   \
+			/* Fallthrough */ \
+			case n:
 
 // Define common address modes based on opcode for immediate mode. Execution
 // ends with data set to the address of the operand.
@@ -386,6 +388,7 @@ loop:
 
 	case 0xF9: // MOV X,dp+Y
 		data = (uint8_t) (data + y);
+		/* Fallthrough */
 	case 0xF8: // MOV X,dp
 		READ_DP_TIMER( 0, data, x = nz );
 		goto inc_pc_loop;
@@ -394,6 +397,7 @@ loop:
 		data = READ_PC16( pc );
 		++pc;
 		data = READ( 0, data );
+		/* Fallthrough */
 	case 0xCD: // MOV X,imm
 		x  = data;
 		nz = data;
@@ -401,6 +405,7 @@ loop:
 
 	case 0xFB: // MOV Y,dp+X
 		data = (uint8_t) (data + x);
+		/* Fallthrough */
 	case 0xEB: // MOV Y,dp
 		// 70% from timer
 		pc++;
@@ -441,12 +446,14 @@ loop:
 
 	case 0xD9: // MOV dp+Y,X
 		data = (uint8_t) (data + y);
+		/* Fallthrough */
 	case 0xD8: // MOV dp,X
 		WRITE( 0, data + dp, x );
 		goto inc_pc_loop;
 
 	case 0xDB: // MOV dp+X,Y
 		data = (uint8_t) (data + x);
+		/* Fallthrough */
 	case 0xCB: // MOV dp,Y
 		WRITE( 0, data + dp, y );
 		goto inc_pc_loop;
@@ -493,6 +500,7 @@ loop:
 #define LOGICAL_OP( op, func )\
 	ADDR_MODES( op ) /* addr */\
 		data = READ( 0, data );\
+		/* Fallthrough */ \
 	case op: /* imm */\
 		nz = a func##= data;\
 		goto inc_pc_loop;\
@@ -524,6 +532,7 @@ loop:
 
 	ADDR_MODES( 0x68 ) // CMP addr
 		data = READ( 0, data );
+		/* Fallthrough */
 	case 0x68: // CMP imm
 		nz = a - data;
 		c = ~nz;
@@ -539,6 +548,7 @@ loop:
 
 	case 0x69: // CMP dp,dp
 		data = READ_DP( -3, data );
+		/* Fallthrough */
 	case 0x78: // CMP dp,imm
 		nz = READ_DP( -1, READ_PC( ++pc ) ) - data;
 		c = ~nz;
@@ -553,6 +563,7 @@ loop:
 		pc++;
 	cmp_x_addr:
 		data = READ( 0, data );
+		/* Fallthrough */
 	case 0xC8: // CMP X,imm
 		nz = x - data;
 		c = ~nz;
@@ -567,6 +578,7 @@ loop:
 		pc++;
 	cmp_y_addr:
 		data = READ( 0, data );
+		/* Fallthrough */
 	case 0xAD: // CMP Y,imm
 		nz = y - data;
 		c = ~nz;
@@ -642,6 +654,7 @@ loop:
 	case 0x9B: // DEC dp+X
 	case 0xBB: // INC dp+X
 		data = (uint8_t) (data + x);
+		/* Fallthrough */
 	case 0x8B: // DEC dp
 	case 0xAB: // INC dp
 		data += dp;
@@ -660,6 +673,7 @@ loop:
 
 	case 0x5C: // LSR A
 		c = 0;
+		/* Fallthrough */
 	case 0x7C:{// ROR A
 		nz = (c >> 1 & 0x80) | (a >> 1);
 		c = a << 8;
@@ -669,6 +683,7 @@ loop:
 
 	case 0x1C: // ASL A
 		c = 0;
+		/* Fallthrough */
 	case 0x3C:{// ROL A
 		int temp = c >> 8 & 1;
 		c = a << 1;
@@ -683,13 +698,16 @@ loop:
 		goto rol_mem;
 	case 0x1B: // ASL dp+X
 		c = 0;
+		/* Fallthrough */
 	case 0x3B: // ROL dp+X
 		data = (uint8_t) (data + x);
+		/* Fallthrough */
 	case 0x2B: // ROL dp
 		data += dp;
 		goto rol_mem;
 	case 0x0C: // ASL abs
 		c = 0;
+		/* Fallthrough */
 	case 0x2C: // ROL abs
 		data = READ_PC16( pc );
 		pc++;
@@ -705,13 +723,16 @@ loop:
 		goto ror_mem;
 	case 0x5B: // LSR dp+X
 		c = 0;
+		/* Fallthrough */
 	case 0x7B: // ROR dp+X
 		data = (uint8_t) (data + x);
+		/* Fallthrough */
 	case 0x6B: // ROR dp
 		data += dp;
 		goto ror_mem;
 	case 0x4C: // LSR abs
 		c = 0;
+		/* Fallthrough */
 	case 0x6C: // ROR abs
 		data = READ_PC16( pc );
 		pc++;

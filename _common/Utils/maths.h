@@ -1,7 +1,7 @@
 /*
  * A small set of additional math functions and templates
  *
- * Copyright (c) 2017-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software
@@ -93,6 +93,10 @@ namespace Maths
     inline long lRound(double d)
     {
         return d >= 0.0 ? long(d + 0.5) : long(d - double(long(d - 1)) + 0.5) + long(d - 1);
+    }
+    inline float fRound(double d)
+    {
+        return float(d >= 0.0 ? long(d + 0.5) : long(d - double(long(d - 1)) + 0.5) + long(d - 1));
     }
 
     inline int iRound(float d)

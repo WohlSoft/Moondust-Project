@@ -5,7 +5,7 @@
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation>Вибрати файл банку WOPL</translation>
+        <translation>Обрати файл банку WOPL</translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
@@ -303,6 +303,10 @@
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
         <translation>Будь-який вільний</translation>
+    </message>
+    <message>
+        <source>libEDMIDI (OPLL, SCC, PSG)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

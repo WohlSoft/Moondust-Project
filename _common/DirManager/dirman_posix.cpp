@@ -33,21 +33,26 @@ DEALINGS IN THE SOFTWARE.
 
 #include "dirman.h"
 #include "dirman_private.h"
-#include <mutex>
 
-static std::mutex g_dirManMutex;
-
-#define PUT_THREAD_GUARD() \
-    std::lock_guard<std::mutex> guard(g_dirManMutex);\
-    (void)guard;
+#if defined(__APPLE__) && MAC_OS_X_VERSION_MAX_ALLOWED < 1010 && defined(DIRMAN_HAS_FSSTATAT)
+#   undef DIRMAN_HAS_FSSTATAT  /*This call isn't available at macOS older than 10.10 */
+#endif
 
 void DirMan::DirMan_private::setPath(const std::string &dirPath)
 {
-    char resolved_path[PATH_MAX];
-    memset(resolved_path, 0, PATH_MAX);
-    char* realPath = realpath(dirPath.c_str(), resolved_path);
+#ifdef DIRMAN_HAS_REALPATH
+    char rp[PATH_MAX];
+    memset(rp, 0, PATH_MAX);
+    char* realPath = realpath(dirPath.c_str(), rp);
     (void)realPath;
-    m_dirPath = resolved_path;
+    m_dirPath = rp;
+#else
+    m_dirPath = dirPath;
+
+    if(dirPath.size() > 2 && dirPath[dirPath.size() - 2] == ':')
+        return;
+#endif
+
     delEnd(m_dirPath, '/');
 }
 
@@ -55,25 +60,39 @@ bool DirMan::DirMan_private::getListOfFiles(std::vector<std::string> &list, cons
 {
     list.clear();
 
-    dirent *dent = NULL;
+    dirent *dent = nullptr;
     DIR *srcdir = opendir(m_dirPath.c_str());
-    if(srcdir == NULL)
+
+    if(srcdir == nullptr)
         return false;
 
-    while((dent = readdir(srcdir)) != NULL)
+    while((dent = readdir(srcdir)) != nullptr)
     {
-        struct stat st;
+#ifdef DIRMAN_HAS_FSSTATAT
+        struct stat st = {};
+#endif
+
         if(strcmp(dent->d_name, ".") == 0 || strcmp(dent->d_name, "..") == 0)
             continue;
 
+#ifdef DIRMAN_HAS_FSSTATAT
         if(fstatat(dirfd(srcdir), dent->d_name, &st, 0) < 0)
             continue;
+
         if(S_ISREG(st.st_mode))
         {
             if(matchSuffixFilters(dent->d_name, suffix_filters))
-                list.push_back(dent->d_name);
+                list.emplace_back(dent->d_name);
         }
+#else
+        if(dent->d_type == DT_REG)
+        {
+            if(matchSuffixFilters(dent->d_name, suffix_filters))
+                list.emplace_back(dent->d_name);
+        }
+#endif
     }
+
     closedir(srcdir);
     return true;
 }
@@ -81,27 +100,40 @@ bool DirMan::DirMan_private::getListOfFiles(std::vector<std::string> &list, cons
 bool DirMan::DirMan_private::getListOfFolders(std::vector<std::string>& list, const std::vector<std::string>& suffix_filters)
 {
     list.clear();
-    dirent *dent = NULL;
+    dirent *dent = nullptr;
     DIR *srcdir = opendir(m_dirPath.c_str());
-    if(srcdir == NULL)
+
+    if(srcdir == nullptr)
         return false;
 
-    while((dent = readdir(srcdir)) != NULL)
+    while((dent = readdir(srcdir)) != nullptr)
     {
-        struct stat st;
+#ifdef DIRMAN_HAS_FSSTATAT
+        struct stat st = {};
+#endif
         if(strcmp(dent->d_name, ".") == 0 || strcmp(dent->d_name, "..") == 0)
             continue;
 
+#ifdef DIRMAN_HAS_FSSTATAT
         if(fstatat(dirfd(srcdir), dent->d_name, &st, 0) < 0)
             continue;
 
         if(S_ISDIR(st.st_mode))
         {
             if(matchSuffixFilters(dent->d_name, suffix_filters))
-                list.push_back(dent->d_name);
+                list.emplace_back(dent->d_name);
         }
+#else
+        if(dent->d_type == DT_DIR)
+        {
+            if(matchSuffixFilters(dent->d_name, suffix_filters))
+                list.emplace_back(dent->d_name);
+        }
+#endif
     }
+
     closedir(srcdir);
+
     return true;
 }
 
@@ -116,17 +148,20 @@ bool DirMan::DirMan_private::fetchListFromWalker(std::string &curPath, std::vect
     std::string path = m_walkerState.digStack.top();
     m_walkerState.digStack.pop();
 
-    dirent *dent = NULL;
+    dirent *dent = nullptr;
     DIR *srcdir = opendir(path.c_str());
-    if(srcdir == NULL) //Can't read this directory. Continue
+    if(srcdir == nullptr) //Can't read this directory. Continue
         return true;
 
-    while((dent = readdir(srcdir)) != NULL)
+    while((dent = readdir(srcdir)) != nullptr)
     {
+#ifdef DIRMAN_HAS_FSSTATAT
         struct stat st;
+#endif
         if(strcmp(dent->d_name, ".") == 0 || strcmp(dent->d_name, "..") == 0)
             continue;
 
+#ifdef DIRMAN_HAS_FSSTATAT
         if(fstatat(dirfd(srcdir), dent->d_name, &st, 0) < 0)
             continue;
 
@@ -135,9 +170,19 @@ bool DirMan::DirMan_private::fetchListFromWalker(std::string &curPath, std::vect
         else if(S_ISREG(st.st_mode))
         {
             if(matchSuffixFilters(dent->d_name, m_walkerState.suffix_filters))
-                list.push_back(dent->d_name);
+                list.emplace_back(dent->d_name);
         }
+#else
+        if(dent->d_type == DT_DIR)
+            m_walkerState.digStack.push(path + "/" + dent->d_name);
+        else if(dent->d_type == DT_REG)
+        {
+            if(matchSuffixFilters(dent->d_name, m_walkerState.suffix_filters))
+                list.emplace_back(dent->d_name);
+        }
+#endif
     }
+
     closedir(srcdir);
     curPath = path;
 
@@ -172,14 +217,15 @@ bool DirMan::rmAbsDir(const std::string &dirPath)
 bool DirMan::mkAbsPath(const std::string &dirPath)
 {
     PUT_THREAD_GUARD();
-    char tmp[PATH_MAX];
-    char *p = NULL;
+    char tmp[PATH_MAX + 1];
+    char *p = nullptr;
     size_t len;
 
-    snprintf(tmp, sizeof(tmp), "%s", dirPath.c_str());
+    memset(tmp, 0, sizeof(tmp));
+    snprintf(tmp, PATH_MAX, "%s", dirPath.c_str());
     len = strlen(tmp);
 
-    if(tmp[len - 1] == '/')
+    if(len > 0 && tmp[len - 1] == '/')
         tmp[len - 1] = 0;
 
     for(p = tmp + 1; *p; p++)
@@ -211,7 +257,7 @@ bool DirMan::rmAbsPath(const std::string &dirPath)
     };
 
     std::stack<DirStackEntry> dirStack;
-    dirStack.push({dirPath, NULL, NULL});
+    dirStack.push({dirPath, nullptr, nullptr});
 
     while(!dirStack.empty())
     {
@@ -221,21 +267,33 @@ bool DirMan::rmAbsPath(const std::string &dirPath)
         bool walkUp = false;
         if(e->d)
         {
-            while((e->p = readdir(e->d)) != NULL)
+            while((e->p = readdir(e->d)) != nullptr)
             {
-                struct stat st;
+#ifdef DIRMAN_HAS_FSSTATAT
+                struct stat st = {};
+#endif
                 if(strcmp(e->p->d_name, ".") == 0 || strcmp(e->p->d_name, "..") == 0)
                     continue;
 
+#ifdef DIRMAN_HAS_FSSTATAT
                 if(fstatat(dirfd(e->d), e->p->d_name, &st, 0) < 0)
                     continue;
+#else
+                if(e->p->d_type == DT_UNKNOWN)
+                    continue;
+#endif
 
                 std::string path = e->path + "/" + e->p->d_name;
 
+#ifdef DIRMAN_HAS_FSSTATAT
                 if(S_ISDIR(st.st_mode))
+#else
+                if(e->p->d_type == DT_DIR)
+#endif
                 {
                     closedir(e->d);
-                    dirStack.push({path, NULL, NULL});
+                    e->d = nullptr;
+                    dirStack.push({path, nullptr, nullptr});
                     walkUp = true;
                     break;
                 }
@@ -249,10 +307,12 @@ bool DirMan::rmAbsPath(const std::string &dirPath)
 
         if(!walkUp)
         {
-            if(e->d) closedir(e->d);
+            if(e->d)
+                closedir(e->d);
+            e->d = nullptr;
             if(::rmdir(e->path.c_str()) != 0)
                 ret = -1;
-            e = NULL;
+            e = nullptr;
             dirStack.pop();
         }
     }

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ void MainWindow::showWelcomeDialog()
 {
     QSettings setup(AppPathManager::settingsFile(), QSettings::IniFormat);
     setup.setIniCodec("UTF-8");
+
     setup.beginGroup("message-boxes");
     bool showNotice = setup.value("uidesign-editor-greeting", configs.editor.enable_first_launch_greeting).toBool();
     setup.endGroup();

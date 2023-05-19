@@ -9,8 +9,10 @@ endif()
 
 option(PGE_USE_LUAJIT "Use LuaJIT lua engine" ${PGE_USE_LUAJIT_ENABLED_BY_DEFAULT})
 
-set(luajitArchive ${CMAKE_SOURCE_DIR}/_Libs/_sources/luajit.tar.gz)
-file(SHA256 ${luajitArchive} luajitArchive_hash)
+#set(luajitArchive ${CMAKE_SOURCE_DIR}/_Libs/_sources/luajit.tar.gz)
+#file(SHA256 ${luajitArchive} luajitArchive_hash)
+
+set(LUAJIT_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/../_Libs/LuaJIT")
 
 set(libLuaJit_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}luajit${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
 
@@ -18,8 +20,8 @@ if(PGE_USE_LUAJIT)
     ExternalProject_Add(
         LuaJIT_local
         PREFIX ${CMAKE_BINARY_DIR}/external/luabind
-        URL ${luajitArchive}
-        URL_HASH SHA256=${luajitArchive_hash}
+        DOWNLOAD_COMMAND ""
+        SOURCE_DIR "${LUAJIT_SOURCE_DIR}"
         CMAKE_ARGS
         "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
         "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
@@ -71,8 +73,8 @@ elseif(PGE_USE_LUAJIT_LEGACY_BUILD)
     ExternalProject_Add(
         LuaJIT_local
         PREFIX ${CMAKE_BINARY_DIR}/external/luajit
-        URL ${luajitArchive}
-        URL_HASH SHA256=${luajitArchive_hash}
+        DOWNLOAD_COMMAND ""
+        SOURCE_DIR "${LUAJIT_SOURCE_DIR}"
         UPDATE_COMMAND ""
         CONFIGURE_COMMAND ""
         SOURCE_DIR ${LUAJIT_LOCAL_SOURCE_DIR}
@@ -87,6 +89,7 @@ elseif(PGE_USE_LUAJIT_LEGACY_BUILD)
     BUILD_BYPRODUCTS
         "${libLuaJit_Lib}"
     )
+
     if(WIN32)
         set(LUAJIT_BINARY_FILES "luajit.exe")
 
@@ -125,4 +128,3 @@ elseif(PGE_USE_LUAJIT_LEGACY_BUILD)
     target_link_libraries(PGE_LuaJIT INTERFACE ${libLuaJit_Lib})
 
 endif()
-

@@ -2,7 +2,7 @@
  * A small crossplatform set of file manipulation functions.
  * All input/output strings are UTF-8 encoded, even on Windows!
  *
- * Copyright (c) 2017-2021 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software
@@ -39,6 +39,9 @@ static std::wstring Str2WStr(const std::string &path)
     return wpath;
 }
 #else
+#if defined(__ANDROID__)
+#   include <SDL2/SDL_rwops.h>
+#endif
 #include <unistd.h>
 #include <fcntl.h>         // open
 #include <string.h>
@@ -48,9 +51,9 @@ static std::wstring Str2WStr(const std::string &path)
 #endif
 
 #if defined(__CYGWIN__) || defined(__DJGPP__) || defined(__MINGW32__)
-#define IS_PATH_SEPARATOR(c) (((c) == '/') || ((c) == '\\'))
+#   define IS_PATH_SEPARATOR(c) (((c) == '/') || ((c) == '\\'))
 #else
-#define IS_PATH_SEPARATOR(c) ((c) == '/')
+#   define IS_PATH_SEPARATOR(c) ((c) == '/')
 #endif
 
 static char fi_path_dot[] = ".";
@@ -106,9 +109,9 @@ static char *fi_dirname(char *path)
 
 FILE *Files::utf8_fopen(const char *filePath, const char *modes)
 {
-    #ifndef _WIN32
+#ifndef _WIN32
     return ::fopen(filePath, modes);
-    #else
+#else
     wchar_t wfile[MAX_PATH + 1];
     wchar_t wmode[21];
     int wfile_len = (int)strlen(filePath);
@@ -118,15 +121,81 @@ FILE *Files::utf8_fopen(const char *filePath, const char *modes)
     wfile[wfile_len] = L'\0';
     wmode[wmode_len] = L'\0';
     return ::_wfopen(wfile, wmode);
-    #endif
+#endif
+}
+
+int Files::skipBom(FILE* file, const char** charset)
+{
+    char buf[4];
+    auto pos = ::ftell(file);
+
+    // Check for a BOM marker
+    if(::fread(buf, 1, 4, file) == 4)
+    {
+        if(::memcmp(buf, "\xEF\xBB\xBF", 3) == 0) // UTF-8 is only supported
+        {
+            if(charset)
+                *charset = "[UTF-8 BOM]";
+            ::fseek(file, pos + 3, SEEK_SET);
+            return CHARSET_UTF8;
+        }
+        // Unsupported charsets
+        else if(::memcmp(buf, "\xFE\xFF", 2) == 0)
+        {
+            if(charset)
+                *charset = "[UTF16-BE BOM]";
+            ::fseek(file, pos + 2, SEEK_SET);
+            return CHARSET_UTF16BE;
+        }
+        else if(::memcmp(buf, "\xFF\xFE", 2) == 0)
+        {
+            if(charset)
+                *charset = "[UTF16-LE BOM]";
+            ::fseek(file, pos + 2, SEEK_SET);
+            return CHARSET_UTF16LE;
+        }
+        else if(::memcmp(buf, "\x00\x00\xFE\xFF", 4) == 0)
+        {
+            if(charset)
+                *charset = "[UTF32-BE BOM]";
+            ::fseek(file, pos + 4, SEEK_SET);
+            return CHARSET_UTF32BE;
+        }
+        else if(::memcmp(buf, "\x00\x00\xFF\xFE", 4) == 0)
+        {
+            if(charset)
+                *charset = "[UTF32-LE BOM]";
+            ::fseek(file, pos + 4, SEEK_SET);
+            return CHARSET_UTF32LE;
+        }
+    }
+
+    if(charset)
+        *charset = "[NO BOM]";
+
+    // No BOM detected, seek to begining of the file
+    ::fseek(file, pos, SEEK_SET);
+
+    return CHARSET_UTF8;
 }
 
 bool Files::fileExists(const std::string &path)
 {
-    #ifdef _WIN32
+#if defined(_WIN32)
     std::wstring wpath = Str2WStr(path);
     return PathFileExistsW(wpath.c_str()) == TRUE;
-    #else
+
+#elif defined(__ANDROID__)
+    SDL_RWops *ops = SDL_RWFromFile(path.c_str(), "rb");
+    if(ops)
+    {
+        SDL_RWclose(ops);
+        return true;
+    }
+
+    return false;
+
+#else
     FILE *ops = fopen(path.c_str(), "rb");
     if(ops)
     {
@@ -134,17 +203,17 @@ bool Files::fileExists(const std::string &path)
         return true;
     }
     return false;
-    #endif
+#endif
 }
 
 bool Files::deleteFile(const std::string &path)
 {
-    #ifdef _WIN32
+#ifdef _WIN32
     std::wstring wpath = Str2WStr(path);
     return (DeleteFileW(wpath.c_str()) == TRUE);
-    #else
+#else
     return ::unlink(path.c_str()) == 0;
-    #endif
+#endif
 }
 
 bool Files::copyFile(const std::string &to, const std::string &from, bool override)
@@ -154,13 +223,13 @@ bool Files::copyFile(const std::string &to, const std::string &from, bool overri
 
     bool ret = true;
 
-    #ifdef _WIN32
+#ifdef _WIN32
 
     std::wstring wfrom  = Str2WStr(from);
     std::wstring wto    = Str2WStr(to);
     ret = (bool)CopyFileW(wfrom.c_str(), wto.c_str(), !override);
 
-    #else
+#else
 
     char    buf[BUFSIZ];
     ssize_t size;
@@ -189,7 +258,7 @@ bool Files::copyFile(const std::string &to, const std::string &from, bool overri
 
     close(source);
     close(dest);
-    #endif
+#endif
 
     return ret;
 }
@@ -260,16 +329,16 @@ bool Files::hasSuffix(const std::string &path, const std::string &suffix)
 bool Files::isAbsolute(const std::string& path)
 {
     bool firstCharIsSlash = (path.size() > 0) ? path[0] == '/' : false;
-    #ifdef _WIN32
+#ifdef _WIN32
     bool containsWinChars = (path.size() > 2) ? (path[1] == ':') && ((path[2] == '\\') || (path[2] == '/')) : false;
     if(firstCharIsSlash || containsWinChars)
     {
         return true;
     }
     return false;
-    #else
+#else
     return firstCharIsSlash;
-    #endif
+#endif
 }
 
 void Files::getGifMask(std::string& mask, const std::string& front)
@@ -283,3 +352,26 @@ void Files::getGifMask(std::string& mask, const std::string& front)
         mask.insert(mask.begin() + dotPos, 'm');
 }
 
+bool Files::dumpFile(const std::string& inPath, std::string& outData)
+{
+    off_t end;
+    bool ret = true;
+    FILE *in = Files::utf8_fopen(inPath.c_str(), "r");
+    if(!in)
+        return false;
+
+    outData.clear();
+
+    std::fseek(in, 0, SEEK_END);
+    end = std::ftell(in);
+    std::fseek(in, 0, SEEK_SET);
+
+    outData.resize(end);
+
+    if(std::fread((void*)outData.data(), 1, outData.size(), in) != outData.size())
+        ret = false;
+
+    std::fclose(in);
+
+    return ret;
+}
