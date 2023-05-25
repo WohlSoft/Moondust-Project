@@ -306,7 +306,7 @@
     </message>
     <message>
         <source>libEDMIDI (OPLL, SCC, PSG)</source>
-        <translation>libEDMIDI (OPLL, SCC, PSG)</translation>
+        <translation>libEDMIDI（OPLL、SCC 和 PSG 芯片）</translation>
     </message>
 </context>
 <context>
