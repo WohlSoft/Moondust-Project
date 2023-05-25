@@ -13,6 +13,7 @@
             <termEntry>
                 <langSet xml:lang="en"><tig><term>Tip</term></tig></langSet>
                 <langSet xml:lang="tr"><tig><term>Tiyo</term></tig></langSet>
+                <descrip>Tavsiyeden daha kısa, yani ingilizcesine daha yakın. Ve aynı anlama geliyorlar</descrip>
             </termEntry>
             <termEntry>
                 <langSet xml:lang="en"><tig><term>play/stop</term></tig></langSet>
