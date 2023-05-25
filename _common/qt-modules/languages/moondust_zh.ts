@@ -306,7 +306,7 @@
     </message>
     <message>
         <source>libEDMIDI (OPLL, SCC, PSG)</source>
-        <translation type="unfinished"></translation>
+        <translation>libEDMIDI (OPLL, SCC, PSG)</translation>
     </message>
 </context>
 <context>
