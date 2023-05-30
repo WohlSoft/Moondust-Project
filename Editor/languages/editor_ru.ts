@@ -8684,7 +8684,7 @@ Data may be corrupted!</source>
     <message>
         <source>Any</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>Любой</translation>
     </message>
     <message>
         <source>None</source>
@@ -8694,47 +8694,47 @@ Data may be corrupted!</source>
     <message>
         <source>Card Roulette Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>Выход через рулетку</translation>
     </message>
     <message>
         <source>Ball Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>Выход через шар</translation>
     </message>
     <message>
         <source>Walked Offscreen</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>Выход из уровня за кадр</translation>
     </message>
     <message>
         <source>Secret Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>Секретный выход</translation>
     </message>
     <message>
         <source>Crystal Sphare Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>Кристальная сфера</translation>
     </message>
     <message>
         <source>Warp Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>Выход через проход</translation>
     </message>
     <message>
         <source>Star Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>Выход взятием звезды</translation>
     </message>
     <message>
         <source>Tape Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>Выход финишной лентой</translation>
     </message>
     <message>
         <source>&lt;Exit type %1&gt;</source>
         <comment>Fallback name for the exit code when it&apos;s blank</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Выход, тип %1&gt;</translation>
     </message>
 </context>
 <context>
