@@ -41,6 +41,8 @@
 #include "obj_wld_items.h"
 #include "obj_tilesets.h"
 #include "obj_rotation_table.h"
+#include "meta_wld_exit_codes.h"
+
 
 struct DataFolders
 {
@@ -183,8 +185,6 @@ struct EditorSetup
 
         State level_npc_vertical_dontmove = F_DISABLED;
         State world_custom_credits = F_DISABLED;
-
-        State world_hawkmouth_exit = F_HIDDEN;
     } supported_features;
 };
 
@@ -326,6 +326,7 @@ public:
     QList<SimpleTilesetCachedCategory> main_tileset_categogies;
 
     QList<obj_rotation_table > main_rotation_table;
+    QList<meta_wld_exitcodes > meta_exit_codes;
 
     /**
      * @brief Verify config pack is valid (Standard configs only)
@@ -451,6 +452,7 @@ private:
     void loadSound();
 
     void loadRotationTable();
+    void loadExitCodes();
 
     QString     getFullIniPath(QString iniFileName);
     bool        openSection(IniProcessing *config, const std::string &section, bool tryGeneral = false);
