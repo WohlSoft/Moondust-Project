@@ -300,9 +300,6 @@ bool DataConfig::loadBasics()
         guiset.readEnum("level-warp-cannon-exit", editor.supported_features.level_warp_cannon_exit, defaultState, formatEnum);
 
         guiset.readEnum("level-event-new-autoscroll", editor.supported_features.level_event_new_autoscroll, defaultState, formatEnum);
-
-        // Not so used field
-        guiset.readEnum("world-hawkmouth-exit", editor.supported_features.world_hawkmouth_exit, EditorSetup::FeaturesSupport::F_HIDDEN, formatEnum);
     }
     guiset.endGroup();
 
@@ -675,6 +672,11 @@ bool DataConfig::loadFullConfig()
     LogDebug("Loading rotation_table.ini...");
     loadRotationTable();
     ///////////////////////////////////////Rotation rules table////////////////////////////////////////////
+
+    ///////////////////////////////////////Level exit codes////////////////////////////////////////////
+    LogDebug("Loading wld_exit_types.ini...");
+    loadExitCodes();
+    ///////////////////////////////////////Level exit codes////////////////////////////////////////////
 
     emit progressMax(100);
     emit progressValue(100);

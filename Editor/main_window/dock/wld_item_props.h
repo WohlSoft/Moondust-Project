@@ -3,9 +3,11 @@
 #define WLD_ITEM_PROPS_H
 
 #include <QDockWidget>
+#include <QMenu>
 #include "mwdock_base.h"
 
 class MainWindow;
+class QToolButton;
 struct WorldLevelTile;
 
 namespace Ui
@@ -42,10 +44,9 @@ private slots:
     void on_WLD_PROPS_LVLTitle_editingFinished();
     void on_WLD_PROPS_EnterTo_valueChanged(int arg1);
     void on_WLD_PROPS_LVLBrowse_clicked();
-    void on_WLD_PROPS_ExitTop_currentIndexChanged(int index);
-    void on_WLD_PROPS_ExitLeft_currentIndexChanged(int index);
-    void on_WLD_PROPS_ExitRight_currentIndexChanged(int index);
-    void on_WLD_PROPS_ExitBottom_currentIndexChanged(int index);
+
+    void on_WLD_PROPS_LevelExitCodeSelected(QAction *exitCode);
+
     void on_WLD_PROPS_GotoX_editingFinished();
     void on_WLD_PROPS_GotoY_editingFinished();
     void on_WLD_PROPS_GetPoint_clicked();
@@ -56,6 +57,18 @@ private:
     long m_currentLevelArrayId = -1;
     //! Prevent writing of settings on slots execution
     bool m_lockSettings = false;
+    //! Exit codes
+    QMenu m_exitCodes[4];
+    QToolButton *m_exitButtons[4];
+    enum ExitCodesSides
+    {
+        EXITCODE_TOP = 0,
+        EXITCODE_LEFT,
+        EXITCODE_RIGHT,
+        EXITCODE_BOTTOM,
+        EXITCODE__INVALID
+    };
+    QIcon m_exitButtonIcons[4][3];
 };
 
 #endif // WLD_ITEM_PROPS_H
