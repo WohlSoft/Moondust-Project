@@ -1536,7 +1536,7 @@ Please save them before doing anything else.</source>
 <context>
     <name>DataConfig</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="348"/>
+        <location filename="../data_configs/data_configs.cpp" line="345"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;
@@ -9288,7 +9288,7 @@ Reason: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="681"/>
+        <location filename="../data_configs/data_configs.cpp" line="683"/>
         <source>Finishing loading...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10776,176 +10776,163 @@ Data may be corrupted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="31"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="37"/>
         <source>Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="69"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="84"/>
         <source>Go to coordinates:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="106"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="104"/>
         <source>Set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="122"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="234"/>
         <source>Open path by exists:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="183"/>
-        <source>Open the Northern (upper) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="224"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="265"/>
         <source>You can set a condition to open path in specified direction (controls at each side of those arrows), dependent on level exit code.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="243"/>
-        <source>Open the Western (left) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="265"/>
-        <source>Open the Eastern (right) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="330"/>
-        <source>Open the Southern (lower) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="368"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="501"/>
         <source>Level file:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="375"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="140"/>
         <source>Path background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="382"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="147"/>
         <source>Level title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="389"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="154"/>
         <source>Big path background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="402"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="187"/>
         <source>Enter to door ID:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="409"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="194"/>
         <source>Always visible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="423"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="208"/>
         <source>Game start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="430"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="215"/>
         <source>Browse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="83"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="116"/>
         <source>Level ID: %1, Array ID: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="84"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="117"/>
         <source>Position: [%1, %2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="174"/>
-        <source>* - Any</source>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="271"/>
+        <source>Any</source>
+        <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="175"/>
-        <source>0 - None</source>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="272"/>
+        <source>None</source>
+        <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="176"/>
-        <source>1 - Card Roulette Exit</source>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="273"/>
+        <source>Card Roulette Exit</source>
+        <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="177"/>
-        <source>2 - SMB3 Boss Exit</source>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="274"/>
+        <source>Ball Exit</source>
+        <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="178"/>
-        <source>3 - Walked Offscreen</source>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="275"/>
+        <source>Walked Offscreen</source>
+        <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="179"/>
-        <source>4 - Secret Exit</source>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="276"/>
+        <source>Secret Exit</source>
+        <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="180"/>
-        <source>5 - Crystal Sphare Exit</source>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="277"/>
+        <source>Crystal Sphare Exit</source>
+        <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="181"/>
-        <source>6 - Warp Exit</source>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="278"/>
+        <source>Warp Exit</source>
+        <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="182"/>
-        <source>7 - Star Exit</source>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="279"/>
+        <source>Star Exit</source>
+        <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="183"/>
-        <source>8 - Tape Exit</source>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="280"/>
+        <source>Tape Exit</source>
+        <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="186"/>
-        <source>9 - Hawk Mouth Exit</source>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="313"/>
+        <source>&lt;Exit type %1&gt;</source>
+        <comment>Fallback name for the exit code when it&apos;s blank</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="418"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="526"/>
         <source>Please save the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="419"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="527"/>
         <source>Please save the file before selecting levels.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="643"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="754"/>
         <source>Placement mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="643"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="754"/>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation type="unfinished"></translation>
     </message>
