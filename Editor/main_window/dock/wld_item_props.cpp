@@ -289,6 +289,9 @@ void WLD_ItemProps::resetExitTypesList()
         levelExitType.push_back(e);
     }
 
+    if(!c.meta_exit_codes.isEmpty() && levelExitType.size() > (c.meta_exit_codes.size() + 2))
+        levelExitType.resize(c.meta_exit_codes.size() + 2);
+
     for(auto &m : c.meta_exit_codes)
     {
         if(m.code <= 0 || m.built_in)
