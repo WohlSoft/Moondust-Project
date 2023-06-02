@@ -141,7 +141,7 @@
     </message>
     <message>
         <source>Native MIDI (Not recommended, buggy)</source>
-        <translation>本地 MIDI (有 BUG，不推荐)</translation>
+        <translation>本地 MIDI (存在 BUG，不建议使用)</translation>
     </message>
     <message>
         <source>[Auto]</source>
