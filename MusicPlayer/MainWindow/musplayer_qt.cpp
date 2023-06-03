@@ -413,8 +413,10 @@ void MusPlayer_Qt::on_play_clicked()
     QString musicPath = m_currentMusic;
 #ifdef SDL_MIXER_GE21
     QString midiRawArgs = m_setupMidi->getRawMidiArgs();
-    if(ui->gme_setup->isEnabled() || PGE_MusicPlayer::type == MUS_PXTONE)
+    if(ui->gme_setup->isEnabled())
         musicPath += "|" + ui->trackID->text() + ";" + midiRawArgs;
+    else if(PGE_MusicPlayer::type == MUS_PXTONE || PGE_MusicPlayer::type == MUS_OGG)
+        musicPath += "|" + midiRawArgs;
     else if((PGE_MusicPlayer::type == MUS_MID || PGE_MusicPlayer::type == MUS_ADLMIDI))
     {
         if(midiRawArgs.isEmpty())

@@ -33,7 +33,6 @@ SingleApplication::SingleApplication(QStringList &args) :
 {
     m_shouldContinue = false; // By default this is not the main process
 
-    m_socket = new QUdpSocket();
     m_server = nullptr;
     QString isServerRuns;
 
@@ -70,11 +69,11 @@ SingleApplication::SingleApplication(QStringList &args) :
         acceptor.bind(QHostAddress::LocalHost, 58235, QUdpSocket::ReuseAddressHint|QUdpSocket::ShareAddress);
 
         // Attempt to connect to the LocalServer
-        m_socket->connectToHost(QHostAddress::LocalHost, 58234);
-        if(m_socket->waitForConnected(100))
+        m_socket.connectToHost(QHostAddress::LocalHost, 58234);
+        if(m_socket.waitForConnected(100))
         {
-            m_socket->write(QString("CMD:Is SDL2 Mixer X running?").toUtf8());
-            m_socket->flush();
+            m_socket.write(QString("CMD:Is SDL2 Mixer X running?").toUtf8());
+            m_socket.flush();
             if(acceptor.waitForReadyRead(100))
             {
                 //QByteArray dataGram;//Yes, I'm runs!
@@ -99,6 +98,7 @@ SingleApplication::SingleApplication(QStringList &args) :
         isServerRuns.clear();
         args.removeAll("--force-run");
     }
+
     m_arguments = args;
 
     if(isRunning)
@@ -108,10 +108,10 @@ SingleApplication::SingleApplication(QStringList &args) :
         for(int i = 1; i < m_arguments.size(); i++)
             str.append(QString("\n%1").arg(m_arguments[i]));
         bytes = str.toUtf8();
-        m_socket->write(bytes);
-        m_socket->flush();
+        m_socket.write(bytes);
+        m_socket.flush();
         QThread::msleep(100);
-        m_socket->close();
+        m_socket.close();
     }
     else
     {
@@ -149,7 +149,9 @@ SingleApplication::~SingleApplication()
             qDebug() << "Terminated!";
         }
     }
-    if(m_server) delete m_server;
+
+    if(m_server)
+        delete m_server;
 }
 
 /**
