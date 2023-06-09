@@ -1067,7 +1067,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Native MIDI (Not recommended, buggy)</source>
-        <translation>本地 MIDI (有 BUG，不推荐)</translation>
+        <translation>本地 MIDI (存在 BUG，不建议使用)</translation>
     </message>
     <message>
         <source>[Auto]</source>
@@ -8672,57 +8672,57 @@ Data may be corrupted!</source>
     <message>
         <source>Any</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>任意</translation>
     </message>
     <message>
         <source>None</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished">无</translation>
+        <translation>无</translation>
     </message>
     <message>
         <source>Card Roulette Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>轮盘过关</translation>
     </message>
     <message>
         <source>Ball Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>球形对象过关</translation>
     </message>
     <message>
         <source>Walked Offscreen</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>离开场景</translation>
     </message>
     <message>
         <source>Secret Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>钥匙过关</translation>
     </message>
     <message>
         <source>Crystal Sphare Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>水晶球过关</translation>
     </message>
     <message>
         <source>Warp Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>传送过关</translation>
     </message>
     <message>
         <source>Star Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>获得星星过关</translation>
     </message>
     <message>
         <source>Tape Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation>终点杆过关</translation>
     </message>
     <message>
         <source>&lt;Exit type %1&gt;</source>
         <comment>Fallback name for the exit code when it&apos;s blank</comment>
-        <translation type="unfinished"></translation>
+        <translation>&amp;lt;传送类型 %1&amp;gt;</translation>
     </message>
 </context>
 <context>
