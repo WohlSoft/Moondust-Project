@@ -1067,7 +1067,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Native MIDI (Not recommended, buggy)</source>
-        <translation>本地 MIDI (有 BUG，不推荐)</translation>
+        <translation>本地 MIDI (存在 BUG，不建议使用)</translation>
     </message>
     <message>
         <source>[Auto]</source>
@@ -1232,7 +1232,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>libEDMIDI (OPLL, SCC, PSG)</source>
-        <translation type="unfinished"></translation>
+        <translation>libEDMIDI（OPLL、SCC 和 PSG 芯片）</translation>
     </message>
 </context>
 <context>
@@ -8646,72 +8646,12 @@ Data may be corrupted!</source>
         <translation>按出口类型打开路线：</translation>
     </message>
     <message>
-        <source>Open the Western (left) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>根据出口类型向左打开路线</translation>
-    </message>
-    <message>
-        <source>Open the Eastern (right) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>根据出口类型向右打开路线</translation>
-    </message>
-    <message>
-        <source>Open the Northern (upper) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>根据出口类型向上打开路线</translation>
-    </message>
-    <message>
-        <source>Open the Southern (lower) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>根据出口类型向下打开路线</translation>
-    </message>
-    <message>
         <source>Level ID: %1, Array ID: %2</source>
         <translation>关卡编号：%1，数组编号：%2</translation>
     </message>
     <message>
         <source>Position: [%1, %2]</source>
         <translation>位置：[%1, %2]</translation>
-    </message>
-    <message>
-        <source>* - Any</source>
-        <translation>* - 任意</translation>
-    </message>
-    <message>
-        <source>0 - None</source>
-        <translation>0 - 无</translation>
-    </message>
-    <message>
-        <source>1 - Card Roulette Exit</source>
-        <translation>1 - 卡牌过关</translation>
-    </message>
-    <message>
-        <source>2 - SMB3 Boss Exit</source>
-        <translation>2 - 问号球过关</translation>
-    </message>
-    <message>
-        <source>3 - Walked Offscreen</source>
-        <translation>3 - 从场景走出</translation>
-    </message>
-    <message>
-        <source>4 - Secret Exit</source>
-        <translation>4 - 插钥匙过关</translation>
-    </message>
-    <message>
-        <source>5 - Crystal Sphare Exit</source>
-        <translation>5 - 水晶球过关</translation>
-    </message>
-    <message>
-        <source>6 - Warp Exit</source>
-        <translation>6 - 从门或水管传送过关</translation>
-    </message>
-    <message>
-        <source>7 - Star Exit</source>
-        <translation>7 - 收集星星过关</translation>
-    </message>
-    <message>
-        <source>8 - Tape Exit</source>
-        <translation>8 - 终点杆过关</translation>
     </message>
     <message>
         <source>Placement mode</source>
@@ -8730,8 +8670,59 @@ Data may be corrupted!</source>
         <translation>请先保存文件后再选择关卡。</translation>
     </message>
     <message>
-        <source>9 - Hawk Mouth Exit</source>
-        <translation>9 - 鹰嘴出口</translation>
+        <source>Any</source>
+        <comment>Exit type name</comment>
+        <translation>任意</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <comment>Exit type name</comment>
+        <translation>无</translation>
+    </message>
+    <message>
+        <source>Card Roulette Exit</source>
+        <comment>Exit type name</comment>
+        <translation>轮盘过关</translation>
+    </message>
+    <message>
+        <source>Ball Exit</source>
+        <comment>Exit type name</comment>
+        <translation>球形对象过关</translation>
+    </message>
+    <message>
+        <source>Walked Offscreen</source>
+        <comment>Exit type name</comment>
+        <translation>离开场景</translation>
+    </message>
+    <message>
+        <source>Secret Exit</source>
+        <comment>Exit type name</comment>
+        <translation>钥匙过关</translation>
+    </message>
+    <message>
+        <source>Crystal Sphare Exit</source>
+        <comment>Exit type name</comment>
+        <translation>水晶球过关</translation>
+    </message>
+    <message>
+        <source>Warp Exit</source>
+        <comment>Exit type name</comment>
+        <translation>传送过关</translation>
+    </message>
+    <message>
+        <source>Star Exit</source>
+        <comment>Exit type name</comment>
+        <translation>获得星星过关</translation>
+    </message>
+    <message>
+        <source>Tape Exit</source>
+        <comment>Exit type name</comment>
+        <translation>终点杆过关</translation>
+    </message>
+    <message>
+        <source>&lt;Exit type %1&gt;</source>
+        <comment>Fallback name for the exit code when it&apos;s blank</comment>
+        <translation>&amp;lt;传送类型 %1&amp;gt;</translation>
     </message>
 </context>
 <context>

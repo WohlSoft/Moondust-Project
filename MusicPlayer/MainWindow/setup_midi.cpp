@@ -89,6 +89,8 @@ void SetupMidi::loadSetup()
 
     sendSetup();
 #endif
+
+    updateWindowLayout();
 }
 
 void SetupMidi::saveSetup()
@@ -342,6 +344,7 @@ void SetupMidi::on_opn_bank_editingFinished()
         }
         ui->opn_bank->setModified(false);
     }
+    updateAutoArgs();
 #endif
 }
 
@@ -363,6 +366,16 @@ void SetupMidi::on_adl_use_custom_clicked(bool checked)
     on_adl_bank_editingFinished();
     if(!checked)
         restartForAdl();
+}
+
+void SetupMidi::updateWindowLayout()
+{
+    ui->adlmidi_extra->setVisible(ui->mididevice->currentIndex() == MIDI_ADLMIDI);
+    ui->opnmidi_extra->setVisible(ui->mididevice->currentIndex() == MIDI_OPNMIDI);
+    ui->timidity_extra->setVisible(ui->mididevice->currentIndex() == MIDI_Timidity);
+    ui->fluidsynth_extra->setVisible(ui->mididevice->currentIndex() == MIDI_Fluidsynth);
+    adjustSize();
+    update();
 }
 
 void SetupMidi::on_adl_bank_browse_clicked()
@@ -397,10 +410,10 @@ void SetupMidi::on_adl_bank_editingFinished()
             restartForAdl();
         }
         else
-        {
             Mix_ADLMIDI_setCustomBankFile(nullptr);
-        }
+
         ui->adl_bank->setModified(false);
+        updateAutoArgs();
     }
 #endif
 }
@@ -557,14 +570,11 @@ void SetupMidi::on_timidityCfgPath_editingFinished()
     {
         QString file = ui->timidityCfgPath->text();
         if(!file.isEmpty() && QFile::exists(file))
-        {
             Mix_SetTimidityCfg(file.toUtf8().data());
-        }
         else
-        {
             Mix_SetTimidityCfg(nullptr);
-        }
-        emit restartForTimidity();
+
+        restartForTimidity();
         ui->timidityCfgPath->setModified(false);
     }
 #endif
@@ -608,15 +618,13 @@ void SetupMidi::on_fluidSynthSF2Paths_editingFinished()
     {
         QString files = ui->fluidSynthSF2Paths->text();
         if(!files.isEmpty() && sfExists(files))
-        {
             Mix_SetSoundFonts(files.toUtf8().data());
-        }
         else
-        {
             Mix_SetSoundFonts(QString(qApp->applicationDirPath() + "/gm.sf2").toUtf8().data());
-        }
-        emit restartForFluidSynth();
+
+        restartForFluidSynth();
         ui->fluidSynthSF2Paths->setModified(false);
+        updateAutoArgs();
     }
 #endif
 }
@@ -642,7 +650,7 @@ void SetupMidi::on_resetDefaultADLMIDI_clicked()
     Mix_ADLMIDI_setChipsCount(ui->adlNumChips->value());
     m_setupLock = false;
     updateAutoArgs();
-    emit restartForAdl();
+    restartForAdl();
 #endif
 }
 
@@ -668,8 +676,10 @@ void SetupMidi::updateAutoArgs()
             args += QString("l%1;").arg(ui->adlVolumeModel->currentIndex());
         if(ui->adlChanAlloc->currentIndex() != 0)
             args += QString("o%1;").arg(ui->adlChanAlloc->currentIndex() - 1);
-        if(ui->adl_autoArpeggio->checkState() != Qt::Checked)
+        if(ui->adl_autoArpeggio->checkState() == Qt::Checked)
             args += QString("j%1;").arg(tristateToInt(ui->adl_autoArpeggio->checkState()));
+        if(ui->adl_use_custom->checkState() == Qt::Checked && !ui->adl_bank->text().isEmpty())
+            args += QString("x=%1;").arg(ui->adl_bank->text());
         break;
     case 1:
         break;
@@ -680,12 +690,16 @@ void SetupMidi::updateAutoArgs()
             args += QString("l%1;").arg(ui->opnVolumeModel->currentIndex());
         if(ui->opnNumChips->value() != 8)
             args += QString("c%1;").arg(ui->opnNumChips->value());
-        if(ui->opn_autoArpeggio->checkState() != Qt::Checked)
+        if(ui->opn_autoArpeggio->checkState() == Qt::Checked)
             args += QString("j%1;").arg(tristateToInt(ui->opn_autoArpeggio->checkState()));
         if(ui->opnChanAlloc->currentIndex() != 0)
             args += QString("o%1;").arg(ui->opnChanAlloc->currentIndex() - 1);
+        if(ui->opn_use_custom->checkState() == Qt::Checked && !ui->opn_bank->text().isEmpty())
+            args += QString("x=%1;").arg(ui->opn_bank->text());
         break;
     case 4:
+        if(!ui->fluidSynthSF2Paths->text().isEmpty())
+            args += QString("x=%1;").arg(ui->fluidSynthSF2Paths->text());
         break;
     case 5:
         break;
@@ -697,17 +711,19 @@ void SetupMidi::on_mididevice_currentIndexChanged(int index)
 {
     if(m_setupLock)
         return;
+
 #ifdef SDL_MIXER_GE21
     switch(index)
     {
+    default:
     case 0:
         Mix_SetMidiPlayer(MIDI_ADLMIDI);
         break;
     case 1:
-        Mix_SetMidiPlayer(MIDI_Timidity);
+        Mix_SetMidiPlayer(MIDI_Native);
         break;
     case 2:
-        Mix_SetMidiPlayer(MIDI_Native);
+        Mix_SetMidiPlayer(MIDI_Timidity);
         break;
     case 3:
         Mix_SetMidiPlayer(MIDI_OPNMIDI);
@@ -718,18 +734,16 @@ void SetupMidi::on_mididevice_currentIndexChanged(int index)
     case 5:
         Mix_SetMidiPlayer(MIDI_EDMIDI);
         break;
-    default:
-        Mix_SetMidiPlayer(MIDI_ADLMIDI);
-        break;
     }
 #else
     Q_UNUSED(index);
 #endif
+
     updateAutoArgs();
+    updateWindowLayout();
+
     if(Mix_PlayingMusicStream(PGE_MusicPlayer::s_playMus) && (PGE_MusicPlayer::type == MUS_MID))
-    {
         emit songRestartNeeded();
-    }
 }
 
 void SetupMidi::on_midiRawArgs_editingFinished()
@@ -741,7 +755,8 @@ void SetupMidi::on_midiRawArgs_editingFinished()
           (PGE_MusicPlayer::type == MUS_MID ||
            PGE_MusicPlayer::type == MUS_ADLMIDI ||
            PGE_MusicPlayer::type == MUS_GME ||
-           PGE_MusicPlayer::type == MUS_PXTONE))
+           PGE_MusicPlayer::type == MUS_PXTONE ||
+           PGE_MusicPlayer::type == MUS_OGG))
         {
             emit songRestartNeeded();
         }

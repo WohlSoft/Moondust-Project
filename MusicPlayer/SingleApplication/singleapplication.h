@@ -16,13 +16,12 @@
 class SingleApplication : public QObject
 {
 Q_OBJECT
+
 public:
     explicit SingleApplication(QStringList &args);
     ~SingleApplication();
     bool shouldContinue();
     QStringList arguments();
-
-public slots:
 
 signals:
     void showUp();
@@ -41,7 +40,7 @@ private:
     //! Shared memory, stable way to avoid concurrent running multiple copies of same application
     QSharedMemory m_shmem;
     //! Client socket pointer
-    QUdpSocket* m_socket;
+    QUdpSocket m_socket;
     //! Pointer to currently working local server copy
     LocalServer* m_server;
     //! Recently accepted arguments

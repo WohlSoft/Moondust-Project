@@ -44,6 +44,13 @@ void DataConfig::loadExitCodes()
         ec.code = (int)i;
         auto group = QString("exit-%1").arg(i).toStdString();
 
+        if(!ec_set.contains(group))
+        {
+            ec.built_in = true;
+            meta_exit_codes.push_back(ec);
+            continue;
+        }
+
         ec_set.beginGroup(group);
         ec_set.read("built-in", ec.built_in, false);
         ec_set.read("disabled", ec.disabled, false);

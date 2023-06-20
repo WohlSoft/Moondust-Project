@@ -1551,7 +1551,7 @@ Please save them before doing anything else.</source>
 <context>
     <name>DataConfig</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="348"/>
+        <location filename="../data_configs/data_configs.cpp" line="345"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;
@@ -9415,7 +9415,7 @@ Reason: %1
         <translation>타일로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="681"/>
+        <location filename="../data_configs/data_configs.cpp" line="683"/>
         <source>Finishing loading...</source>
         <translation>로드 완료 중 ...</translation>
     </message>
@@ -10938,176 +10938,163 @@ Data may be corrupted!</source>
         <translation>항목 속성</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="31"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="37"/>
         <source>Level</source>
         <translation>수평</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="69"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="84"/>
         <source>Go to coordinates:</source>
         <translation>좌표로 이동 :</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="106"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="104"/>
         <source>Set</source>
         <translation>세트</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="122"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="234"/>
         <source>Open path by exists:</source>
         <translation>이탈 유형별 열린 경로 :</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="183"/>
-        <source>Open the Northern (upper) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>출구 유형별로 북부 (상단) 경로 열기</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="224"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="265"/>
         <source>You can set a condition to open path in specified direction (controls at each side of those arrows), dependent on level exit code.</source>
         <translation>레벨 종료 코드에 따라 지정된 방향 (해당 화살표의 각 측면에서 제어)으로 경로를 열도록 조건을 설정할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="243"/>
-        <source>Open the Western (left) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>출구 유형별로 서쪽 (왼쪽) 경로 열기</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="265"/>
-        <source>Open the Eastern (right) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>출구 유형별로 동부 (오른쪽) 경로 열기</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="330"/>
-        <source>Open the Southern (lower) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>출구 유형별로 남부 (하단) 경로 열기</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="368"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="501"/>
         <source>Level file:</source>
         <translation>레벨 파일 :</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="375"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="140"/>
         <source>Path background</source>
         <translation>배경 경로</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="382"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="147"/>
         <source>Level title</source>
         <translation>레벨 제목</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="389"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="154"/>
         <source>Big path background</source>
         <translation>큰 배경 경로</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="402"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="187"/>
         <source>Enter to door ID:</source>
         <translation>출입문 번호 :</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="409"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="194"/>
         <source>Always visible</source>
         <translation>항상 표시</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="423"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="208"/>
         <source>Game start point</source>
         <translation>게임 시작 지점</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="430"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="215"/>
         <source>Browse</source>
         <translation>검색</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="83"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="116"/>
         <source>Level ID: %1, Array ID: %2</source>
         <translation>레벨 ID : % 1, 어레이 ID : % 2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="84"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="117"/>
         <source>Position: [%1, %2]</source>
         <translation>위치 : [% 1, % 2]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="174"/>
-        <source>* - Any</source>
-        <translation>*-모두</translation>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="271"/>
+        <source>Any</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="175"/>
-        <source>0 - None</source>
-        <translation>0-없음</translation>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="272"/>
+        <source>None</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="176"/>
-        <source>1 - Card Roulette Exit</source>
-        <translation>1-카드 룰렛 출구</translation>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="273"/>
+        <source>Card Roulette Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="177"/>
-        <source>2 - SMB3 Boss Exit</source>
-        <translation>2-보스 패배 종료</translation>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="274"/>
+        <source>Ball Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="178"/>
-        <source>3 - Walked Offscreen</source>
-        <translation>3-화면 밖으로 걸어</translation>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="275"/>
+        <source>Walked Offscreen</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="179"/>
-        <source>4 - Secret Exit</source>
-        <translation>4-비밀 열쇠 구멍 출구</translation>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="276"/>
+        <source>Secret Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="180"/>
-        <source>5 - Crystal Sphare Exit</source>
-        <translation>5-Crystal Sphere 출구</translation>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="277"/>
+        <source>Crystal Sphare Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="181"/>
-        <source>6 - Warp Exit</source>
-        <translation>6-워프 / 도어를 통한 출구</translation>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="278"/>
+        <source>Warp Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="182"/>
-        <source>7 - Star Exit</source>
-        <translation>7-별 수집</translation>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="279"/>
+        <source>Star Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="183"/>
-        <source>8 - Tape Exit</source>
-        <translation>8-목표 테이프 종료</translation>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="280"/>
+        <source>Tape Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="186"/>
-        <source>9 - Hawk Mouth Exit</source>
-        <translation>9-호크 입 출구</translation>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="313"/>
+        <source>&lt;Exit type %1&gt;</source>
+        <comment>Fallback name for the exit code when it&apos;s blank</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="418"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="526"/>
         <source>Please save the file</source>
         <translation>파일을 저장하십시오</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="419"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="527"/>
         <source>Please save the file before selecting levels.</source>
         <translation>레벨을 선택하기 전에 파일을 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="643"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="754"/>
         <source>Placement mode</source>
         <translation>배치 모드</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="643"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="754"/>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>먼저 맵에 항목을 놓고 &apos;속성&apos;컨텍스트 메뉴 항목을 엽니 다.</translation>
     </message>

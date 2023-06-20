@@ -8658,72 +8658,12 @@ Data may be corrupted!</source>
         <translation>Открыть выходные пути:</translation>
     </message>
     <message>
-        <source>Open the Western (left) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Открыть Западный (левый) путь выходом типа</translation>
-    </message>
-    <message>
-        <source>Open the Eastern (right) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Открыть Восточный (правый) путь выходом типа</translation>
-    </message>
-    <message>
-        <source>Open the Northern (upper) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Открыть Северный (верхний) путь выходом типа</translation>
-    </message>
-    <message>
-        <source>Open the Southern (lower) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Открыть Южный (нижний) путь выходом типа</translation>
-    </message>
-    <message>
         <source>Level ID: %1, Array ID: %2</source>
         <translation>ID уровня: %1, ID массива: %2</translation>
     </message>
     <message>
         <source>Position: [%1, %2]</source>
         <translation>Положение: [%1, %2]</translation>
-    </message>
-    <message>
-        <source>* - Any</source>
-        <translation>* - Все</translation>
-    </message>
-    <message>
-        <source>0 - None</source>
-        <translation>0 - Нет</translation>
-    </message>
-    <message>
-        <source>1 - Card Roulette Exit</source>
-        <translation>1 - Рулетка</translation>
-    </message>
-    <message>
-        <source>2 - SMB3 Boss Exit</source>
-        <translation>2 - Победа над боссом</translation>
-    </message>
-    <message>
-        <source>3 - Walked Offscreen</source>
-        <translation>3 - Выход за кадр</translation>
-    </message>
-    <message>
-        <source>4 - Secret Exit</source>
-        <translation>4 - Секретная замочная скважина</translation>
-    </message>
-    <message>
-        <source>5 - Crystal Sphare Exit</source>
-        <translation>5 - Хрустальный шар</translation>
-    </message>
-    <message>
-        <source>6 - Warp Exit</source>
-        <translation>6 - Выход через проход/дверь</translation>
-    </message>
-    <message>
-        <source>7 - Star Exit</source>
-        <translation>7 - Взятие звезды</translation>
-    </message>
-    <message>
-        <source>8 - Tape Exit</source>
-        <translation>8 - Финишная ленточка</translation>
     </message>
     <message>
         <source>Placement mode</source>
@@ -8742,8 +8682,59 @@ Data may be corrupted!</source>
         <translation>Пожалуйста, сохраните файл прежде чем выбирать уровни.</translation>
     </message>
     <message>
-        <source>9 - Hawk Mouth Exit</source>
-        <translation>9 - Выход через клюв ястреба</translation>
+        <source>Any</source>
+        <comment>Exit type name</comment>
+        <translation>Любой</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <comment>Exit type name</comment>
+        <translation>Никакой</translation>
+    </message>
+    <message>
+        <source>Card Roulette Exit</source>
+        <comment>Exit type name</comment>
+        <translation>Выход через рулетку</translation>
+    </message>
+    <message>
+        <source>Ball Exit</source>
+        <comment>Exit type name</comment>
+        <translation>Выход через шар</translation>
+    </message>
+    <message>
+        <source>Walked Offscreen</source>
+        <comment>Exit type name</comment>
+        <translation>Выход из уровня за кадр</translation>
+    </message>
+    <message>
+        <source>Secret Exit</source>
+        <comment>Exit type name</comment>
+        <translation>Секретный выход</translation>
+    </message>
+    <message>
+        <source>Crystal Sphare Exit</source>
+        <comment>Exit type name</comment>
+        <translation>Кристальная сфера</translation>
+    </message>
+    <message>
+        <source>Warp Exit</source>
+        <comment>Exit type name</comment>
+        <translation>Выход через проход</translation>
+    </message>
+    <message>
+        <source>Star Exit</source>
+        <comment>Exit type name</comment>
+        <translation>Выход взятием звезды</translation>
+    </message>
+    <message>
+        <source>Tape Exit</source>
+        <comment>Exit type name</comment>
+        <translation>Выход финишной лентой</translation>
+    </message>
+    <message>
+        <source>&lt;Exit type %1&gt;</source>
+        <comment>Fallback name for the exit code when it&apos;s blank</comment>
+        <translation>&lt;Выход, тип %1&gt;</translation>
     </message>
 </context>
 <context>

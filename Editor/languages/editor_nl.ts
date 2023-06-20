@@ -1552,7 +1552,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
 <context>
     <name>DataConfig</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="348"/>
+        <location filename="../data_configs/data_configs.cpp" line="345"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;
@@ -9552,7 +9552,7 @@ Het maximum aantal muziekdozen is %2.</translation>
         <translation>Tegelset categoriën aan het initialiseren...</translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="681"/>
+        <location filename="../data_configs/data_configs.cpp" line="683"/>
         <source>Finishing loading...</source>
         <translation>Lading aan het finaliseren...</translation>
     </message>
@@ -10923,176 +10923,163 @@ Data zou corrupt kunnen zijn!</translation>
         <translation>Voorwerp Eigenschappen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="31"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="37"/>
         <source>Level</source>
         <translation>Niveau</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="389"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="154"/>
         <source>Big path background</source>
         <translation>Grote achtergrondpad</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="375"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="140"/>
         <source>Path background</source>
         <translation>Achtergrondpad</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="423"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="208"/>
         <source>Game start point</source>
         <translation>Spel startpunt</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="409"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="194"/>
         <source>Always visible</source>
         <translation>Altijd zichtbaar</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="224"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="265"/>
         <source>You can set a condition to open path in specified direction (controls at each side of those arrows), dependent on level exit code.</source>
         <translation>U kunt een voorwaarde instellen om paden te openen in een specifieke richting (besturing aan elke zijde van de pijlen), afhankelijk van niveau afsluitcode.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="368"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="501"/>
         <source>Level file:</source>
         <translation>Niveau bestand:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="382"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="147"/>
         <source>Level title</source>
         <translation>Niveautitel</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="402"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="187"/>
         <source>Enter to door ID:</source>
         <translation>Ingang via deur #:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="430"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="215"/>
         <source>Browse</source>
         <translation>Bladeren</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="69"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="84"/>
         <source>Go to coordinates:</source>
         <translation>Ga naar coördinaten:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="106"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="104"/>
         <source>Set</source>
         <translation>Plaatsen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="122"/>
+        <location filename="../main_window/dock/wld_item_props.ui" line="234"/>
         <source>Open path by exists:</source>
         <translation>Open paden volgens type uitgang:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="243"/>
-        <source>Open the Western (left) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Het westelijke (linker) pad openen door type uitgang</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="265"/>
-        <source>Open the Eastern (right) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Het oostelijke (rechter) pad openen door type uitgang</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="183"/>
-        <source>Open the Northern (upper) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Het noordelijke (bovenste) pad openen door type uitgang</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.ui" line="330"/>
-        <source>Open the Southern (lower) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Het zuidelijke (onderste) pad openen door type uitgang</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="83"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="116"/>
         <source>Level ID: %1, Array ID: %2</source>
         <translation>Niveau ID: %1, Array ID: %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="84"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="117"/>
         <source>Position: [%1, %2]</source>
         <translation>Positie: [%1, %2]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="174"/>
-        <source>* - Any</source>
-        <translation>* - Elke</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="175"/>
-        <source>0 - None</source>
-        <translation>0 - Geen</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="176"/>
-        <source>1 - Card Roulette Exit</source>
-        <translation>1 - Kaartroulette uitgang (SMB3)</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="177"/>
-        <source>2 - SMB3 Boss Exit</source>
-        <translation>2 - Baas verslagen uitgang</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="178"/>
-        <source>3 - Walked Offscreen</source>
-        <translation>3 - Buiten Scherm Gelopen</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="179"/>
-        <source>4 - Secret Exit</source>
-        <translation>4 - Geheime sleutelgat uitgang</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="180"/>
-        <source>5 - Crystal Sphare Exit</source>
-        <translation>5 - Kristallen Bol uitgang</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="181"/>
-        <source>6 - Warp Exit</source>
-        <translation>6 - Uitgang via portaal/deur</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="182"/>
-        <source>7 - Star Exit</source>
-        <translation>7 - Ster opgepakt</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="183"/>
-        <source>8 - Tape Exit</source>
-        <translation>8 - Doel Stok uitgang (SMW)</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="186"/>
-        <source>9 - Hawk Mouth Exit</source>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="271"/>
+        <source>Any</source>
+        <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="418"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="272"/>
+        <source>None</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="273"/>
+        <source>Card Roulette Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="274"/>
+        <source>Ball Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="275"/>
+        <source>Walked Offscreen</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="276"/>
+        <source>Secret Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="277"/>
+        <source>Crystal Sphare Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="278"/>
+        <source>Warp Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="279"/>
+        <source>Star Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="280"/>
+        <source>Tape Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="313"/>
+        <source>&lt;Exit type %1&gt;</source>
+        <comment>Fallback name for the exit code when it&apos;s blank</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="526"/>
         <source>Please save the file</source>
         <translation>Gelieve het bestand op te slaan</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="419"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="527"/>
         <source>Please save the file before selecting levels.</source>
         <translation>Gelieve het bestand op te slaan alvorens niveaus te selecteren.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="643"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="754"/>
         <source>Placement mode</source>
         <translation>Plaatsingsmodus</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="643"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="754"/>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Plaats eerst een vorwerp op de map en open het &apos;Eigenschappen&apos; context menu.</translation>
     </message>
