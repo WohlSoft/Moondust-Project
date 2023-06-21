@@ -526,8 +526,8 @@ Please set SoX path first</source>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
 &lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;在这里你可以转换格式错误的音乐或音效&lt;br&gt;（例如错误的采样率、编码等）。&lt;/p&gt;
-&lt;p&gt;此功能使用 &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; 音频转换器。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;在这里你可以转换格式错误的音乐或音效&lt;br&gt;（例如错误的采样率、编码等）。&lt;/p&gt;
+&lt;p&gt;此功能使用 &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; 音频转换器。&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -1402,7 +1402,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是目标图像的&lt;span style=&quot; font-weight:600;&quot;&gt;宽度&lt;/span&gt;，目标图像的宽度将拉伸至此。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;这是目标图像的&lt;span style=&quot; font-weight:600;&quot;&gt;宽度&lt;/span&gt;，目标图像的宽度将拉伸至此。&lt;/p&gt;</translation>
     </message>
     <message>
         <source> px</source>
@@ -1430,11 +1430,11 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是目标图像的&lt;span style=&quot; font-weight:600;&quot;&gt;高度&lt;/span&gt;，目标图像的高度将拉伸至此。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;这是目标图像的&lt;span style=&quot; font-weight:600;&quot;&gt;高度&lt;/span&gt;，目标图像的高度将拉伸至此。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;勾选此项将会计算黑边尺寸以校正目标图片比例。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;勾选此项将会计算黑边尺寸以校正目标图片比例。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Please, select target image size:</source>
@@ -2200,7 +2200,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是和此 NPC 对话时要显示的内容。&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;注：&lt;/span&gt;所有双引号和换行字符都将被移除。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;这是和此 NPC 对话时要显示的内容。&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;注：&lt;/span&gt;所有双引号和换行字符都将被移除。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Enter the NPC&apos;s dialog message:
@@ -3470,7 +3470,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;注：&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; 和 &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; 关卡最多可以有 21 个场景，&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot; &gt;SMBX-1...7 &lt;/span&gt; 关卡最多只能有 6 个场景。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;注：&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; 和 &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; 关卡最多可以有 21 个场景，&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7 &lt;/span&gt; 关卡最多只能有 6 个场景。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Destiation</source>
@@ -3529,7 +3529,7 @@ Do you want to continue?</source>
     <name>LvlEventsBox</name>
     <message>
         <source>Classic Events</source>
-        <translation>事件</translation>
+        <translation>传统事件</translation>
     </message>
     <message>
         <source>Events list</source>
@@ -4713,7 +4713,8 @@ The special state is defined by the active configuration pack.</source>
     <message>
         <source>The speed at which the player will exit the warp.
 Measured in pixels per 1/65 seconds.</source>
-        <translation>玩家从传送点出来时的速度，以 1/65 秒为单位。</translation>
+        <translation>玩家从传送点出来时的速度，
+以 1/65 秒为单位。</translation>
     </message>
     <message>
         <source>The direction in which the player will exit the warp.</source>
@@ -4762,7 +4763,8 @@ Measured in pixels per 1/65 seconds.</source>
     <message>
         <source>Target coordinates of player on the world map
 when you exit from a level through this warp.</source>
-        <translation>传送到大地图的指定位置。</translation>
+        <translation>玩家在大地图上的目标坐标
+当您通过此扭曲从关卡退出时。</translation>
     </message>
     <message>
         <source>Y:</source>
@@ -5425,7 +5427,7 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;播放动态对象中的动画&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;如果当前地图中对象过多，推荐&lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;关闭&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;此选项。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;播放动态对象中的动画&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;如果当前地图中对象过多，推荐&lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;关闭&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;此选项。&lt;/span&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;empty&gt;</source>
@@ -8981,7 +8983,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;勾选此项将会计算黑边尺寸以校正目标图片比例。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;勾选此项将会计算黑边尺寸以校正目标图片比例。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Keep original aspect ratio</source>
@@ -8993,7 +8995,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是目标图像的&lt;span style=&quot; font-weight:600;&quot;&gt;宽度&lt;/span&gt;，目标图像的宽度将拉伸至此。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;这是目标图像的&lt;span style=&quot; font-weight:600;&quot;&gt;宽度&lt;/span&gt;，目标图像的宽度将拉伸至此。&lt;/p&gt;</translation>
     </message>
     <message>
         <source> px</source>
@@ -9001,7 +9003,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是目标图像的&lt;span style=&quot; font-weight:600;&quot;&gt;高度&lt;/span&gt;，目标图像的高度将拉伸至此。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;这是目标图像的&lt;span style=&quot; font-weight:600;&quot;&gt;高度&lt;/span&gt;，目标图像的高度将拉伸至此。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Width</source>
