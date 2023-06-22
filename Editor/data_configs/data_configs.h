@@ -253,6 +253,7 @@ public:
     bool loadFullConfig();
     DataFolders dirs;
     QString config_dir;
+    QString arg_config_app_dir;
     QString data_dir;
     QString localScriptName_lvl;
     QString commonScriptName_lvl;
@@ -369,7 +370,7 @@ public:
 
     void  loadTilesets();
 
-    void setConfigPath(QString p);
+    void setConfigPath(const QString &p, const QString &appDir = QString());
     bool loadBasics();
 
     bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with=nullptr, QString iniFile="", IniProcessing *setup=nullptr);

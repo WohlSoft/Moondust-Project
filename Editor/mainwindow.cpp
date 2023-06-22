@@ -110,11 +110,11 @@ static BOOL s_isWow64()
 }
 #endif
 
-bool MainWindow::initEverything(const QString &configDir, const QString &themePack)
+bool MainWindow::initEverything(const QString &configDir, const QString &themePack, const QString &configAppPath)
 {
     currentConfigDir = configDir;
 
-    configs.setConfigPath( configDir );
+    configs.setConfigPath(configDir, configAppPath);
 
 #ifdef WIN_CHECK_FOR_64BIT_CPU
     // Notify users of 32-bit application when they use it on 64-bit operating system
