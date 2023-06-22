@@ -90,7 +90,7 @@ public:
      * @param themePack Path to theme pack to load
      * @return true if everything has been successfully initialized, false if fatal error has occouped
      */
-    bool initEverything(const QString &configDir, const QString &themePack);
+    bool initEverything(const QString &configDir, const QString &themePack, const QString &configAppPath = QString());
 
     //! Global game configucrations
     DataConfig configs;

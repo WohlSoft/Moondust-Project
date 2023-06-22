@@ -141,6 +141,13 @@ static void pgeEditorQuit()
 extern "C"
 int main(int argc, char *argv[])
 {
+    bool argsParseEnd = false;
+    bool hasRunConfigArg = false;
+    QString runConfigArg;
+
+    bool hasRunCustomAppPathArg = false;
+    QString runCustomAppPath;
+
     CrashHandler::initCrashHandlers();
 
     //Init system paths
@@ -215,8 +222,31 @@ int main(int argc, char *argv[])
 //    }
 //#endif
 
-    for(QString &arg : args)
+    for(auto arg_i = args.begin(); arg_i != args.end(); )
     {
+        const QString &arg = *arg_i;
+
+        if(hasRunConfigArg)
+        {
+            runConfigArg = arg;
+#ifdef _WIN32
+            runConfigArg.replace('\\', '/');
+#endif
+            hasRunConfigArg = false;
+            arg_i = args.erase(arg_i);
+            continue;
+        }
+        else if(hasRunCustomAppPathArg)
+        {
+            runCustomAppPath = arg;
+#ifdef _WIN32
+            runCustomAppPath.replace('\\', '/');
+#endif
+            hasRunCustomAppPathArg = false;
+            arg_i = args.erase(arg_i);
+            continue;
+        }
+
         if(arg == "--install")
         {
             AppPathManager::install();
@@ -228,12 +258,35 @@ int main(int argc, char *argv[])
             pgeEditorQuit();
             return 0;
         }
-        else if(arg == "--version")
+        else if(!argsParseEnd)
         {
-            std::cout << V_INTERNAL_NAME " " V_FILE_VERSION << V_FILE_RELEASE "-" V_BUILD_VER << "-" << V_BUILD_BRANCH << std::endl;
-            pgeEditorQuit();
-            return 0;
+            if(arg == "--version")
+            {
+                std::cout << V_INTERNAL_NAME " " V_FILE_VERSION << V_FILE_RELEASE "-" V_BUILD_VER << "-" << V_BUILD_BRANCH << std::endl;
+                pgeEditorQuit();
+                return 0;
+            }
+            else if(arg == "--config")
+            {
+                hasRunConfigArg = true;
+                arg_i = args.erase(arg_i);
+                continue;
+            }
+            else if(arg == "--app-path")
+            {
+                hasRunCustomAppPathArg = true;
+                arg_i = args.erase(arg_i);
+                continue;
+            }
+            else if(arg == "--")
+            {
+                argsParseEnd = true;
+                arg_i = args.erase(arg_i);
+                continue;
+            }
         }
+
+        ++arg_i;
     }
 
     //Init themes engine
@@ -252,6 +305,11 @@ int main(int argc, char *argv[])
     QString currentConfigDir;
     QString themePack;
 
+    if(!runConfigArg.isEmpty())
+    {
+        currentConfigDir = runConfigArg;
+    }
+    else
     {
         ConfigManager cmanager(nullptr);
         currentConfigDir    = cmanager.loadConfigs();
@@ -270,12 +328,13 @@ int main(int argc, char *argv[])
                 return 0;
             }
         }
+
         currentConfigDir = cmanager.m_currentConfigPath;
     }
     /******************************Config manager***END***************************/
 
     //Init Main Window class
-    if(!mWindow->initEverything(currentConfigDir, themePack))
+    if(!mWindow->initEverything(currentConfigDir, themePack, runCustomAppPath))
     {
         delete mWindow;
         goto QuitFromEditor;
