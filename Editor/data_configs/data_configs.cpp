@@ -115,7 +115,7 @@ void DataConfig::setConfigPath(const QString &p, const QString &appDir)
         config_dir.append('/');
 
     arg_config_app_dir = appDir;
-    if(!arg_config_app_dir.endsWith('/'))
+    if(!arg_config_app_dir.isEmpty() && !arg_config_app_dir.endsWith('/'))
         arg_config_app_dir.append('/');
 }
 
@@ -542,6 +542,7 @@ bool DataConfig::loadFullConfig()
     // ================ Apply pre-Setup ================
     QString appPath = arg_config_app_dir.isEmpty() ? ApplicationPath : arg_config_app_dir;
     data_dir = (preSetup_lookAppDir ? preSetup_customAppPath + "/" : config_dir + "data/");
+
     if(QDir(appPath + "/" + data_dir).exists()) //Check as relative
         data_dir = appPath + "/" + data_dir;
     else if(!QDir(data_dir).exists()) //Check as absolute
