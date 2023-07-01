@@ -749,6 +749,9 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
 
         bool isOrigin = (it.key() == "origin");
 
+        if(isOrigin)
+            o["use-tr-id"] = it->useTrId;
+
         for(auto l = it->levels.begin(); l != it->levels.end(); ++l)
         {
             QJsonObject lo;
@@ -1224,6 +1227,9 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
     bool isOrigin = (trName == "origin");
 
     auto &tr = proj[trName];
+
+    if(isOrigin)
+        tr.useTrId = r.value("use-tr-id").toBool(false);
 
     for(auto &k : r.keys())
     {

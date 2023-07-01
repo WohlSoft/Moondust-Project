@@ -99,6 +99,8 @@ struct TranslationData_Script
 
 struct TranslationData
 {
+    //! Translation will prefer the TrId system (special keywords). If set to FALSE, the original string will work as a keyword.
+    bool useTrId = false;
     QSet<QString> directories;
     QMap<QString, TranslationData_Level> levels;
     QMap<QString, TranslationData_World> worlds;
