@@ -1,5 +1,5 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Moondust Project by Wohlstand, a free platform for game making
  * Copyright (c) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify

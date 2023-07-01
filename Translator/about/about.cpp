@@ -1,7 +1,7 @@
 /*
- * Playble Character Calibrator, a free tool for playable character sprite setup tune
- * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017-2023 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust Translator, a free tool for internationalisation of levels and episodes
+ * This is a part of the Moondust Project, a free platform for game making
+ * Copyright (c) 2023-2023 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
