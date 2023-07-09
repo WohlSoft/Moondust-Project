@@ -5984,7 +5984,7 @@ The configuration pack was loaded, but contains errors.</source>
     </message>
     <message>
         <source>This file have unknown extension</source>
-        <translation>此文件的扩展名未知</translation>
+        <translation>不支持的文件格式</translation>
     </message>
     <message>
         <source>Saving of file...</source>
@@ -9310,11 +9310,11 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Extension is not set</source>
-        <translation>未指定扩展名</translation>
+        <translation>未指定格式</translation>
     </message>
     <message>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation>扩展名未指定，请指定扩展名！</translation>
+        <translation>文件格式未指定，请输入文件格式！</translation>
     </message>
     <message>
         <source>SMBX file version</source>
