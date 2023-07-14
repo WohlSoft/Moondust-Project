@@ -246,16 +246,25 @@ static int toOpnEmu(int index)
         index = OPNMIDI_OPN2_EMU_MAME_OPN2;
         break;
     case 1:
-        index = OPNMIDI_OPN2_EMU_NUKED;
+        index = OPNMIDI_OPN2_EMU_NUKED_YM3438;
         break;
     case 2:
         index = OPNMIDI_OPN2_EMU_GENS;
         break;
     case 3:
-        index = OPNMIDI_OPN2_EMU_NP2;
+        index = OPNMIDI_OPN2_EMU_YMFM_OPN2;
         break;
     case 4:
+        index = OPNMIDI_OPN2_EMU_NP2;
+        break;
+    case 5:
         index = OPNMIDI_OPN2_EMU_MAME_OPNA;
+        break;
+    case 6:
+        index = OPNMIDI_OPN2_EMU_YMFM_OPNA;
+        break;
+    case 7:
+        index = OPNMIDI_OPN2_EMU_NUKED_YM2612;
         break;
     }
     return index;
