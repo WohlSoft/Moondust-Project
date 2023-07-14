@@ -110,12 +110,17 @@
         </item>
         <item>
          <property name="text">
-          <string>Nuked OPN2</string>
+          <string>Nuked OPN2 (YM3438)</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>GENS 2.10 OPN2</string>
+          <string>GENS/GS II OPN2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>YMFM OPN2</string>
          </property>
         </item>
         <item>
@@ -126,6 +131,16 @@
         <item>
          <property name="text">
           <string>Mame YM2608 (OPNA)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>YMFM OPNA</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Nuked OPN2 (YM2612)</string>
          </property>
         </item>
        </widget>
