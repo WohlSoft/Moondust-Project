@@ -22,15 +22,15 @@
 #define TRANSLATOR_VERSION_H
 
 #ifdef GIT_VERSION
-#define V_BUILD_VER GIT_VERSION
+#   define V_BUILD_VER GIT_VERSION
 #else
-#define V_BUILD_VER "<empty>"
+#   define V_BUILD_VER "<empty>"
 #endif
 
 #ifdef GIT_BRANCH
-#define V_BUILD_BRANCH GIT_BRANCH
+#   define V_BUILD_BRANCH GIT_BRANCH
 #else
-#define V_BUILD_BRANCH "<unknown>"
+#   define V_BUILD_BRANCH "<unknown>"
 #endif
 
 //Version of this program
@@ -71,13 +71,13 @@
 #define V_VF3_s STR_VALUE(V_VF3)
 #define V_VF4_s STR_VALUE(V_VF4)
 #if V_VF4 == 0
-    #if V_VF3 == 0
-        #define V_FILE_VERSION_NUM GEN_VERSION_NUMBER_2(V_VF1_s, V_VF2_s)
-    #else
-        #define V_FILE_VERSION_NUM GEN_VERSION_NUMBER_3(V_VF1_s, V_VF2_s, V_VF3_s)
-    #endif
+#   if V_VF3 == 0
+#       define V_FILE_VERSION_NUM GEN_VERSION_NUMBER_2(V_VF1_s, V_VF2_s)
+#   else
+#       define V_FILE_VERSION_NUM GEN_VERSION_NUMBER_3(V_VF1_s, V_VF2_s, V_VF3_s)
+#   endif
 #else
-    #define V_FILE_VERSION_NUM GEN_VERSION_NUMBER_4(V_VF1_s, V_VF2_s, V_VF3_s, V_VF4_s)
+#   define V_FILE_VERSION_NUM GEN_VERSION_NUMBER_4(V_VF1_s, V_VF2_s, V_VF3_s, V_VF4_s)
 #endif
 
 //Version of this program
@@ -86,14 +86,14 @@
 //Version of this program
 #define _LATEST_STABLE V_FILE_VERSION_NUM V_FILE_RELEASE
 
-#define V_FILE_DESC "Platformer Game Engine - Maintainer"
+#define V_FILE_DESC "Moondust Project - Translator"
 
-#define V_INTERNAL_NAME "pge_maintainer"
+#define V_INTERNAL_NAME "pge_translator"
 
 #ifdef _WIN32
-	#define V_ORIGINAL_NAME "pge_maintainer.exe" // for Windows platforms
+    #define V_ORIGINAL_NAME "pge_translator.exe" // for Windows platforms
 #else
-	#define V_ORIGINAL_NAME "pge_maintainer" // for any other platforms
+    #define V_ORIGINAL_NAME "pge_translator" // for any other platforms
 #endif
 
 //Uncomment this for enable detal logging
