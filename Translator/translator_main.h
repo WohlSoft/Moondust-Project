@@ -32,6 +32,7 @@ class FilesStringsModel;
 class TranslateField;
 class DialoguesListModel;
 class DialogueItem;
+class LangsListModel;
 
 namespace Ui {
 class TranslatorMain;
@@ -64,10 +65,17 @@ private slots:
 
 private:
     Ui::TranslatorMain *ui;
+
+    //! Currently opened project data
     TranslateProject m_project;
+
+    // Models
     FilesListModel *m_filesListModel = nullptr;
     FilesStringsModel *m_filesStringsModel = nullptr;
     DialoguesListModel *m_dialoguesListModel = nullptr;
+    LangsListModel *m_langsListModel = nullptr;
+
+    // Misc. data
     QSettings m_setup;
     QString m_recentPath;
     QVector<QString> m_recentProjects;

@@ -157,12 +157,17 @@ bool TextDataProcessor::loadProject(const QString &directory, TranslateProject &
                      QDirIterator::NoIteratorFlags);
     bool hasTranslations = false;
 
+    QString meta_file = directory + "/i18n/translation_origin.json";
+
+    if(QFile::exists(meta_file)) // Load metafile first
+        loadTranslation(proj, "origin", meta_file);
+
     while(dit.hasNext())
     {
         auto f = dit.next();
         QFileInfo fi(f);
         QRegExp fe("translation_([a-zA-Z-]*)\\.json", Qt::CaseInsensitive, QRegExp::RegExp2);
-        if(fe.exactMatch(fi.fileName()))
+        if(fe.exactMatch(fi.fileName()) && (fe.cap(1) != "origin"))
         {
             loadTranslation(proj, fe.cap(1), f);
             hasTranslations = true;
@@ -199,12 +204,17 @@ bool TextDataProcessor::loadProjectLevel(const QString &file, TranslateProject &
 
     bool hasTranslations = false;
 
+    QString meta_file = directory + "/i18n/translation_origin.json";
+
+    if(QFile::exists(meta_file)) // Load metafile first
+        loadTranslation(proj, "origin", meta_file);
+
     while(dit.hasNext())
     {
         auto f = dit.next();
         QFileInfo fi(f);
         QRegExp fe("translation_([a-zA-Z-]*)\\.json", Qt::CaseInsensitive, QRegExp::RegExp2);
-        if(fe.exactMatch(fi.fileName()))
+        if(fe.exactMatch(fi.fileName()) && (fe.cap(1) != "origin"))
         {
             loadTranslation(proj, fe.cap(1), f);
             hasTranslations = true;
@@ -755,6 +765,162 @@ void TextDataProcessor::importScript(TranslationData &origin, const QString &pat
 
     if(hasStrings)
         origin.scripts.insert(shortPath, tr);
+}
+
+void TextDataProcessor::recountStats(TranslateProject &proj, TranslationData &tr, bool isOrigin)
+{
+    TranslationData &origin = proj["origin"];
+
+    tr.t_strings = isOrigin ? 0 : origin.t_strings;
+    tr.t_translated = 0;
+
+    for(auto li = tr.levels.begin(); li != tr.levels.end(); ++li)
+    {
+        auto &l = li.value();
+        l.t_strings = isOrigin ? 0 : origin.levels[li.key()].t_strings;
+        l.t_translated = 0;
+
+        if(isOrigin)
+        {
+            if(!l.title.text.isEmpty())
+            {
+                ++l.t_strings;
+                ++tr.t_strings;
+            }
+        }
+        else
+        {
+            if(!l.title.unfinished && !l.title.text.isEmpty())
+            {
+                ++l.t_translated;
+                ++tr.t_translated;
+            }
+        }
+
+        for(auto &e : l.events)
+        {
+            if(isOrigin)
+            {
+                if(!e.message.text.isEmpty())
+                {
+                    ++l.t_strings;
+                    ++tr.t_strings;
+                }
+            }
+            else
+            {
+                if(!e.message.unfinished && !e.message.text.isEmpty())
+                {
+                    ++l.t_translated;
+                    ++tr.t_translated;
+                }
+            }
+        }
+
+        for(auto &e : l.npc)
+        {
+            if(isOrigin)
+            {
+                if(!e.talk.text.isEmpty())
+                {
+                    ++l.t_strings;
+                    ++tr.t_strings;
+                }
+            }
+            else
+            {
+                if(!e.talk.unfinished && !e.talk.text.isEmpty())
+                {
+                    ++l.t_translated;
+                    ++tr.t_translated;
+                }
+            }
+        }
+    }
+
+    for(auto li = tr.worlds.begin(); li != tr.worlds.end(); ++li)
+    {
+        auto &l = li.value();
+        l.t_strings = isOrigin ? 0 : origin.worlds[li.key()].t_strings;
+        l.t_translated = 0;
+
+        if(isOrigin)
+        {
+            if(!l.title.text.isEmpty())
+            {
+                ++l.t_strings;
+                ++tr.t_strings;
+            }
+
+            if(!l.credits.text.isEmpty())
+            {
+                ++l.t_strings;
+                ++tr.t_strings;
+            }
+        }
+        else
+        {
+            if(!l.title.unfinished && !l.title.text.isEmpty())
+            {
+                ++l.t_translated;
+                ++tr.t_translated;
+            }
+
+            if(!l.credits.unfinished && !l.credits.text.isEmpty())
+            {
+                ++l.t_translated;
+                ++tr.t_translated;
+            }
+        }
+
+        for(auto &e : l.level_titles)
+        {
+            if(isOrigin)
+            {
+                if(!e.title.text.isEmpty())
+                {
+                    ++l.t_strings;
+                    ++tr.t_strings;
+                }
+            }
+            else
+            {
+                if(!e.title.unfinished && !e.title.text.isEmpty())
+                {
+                    ++l.t_translated;
+                    ++tr.t_translated;
+                }
+            }
+        }
+    }
+
+    for(auto li = tr.scripts.begin(); li != tr.scripts.end(); ++li)
+    {
+        auto &l = li.value();
+        l.t_strings = isOrigin ? 0 : origin.scripts[li.key()].t_strings;
+        l.t_translated = 0;
+
+        for(auto &e : l.lines)
+        {
+            if(isOrigin)
+            {
+                if(!e.translation.text.isEmpty())
+                {
+                    ++l.t_strings;
+                    ++tr.t_strings;
+                }
+            }
+            else
+            {
+                if(!e.translation.unfinished && !e.translation.text.isEmpty())
+                {
+                    ++l.t_translated;
+                    ++tr.t_translated;
+                }
+            }
+        }
+    }
+
 }
 
 bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &proj)
@@ -1483,4 +1649,6 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
             }
         }
     }
+
+    recountStats(proj, tr, isOrigin);
 }

@@ -101,6 +101,7 @@ list(APPEND PGE_TRANSLATOR_SRCS
     textdata/files_list_model.h textdata/files_list_model.cpp
     textdata/dialogues_list_model.h textdata/dialogues_list_model.cpp
     textdata/files_strings.h textdata/files_strings.cpp
+    textdata/langs_list_model.h textdata/langs_list_model.cpp
     about/about.h about/about.cpp
     translator_main.h translator_main.cpp
     translate_field.h translate_field.cpp

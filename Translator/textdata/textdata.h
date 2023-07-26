@@ -85,6 +85,10 @@ struct TranslationData_Level
     QVector<TranslationData_Dialogue> dialogues;
     //! Stoirage of useful translations
     QMap<QString, QString> glossary;
+    //! Total number of strings in the translation
+    int t_strings = 0;
+    //! Total number of translated strings
+    int t_translated = 0;
 };
 
 struct TranslationData_LEVEL
@@ -101,6 +105,10 @@ struct TranslationData_World
     QMap<int, TranslationData_LEVEL> level_titles;
     //! Stoirage of useful translations
     QMap<QString, QString> glossary;
+    //! Total number of strings in the translation
+    int t_strings = 0;
+    //! Total number of translated strings
+    int t_translated = 0;
 };
 
 struct TranslationData_ScriptLine
@@ -114,12 +122,22 @@ struct TranslationData_Script
 {
     QString title;
     QMap<int, TranslationData_ScriptLine> lines;
+    //! Total number of strings in the translation
+    int t_strings = 0;
+    //! Total number of translated strings
+    int t_translated = 0;
 };
 
 struct TranslationData
 {
     //! Translation will prefer the TrId system (special keywords). If set to FALSE, the original string will work as a keyword.
     bool useTrId = false;
+    //! Will language being visible in the list?
+    bool langVisible = true;
+    //! Total number of strings in the translation
+    int t_strings = 0;
+    //! Total number of translated strings
+    int t_translated = 0;
     QSet<QString> directories;
     QMap<QString, TranslationData_Level> levels;
     QMap<QString, TranslationData_World> worlds;

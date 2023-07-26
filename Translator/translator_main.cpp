@@ -26,10 +26,13 @@
 #include <QFuture>
 #include <QtDebug>
 
+#include "textdata/files_strings.h"
+
 #include "textdata/text_data_processor.h"
 #include "textdata/files_list_model.h"
-#include "textdata/files_strings.h"
 #include "textdata/dialogues_list_model.h"
+#include "textdata/langs_list_model.h"
+
 #include "qfile_dialogs_default_options.hpp"
 #include "translate_field.h"
 #include "dialogue_item.h"
@@ -57,6 +60,13 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
     m_dialoguesListModel = new DialoguesListModel(&m_project, ui->dialoguesList);
     ui->dialoguesList->setModel(m_dialoguesListModel);
     ui->dialoguesList->setColumnWidth(0, 24);
+
+    m_langsListModel = new LangsListModel(&m_project, ui->languagesTable);
+    ui->languagesTable->setModel(m_langsListModel);
+    ui->languagesTable->setColumnWidth(0, 24);
+    ui->languagesTable->setColumnWidth(1, 35);
+    ui->languagesTable->setColumnWidth(2, 35);
+    ui->languagesTable->setColumnWidth(3, 35);
 
     ui->sourceLineRO->installEventFilter(this);
     ui->sourceLineNote->installEventFilter(this);
@@ -391,6 +401,7 @@ void TranslatorMain::on_actionCloseProject_triggered()
     m_dialoguesListModel->clear();
     m_filesStringsModel->clear();
     m_filesListModel->rebuildView(m_currentPath);
+    m_langsListModel->clear();
     m_currentLevel.clear();
     m_currentPath.clear();
     updateActions();
@@ -503,6 +514,7 @@ void TranslatorMain::openProject(const QString &d, bool singleLevel)
     m_dialoguesListModel->clear();
     m_filesStringsModel->clear();
     m_filesListModel->rebuildView(d);
+    m_langsListModel->refreshData();
 
     m_recentPath = d;
     if(singleLevel)
