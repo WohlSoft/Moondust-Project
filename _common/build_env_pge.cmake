@@ -29,6 +29,22 @@ endif()
 include(${CMAKE_CURRENT_LIST_DIR}/build_env.cmake)
 
 if(ANDROID)
+    if(${ANDROID_ABI} STREQUAL "armeabi-v7a")
+        # Disable NEON support for old devices
+        set(ANDROID_ARM_NEON FALSE)
+    elseif(NOT DEFINED ANDROID_ARM_NEON)
+        set(ANDROID_ARM_NEON TRUE)
+    endif()
+
+    if(NOT DEFINED ANDROID_STL)
+        # include(ndk-stl-config.cmake)
+        set(ANDROID_STL "c++_static")
+    endif()
+
+    if(NOT DEFINED ANDROID_PLATFORM)
+        set(ANDROID_PLATFORM 16)
+    endif()
+
     set(ANDROID_CMAKE_FLAGS
         "-DANDROID_ABI=${ANDROID_ABI}"
         "-DANDROID_NDK=${ANDROID_NDK}"
@@ -44,14 +60,17 @@ endif()
 
 if(UNIX) # When include/library/binary directory name is not usual in a system, make symbolic links for them
     if(NOT "${CMAKE_INSTALL_LIBDIR}" STREQUAL "lib")
+        message("${CMAKE_INSTALL_LIBDIR} IS NOT STREQUAL lib")
         file(MAKE_DIRECTORY "${DEPENDENCIES_INSTALL_DIR}")
         execute_process(COMMAND ln -s "lib" "${DEPENDENCIES_INSTALL_DIR}/${CMAKE_INSTALL_LIBDIR}")
     endif()
     if(NOT "${CMAKE_INSTALL_BINDIR}" STREQUAL "bin")
+        message("${CMAKE_INSTALL_BINDIR} IS NOT STREQUAL bin")
         file(MAKE_DIRECTORY "${DEPENDENCIES_INSTALL_DIR}")
         execute_process(COMMAND ln -s "bin" "${DEPENDENCIES_INSTALL_DIR}/${CMAKE_INSTALL_BINDIR}")
     endif()
     if(NOT "${CMAKE_INSTALL_INCLUDEDIR}" STREQUAL "include")
+        message("${CMAKE_INSTALL_INCLUDEDIR} IS NOT STREQUAL lib")
         file(MAKE_DIRECTORY "${DEPENDENCIES_INSTALL_DIR}")
         execute_process(COMMAND ln -s "include" "${DEPENDENCIES_INSTALL_DIR}/${CMAKE_INSTALL_INCLUDEDIR}")
     endif()

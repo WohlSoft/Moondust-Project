@@ -1,5 +1,20 @@
 cmake_minimum_required (VERSION 3.2)
-project (Moondust LANGUAGES C CXX)
+
+if(POLICY CMP0069) # Allow CMAKE_INTERPROCEDURAL_OPTIMIZATION (lto) to be set
+    cmake_policy(SET CMP0069 NEW)
+endif()
+
+project(Moondust LANGUAGES C CXX)
+
+include(CheckCCompilerFlag)
+include(CheckCXXCompilerFlag)
+include(ExternalProject)
+include(CheckLibraryExists)
+include(CheckFunctionExists)
+include(GNUInstallDirs)
+include(FindBacktrace)
+include(TestBigEndian)
+include(CheckIncludeFile)
 
 set(PGE_INSTALL_DIRECTORY "Moondust" CACHE STRING "Name of directory where all binary and data files are will be installed")
 
