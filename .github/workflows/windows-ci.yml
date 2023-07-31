@@ -41,8 +41,8 @@ jobs:
             extra_options: "-DCMAKE_PREFIX_PATH=\"C:/Qt/5.6.3-i686/\" -DCMAKE_TOOLCHAIN_FILE=`pwd`/_common/ci_windows_mingw_toolchain_x32.cmake",
             build_type: "Release",
             upload_directory: "www/win32/moondust-win32/",
-            mingw_download: "https://wohlsoft.ru/docs/Software/MinGW/i686-13.1.0-release-posix-dwarf-msvcrt-rt_v11-rev1.7z", mingw_install_dir: "C:/MinGW-w64/",
-            qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.6.3-i686-mingw-w64-13.1.0-shared-release.7z", qt_install_dir: "C:/Qt/",
+            mingw_download: "https://wohlsoft.ru/docs/Software/MinGW/i686-12.2.0-release-posix-dwarf-msvcrt-rt_v10-rev2.7z", mingw_install_dir: "C:/MinGW-w64/",
+            qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.6.3-i686-mingw-w64-12.2.0-shared-release.7z", qt_install_dir: "C:/Qt/",
             qt_dir: "C:/Qt/5.6.3-i686/bin",
             ninja_download: "https://wohlsoft.ru/docs/Software/Ninja-Build/ninja-win.zip", ninja_install_dir: "C:/MinGW-w64/mingw32/bin",
             lftp_download: "https://wohlsoft.ru/docs/Software/lftp-4.4.15.win64-openssl-1.0.1g.7z", lftp_install_dir: "C:/MinGW-w64/mingw32/"
