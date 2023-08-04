@@ -41,6 +41,8 @@
 #include "obj_wld_items.h"
 #include "obj_tilesets.h"
 #include "obj_rotation_table.h"
+#include "meta_wld_exit_codes.h"
+
 
 struct DataFolders
 {
@@ -183,8 +185,6 @@ struct EditorSetup
 
         State level_npc_vertical_dontmove = F_DISABLED;
         State world_custom_credits = F_DISABLED;
-
-        State world_hawkmouth_exit = F_HIDDEN;
     } supported_features;
 };
 
@@ -253,6 +253,7 @@ public:
     bool loadFullConfig();
     DataFolders dirs;
     QString config_dir;
+    QString arg_config_app_dir;
     QString data_dir;
     QString localScriptName_lvl;
     QString commonScriptName_lvl;
@@ -326,6 +327,7 @@ public:
     QList<SimpleTilesetCachedCategory> main_tileset_categogies;
 
     QList<obj_rotation_table > main_rotation_table;
+    QList<meta_wld_exitcodes > meta_exit_codes;
 
     /**
      * @brief Verify config pack is valid (Standard configs only)
@@ -368,7 +370,7 @@ public:
 
     void  loadTilesets();
 
-    void setConfigPath(QString p);
+    void setConfigPath(const QString &p, const QString &appDir = QString());
     bool loadBasics();
 
     bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with=nullptr, QString iniFile="", IniProcessing *setup=nullptr);
@@ -451,6 +453,7 @@ private:
     void loadSound();
 
     void loadRotationTable();
+    void loadExitCodes();
 
     QString     getFullIniPath(QString iniFileName);
     bool        openSection(IniProcessing *config, const std::string &section, bool tryGeneral = false);

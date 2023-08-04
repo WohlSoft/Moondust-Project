@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.2)
+cmake_minimum_required (VERSION 3.5)
 project(MoondustEditor C CXX)
 
 if(POLICY CMP0071) # Automoc
@@ -208,6 +208,7 @@ list(APPEND PGE_EDITOR_SRCS
     data_configs/conf_music.cpp
     data_configs/conf_rotation_tables.cpp
     data_configs/conf_sound.cpp
+    data_configs/conf_wld_exit_codes.cpp
     data_configs/conf_wld_level.cpp
     data_configs/conf_wld_path.cpp
     data_configs/conf_wld_scene.cpp

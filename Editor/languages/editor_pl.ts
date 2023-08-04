@@ -8629,72 +8629,12 @@ Informacje mogą być uszkodzone!</translation>
         <translation>Otwórz ścieżkę:</translation>
     </message>
     <message>
-        <source>Open the Western (left) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Otwórz zachodnią (lewą) ścieżkę przez wyjście</translation>
-    </message>
-    <message>
-        <source>Open the Eastern (right) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Otwórz wschodnią (prawą) ścieżkę przez wyjście</translation>
-    </message>
-    <message>
-        <source>Open the Northern (upper) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Otwórz północną (górną) ścieżkę przez wyjście</translation>
-    </message>
-    <message>
-        <source>Open the Southern (lower) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Otwórz południową (dolną) ścieżkę przez wyjście</translation>
-    </message>
-    <message>
         <source>Level ID: %1, Array ID: %2</source>
         <translation>ID Pziomu: %1, Array ID: %2</translation>
     </message>
     <message>
         <source>Position: [%1, %2]</source>
         <translation>Pozycja: [%1, %2]</translation>
-    </message>
-    <message>
-        <source>* - Any</source>
-        <translation>* - Każde</translation>
-    </message>
-    <message>
-        <source>0 - None</source>
-        <translation>0 - Żadne</translation>
-    </message>
-    <message>
-        <source>1 - Card Roulette Exit</source>
-        <translation>1 - Wyjście z Karcianej Ruletki</translation>
-    </message>
-    <message>
-        <source>2 - SMB3 Boss Exit</source>
-        <translation>2 - Wjście z pokonanego wroga</translation>
-    </message>
-    <message>
-        <source>3 - Walked Offscreen</source>
-        <translation>3 - Wyjście poza ekran</translation>
-    </message>
-    <message>
-        <source>4 - Secret Exit</source>
-        <translation>4 - Sekretne wyjście</translation>
-    </message>
-    <message>
-        <source>5 - Crystal Sphare Exit</source>
-        <translation>5 -Kryształowa Sfera</translation>
-    </message>
-    <message>
-        <source>6 - Warp Exit</source>
-        <translation>6 - Wyjście przez przejście</translation>
-    </message>
-    <message>
-        <source>7 - Star Exit</source>
-        <translation>7 - Wyjście przez gwiazdkę</translation>
-    </message>
-    <message>
-        <source>8 - Tape Exit</source>
-        <translation>8 - Wyjście za pomocą Bramki</translation>
     </message>
     <message>
         <source>Placement mode</source>
@@ -8713,8 +8653,59 @@ Informacje mogą być uszkodzone!</translation>
         <translation>Proszę zapisz plik przed wybieraniem poziomów.</translation>
     </message>
     <message>
-        <source>9 - Hawk Mouth Exit</source>
-        <translation>9 - Wyjście Dziobem Jastrzębia</translation>
+        <source>Any</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Card Roulette Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ball Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Walked Offscreen</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Secret Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crystal Sphare Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warp Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Star Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tape Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;Exit type %1&gt;</source>
+        <comment>Fallback name for the exit code when it&apos;s blank</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -28,7 +28,7 @@ void DataConfig::loadRotationTable()
 
     if(!QFile::exists(rtables_ini))
     {
-        LogWarning("Rotation tables wasn't load: rotation_table.ini does not exist");
+        LogDebug("Rotation tables wasn't load: rotation_table.ini does not exist");
         return;
     }
 
@@ -37,7 +37,7 @@ void DataConfig::loadRotationTable()
 
     std::vector<std::string> groups = rtable_set.childGroups();
 
-    if(groups.size()==0)
+    if(groups.size() == 0)
     {
         LogWarning("ERROR LOADING of rotation_table.ini: number of items not define, or empty config");
         return;

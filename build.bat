@@ -215,8 +215,8 @@ rem ------------------------------------------------------------
 rem ------------------------------------------------------------
 
 :updateSubModules
-git submodule foreach git checkout master
-git submodule foreach git pull origin master
+set PATH=%PATH%;%CD%\_common
+git submodule foreach submodule-update.sh
 exit /B 0
 goto quit
 
@@ -226,14 +226,14 @@ rem ------------------------------------------------------------
 rem ------------------------------------------------------------
 
 :repairSubModules
+set PATH=%PATH%;%CD%\_common
 echo === Cleaning-up old state...
-git submodule foreach 'pwd; rm -Rf * .git*;'
+git submodule foreach "rm -Rf * .git*
 echo === Fetching new submodules...
 git submodule init
 git submodule update
 echo.
-git submodule foreach git checkout master
-git submodule foreach git pull origin master
+git submodule foreach submodule-update.sh
 echo.
 echo ==== Fixed! ====
 exit /B 0

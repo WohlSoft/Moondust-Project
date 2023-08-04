@@ -8620,72 +8620,12 @@ Des données pourraient être corrompues !</translation>
         <translation>Ouvrir les chemins par type de sortie :</translation>
     </message>
     <message>
-        <source>Open the Western (left) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Ouvrir le chemin Ouest (gauche) par type de sortie</translation>
-    </message>
-    <message>
-        <source>Open the Eastern (right) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Ouvrir le chemin Est (droit) par type de sortie</translation>
-    </message>
-    <message>
-        <source>Open the Northern (upper) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Ouvrir le chemin Nord (haut) par type de sortie</translation>
-    </message>
-    <message>
-        <source>Open the Southern (lower) path by exit type</source>
-        <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Ouvrir le chemin Sud (bas) par type de sortie</translation>
-    </message>
-    <message>
         <source>Level ID: %1, Array ID: %2</source>
         <translation>ID de niveau : %1, ID de tableau : %2</translation>
     </message>
     <message>
         <source>Position: [%1, %2]</source>
         <translation>Position : [%1, %2]</translation>
-    </message>
-    <message>
-        <source>* - Any</source>
-        <translation>* - Toutes</translation>
-    </message>
-    <message>
-        <source>0 - None</source>
-        <translation>0 - Aucune</translation>
-    </message>
-    <message>
-        <source>1 - Card Roulette Exit</source>
-        <translation>1 - Sortie « Carte Roulette »</translation>
-    </message>
-    <message>
-        <source>2 - SMB3 Boss Exit</source>
-        <translation>2 - Sortie « Défaite de Boss »</translation>
-    </message>
-    <message>
-        <source>3 - Walked Offscreen</source>
-        <translation>3 - A marché en dehors de l&apos;écran</translation>
-    </message>
-    <message>
-        <source>4 - Secret Exit</source>
-        <translation>5 - Sortie secrète</translation>
-    </message>
-    <message>
-        <source>5 - Crystal Sphare Exit</source>
-        <translation>5 - Sortie « Sphère de cristal »</translation>
-    </message>
-    <message>
-        <source>6 - Warp Exit</source>
-        <translation>6 - Sortie par passage/porte</translation>
-    </message>
-    <message>
-        <source>7 - Star Exit</source>
-        <translation>7 - A récupéré une étoile</translation>
-    </message>
-    <message>
-        <source>8 - Tape Exit</source>
-        <translation>8 - Sortie « Bande de but »</translation>
     </message>
     <message>
         <source>Placement mode</source>
@@ -8704,8 +8644,59 @@ Des données pourraient être corrompues !</translation>
         <translation>Veuillez enregistrer le fichier avant de sélectionner des niveaux.</translation>
     </message>
     <message>
-        <source>9 - Hawk Mouth Exit</source>
-        <translation>9 - Sortie Hawk Mouth</translation>
+        <source>Any</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished">Aucun</translation>
+    </message>
+    <message>
+        <source>Card Roulette Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ball Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Walked Offscreen</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Secret Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crystal Sphare Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warp Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Star Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tape Exit</source>
+        <comment>Exit type name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;Exit type %1&gt;</source>
+        <comment>Fallback name for the exit code when it&apos;s blank</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

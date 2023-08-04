@@ -59,8 +59,6 @@ private slots:
     void on_fluidSynthSF2PathsBrowse_clicked();
     void on_fluidSynthSF2Paths_editingFinished();
 
-    void updateAutoArgs();
-
     void on_mididevice_currentIndexChanged(int index);
 
     void on_resetDefaultADLMIDI_clicked();
@@ -75,6 +73,9 @@ signals:
 
 private:
     Ui::SetupMidi *ui;
+    void updateWindowLayout();
+    void updateAutoArgs();
+
     void restartForAdl();
     void restartForOpn();
     void restartForTimidity();

@@ -108,11 +108,15 @@ void DataConfig::addError(QString bug, PGE_LogLevel level)
     errorsList[m_errOut] << bug;
 }
 
-void DataConfig::setConfigPath(QString p)
+void DataConfig::setConfigPath(const QString &p, const QString &appDir)
 {
     config_dir = p;
     if(!config_dir.endsWith('/'))
         config_dir.append('/');
+
+    arg_config_app_dir = appDir;
+    if(!arg_config_app_dir.isEmpty() && !arg_config_app_dir.endsWith('/'))
+        arg_config_app_dir.append('/');
 }
 
 static void s_readWidgetDefaults(IniProcessing &s, QString name, EditorSetup::DefaultToolboxPositions::State &target, const EditorSetup::DefaultToolboxPositions::State &defaults)
@@ -300,9 +304,6 @@ bool DataConfig::loadBasics()
         guiset.readEnum("level-warp-cannon-exit", editor.supported_features.level_warp_cannon_exit, defaultState, formatEnum);
 
         guiset.readEnum("level-event-new-autoscroll", editor.supported_features.level_event_new_autoscroll, defaultState, formatEnum);
-
-        // Not so used field
-        guiset.readEnum("world-hawkmouth-exit", editor.supported_features.world_hawkmouth_exit, EditorSetup::FeaturesSupport::F_HIDDEN, formatEnum);
     }
     guiset.endGroup();
 
@@ -315,8 +316,10 @@ bool DataConfig::loadBasics()
     if(!openSection(&guiset, "main"))
         return false;
 
-    data_dir = (guiset.value("application-dir", "0").toBool() ?
-                ApplicationPath + "/" : config_dir + "data/");
+    if(guiset.value("application-dir", false).toBool())
+        data_dir = arg_config_app_dir.isEmpty() ? ApplicationPath + "/" : arg_config_app_dir;
+    else
+        data_dir = config_dir + "data/";
 
     QString url     = guiset.value("home-page", "http://wohlsoft.ru/config_packs/").toQString();
     QString version = guiset.value("pge-editor-version", "0.0").toQString();
@@ -537,9 +540,11 @@ bool DataConfig::loadFullConfig()
     }
 
     // ================ Apply pre-Setup ================
+    QString appPath = arg_config_app_dir.isEmpty() ? ApplicationPath : arg_config_app_dir;
     data_dir = (preSetup_lookAppDir ? preSetup_customAppPath + "/" : config_dir + "data/");
-    if(QDir(ApplicationPath + "/" + data_dir).exists()) //Check as relative
-        data_dir = ApplicationPath + "/" + data_dir;
+
+    if(QDir(appPath + "/" + data_dir).exists()) //Check as relative
+        data_dir = appPath + "/" + data_dir;
     else if(!QDir(data_dir).exists()) //Check as absolute
     {
         LogCritical(QString("Config data path not exists: %1").arg(data_dir));
@@ -675,6 +680,11 @@ bool DataConfig::loadFullConfig()
     LogDebug("Loading rotation_table.ini...");
     loadRotationTable();
     ///////////////////////////////////////Rotation rules table////////////////////////////////////////////
+
+    ///////////////////////////////////////Level exit codes////////////////////////////////////////////
+    LogDebug("Loading wld_exit_types.ini...");
+    loadExitCodes();
+    ///////////////////////////////////////Level exit codes////////////////////////////////////////////
 
     emit progressMax(100);
     emit progressValue(100);

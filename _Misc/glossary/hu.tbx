@@ -13,6 +13,7 @@
             <termEntry id="1">
                 <langSet xml:lang="en"><tig><term>warp</term></tig></langSet>
                 <langSet xml:lang="hu"><tig><term>ugrás</term></tig></langSet>
+                <descrip>Ez talán az egyetlen elfogadható fordítás. / This is probably the only acceptable translation.</descrip>
             </termEntry>
             <termEntry>
                 <langSet xml:lang="en"><tig><term>offset</term></tig></langSet>
@@ -21,6 +22,7 @@
             <termEntry>
                 <langSet xml:lang="en"><tig><term>warp</term></tig></langSet>
                 <langSet xml:lang="hu"><tig><term>ugrás</term></tig></langSet>
+                <descrip>Ez talán az egyetlen elfogadható fordítás. / This is probably the only acceptable translation.</descrip>
             </termEntry>
             <termEntry>
                 <langSet xml:lang="en"><tig><term>frame</term></tig></langSet>
@@ -37,6 +39,7 @@
             <termEntry>
                 <langSet xml:lang="en"><tig><term>NPC</term></tig></langSet>
                 <langSet xml:lang="hu"><tig><term>NJK</term></tig></langSet>
+                <descrip>A rövidítés tartalmának fordítása. / Translation of the content of the abbreviation.</descrip>
             </termEntry>
         </body>
     </text>
