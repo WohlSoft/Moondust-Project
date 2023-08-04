@@ -44,6 +44,7 @@ else()
             "-DJPEG_SHARED=OFF"
             "-DJPEG_STATIC=ON"
             $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
+            $<$<BOOL:APPLE>:"-DCMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES}">
         BUILD_BYPRODUCTS
             "${libJPEG_A_Lib}"
     )

@@ -47,6 +47,7 @@ else()
             "-DZLIB_INCLUDE_DIR=${DEPENDENCIES_INSTALL_DIR}/include"
             "-DZLIB_LIBRARY=${libZLib_A_Lib}"
             $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
+            $<$<BOOL:APPLE>:"-DCMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES}">
             "-DPNG_TESTS=OFF"
         BUILD_BYPRODUCTS
             "${libPNG_A_Lib}"
