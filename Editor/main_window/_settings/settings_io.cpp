@@ -97,6 +97,7 @@ void MainWindow::loadSettings()
         GlobalSettings::LvlOpts.camera_grid_show = settings.value("camera-grid-show", false).toBool();
         GlobalSettings::LvlOpts.default_zoom = settings.value("default-zoom", 100).toUInt();
 
+        GlobalSettings::LvlItemDefaults.LockedItemOpacity = settings.value("locked-item-opacity", 0.3).toDouble();
         GlobalSettings::LvlItemDefaults.npc_direction = settings.value("defaults-npc-directuin", -1).toInt();
         GlobalSettings::LvlItemDefaults.npc_generator_type = settings.value("defaults-npc-gen-type", 1).toInt();
         GlobalSettings::LvlItemDefaults.npc_generator_delay = settings.value("defaults-npc-gen-delay", 20).toInt();

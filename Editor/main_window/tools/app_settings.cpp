@@ -129,6 +129,7 @@ void AppSettings::loadSettings()
     ui->screengrabCustom->setChecked(GlobalSettings::screenGrab.sizeType == SETTINGS_ScreenGrabSettings::GRAB_Custom);
     ui->screengrabW->setValue(GlobalSettings::screenGrab.width);
     ui->screengrabH->setValue(GlobalSettings::screenGrab.height);
+    ui->lockedItemOpacity->setValue(GlobalSettings::LvlItemDefaults.LockedItemOpacity);
 
     LogWriter::loadLogLevels(ui->logLevel);
     ui->logLevel->setCurrentIndex(int(LogWriter::logLevel));
@@ -246,6 +247,8 @@ void AppSettings::on_buttonBox_accepted()
 
     GlobalSettings::LvlOpts.autoSave_enable = ui->autoSaveEnable->isChecked();
     GlobalSettings::LvlOpts.autoSave_interval = ui->autoSaveInterval->value();
+
+    GlobalSettings::LvlItemDefaults.LockedItemOpacity = ui->lockedItemOpacity->value();
 
     GlobalSettings::LvlOpts.default_zoom = static_cast<unsigned int>(ui->defaultZoom->value());
 

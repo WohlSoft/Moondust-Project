@@ -44,6 +44,8 @@ void MainWindow::setDefaults()
 {
     GlobalSettings::tools_sox_bin_path = ApplicationPath + GlobalSettings::tools_sox_bin_path;
 
+    GlobalSettings::LvlItemDefaults.LockedItemOpacity               = 0.3;
+
     GlobalSettings::LvlItemDefaults.npc_direction                   = -1;
     GlobalSettings::LvlItemDefaults.npc_generator_type              = 1;
     GlobalSettings::LvlItemDefaults.npc_generator_delay             = 20;
