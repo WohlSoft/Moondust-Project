@@ -74,6 +74,7 @@ public:
 
     void setAnimator(long aniID);
 
+    QString getLayerName();
     bool itemTypeIsLocked();
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 

@@ -61,6 +61,7 @@ public:
     int         m_zLayer = 0;
     qreal       m_zOffset = 0.0;
 
+    QString getLayerName();
     bool itemTypeIsLocked();
     void contextMenu(QGraphicsSceneMouseEvent *event);
 

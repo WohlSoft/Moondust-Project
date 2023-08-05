@@ -63,6 +63,7 @@ public:
     LevelBlock  m_data;
     obj_block   m_localProps;
 
+    QString getLayerName();
     bool itemTypeIsLocked();
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 

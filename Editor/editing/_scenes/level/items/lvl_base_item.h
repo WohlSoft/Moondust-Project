@@ -106,6 +106,7 @@ public:
     //Locks
     bool m_locked;
     void setLocked(bool lock);
+    virtual QString getLayerName();
     virtual bool itemTypeIsLocked();
 
     /**

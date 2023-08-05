@@ -27,6 +27,7 @@
 #include <main_window/dock/lvl_search_box.h>
 #include <main_window/dock/lvl_events_box.h>
 #include <networking/engine_intproc.h>
+#include "../../editing/_scenes/level/lvl_scene.h"
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -881,6 +882,7 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 
     QMenu *layer_menu = new QMenu(this);
     QAction *rename = layer_menu->addAction(tr("Rename layer"));
+    QAction *selectAll = layer_menu->addAction(tr("Select all items"));
 
     layer_menu->addSeparator();
 
@@ -890,6 +892,35 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
     QAction *selected = layer_menu->exec(globPos);
     if(selected == rename)
         ui->LvlLayerList->editItem(ui->LvlLayerList->selectedItems()[0]);
+    else if(selected == selectAll) {
+
+        LevelEdit *lvlEdit = mw()->activeLvlEditWin();
+        LvlScene *scene = nullptr;
+        if((lvlEdit) && (lvlEdit->sceneCreated))
+            scene = lvlEdit->scene;
+
+        scene->clearSelection();
+
+        QMap<QString, bool> *layerMap = new QMap<QString, bool>();
+        QList<QListWidgetItem *> layers = ui->LvlLayerList->selectedItems();
+        if (layers.count() > 0) {
+            for (int i = 0; i < layers.count(); ++i) {
+                layerMap->insert(QString(layers[i]->text()), true);
+            }
+                int WinType = mw()->activeChildWindow();
+            LevelEdit *edit = nullptr;
+            if(WinType == MainWindow::WND_Level)
+                edit = mw()->activeLvlEditWin();
+
+            QList<QGraphicsItem*> items = edit->getGraphicsView()->items();
+            for (int i = items.count(); i >= 0; --i) {
+                if(items[i]->data(ITEM_IS_ITEM).toInt() == 1) {
+                    LvlBaseItem* item = dynamic_cast<LvlBaseItem *>(items[i]);
+                    item->setSelected(layerMap->contains(QString(item->getLayerName())));
+                }
+            }
+        }
+    }
     else if((selected == removeLayer) || (selected == removeLayerOnly))
     {
         if(selected == removeLayerOnly)

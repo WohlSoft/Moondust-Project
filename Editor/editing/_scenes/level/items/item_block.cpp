@@ -576,6 +576,10 @@ void ItemBlock::setInvisible(bool inv)
 
 }
 
+QString ItemBlock::getLayerName() {
+    return m_data.layer;
+}
+
 void ItemBlock::setLayer(QString layer)
 {
     foreach(LevelLayer lr, m_scene->m_data->layers)

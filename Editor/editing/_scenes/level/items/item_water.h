@@ -55,6 +55,7 @@ public:
 
     LevelPhysEnv m_data;
 
+    QString getLayerName();
     bool itemTypeIsLocked();
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 

@@ -60,6 +60,7 @@ public:
     LevelDoor   m_data;
     QSize       m_itemSize;
 
+    QString getLayerName();
     bool itemTypeIsLocked();
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 

@@ -764,6 +764,10 @@ void ItemNPC::setGenerator(bool enable, int direction, int type, bool init)
     }
 }
 
+QString ItemNPC::getLayerName() {
+    return m_data.layer;
+}
+
 void ItemNPC::setLayer(QString layer)
 {
     foreach(LevelLayer lr, m_scene->m_data->layers)

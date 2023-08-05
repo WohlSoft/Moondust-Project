@@ -109,6 +109,10 @@ bool LvlBaseItem::itemTypeIsLocked()
     return false;
 }
 
+QString LvlBaseItem::getLayerName() {
+    return nullptr;
+}
+
 void LvlBaseItem::setMetaSignsVisibility(bool)
 {}
 
