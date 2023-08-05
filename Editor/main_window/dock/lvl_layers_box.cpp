@@ -121,10 +121,10 @@ void LvlLayersBox::setLayersBox()
             item->setFlags(Qt::ItemIsUserCheckable);
 
             if((layer.name != "Destroyed Blocks") && (layer.name != "Spawned NPCs"))
-                item->setFlags(item->flags() | Qt::ItemIsEnabled);
+                item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable );
 
             if(layer.name != "Default")
-                item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
+                item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
             item->setCheckState((layer.hidden) ? Qt::Unchecked : Qt::Checked);
             item->setData(Qt::UserRole, QString::number(layer.meta.array_id));
@@ -874,6 +874,8 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 {
     if(ui->LvlLayerList->selectedItems().isEmpty()) return;
 
+    bool isDefaultLayer = ui->LvlLayerList->selectedItems().first()->text() == "Default";
+
     QPoint globPos = ui->LvlLayerList->mapToGlobal(pos);
 
     LogDebug(QString("Main Menu's context menu called! %1 %2 -> %3 %4")
@@ -881,13 +883,21 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
              .arg(globPos.x()).arg(globPos.y()));
 
     QMenu *layer_menu = new QMenu(this);
-    QAction *rename = layer_menu->addAction(tr("Rename layer"));
+    QAction *rename = nullptr;
+    if (!isDefaultLayer) {
+        rename = layer_menu->addAction(tr("Rename layer"));
+    }
     QAction *selectAll = layer_menu->addAction(tr("Select all items"));
 
-    layer_menu->addSeparator();
+    QAction *removeLayer = nullptr;
+    QAction *removeLayerOnly = nullptr;
 
-    QAction *removeLayer = layer_menu->addAction(tr("Remove layer with items"));
-    QAction *removeLayerOnly = layer_menu->addAction(tr("Remove Layer and keep items"));
+    if (!isDefaultLayer) {
+        layer_menu->addSeparator();
+
+        removeLayer = layer_menu->addAction(tr("Remove layer with items"));
+        removeLayerOnly = layer_menu->addAction(tr("Remove Layer and keep items"));
+    }
 
     QAction *selected = layer_menu->exec(globPos);
     if(selected == rename)

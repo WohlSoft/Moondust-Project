@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>227</width>
+    <width>240</width>
     <height>250</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>212</width>
+    <width>240</width>
     <height>143</height>
    </size>
   </property>
@@ -129,9 +129,6 @@
        <property name="checkState">
         <enum>Checked</enum>
        </property>
-       <property name="flags">
-        <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-       </property>
       </item>
       <item>
        <property name="text">
@@ -141,7 +138,7 @@
         <enum>Unchecked</enum>
        </property>
        <property name="flags">
-        <set>ItemIsDragEnabled|ItemIsUserCheckable</set>
+        <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable</set>
        </property>
       </item>
       <item>
@@ -152,7 +149,7 @@
         <enum>Checked</enum>
        </property>
        <property name="flags">
-        <set>ItemIsDragEnabled|ItemIsUserCheckable</set>
+        <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable</set>
        </property>
       </item>
      </widget>
