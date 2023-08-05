@@ -913,8 +913,8 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 
         QMap<QString, bool> *layerMap = new QMap<QString, bool>();
         QList<QListWidgetItem *> layers = ui->LvlLayerList->selectedItems();
-        if (layers.count() > 0) {
-            for (int i = 0; i < layers.count(); ++i) {
+        if (layers.size() > 0) {
+            for (int i = 0; i < layers.size(); ++i) {
                 layerMap->insert(QString(layers[i]->text()), true);
             }
                 int WinType = mw()->activeChildWindow();
