@@ -82,6 +82,9 @@ do
             echo "--- Compile options ---"
             printf " \E[1;4msystem-png\E[0m       - Prefer to use libPNG and ZLib from system\n"
             printf " \E[1;4msystem-libs\E[0m      - Prefer to use most of libraries from system\n"
+            if [[ "$OSTYPE" == "darwin"* ]]; then
+                printf " \E[1;4mmac-universal\E[0m    - Attempt to build the universal build for ARM64 and x86_64\n"
+            fi
             printf "\n"
             echo ""
 
@@ -279,6 +282,9 @@ do
         noqt)
             CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_ENABLE_QT=OFF"
             ;;
+        mac-universal)
+            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} \"-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64\""
+            ;;
         # Disable building of some components
         noeditor)
             CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_BUILD_EDITOR=OFF"
@@ -338,6 +344,10 @@ else
     echo ""
     echo "_paths.sh is not exist! Run \"generate_paths.sh\" first!"
     errorofbuild
+fi
+
+if [[ "$PGE_OSX_TARGET" != "" ]]; then
+    CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} \"-DPGE_OSX_TARGET=$PGE_OSX_TARGET\""
 fi
 
 PATH=${QT_PATH}:$PATH

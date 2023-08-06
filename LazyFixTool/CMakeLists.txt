@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.2)
+cmake_minimum_required (VERSION 3.5)
 project(MoondustLazyFixTool C CXX)
 
 set(CMAKE_INSTALL_RPATH ".")
