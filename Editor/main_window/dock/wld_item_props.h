@@ -45,7 +45,7 @@ private slots:
     void on_WLD_PROPS_EnterTo_valueChanged(int arg1);
     void on_WLD_PROPS_LVLBrowse_clicked();
 
-    void on_WLD_PROPS_LevelExitCodeSelected(QAction *exitCode);
+    void levelExitCodeSelected(QAction *exitCode);
 
     void on_WLD_PROPS_GotoX_editingFinished();
     void on_WLD_PROPS_GotoY_editingFinished();
