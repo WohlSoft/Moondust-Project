@@ -48,7 +48,7 @@ jobs:
             libpulse-dev libdbus-1-dev udev mtdev-tools webp libudev-dev libglm-dev libwayland-dev \
             libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libgles2-mesa \
             libgles2-mesa-dev libmirclient-dev libproxy-dev \
-            gcc-8 g++-8 libc6 libstdc++6 ntpdate tzdata \
+            gcc-8 g++-8 libc6 libstdc++6 \
             && update-alternatives --remove-all gcc \
             && update-alternatives --remove-all g++ \
             && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 80 \
@@ -99,14 +99,6 @@ jobs:
           echo "--- This build is a normal branch build ---"
           echo "is_pull_request=false" >> $GITHUB_OUTPUT;
         fi
-
-    - name: Set up time zone to UTC+3
-      shell: bash
-      run: |
-        echo 'Europe/Moscow' | sudo tee /etc/timezone
-        sudo dpkg-reconfigure --frontend noninteractive tzdata
-        sudo ntpdate ntp.ubuntu.com
-        echo $(TZ=Europe/Moscow date)
 
     - name: Download Qt
       if: matrix.config.qt_download
