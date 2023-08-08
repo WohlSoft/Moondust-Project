@@ -38,7 +38,6 @@ jobs:
             && apt-get update --fix-missing -qq \
             && apt-get install -y software-properties-common \
             && add-apt-repository -y \"ppa:git-core/ppa\" \
-            && add-apt-repository -y \"ppa:ubuntu-sdk-team/ppa\" \
             && add-apt-repository -y \"ppa:ubuntu-toolchain-r/test\" \
             && apt-get update --fix-missing -qq \
             && apt-get install -f -qq \
