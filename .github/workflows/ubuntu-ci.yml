@@ -152,6 +152,7 @@ jobs:
             export QT_VER="${{ matrix.config.qt_ver }}"
             export QT_PATH="${{ matrix.config.qt_dir }}"
             export QT_LIB_PATH="${{ matrix.config.qt_lib_dir }}"
+            export QT_ROOT_STATIC="/home/runner/${QT_VER}"
 
             echo "# ==============Qt paths================" > _paths.sh;
             echo "QT_PATH=\"/home/runner/${QT_VER}/bin/\"" >> _paths.sh;

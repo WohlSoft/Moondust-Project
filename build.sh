@@ -517,6 +517,9 @@ cd "${BUILD_DIR}"
 CMAKE_STATIC_QT=""
 if ${flag_cmake_static_qt}; then
     CMAKE_STATIC_QT="-DPGE_ENABLE_STATIC_QT=ON"
+    if [[ "${QT_ROOT_STATIC}" != "" ]]; then
+        CMAKE_STATIC_QT="${CMAKE_STATIC_QT} -DMOONDUST_STATIC_QT_ROOT=${QT_ROOT_STATIC}"
+    fi
 fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
