@@ -4168,6 +4168,10 @@ All elements of this layer will be removed too!</source>
         <translation>要删除此图层吗？
 此图层的所有对象即将删除！</translation>
     </message>
+    <message>
+        <source>Select all items</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlScene</name>

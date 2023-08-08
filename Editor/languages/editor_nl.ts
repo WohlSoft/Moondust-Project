@@ -5249,60 +5249,65 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
         <translation>Vergrendelen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="708"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="709"/>
         <source>Layers merge</source>
         <translation>Lagen samenvoegen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="709"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="710"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
         <translation>Laag met de naam &apos;%1&apos; bestaat al, wilt u de lagen samenvoegen?</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="792"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="793"/>
         <source>New Layer %1</source>
         <translation>Nieuwe Laag %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="866"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="898"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="906"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="867"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="943"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="951"/>
         <source>Remove layer</source>
         <translation>Laag verwijderen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="867"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="868"/>
         <source>Are you sure you want to remove this layer?
 All objects on this layer will be moved to the &apos;Default&apos; layer.</source>
         <translation>Bent u zeker dat u deze laag wilt verwijderen?
 Alle voorwerpen in de laag zullen naar de basislaag verplaatst worden.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="888"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="894"/>
+        <source>Select all items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="905"/>
         <source>Remove Layer and keep items</source>
         <translation>Laag verwijderen en voorwerpen behouden</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="899"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="944"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
         <translation>Bent u zeker dat u deze laag wilt verwijderen?
 Alle voorwerpen in de laag zullen naar de basislaag verplaatst worden!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="907"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="952"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
         <translation>Bent u zeker dat u deze laag wilt verwijderen?
 Alle voorwerpen zullen verdwijnen!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="883"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="892"/>
         <source>Rename layer</source>
         <translation>Laag hernoemen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="887"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="904"/>
         <source>Remove layer with items</source>
         <translation>Laag samen met voorwerpen verwijderen</translation>
     </message>
@@ -7652,9 +7657,9 @@ Bestand bestaat niet.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="224"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="156"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="162"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="168"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="157"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="163"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="169"/>
         <source>[None]</source>
         <translation>[Geen]</translation>
     </message>

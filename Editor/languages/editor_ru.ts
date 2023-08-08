@@ -4170,6 +4170,10 @@ All elements of this layer will be removed too!</source>
         <translation>Вы действительно хотите удалить этот слой?
 Все элементы этого слоя будут удалены тоже!</translation>
     </message>
+    <message>
+        <source>Select all items</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlScene</name>

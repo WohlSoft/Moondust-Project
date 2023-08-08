@@ -4171,6 +4171,10 @@ All elements of this layer will be removed too!</source>
         <translation>Are you sure you want to remove this layer?
 All objects on this layer will be deleted!</translation>
     </message>
+    <message>
+        <source>Select all items</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlScene</name>

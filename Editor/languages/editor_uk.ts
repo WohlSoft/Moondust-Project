@@ -4165,6 +4165,10 @@ All elements of this layer will be removed too!</source>
         <translation>Ви справді бажаєте видалити цей Шар?
 Всі елементи цього Шару будуть видалені!</translation>
     </message>
+    <message>
+        <source>Select all items</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlScene</name>

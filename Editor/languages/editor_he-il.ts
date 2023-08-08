@@ -4096,6 +4096,10 @@ All elements of this layer will be moved to the &apos;Default&apos; layer!</sour
 All elements of this layer will be removed too!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select all items</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlScene</name>

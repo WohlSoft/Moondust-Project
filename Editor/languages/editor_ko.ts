@@ -5253,58 +5253,63 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>잠금</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="708"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="709"/>
         <source>Layers merge</source>
         <translation>레이어 병합</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="709"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="710"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
         <translation>&apos;%1&apos;이름의 레이어는 이미 존재합니다, 레이어를 병합하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="792"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="793"/>
         <source>New Layer %1</source>
         <translation>새로운 레이어%1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="866"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="898"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="906"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="867"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="943"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="951"/>
         <source>Remove layer</source>
         <translation>레이어 제거</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="867"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="868"/>
         <source>Are you sure you want to remove this layer?
 All objects on this layer will be moved to the &apos;Default&apos; layer.</source>
         <translation>이 레이어를 제거 하시겠습니까?
 이 레이어의 모든 개체는 &apos;기본&apos;레이어로 이동합니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="883"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="892"/>
         <source>Rename layer</source>
         <translation>레이어 이름 변경</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="887"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="894"/>
+        <source>Select all items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="904"/>
         <source>Remove layer with items</source>
         <translation>레이어 및 항목 제거</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="888"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="905"/>
         <source>Remove Layer and keep items</source>
         <translation>레이어 제거 및 항목 유지</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="899"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="944"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
         <translation>이 레이어를 제거 하시겠습니까?
 이 레이어의 모든 개체는 &apos;기본&apos;레이어로 이동합니다!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="907"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="952"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
         <translation>이 레이어를 제거 하시겠습니까?
@@ -7839,9 +7844,9 @@ Please reload current file to apply result.</source>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="224"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="156"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="162"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="168"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="157"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="163"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="169"/>
         <source>[None]</source>
         <translation>[없음]</translation>
     </message>
