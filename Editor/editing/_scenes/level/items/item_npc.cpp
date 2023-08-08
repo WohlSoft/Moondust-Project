@@ -764,7 +764,8 @@ void ItemNPC::setGenerator(bool enable, int direction, int type, bool init)
     }
 }
 
-QString ItemNPC::getLayerName() {
+QString ItemNPC::getLayerName()
+{
     return m_data.layer;
 }
 

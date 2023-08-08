@@ -121,7 +121,7 @@ void LvlLayersBox::setLayersBox()
             item->setFlags(Qt::ItemIsUserCheckable);
 
             if((layer.name != "Destroyed Blocks") && (layer.name != "Spawned NPCs"))
-                item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable );
+                item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 
             if(layer.name != "Default")
                 item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
@@ -872,7 +872,8 @@ void LvlLayersBox::on_RemoveLayer_clicked()
 
 void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 {
-    if(ui->LvlLayerList->selectedItems().isEmpty()) return;
+    if(ui->LvlLayerList->selectedItems().isEmpty())
+        return;
 
     bool isDefaultLayer = ui->LvlLayerList->selectedItems().first()->text() == "Default";
 
@@ -884,17 +885,17 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 
     QMenu *layer_menu = new QMenu(this);
     QAction *rename = nullptr;
-    if (!isDefaultLayer) {
+    if(!isDefaultLayer)
         rename = layer_menu->addAction(tr("Rename layer"));
-    }
+
     QAction *selectAll = layer_menu->addAction(tr("Select all items"));
 
     QAction *removeLayer = nullptr;
     QAction *removeLayerOnly = nullptr;
 
-    if (!isDefaultLayer) {
+    if(!isDefaultLayer)
+    {
         layer_menu->addSeparator();
-
         removeLayer = layer_menu->addAction(tr("Remove layer with items"));
         removeLayerOnly = layer_menu->addAction(tr("Remove Layer and keep items"));
     }
@@ -902,8 +903,8 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
     QAction *selected = layer_menu->exec(globPos);
     if(selected == rename)
         ui->LvlLayerList->editItem(ui->LvlLayerList->selectedItems()[0]);
-    else if(selected == selectAll) {
-
+    else if(selected == selectAll)
+    {
         LevelEdit *lvlEdit = mw()->activeLvlEditWin();
         LvlScene *scene = nullptr;
         if((lvlEdit) && (lvlEdit->sceneCreated))
@@ -913,18 +914,22 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 
         QMap<QString, bool> *layerMap = new QMap<QString, bool>();
         QList<QListWidgetItem *> layers = ui->LvlLayerList->selectedItems();
-        if (layers.size() > 0) {
-            for (int i = 0; i < layers.size(); ++i) {
+        if(layers.size() > 0)
+        {
+            for(int i = 0; i < layers.size(); ++i)
                 layerMap->insert(QString(layers[i]->text()), true);
-            }
-                int WinType = mw()->activeChildWindow();
+
+            int WinType = mw()->activeChildWindow();
+
             LevelEdit *edit = nullptr;
             if(WinType == MainWindow::WND_Level)
                 edit = mw()->activeLvlEditWin();
 
             QList<QGraphicsItem*> items = edit->getGraphicsView()->items();
-            for (int i = items.count(); i >= 0; --i) {
-                if(items[i]->data(ITEM_IS_ITEM).toInt() == 1) {
+            for(int i = items.count(); i >= 0; --i)
+            {
+                if(items[i]->data(ITEM_IS_ITEM).toInt() == 1)
+                {
                     LvlBaseItem* item = dynamic_cast<LvlBaseItem *>(items[i]);
                     item->setSelected(layerMap->contains(QString(item->getLayerName())));
                 }

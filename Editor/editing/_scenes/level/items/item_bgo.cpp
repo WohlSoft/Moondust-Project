@@ -480,7 +480,8 @@ cancelTransform:
 }
 
 
-QString ItemBGO::getLayerName() {
+QString ItemBGO::getLayerName()
+{
     return m_data.layer;
 }
 

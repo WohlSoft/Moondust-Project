@@ -301,7 +301,8 @@ void ItemPhysEnv::setLayer(QString layer)
     }
 }
 
-QString ItemPhysEnv::getLayerName() {
+QString ItemPhysEnv::getLayerName()
+{
     return m_data.layer;
 }
 

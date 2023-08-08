@@ -576,7 +576,8 @@ void ItemBlock::setInvisible(bool inv)
 
 }
 
-QString ItemBlock::getLayerName() {
+QString ItemBlock::getLayerName()
+{
     return m_data.layer;
 }
 
