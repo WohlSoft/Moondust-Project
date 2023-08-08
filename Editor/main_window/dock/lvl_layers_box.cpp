@@ -885,25 +885,25 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
              .arg(pos.x()).arg(pos.y())
              .arg(globPos.x()).arg(globPos.y()));
 
-    QMenu *layer_menu = new QMenu(this);
+    QMenu layer_menu(this);
     QAction *rename = nullptr;
 
     if(!isDefaultLayer)
-        rename = layer_menu->addAction(tr("Rename layer"));
+        rename = layer_menu.addAction(tr("Rename layer"));
 
-    QAction *selectAll = layer_menu->addAction(tr("Select all items"));
+    QAction *selectAll = layer_menu.addAction(tr("Select all items"));
 
     QAction *removeLayer = nullptr;
     QAction *removeLayerOnly = nullptr;
 
     if(!isDefaultLayer)
     {
-        layer_menu->addSeparator();
-        removeLayer = layer_menu->addAction(tr("Remove layer with items"));
-        removeLayerOnly = layer_menu->addAction(tr("Remove Layer and keep items"));
+        layer_menu.addSeparator();
+        removeLayer = layer_menu.addAction(tr("Remove layer with items"));
+        removeLayerOnly = layer_menu.addAction(tr("Remove Layer and keep items"));
     }
 
-    QAction *selected = layer_menu->exec(globPos);
+    QAction *selected = layer_menu.exec(globPos);
 
     if(selected == rename)
         ui->LvlLayerList->editItem(layerItem);
