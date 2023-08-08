@@ -3,10 +3,26 @@ name: Ubuntu 18.04
 agent:
   machine:
     type: e1-standard-2
-    os_image: ubuntu1804
+    os_image: ubuntu2004
   containers:
     - name: Ubuntu-18-04
       image: 'ubuntu:18.04'
+global_job_config:
+  prologue:
+    commands:
+      - apt-get update --fix-missing -qq
+      - apt-get install -y software-properties-common
+      - 'add-apt-repository -y "ppa:git-core/ppa"'
+      - apt-get update --fix-missing -qq
+      - apt-get install -f -qq
+      - >-
+        apt-get install -qq sudo git p7zip-full ninja-build wget lftp "^libxcb.*" libx11-dev libx11-xcb-dev libgtk-3-dev libgegl-dev libxcursor-dev libxrender-dev libxrandr-dev libxext-dev libxi-dev libxss-dev libxt-dev libxv-dev libxxf86vm-dev libxinerama-dev libxkbcommon-dev libfontconfig1-dev libasound2-dev libpulse-dev libdbus-1-dev udev mtdev-tools webp libudev-dev libglm-dev libwayland-dev libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libgles2-mesa libgles2-mesa-dev
+        libmirclient-dev libproxy-dev libsdl2-dev libpng-dev libjpeg-dev hashdeep dpkg debconf lintian
+      - 'wget https://github.com/Kitware/CMake/releases/download/v3.27.1/cmake-3.27.1-linux-x86_64.tar.gz -O cmake.tar.gz'
+      - tar -xf cmake.tar.gz
+      - sudo cp -a cmake-3.27.1-linux-x86_64/bin/* /usr/local/bin
+      - sudo cp -a cmake-3.27.1-linux-x86_64/share/* /usr/local/share
+      - rm -vrf cmake.tar.gz cmake-3.27.1-linux-x86_64
 blocks:
   - name: Build
     task:
@@ -22,19 +38,6 @@ blocks:
           value: linux
       prologue:
         commands:
-          - apt-get update --fix-missing -qq
-          - apt-get install -y software-properties-common
-          - 'add-apt-repository -y "ppa:git-core/ppa"'
-          - apt-get update --fix-missing -qq
-          - apt-get install -f -qq
-          - >-
-            apt-get install -qq sudo git p7zip-full ninja-build wget lftp "^libxcb.*" libx11-dev libx11-xcb-dev libgtk-3-dev libgegl-dev libxcursor-dev libxrender-dev libxrandr-dev libxext-dev libxi-dev libxss-dev libxt-dev libxv-dev libxxf86vm-dev libxinerama-dev libxkbcommon-dev libfontconfig1-dev libasound2-dev libpulse-dev libdbus-1-dev udev mtdev-tools webp libudev-dev libglm-dev libwayland-dev libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libgles2-mesa libgles2-mesa-dev
-            libmirclient-dev libproxy-dev libsdl2-dev libpng-dev libjpeg-dev hashdeep dpkg debconf lintian
-          - 'wget https://github.com/Kitware/CMake/releases/download/v3.27.1/cmake-3.27.1-linux-x86_64.tar.gz -O cmake.tar.gz'
-          - tar -xf cmake.tar.gz
-          - sudo cp -a cmake-3.27.1-linux-x86_64/bin/* /usr/local/bin
-          - sudo cp -a cmake-3.27.1-linux-x86_64/share/* /usr/local/share
-          - rm -vrf cmake.tar.gz cmake-3.27.1-linux-x86_64
           - checkout
           - git submodule init
           - git submodule update
