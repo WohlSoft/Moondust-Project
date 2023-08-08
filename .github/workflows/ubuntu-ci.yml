@@ -31,6 +31,7 @@ jobs:
             qt_ver: "5.15.2_static",
             qt_dir: "/home/runner/Qt/5.15.2_static/bin",
             qt_lib_dir: "/home/runner/Qt/5.15.2_static/lib",
+            readline6_download: "https://wohlsoft.ru/docs/Software/libreadline6_6.3-8_amd64-ubuntu1804.deb"
             lftp_download: "https://wohlsoft.ru/docs/Software/lftp_4.9.1-1_amd64-ubuntu1604.deb",
 
             deps_cmdline: "echo 'Ubuntu 18' \
@@ -48,7 +49,7 @@ jobs:
             libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libgles2-mesa \
             libgles2-mesa-dev libmirclient-dev libproxy-dev \
             gcc-8 g++-8 libc6 libstdc++6 \
-            libexpat1 libreadline6 libgnutls30 libtinfo5 zlib1g \
+            libexpat1 readline-common libgnutls30 libtinfo5 zlib1g \
             && update-alternatives --remove-all gcc \
             && update-alternatives --remove-all g++ \
             && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 80 \
@@ -115,6 +116,20 @@ jobs:
         sudo chown -R $USER:$USER "${{ matrix.config.qt_install_dir }}"
         tar -xf qt.tar.bz2 -C "${{ matrix.config.qt_install_dir }}"
         rm -f qt.tar.bz2
+
+    - name: Download libreadline6
+      if: matrix.config.readline6_download
+      uses: carlosperate/download-file-action@v2
+      with:
+        file-url: "${{ matrix.config.readline6_download }}"
+        file-name: libreadline6.deb
+
+    - name: Install LFTP
+      if: matrix.config.readline6_download
+      shell: bash
+      run: |
+        sudo dpkg -i ./libreadline6.deb
+        rm -f libreadline6.deb
 
     - name: Download LFTP
       if: matrix.config.lftp_download
