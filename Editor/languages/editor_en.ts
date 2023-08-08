@@ -365,6 +365,18 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translatorcomment>Fragment of the &quot;Automatically save file every X minute(s)&quot;</translatorcomment>
         <translation>minutes</translation>
     </message>
+    <message>
+        <source>Locked Item Opacity</source>
+        <translation>Locked Item Opacity</translation>
+    </message>
+    <message>
+        <source>Opacity</source>
+        <translation>Opacity</translation>
+    </message>
+    <message>
+        <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
