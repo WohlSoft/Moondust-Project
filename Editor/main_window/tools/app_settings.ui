@@ -761,6 +761,9 @@ like when choosing an item from the item toolbox or from the tileset item box.</
             </item>
             <item>
              <widget class="QDoubleSpinBox" name="lockedItemOpacity">
+              <property name="toolTip">
+               <string>Defines the opacity level that will be applied to all locked elements of the scene.</string>
+              </property>
               <property name="minimum">
                <double>0.000000000000000</double>
               </property>
