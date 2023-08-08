@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.config.name }} | ${{ matrix.config.build_type }}
+    name: "${{ matrix.config.name }} | ${{ matrix.config.build_type }}"
     runs-on: ${{ matrix.config.os }}
     strategy:
       fail-fast: false
