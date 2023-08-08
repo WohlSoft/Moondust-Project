@@ -23,6 +23,14 @@ else()
     set(PGE_ARCHITECTURE_BITS "unk")
 endif()
 
+# Date and time when build was initiated
+string(TIMESTAMP MOONDUST_DATETIME "%Y-%m-%d %H:%m:%S UTC" UTC)
+# Keep this string being fixed to don't lead unfair rebuilds during local debugs
+set(MOONDUST_DATETIME_CACHED "${MOONDUST_DATETIME}" CACHE STRING "The cached date and time when build was configured a first time")
+add_definitions(-DV_DATE_OF_BUILD="${MOONDUST_DATETIME_CACHED}")
+mark_as_advanced(MOONDUST_DATETIME_CACHED)
+
+# Path to build dependencies
 if(NOT DEFINED DEPENDENCIES_INSTALL_DIR)
     set(DEPENDENCIES_INSTALL_DIR ${Moondust_BINARY_DIR})
 endif()

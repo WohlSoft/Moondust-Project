@@ -193,8 +193,9 @@
 
 
 // --------------- Date and time of the build ---------------
-
-#define V_DATE_OF_BUILD __DATE__ " " __TIME__
+#ifndef V_DATE_OF_BUILD
+#   define V_DATE_OF_BUILD __DATE__ " " __TIME__
+#endif
 
 
 #endif // GLOBAL_PGE_VERSION
