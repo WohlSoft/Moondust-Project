@@ -4,6 +4,10 @@ if(POLICY CMP0069) # Allow CMAKE_INTERPROCEDURAL_OPTIMIZATION (lto) to be set
     cmake_policy(SET CMP0069 NEW)
 endif()
 
+if(POLICY CMP0135) # Supress the DOWNLOAD_EXTRACT_TIMESTAMP warning at External Projects
+    cmake_policy(SET CMP0135 NEW)
+endif()
+
 project(Moondust LANGUAGES C CXX)
 
 include(CheckCCompilerFlag)
