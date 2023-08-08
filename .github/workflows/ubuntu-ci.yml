@@ -48,7 +48,7 @@ jobs:
             libpulse-dev libdbus-1-dev udev mtdev-tools webp libudev-dev libglm-dev libwayland-dev \
             libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libgles2-mesa \
             libgles2-mesa-dev libmirclient-dev libproxy-dev \
-            gcc-8 g++-8 libc6 libstdc++6 \
+            gcc-8 g++-8 libc6 libstdc++6 ntpdate \
             && update-alternatives --remove-all gcc \
             && update-alternatives --remove-all g++ \
             && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 80 \
