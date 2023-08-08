@@ -31,7 +31,7 @@ jobs:
             qt_ver: "5.15.2_static",
             qt_dir: "/home/runner/Qt/5.15.2_static/bin",
             qt_lib_dir: "/home/runner/Qt/5.15.2_static/lib",
-            readline6_download: "https://wohlsoft.ru/docs/Software/libreadline6_6.3-8_amd64-ubuntu1804.deb"
+            readline6_download: "https://wohlsoft.ru/docs/Software/libreadline6_6.3-8_amd64-ubuntu1804.deb",
             lftp_download: "https://wohlsoft.ru/docs/Software/lftp_4.9.1-1_amd64-ubuntu1604.deb",
 
             deps_cmdline: "echo 'Ubuntu 18' \
