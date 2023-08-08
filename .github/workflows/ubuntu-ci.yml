@@ -32,7 +32,6 @@ jobs:
             qt_dir: "/home/runner/Qt/5.15.2_static/bin",
             qt_lib_dir: "/home/runner/Qt/5.15.2_static/lib",
             lftp_download: "https://wohlsoft.ru/docs/Software/lftp_4.9.1-1_amd64-ubuntu1604.deb",
-            lftp_install_pacakge: "lftp_4.9.1-1_amd64-ubuntu1604.deb",
 
             deps_cmdline: "echo 'Ubuntu 18' \
             && apt-get update --fix-missing -qq \
@@ -121,14 +120,14 @@ jobs:
       uses: carlosperate/download-file-action@v2
       with:
         file-url: "${{ matrix.config.lftp_download }}"
-        file-name: lftp.7z
+        file-name: lftp.deb
 
     - name: Install LFTP
       if: matrix.config.lftp_download
       shell: bash
       run: |
-        sudo dpkg -i "./${{ matrix.config.lftp_install_pacakge }}"
-        rm -f "${{ matrix.config.lftp_install_pacakge }}"
+        sudo dpkg -i ./lftp.deb
+        rm -f lftp.deb
 
     - name: Configure
       shell: bash
