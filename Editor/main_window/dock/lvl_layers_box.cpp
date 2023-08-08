@@ -20,6 +20,7 @@
 
 #include <editing/_scenes/level/lvl_history_manager.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
+#include <editing/_scenes/level/lvl_scene.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/util.h>
 #include <main_window/dock/lvl_item_properties.h>
@@ -27,7 +28,6 @@
 #include <main_window/dock/lvl_search_box.h>
 #include <main_window/dock/lvl_events_box.h>
 #include <networking/engine_intproc.h>
-#include "../../editing/_scenes/level/lvl_scene.h"
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
