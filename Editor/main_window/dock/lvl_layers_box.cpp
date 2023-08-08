@@ -875,7 +875,9 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
     if(ui->LvlLayerList->selectedItems().isEmpty())
         return;
 
-    bool isDefaultLayer = ui->LvlLayerList->selectedItems().first()->text() == "Default";
+    QListWidgetItem *layerItem = ui->LvlLayerList->selectedItems()[0];
+    QString layerName = layerItem->text();
+    bool isDefaultLayer = layerName == "Default";
 
     QPoint globPos = ui->LvlLayerList->mapToGlobal(pos);
 
@@ -885,6 +887,7 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 
     QMenu *layer_menu = new QMenu(this);
     QAction *rename = nullptr;
+
     if(!isDefaultLayer)
         rename = layer_menu->addAction(tr("Rename layer"));
 
@@ -901,39 +904,33 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
     }
 
     QAction *selected = layer_menu->exec(globPos);
+
     if(selected == rename)
-        ui->LvlLayerList->editItem(ui->LvlLayerList->selectedItems()[0]);
+        ui->LvlLayerList->editItem(layerItem);
     else if(selected == selectAll)
     {
         LevelEdit *lvlEdit = mw()->activeLvlEditWin();
         LvlScene *scene = nullptr;
-        if((lvlEdit) && (lvlEdit->sceneCreated))
-            scene = lvlEdit->scene;
 
+        if(!lvlEdit || !lvlEdit->sceneCreated || !lvlEdit->scene)
+        {
+            qWarning() << "Attempt to send an action from a non-initialized scene";
+            return;
+        }
+
+        scene = lvlEdit->scene;
         scene->clearSelection();
 
-        QMap<QString, bool> *layerMap = new QMap<QString, bool>();
-        QList<QListWidgetItem *> layers = ui->LvlLayerList->selectedItems();
-        if(layers.size() > 0)
+        QList<QGraphicsItem*> items = lvlEdit->getGraphicsView()->items();
+
+        for(auto *it : items)
         {
-            for(int i = 0; i < layers.size(); ++i)
-                layerMap->insert(QString(layers[i]->text()), true);
+            if(it->data(ITEM_IS_ITEM).toInt() != 1)
+                continue;
 
-            int WinType = mw()->activeChildWindow();
-
-            LevelEdit *edit = nullptr;
-            if(WinType == MainWindow::WND_Level)
-                edit = mw()->activeLvlEditWin();
-
-            QList<QGraphicsItem*> items = edit->getGraphicsView()->items();
-            for(int i = items.count(); i >= 0; --i)
-            {
-                if(items[i]->data(ITEM_IS_ITEM).toInt() == 1)
-                {
-                    LvlBaseItem* item = dynamic_cast<LvlBaseItem *>(items[i]);
-                    item->setSelected(layerMap->contains(QString(item->getLayerName())));
-                }
-            }
+            LvlBaseItem* item = dynamic_cast<LvlBaseItem *>(it);
+            Q_ASSERT(item);
+            item->setSelected(item->getLayerName() == layerName);
         }
     }
     else if((selected == removeLayer) || (selected == removeLayerOnly))
