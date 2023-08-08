@@ -79,7 +79,6 @@ jobs:
           eval ${{ matrix.config.deps_cmdline }}
         fi
         g++ --version
-        cmake --version
         mkdir build-temp
 
     - uses: actions/checkout@v3
