@@ -4172,7 +4172,7 @@ All elements of this layer will be removed too!</source>
     </message>
     <message>
         <source>Select all items</source>
-        <translation type="unfinished"></translation>
+        <translation>Выделить все элементы</translation>
     </message>
 </context>
 <context>

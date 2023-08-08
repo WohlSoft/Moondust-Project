@@ -4173,7 +4173,7 @@ All objects on this layer will be deleted!</translation>
     </message>
     <message>
         <source>Select all items</source>
-        <translation type="unfinished"></translation>
+        <translation>Select all items</translation>
     </message>
 </context>
 <context>
