@@ -13,6 +13,7 @@ jobs:
   build:
     name: "${{ matrix.config.name }} | ${{ matrix.config.build_type }}"
     runs-on: ${{ matrix.config.os }}
+    container: ${{ matrix.config.container }}
     strategy:
       fail-fast: true
       matrix:
