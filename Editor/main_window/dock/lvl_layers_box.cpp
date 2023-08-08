@@ -892,6 +892,8 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
         rename = layer_menu.addAction(tr("Rename layer"));
 
     QAction *selectAll = layer_menu.addAction(tr("Select all items"));
+    if(layerItem->checkState() != Qt::Checked)
+        selectAll->setEnabled(false);
 
     QAction *removeLayer = nullptr;
     QAction *removeLayerOnly = nullptr;
