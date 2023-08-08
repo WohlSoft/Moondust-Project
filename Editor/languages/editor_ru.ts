@@ -374,7 +374,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
-        <translation type="unfinished"></translation>
+        <translation>Определяет степень видимости (непрозрачности), применяемую ко всем заблокированным элементам на сцене.</translation>
     </message>
 </context>
 <context>
