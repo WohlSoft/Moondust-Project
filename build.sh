@@ -517,17 +517,19 @@ cd "${BUILD_DIR}"
 CMAKE_STATIC_QT=""
 if ${flag_cmake_static_qt}; then
     CMAKE_STATIC_QT="-DPGE_ENABLE_STATIC_QT=ON"
-    if [[ "${QT_ROOT_STATIC}" != "" ]]; then
-        CMAKE_STATIC_QT="${CMAKE_STATIC_QT} -DMOONDUST_STATIC_QT_ROOT=${QT_ROOT_STATIC}"
+    if [[ ! -z "${QT_PREFIX_ROOT}" ]]; then
+        CMAKE_STATIC_QT="${CMAKE_STATIC_QT} -DMOONDUST_STATIC_QT_ROOT=${QT_PREFIX_ROOT}"
     fi
 fi
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    QT_PREFIX_ROOT=$(osx_realpath "${QT_PATH}/../")
-elif [[ -f /usr/bin/realpath ]]; then
-    QT_PREFIX_ROOT=$(realpath "${QT_PATH}/../")
-else
-    QT_PREFIX_ROOT=$(readlink -f -- "${QT_PATH}/../")
+if [[ -z "${QT_PREFIX_ROOT}" ]]; then
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        QT_PREFIX_ROOT=$(osx_realpath "${QT_PATH}/../")
+    elif [[ -f /usr/bin/realpath ]]; then
+        QT_PREFIX_ROOT=$(realpath "${QT_PATH}/../")
+    else
+        QT_PREFIX_ROOT=$(readlink -f -- "${QT_PATH}/../")
+    fi
 fi
 
 if [[ "$OSTYPE" == "msys"* ]]; then

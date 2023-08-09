@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - stable
+      - versus-ci-ubuntu
   pull_request:
     branches:
       - master
@@ -47,16 +48,14 @@ jobs:
             libxxf86vm-dev libxinerama-dev libxkbcommon-dev libfontconfig1-dev libasound2-dev \
             libpulse-dev libdbus-1-dev udev mtdev-tools webp libudev-dev libglm-dev libwayland-dev \
             libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libgles2-mesa \
-            libgles2-mesa-dev libmirclient-dev libproxy-dev \
+            libgles2-mesa-dev libmirclient-dev libproxy-dev libtiff-dev libxkbcommon-x11-dev \
             gcc-8 g++-8 libc6 libstdc++6 \
             libexpat1 readline-common libgnutls30 libtinfo5 zlib1g \
-            && update-alternatives --remove-all gcc \
-            && update-alternatives --remove-all g++ \
-            && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 80 \
-            && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 80 \
-            && wget -q https://github.com/Kitware/CMake/releases/download/v3.15.4/cmake-3.15.4-Linux-x86_64.sh \
-            && chmod uog+x cmake-3.15.4-Linux-x86_64.sh \
-            && ./cmake-3.15.4-Linux-x86_64.sh --skip-license --prefix=/usr \
+            && wget https://github.com/Kitware/CMake/releases/download/v3.27.1/cmake-3.27.1-linux-x86_64.tar.gz -O cmake.tar.gz \
+            && tar -xf cmake.tar.gz \
+            && cp -a cmake-3.27.1-linux-x86_64/bin/* /usr/local/bin \
+            && cp -a cmake-3.27.1-linux-x86_64/share/* /usr/local/share \
+            && rm -vrf cmake.tar.gz cmake-3.27.1-linux-x86_64 \
             && git config --global --add safe.directory '*'"
           }
 
@@ -79,8 +78,8 @@ jobs:
         if [[ ! -z "${{ matrix.config.deps_cmdline }}" ]]; then
           eval ${{ matrix.config.deps_cmdline }}
         fi
-        g++ --version
-        mkdir build-temp
+        g++-8 --version
+        cmake --version
 
     - uses: actions/checkout@v3
       with:
@@ -145,6 +144,37 @@ jobs:
         sudo dpkg -i ./lftp.deb
         rm -f lftp.deb
 
+    - name: Generate version files
+      shell: bash
+      run: |
+        if [[ "${BRANCH_NAME}" == *"merge"* ]]; then
+            BRANCH_NAME_RES="pull-request"
+            echo "-- Pull-request detected!"
+        else
+            BRANCH_NAME_RES=${BRANCH_NAME}
+        fi
+
+        GIT_REVISION=$(git --git-dir .git --work-tree . describe --always)
+        VER_DIR=$PWD/bin-cmake-release/versions
+        TEMP_ELF=$PWD/35hb13h51.tmp
+
+        echo "== Generating version files into ${VER_DIR}... =="
+
+        mkdir -p ${VER_DIR}
+        mkdir ${TEMP_ELF}
+        cd ${TEMP_ELF}
+        cmake ../_common/travis-ci/version_gen > /dev/null
+        make -s -j 3 > /dev/null
+        cd ..
+
+        ${TEMP_ELF}/version_gen_editor > ${VER_DIR}/editor_${BRANCH_NAME_RES}.txt
+        ${TEMP_ELF}/version_gen_editor_short > ${VER_DIR}/editor_stable_${BRANCH_NAME_RES}.txt
+
+        ${TEMP_ELF}/version_gen_engine > ${VER_DIR}/engine_${BRANCH_NAME_RES}.txt
+        ${TEMP_ELF}/version_gen_engine_short > ${VER_DIR}/engine_stable_${BRANCH_NAME_RES}.txt
+
+        rm -Rf ${TEMP_ELF}
+
     - name: Configure
       shell: bash
       run: |
@@ -152,13 +182,16 @@ jobs:
             export QT_VER="${{ matrix.config.qt_ver }}"
             export QT_PATH="${{ matrix.config.qt_dir }}"
             export QT_LIB_PATH="${{ matrix.config.qt_lib_dir }}"
-            export QT_ROOT_STATIC="/home/runner/${QT_VER}"
 
             echo "# ==============Qt paths================" > _paths.sh;
-            echo "QT_PATH=\"/home/runner/${QT_VER}/bin/\"" >> _paths.sh;
-            echo "QT_LIB_PATH=\"//home/runner/${QT_VER}/lib/\"" >> _paths.sh;
+            echo "QT_PATH=\"/home/runner/Qt/${QT_VER}/bin\"" >> _paths.sh;
+            echo "QT_LIB_PATH=\"/home/runner/Qt/${QT_VER}/lib\"" >> _paths.sh;
             echo "QMake=\"qmake\"" >> _paths.sh;
             echo "LRelease=\"lrelease\"" >> _paths.sh;
+            echo "" >> _paths.sh;
+            echo "export CC=gcc-8" >> _paths.sh;
+            echo "export CXX=g++-8" >> _paths.sh;
+            echo "export QT_PREFIX_ROOT=\"/home/runner/Qt/${QT_VER}\"" >> _paths.sh;
             echo "" >> _paths.sh;
             chmod u+x _paths.sh;
             echo "============== _paths.sh ================="
@@ -187,8 +220,15 @@ jobs:
         else
             BRANCH_NAME_RES=${BRANCH_NAME}
         fi
-        export PATH=/home/runner/Qt/$QtStaticVersion/bin:$PATH
+
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+            export PATH=${{ matrix.config.extra_path }}:${PATH}
+        fi
+
+        mkdir -p build-temp
+
         TZ=Europe/Moscow date +"%Y-%m-%d %H:%M:%S" > build-temp/build_date_${BRANCH_NAME_RES}_linux.txt
+
         ./build.sh no-pause ninja deploy static-qt portable
 
     - name: Deploy to builds.wohlsoft.ru
@@ -223,4 +263,4 @@ jobs:
       shell: bash
       run: |
         git status
-        ls -lR build
+        ls -lR build-pge-cmake-release
