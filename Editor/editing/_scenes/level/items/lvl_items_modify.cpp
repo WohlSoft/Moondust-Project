@@ -365,7 +365,7 @@ void LvlScene::placeItemUnderCursor()
         }
     }
 
-    if(itemCollidesWith(m_cursorItemImg))
+    if(itemCollidesWith(m_cursorItemImg) && (QApplication::queryKeyboardModifiers() & Qt::KeyboardModifier::ControlModifier) == 0)
         return;
     else
     {
