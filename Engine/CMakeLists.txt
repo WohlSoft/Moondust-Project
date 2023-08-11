@@ -25,10 +25,17 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 if(ANDROID)
-    include(AndroidNdkModules)
-    android_ndk_import_module_cpufeatures()
-    include(../_common/ndk-stl-config.cmake)
-    set(ANDROID_STL "c++_static")
+    if(${ANDROID_ABI} STREQUAL "armeabi-v7a")
+        # Disable NEON support for old devices
+        set(ANDROID_ARM_NEON FALSE)
+    elseif(NOT DEFINED ANDROID_ARM_NEON)
+        set(ANDROID_ARM_NEON TRUE)
+    endif()
+
+    if(NOT DEFINED ANDROID_STL)
+        # include(ndk-stl-config.cmake)
+        set(ANDROID_STL "c++_static")
+    endif()
 endif()
 
 # Version
@@ -483,11 +490,11 @@ if(NOT APPLE AND NOT MSVC AND NOT USE_SYSTEM_LIBC)
     set_property(TARGET pge_engine APPEND_STRING PROPERTY LINK_FLAGS " -static-libgcc -static-libstdc++")
 endif()
 
-if(ANDROID)
-    list(APPEND PGE_ENGINE_LINK_LIBS
-        "cpufeatures"
-    )
-endif()
+#if(ANDROID)
+#    list(APPEND PGE_ENGINE_LINK_LIBS
+#        "cpufeatures"
+#    )
+#endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC AND NOT ANDROID)
     if(WIN32)
