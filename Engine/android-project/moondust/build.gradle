@@ -2,8 +2,7 @@ def buildAsLibrary = project.hasProperty('BUILD_AS_LIBRARY');
 def buildAsApplication = !buildAsLibrary
 if (buildAsApplication) {
     apply plugin: 'com.android.application'
-}
-else {
+} else {
     apply plugin: 'com.android.library'
 }
 
@@ -93,13 +92,19 @@ println "Project version: " + xTechVersionString + ", version code: " + xTechVer
 
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
+
+    // Note: The NDK 23 is SIGNIFICANTLY important, because of the support for non-NEON and older Android versions
+    //       The NDK 24 removes the support for Android 4.1, 4.2, and 4.3.
+    //       See details: https://github.com/android/ndk/wiki/Changelog-r24
+    ndkVersion "23.2.8568313"
+
     defaultConfig {
         if (buildAsApplication) {
             applicationId "ru.wohlsoft.moondust"
         }
         minSdkVersion 16
-        targetSdkVersion 32
+        targetSdkVersion 33
 
         versionName xTechVersionString
         versionCode xTechVersionNumber
