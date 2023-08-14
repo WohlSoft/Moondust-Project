@@ -538,7 +538,7 @@ void TranslatorMain::openProject(const QString &d, bool singleLevel)
     {
         int i = m_recentProjects.indexOf(d);
         if(i != 0)
-            m_recentProjects.swapItemsAt(i, 0);
+            std::swap(m_recentProjects[i], m_recentProjects[0]);
     }
 
     updateRecent();
