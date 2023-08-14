@@ -6,7 +6,8 @@ import json
 tpl_category = '<p><span class="title1">%s</span></p><br>'
 tpl_role = '<p><span class="title2">%s:</span></p>'
 
-img_root_qt = 'qrc://contributors/'
+# img_root_qt = 'qrc://contributors/'
+img_root_qt = ':/contributors/'
 img_root_local = 'contributors/'
 
 

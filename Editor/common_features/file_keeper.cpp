@@ -22,6 +22,7 @@
 #include <QDir>
 #include <QTimer>
 #include <QSet>
+#include <random>
 
 #ifndef __WIN32
 
@@ -53,6 +54,10 @@ static QString errorToString()
 #endif // __WIN32
 
 
+static std::random_device rd;
+static std::mt19937 mt(rd());
+static std::uniform_int_distribution<int> distI(0, RAND_MAX);
+
 static QString getRandomString()
 {
     const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
@@ -61,7 +66,7 @@ static QString getRandomString()
     QString randomString;
     for(int i = 0; i < randomStringLength; ++i)
     {
-        int index = qrand() % possibleCharacters.length();
+        int index = distI(mt) % possibleCharacters.length();
         QChar nextChar = possibleCharacters.at(index);
         randomString.append(nextChar);
     }

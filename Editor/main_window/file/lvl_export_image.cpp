@@ -22,6 +22,7 @@
 #include <QProgressDialog>
 #include <QDesktopWidget>
 #include <QStandardPaths>
+#include <QDateTime>
 
 #include <common_features/main_window_ptr.h>
 #include <common_features/app_path.h>
@@ -139,7 +140,7 @@ void LevelEdit::ExportingReady() //slot
                        m_recentExportPath + "/" +
                        QString("%1_Section_%2%3.png").arg(QFileInfo(curFile).baseName())
                        .arg(LvlData.CurSection + 1)
-                       .arg(scene->m_captureFullSection ? "" : ("_" + QString::number(qrand()))),
+                       .arg(scene->m_captureFullSection ? "" : ("_" + QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss"))),
                        tr("PNG Image (*.png)"), nullptr, c_fileDialogOptions);
     if(fileName.isEmpty())
         return;

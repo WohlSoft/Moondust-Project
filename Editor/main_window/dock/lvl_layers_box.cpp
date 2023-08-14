@@ -20,6 +20,7 @@
 
 #include <editing/_scenes/level/lvl_history_manager.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
+#include <editing/_scenes/level/lvl_scene.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/util.h>
 #include <main_window/dock/lvl_item_properties.h>
@@ -120,10 +121,10 @@ void LvlLayersBox::setLayersBox()
             item->setFlags(Qt::ItemIsUserCheckable);
 
             if((layer.name != "Destroyed Blocks") && (layer.name != "Spawned NPCs"))
-                item->setFlags(item->flags() | Qt::ItemIsEnabled);
+                item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 
             if(layer.name != "Default")
-                item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
+                item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
             item->setCheckState((layer.hidden) ? Qt::Unchecked : Qt::Checked);
             item->setData(Qt::UserRole, QString::number(layer.meta.array_id));
@@ -871,7 +872,12 @@ void LvlLayersBox::on_RemoveLayer_clicked()
 
 void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 {
-    if(ui->LvlLayerList->selectedItems().isEmpty()) return;
+    if(ui->LvlLayerList->selectedItems().isEmpty())
+        return;
+
+    QListWidgetItem *layerItem = ui->LvlLayerList->selectedItems()[0];
+    QString layerName = layerItem->text();
+    bool isDefaultLayer = layerName == "Default";
 
     QPoint globPos = ui->LvlLayerList->mapToGlobal(pos);
 
@@ -879,17 +885,56 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
              .arg(pos.x()).arg(pos.y())
              .arg(globPos.x()).arg(globPos.y()));
 
-    QMenu *layer_menu = new QMenu(this);
-    QAction *rename = layer_menu->addAction(tr("Rename layer"));
+    QMenu layer_menu(this);
+    QAction *rename = nullptr;
 
-    layer_menu->addSeparator();
+    if(!isDefaultLayer)
+        rename = layer_menu.addAction(tr("Rename layer"));
 
-    QAction *removeLayer = layer_menu->addAction(tr("Remove layer with items"));
-    QAction *removeLayerOnly = layer_menu->addAction(tr("Remove Layer and keep items"));
+    QAction *selectAll = layer_menu.addAction(tr("Select all items"));
+    if(layerItem->checkState() != Qt::Checked)
+        selectAll->setEnabled(false);
 
-    QAction *selected = layer_menu->exec(globPos);
+    QAction *removeLayer = nullptr;
+    QAction *removeLayerOnly = nullptr;
+
+    if(!isDefaultLayer)
+    {
+        layer_menu.addSeparator();
+        removeLayer = layer_menu.addAction(tr("Remove layer with items"));
+        removeLayerOnly = layer_menu.addAction(tr("Remove Layer and keep items"));
+    }
+
+    QAction *selected = layer_menu.exec(globPos);
+
     if(selected == rename)
-        ui->LvlLayerList->editItem(ui->LvlLayerList->selectedItems()[0]);
+        ui->LvlLayerList->editItem(layerItem);
+    else if(selected == selectAll)
+    {
+        LevelEdit *lvlEdit = mw()->activeLvlEditWin();
+        LvlScene *scene = nullptr;
+
+        if(!lvlEdit || !lvlEdit->sceneCreated || !lvlEdit->scene)
+        {
+            qWarning() << "Attempt to send an action from a non-initialized scene";
+            return;
+        }
+
+        scene = lvlEdit->scene;
+        scene->clearSelection();
+
+        QList<QGraphicsItem*> items = lvlEdit->getGraphicsView()->items();
+
+        for(auto *it : items)
+        {
+            if(it->data(ITEM_IS_ITEM).toInt() != 1)
+                continue;
+
+            LvlBaseItem* item = dynamic_cast<LvlBaseItem *>(it);
+            Q_ASSERT(item);
+            item->setSelected(item->getLayerName() == layerName);
+        }
+    }
     else if((selected == removeLayer) || (selected == removeLayerOnly))
     {
         if(selected == removeLayerOnly)

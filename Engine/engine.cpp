@@ -267,6 +267,14 @@ bool PGEEngineApp::initSDL()
         pLogWarning("Error while SDL Initialization: %s", error);
     SDL_ClearError();
 
+#if defined(__ANDROID__)
+    if(!SDL_AndroidRequestPermission("android.permission.WRITE_EXTERNAL_STORAGE"))
+    {
+        pLogFatal("Permission denied");
+        return false;
+    }
+#endif
+
     // Initialize SDL Mixer
     res = (Mix_Init(sdlMixerInitFlags) < 0);
     if(!res)

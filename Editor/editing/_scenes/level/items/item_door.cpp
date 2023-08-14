@@ -601,6 +601,11 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 }
 
 
+QString ItemDoor::getLayerName()
+{
+    return m_data.layer;
+}
+
 ///////////////////MainArray functions/////////////////////////////
 void ItemDoor::setLayer(QString layer)
 {

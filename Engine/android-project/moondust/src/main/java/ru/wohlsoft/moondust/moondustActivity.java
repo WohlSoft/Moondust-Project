@@ -1,6 +1,14 @@
 package ru.wohlsoft.moondust;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
 import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +46,10 @@ enum ControllerKeys
 
 public class moondustActivity extends SDLActivity
 {
+    final String LOG_TAG = "Moondust";
+    public static final int READWRITE_PERMISSION_FOR_GAME = 1;
+    private Bundle m_savedInstanceState = null;
+
     protected String[] getLibraries()
     {
         return new String[] {
@@ -74,10 +86,34 @@ public class moondustActivity extends SDLActivity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        if(!hasManageAppFS())
+            return;
+
         LinearLayout ll = new LinearLayout(this);
         ll.setBackground(getResources().getDrawable(R.mipmap.buttons));
         addContentView(ll, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
+    }
+
+    public boolean hasManageAppFS()
+    {
+        if(Build.VERSION.SDK_INT >= 30)
+        {
+            if(Environment.isExternalStorageManager())
+                return true;
+
+            Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+            String pName = getPackageName();
+            Uri uri = Uri.fromParts("package", pName, null);
+            intent.setData(uri);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+            return false;
+        }
+
+        return true;
     }
 
     public static native void setKeyPos(int cmd, float left, float top, float right, float bottom);

@@ -363,6 +363,18 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <comment>Autosave interval units</comment>
         <translation>分钟自动保存文件</translation>
     </message>
+    <message>
+        <source>Locked Item Opacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
@@ -4155,6 +4167,10 @@ All elements of this layer will be moved to the &apos;Default&apos; layer!</sour
 All elements of this layer will be removed too!</source>
         <translation>要删除此图层吗？
 此图层的所有对象即将删除！</translation>
+    </message>
+    <message>
+        <source>Select all items</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

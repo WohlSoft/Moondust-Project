@@ -44,8 +44,8 @@ WLD_ItemProps::WLD_ItemProps(QWidget *parent) :
     QRect mwg = mw()->geometry();
     int GOffset = 10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
-    connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
-    connect(this, &QDockWidget::visibilityChanged, mw()->ui->action_Placing_ShowProperties, &QAction::setChecked);
+    QObject::connect(mw(), &MainWindow::languageSwitched, this, &WLD_ItemProps::re_translate);
+    QObject::connect(this, &QDockWidget::visibilityChanged, mw()->ui->action_Placing_ShowProperties, &QAction::setChecked);
     mw()->ui->action_Placing_ShowProperties->setChecked(isVisible());
     setFloating(true);
     setGeometry(
@@ -79,7 +79,7 @@ WLD_ItemProps::WLD_ItemProps(QWidget *parent) :
     for(size_t i = 0; i < 4; ++i)
     {
         QObject::connect(&m_exitCodes[i], &QMenu::triggered,
-                         this, &WLD_ItemProps::on_WLD_PROPS_LevelExitCodeSelected);
+                         this, &WLD_ItemProps::levelExitCodeSelected);
         m_exitButtons[i]->setMenu(&m_exitCodes[i]);
     }
 }
@@ -565,7 +565,7 @@ void WLD_ItemProps::on_WLD_PROPS_LVLBrowse_clicked()
 
 }
 
-void WLD_ItemProps::on_WLD_PROPS_LevelExitCodeSelected(QAction *exitCode)
+void WLD_ItemProps::levelExitCodeSelected(QAction *exitCode)
 {
     if(m_lockSettings || !exitCode)
         return;

@@ -201,42 +201,42 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>기본값</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="617"/>
+        <location filename="../main_window/tools/app_settings.ui" line="799"/>
         <source>Classic Events tabs to auto-expand</source>
         <translation>자동 확장 할 클래식 이벤트 탭</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="651"/>
+        <location filename="../main_window/tools/app_settings.ui" line="819"/>
         <source>Autoscroll section</source>
         <translation>자동 스크롤 섹션</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="623"/>
+        <location filename="../main_window/tools/app_settings.ui" line="805"/>
         <source>Common</source>
         <translation>공통 이벤트 명령</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="637"/>
+        <location filename="../main_window/tools/app_settings.ui" line="833"/>
         <source>Layer visibility</source>
         <translation>레이어 가시성</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="644"/>
+        <location filename="../main_window/tools/app_settings.ui" line="840"/>
         <source>Layer movement</source>
         <translation>레이어 이동</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="658"/>
+        <location filename="../main_window/tools/app_settings.ui" line="860"/>
         <source>Trigger event</source>
         <translation>트리거 이벤트(명령 실행)</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="665"/>
+        <location filename="../main_window/tools/app_settings.ui" line="812"/>
         <source>Hold buttons</source>
         <translation>보류(홀드) 버튼</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="630"/>
+        <location filename="../main_window/tools/app_settings.ui" line="826"/>
         <source>Section settings</source>
         <translation>섹션 설정</translation>
     </message>
@@ -257,202 +257,217 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="701"/>
+        <location filename="../main_window/tools/app_settings.ui" line="617"/>
         <source>NPC settings</source>
         <translation>NPC 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="710"/>
+        <location filename="../main_window/tools/app_settings.ui" line="626"/>
         <source>Generator</source>
         <translation>생성 프로그램</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="719"/>
+        <location filename="../main_window/tools/app_settings.ui" line="635"/>
         <source>Type:</source>
         <translation>유형:</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="753"/>
+        <location filename="../main_window/tools/app_settings.ui" line="669"/>
         <source>Warp</source>
         <translation>경사</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="758"/>
+        <location filename="../main_window/tools/app_settings.ui" line="674"/>
         <source>Projectile</source>
         <translation>발사체</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="766"/>
+        <location filename="../main_window/tools/app_settings.ui" line="682"/>
         <source>Delay (seconds):</source>
         <translation>지연 (초) :</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="789"/>
+        <location filename="../main_window/tools/app_settings.ui" line="705"/>
         <source>Direction</source>
         <translation>Direction</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="801"/>
+        <location filename="../main_window/tools/app_settings.ui" line="717"/>
         <source>Left</source>
         <translation>왼쪽</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="808"/>
+        <location filename="../main_window/tools/app_settings.ui" line="724"/>
         <source>Random</source>
         <translation>무작위</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="815"/>
+        <location filename="../main_window/tools/app_settings.ui" line="731"/>
         <source>Right</source>
         <translation>오른쪽</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="828"/>
+        <location filename="../main_window/tools/app_settings.ui" line="744"/>
+        <source>Locked Item Opacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="758"/>
+        <source>Opacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="765"/>
+        <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="870"/>
         <source>Warps and Doors</source>
         <translation>워프 및 문</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="834"/>
+        <location filename="../main_window/tools/app_settings.ui" line="876"/>
         <source>Warp type:</source>
         <translation>워프 유형:</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="842"/>
+        <location filename="../main_window/tools/app_settings.ui" line="884"/>
         <source>0 - Instant</source>
         <translation>0-즉시</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="847"/>
+        <location filename="../main_window/tools/app_settings.ui" line="889"/>
         <source>1 - Pipe</source>
         <translation>1-파이프</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="852"/>
+        <location filename="../main_window/tools/app_settings.ui" line="894"/>
         <source>2 - Door</source>
         <translation>2-문</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="857"/>
+        <location filename="../main_window/tools/app_settings.ui" line="899"/>
         <source>3 - Portal</source>
         <translation>3-포털</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="882"/>
+        <location filename="../main_window/tools/app_settings.ui" line="924"/>
         <source>View</source>
         <translation>전망</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="891"/>
+        <location filename="../main_window/tools/app_settings.ui" line="933"/>
         <source>Tileset Item toolbox</source>
         <translation>타일셋 항목 도구 상자</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="900"/>
-        <location filename="../main_window/tools/app_settings.ui" line="926"/>
-        <location filename="../main_window/tools/app_settings.ui" line="984"/>
+        <location filename="../main_window/tools/app_settings.ui" line="942"/>
+        <location filename="../main_window/tools/app_settings.ui" line="968"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1026"/>
         <source>Display tabs horizontally</source>
         <translation>가로로 탭 표시</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="907"/>
-        <location filename="../main_window/tools/app_settings.ui" line="933"/>
-        <location filename="../main_window/tools/app_settings.ui" line="991"/>
+        <location filename="../main_window/tools/app_settings.ui" line="949"/>
+        <location filename="../main_window/tools/app_settings.ui" line="975"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1033"/>
         <source>Display tabs vertically</source>
         <translation>탭을 세로로 표시</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="917"/>
+        <location filename="../main_window/tools/app_settings.ui" line="959"/>
         <source>World Map Item toolbox</source>
         <translation>세계지도 아이템 도구 상자</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="943"/>
-        <location filename="../main_window/tools/app_settings.ui" line="952"/>
+        <location filename="../main_window/tools/app_settings.ui" line="985"/>
+        <location filename="../main_window/tools/app_settings.ui" line="994"/>
         <source>Theme</source>
         <translation>테마</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="962"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1004"/>
         <source>Palette</source>
         <translation>팔레트</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="975"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1017"/>
         <source>Level Item toolbox</source>
         <translation>레벨 항목 도구 상자</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1014"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1056"/>
         <source>Font</source>
         <translation>폰트</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1033"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1075"/>
         <source>Font size</source>
         <translation>폰트 크기</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1053"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1095"/>
         <source>Use default</source>
         <translation>기본값 사용</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1064"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1106"/>
         <source>Logging</source>
         <translation>벌채 반출</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1073"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1115"/>
         <source>Log level</source>
         <translation>로그 수준</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1083"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1125"/>
         <source>Browse</source>
         <translation>검색</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1090"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1132"/>
         <source>Log file</source>
         <translation>로그 파일</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1114"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1156"/>
         <source>Extra</source>
         <translation>추가의</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1123"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1165"/>
         <source>Note: Some of those settings will take change on application restart</source>
         <translation>참고 : 일부 설정은 편집기를 다시 시작한 후에 만 변경 사항을 적용합니다</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1136"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1178"/>
         <source>Enable auto-scaling on the High-DPI screens</source>
         <translation>높은 DPI 모니터에서 자동 확장 활성화</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="226"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="227"/>
         <source>Set log file</source>
         <translation>로그 파일 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="227"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="228"/>
         <source>Text files (*.txt *.log)</source>
         <translation>텍스트 파일 (* .txt * .log)</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="326"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="329"/>
         <source>Success</source>
         <translation>성공</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="326"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="329"/>
         <source>All file associations have been set</source>
         <translation>모든 파일 연결이 설정되었습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="328"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="331"/>
         <source>Error</source>
         <translation>에러</translation>
     </message>
@@ -1551,7 +1566,7 @@ Please save them before doing anything else.</source>
 <context>
     <name>DataConfig</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="345"/>
+        <location filename="../data_configs/data_configs.cpp" line="351"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;
@@ -5238,58 +5253,63 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>잠금</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="708"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="709"/>
         <source>Layers merge</source>
         <translation>레이어 병합</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="709"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="710"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
         <translation>&apos;%1&apos;이름의 레이어는 이미 존재합니다, 레이어를 병합하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="792"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="793"/>
         <source>New Layer %1</source>
         <translation>새로운 레이어%1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="866"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="898"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="906"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="867"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="943"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="951"/>
         <source>Remove layer</source>
         <translation>레이어 제거</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="867"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="868"/>
         <source>Are you sure you want to remove this layer?
 All objects on this layer will be moved to the &apos;Default&apos; layer.</source>
         <translation>이 레이어를 제거 하시겠습니까?
 이 레이어의 모든 개체는 &apos;기본&apos;레이어로 이동합니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="883"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="892"/>
         <source>Rename layer</source>
         <translation>레이어 이름 변경</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="887"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="894"/>
+        <source>Select all items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="904"/>
         <source>Remove layer with items</source>
         <translation>레이어 및 항목 제거</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="888"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="905"/>
         <source>Remove Layer and keep items</source>
         <translation>레이어 제거 및 항목 유지</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="899"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="944"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
         <translation>이 레이어를 제거 하시겠습니까?
 이 레이어의 모든 개체는 &apos;기본&apos;레이어로 이동합니다!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="907"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="952"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
         <translation>이 레이어를 제거 하시겠습니까?
@@ -7824,9 +7844,9 @@ Please reload current file to apply result.</source>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="224"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="156"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="162"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="168"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="157"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="163"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="169"/>
         <source>[None]</source>
         <translation>[없음]</translation>
     </message>
@@ -8201,84 +8221,84 @@ Please save the file first.</source>
 먼저 파일을 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="217"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="219"/>
         <source>Default by item</source>
         <translation>항목 별 기본값</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="250"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="252"/>
         <source>Custom...</source>
         <translation>커스텀...</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="256"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="258"/>
         <source>Next grid size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="261"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="263"/>
         <source>Previous grid size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="273"/>
         <location filename="../main_window/_settings/defaults.cpp" line="275"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="277"/>
         <source>Select</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>고르다</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="286"/>
         <location filename="../main_window/_settings/defaults.cpp" line="288"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="290"/>
         <source>Erase</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>삭제</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="299"/>
         <location filename="../main_window/_settings/defaults.cpp" line="301"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="303"/>
         <source>Items</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>아이템</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="312"/>
         <location filename="../main_window/_settings/defaults.cpp" line="314"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="316"/>
         <source>Player</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>플레이어</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="328"/>
         <location filename="../main_window/_settings/defaults.cpp" line="330"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="332"/>
         <source>Section</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>부분</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="340"/>
         <location filename="../main_window/_settings/defaults.cpp" line="342"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="344"/>
         <source>World settings</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>세계 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="352"/>
         <location filename="../main_window/_settings/defaults.cpp" line="354"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="356"/>
         <source>Warps and Doors</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>워프 및 문</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="364"/>
         <location filename="../main_window/_settings/defaults.cpp" line="366"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="368"/>
         <source>Water</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>물</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="393"/>
         <location filename="../main_window/_settings/defaults.cpp" line="395"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="397"/>
         <source>Options</source>
         <translation>옵션</translation>
     </message>
@@ -8700,7 +8720,7 @@ Error description:
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="328"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="331"/>
         <source>File association failed.</source>
         <translation>파일 연결에 실패했습니다.</translation>
     </message>
@@ -9415,7 +9435,7 @@ Reason: %1
         <translation>타일로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="683"/>
+        <location filename="../data_configs/data_configs.cpp" line="691"/>
         <source>Finishing loading...</source>
         <translation>로드 완료 중 ...</translation>
     </message>

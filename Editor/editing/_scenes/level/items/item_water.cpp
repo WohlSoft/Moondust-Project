@@ -301,6 +301,11 @@ void ItemPhysEnv::setLayer(QString layer)
     }
 }
 
+QString ItemPhysEnv::getLayerName()
+{
+    return m_data.layer;
+}
+
 void ItemPhysEnv::arrayApply()
 {
     bool found = false;

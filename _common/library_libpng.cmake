@@ -41,13 +41,12 @@ else()
             "-DDISABLE_FORCE_DEBUG_POSTFIX=ON"
             "-DCMAKE_DEBUG_POSTFIX=${PGE_LIBS_DEBUG_SUFFIX}"
             ${ANDROID_CMAKE_FLAGS}
+            ${APPLE_CMAKE_FLAGS}
             "-DPNG_SHARED=OFF"
             "-DPNG_STATIC=ON"
             "-DPNG_BUILD_ZLIB=ON"
             "-DZLIB_INCLUDE_DIR=${DEPENDENCIES_INSTALL_DIR}/include"
             "-DZLIB_LIBRARY=${libZLib_A_Lib}"
-            $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
-            $<$<BOOL:APPLE>:"-DCMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES}">
             "-DPNG_TESTS=OFF"
         BUILD_BYPRODUCTS
             "${libPNG_A_Lib}"

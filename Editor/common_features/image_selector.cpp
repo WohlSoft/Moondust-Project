@@ -53,11 +53,11 @@ ImageSelectorMenu::ImageSelectorMenu(QWidget *parent):
                      this,
                      &ImageSelectorMenu::itemClicked);
 
-    QObject::connect(this, &QDialog::accept,
+    QObject::connect(this, &QDialog::accepted,
                      this,
                      &ImageSelectorMenu::doAccept);
 
-    QObject::connect(this, &QDialog::reject,
+    QObject::connect(this, &QDialog::rejected,
                      this,
                      &ImageSelectorMenu::doReject);
 

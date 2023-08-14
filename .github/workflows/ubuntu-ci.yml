@@ -1,0 +1,266 @@
+name: Ubuntu CI
+
+on:
+  push:
+    branches:
+      - master
+      - stable
+      - versus-ci-ubuntu
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: "${{ matrix.config.name }} | ${{ matrix.config.build_type }}"
+    runs-on: ${{ matrix.config.os }}
+    container: ${{ matrix.config.container }}
+    strategy:
+      fail-fast: true
+      matrix:
+        config:
+        - {
+            name: "Ubuntu 18.04 x86_64",
+            os: ubuntu-latest,
+            container: "ubuntu:18.04",
+            generator: "Ninja",
+            extra_path: "/home/runner/Qt/5.15.2_static/bin",
+            build_type: "Release",
+            upload_directory: "www/ubuntu-18-04/",
+            qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/qt-5.15.2-static-ubuntu-18-04-x64-gcc8.tar.bz2",
+            qt_install_dir: "/home/runner/Qt",
+            qt_ver: "5.15.2_static",
+            qt_dir: "/home/runner/Qt/5.15.2_static/bin",
+            qt_lib_dir: "/home/runner/Qt/5.15.2_static/lib",
+            readline6_download: "https://wohlsoft.ru/docs/Software/libreadline6_6.3-8_amd64-ubuntu1804.deb",
+            lftp_download: "https://wohlsoft.ru/docs/Software/lftp_4.9.1-1_amd64-ubuntu1604.deb",
+
+            deps_cmdline: "echo 'Ubuntu 18' \
+            && apt-get update --fix-missing -qq \
+            && apt-get install -y software-properties-common \
+            && add-apt-repository -y \"ppa:git-core/ppa\" \
+            && add-apt-repository -y \"ppa:ubuntu-toolchain-r/test\" \
+            && apt-get update --fix-missing -qq \
+            && apt-get install -f -qq \
+            && apt-get install -qq sudo git p7zip-full ninja-build wget lftp \
+            \"^libxcb.*\" libx11-dev libx11-xcb-dev libgtk-3-dev libgegl-dev libxcursor-dev \
+            libxrender-dev libxrandr-dev libxext-dev libxi-dev libxss-dev libxt-dev libxv-dev \
+            libxxf86vm-dev libxinerama-dev libxkbcommon-dev libfontconfig1-dev libasound2-dev \
+            libpulse-dev libdbus-1-dev udev mtdev-tools webp libudev-dev libglm-dev libwayland-dev \
+            libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libgles2-mesa \
+            libgles2-mesa-dev libmirclient-dev libproxy-dev libtiff-dev libxkbcommon-x11-dev \
+            gcc-8 g++-8 libc6 libstdc++6 \
+            libexpat1 readline-common libgnutls30 libtinfo5 zlib1g \
+            && wget https://github.com/Kitware/CMake/releases/download/v3.27.1/cmake-3.27.1-linux-x86_64.tar.gz -O cmake.tar.gz \
+            && tar -xf cmake.tar.gz \
+            && cp -a cmake-3.27.1-linux-x86_64/bin/* /usr/local/bin \
+            && cp -a cmake-3.27.1-linux-x86_64/share/* /usr/local/share \
+            && rm -vrf cmake.tar.gz cmake-3.27.1-linux-x86_64 \
+            && git config --global --add safe.directory '*'"
+          }
+
+    steps:
+    - name: Check for the upload support
+      id: upload-check
+      shell: bash
+      run: |
+        if [[ "${{ secrets.builds_login }}" != '' && \
+              "${{ secrets.builds_password }}" != '' && \
+              "${{ secrets.builds_host }}" != '' ]]; then
+          echo "available=true" >> $GITHUB_OUTPUT;
+        else
+          echo "available=false" >> $GITHUB_OUTPUT;
+        fi
+
+    - name: Install Dependencies
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.deps_cmdline }}" ]]; then
+          eval ${{ matrix.config.deps_cmdline }}
+        fi
+        g++-8 --version
+        cmake --version
+
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 3
+        submodules: recursive
+
+    - uses: Wohlstand/branch-name@v1.0.1-wohl
+
+    - name: Check if a pull request
+      id: event-check
+      shell: bash
+      run: |
+        if [[ "${BRANCH_NAME}" == *"merge"* ]]; then
+          echo "--- This build is a pull-request ---"
+          echo "is_pull_request=true" >> $GITHUB_OUTPUT;
+        else
+          echo "--- This build is a normal branch build ---"
+          echo "is_pull_request=false" >> $GITHUB_OUTPUT;
+        fi
+
+    - name: Download Qt
+      if: matrix.config.qt_download
+      uses: carlosperate/download-file-action@v2
+      with:
+        file-url: "${{ matrix.config.qt_download }}"
+        file-name: qt.tar.bz2
+
+    - name: Extract Qt
+      if: matrix.config.qt_install_dir
+      shell: bash
+      run: |
+        sudo mkdir -p "${{ matrix.config.qt_install_dir }}"
+        sudo chown -R $USER:$USER "${{ matrix.config.qt_install_dir }}"
+        tar -xf qt.tar.bz2 -C "${{ matrix.config.qt_install_dir }}"
+        rm -f qt.tar.bz2
+
+    - name: Download libreadline6
+      if: matrix.config.readline6_download
+      uses: carlosperate/download-file-action@v2
+      with:
+        file-url: "${{ matrix.config.readline6_download }}"
+        file-name: libreadline6.deb
+
+    - name: Install LFTP
+      if: matrix.config.readline6_download
+      shell: bash
+      run: |
+        sudo dpkg -i ./libreadline6.deb
+        rm -f libreadline6.deb
+
+    - name: Download LFTP
+      if: matrix.config.lftp_download
+      uses: carlosperate/download-file-action@v2
+      with:
+        file-url: "${{ matrix.config.lftp_download }}"
+        file-name: lftp.deb
+
+    - name: Install LFTP
+      if: matrix.config.lftp_download
+      shell: bash
+      run: |
+        sudo dpkg -i ./lftp.deb
+        rm -f lftp.deb
+
+    - name: Generate version files
+      shell: bash
+      run: |
+        if [[ "${BRANCH_NAME}" == *"merge"* ]]; then
+            BRANCH_NAME_RES="pull-request"
+            echo "-- Pull-request detected!"
+        else
+            BRANCH_NAME_RES=${BRANCH_NAME}
+        fi
+
+        GIT_REVISION=$(git --git-dir .git --work-tree . describe --always)
+        VER_DIR=$PWD/bin-cmake-release/versions
+        TEMP_ELF=$PWD/35hb13h51.tmp
+
+        echo "== Generating version files into ${VER_DIR}... =="
+
+        mkdir -p ${VER_DIR}
+        mkdir ${TEMP_ELF}
+        cd ${TEMP_ELF}
+        cmake ../_common/travis-ci/version_gen > /dev/null
+        make -s -j 3 > /dev/null
+        cd ..
+
+        ${TEMP_ELF}/version_gen_editor > ${VER_DIR}/editor_${BRANCH_NAME_RES}.txt
+        ${TEMP_ELF}/version_gen_editor_short > ${VER_DIR}/editor_stable_${BRANCH_NAME_RES}.txt
+
+        ${TEMP_ELF}/version_gen_engine > ${VER_DIR}/engine_${BRANCH_NAME_RES}.txt
+        ${TEMP_ELF}/version_gen_engine_short > ${VER_DIR}/engine_stable_${BRANCH_NAME_RES}.txt
+
+        rm -Rf ${TEMP_ELF}
+
+    - name: Configure
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+            export QT_VER="${{ matrix.config.qt_ver }}"
+            export QT_PATH="${{ matrix.config.qt_dir }}"
+            export QT_LIB_PATH="${{ matrix.config.qt_lib_dir }}"
+
+            echo "# ==============Qt paths================" > _paths.sh;
+            echo "QT_PATH=\"/home/runner/Qt/${QT_VER}/bin\"" >> _paths.sh;
+            echo "QT_LIB_PATH=\"/home/runner/Qt/${QT_VER}/lib\"" >> _paths.sh;
+            echo "QMake=\"qmake\"" >> _paths.sh;
+            echo "LRelease=\"lrelease\"" >> _paths.sh;
+            echo "" >> _paths.sh;
+            echo "export CC=gcc-8" >> _paths.sh;
+            echo "export CXX=g++-8" >> _paths.sh;
+            echo "export QT_PREFIX_ROOT=\"/home/runner/Qt/${QT_VER}\"" >> _paths.sh;
+            echo "" >> _paths.sh;
+            chmod u+x _paths.sh;
+            echo "============== _paths.sh ================="
+            cat _paths.sh
+            echo "=========================================="
+            export PATH=${{ matrix.config.extra_path }}:${PATH}
+            echo "PATH environment: ${PATH}"
+        fi
+
+        echo "====================================="
+        qmake --version
+        echo "====================================="
+        gcc --version
+        echo "====================================="
+        git --version
+        echo "====================================="
+        cmake --version
+        echo "====================================="
+
+    - name: Build
+      shell: bash
+      run: |
+        if [[ "${BRANCH_NAME}" == *"merge"* ]]; then
+            BRANCH_NAME_RES="pull-request"
+            echo "-- Pull-request detected!"
+        else
+            BRANCH_NAME_RES=${BRANCH_NAME}
+        fi
+
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+            export PATH=${{ matrix.config.extra_path }}:${PATH}
+        fi
+
+        mkdir -p build-temp
+
+        TZ=Europe/Moscow date +"%Y-%m-%d %H:%M:%S" > build-temp/build_date_${BRANCH_NAME_RES}_linux.txt
+
+        ./build.sh no-pause ninja deploy static-qt portable
+
+    - name: Deploy to builds.wohlsoft.ru
+      if: success() && github.event_name != 'pull_request' && steps.event-check.outputs.is_pull_request == 'false' && steps.upload-check.outputs.available == 'true'
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+            export PATH=${{ matrix.config.extra_path }}:${PATH}
+        fi
+
+        if [[ "${BRANCH_NAME}" == *"merge"* ]]; then
+            BRANCH_NAME_RES="pull-request"
+            echo "-- Pull-request detected!"
+        else
+            BRANCH_NAME_RES=${BRANCH_NAME}
+        fi
+
+        UPLOAD_LIST="set ssl:verify-certificate no;"
+        for q in ./bin-cmake-release/*.tar.bz2; do
+            UPLOAD_LIST="${UPLOAD_LIST} put -O ${{ matrix.config.upload_directory }} $q;"
+        done
+        UPLOAD_LIST="${UPLOAD_LIST} put -O ./www/_versions build-temp/build_date_${BRANCH_NAME_RES}_linux.txt;"
+        UPLOAD_LIST="${UPLOAD_LIST} put -O ./www/_versions bin-cmake-release/versions/editor_${BRANCH_NAME_RES}.txt;"
+        UPLOAD_LIST="${UPLOAD_LIST} put -O ./www/_versions bin-cmake-release/versions/editor_stable_${BRANCH_NAME_RES}.txt;"
+        UPLOAD_LIST="${UPLOAD_LIST} put -O ./www/_versions bin-cmake-release/versions/engine_${BRANCH_NAME_RES}.txt;"
+        UPLOAD_LIST="${UPLOAD_LIST} put -O ./www/_versions bin-cmake-release/versions/engine_stable_${BRANCH_NAME_RES}.txt;"
+
+        lftp -e "${UPLOAD_LIST} exit" -u ${{ secrets.builds_login }},${{ secrets.builds_password }} ${{ secrets.builds_host }}
+
+    - name: List Build Directory
+      if: always()
+      shell: bash
+      run: |
+        git status
+        ls -lR build-pge-cmake-release

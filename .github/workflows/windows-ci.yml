@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.config.name }} | ${{ matrix.config.build_type }}
+    name: "${{ matrix.config.name }} | ${{ matrix.config.build_type }}"
     runs-on: ${{ matrix.config.os }}
     strategy:
       fail-fast: false
@@ -49,10 +49,36 @@ jobs:
           }
 
     steps:
+    - name: Check for the upload support
+      id: upload-check
+      shell: bash
+      run: |
+        if [[ "${{ secrets.builds_login }}" != '' && \
+              "${{ secrets.builds_password }}" != '' && \
+              "${{ secrets.builds_host }}" != '' ]]; then
+          echo "available=true" >> $GITHUB_OUTPUT;
+        else
+          echo "available=false" >> $GITHUB_OUTPUT;
+        fi
+
     - uses: actions/checkout@v3
       with:
         fetch-depth: 3
         submodules: recursive
+
+    - uses: Wohlstand/branch-name@v1.0.1-wohl
+
+    - name: Check if a pull request
+      id: event-check
+      shell: bash
+      run: |
+        if [[ "${BRANCH_NAME}" == *"merge"* ]]; then
+          echo "--- This build is a pull-request ---"
+          echo "is_pull_request=true" >> $GITHUB_OUTPUT;
+        else
+          echo "--- This build is a normal branch build ---"
+          echo "is_pull_request=false" >> $GITHUB_OUTPUT;
+        fi
 
     - name: Download MinGW
       if: matrix.config.mingw_download
@@ -167,11 +193,11 @@ jobs:
         mv bin-cmake-release/_packed/*.zip _packed
 
     - name: Deploy to builds.wohlsoft.ru
-      if: success() && github.event_name != 'pull_request'
+      if: success() && github.event_name != 'pull_request' && steps.event-check.outputs.is_pull_request == 'false' && steps.upload-check.outputs.available == 'true'
       shell: bash
       run: |
         if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
-          export PATH=${{ matrix.config.extra_path }}:${PATH}
+            export PATH=${{ matrix.config.extra_path }}:${PATH}
         fi
         UPLOAD_LIST="set ssl:verify-certificate no;"
         for q in ./_packed/*.zip; do

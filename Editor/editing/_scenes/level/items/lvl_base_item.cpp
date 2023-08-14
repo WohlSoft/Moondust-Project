@@ -98,6 +98,7 @@ QPainterPath LvlBaseItem::shape() const
 
 void LvlBaseItem::setLocked(bool lock)
 {
+    this->setOpacity(lock ? GlobalSettings::LvlItemDefaults.LockedItemOpacity : 1);
     this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
     this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
     m_locked = lock;
@@ -106,6 +107,11 @@ void LvlBaseItem::setLocked(bool lock)
 bool LvlBaseItem::itemTypeIsLocked()
 {
     return false;
+}
+
+QString LvlBaseItem::getLayerName()
+{
+    return QString();
 }
 
 void LvlBaseItem::setMetaSignsVisibility(bool)

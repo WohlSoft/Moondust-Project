@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Moondust Engine</string>
+    <string name="managePermExplainTitle">All files access permission is required</string>
+    <string name="managePermExplainText">This game uses resources (such as levels, episodes, graphics, music, sounds, configs, etc.) that were placed by the user on the local store directly. This concept allows users to modify and extend the content for their own purposes like that was done at the desktop version of this game. Unfortunately, Android 11+ doesn\'t give the way to grant individual read permission for the specified directory instead of a single file. To run this game you should grand access to all files for the game because of explained reasons.</string>
 </resources>
