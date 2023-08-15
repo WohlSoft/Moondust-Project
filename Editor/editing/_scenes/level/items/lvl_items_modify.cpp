@@ -365,8 +365,11 @@ void LvlScene::placeItemUnderCursor()
         }
     }
 
-    if(itemCollidesWith(m_cursorItemImg) && (QApplication::queryKeyboardModifiers() & Qt::KeyboardModifier::ControlModifier) == 0)
+    if(!m_keyCtrlPressed && itemCollidesWith(m_cursorItemImg))
+    {
+        // Can't place object
         return;
+    }
     else
     {
         if(m_placingItemType == PLC_Block)
@@ -507,6 +510,7 @@ void LvlScene::placeItemUnderCursor()
 
         }
     }
+
     if(wasPlaced)
     {
         //Mark level as modified

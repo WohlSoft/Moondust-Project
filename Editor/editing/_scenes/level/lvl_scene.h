@@ -459,6 +459,8 @@ public:
 
     bool m_mouseIsMoved; //Mouse was moved with right mouseKey
 
+    bool m_keyCtrlPressed = false;
+
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
@@ -470,6 +472,8 @@ public:
     void keyPressEvent(QKeyEvent *keyEvent);
     void keyReleaseEvent(QKeyEvent *keyEvent);
 
+    void focusInEvent(QFocusEvent* event);
+    void focusOutEvent(QFocusEvent* event);
 
 
     // ////////////////////////////////////////////////////////////////////////////////
