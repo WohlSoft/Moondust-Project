@@ -25,7 +25,7 @@
 #include <main_window/global_settings.h>
 
 
-TipOfDay::TipOfDay(QWidget* parent) :
+TipOfDay::TipOfDay(QString language, QWidget* parent) :
     QDialog(parent),
     m_mt(m_rd()),
     m_rand(0, RAND_MAX),
@@ -33,7 +33,13 @@ TipOfDay::TipOfDay(QWidget* parent) :
 {
     ui->setupUi(this);
 
-    QFile ftips(":/tips/tips/tips_en.html");
+    QFile ftips;
+    QString tipsFile = QString(":/tips/tips/tips_%1.html").arg(language);
+
+    if(QFile::exists(tipsFile))
+        ftips.setFileName(tipsFile);
+    else // Fallback to English
+        ftips.setFileName(":/tips/tips/tips_en.html");
 
     ftips.open(QIODevice::ReadOnly | QIODevice::Text);
     QTextStream ts(&ftips);

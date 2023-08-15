@@ -71,7 +71,7 @@ void MainWindow::showTipOfDay()
 
 void MainWindow::on_actionTipOfDay_triggered()
 {
-    TipOfDay tod;
+    TipOfDay tod(m_currLang, this);
     util::DialogToCenter(&tod, true);
     tod.exec();
 }
