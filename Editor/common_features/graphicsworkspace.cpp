@@ -260,10 +260,13 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
         modS_h *= 2;
     }
 
+    auto delta = event->angleDelta();
+    int deltaX = delta.x() != 0 ? delta.x() : delta.y();
+
     if(event->modifiers() & Qt::ControlModifier)
     {
         // Scale the view / do the zoom
-        if(event->delta() > 0)
+        if(deltaX > 0)
         {
             if(zoomValue * scaleFactor >= scaleMax) return;
             // Zoom in
@@ -281,34 +284,42 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
             emit zoomValueChanged(qRound(zoomValue * 100));
             emit zoomValueChanged(QString::number(qRound(zoomValue * 100)));
         }
+
         replayLastMouseEvent();
         return;
     }
 
     if(event->modifiers() & Qt::AltModifier)
     {
-        if(event->delta() > 0)
+        if(deltaX > 0)
             horizontalScrollBar()->setValue(horizontalScrollBar()->value() - modS_h);
         else
             horizontalScrollBar()->setValue(horizontalScrollBar()->value() + modS_h);
+
         //event->accept();
         replayLastMouseEvent();
+
         if(scene())
             scene()->update();
+
         return;
     }
     else
     {
-        if(event->delta() > 0)
+        if(deltaX > 0)
             verticalScrollBar()->setValue(verticalScrollBar()->value() - modS);
         else
             verticalScrollBar()->setValue(verticalScrollBar()->value() + modS);
+
         //event->accept();
         replayLastMouseEvent();
+
         if(scene())
             scene()->update();
+
         return;
     }
+
     //replayLastMouseEvent(); //DEAD CODE
     //QGraphicsView::wheelEvent(event);
 }
