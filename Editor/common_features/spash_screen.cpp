@@ -50,6 +50,7 @@ void EditorSpashScreen::drawContents(QPainter *painter)
     painter->setBrush(Qt::white);
     painter->setRenderHint(QPainter::TextAntialiasing);
     painter->setRenderHint(QPainter::Antialiasing);
+
     for(int i = 0; i < m_animations.size(); i++)
     {
         QPixmap &frame = m_animations[i].second->wholeImage();

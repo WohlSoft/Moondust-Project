@@ -57,12 +57,12 @@ void WldScene::keyReleaseEvent(QKeyEvent *keyEvent)
         m_keyCtrlPressed = false;
 }
 
-void WldScene::focusInEvent(QFocusEvent *event)
+void WldScene::focusInEvent(QFocusEvent *)
 {
     m_keyCtrlPressed = (QApplication::queryKeyboardModifiers() & Qt::KeyboardModifier::ControlModifier) != 0;
 }
 
-void WldScene::focusOutEvent(QFocusEvent *event)
+void WldScene::focusOutEvent(QFocusEvent *)
 {
     // Reset everything to avoid possible mess
     m_keyCtrlPressed = false;

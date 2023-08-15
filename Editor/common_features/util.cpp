@@ -31,6 +31,13 @@
 
 #include "util.h"
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+#   define QSTRING_SPLIT_BEHAVIOUR(x) QString::x
+#else
+#   define QSTRING_SPLIT_BEHAVIOUR(x) Qt::x
+#endif
+
+
 void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, int searchType)
 {
     QString toSearch;
@@ -183,7 +190,7 @@ inline void CSV2IntArr_CODE(const QString &source, TList &dest, const typename T
     if(!source.isEmpty())
     {
         bool ok;
-        QStringList tmlL = source.split(',', QString::SkipEmptyParts);
+        QStringList tmlL = source.split(',', QSTRING_SPLIT_BEHAVIOUR(SkipEmptyParts));
         for(QString &fr : tmlL)
         {
             if(std::is_same<T, int>::value)
@@ -228,6 +235,7 @@ QRect util::getScreenGeometry(int screenIndex)
         return d->geometry();
 
     QScreen *screen = QGuiApplication::primaryScreen();
+
     if(screenIndex < 0)
         return screen ? screen->geometry() : d->geometry();
     else
