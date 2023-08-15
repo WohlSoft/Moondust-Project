@@ -55,10 +55,10 @@ if(WIN32)
     include(../_common/StackWalker/StackWalker.cmake)
 endif()
 
-pge_cxx_standard(14)
-
-if(NOT PGE_FORCE_QT5)
-    find_package(Qt6 COMPONENTS Core Gui Widgets Network Concurrent Qml LinguistTools QUIET)
+if(PGE_USE_QT5)
+    pge_cxx_standard(14)
+else()
+    pge_cxx_standard(17)
 endif()
 
 set(QT_LIBS_LIST
@@ -87,6 +87,16 @@ set(QT_INCLUDES_LIST
     ${QT_Concurrent_INCLUDE_DIRS}
     ${QT_Qml_INCLUDE_DIRS}
 )
+
+set(QT_EXECUTABLE_CXX_FLAGS
+    ${QT_Core_EXECUTABLE_COMPILE_FLAGS}
+    ${QT_Gui_EXECUTABLE_COMPILE_FLAGS}
+    ${QT_Widgets_EXECUTABLE_COMPILE_FLAGS}
+    ${QT_Network_EXECUTABLE_COMPILE_FLAGS}
+    ${QT_Concurrent_EXECUTABLE_COMPILE_FLAGS}
+    ${QT_Qml_EXECUTABLE_COMPILE_FLAGS}
+)
+
 
 if(WIN32)
     list(APPEND QT_LIBS_LIST ${QT_WinExtras_LIBRARIES})

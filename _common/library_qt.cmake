@@ -13,6 +13,7 @@ if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
     if(PGE_FORCE_QT5)
         find_package(Qt5 COMPONENTS Core QUIET) # Check is Qt available
         set(QT_ANY_DIR ${Qt5_DIR})
+        set(PGE_USE_QT5 TRUE)
     else()
         find_package(Qt6 COMPONENTS Core QUIET) # Check is Qt available
         set(QT_ANY_DIR ${Qt6_DIR})
@@ -20,6 +21,9 @@ if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
         if(NOT Qt6_FOUND)
             find_package(Qt5 COMPONENTS Core QUIET) # Check is Qt available
             set(QT_ANY_DIR ${Qt5_DIR})
+            set(PGE_USE_QT5 TRUE)
+        else()
+            set(PGE_USE_QT6 TRUE)
         endif()
     endif()
 

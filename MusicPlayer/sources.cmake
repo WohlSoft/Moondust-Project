@@ -1,4 +1,4 @@
-qt5_wrap_ui(UIS_HDRS
+set(SDLMixer_MusPlay_UI
     MainWindow/player_main.ui
     MainWindow/multi_music_test.ui
     MainWindow/multi_music_item.ui
@@ -14,9 +14,7 @@ qt5_wrap_ui(UIS_HDRS
     AssocFiles/assoc_files.ui
 )
 
-set(RESOURCE ${SDLMixerMusPlayer_SOURCE_DIR}/_resources/musicplayer.qrc)
-qt5_add_resources(RESOURCE_ADDED ${RESOURCE})
-
+set(SDLMixer_MusPlay_RESOURCE ${SDLMixerMusPlayer_SOURCE_DIR}/_resources/musicplayer.qrc)
 
 list(APPEND SDLMixer_MusPlay_SRC
     AssocFiles/assoc_files.cpp AssocFiles/assoc_files.h
