@@ -249,5 +249,16 @@ QRect util::getScreenGeometry(int screenIndex)
 
 QRect util::alignToScreenCenter(const QSize size)
 {
-    return QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, size, getScreenGeometry());
+    QRect screenRect;
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 10, 0)
+    screenRect = getScreenGeometry(qApp->desktop()->screenNumber(QCursor::pos()));
+#else
+    QScreen *screen = QGuiApplication::screenAt(QCursor::pos());
+    if(!screen)
+        screen = QGuiApplication::primaryScreen();
+    screenRect = screen->geometry();
+#endif
+
+    return QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, size, screenRect);
 }
