@@ -362,7 +362,7 @@ public:
 
     typedef QList<QGraphicsItem *> PGE_ItemList;
     bool checkGroupCollisions(PGE_ItemList *items);
-    QGraphicsItem *itemCollidesWith(QGraphicsItem *item, PGE_ItemList *itemgrp = 0);
+    QGraphicsItem *itemCollidesWith(QGraphicsItem *item, PGE_ItemList *itemgrp = nullptr, PGE_ItemList *allCollisions = nullptr);
     QGraphicsItem *itemCollidesCursor(QGraphicsItem *item);
 
     typedef RTree<QGraphicsItem *, int64_t, 2, int64_t > IndexTree;

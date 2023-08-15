@@ -357,6 +357,7 @@ void LvlScene::placeItemUnderCursor()
                 delete xxx;
                 removed = true;
             }
+
             if(removed) //Remove pointer of deleted item
             {
                 if(collisionCheckBuffer.contains(xxx))
@@ -365,151 +366,186 @@ void LvlScene::placeItemUnderCursor()
         }
     }
 
-    if(!m_keyCtrlPressed && itemCollidesWith(m_cursorItemImg))
+
+    // Verify, is possible to place any objects
+
+    if(m_keyCtrlPressed)
+    {
+        // Collide with new items only
+        PGE_ItemList newItems;
+        PGE_ItemList foundItems;
+        itemCollidesWith(m_cursorItemImg, nullptr, &foundItems);
+
+        for(auto *xxx : foundItems)
+        {
+            if(xxx->data(ITEM_TYPE).toString() == "Block")
+            {
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastBlockArrayID)
+                    newItems.push_back(xxx);
+            }
+            else if(xxx->data(ITEM_TYPE).toString() == "BGO")
+            {
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastBgoArrayID)
+                    newItems.push_back(xxx);
+            }
+            else if(xxx->data(ITEM_TYPE).toString() == "NPC")
+            {
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastNpcArrayID)
+                    newItems.push_back(xxx);
+            }
+        }
+
+        if(itemCollidesWith(m_cursorItemImg, &newItems))
+            return; // Don't place over recently placed objects
+    }
+    else if(itemCollidesWith(m_cursorItemImg))
     {
         // Can't place object
         return;
     }
-    else
+
+
+    // Perform the placing itself
+
+
+    if(m_placingItemType == PLC_Block)
     {
-        if(m_placingItemType == PLC_Block)
-        {
-            LvlPlacingItems::blockSet.x = m_cursorItemImg->scenePos().x();
-            LvlPlacingItems::blockSet.y = m_cursorItemImg->scenePos().y();
+        LvlPlacingItems::blockSet.x = m_cursorItemImg->scenePos().x();
+        LvlPlacingItems::blockSet.y = m_cursorItemImg->scenePos().y();
 
-            m_data->blocks_array_id++;
-            LvlPlacingItems::blockSet.meta.array_id = m_data->blocks_array_id;
+        m_data->blocks_array_id++;
+        LvlPlacingItems::blockSet.meta.array_id = m_data->blocks_array_id;
 
-            m_data->blocks.push_back(LvlPlacingItems::blockSet);
-            placeBlock(LvlPlacingItems::blockSet, true);
-            m_placingItems.blocks.push_back(LvlPlacingItems::blockSet);
-            wasPlaced = true;
-        }
-        else if(m_placingItemType == PLC_BGO)
-        {
-            LvlPlacingItems::bgoSet.x = m_cursorItemImg->scenePos().x();
-            LvlPlacingItems::bgoSet.y = m_cursorItemImg->scenePos().y();
-
-            m_data->bgo_array_id++;
-            LvlPlacingItems::bgoSet.meta.array_id = m_data->bgo_array_id;
-
-            m_data->bgo.push_back(LvlPlacingItems::bgoSet);
-            placeBGO(LvlPlacingItems::bgoSet, true);
-            m_placingItems.bgo.push_back(LvlPlacingItems::bgoSet);
-            wasPlaced = true;
-        }
-        else if(m_placingItemType == PLC_NPC)
-        {
-            LvlPlacingItems::npcSet.x = m_cursorItemImg->scenePos().x();
-            LvlPlacingItems::npcSet.y = m_cursorItemImg->scenePos().y();
-
-            if(LvlPlacingItems::npcSpecialAutoIncrement)
-            {
-                LvlPlacingItems::npcSet.special_data = m_IncrementingNpcSpecialSpin;
-                m_IncrementingNpcSpecialSpin++;
-            }
-
-            m_data->npc_array_id++;
-            LvlPlacingItems::npcSet.meta.array_id = m_data->npc_array_id;
-
-            m_data->npc.push_back(LvlPlacingItems::npcSet);
-
-            placeNPC(LvlPlacingItems::npcSet, !LvlPlacingItems::npcSet.generator);
-
-            m_placingItems.npc.push_back(LvlPlacingItems::npcSet);
-            wasPlaced = true;
-        }
-        else if(m_placingItemType == PLC_PlayerPoint)
-        {
-
-            bool found = true;
-            QList<QVariant> oData;
-            PlayerPoint pnt = FileFormats::CreateLvlPlayerPoint(LvlPlacingItems::playerID + 1);
-            //Check exists point on map
-            foreach(PlayerPoint ptr, m_data->players)
-            {
-                if(ptr.id == pnt.id)
-                {
-                    found = true;
-                    pnt = ptr;
-                }
-            }
-
-            if(!found)
-            {
-                pnt.id = 0;
-                pnt.x = 0;
-                pnt.y = 0;
-                pnt.w = 0;
-                pnt.h = 0;
-            }
-
-            oData.push_back(pnt.id);
-            oData.push_back((qlonglong)pnt.x);
-            oData.push_back((qlonglong)pnt.y);
-            oData.push_back((qlonglong)pnt.w);
-            oData.push_back((qlonglong)pnt.h);
-
-
-            pnt = FileFormats::CreateLvlPlayerPoint(LvlPlacingItems::playerID + 1);
-            pnt.x = m_cursorItemImg->scenePos().x();
-            pnt.y = m_cursorItemImg->scenePos().y();
-
-            placePlayerPoint(pnt);
-
-            LogDebug(QString("Placing player point %1 with position %2 %3, %4")
-                     .arg(LvlPlacingItems::playerID + 1)
-                     .arg(m_cursorItemImg->scenePos().x())
-                     .arg(m_cursorItemImg->scenePos().y())
-                    );
-
-            m_history->addPlacePlayerPoint(pnt, QVariant(oData));
-        }
-        else if(m_placingItemType == PLC_Door)
-        {
-            foreach(LevelDoor door, m_data->doors)
-            {
-                if(door.meta.array_id == (unsigned int)LvlPlacingItems::doorArrayId)
-                {
-                    if(LvlPlacingItems::doorType == LvlPlacingItems::DOOR_Entrance)
-                    {
-                        if(!door.isSetIn)
-                        {
-                            door.ix = m_cursorItemImg->scenePos().x();
-                            door.iy = m_cursorItemImg->scenePos().y();
-                            if((door.lvl_i) || (door.lvl_o))
-                            {
-                                door.ox = door.ix;
-                                door.oy = door.iy;
-                            }
-                            door.isSetIn = true;
-                            m_history->addPlace(door, true);
-                            placeDoorEnter(door, false, false);
-                        }
-                    }
-                    else
-                    {
-                        if(!door.isSetOut)
-                        {
-                            door.ox = m_cursorItemImg->scenePos().x();
-                            door.oy = m_cursorItemImg->scenePos().y();
-                            if((door.lvl_i) || (door.lvl_o))
-                            {
-                                door.ix = door.ox;
-                                door.iy = door.oy;
-                            }
-                            door.isSetOut = true;
-                            m_history->addPlace(door, false);
-                            placeDoorExit(door, false, false);
-                        }
-                    }
-                    m_mw->dock_LvlWarpProps->setDoorData(-2);
-                    break;
-                }
-            }
-
-        }
+        m_data->blocks.push_back(LvlPlacingItems::blockSet);
+        placeBlock(LvlPlacingItems::blockSet, true);
+        m_placingItems.blocks.push_back(LvlPlacingItems::blockSet);
+        wasPlaced = true;
     }
+    else if(m_placingItemType == PLC_BGO)
+    {
+        LvlPlacingItems::bgoSet.x = m_cursorItemImg->scenePos().x();
+        LvlPlacingItems::bgoSet.y = m_cursorItemImg->scenePos().y();
+
+        m_data->bgo_array_id++;
+        LvlPlacingItems::bgoSet.meta.array_id = m_data->bgo_array_id;
+
+        m_data->bgo.push_back(LvlPlacingItems::bgoSet);
+        placeBGO(LvlPlacingItems::bgoSet, true);
+        m_placingItems.bgo.push_back(LvlPlacingItems::bgoSet);
+        wasPlaced = true;
+    }
+    else if(m_placingItemType == PLC_NPC)
+    {
+        LvlPlacingItems::npcSet.x = m_cursorItemImg->scenePos().x();
+        LvlPlacingItems::npcSet.y = m_cursorItemImg->scenePos().y();
+
+        if(LvlPlacingItems::npcSpecialAutoIncrement)
+        {
+            LvlPlacingItems::npcSet.special_data = m_IncrementingNpcSpecialSpin;
+            m_IncrementingNpcSpecialSpin++;
+        }
+
+        m_data->npc_array_id++;
+        LvlPlacingItems::npcSet.meta.array_id = m_data->npc_array_id;
+
+        m_data->npc.push_back(LvlPlacingItems::npcSet);
+
+        placeNPC(LvlPlacingItems::npcSet, !LvlPlacingItems::npcSet.generator);
+
+        m_placingItems.npc.push_back(LvlPlacingItems::npcSet);
+        wasPlaced = true;
+    }
+    else if(m_placingItemType == PLC_PlayerPoint)
+    {
+
+        bool found = true;
+        QList<QVariant> oData;
+        PlayerPoint pnt = FileFormats::CreateLvlPlayerPoint(LvlPlacingItems::playerID + 1);
+        //Check exists point on map
+        foreach(PlayerPoint ptr, m_data->players)
+        {
+            if(ptr.id == pnt.id)
+            {
+                found = true;
+                pnt = ptr;
+            }
+        }
+
+        if(!found)
+        {
+            pnt.id = 0;
+            pnt.x = 0;
+            pnt.y = 0;
+            pnt.w = 0;
+            pnt.h = 0;
+        }
+
+        oData.push_back(pnt.id);
+        oData.push_back((qlonglong)pnt.x);
+        oData.push_back((qlonglong)pnt.y);
+        oData.push_back((qlonglong)pnt.w);
+        oData.push_back((qlonglong)pnt.h);
+
+
+        pnt = FileFormats::CreateLvlPlayerPoint(LvlPlacingItems::playerID + 1);
+        pnt.x = m_cursorItemImg->scenePos().x();
+        pnt.y = m_cursorItemImg->scenePos().y();
+
+        placePlayerPoint(pnt);
+
+        LogDebug(QString("Placing player point %1 with position %2 %3, %4")
+                 .arg(LvlPlacingItems::playerID + 1)
+                 .arg(m_cursorItemImg->scenePos().x())
+                 .arg(m_cursorItemImg->scenePos().y())
+                );
+
+        m_history->addPlacePlayerPoint(pnt, QVariant(oData));
+    }
+    else if(m_placingItemType == PLC_Door)
+    {
+        foreach(LevelDoor door, m_data->doors)
+        {
+            if(door.meta.array_id == (unsigned int)LvlPlacingItems::doorArrayId)
+            {
+                if(LvlPlacingItems::doorType == LvlPlacingItems::DOOR_Entrance)
+                {
+                    if(!door.isSetIn)
+                    {
+                        door.ix = m_cursorItemImg->scenePos().x();
+                        door.iy = m_cursorItemImg->scenePos().y();
+                        if((door.lvl_i) || (door.lvl_o))
+                        {
+                            door.ox = door.ix;
+                            door.oy = door.iy;
+                        }
+                        door.isSetIn = true;
+                        m_history->addPlace(door, true);
+                        placeDoorEnter(door, false, false);
+                    }
+                }
+                else
+                {
+                    if(!door.isSetOut)
+                    {
+                        door.ox = m_cursorItemImg->scenePos().x();
+                        door.oy = m_cursorItemImg->scenePos().y();
+                        if((door.lvl_i) || (door.lvl_o))
+                        {
+                            door.ix = door.ox;
+                            door.iy = door.oy;
+                        }
+                        door.isSetOut = true;
+                        m_history->addPlace(door, false);
+                        placeDoorExit(door, false, false);
+                    }
+                }
+                m_mw->dock_LvlWarpProps->setDoorData(-2);
+                break;
+            }
+        }
+
+    }
+
 
     if(wasPlaced)
     {
