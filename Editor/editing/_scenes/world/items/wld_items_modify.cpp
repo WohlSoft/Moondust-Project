@@ -206,83 +206,124 @@ void WldScene::placeItemUnderCursor()
         }
     }
 
-    //    QList<QGraphicsItem *> * checkZone;
-    //    if(collisionCheckBuffer.isEmpty())
-    //        checkZone = NULL;
-    //    else
-    //        checkZone = &collisionCheckBuffer;
 
-    if(itemCollidesWith(m_cursorItemImg))
-        return;
-    else
+    // Verify, is possible to place any objects
+
+    if(m_keyCtrlPressed)
     {
-        if(m_placingItemType == PLC_Terrain)
+        // Collide with new items only
+        PGE_ItemList newItems;
+        PGE_ItemList foundItems;
+        itemCollidesWith(m_cursorItemImg, nullptr, &foundItems);
+
+        for(auto *xxx : foundItems)
         {
-            WldPlacingItems::terrainSet.x = m_cursorItemImg->scenePos().x();
-            WldPlacingItems::terrainSet.y = m_cursorItemImg->scenePos().y();
-
-            m_data->tile_array_id++;
-            WldPlacingItems::terrainSet.meta.array_id = m_data->tile_array_id;
-
-            m_data->tiles.push_back(WldPlacingItems::terrainSet);
-            placeTile(WldPlacingItems::terrainSet, true);
-            m_placingItems.tiles.push_back(WldPlacingItems::terrainSet);
-            wasPlaced = true;
-        }
-        else if(m_placingItemType == PLC_Scene)
-        {
-            WldPlacingItems::sceneSet.x = m_cursorItemImg->scenePos().x();
-            WldPlacingItems::sceneSet.y = m_cursorItemImg->scenePos().y();
-
-            m_data->scene_array_id++;
-            WldPlacingItems::sceneSet.meta.array_id = m_data->scene_array_id;
-
-            m_data->scenery.push_back(WldPlacingItems::sceneSet);
-            placeScenery(WldPlacingItems::sceneSet, true);
-            m_placingItems.scenery.push_back(WldPlacingItems::sceneSet);
-            wasPlaced = true;
-        }
-        else if(m_placingItemType == PLC_Path)
-        {
-            WldPlacingItems::pathSet.x = m_cursorItemImg->scenePos().x();
-            WldPlacingItems::pathSet.y = m_cursorItemImg->scenePos().y();
-
-            m_data->path_array_id++;
-            WldPlacingItems::pathSet.meta.array_id = m_data->path_array_id;
-
-            m_data->paths.push_back(WldPlacingItems::pathSet);
-            placePath(WldPlacingItems::pathSet, true);
-            m_placingItems.paths.push_back(WldPlacingItems::pathSet);
-            wasPlaced = true;
-        }
-        else if(m_placingItemType == PLC_Level)
-        {
-            WldPlacingItems::levelSet.x = m_cursorItemImg->scenePos().x();
-            WldPlacingItems::levelSet.y = m_cursorItemImg->scenePos().y();
-
-            m_data->level_array_id++;
-            WldPlacingItems::levelSet.meta.array_id = m_data->level_array_id;
-
-            m_data->levels.push_back(WldPlacingItems::levelSet);
-            placeLevel(WldPlacingItems::levelSet, true);
-            m_placingItems.levels.push_back(WldPlacingItems::levelSet);
-            wasPlaced = true;
-        }
-        else if(m_placingItemType == PLC_Musicbox)
-        {
-            WldPlacingItems::musicSet.x = m_cursorItemImg->scenePos().x();
-            WldPlacingItems::musicSet.y = m_cursorItemImg->scenePos().y();
-
-            m_data->musicbox_array_id++;
-            WldPlacingItems::musicSet.meta.array_id = m_data->musicbox_array_id;
-
-            m_data->music.push_back(WldPlacingItems::musicSet);
-            placeMusicbox(WldPlacingItems::musicSet, true);
-            m_placingItems.music.push_back(WldPlacingItems::musicSet);
-            wasPlaced = true;
+            if(xxx->data(ITEM_TYPE).toString() == "TILE")
+            {
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastTerrainArrayID)
+                    newItems.push_back(xxx);
+            }
+            else if(xxx->data(ITEM_TYPE).toString() == "SCENERY")
+            {
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastSceneryArrayID)
+                    newItems.push_back(xxx);
+            }
+            else if(xxx->data(ITEM_TYPE).toString() == "PATH")
+            {
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastPathArrayID)
+                    newItems.push_back(xxx);
+            }
+            else if(xxx->data(ITEM_TYPE).toString() == "LEVEL")
+            {
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastLevelArrayID)
+                    newItems.push_back(xxx);
+            }
+            else if(xxx->data(ITEM_TYPE).toString() == "MUSICBOX")
+            {
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastMusicBoxArrayID)
+                    newItems.push_back(xxx);
+            }
         }
 
+        if(itemCollidesWith(m_cursorItemImg, &newItems))
+            return; // Don't place over recently placed objects
     }
+    else if(itemCollidesWith(m_cursorItemImg))
+    {
+        // Can't place object
+        return;
+    }
+
+    // Perform the placing itself
+
+
+    if(m_placingItemType == PLC_Terrain)
+    {
+        WldPlacingItems::terrainSet.x = m_cursorItemImg->scenePos().x();
+        WldPlacingItems::terrainSet.y = m_cursorItemImg->scenePos().y();
+
+        m_data->tile_array_id++;
+        WldPlacingItems::terrainSet.meta.array_id = m_data->tile_array_id;
+
+        m_data->tiles.push_back(WldPlacingItems::terrainSet);
+        placeTile(WldPlacingItems::terrainSet, true);
+        m_placingItems.tiles.push_back(WldPlacingItems::terrainSet);
+        wasPlaced = true;
+    }
+    else if(m_placingItemType == PLC_Scene)
+    {
+        WldPlacingItems::sceneSet.x = m_cursorItemImg->scenePos().x();
+        WldPlacingItems::sceneSet.y = m_cursorItemImg->scenePos().y();
+
+        m_data->scene_array_id++;
+        WldPlacingItems::sceneSet.meta.array_id = m_data->scene_array_id;
+
+        m_data->scenery.push_back(WldPlacingItems::sceneSet);
+        placeScenery(WldPlacingItems::sceneSet, true);
+        m_placingItems.scenery.push_back(WldPlacingItems::sceneSet);
+        wasPlaced = true;
+    }
+    else if(m_placingItemType == PLC_Path)
+    {
+        WldPlacingItems::pathSet.x = m_cursorItemImg->scenePos().x();
+        WldPlacingItems::pathSet.y = m_cursorItemImg->scenePos().y();
+
+        m_data->path_array_id++;
+        WldPlacingItems::pathSet.meta.array_id = m_data->path_array_id;
+
+        m_data->paths.push_back(WldPlacingItems::pathSet);
+        placePath(WldPlacingItems::pathSet, true);
+        m_placingItems.paths.push_back(WldPlacingItems::pathSet);
+        wasPlaced = true;
+    }
+    else if(m_placingItemType == PLC_Level)
+    {
+        WldPlacingItems::levelSet.x = m_cursorItemImg->scenePos().x();
+        WldPlacingItems::levelSet.y = m_cursorItemImg->scenePos().y();
+
+        m_data->level_array_id++;
+        WldPlacingItems::levelSet.meta.array_id = m_data->level_array_id;
+
+        m_data->levels.push_back(WldPlacingItems::levelSet);
+        placeLevel(WldPlacingItems::levelSet, true);
+        m_placingItems.levels.push_back(WldPlacingItems::levelSet);
+        wasPlaced = true;
+    }
+    else if(m_placingItemType == PLC_Musicbox)
+    {
+        WldPlacingItems::musicSet.x = m_cursorItemImg->scenePos().x();
+        WldPlacingItems::musicSet.y = m_cursorItemImg->scenePos().y();
+
+        m_data->musicbox_array_id++;
+        WldPlacingItems::musicSet.meta.array_id = m_data->musicbox_array_id;
+
+        m_data->music.push_back(WldPlacingItems::musicSet);
+        placeMusicbox(WldPlacingItems::musicSet, true);
+        m_placingItems.music.push_back(WldPlacingItems::musicSet);
+        wasPlaced = true;
+    }
+
+
     if(wasPlaced)
     {
         //Mark world map as modified

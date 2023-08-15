@@ -114,7 +114,7 @@ bool WldScene::checkGroupCollisions(QList<QGraphicsItem *> *items)
 
 }
 
-QGraphicsItem *WldScene::itemCollidesWith(QGraphicsItem *item, QList<QGraphicsItem *> *itemgrp)
+QGraphicsItem *WldScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *itemgrp, PGE_ItemList *allCollisions)
 {
     qreal leftA, leftB;
     qreal rightA, rightB;
@@ -129,7 +129,7 @@ QGraphicsItem *WldScene::itemCollidesWith(QGraphicsItem *item, QList<QGraphicsIt
 
     QList<QGraphicsItem *> collisions;
 
-    if(itemgrp && !itemgrp->isEmpty())
+    if(itemgrp)
         collisions = *itemgrp;
     else
     {
@@ -154,10 +154,10 @@ QGraphicsItem *WldScene::itemCollidesWith(QGraphicsItem *item, QList<QGraphicsIt
             continue;
         if(it->data(ITEM_IS_ITEM).isNull())
             continue;
-        //      if(it->data(ITEM_TYPE).toString()=="Space")
-        //          continue;
-        //            if(it->data(ITEM_TYPE).toString()=="Square")
-        //                continue;
+        //if(it->data(ITEM_TYPE).toString()=="Space")
+        //    continue;
+        //if(it->data(ITEM_TYPE).toString()=="Square")
+        //    continue;
         if(item->data(ITEM_TYPE).toString() != it->data(ITEM_TYPE).toString())
             continue;
 
@@ -184,7 +184,11 @@ QGraphicsItem *WldScene::itemCollidesWith(QGraphicsItem *item, QList<QGraphicsIt
         if(leftA >= rightB)
             continue;
 
-        return it; // Collision found!
+        // Collision found!
+        if(allCollisions)
+            allCollisions->push_back(it); // Get all found items
+        else
+            return it; // First item only
     }
 
     return nullptr;
