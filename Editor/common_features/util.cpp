@@ -20,7 +20,9 @@
 #include <QWidgetItem>
 #include <QDialog>
 #include <QApplication>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QDesktopWidget>
+#endif
 #include <QScreen>
 #include <QStyle>
 #include <QLineEdit>
@@ -206,20 +208,24 @@ void util::CSV2IntArr(QString source, QList<int> &dest)
     CSV2IntArr_CODE(source, dest, 0);
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 void util::CSV2IntArr(QString source, QVector<int> &dest)
 {
     CSV2IntArr_CODE(source, dest, 0);
 }
+#endif
 
 void util::CSV2DoubleArr(QString source, QList<double> &dest)
 {
     CSV2IntArr_CODE(source, dest, 0.0);
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 void util::CSV2DoubleArr(QString source, QVector<double> &dest)
 {
     CSV2IntArr_CODE(source, dest, 0.0);
 }
+#endif
 
 QRect util::getScreenGeometry(int screenIndex)
 {

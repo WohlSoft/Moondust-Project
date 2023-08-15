@@ -21,7 +21,9 @@
 #define LOGGER_SETS_H
 
 #include <QString>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QtMsgHandler>
+#endif
 #include <QObject>
 #include "logger.h"
 
