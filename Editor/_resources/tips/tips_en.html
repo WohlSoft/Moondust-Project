@@ -2,11 +2,11 @@ Most of features are available on the <b>toolbars</b> and in the menus on top of
 <h3>Level</h3>
 <ul>
 <li><b><img src=":/images/section.png"/>Section settings</b> allows you to resize sections, as well as set music, background and properties</li>
-<li><b><img src=":/images/level.png"/>Item toolbox</b> provides a complete list of available to place elements with category/group and search filters</li>
-<li><b><img src=":/images/tileset_box.png"/>Tileset item box</b> provides a convenient, customizable and flexible item set. <i>If you prefer SMBX's Item Box, use this item box instead of the regular item box!</i></li>
+<li><b><img src=":/images/level.png"/>Item Browser</b> provides a complete list of available to place elements with category/group and search filters</li>
+<li><b><img src=":/images/tileset_box.png"/>Tileset item box</b> provides a convenient, customizable and flexible item set. <i>If you prefer SMBX's Item Box, use this item box instead of the regular Item Browser!</i></li>
 <li><b><img src=":/doors.png"/>Warps and Doors</b> provides management of warp entries to connect different level areas.</li>
-<li><b><img src=":/layers.png"/>Layers</b> manages layers which allows item group manipulation with events or scripts</li>
-<li><b><img src=":/images/events.png"/>Events</b> manage events to change up gameplay of your levels and manipulate layer-bound items</li>
+<li><b><img src=":/layers.png"/>Layers</b> manages layers which allows item group manipulation with events or scripts.</li>
+<li><b><img src=":/images/events.png"/>Events</b> manage events to change up gameplay of your levels and manipulate layer-bound items.</li>
 <li><b><img src=":/images/search.png"/>Search</b> can find any given item in the level!</li>
 </ul>
 
@@ -34,7 +34,7 @@ Do you remember the <a href="http://www.youtube.com/watch?v=d6qbuY6VVCY">bug wit
 
 <hr>
 You can share your ideas and creations publicly by exporting your level or world map parts into the image files.<br>
-To export part of a level or world map screen you can press <b>F12</b> key or sekect the <b>File -&gt; Export to image</b> menu item.<br>
+To export part of a level or world map screen you can press <b>F12</b> key or select the <b>File -&gt; Export to image</b> menu item.<br>
 <b>Note:</b> To export entire level sections you need to select the <b>File -&gt; Export section to image...</b> menu item.
 
 <hr>
@@ -43,10 +43,10 @@ You can use the SoX utility from here:
 <b>Tools -&gt;External tools -&gt;Convert audio (SoX)...</b>
 
 <hr>
-You can use the middle mouse button (press scrolling wheel) for advanced conveniences!<br>
+You can use the <b>middle mouse button</b> (press scrolling wheel) for advanced conveniences!<br>
 <ul>
 <li>If there are no selected elements on the map, you will toggle into hand-drag mode</li>
-<li>If you select one element, you will switch to a "placing new" mode of the same element</li>
+<li>If you select one single element, you will "pick it up": you will switch the "placing new" mode of the same element.</li>
 <li>If you select multiple elements, they will be duplicated to the current mouse position on the top-left corner of the selection area</li>
 </ul>
 
@@ -72,24 +72,27 @@ You have placement tools which you can find on the toolbar:<br>
 <b>Note:</b> Those buttons will be available when you pick up an item to place.
 
 <hr>
-If you want to place elements more accurately, you can <b><img src=":/images/zoom_in.png">zoom in</b> and disable grid aligning by toggling the <b><img src=":/images/grid.png">Snap to grid</b> switch.<br>
-Scroll your mouse wheel whilst holding the Alt key to zoom in or out.
+If you want to place elements more accurately, you can <b><img src=":/images/zoom_in.png">zoom in</b> and disable grid aligning by toggling the <b><img src=":/images/grid_snap.png">Snap to grid</b> switch.<br>
+Scroll your mouse wheel while holding the <b>CTRL</b> key to zoom in or out.
 
 <hr>
 There are many ways to run level testing with the Editor at the <b>Test</b> menu:<br>
 <br>
 Next runtime engines supported:
 <ul>
-  <li><b><img src=":/images/cat/cat_16.png" width="16" height="16"/>Moondust Engine</b>, the own engine of Moondust Project.<br>
+  <li><b><img src=":/engines/moondust/16.png" width="16" height="16"/>Moondust Engine</b>, the own engine of Moondust Project.<br>
   <b>Still in development</b>.<li>
-  <li><b><img src=":/images/mushroom16.png" width="16" height="16"/>The X-Tech</b>, the modern and cross-platform port of the SMBX Engine, has the full integration with the Editor.<li>
-  <li><b><img src=":/lunalua.ico" width="16" height="16"/>LunaTester</b> that starts the level testing in the vanilla SMBX with LunaLua (Required the LunaLua <u>0.7.3.1</u>, or <u>SMBX2 Beta3 and newer</u>).<br>
-    <u>On non-Windows platforms the Wine is required.</u></li>
-  <li><b><img src=":/images/38a.ico" width="16" height="16"/>SMBX-38A</b>, the alternative game made by 5438A38A.<br>
-    <u>On non-Windows platforms hte Wine is required.</u><li>
+  <li><b><img src=":/engines/thextech/16.png" width="16" height="16"/>TheXTech</b>, the modern and cross-platform port of the SMBX Engine. It supports the full integration with this Editor.<li>
+  <li><b><img src=":/engines/lunalua/16.png" width="16" height="16"/>LunaTester</b> that starts the level testing in the vanilla SMBX with LunaLua (Required the LunaLua <u>0.7.3.1</u>, or <u>SMBX2 Beta3 and newer</u>).<br>
+    <u>On non-Windows platforms the Wine is required. The macOS 10.15 and newer is NOT supported. Also, non-x86 and non-x86_64 processors also NOT supported.</u></li>
+  <li><b><img src=":/engines/38a/16.png" width="16" height="16"/>SMBX-38A</b>, the alternative game made by 5438A38A.<br>
+    <u>On non-Windows platforms the Wine is required. The macOS 10.15 and newer is NOT supported. Also, non-x86 and non-x86_64 processors also NOT supported.</u></li>
 </ul>
 
 <hr>
 Did you know that you can override the size of grid alignments?<br>
 You can set any necessary size of grid in the <b>Edit -&gt;Set align grid size</b> menu.<br><br>
 <i><u>Don't forget to set <b>"Default by item"</b> to use the default grid size of every element!</u></i>
+
+<hr>
+Did you know that you can place new items with overlapping by holding the <b>CTRL</b> key on your keyboard?
