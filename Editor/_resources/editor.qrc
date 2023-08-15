@@ -275,8 +275,32 @@
     </qresource>
     <qresource prefix="/tips">
         <file>tips/tips_en.html</file>
+        <file>tips/tips_ru.html</file>
     </qresource>
     <qresource prefix="/plugin">
         <file>plugin/main_boot.js</file>
+    </qresource>
+    <qresource prefix="/engines">
+        <file alias="38a/38a.ico">engines/38a/38a.ico</file>
+        <file alias="38a/16.png">engines/38a/38a_16.png</file>
+        <file alias="38a/32.png">engines/38a/38a_32.png</file>
+        <file alias="38a/48.png">engines/38a/38a_48.png</file>
+        <file alias="38a/256.png">engines/38a/38a_256.png</file>
+        <file alias="lunalua/16.png">engines/lunalua/lunalua_16.png</file>
+        <file alias="lunalua/32.png">engines/lunalua/lunalua_32.png</file>
+        <file alias="lunalua/48.png">engines/lunalua/lunalua_48.png</file>
+        <file alias="lunalua/256.png">engines/lunalua/lunalua_256.png</file>
+        <file alias="moondust/cat.icons">engines/moondust/cat.icns</file>
+        <file alias="moondust/cat.ico">engines/moondust/cat.ico</file>
+        <file alias="moondust/16.png">engines/moondust/cat_16.png</file>
+        <file alias="moondust/32.png">engines/moondust/cat_32.png</file>
+        <file alias="moondust/48.png">engines/moondust/cat_48.png</file>
+        <file alias="moondust/128.png">engines/moondust/cat_128.png</file>
+        <file alias="moondust/256.png">engines/moondust/cat_256.png</file>
+        <file alias="thextech/16.png">engines/thextech/thextech_16.png</file>
+        <file alias="thextech/32.png">engines/thextech/thextech_32.png</file>
+        <file alias="thextech/48.png">engines/thextech/thextech_48.png</file>
+        <file alias="thextech/128.png">engines/thextech/thextech_128.png</file>
+        <file alias="thextech/256.png">engines/thextech/thextech_256.png</file>
     </qresource>
 </RCC>

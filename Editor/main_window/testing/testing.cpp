@@ -59,9 +59,11 @@ void MainWindow::initTesting()
     {
         ui->sepEngineExtras->setVisible(false);
         QIcon pgeEngine;
-        pgeEngine.addPixmap(QPixmap(":/images/cat/cat_16.png"));
-        pgeEngine.addPixmap(QPixmap(":/images/cat/cat_32.png"));
-        pgeEngine.addPixmap(QPixmap(":/images/cat/cat_48.png"));
+        pgeEngine.addPixmap(QPixmap(":/engines/moondust/16.png"));
+        pgeEngine.addPixmap(QPixmap(":/engines/moondust/32.png"));
+        pgeEngine.addPixmap(QPixmap(":/engines/moondust/48.png"));
+        pgeEngine.addPixmap(QPixmap(":/engines/moondust/128.png"));
+        pgeEngine.addPixmap(QPixmap(":/engines/moondust/256.png"));
 
         QMenu *pgeEngineMenu = ui->menuTest->addMenu(pgeEngine, "PGE Engine");
         ui->menuTest->insertMenu(menuNext, pgeEngineMenu);
@@ -81,8 +83,11 @@ void MainWindow::initTesting()
     {
         ui->sepEngineExtras->setVisible(false);
         QIcon theXTech;
-        theXTech.addPixmap(QPixmap(":/images/mushroom.png"));
-        theXTech.addPixmap(QPixmap(":/images/mushroom16.png"));
+        theXTech.addPixmap(QPixmap(":/engines/thextech/16.png"));
+        theXTech.addPixmap(QPixmap(":/engines/thextech/32.png"));
+        theXTech.addPixmap(QPixmap(":/engines/thextech/48.png"));
+        theXTech.addPixmap(QPixmap(":/engines/thextech/128.png"));
+        theXTech.addPixmap(QPixmap(":/engines/thextech/256.png"));
 
         QMenu *theXTechMenu = ui->menuTest->addMenu(theXTech, "TheXTech");
         ui->menuTest->insertMenu(menuNext, theXTechMenu);
@@ -101,7 +106,12 @@ void MainWindow::initTesting()
     if(!noDefault || defEngine == ConfStatus::ENGINE_38A)
     {
         ui->sepEngineExtras->setVisible(false);
-        QIcon sanBaIcon(":/images/38a.ico");
+        QIcon sanBaIcon;
+        sanBaIcon.addPixmap(QPixmap(":/engines/38a/16.png"));
+        sanBaIcon.addPixmap(QPixmap(":/engines/38a/32.png"));
+        sanBaIcon.addPixmap(QPixmap(":/engines/38a/48.png"));
+        sanBaIcon.addPixmap(QPixmap(":/engines/38a/256.png"));
+
         QMenu *sanBaEiMenu = ui->menuTest->addMenu(sanBaIcon, "SMBX-38A");
         ui->menuTest->insertMenu(menuNext, sanBaEiMenu);
 
@@ -118,7 +128,12 @@ void MainWindow::initTesting()
     if(!noDefault || defEngine == ConfStatus::ENGINE_LUNA)
     {
         ui->sepEngineExtras->setVisible(false);
-        QIcon lunaIcon(":/lunalua.ico");
+        QIcon lunaIcon;
+        lunaIcon.addPixmap(QPixmap(":/engines/lunalua/16.png"));
+        lunaIcon.addPixmap(QPixmap(":/engines/lunalua/32.png"));
+        lunaIcon.addPixmap(QPixmap(":/engines/lunalua/48.png"));
+        lunaIcon.addPixmap(QPixmap(":/engines/lunalua/256.png"));
+
         QMenu *lunaMenu = ui->menuTest->addMenu(lunaIcon, "LunaTester");
         ui->menuTest->insertMenu(menuNext, lunaMenu);
 
