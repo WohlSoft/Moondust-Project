@@ -22,6 +22,7 @@ if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
             find_package(Qt5 COMPONENTS Core QUIET) # Check is Qt available
             set(QT_ANY_DIR ${Qt5_DIR})
             set(PGE_USE_QT5 TRUE)
+            set(PGEFL_PREFER_QT5 TRUE) # For PGE-FL to don't let it find Qt 6
         else()
             set(PGE_USE_QT6 TRUE)
         endif()
@@ -34,7 +35,7 @@ if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
     if(QT_ANY_FOUND)
         option(PGE_ENABLE_QT "Enable build of Qt-dependent components" ${PGE_ENABLE_QT_ENABLED_BY_DEFAULT})
         option(PGE_ENABLE_STATIC_QT "Use static library deployment of Qt (Set this flag when you are using static build of Qt!)" OFF)
-        message("== Qt 5 has been found in ${QT_ANY_DIR}")
+        message("== Qt has been found in ${QT_ANY_DIR}")
         get_filename_component(QT5_BINARY_DIR "${QT_ANY_DIR}/../../bin" ABSOLUTE)
 
 
