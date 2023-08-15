@@ -1195,6 +1195,7 @@ void IniProcessing::read(const char *key, QList<long double> &dest, const QList<
     readNumArrHelper<QList<long double>, long double>(this, key, dest, defVal);
 }
 
+#   if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 void IniProcessing::read(const char *key, QVector<short> &dest, const QVector<short> &defVal)
 {
     readNumArrHelper<QVector<short>, short>(this, key, dest, defVal);
@@ -1240,6 +1241,7 @@ void IniProcessing::read(const char *key, QVector<long double> &dest, const QVec
 {
     readNumArrHelper<QVector<long double>, long double>(this, key, dest, defVal);
 }
+#   endif
 #endif
 
 IniProcessingVariant IniProcessing::value(const char *key, const IniProcessingVariant &defVal)
