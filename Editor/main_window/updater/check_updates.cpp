@@ -24,6 +24,7 @@
 #include <version.h>
 #include <common_features/app_path.h>
 #include <common_features/version_cmp.h>
+#include <common_features/compat.h>
 
 #include <QDateTime>
 #include <QStringList>
@@ -32,6 +33,7 @@
 
 #include "check_updates.h"
 #include "ui_check_updates.h"
+
 
 UpdateChecker::UpdateChecker(QWidget *parent) :
     QDialog(parent),
@@ -107,7 +109,7 @@ static unsigned int BuildDateToTimestamp(const char *buildTime)
     src.replace(' ', '-');
     src.replace('.', '-');
     src.replace(':', '-');
-    QStringList datetime = src.split('-', QString::SkipEmptyParts);
+    QStringList datetime = src.split('-', QSTRING_SPLIT_BEHAVIOUR(SkipEmptyParts));
 
     for(int i=0; i<datetime.size(); i++)
     {
@@ -152,7 +154,7 @@ static unsigned int DatetimeToTimestamp(QString src)
     src.replace(' ', '-');
     src.replace('.', '-');
     src.replace(':', '-');
-    QStringList datetime = src.split('-', QString::SkipEmptyParts);
+    QStringList datetime = src.split('-', QSTRING_SPLIT_BEHAVIOUR(SkipEmptyParts));
 
     for(int i=0; i<datetime.size(); i++)
     {

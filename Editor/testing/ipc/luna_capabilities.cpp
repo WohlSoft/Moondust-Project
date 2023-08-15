@@ -255,7 +255,7 @@ static bool getRawLunaCapabilities(LunaLuaCapabilities &caps, const QString &pat
             {
                 for(const auto &v : knownButNot)
                 {
-                    if(a.indexOf(v) < 0)
+                    if(a.indexOf(v.toUtf8()) < 0)
                         continue;
                     caps.type = "DLL-Check incompatible " + v;
                     caps.isCompatible = false;

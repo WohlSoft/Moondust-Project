@@ -22,6 +22,7 @@
 
 #include <common_features/main_window_ptr.h>
 #include <common_features/util.h>
+#include <common_features/compat.h>
 #include <dev_console/devconsole.h>
 #include <defines.h>
 
@@ -324,11 +325,7 @@ void TilesetGroupEditor::on_tilesetUp_clicked()
 
     if(0 < i)
     {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
-        tilesets.swapItemsAt(i, i - 1);
-#else
-        tilesets.swap(i, i - 1);
-#endif
+        tilesets.Q_ListSwap(i, i - 1);
         redrawAll();
         ui->tilesetList->setCurrentRow(i - 1);
     }
@@ -343,11 +340,7 @@ void TilesetGroupEditor::on_tilesetDown_clicked()
 
     if(i + 1 < tilesets.size())
     {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
-        tilesets.swapItemsAt(i, i + 1);
-#else
-        tilesets.swap(i, i + 1);
-#endif
+        tilesets.Q_ListSwap(i, i + 1);
         redrawAll();
         ui->tilesetList->setCurrentRow(i + 1);
     }
@@ -426,12 +419,7 @@ void TilesetGroupEditor::movedTileset(const QModelIndex &sourceParent, int sourc
 
     qDebug() << "Tilesets moved";
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
-    tilesets.swapItemsAt(sourceStart, destinationRow);
-#else
-    tilesets.swap(sourceStart, destinationRow);
-#endif
+    tilesets.Q_ListSwap(sourceStart, destinationRow);
     redrawAll();
     ui->tilesetList->setCurrentRow(destinationRow);
 }
-

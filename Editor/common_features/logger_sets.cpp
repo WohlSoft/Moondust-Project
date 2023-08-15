@@ -33,6 +33,7 @@
 
 #include "app_path.h"
 #include "logger_sets.h"
+#include "compat.h"
 
 #ifdef DEBUG_BUILD
 #define ONSCREEN_LOGGING
@@ -161,7 +162,7 @@ static void writeToFile(const QString &txt)
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
     ts.setCodec("UTF-8");
-    ts << txt << endl;
+    ts << txt << QT_ENDL;
     outFile.close();
 }
 
@@ -171,7 +172,7 @@ static void writeToScreen(const QString &txt)
 {
     QTextStream ts(stdout);
     ts.setCodec("UTF-8");
-    ts << txt << endl;
+    ts << txt << QT_ENDL;
     ts.flush();
 }
 #endif

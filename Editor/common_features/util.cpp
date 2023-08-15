@@ -31,11 +31,7 @@
 
 #include "util.h"
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-#   define QSTRING_SPLIT_BEHAVIOUR(x) QString::x
-#else
-#   define QSTRING_SPLIT_BEHAVIOUR(x) Qt::x
-#endif
+#include "compat.h"
 
 
 void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, int searchType)

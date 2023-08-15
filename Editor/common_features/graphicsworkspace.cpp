@@ -30,7 +30,7 @@ bool qt_sendSpontaneousEvent(QObject *receiver, QEvent *event);
 
 GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     QGraphicsView(parent),
-    lastMouseEvent(QEvent::None, QPointF(), QPointF(), QPointF(), Qt::NoButton, 0, 0)
+    lastMouseEvent(QEvent::None, QPointF(), QPointF(), QPointF(), Qt::NoButton, Qt::MouseButtons(), Qt::NoModifier)
 {
     useLastMouseEvent = true;
     handScrolling = false;

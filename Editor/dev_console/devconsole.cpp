@@ -127,6 +127,7 @@ DevConsole::DevConsole(QWidget *parent) :
 #ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
 #endif
+
 #ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
 
@@ -150,7 +151,7 @@ DevConsole::DevConsole(QWidget *parent) :
         }
     }
 
-#   if QT_VERSION_CHECK(5, 5, 0)
+#   if QT_VERSION >= QT_VERSION_CHECK(5, 5, 0)
     if(QSysInfo::WindowsVersion >= QSysInfo::WV_WINDOWS10)
     {
         // Erase style sheet from here, it won't work correctly...
@@ -158,7 +159,9 @@ DevConsole::DevConsole(QWidget *parent) :
     }
 #   endif
 #endif
-    if(!hasFocus()) setWindowOpacity(0.9);
+
+    if(!hasFocus())
+        setWindowOpacity(0.9);
 }
 
 DevConsole::~DevConsole()

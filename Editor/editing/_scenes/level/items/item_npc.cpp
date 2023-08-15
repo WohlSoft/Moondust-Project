@@ -19,17 +19,11 @@
 #include <QInputDialog>
 #include <QClipboard>
 #include <qglobal.h>
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-#include <QRandomGenerator>
-#endif
+#include <common_features/compat.h>
 
 static int randomDirection()
 {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-    int r = QRandomGenerator::system()->generate() % 2;
-#else
-    int r = qrand() % 2;
-#endif
+    int r = Q_RANDNEW() % 2;
     return ((r == 0) ? -1 : 1);
 }
 
