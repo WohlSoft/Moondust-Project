@@ -94,24 +94,30 @@ public:
      * \param dest Target array
      */
     static void CSV2IntArr(QString source, QList<int> &dest);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     /*!
      * \brief Convers number sequence separated with comma into array of integers
      * \param source Source string with number sequence separated with a comma
      * \param dest Target array
      */
     static void CSV2IntArr(QString source, QVector<int> &dest);
+#endif
     /*!
      * \brief Convers number sequence separated with comma into array of integers
      * \param source Source string with number sequence separated with a comma
      * \param dest Target array
      */
     static void CSV2DoubleArr(QString source, QList<double> &dest);
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     /*!
      * \brief Convers number sequence separated with comma into array of integers
      * \param source Source string with number sequence separated with a comma
      * \param dest Target array
      */
     static void CSV2DoubleArr(QString source, QVector<double> &dest);
+#endif
+
     /*!
      * \brief Gives the geometry of choosen screen
      * \param screenIndex Index of screen
