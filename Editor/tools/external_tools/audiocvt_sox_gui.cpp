@@ -29,9 +29,15 @@ AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
 #else
     ui->sox_bin_path->setText("/usr/bin/sox");
 #endif
-    connect(&converter, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(nextStep(int, QProcess::ExitStatus)));
-    connect(&converter, SIGNAL(readyReadStandardOutput()), this, SLOT(consoleMessage()));
-    connect(&converter, SIGNAL(readyReadStandardError()), this, SLOT(consoleMessageErr()));
+
+    // Moved from UI file itself
+    QObject::connect(ui->ogg_quality, &QSlider::valueChanged,
+                     ui->ogg_quality_var,
+                     static_cast<void(QLabel::*)(int)>(&QLabel::setNum));
+
+    QObject::connect(&converter, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(nextStep(int, QProcess::ExitStatus)));
+    QObject::connect(&converter, SIGNAL(readyReadStandardOutput()), this, SLOT(consoleMessage()));
+    QObject::connect(&converter, SIGNAL(readyReadStandardError()), this, SLOT(consoleMessageErr()));
     isLevel = (m_mw && m_mw->activeChildWindow() == MainWindow::WND_Level);
     ledit = NULL;
 

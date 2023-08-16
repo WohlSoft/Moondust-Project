@@ -547,22 +547,6 @@
  </resources>
  <connections>
   <connection>
-   <sender>ogg_quality</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>ogg_quality_var</receiver>
-   <slot>setNum(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>388</x>
-     <y>294</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>392</x>
-     <y>311</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>mp3_set_birtate</sender>
    <signal>toggled(bool)</signal>
    <receiver>mp3_bitrate</receiver>
