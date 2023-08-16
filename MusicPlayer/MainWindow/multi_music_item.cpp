@@ -47,6 +47,15 @@ static const char *musicTypeC(Mix_Music *mus)
                "<Unknown>");
 }
 
+static QString timePosToString(double pos, const QString &format = "hh:mm:ss")
+{
+#if QT_VERSION >= QT_VERSION_CHECK(5, 8, 0)
+    return QDateTime::fromSecsSinceEpoch((uint)std::floor(pos), Qt::UTC).toString(format);
+#else
+    return QDateTime::fromTime_t((uint)std::floor(pos)).toUTC().toString(format);
+#endif
+}
+
 MultiMusicItem::MultiMusicItem(QString music, QWidget *parent) :
     QWidget(parent),
     m_curMusPath(music),
@@ -122,7 +131,7 @@ void MultiMusicItem::updatePositionSlider()
     else
     {
         m_seekBar->setPosition(pos);
-        ui->playingTimeLabel->setText(QDateTime::fromSecsSinceEpoch((uint)std::floor(pos), Qt::UTC).toString("hh:mm:ss"));
+        ui->playingTimeLabel->setText(timePosToString(pos));
     }
 
     m_positionWatcherLock = false;
@@ -198,7 +207,7 @@ void MultiMusicItem::openMusic()
             m_seekBar->setLength(total);
             m_seekBar->setPosition(0.0);
             m_seekBar->setLoopPoints(loopStart, loopEnd);
-            ui->playingTimeLenghtLabel->setText(QDateTime::fromSecsSinceEpoch((uint)std::floor(total), Qt::UTC).toString("/ hh:mm:ss"));
+            ui->playingTimeLenghtLabel->setText(timePosToString(total, "/ hh:mm:ss"));
             m_positionWatcher.start(128);
         }
 
@@ -309,7 +318,7 @@ void MultiMusicItem::musicPosition_seeked(double value)
     if(Mix_PlayingMusicStream(m_curMus))
     {
         Mix_SetMusicPositionStream(m_curMus, value);
-        ui->playingTimeLabel->setText(QDateTime::fromSecsSinceEpoch((uint)value, Qt::UTC).toString("hh:mm:ss"));
+        ui->playingTimeLabel->setText(timePosToString(value));
     }
 }
 
