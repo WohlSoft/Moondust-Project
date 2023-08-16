@@ -972,12 +972,14 @@ public:
         writeIniParam(key, fromVector(value));
     }
 
+#   if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     template<typename T>
     void setValue(const char *key, const QVector<T> &value)
     {
         static_assert(std::is_arithmetic<T>::value, "Not arithmetic (integral or floating point required!)");
         writeIniParam(key, fromVector(value));
     }
+#   endif
 #endif
 
     /**

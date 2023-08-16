@@ -19,7 +19,7 @@
 #include <QInputDialog>
 #include <QClipboard>
 #include <qglobal.h>
-#include <common_features/compat.h>
+#include <pge_qt_compat.h>
 
 static int randomDirection()
 {

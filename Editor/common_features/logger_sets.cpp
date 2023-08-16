@@ -26,6 +26,7 @@
 #include <QMutex>
 #include <QMutexLocker>
 #include <QComboBox>
+#include <pge_qt_compat.h>
 
 #include <dev_console/devconsole.h>
 
@@ -33,7 +34,6 @@
 
 #include "app_path.h"
 #include "logger_sets.h"
-#include "compat.h"
 
 #ifdef DEBUG_BUILD
 #define ONSCREEN_LOGGING
@@ -130,7 +130,9 @@ void LogWriter::LoadLogSettings()
 
     QString mainIniFile = AppPathManager::settingsFile();
     QSettings logSettings(mainIniFile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     logSettings.setIniCodec("UTF-8");
+#endif
 
     QString logDirS = AppPathManager::logsDir();
     QDir defLogDir(logDirS);
@@ -161,7 +163,11 @@ static void writeToFile(const QString &txt)
     QFile outFile(LogWriter::DebugLogFile);
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     ts.setCodec("UTF-8");
+#else
+    ts.setEncoding(QStringConverter::Utf8);
+#endif
     ts << txt << QT_ENDL;
     outFile.close();
 }
@@ -171,7 +177,11 @@ static void writeToFile(const QString &txt)
 static void writeToScreen(const QString &txt)
 {
     QTextStream ts(stdout);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     ts.setCodec("UTF-8");
+#else
+    ts.setEncoding(QStringConverter::Utf8);
+#endif
     ts << txt << QT_ENDL;
     ts.flush();
 }

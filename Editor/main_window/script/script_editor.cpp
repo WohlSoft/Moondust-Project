@@ -12,9 +12,10 @@ Highlighter::Highlighter(QTextDocument *parent)
 
 void Highlighter::highlightBlock(const QString &text)
 {
-    foreach(const HighlightingRule &rule, highlightingRules)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    for(const HighlightingRule &rule : highlightingRules)
     {
-        QRegExp expression(rule.pattern);
+        Q_QRegExp expression(rule.pattern);
         int index = expression.indexIn(text);
         while(index >= 0)
         {
@@ -33,6 +34,7 @@ void Highlighter::highlightBlock(const QString &text)
     {
         int endIndex = commentEndExpression.indexIn(text, startIndex);
         int commentLength;
+
         if(endIndex == -1)
         {
             setCurrentBlockState(1);
@@ -43,9 +45,14 @@ void Highlighter::highlightBlock(const QString &text)
             commentLength = endIndex - startIndex
                             + commentEndExpression.matchedLength();
         }
+
         setFormat(startIndex, commentLength, multiLineCommentFormat);
         startIndex = commentStartExpression.indexIn(text, startIndex + commentLength);
     }
+#else
+    Q_UNUSED(text)
+    // FIXME: Completely redo this shit
+#endif
 }
 
 
@@ -67,39 +74,39 @@ Highlighter_CPP::Highlighter_CPP(QTextDocument *parent) :
                     << "\\btemplate\\b" << "\\btypedef\\b" << "\\btypename\\b"
                     << "\\bunion\\b" << "\\bunsigned\\b" << "\\bvirtual\\b"
                     << "\\bvoid\\b" << "\\bvolatile\\b";
-    foreach(const QString &pattern, keywordPatterns)
+    for(const QString &pattern : keywordPatterns)
     {
-        rule.pattern = QRegExp(pattern);
+        rule.pattern = Q_QRegExp(pattern);
         rule.format = keywordFormat;
         highlightingRules.append(rule);
     }
 
     classFormat.setFontWeight(QFont::Bold);
     classFormat.setForeground(Qt::darkMagenta);
-    rule.pattern = QRegExp("\\bQ[A-Za-z]+\\b");
+    rule.pattern = Q_QRegExp("\\bQ[A-Za-z]+\\b");
     rule.format = classFormat;
     highlightingRules.append(rule);
 
     singleLineCommentFormat.setForeground(Qt::red);
-    rule.pattern = QRegExp("//[^\n]*");
+    rule.pattern = Q_QRegExp("//[^\n]*");
     rule.format = singleLineCommentFormat;
     highlightingRules.append(rule);
 
     multiLineCommentFormat.setForeground(Qt::red);
 
     quotationFormat.setForeground(Qt::darkGreen);
-    rule.pattern = QRegExp("\".*\"");
+    rule.pattern = Q_QRegExp("\".*\"");
     rule.format = quotationFormat;
     highlightingRules.append(rule);
 
     functionFormat.setFontItalic(true);
     functionFormat.setForeground(Qt::blue);
-    rule.pattern = QRegExp("\\b[A-Za-z0-9_]+(?=\\()");
+    rule.pattern = Q_QRegExp("\\b[A-Za-z0-9_]+(?=\\()");
     rule.format = functionFormat;
     highlightingRules.append(rule);
 
-    commentStartExpression = QRegExp("/\\*");
-    commentEndExpression = QRegExp("\\*/");
+    commentStartExpression = Q_QRegExp("/\\*");
+    commentEndExpression = Q_QRegExp("\\*/");
 }
 
 
@@ -193,8 +200,10 @@ void ScriptEditor::on_actionNew_triggered()
     static int UntitleCounter = 0;
     window->setWindowTitle(QString("Untitled-%1.lua").arg(UntitleCounter++));
     ScriptEditorWindow *box = qobject_cast<ScriptEditorWindow *>(window->widget());
+
     if(box)
         box->setLang(ScriptEditorWindow::LANG_CPP);
+
     window->show();
     ui->statusbar->showMessage(tr("Empty script has been added!"), 3000);
 }

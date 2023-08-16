@@ -1566,7 +1566,9 @@ bool LunaTesterEngine::verifyCompatibility()
 void LunaTesterEngine::loadSetup()
 {
     QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     settings.setIniCodec("UTF-8");
+#endif
 
     settings.beginGroup("LunaTester");
     {
@@ -1587,7 +1589,9 @@ void LunaTesterEngine::loadSetup()
 void LunaTesterEngine::saveSetup()
 {
     QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     settings.setIniCodec("UTF-8");
+#endif
 
     settings.beginGroup("LunaTester");
     {
@@ -1812,7 +1816,9 @@ bool LunaTesterEngine::doTestWorldFile(const QString &worldFile)
 
         SETTINGS_TestSettings  t = GlobalSettings::testing;
         QSettings autostartINI(autoStart, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         autostartINI.setIniCodec("UTF-8");
+#endif
 
         autostartINI.beginGroup("autostart");
         autostartINI.setValue("do-autostart", true);

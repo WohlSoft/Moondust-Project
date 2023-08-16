@@ -22,7 +22,10 @@
 
 #include <QtGlobal>
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-#include <QRandomGenerator>
+#   include <QRandomGenerator>
+#endif
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#   include <QRegularExpression>
 #endif
 
 /** This is a small module that helps to maintain compatibility between
@@ -66,6 +69,59 @@
 #   define Q_ListSwap(x1, x2) swapItemsAt(x1, x2)
 #else
 #   define Q_ListSwap(x1, x2) swap(x1, x2)
+#endif
+
+
+// QEvent::localPos
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#   define Q_EventLocalPos position
+#else
+#   define Q_EventLocalPos localPos
+#endif
+
+// QEvent::windowPos
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#   define Q_EventScreenPos globalPosition
+#else
+#   define Q_EventScreenPos screenPos
+#endif
+
+// QEvent::screenPos
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#   define Q_EventWindowPos scenePosition
+#else
+#   define Q_EventWindowPos windowPos
+#endif
+
+
+// QEvent::pos
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#   define Q_EventPos position().toPoint
+#else
+#   define Q_EventPos pos
+#endif
+
+// QEvent::globalPos
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#   define Q_EventGlobalPos globalPosition().toPoint
+#else
+#   define Q_EventGlobalPos globalPos
+#endif
+
+// QRegExp
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#   define  Q_QRegExp QRegularExpression
+#   define  Q_QRegExpMatch(x) match(x).hasMatch()
+#else
+#   define  Q_QRegExp QRegExp
+#   define  Q_QRegExpMatch(x) exactMatch(x)
+#endif
+
+// QRegExpValidator
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#   define  Q_QRegExpValidator QRegularExpressionValidator
+#else
+#   define  Q_QRegExpValidator QRegExpValidator
 #endif
 
 

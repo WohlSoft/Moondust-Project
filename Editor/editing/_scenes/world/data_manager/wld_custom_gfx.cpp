@@ -43,7 +43,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
     if(!rTableFile.isEmpty())
     {
         QSettings rTableINI(rTableFile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         rTableINI.setIniCodec("UTF-8");
+#endif
 
         QStringList rules = rTableINI.childGroups();
 
@@ -91,7 +93,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
     {
         LogDebug(QString("Found folders.ini: %1").arg(sFoldersFile));
         QSettings rTableINI(sFoldersFile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         rTableINI.setIniCodec("UTF-8");
+#endif
 
         rTableINI.beginGroup("folders");
         auto keys = rTableINI.allKeys();

@@ -51,7 +51,9 @@ LevelEdit::LevelEdit(MainWindow *mw, QWidget *parent) :
     m_recentExportPath = AppPathManager::userAppDir();
     setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
+#endif
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing, false);

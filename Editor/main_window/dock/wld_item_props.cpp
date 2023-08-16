@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <pge_qt_compat.h>
 #include <editing/_scenes/world/wld_item_placing.h>
 #include <editing/_scenes/world/wld_history_manager.h>
 #include <editing/_dialogs/itemselectdialog.h>
@@ -536,9 +537,13 @@ void WLD_ItemProps::on_WLD_PROPS_LVLBrowse_clicked()
         ui->WLD_PROPS_LVLFile->setModified(true);
         on_WLD_PROPS_LVLFile_editingFinished();
 
-        QRegExp lvlext = QRegExp(".*\\.(lvl|lvlx)$");
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        Q_QRegExp lvlext = Q_QRegExp(".*\\.(lvl|lvlx)$");
         lvlext.setPatternSyntax(QRegExp::RegExp2);
         lvlext.setCaseSensitivity(Qt::CaseInsensitive);
+#else
+        Q_QRegExp lvlext = QRegularExpression(".*\\.(lvl|lvlx)$", QRegularExpression::CaseInsensitiveOption);
+#endif
 
         //Attempt to read level title:
         QString FilePath = dirPath + "/" + levelList.currentFile();
@@ -548,7 +553,8 @@ void WLD_ItemProps::on_WLD_PROPS_LVLBrowse_clicked()
 
         LevelData getLevelHead;
         getLevelHead.LevelName = "";
-        if(lvlext.exactMatch(FilePath))
+
+        if(lvlext.Q_QRegExpMatch(FilePath))
         {
             if(!FileFormats::OpenLevelFileHeader(FilePath, getLevelHead))
                 return;

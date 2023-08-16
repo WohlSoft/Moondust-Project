@@ -18,7 +18,6 @@
 
 #include <QDir>
 #include <QMessageBox>
-#include <QDesktopWidget>
 #ifdef Q_OS_WIN
 #include <QtWin>
 #include <QSysInfo>
@@ -294,7 +293,9 @@ void ConfigManager::loadConfigPackList()
             continue; //Skip if it is not a config pack directory
 
         QSettings guiset(gui_ini, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         guiset.setIniCodec("UTF-8");
+#endif
 
         guiset.beginGroup("gui");
         splash_logo = guiset.value("editor-splash", "").toString();
@@ -343,7 +344,9 @@ void ConfigManager::saveCurrentSettings()
 {
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     settings.setIniCodec("UTF-8");
+#endif
 
     if(!m_currentConfigPath.endsWith('/'))
         m_currentConfigPath.append('/');
@@ -394,7 +397,9 @@ QString ConfigManager::loadConfigs()
     QString inifile = AppPathManager::settingsFile();
 
     QSettings settings(inifile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     settings.setIniCodec("UTF-8");
+#endif
 
     settings.beginGroup("Main");
     QString configPath  = settings.value("current-config", QString()).toString();
@@ -492,7 +497,9 @@ bool ConfigManager::isConfigured()
         return false;
 
     QSettings settings(settingsFile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     settings.setIniCodec("UTF-8");
+#endif
 
     settings.beginGroup("main");
     bool ret = settings.value("application-path-configured", false).toBool();
@@ -509,7 +516,9 @@ bool ConfigManager::isIntegrationCompatible()
 {
     int apiVersion;
     QSettings settings(m_currentConfigPath + "main.ini", QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     settings.setIniCodec("UTF-8");
+#endif
 
     settings.beginGroup("main");
     apiVersion = settings.value("api-version", -1).toInt();

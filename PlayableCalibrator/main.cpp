@@ -22,7 +22,9 @@
 #endif
 
 #include <QtWidgets/QApplication>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QDesktopWidget>
+#endif
 #include "calibration_main.h"
 #include <main/app_path.h>
 #include <iostream>

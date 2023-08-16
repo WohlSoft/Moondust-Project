@@ -53,7 +53,7 @@ void EditorSpashScreen::drawContents(QPainter *painter)
 
     for(int i = 0; i < m_animations.size(); i++)
     {
-        QPixmap &frame = m_animations[i].second->wholeImage();
+        const QPixmap &frame = m_animations[i].second->wholeImage();
         QRect frameRect = m_animations[i].second->frameRect();
         QRect x;
         x.setX(m_animations[i].first.x() RatioWidth);

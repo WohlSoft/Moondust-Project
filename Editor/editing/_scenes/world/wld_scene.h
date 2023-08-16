@@ -29,6 +29,7 @@
 #include <QBitmap>
 #include <QPainter>
 #include <QMessageBox>
+#include <Utils/vptrlist.h>
 
 #include <common_features/simple_animator.h>
 #include <common_features/graphicsworkspace.h>
@@ -160,7 +161,7 @@ protected:
     // ///////////////////GFX Manager////////////////////////
 public:
     //! Pre-loaded custom images bank
-    QList<QPixmap> m_localImages;
+    VPtrList<QPixmap> m_localImages;
 
     //! Container of local terrain tiles configs
     PGE_DataArray<obj_w_tile > m_localConfigTerrain;

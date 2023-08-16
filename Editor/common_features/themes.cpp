@@ -276,7 +276,9 @@ QStringList Themes::availableThemes()
 
         if(!QFileInfo(gui_ini).exists()) continue; //Skip if it is not a config
         QSettings guiset(gui_ini, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         guiset.setIniCodec("UTF-8");
+#endif
 
         guiset.beginGroup("main");
         themeName = guiset.value("theme-name", QDir(theme_dir).dirName()).toString().remove('|');
@@ -307,7 +309,9 @@ void Themes::loadTheme(const QString &themeDir)
     if(!QFileInfo(gui_ini).exists()) return;
 
     QSettings guiset(gui_ini, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     guiset.setIniCodec("UTF-8");
+#endif
 
     guiset.beginGroup("main");
     loadImage(guiset, "default-splash", splash);

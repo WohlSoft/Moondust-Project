@@ -173,7 +173,9 @@ bool AppPathManager::isPortable()
     if(!QFile(settingsFile()).exists()) return false;
     bool forcePortable = false;
     QSettings checkForPort(settingsFile(), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     checkForPort.setIniCodec("UTF-8");
+#endif
 
     checkForPort.beginGroup("Main");
     forcePortable = checkForPort.value("force-portable", false).toBool();

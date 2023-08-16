@@ -91,10 +91,17 @@ void BookmarksBox::on_bookmarkAdd_clicked()
 
 void BookmarksBox::on_bookmarkList_itemChanged(QListWidgetItem *item)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    if(
+        (item->data(Qt::UserRole + 1).typeId() == QMetaType::Bool) ||
+        (item->data(Qt::UserRole + 2).typeId() == QMetaType::Bool)
+    )
+#else
     if(
         (item->data(Qt::UserRole + 1).type() == QVariant::Type::Bool) ||
         (item->data(Qt::UserRole + 2).type() == QVariant::Type::Bool)
-    )
+        )
+#endif
     {
         qreal x, y;
 

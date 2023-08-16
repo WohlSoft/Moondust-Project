@@ -105,7 +105,7 @@ void HistoryElementSettingsWarp::undo()
     }
     else
     if(subtype == HistorySettings::SETTING_NEEDASTAR_MSG){
-        doorp->stars_msg = extraData.toList()[0].toInt();
+        doorp->stars_msg = extraData.toList()[0].toString();
     }
     else
     if(subtype == HistorySettings::SETTING_CANNON_SPEED){
@@ -241,7 +241,7 @@ void HistoryElementSettingsWarp::redo()
     }
     else
     if(subtype == HistorySettings::SETTING_NEEDASTAR_MSG){
-        doorp->stars_msg = extraData.toList()[1].toInt();
+        doorp->stars_msg = extraData.toList()[1].toString();
     }
     else
     if(subtype == HistorySettings::SETTING_CANNON_SPEED){

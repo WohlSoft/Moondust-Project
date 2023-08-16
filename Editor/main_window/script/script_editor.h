@@ -6,6 +6,7 @@
 #include <QMdiSubWindow>
 #include <QSyntaxHighlighter>
 #include <QTextEdit>
+#include <pge_qt_compat.h>
 
 // TODO: Rework this thing completely and start to use Scintilla!
 
@@ -22,13 +23,13 @@ protected:
 protected:
     struct HighlightingRule
     {
-        QRegExp pattern;
+        Q_QRegExp pattern;
         QTextCharFormat format;
     };
     QVector<HighlightingRule> highlightingRules;
 
-    QRegExp commentStartExpression;
-    QRegExp commentEndExpression;
+    Q_QRegExp commentStartExpression;
+    Q_QRegExp commentEndExpression;
 
     QTextCharFormat keywordFormat;
     QTextCharFormat classFormat;

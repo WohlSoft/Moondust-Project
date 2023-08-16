@@ -59,7 +59,7 @@ DebuggerBox::DebuggerBox(QWidget *parent) :
 
     QFont font("Monospace");
     font.setStyleHint(QFont::TypeWriter);
-    font.setWeight(8);
+    font.setWeight(QFont::Normal);
     ui->DEBUG_Items->setFont(font);
 
 }
@@ -137,7 +137,9 @@ void DebuggerBox::Debugger_loadCustomCounters()
 
 reload:
     QSettings cCounters(debuggerFile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     cCounters.setIniCodec("UTF-8");
+#endif
 
     {
         cCounters.beginGroup("custom-counters");
@@ -195,7 +197,9 @@ void DebuggerBox::Debugger_saveCustomCounters()
     QString debuggerFile = AppPathManager::settingsPath() + "/" + util::filePath(ConfStatus::configName) + " counters.ini";
 
     QSettings cCounters(debuggerFile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     cCounters.setIniCodec("UTF-8");
+#endif
     cCounters.clear();
 
     cCounters.beginGroup("custom-counters");

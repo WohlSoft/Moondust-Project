@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDesktopWidget>
 #include <QtConcurrent>
 #include <QMdiSubWindow>
 
@@ -139,7 +138,11 @@ void MainWindow::on_actionLoad_configs_triggered()
     dock_TilesetBox->m_lockSettings = true;
     dock_TilesetBox->clearTilesetGroups();
     // Do the loading in a thread
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QFuture<bool> isOk = QtConcurrent::run(&this->configs, &DataConfig::loadFullConfig);
+#else
+    QFuture<bool> isOk = QtConcurrent::run(&DataConfig::loadFullConfig, &this->configs);
+#endif
 
     while(!isOk.isFinished())
     {

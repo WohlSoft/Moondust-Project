@@ -20,7 +20,6 @@
 #include <QPixmap>
 #include <QGraphicsScene>
 #include <QProgressDialog>
-#include <QDesktopWidget>
 #include <QStandardPaths>
 #include <QDateTime>
 
@@ -59,13 +58,13 @@ void LevelEdit::ExportToImage_fn_piece()
     MainWinConnect::pMainWin->on_actionSelect_triggered();
 
     qreal zoom = 1.0;
+
     if(QString(ui->graphicsView->metaObject()->className()) == "GraphicsWorkspace")
-    {
         zoom = static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
-    }
 
     scene->captutedSize.setX(qRound(qreal(ui->graphicsView->horizontalScrollBar()->value()) / zoom) + 10);
     scene->captutedSize.setY(qRound(qreal(ui->graphicsView->verticalScrollBar()->value()) / zoom) + 10);
+
     if(GlobalSettings::screenGrab.sizeType == SETTINGS_ScreenGrabSettings::GRAB_Fit)
     {
         scene->captutedSize.setWidth(qRound(qreal(ui->graphicsView->viewport()->width()) / zoom) - 20);
@@ -92,7 +91,9 @@ void LevelEdit::ExportingReady() //slot
     bool gridWasShown = false;
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     settings.setIniCodec("UTF-8");
+#endif
 
     settings.beginGroup("Main");
     m_recentExportPath = settings.value("export-path", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)).toString();

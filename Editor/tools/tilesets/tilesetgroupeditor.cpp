@@ -19,10 +19,10 @@
 #include <QInputDialog>
 #include <QtDebug>
 #include <QSet>
+#include <pge_qt_compat.h>
 
 #include <common_features/main_window_ptr.h>
 #include <common_features/util.h>
-#include <common_features/compat.h>
 #include <dev_console/devconsole.h>
 #include <defines.h>
 
@@ -98,7 +98,9 @@ void TilesetGroupEditor::SaveSimpleTilesetGroup(const QString &path, const Simpl
     modifiedPath = path;
 
     QSettings simpleTilesetGroupINI(modifiedPath, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     simpleTilesetGroupINI.setIniCodec("UTF-8");
+#endif
 
     simpleTilesetGroupINI.clear();
     simpleTilesetGroupINI.beginGroup("tileset-group"); //HEADER
@@ -116,7 +118,9 @@ void TilesetGroupEditor::SaveSimpleTilesetGroup(const QString &path, const Simpl
 bool TilesetGroupEditor::OpenSimpleTilesetGroup(const QString &path, SimpleTilesetGroup &tilesetGroup)
 {
     QSettings simpleTilesetINI(path, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     simpleTilesetINI.setIniCodec("UTF-8");
+#endif
 
     simpleTilesetINI.beginGroup("tileset-group");
     if(!simpleTilesetINI.contains("tilesets-count"))
@@ -231,15 +235,17 @@ void TilesetGroupEditor::on_Open_clicked()
         lastFileName = pathInfo.baseName();
         QString dirPath = pathInfo.absoluteDir().absolutePath();
         m_categories.reset(new QSettings(dirPath + "/categories.ini", QSettings::IniFormat, this));
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         if(!m_categories.isNull())
             m_categories->setIniCodec("UTF-8");
+#endif
 
         for(QString &tarName : t.tilesets)
         {
             QString rootTilesetDir = m_configs->config_dir + "tilesets/";
             SimpleTileset st;
             if(tileset::OpenSimpleTileset(rootTilesetDir + tarName, st))
-                tilesets << qMakePair<QString, SimpleTileset>(tarName, st);
+                tilesets << qMakePair<QString, SimpleTileset>((QString)tarName, (SimpleTileset)st);
         }
         fetchCategories(dirPath);
         ui->category->setCurrentText(t.groupCat);

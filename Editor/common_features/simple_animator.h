@@ -42,7 +42,7 @@ public:
     QPixmap image(int frame=-1);
     QRect &frameRect();
     QRectF frameRectF();
-    QPixmap &wholeImage();
+    const QPixmap &wholeImage() const;
     void setSettings(QPixmap &sprite, bool enables=false, int framesq=1, int fspeed=64, int First=0, int Last=-1,
                    bool rev=false, bool bid=false);
 
@@ -72,7 +72,7 @@ private:
     //! Animation frame delay
     int m_frameDelay;
 
-    QPixmap *m_texture; //Whole image
+    const QPixmap *m_texture = nullptr; //Whole image
     //QVector<QPixmap> frames; //Whole image
 
     bool       m_frame_sequance_enabled;

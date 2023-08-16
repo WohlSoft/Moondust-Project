@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDesktopWidget>
-
 #include <mainwindow.h>
 #include <common_features/themes.h>
 #include <main_window/global_settings.h>
@@ -122,6 +120,7 @@ void LvlScene::switchMode(const QString &title)
 void LvlScene::hideWarpsAndDoors(bool visible)
 {
     QMap<QString, LevelLayer> localLayers;
+
     for(auto &layer : m_data->layers)
         localLayers[layer.name] = layer;
 
@@ -143,6 +142,7 @@ void LvlScene::setTiledBackground(bool forceTiled)
 void LvlScene::applyLayersVisible()
 {
     QList<QGraphicsItem *> ItemList = items();
+
     for(auto &it : ItemList)
     {
         QGraphicsItem *item = it;

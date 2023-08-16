@@ -49,7 +49,11 @@ static void processLuaMacros(QString luaFile, QString newFile, const QStringList
     f.open(QIODevice::ReadOnly/*|QIODevice::Text*/);
     of.open(QIODevice::WriteOnly/*|QIODevice::Text*/);
     QTextStream lua(&f);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     lua.setCodec("UTF-8");
+#else
+    lua.setEncoding(QStringConverter::Utf8);
+#endif
     QDate d = QDate::currentDate();
     QTime t = QTime::currentTime();
     QString dateTime = QString("%1:%2 %3-%4-%5")

@@ -213,7 +213,11 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
             waitLoopQuit = true;
         });
         // Do the loading in a thread
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         isOk.setFuture(QtConcurrent::run(&this->configs, &DataConfig::loadFullConfig));
+#else
+        isOk.setFuture(QtConcurrent::run(&DataConfig::loadFullConfig, &this->configs));
+#endif
         /*********************Loading of config pack**********************/
 
         /*********************Splash Screen**********************/

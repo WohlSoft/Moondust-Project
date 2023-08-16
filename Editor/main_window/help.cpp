@@ -42,7 +42,9 @@ void MainWindow::on_actionContents_triggered()
 void MainWindow::showWelcomeDialog()
 {
     QSettings setup(AppPathManager::settingsFile(), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     setup.setIniCodec("UTF-8");
+#endif
 
     setup.beginGroup("message-boxes");
     bool showNotice = setup.value("uidesign-editor-greeting", configs.editor.enable_first_launch_greeting).toBool();

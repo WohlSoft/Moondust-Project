@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <pge_qt_compat.h>
 #include <common_features/app_path.h>
 #include <common_features/util.h>
 #include <audio/sdl_music_player.h>
@@ -335,7 +336,7 @@ retry_queue:
             {
                 hasWork = true;
                 current_musFileOld = current_musFileNew;
-                current_musFileNew.replace(QRegExp("([^.]+)$"), "mp3");
+                current_musFileNew.replace(Q_QRegExp("([^.]+)$"), "mp3");
                 renameToBak = false;
             }
         }
@@ -345,7 +346,7 @@ retry_queue:
             {
                 hasWork = true;
                 current_musFileOld = current_musFileNew;
-                current_musFileNew.replace(QRegExp("([^.]+)$"), "ogg");
+                current_musFileNew.replace(Q_QRegExp("([^.]+)$"), "ogg");
                 renameToBak = false;
             }
         }
@@ -355,7 +356,7 @@ retry_queue:
             {
                 hasWork = true;
                 current_musFileOld = current_musFileNew;
-                current_musFileNew.replace(QRegExp("([^.]+)$"), "flac");
+                current_musFileNew.replace(Q_QRegExp("([^.]+)$"), "flac");
                 renameToBak = false;
             }
         }
@@ -365,7 +366,7 @@ retry_queue:
             {
                 hasWork = true;
                 current_musFileOld = current_musFileNew;
-                current_musFileNew.replace(QRegExp("([^.]+)$"), "wav");
+                current_musFileNew.replace(Q_QRegExp("([^.]+)$"), "wav");
                 renameToBak = false;
             }
         }

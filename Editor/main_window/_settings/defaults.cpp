@@ -17,7 +17,6 @@
  */
 
 #include <QFont>
-#include <QDesktopWidget>
 #include <QLineEdit>
 #include <QToolButton>
 #include <QCheckBox>
@@ -206,7 +205,11 @@ void MainWindow::setUiDefults()
     ui->actionFloodSectionOnly->setEnabled(false);
 
     auto ziKey = QKeySequence::keyBindings(QKeySequence::ZoomIn);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     ziKey.append(QKeySequence(Qt::CTRL + Qt::Key_Equal));
+#else
+    ziKey.append(QKeySequence(QKeyCombination(Qt::CTRL, Qt::Key_Equal)));
+#endif
     ui->actionZoomIn->setShortcuts(ziKey);
     ui->actionZoomOut->setShortcuts(QKeySequence::ZoomOut);
 

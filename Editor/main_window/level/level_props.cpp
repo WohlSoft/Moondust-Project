@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDesktopWidget>
-
 #include <editing/edit_level/levelprops.h>
 #include <editing/_scenes/level/lvl_history_manager.h>
 
@@ -32,11 +30,15 @@ void MainWindow::on_actionLevelProp_triggered()
     if(activeChildWindow() != WND_Level)
         return;
 
-    LevelEdit * e=activeLvlEditWin();
-    if(!e) return;
+    LevelEdit* e = activeLvlEditWin();
+
+    if(!e)
+        return;
+
     LevelProps levelProps(e->LvlData, this);
-    levelProps.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    levelProps.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     levelProps.setGeometry(util::alignToScreenCenter(levelProps.size()));
+
     if(levelProps.exec() == QDialog::Accepted)
     {
         QList<QVariant> lvlsetData;
@@ -48,7 +50,7 @@ void MainWindow::on_actionLevelProp_triggered()
         e->LvlData.LevelName = levelProps.m_levelTitle;
         e->LvlData.custom_params = levelProps.m_customParams;
         e->LvlData.meta.modified = true;
-        e->setWindowTitle( QString(levelProps.m_levelTitle.isEmpty() ? e->userFriendlyCurrentFile() : levelProps.m_levelTitle).replace("&", "&&&") );
+        e->setWindowTitle(QString(levelProps.m_levelTitle.isEmpty() ? e->userFriendlyCurrentFile() : levelProps.m_levelTitle).replace("&", "&&&"));
         updateWindowMenu();
     }
 }

@@ -603,7 +603,9 @@ bool DataConfig::loadFullConfig()
     if(QFile::exists(engine_ini)) //Load if exist, is not required
     {
         QSettings engineSet(engine_ini, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         engineSet.setIniCodec("UTF-8");
+#endif
 
         engineSet.beginGroup("common");
         engine.screen_w = engineSet.value("viewport-width", engine.screen_w).toUInt();

@@ -20,9 +20,9 @@
 #include <QAbstractItemView>
 #include <QComboBox>
 #include <QStyleFactory>
+#include <pge_qt_compat.h>
 
 #include "proxystyle.h"
-#include "compat.h"
 
 
 PGE_ProxyStyle::PGE_ProxyStyle(QStyle* style) : QProxyStyle(style) {}

@@ -665,7 +665,9 @@ void TilesetEditor::showEvent(QShowEvent *event)
 void TilesetEditor::showNotify()
 {
     QSettings cCounters(AppPathManager::settingsFile(), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     cCounters.setIniCodec("UTF-8");
+#endif
 
     cCounters.beginGroup("message-boxes");
     bool showNotice = cCounters.value("tileset-editor-greeting", true).toBool();

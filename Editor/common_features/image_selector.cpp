@@ -251,7 +251,8 @@ ImageSelector::ImageSelector(QWidget *parent) :
     this->setLayout(m_layout);
     m_layout->addWidget(m_button);
     m_button->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
-    m_layout->setMargin(0);
+    m_layout->setContentsMargins(0, 0, 0, 0);
+
     m_menuBox = new ImageSelectorMenu(this);
     QObject::connect(m_button,
     static_cast<void (QToolButton::*)(bool)>(&QToolButton::clicked),

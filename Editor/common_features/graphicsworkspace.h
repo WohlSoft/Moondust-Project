@@ -20,6 +20,62 @@
 #include <QStyleHintReturnMask>
 #include <QStyleOptionRubberBand>
 
+
+// Internal replacement for QMouseEvent which is impossible to copy at Qt6
+class PGEMouseEvent
+{
+public:
+    PGEMouseEvent() = default;
+    PGEMouseEvent(const PGEMouseEvent &o) = default;
+    PGEMouseEvent &operator=(const PGEMouseEvent &o) = default;
+    PGEMouseEvent(const QMouseEvent *o);
+
+    PGEMouseEvent(QEvent::Type type,
+                  const QPointF &localPos,
+                  const QPointF &windowPos,
+                  const QPointF &screenPos,
+                  Qt::MouseButton button,
+                  Qt::MouseButtons buttons,
+                  Qt::KeyboardModifiers modifiers);
+
+    // Compatibility to original QMouseEvent
+    PGEMouseEvent &operator=(const QMouseEvent *o);
+
+    QEvent::Type type() const { return m_type; }
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const QInputDevice *device() const { return m_device; }
+#endif
+    QPoint pos() const { return m_pos; }
+    QPointF localPos() const { return m_localPos; }
+    QPointF globalPos() const { return m_globalPos; }
+    QPointF screenPos() const { return m_screenPos; }
+    QPointF windowPos() const { return m_windowPos; }
+    Qt::MouseButton button() const { return m_button; }
+    Qt::MouseButtons buttons() const { return m_buttons; }
+    Qt::KeyboardModifiers modifiers() const { return m_modifiers; }
+    bool spontaneous() const { return m_spontanous; }
+
+    bool isAccepted() const { return m_accepted; }
+    void setAccepted(bool accepted) { m_accepted = accepted; }
+
+private:
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const QInputDevice *m_device = nullptr;
+#endif
+    QEvent::Type m_type = QEvent::None;
+    QPoint m_pos = QPoint();
+    QPointF m_localPos = QPointF();
+    QPointF m_globalPos = QPointF();
+    QPointF m_windowPos = QPointF();
+    QPointF m_screenPos = QPointF();
+    Qt::MouseButton m_button = Qt::NoButton;
+    Qt::MouseButtons m_buttons;
+    Qt::KeyboardModifiers m_modifiers;
+    bool m_accepted = false;
+    bool m_spontanous = false;
+};
+
+
 class GraphicsWorkspace : public QGraphicsView
 {
     Q_OBJECT
@@ -80,11 +136,12 @@ protected:
     virtual void mouseReleaseEvent( QMouseEvent * event);
     virtual void mouseDoubleClickEvent(QMouseEvent *event);
 
-    void mouseMoveEventHandler(QMouseEvent *event);
-    void storeMouseEvent(QMouseEvent *event);
+    void mouseMoveEventHandler(PGEMouseEvent &event);
+    void storeMouseEvent(const PGEMouseEvent &event);
+    void storeMouseEvent(const QMouseEvent *event);
 
     QRegion rubberBandRegion(const QWidget *widget, const QRect &rect) const;
-    void updateRubberBand(const QMouseEvent *event);
+    void updateRubberBand(const PGEMouseEvent &event);
 
 
     QRect rubberBandRect;
@@ -93,7 +150,7 @@ protected:
     Qt::ItemSelectionMode rubberBandSelectionMode;
     // [ASM] Multi-selection
     bool useLastMouseEvent;
-    QMouseEvent lastMouseEvent;
+    PGEMouseEvent lastMouseEvent;
     QList<QGraphicsItem *> rubberBandExtendSelection;
     QPoint mousePressViewPoint;
     QPointF mousePressScenePoint;

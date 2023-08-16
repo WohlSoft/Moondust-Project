@@ -34,7 +34,9 @@ WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
     m_mapPoint = QPoint(-1, -1);
     setWindowIcon(QIcon(QPixmap(":/images/world16.png")));
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
+#endif
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);
 

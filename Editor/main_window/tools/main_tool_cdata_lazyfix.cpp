@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDesktopWidget>
 #include <QFile>
 
 #include <common_features/graphics_funcs.h>

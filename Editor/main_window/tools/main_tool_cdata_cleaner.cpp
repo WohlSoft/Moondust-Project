@@ -17,6 +17,7 @@
  */
 
 #include <QMessageBox>
+#include <pge_qt_compat.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -92,9 +93,13 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
 
         qDebug() << levelCustomDirectory << "Total custom files" << filesForRemove.size();
 
-        QRegExp reg;
+        Q_QRegExp reg;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         reg.setPatternSyntax(QRegExp::Wildcard);
         reg.setCaseSensitivity(Qt::CaseInsensitive);
+#else
+        reg.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+#endif
 
         QList<unsigned long > npcContainers;
 
@@ -372,7 +377,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                 for(QString &f : whiteList)
                 {
                     reg.setPattern(f);
-                    if(reg.exactMatch(filesForRemove[i]))
+                    if(reg.Q_QRegExpMatch(filesForRemove[i]))
                     {
                         filesForRemove.removeAt(i);
                         i--;
@@ -470,17 +475,20 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                         if(transformTo > 0 && !usedTransforms.contains(transformTo))
                         {
                             obj_block &t = s->m_localConfigBlocks[transformTo];
+
                             if(t.isValid)
                             {
                                 x = &t;
                                 usedTransforms.insert(transformTo);
                                 transformTo = x->setup.transfororm_on_hit_into;
-                            } else {
-                                transformTo = 0;
                             }
-                        } else {
-                            transformTo = 0;
+                            else
+                                transformTo = 0;
+
                         }
+                        else
+                            transformTo = 0;
+
                     } while(transformTo > 0);
                     break;
                 }

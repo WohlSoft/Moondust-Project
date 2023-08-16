@@ -30,10 +30,9 @@
 #include <QTableWidget>
 #include <QComboBox>
 #include <QTabBar>
+#include <pge_qt_compat.h>
 
 #include "util.h"
-
-#include "compat.h"
 
 
 void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, int searchType)
@@ -229,21 +228,20 @@ void util::CSV2DoubleArr(QString source, QVector<double> &dest)
 
 QRect util::getScreenGeometry(int screenIndex)
 {
-    auto *d = qApp->desktop();
-    Q_ASSERT(d);
     auto screens = QGuiApplication::screens();
+    Q_ASSERT(screens.size() > 0);
 
-    if(screens.size() <= 1) // if 1 monitor only in use
-        return d->geometry();
+    if(screens.size() == 1) // if one monitor only in use
+        return screens.front()->geometry();
 
     QScreen *screen = QGuiApplication::primaryScreen();
 
     if(screenIndex < 0)
-        return screen ? screen->geometry() : d->geometry();
+        return screen ? screen->geometry() : screens.first()->geometry();
     else
     {
         if(screenIndex >= screens.size())
-            return d->geometry();
+            return screens.first()->geometry();
         else
             return screens[screenIndex]->geometry();
     }

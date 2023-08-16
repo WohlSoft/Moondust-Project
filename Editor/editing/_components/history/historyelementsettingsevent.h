@@ -3,6 +3,7 @@
 #define HISTORYELEMENTSETTINGSEVENT_H
 
 #include <QObject>
+#include <QVariant>
 
 #include <defines.h>
 #include "ihistoryelement.h"

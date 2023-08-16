@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <pge_qt_compat.h>
 #include "animation_edit.h"
 #include <ui_animation_edit.h>
 #include "frame_matrix/matrix.h"
@@ -41,7 +42,7 @@ AnimationEdit::AnimationEdit(Calibration *conf, QObject *mw, QWidget *parent) :
     m_ticker.connect(&m_ticker, SIGNAL(timeout()), this, SLOT(nextFrame()));
     m_ticker.setInterval(ui->frameSpeed->value());
 
-    ui->aniToAdd->setValidator(new QRegExpValidator(QRegExp("[0-9A-Za-z]*"), ui->aniToAdd));
+    ui->aniToAdd->setValidator(new Q_QRegExpValidator(Q_QRegExp("[0-9A-Za-z]*"), ui->aniToAdd));
 }
 
 AnimationEdit::~AnimationEdit()

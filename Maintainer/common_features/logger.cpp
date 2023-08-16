@@ -44,7 +44,9 @@ void LogWriter::LoadLogSettings()
 
     QString mainIniFile = AppPathManager::settingsFile();
     QSettings logSettings(mainIniFile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     logSettings.setIniCodec("UTF-8");
+#endif
 
     QDir defLogDir(AppPathManager::userAppDir()+"/logs");
     if(!defLogDir.exists())

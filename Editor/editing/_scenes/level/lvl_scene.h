@@ -30,6 +30,7 @@
 #include <QPainter>
 #include <QMessageBox>
 #include <QList>
+#include <Utils/vptrlist.h>
 
 #include <common_features/logger.h>
 #include <common_features/simple_animator.h>
@@ -193,7 +194,7 @@ protected:
     // ///////////////////GFX Manager////////////////////////
 public:
     //! Pre-loaded custom images bank
-    QList<QPixmap> m_localImages;
+    VPtrList<QPixmap> m_localImages;
 
     //! Container of local backgrounds configs
     QHash<int, obj_BG > m_localConfigBackgrounds;

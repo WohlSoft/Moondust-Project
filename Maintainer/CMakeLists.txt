@@ -34,6 +34,7 @@ include(../_common/executable_build_props.cmake)
 include(../_common/static_qt.cmake)
 
 include(../_common/translator-qt/translator.cmake)
+include(../_common/qt-modules/compat/pge_qt_compat.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
 
 if(PGE_USE_QT5)

@@ -290,11 +290,19 @@ void CaseFixer::on_start_clicked()
     else if(ui->modeAllLower->isChecked())
         mode = CaseFixerWorker::MODE_TOLOWER;
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     m_process = QtConcurrent::run<bool>(&m_worker,
                                         &CaseFixerWorker::initJob,
                                         ui->configPackPath->text(),
                                         ui->episodeToFix->text(),
                                         true, mode);
+#else
+    m_process = QtConcurrent::run(&CaseFixerWorker::initJob,
+                                  &m_worker,
+                                  ui->configPackPath->text(),
+                                  ui->episodeToFix->text(),
+                                  true, mode);
+#endif
 
     while(m_process.isRunning())
     {
@@ -310,7 +318,12 @@ void CaseFixer::on_start_clicked()
         return;
     }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     m_process = QtConcurrent::run<bool>(&m_worker, &CaseFixerWorker::runJob);
+#else
+    m_process = QtConcurrent::run(&CaseFixerWorker::runJob, &m_worker);
+#endif
+
     m_progressWatcher.start(100);
 }
 
@@ -338,7 +351,9 @@ void CaseFixer::refreshProgressBar()
 void CaseFixer::loadSetup()
 {
     QSettings settings(AppPathManager::settingsFile(), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     settings.setIniCodec("UTF-8");
+#endif
 
     settings.beginGroup("CaseFixer");
     {
@@ -350,7 +365,9 @@ void CaseFixer::loadSetup()
 void CaseFixer::saveSetup()
 {
     QSettings settings(AppPathManager::settingsFile(), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     settings.setIniCodec("UTF-8");
+#endif
 
     settings.beginGroup("CaseFixer");
     {
