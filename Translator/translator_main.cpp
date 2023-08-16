@@ -243,6 +243,10 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
     ui->previewZone->setFontSize(ui->previewFontSize->value());
 
 
+    // Synchronize values before use
+    ui->previewZone->setMacroPlayerNum(ui->macroPlayerNum->value());
+    ui->previewZone->setMacroPlayerState(ui->macroStateNum->value());
+
     QObject::connect(ui->preProcessorTest,
                      static_cast<void(QGroupBox::*)(bool)>(&QGroupBox::clicked),
                      ui->previewZone,
