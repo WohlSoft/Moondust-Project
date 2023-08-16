@@ -605,7 +605,13 @@ IniProcessing::IniProcessing(char *memory, size_t size) :
 
 #ifdef INI_PROCESSING_ALLOW_QT_TYPES
 IniProcessing::IniProcessing(const QString &iniFileName, int) :
-    m_params{iniFileName.toStdString(), false, -1, ERR_OK, false, params::IniSections(), nullptr, ""}
+    m_params
+    {
+        iniFileName.toStdString(), false, -1, ERR_OK, false, params::IniSections(), nullptr, ""
+#ifdef _WIN32
+        , false
+#endif
+    }
 {
     open(m_params.filePath);
 }
