@@ -87,8 +87,12 @@ public:
     void ResetZoom();
     void zoomIn();
     void zoomOut();
+
     void setZoom(int percent);
-    int  getZoom();
+    int  getZoom() const;
+
+    void setZoomF(qreal percent);
+    qreal getZoomF() const;
 
     QGraphicsView *getGraphicsView();
 
