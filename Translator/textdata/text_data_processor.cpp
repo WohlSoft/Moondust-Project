@@ -22,7 +22,11 @@
 
 #include <QDir>
 #include <QFile>
-#include <QRegExp>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#   include <QRegExp>
+#else
+#   include <QRegularExpression>
+#endif
 #include <QFileInfo>
 #include <QTextStream>
 #include <QDirIterator>
@@ -34,6 +38,25 @@
 #include <PGE_File_Formats/file_formats.h>
 
 #include "text_data_processor.h"
+
+
+static QStringList s_getRegExMatches(const QString &pattern, const QString &input)
+{
+    QStringList ret;
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    QRegExp fe(pattern, Qt::CaseInsensitive, QRegExp::RegExp2);
+    if(fe.exactMatch(input))
+        ret = fe.capturedTexts();
+#else
+    QRegularExpression fe(pattern, QRegularExpression::CaseInsensitiveOption);
+    auto m = fe.match(input);
+    if(m.hasMatch())
+        ret = m.capturedTexts();
+#endif
+
+    return ret;
+}
 
 
 /*!
@@ -166,10 +189,11 @@ bool TextDataProcessor::loadProject(const QString &directory, TranslateProject &
     {
         auto f = dit.next();
         QFileInfo fi(f);
-        QRegExp fe("translation_([a-zA-Z-]*)\\.json", Qt::CaseInsensitive, QRegExp::RegExp2);
-        if(fe.exactMatch(fi.fileName()) && (fe.cap(1) != "origin"))
+        QStringList cap = s_getRegExMatches("translation_([a-zA-Z-]*)\\.json", fi.fileName());
+
+        if(cap.size() >= 2 && cap[1] != "origin")
         {
-            loadTranslation(proj, fe.cap(1), f);
+            loadTranslation(proj, cap[1], f);
             hasTranslations = true;
         }
     }
@@ -213,10 +237,11 @@ bool TextDataProcessor::loadProjectLevel(const QString &file, TranslateProject &
     {
         auto f = dit.next();
         QFileInfo fi(f);
-        QRegExp fe("translation_([a-zA-Z-]*)\\.json", Qt::CaseInsensitive, QRegExp::RegExp2);
-        if(fe.exactMatch(fi.fileName()) && (fe.cap(1) != "origin"))
+        QStringList cap = s_getRegExMatches("translation_([a-zA-Z-]*)\\.json", fi.fileName());
+
+        if(cap.size() >= 2 && cap[1] != "origin")
         {
-            loadTranslation(proj, fe.cap(1), f);
+            loadTranslation(proj, cap[1], f);
             hasTranslations = true;
         }
     }
@@ -1507,18 +1532,18 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                     {
                         auto s = it.toString();
                         TranslationData_DialogueNode n;
-                        QRegExp r_npc("npc-(\\d*)\\-talk", Qt::CaseInsensitive, QRegExp::RegExp2);
-                        QRegExp r_event("event-(\\d*)\\-msg", Qt::CaseInsensitive, QRegExp::RegExp2);
+                        QStringList l_npc = s_getRegExMatches("npc-(\\d*)\\-talk", s);
+                        QStringList l_event = s_getRegExMatches("event-(\\d*)\\-msg", s);
 
-                        if(r_npc.exactMatch(s))
+                        if(l_npc.size() >= 2)
                         {
-                            n.item_index = r_npc.cap(1).toInt();
+                            n.item_index = l_npc[1].toInt();
                             n.type = TranslationData_DialogueNode::T_NPC_TALK;
                             d.messages.push_back(n);
                         }
-                        else if(r_event.exactMatch(s))
+                        else if(l_event.size() >= 2)
                         {
-                            n.item_index = r_event.cap(1).toInt();
+                            n.item_index = l_event[1].toInt();
                             n.type = TranslationData_DialogueNode::T_EVENT_MSG;
                             d.messages.push_back(n);
                         }
@@ -1545,18 +1570,18 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                     {
                         auto s = it.toString();
                         TranslationData_DialogueNode n;
-                        QRegExp r_npc("npc-(\\d*)\\-talk", Qt::CaseInsensitive, QRegExp::RegExp2);
-                        QRegExp r_event("event-(\\d*)\\-msg", Qt::CaseInsensitive, QRegExp::RegExp2);
+                        QStringList l_npc = s_getRegExMatches("npc-(\\d*)\\-talk", s);
+                        QStringList l_event = s_getRegExMatches("event-(\\d*)\\-msg", s);
 
-                        if(r_npc.exactMatch(s))
+                        if(l_npc.size() >= 2)
                         {
-                            n.item_index = r_npc.cap(1).toInt();
+                            n.item_index = l_npc[1].toInt();
                             n.type = TranslationData_DialogueNode::T_NPC_TALK;
                             d.messages.push_back(n);
                         }
-                        else if(r_event.exactMatch(s))
+                        else if(l_event.size() >= 2)
                         {
-                            n.item_index = r_event.cap(1).toInt();
+                            n.item_index = l_event[1].toInt();
                             n.type = TranslationData_DialogueNode::T_EVENT_MSG;
                             d.messages.push_back(n);
                         }

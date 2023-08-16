@@ -1,18 +1,38 @@
-#include "msg_box_preview.h"
+#include <regex>
+#include <string>
 #include <QFontMetrics>
 #include <QPaintEvent>
 #include <QFontDatabase>
 #include <QPainter>
-#include <QRegExp>
 #include <QStack>
+
+#include "msg_box_preview.h"
+
+
+static void s_splitString(std::vector<std::string>& out, const std::string& str, char delimiter)
+{
+    std::string::size_type beg = 0;
+    std::string::size_type end = 0;
+    do
+    {
+        end = str.find(delimiter, beg);
+        if(end == std::string::npos)
+            end = str.size();
+        out.emplace_back(str.substr(beg, end-beg));
+        beg = end + 1;
+    }
+    while(end < str.size() - 1);
+}
+
 
 QString MsgBoxPreview::runPreProcessor()
 {
-    QRegExp cond_if = QRegExp("^#if *(\\w+\\(.*\\))$");
-    QRegExp cond_elif = QRegExp("^#elif *(\\w+\\(.*\\))$");
-    const QString cond_endif = "#endif";
+    std::regex cond_if = std::regex("^#if *(\\w+\\(.*\\))$");
+    std::regex cond_elif = std::regex("^#elif *(\\w+\\(.*\\))$");
+    const std::string cond_endif = "#endif";
+    const std::string cond_else = "#else";
 
-    QRegExp op_player = QRegExp("^player\\((.*)\\)$");
+    std::regex reg_op_player = std::regex("^player\\((.*)\\)$");
 
     struct State
     {
@@ -22,28 +42,36 @@ QString MsgBoxPreview::runPreProcessor()
     };
 
     State st;
-    QStack<State> stack;
-    QString ret;
+    std::string ret;
+    std::string tmpS = m_currentText.toStdString();
+    std::vector<std::string> tmp;
+    s_splitString(tmp, tmpS, '\n');
 
-    const QStringList tmp = m_currentText.split('\n');
     for(const auto &t : tmp)
     {
-        if((!st.open && cond_if.exactMatch(t)) ||
-            (st.open && cond_elif.exactMatch(t)))
+        std::smatch m_if;
+        std::smatch m_elif;
+
+        if((!st.open && std::regex_search(t, m_if, cond_if)) ||
+            (st.open && std::regex_search(t, m_elif, cond_elif)))
         {
             st.cond_true = false;
             if(st.open && st.skip_to_endif)
                 continue;
 
-            QString cond = st.open ? cond_elif.cap(1) : cond_if.cap(1);
-            if(op_player.exactMatch(cond)) // check whaever player
+            std::string cond = st.open ? m_elif[1].str() : m_if[1].str();
+            std::smatch m_op_player;
+
+            if(std::regex_search(cond, m_op_player, reg_op_player)) // check whaever player
             {
                 st.open = true;
-                QString players = op_player.cap(1);
-                QStringList nums = players.split(',');
+                std::string players = m_op_player[1].str();
+                std::vector<std::string> nums;
+                s_splitString(nums, players, ',');
+
                 for(auto &i : nums)
                 {
-                    if(i.toInt() == m_macro.player)
+                    if(std::atoi(i.c_str()) == m_macro.player)
                     {
                         st.cond_true = true;
                         st.skip_to_endif = true;
@@ -53,8 +81,8 @@ QString MsgBoxPreview::runPreProcessor()
             }
             else // invalid line
             {
-                if(!ret.isEmpty())
-                    ret.append('\n');
+                if(!ret.empty())
+                    ret.push_back('\n');
                 ret.append(t);
             }
         }
@@ -64,15 +92,24 @@ QString MsgBoxPreview::runPreProcessor()
             st.cond_true = false;
             st.skip_to_endif = false;
         }
+        else if(st.open && t == cond_else)
+        {
+            st.open = true;
+            st.cond_true = true;
+            if(st.open && st.skip_to_endif)
+                continue;
+
+            st.skip_to_endif = false;
+        }
         else if(!st.open || st.cond_true) // ordinary line
         {
-            if(!ret.isEmpty())
-                ret.append('\n');
+            if(!ret.empty())
+                ret.push_back('\n');
             ret.append(t);
         }
     }
 
-    return ret;
+    return QString::fromStdString(ret);
 }
 
 MsgBoxPreview::MsgBoxPreview(QWidget *parent) :

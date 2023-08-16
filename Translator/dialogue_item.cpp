@@ -69,8 +69,8 @@ void DialogueItem::updateLabel()
     case T_NPC:
     {
         Q_ASSERT(l.npc.contains(m_key));
-        auto &n = l.npc[m_key];
-        auto &on = orig.npc[m_key];
+        const auto &n = l.npc[m_key];
+        const auto &on = orig.npc[m_key];
         m_text = n.talk.text;
         ui->itemType->setText(QString("NPC-%1 [idx-%2]").arg(on.npc_id).arg(on.npc_index));
         if(!isOrigin && m_text.isEmpty())
@@ -81,8 +81,8 @@ void DialogueItem::updateLabel()
     case T_EVENT:
     {
         Q_ASSERT(l.events.contains(m_key));
-        auto &e = l.events[m_key];
-        auto &oe = orig.events[m_key];
+        const auto &e = l.events[m_key];
+        const auto &oe = orig.events[m_key];
         m_text = e.message.text;
         ui->itemType->setText(QString("Event-%1").arg(oe.event_index));
         if(!isOrigin && m_text.isEmpty())

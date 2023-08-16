@@ -19,7 +19,9 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 #include <QString>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QtMsgHandler>
+#endif
 
 void LoadLogSettings();
 void WriteToLog(QtMsgType type, QString msg);

@@ -119,7 +119,7 @@ QVariant DialoguesListModel::data(const QModelIndex &index, int role) const
         {
         case Qt::DisplayRole:
             return it.note.isEmpty() ? tr("<Double-click to edit note>") : it.note;
-        case Qt::TextColorRole:
+        case Qt::ForegroundRole:
             return it.note.isEmpty() ? QColor(Qt::gray) : QApplication::palette().text().color();
         case Qt::EditRole:
             return it.note;

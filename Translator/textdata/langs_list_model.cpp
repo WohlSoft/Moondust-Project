@@ -255,7 +255,7 @@ QVariant LangsListModel::data(const QModelIndex &index, int role) const
 
         break;
 
-    case Qt::TextColorRole:
+    case Qt::ForegroundRole:
         switch(index.column())
         {
         case C_LANG_NAME:

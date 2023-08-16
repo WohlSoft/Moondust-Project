@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.2)
+cmake_minimum_required (VERSION 3.5)
 project(MoondustTranslator C CXX)
 
 if(POLICY CMP0071) # Automoc
@@ -34,16 +34,15 @@ include(../_common/executable_build_props.cmake)
 include(../_common/static_qt.cmake)
 
 include(../_common/translator-qt/translator.cmake)
+include(../_common/qt-modules/compat/pge_qt_compat.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/qt-modules/msg_box_preview/msg_box_preview.cmake)
 
-pge_cxx_standard(14)
-
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Gui REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Concurrent REQUIRED)
-find_package(Qt5LinguistTools REQUIRED)
+if(PGE_USE_QT5)
+    pge_cxx_standard(14)
+else()
+    pge_cxx_standard(17)
+endif()
 
 if(QT_DISABLE_NATIVE_FILE_DIALOG) # Disable native file dialogs when locally-built libPNG was been used to avoid the crash
     message("== Translator: Native file dialogs will be DISABLED")
@@ -60,7 +59,7 @@ file(GLOB PGE_LANG_SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.ts")
 
 set_source_files_properties(${PGE_LANG_SRC_FILES} PROPERTIES OUTPUT_LOCATION ${PGE_LANG_OUTPUT_DIR})
 set(PGE_LANG_BIN_FILES)
-qt5_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
+pge_qt_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
 add_custom_target(translator_translations DEPENDS ${PGE_LANG_BIN_FILES})
 
 if(NOT APPLE AND NOT EMSCRIPTEN)
@@ -70,9 +69,9 @@ endif()
 
 # Executables fail to build with Qt 5 in the default configuration
 # without -fPIE. We add that here.
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS} ${Qt5Concurrent_EXECUTABLE_COMPILE_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${QT_Widgets_EXECUTABLE_COMPILE_FLAGS} ${QT_Concurrent_EXECUTABLE_COMPILE_FLAGS}")
 
-qt5_wrap_ui(UIS_HDRS
+pge_qt_wrap_ui(UIS_HDRS
     translator_main.ui
     translate_field.ui
     dialogue_item.ui
@@ -80,7 +79,7 @@ qt5_wrap_ui(UIS_HDRS
 )
 
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/translator.qrc)
-qt5_add_resources(RESOURCE_ADDED ${RESOURCE})
+pge_qt_add_resources(RESOURCE_ADDED ${RESOURCE})
 
 if(QT_IMPORT_PLUGINS_MODULE)
     set(QT_PLUGINS_CPP "${CMAKE_BINARY_DIR}/pge_translator_plugins.cpp")
@@ -147,19 +146,19 @@ add_library(PGE_Translator_QtLibs INTERFACE)
 # dependencies QtCore and QtGui
 target_include_directories(PGE_Translator_QtLibs
     INTERFACE
-    ${Qt5Core_INCLUDE_DIRS}
-    ${Qt5Gui_INCLUDE_DIRS}
-    ${Qt5Widgets_INCLUDE_DIRS}
-    ${Qt5Concurrent_INCLUDES_DIRS}
+    ${QT_Core_INCLUDE_DIRS}
+    ${QT_Gui_INCLUDE_DIRS}
+    ${QT_Widgets_INCLUDE_DIRS}
+    ${QT_Concurrent_INCLUDE_DIRS}
 )
 
 # We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
 target_compile_definitions(PGE_Translator_QtLibs
     INTERFACE
-    ${Qt5Core_DEFINITIONS}
-    ${Qt5Gui_DEFINITIONS}
-    ${Qt5Widgets_DEFINITIONS}
-    ${Qt5Concurrent_DEFINITIONS}
+    ${QT_Core_DEFINITIONS}
+    ${QT_Gui_DEFINITIONS}
+    ${QT_Widgets_DEFINITIONS}
+    ${QT_Concurrent_DEFINITIONS}
     -DPGE_FILES_QT
 )
 
@@ -174,10 +173,10 @@ endif()
 target_link_libraries(PGE_Translator_QtLibs INTERFACE
     ${QT_EXTRA_LIBS_PRE}
     PGE_FileFormatsQt
-    ${Qt5Concurrent_LIBRARIES}
-    ${Qt5Widgets_LIBRARIES}
-    ${Qt5Gui_LIBRARIES}
-    ${Qt5Core_LIBRARIES}
+    ${QT_Concurrent_LIBRARIES}
+    ${QT_Widgets_LIBRARIES}
+    ${QT_Gui_LIBRARIES}
+    ${QT_Core_LIBRARIES}
     ${QT_EXTRA_LIBS}
 )
 if(QT_PTHREAD)
