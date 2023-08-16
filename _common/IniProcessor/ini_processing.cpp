@@ -35,6 +35,7 @@
 #include "ini_processing.h"
 #include <cstdio>
 #include <cctype>
+#include <cstdint>
 #include <cstring>
 #include <cstdlib>
 #include <clocale>
