@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../_resources/editor.qrc">
-    <normaloff>:/images/bug.png</normaloff>:/images/bug.png</iconset>
+    <normaloff>:/toolbar/dock/bookmarks.png</normaloff>:/toolbar/dock/bookmarks.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout" columnstretch="0,1000,0" columnminimumwidth="160,0,0">
    <item row="1" column="0" colspan="3">
@@ -133,7 +133,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../_resources/editor.qrc">:/images/cat_beaten/cat_beaten_128.png</pixmap>
+      <pixmap resource="../_resources/editor.qrc">:/crashdialogue/128.png</pixmap>
      </property>
     </widget>
    </item>

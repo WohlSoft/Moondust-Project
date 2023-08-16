@@ -39,7 +39,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="_resources/editor.qrc">
-    <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
+    <normaloff>:/appicon/48.png</normaloff>:/appicon/48.png</iconset>
   </property>
   <property name="tabShape">
    <enum>QTabWidget::Triangular</enum>
@@ -110,7 +110,7 @@
      </property>
      <property name="icon">
       <iconset resource="_resources/editor.qrc">
-       <normaloff>:/images/new.png</normaloff>:/images/new.png</iconset>
+       <normaloff>:/toolbar/file/new.png</normaloff>:/toolbar/file/new.png</iconset>
      </property>
      <addaction name="actionNewLevel"/>
      <addaction name="actionNewWorld_map"/>
@@ -395,7 +395,7 @@
      </property>
      <property name="icon">
       <iconset resource="_resources/editor.qrc">
-       <normaloff>:/lunalua/lunalua_16.png</normaloff>:/lunalua/lunalua_16.png</iconset>
+       <normaloff>:/engines/lunalua/16.png</normaloff>:/engines/lunalua/16.png</iconset>
      </property>
      <addaction name="actionLunaLUA_lvl"/>
      <addaction name="actionLunaLUA_eps"/>
@@ -703,7 +703,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
+     <normaloff>:/toolbar/file/open.png</normaloff>:/toolbar/file/open.png</iconset>
    </property>
    <property name="text">
     <string>Open...</string>
@@ -735,7 +735,7 @@
   <action name="actionNewLevel">
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/lvl16.png</normaloff>:/lvl16.png</iconset>
+     <normaloff>:/toolbar/dock/level.png</normaloff>:/toolbar/dock/level.png</iconset>
    </property>
    <property name="text">
     <string>Level...</string>
@@ -747,7 +747,7 @@
   <action name="actionNewWorld_map">
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/world16.png</normaloff>:/images/world16.png</iconset>
+     <normaloff>:/toolbar/dock/world16.png</normaloff>:/toolbar/dock/world16.png</iconset>
    </property>
    <property name="text">
     <string>World map...</string>
@@ -759,7 +759,7 @@
   <action name="actionNewNPC_config">
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
+     <normaloff>:/toolbar/dock/coin.png</normaloff>:/toolbar/dock/coin.png</iconset>
    </property>
    <property name="text">
     <string>NPC config...</string>
@@ -774,7 +774,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+     <normaloff>:/toolbar/file/save.png</normaloff>:/toolbar/file/save.png</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -798,7 +798,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/saveas.png</normaloff>:/images/saveas.png</iconset>
+     <normaloff>:/toolbar/file/save_as.png</normaloff>:/toolbar/file/save_as.png</iconset>
    </property>
    <property name="text">
     <string>Save as...</string>
@@ -1442,7 +1442,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/item_browser_level.png</normaloff>:/images/item_browser_level.png</iconset>
+     <normaloff>:/toolbar/dock/item_browser_level.png</normaloff>:/toolbar/dock/item_browser_level.png</iconset>
    </property>
    <property name="text">
     <string>Level items browser</string>
@@ -1460,7 +1460,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/item_browser_world.png</normaloff>:/images/item_browser_world.png</iconset>
+     <normaloff>:/toolbar/dock/item_browser_world.png</normaloff>:/toolbar/dock/item_browser_world.png</iconset>
    </property>
    <property name="text">
     <string>World map items browser</string>
@@ -1484,7 +1484,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/arrow.png</normaloff>:/images/arrow.png</iconset>
+     <normaloff>:/toolbar/modes/select.png</normaloff>:/toolbar/modes/select.png</iconset>
    </property>
    <property name="text">
     <string>Select and Move</string>
@@ -1508,7 +1508,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/rubber.png</normaloff>:/images/rubber.png</iconset>
+     <normaloff>:/toolbar/modes/erase.png</normaloff>:/toolbar/modes/erase.png</iconset>
    </property>
    <property name="text">
     <string>Eriser</string>
@@ -1526,7 +1526,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/section.png</normaloff>:/images/section.png</iconset>
+     <normaloff>:/toolbar/dock/section.png</normaloff>:/toolbar/dock/section.png</iconset>
    </property>
    <property name="text">
     <string>Section Settings</string>
@@ -1558,7 +1558,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/goto_left_bottom.png</normaloff>:/images/goto_left_bottom.png</iconset>
+     <normaloff>:/toolbar/goto/left_bottom.png</normaloff>:/toolbar/goto/left_bottom.png</iconset>
    </property>
    <property name="text">
     <string>Go to left-bottom of the section</string>
@@ -1576,7 +1576,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/grid_snap.png</normaloff>:/images/grid_snap.png</iconset>
+     <normaloff>:/toolbar/edit/toolbar/edit/grid_snap.png</normaloff>:/toolbar/edit/toolbar/edit/grid_snap.png</iconset>
    </property>
    <property name="text">
     <string>Attach to grid</string>
@@ -1591,8 +1591,8 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/locks/block_op.png</normaloff>
-     <normalon>:/locks/block_cl.png</normalon>:/locks/block_op.png</iconset>
+     <normaloff>:/toolbar/locks/block_op.png</normaloff>
+     <normalon>:/toolbar/locks/block_cl.png</normalon>:/toolbar/locks/block_op.png</iconset>
    </property>
    <property name="text">
     <string>Lock all Blocks</string>
@@ -1604,8 +1604,8 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/locks/bgo_op.png</normaloff>
-     <normalon>:/locks/bgo_cl.png</normalon>:/locks/bgo_op.png</iconset>
+     <normaloff>:/toolbar/locks/bgo_op.png</normaloff>
+     <normalon>:/toolbar/locks/bgo_cl.png</normalon>:/toolbar/locks/bgo_op.png</iconset>
    </property>
    <property name="text">
     <string>Lock all BGO</string>
@@ -1617,8 +1617,8 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/locks/npc_op.png</normaloff>
-     <normalon>:/locks/npc_cl.png</normalon>:/locks/npc_op.png</iconset>
+     <normaloff>:/toolbar/locks/npc_op.png</normaloff>
+     <normalon>:/toolbar/locks/npc_cl.png</normalon>:/toolbar/locks/npc_op.png</iconset>
    </property>
    <property name="text">
     <string>Lock all NPC</string>
@@ -1630,8 +1630,8 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/locks/door_op.png</normaloff>
-     <normalon>:/locks/door_cl.png</normalon>:/locks/door_op.png</iconset>
+     <normaloff>:/toolbar/locks/door_op.png</normaloff>
+     <normalon>:/toolbar/locks/door_cl.png</normalon>:/toolbar/locks/door_op.png</iconset>
    </property>
    <property name="text">
     <string>Lock all door objects</string>
@@ -1643,8 +1643,8 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/locks/water_op.png</normaloff>
-     <normalon>:/locks/water_cl.png</normalon>:/locks/water_op.png</iconset>
+     <normaloff>:/toolbar/locks/water_op.png</normaloff>
+     <normalon>:/toolbar/locks/water_cl.png</normalon>:/toolbar/locks/water_op.png</iconset>
    </property>
    <property name="text">
     <string>Lock all water squares</string>
@@ -1656,7 +1656,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/player1_start.png</normaloff>:/images/player1_start.png</iconset>
+     <normaloff>:/toolbar/modes/player1_start.png</normaloff>:/toolbar/modes/player1_start.png</iconset>
    </property>
    <property name="text">
     <string>Set first player position</string>
@@ -1671,7 +1671,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/player2_start.png</normaloff>:/images/player2_start.png</iconset>
+     <normaloff>:/toolbar/modes/player2_start.png</normaloff>:/toolbar/modes/player2_start.png</iconset>
    </property>
    <property name="text">
     <string>Set second player position</string>
@@ -1686,7 +1686,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/playmusic.png</normaloff>:/images/playmusic.png</iconset>
+     <normaloff>:/toolbar/playmusic.png</normaloff>:/toolbar/playmusic.png</iconset>
    </property>
    <property name="text">
     <string>Play music</string>
@@ -1704,7 +1704,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/reload.png</normaloff>:/reload.png</iconset>
+     <normaloff>:/toolbar/file/reload.png</normaloff>:/toolbar/file/reload.png</iconset>
    </property>
    <property name="text">
     <string>Reload file data</string>
@@ -1728,7 +1728,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/hand.png</normaloff>:/hand.png</iconset>
+     <normaloff>:/toolbar/modes/drag.png</normaloff>:/toolbar/modes/drag.png</iconset>
    </property>
    <property name="text">
     <string>Scroll hand</string>
@@ -1746,7 +1746,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/edit_undo.png</normaloff>:/images/edit_undo.png</iconset>
+     <normaloff>:/toolbar/edit/toolbar/edit/undo.png</normaloff>:/toolbar/edit/toolbar/edit/undo.png</iconset>
    </property>
    <property name="text">
     <string>Undo</string>
@@ -1761,7 +1761,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/edit_redo.png</normaloff>:/images/edit_redo.png</iconset>
+     <normaloff>:/toolbar/edit/toolbar/edit/redo.png</normaloff>:/toolbar/edit/toolbar/edit/redo.png</iconset>
    </property>
    <property name="text">
     <string>Redo</string>
@@ -1776,7 +1776,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/doors.png</normaloff>:/doors.png</iconset>
+     <normaloff>:/toolbar/dock/doors.png</normaloff>:/toolbar/dock/doors.png</iconset>
    </property>
    <property name="text">
     <string>Warps and Doors</string>
@@ -1791,7 +1791,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/animation.png</normaloff>:/images/animation.png</iconset>
+     <normaloff>:/toolbar/view/animation.png</normaloff>:/toolbar/view/animation.png</iconset>
    </property>
    <property name="text">
     <string>Animation</string>
@@ -1919,7 +1919,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/edit_copy.png</normaloff>:/images/edit_copy.png</iconset>
+     <normaloff>:/toolbar/edit/toolbar/edit/copy.png</normaloff>:/toolbar/edit/toolbar/edit/copy.png</iconset>
    </property>
    <property name="text">
     <string>Copy</string>
@@ -1952,7 +1952,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/drawWater.png</normaloff>:/drawWater.png</iconset>
+     <normaloff>:/toolbar/modes/draw_water.png</normaloff>:/toolbar/modes/draw_water.png</iconset>
    </property>
    <property name="text">
     <string>Draw Water zone</string>
@@ -1967,7 +1967,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/drawQuickSand.png</normaloff>:/drawQuickSand.png</iconset>
+     <normaloff>:/toolbar/modes/draw_sand.png</normaloff>:/toolbar/modes/draw_sand.png</iconset>
    </property>
    <property name="text">
     <string>Draw QuickSand zone</string>
@@ -1982,7 +1982,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/edit_paste.png</normaloff>:/images/edit_paste.png</iconset>
+     <normaloff>:/toolbar/edit/toolbar/edit/paste.png</normaloff>:/toolbar/edit/toolbar/edit/paste.png</iconset>
    </property>
    <property name="text">
     <string>Paste</string>
@@ -1997,7 +1997,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/layers.png</normaloff>:/layers.png</iconset>
+     <normaloff>:/toolbar/dock/layers.png</normaloff>:/toolbar/dock/layers.png</iconset>
    </property>
    <property name="text">
     <string>Layers</string>
@@ -2026,7 +2026,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/edit_cut.png</normaloff>:/images/edit_cut.png</iconset>
+     <normaloff>:/toolbar/edit/toolbar/edit/cut.png</normaloff>:/toolbar/edit/toolbar/edit/cut.png</iconset>
    </property>
    <property name="text">
     <string>Cut</string>
@@ -2058,7 +2058,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/select_only.png</normaloff>:/select_only.png</iconset>
+     <normaloff>:/toolbar/modes/select_only.png</normaloff>:/toolbar/modes/select_only.png</iconset>
    </property>
    <property name="text">
     <string>Select only</string>
@@ -2084,7 +2084,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/goto_left_top.png</normaloff>:/images/goto_left_top.png</iconset>
+     <normaloff>:/toolbar/goto/left_top.png</normaloff>:/toolbar/goto/left_top.png</iconset>
    </property>
    <property name="text">
     <string>Go to the left-top of the section</string>
@@ -2099,7 +2099,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/events.png</normaloff>:/images/events.png</iconset>
+     <normaloff>:/toolbar/dock/events.png</normaloff>:/toolbar/dock/events.png</iconset>
    </property>
    <property name="text">
     <string>Events</string>
@@ -2125,7 +2125,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/search.png</normaloff>:/images/search.png</iconset>
+     <normaloff>:/toolbar/dock/search.png</normaloff>:/toolbar/dock/search.png</iconset>
    </property>
    <property name="text">
     <string>Level Search</string>
@@ -2194,7 +2194,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/section.png</normaloff>:/images/section.png</iconset>
+     <normaloff>:/toolbar/dock/section.png</normaloff>:/toolbar/dock/section.png</iconset>
    </property>
    <property name="text">
     <string>World settings</string>
@@ -2209,8 +2209,8 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/lock_tile_op.png</normaloff>
-     <normalon>:/images/lock_tile_cl.png</normalon>:/images/lock_tile_op.png</iconset>
+     <normaloff>:/toolbar/locks/tile_op.png</normaloff>
+     <normalon>:/toolbar/locks/tile_cl.png</normalon>:/toolbar/locks/tile_op.png</iconset>
    </property>
    <property name="text">
     <string>Lock Terrain tiles</string>
@@ -2222,8 +2222,8 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/lock_scenery_op.png</normaloff>
-     <normalon>:/images/lock_scenery_cl.png</normalon>:/images/lock_scenery_op.png</iconset>
+     <normaloff>:/toolbar/locks/scenery_op.png</normaloff>
+     <normalon>:/toolbar/locks/scenery_cl.png</normalon>:/toolbar/locks/scenery_op.png</iconset>
    </property>
    <property name="text">
     <string>Lock Scenery tiles</string>
@@ -2235,8 +2235,8 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/lock_paths_op.png</normaloff>
-     <normalon>:/images/lock_paths_cl.png</normalon>:/images/lock_paths_op.png</iconset>
+     <normaloff>:/toolbar/locks/paths_op.png</normaloff>
+     <normalon>:/toolbar/locks/paths_cl.png</normalon>:/toolbar/locks/paths_op.png</iconset>
    </property>
    <property name="text">
     <string>Lock Paths</string>
@@ -2248,8 +2248,8 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/lock_levels_op.png</normaloff>
-     <normalon>:/images/lock_levels_cl.png</normalon>:/images/lock_levels_op.png</iconset>
+     <normaloff>:/toolbar/locks/levels_op.png</normaloff>
+     <normalon>:/toolbar/locks/levels_cl.png</normalon>:/toolbar/locks/levels_op.png</iconset>
    </property>
    <property name="text">
     <string>Lock Levels</string>
@@ -2261,8 +2261,8 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/lock_musicbox_op.png</normaloff>
-     <normalon>:/images/lock_musicbox_cl.png</normalon>:/images/lock_musicbox_op.png</iconset>
+     <normaloff>:/toolbar/locks/musicbox_op.png</normaloff>
+     <normalon>:/toolbar/locks/musicbox_cl.png</normalon>:/toolbar/locks/musicbox_op.png</iconset>
    </property>
    <property name="text">
     <string>Lock Music Boxes</string>
@@ -2274,7 +2274,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/square_fill.png</normaloff>:/images/square_fill.png</iconset>
+     <normaloff>:/toolbar/place/fill_rect.png</normaloff>:/toolbar/place/fill_rect.png</iconset>
    </property>
    <property name="text">
     <string>Rectangular fill</string>
@@ -2292,7 +2292,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/overwrite.png</normaloff>:/images/overwrite.png</iconset>
+     <normaloff>:/toolbar/place/overwrite.png</normaloff>:/toolbar/place/overwrite.png</iconset>
    </property>
    <property name="text">
     <string>Overwrite mode</string>
@@ -2301,7 +2301,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
   <action name="actionResizeApply">
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/resize_accept.png</normaloff>:/images/resize_accept.png</iconset>
+     <normaloff>:/toolbar/modes/accept.png</normaloff>:/toolbar/modes/accept.png</iconset>
    </property>
    <property name="text">
     <string>Apply</string>
@@ -2316,7 +2316,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
   <action name="actionResizeCancel">
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/resize_cancel.png</normaloff>:/images/resize_cancel.png</iconset>
+     <normaloff>:/toolbar/modes/cancel.png</normaloff>:/toolbar/modes/cancel.png</iconset>
    </property>
    <property name="text">
     <string>Cancel</string>
@@ -2334,7 +2334,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/line_fill.png</normaloff>:/images/line_fill.png</iconset>
+     <normaloff>:/toolbar/place/fill_line.png</normaloff>:/toolbar/place/fill_line.png</iconset>
    </property>
    <property name="text">
     <string>Line</string>
@@ -2352,7 +2352,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/search.png</normaloff>:/images/search.png</iconset>
+     <normaloff>:/toolbar/dock/search.png</normaloff>:/toolbar/dock/search.png</iconset>
    </property>
    <property name="text">
     <string comment="Must be like &quot;Search on the world map&quot;">World map Search</string>
@@ -2380,7 +2380,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
   <action name="actionZoomIn">
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/zoom_in.png</normaloff>:/images/zoom_in.png</iconset>
+     <normaloff>:/toolbar/view/zoom_in.png</normaloff>:/toolbar/view/zoom_in.png</iconset>
    </property>
    <property name="text">
     <string>Zoom In</string>
@@ -2389,7 +2389,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
   <action name="actionZoomOut">
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/zoom_out.png</normaloff>:/images/zoom_out.png</iconset>
+     <normaloff>:/toolbar/view/zoom_out.png</normaloff>:/toolbar/view/zoom_out.png</iconset>
    </property>
    <property name="text">
     <string>Zoom Out</string>
@@ -2398,7 +2398,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
   <action name="actionZoomReset">
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/zoom_reset.png</normaloff>:/images/zoom_reset.png</iconset>
+     <normaloff>:/toolbar/view/zoom_reset.png</normaloff>:/toolbar/view/zoom_reset.png</iconset>
    </property>
    <property name="text">
     <string>Reset Zoom</string>
@@ -2413,7 +2413,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/tileset_box.png</normaloff>:/images/tileset_box.png</iconset>
+     <normaloff>:/toolbar/dock/tileset_box.png</normaloff>:/toolbar/dock/tileset_box.png</iconset>
    </property>
    <property name="text">
     <string>Tileset Item Box</string>
@@ -2425,7 +2425,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/bug.png</normaloff>:/images/bug.png</iconset>
+     <normaloff>:/toolbar/dock/bug.png</normaloff>:/toolbar/dock/bug.png</iconset>
    </property>
    <property name="text">
     <string>Debugger</string>
@@ -2486,7 +2486,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/flood_fill.png</normaloff>:/images/flood_fill.png</iconset>
+     <normaloff>:/toolbar/place/fill_flood.png</normaloff>:/toolbar/place/fill_flood.png</iconset>
    </property>
    <property name="text">
     <string>Fill</string>
@@ -2509,7 +2509,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/properties.png</normaloff>:/images/properties.png</iconset>
+     <normaloff>:/toolbar/dock/properties.png</normaloff>:/toolbar/dock/properties.png</iconset>
    </property>
    <property name="text">
     <string>Show properties</string>
@@ -2546,7 +2546,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/bookmarks.png</normaloff>:/images/bookmarks.png</iconset>
+     <normaloff>:/toolbar/dock/bookmarks.png</normaloff>:/toolbar/dock/bookmarks.png</iconset>
    </property>
    <property name="text">
     <string>Position bookmarks</string>
@@ -2791,7 +2791,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/circle_fill.png</normaloff>:/images/circle_fill.png</iconset>
+     <normaloff>:/toolbar/place/fill_circle.png</normaloff>:/toolbar/place/fill_circle.png</iconset>
    </property>
    <property name="text">
     <string>Circular fill</string>
@@ -2812,7 +2812,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/show_grid.png</normaloff>:/images/show_grid.png</iconset>
+     <normaloff>:/toolbar/view/show_grid.png</normaloff>:/toolbar/view/show_grid.png</iconset>
    </property>
    <property name="text">
     <string>Show grid</string>
@@ -2830,7 +2830,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/camera_grid.png</normaloff>:/images/camera_grid.png</iconset>
+     <normaloff>:/toolbar/view/camera_grid.png</normaloff>:/toolbar/view/camera_grid.png</iconset>
    </property>
    <property name="text">
     <string>Show camera grid</string>
@@ -2861,7 +2861,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/goto_top_right.png</normaloff>:/images/goto_top_right.png</iconset>
+     <normaloff>:/toolbar/goto/top_right.png</normaloff>:/toolbar/goto/top_right.png</iconset>
    </property>
    <property name="text">
     <string>Go to top-right of the section</string>
@@ -2873,7 +2873,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/goto_right_bottom.png</normaloff>:/images/goto_right_bottom.png</iconset>
+     <normaloff>:/toolbar/goto/right_bottom.png</normaloff>:/toolbar/goto/right_bottom.png</iconset>
    </property>
    <property name="text">
     <string>Go to right-bottom of the section</string>
@@ -2957,7 +2957,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/musicboxes.png</normaloff>:/images/musicboxes.png</iconset>
+     <normaloff>:/toolbar/dock/musicboxes.png</normaloff>:/toolbar/dock/musicboxes.png</iconset>
    </property>
    <property name="text">
     <string>Music change points</string>

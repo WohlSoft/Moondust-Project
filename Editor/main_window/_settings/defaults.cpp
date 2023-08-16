@@ -80,10 +80,10 @@ void MainWindow::setDefaults()
 void MainWindow::setUiDefults()
 {
 #ifdef Q_OS_MAC
-    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    this->setWindowIcon(QIcon(":/appicon/app.icns"));
 #endif
 #ifdef Q_OS_WIN
-    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+    this->setWindowIcon(QIcon(":/appicon/app.ico"));
 #endif
 
     //MainWindow Geometry;
@@ -183,6 +183,16 @@ void MainWindow::setUiDefults()
                                 newAction->setToolTip(ui->menuNew->title());
                            });
         ui->fileIoTooBar->insertWidget(ui->OpenFile, newAction);
+    }
+
+    // Set nice icon on LunaLua menu
+    {
+        QIcon lunaIcon;
+        lunaIcon.addPixmap(QPixmap(":/engines/lunalua/16.png"));
+        lunaIcon.addPixmap(QPixmap(":/engines/lunalua/32.png"));
+        lunaIcon.addPixmap(QPixmap(":/engines/lunalua/48.png"));
+        lunaIcon.addPixmap(QPixmap(":/engines/lunalua/256.png"));
+        ui->menuLunaLUA_scripts->setIcon(lunaIcon);
     }
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow *)), this, SLOT(updateMenus(QMdiSubWindow *)));

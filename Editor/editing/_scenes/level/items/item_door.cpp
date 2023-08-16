@@ -644,7 +644,7 @@ void ItemDoor::refreshArrows()
         if((m_pointSide == D_Entrance) || m_data.two_way)
         {
             m_arrowEnter = new QGraphicsPixmapItem;
-            QPixmap pix(":/arrows/images/warp_arrow_enter.png");
+            QPixmap pix(":/arrows/arrows/warp_arrow_enter.png");
             m_arrowEnter->setPixmap(pix);
             m_scene->addItem(m_arrowEnter);
             m_arrowEnter->setOpacity(qreal(0.6));
@@ -700,7 +700,7 @@ void ItemDoor::refreshArrows()
         if((m_pointSide == D_Exit) || m_data.two_way)
         {
             m_arrowExit = new QGraphicsPixmapItem;
-            QPixmap pix(":/arrows/images/warp_arrow_exit.png");
+            QPixmap pix(":/arrows/arrows/warp_arrow_exit.png");
             m_arrowExit->setPixmap(pix);
             m_scene->addItem(m_arrowExit);
             m_arrowExit->setOpacity(qreal(0.6));

@@ -18,7 +18,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/world16.png</normaloff>:/images/world16.png</iconset>
+    <normaloff>:/toolbar/dock/world16.png</normaloff>:/toolbar/dock/world16.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">

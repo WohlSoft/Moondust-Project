@@ -52,73 +52,78 @@ void Themes::init()
     icons_map_dark.clear();
 
     //init default icons
-    icons_map[level_16]     = QIcon(":/lvl16.png");
-    icons_map[level_24]     = QIcon(":/images/level.png");
-    icons_map[world_16]     = QIcon(":/images/world16.png");
-    icons_map[world_24]     = QIcon(":/images/world.png");
-    icons_map[npc_16]       = QIcon(":/images/coin.png");
+    icons_map[level_16]     = QIcon(":/toolbar/dock/level16.png");
+    icons_map[level_24]     = QIcon(":/toolbar/dock/level.png");
+    icons_map[world_16]     = QIcon(":/toolbar/dock/world16.png");
+    icons_map[world_24]     = QIcon(":/toolbar/dock/world.png");
+    icons_map[npc_16]       = QIcon(":/toolbar/dock/coin.png");
 
-    icons_map[level_item_browser] = QIcon(":/images/item_browser_level.png");
-    icons_map[world_item_browser] = QIcon(":/images/item_browser_world.png");
-    icons_map[world_music_boxes] = QIcon(":/images/musicboxes.png");
+    icons_map[level_item_browser] = QIcon(":/toolbar/dock/item_browser_level.png");
+    icons_map[world_item_browser] = QIcon(":/toolbar/dock/item_browser_world.png");
+    icons_map[world_music_boxes] = QIcon(":/toolbar/dock/musicboxes.png");
 
-    icons_map[file_open]    = QIcon(":/images/open.png");
-    icons_map[file_new]     = QIcon(":/images/new.png");
-    icons_map[file_save]    = QIcon(":/images/save.png");
-    icons_map[file_saveas]  = QIcon(":/images/saveas.png");
-    icons_map[file_reload]  = QIcon(":/reload.png");
+    icons_map[file_open]    = QIcon(":/toolbar/file/open.png");
+    icons_map[file_new]     = QIcon(":/toolbar/file/new.png");
+    icons_map[file_save]    = QIcon(":/toolbar/file/save.png");
+    icons_map[file_saveas]  = QIcon(":/toolbar/file/save_as.png");
+    icons_map[file_reload]  = QIcon(":/toolbar/file/reload.png");
 
-    icons_map[debugger]     = QIcon(":/images/bug.png");
-    icons_map[tileset_box]  = QIcon(":/images/tileset_box.png");
-    icons_map[bookmarks]    = QIcon(":/images/bookmarks.png");
+    icons_map[debugger]     = QIcon(":/toolbar/dock/bug.png");
+    icons_map[tileset_box]  = QIcon(":/toolbar/dock/tileset_box.png");
+    icons_map[bookmarks]    = QIcon(":/toolbar/dock/bookmarks.png");
 
-    icons_map[playmusic]    = QIcon(":/images/playmusic.png");
-    icons_map_dark[playmusic] = QIcon(":/images/playmusic_dark.png");
-    icons_map[grid_snap]    = QIcon(":/images/grid_snap.png");
-    icons_map_dark[grid_snap] = QIcon(":/images/grid_snap_dark.png");
-    icons_map[show_grid]    = QIcon(":/images/show_grid.png");
-    icons_map_dark[show_grid] = QIcon(":/images/show_grid_dark.png");
-    icons_map[camera_grid]  = QIcon(":/images/camera_grid.png");
-    icons_map_dark[camera_grid] = QIcon(":/images/camera_grid_dark.png");
-    icons_map[animation]    = QIcon(":/images/animation.png");
-    icons_map[search]       = QIcon(":/images/search.png");
-    icons_map[pencil]       = QIcon(":/images/pencil_16x16.png");
+    icons_map[playmusic]    = QIcon(":/toolbar/playmusic.png");
+    icons_map_dark[playmusic] = QIcon(":/toolbar/playmusic_dark.png");
 
-    icons_map[copy]         = QIcon(":/images/edit_copy.png");
-    icons_map[copy_16]      = QIcon(":/images/copy_16x16.png");
-    icons_map[cut]          = QIcon(":/images/edit_cut.png");
-    icons_map[paste]        = QIcon(":/images/edit_paste.png");
+    icons_map[grid_snap]    = QIcon(":/toolbar/edit/toolbar/edit/grid_snap.png");
+    icons_map_dark[grid_snap] = QIcon(":/toolbar/edit/toolbar/edit/grid_snap_dark.png");
 
-    icons_map[undo]         = QIcon(":/images/edit_undo.png");
-    icons_map[redo]         = QIcon(":/images/edit_redo.png");
+    icons_map[show_grid]    = QIcon(":/toolbar/view/show_grid.png");
+    icons_map_dark[show_grid] = QIcon(":/toolbar/view/show_grid_dark.png");
+    icons_map[camera_grid]  = QIcon(":/toolbar/view/camera_grid.png");
+    icons_map_dark[camera_grid] = QIcon(":/toolbar/view/camera_grid_dark.png");
+    icons_map[animation]    = QIcon(":/toolbar/view/animation.png");
 
-    icons_map[selection]    = QIcon(":/images/arrow.png");
-    icons_map[selection_only] = QIcon(":/select_only.png");
-    icons_map[hand_drag]    = QIcon(":/hand.png");
-    icons_map[erasing]      = QIcon(":/images/rubber.png");
-    icons_map[accept]       = QIcon(":/images/resize_accept.png");
-    icons_map[cancel]       = QIcon(":/images/resize_cancel.png");
+    icons_map[search]       = QIcon(":/toolbar/dock/search.png");
+    icons_map[pencil]       = QIcon(":/dock/pencil_16x16.png");
 
-    icons_map[rect_fill]  = QIcon(":/images/square_fill.png");
-    icons_map[circle_fill]  = QIcon(":/images/circle_fill.png");
-    icons_map[line_tool]    = QIcon(":/images/line_fill.png");
-    icons_map[flood_fill]    = QIcon(":/images/flood_fill.png");
-    icons_map[overwrite_mode] = QIcon(":/images/overwrite.png");
+    icons_map[copy]         = QIcon(":/toolbar/edit/toolbar/edit/copy.png");
+    icons_map[copy_16]      = QIcon(":/dock/copy_16x16.png");
+    icons_map[cut]          = QIcon(":/toolbar/edit/toolbar/edit/cut.png");
+    icons_map[paste]        = QIcon(":/toolbar/edit/toolbar/edit/paste.png");
 
-    icons_map[properties]   = QIcon(":/images/properties.png");
+    icons_map[undo]         = QIcon(":/toolbar/edit/toolbar/edit/undo.png");
+    icons_map[redo]         = QIcon(":/toolbar/edit/toolbar/edit/redo.png");
 
-    icons_map[zoom_reset]   = QIcon(":/images/zoom_reset.png");
-    icons_map[zoom_in]      = QIcon(":/images/zoom_in.png");
-    icons_map[zoom_out]     = QIcon(":/images/zoom_out.png");
-    icons_map[section_settings] = QIcon(":/images/section.png");
-    icons_map[section_settings_16] = QIcon(":/images/section16.png");
-    icons_map[doors]        = QIcon(":/doors.png");
-    icons_map[layers]       = QIcon(":/layers.png");
-    icons_map[events]       = QIcon(":/images/events.png");
-    icons_map[water]        = QIcon(":/drawWater.png");
-    icons_map[quicksand]    = QIcon(":/drawQuickSand.png");
-    icons_map[draw_player1] = QIcon(":/images/player1_start.png");
-    icons_map[draw_player2] = QIcon(":/images/player2_start.png");
+    icons_map[selection]    = QIcon(":/toolbar/modes/select.png");
+    icons_map[selection_only] = QIcon(":/toolbar/modes/select_only.png");
+    icons_map[hand_drag]    = QIcon(":/toolbar/modes/drag.png");
+    icons_map[erasing]      = QIcon(":/toolbar/modes/erase.png");
+    icons_map[accept]       = QIcon(":/toolbar/modes/accept.png");
+    icons_map[cancel]       = QIcon(":/toolbar/modes/cancel.png");
+
+    icons_map[rect_fill]  = QIcon(":/toolbar/place/fill_rect.png");
+    icons_map[circle_fill]  = QIcon(":/toolbar/place/fill_circle.png");
+    icons_map[line_tool]    = QIcon(":/toolbar/place/fill_line.png");
+    icons_map[flood_fill]    = QIcon(":/toolbar/place/fill_flood.png");
+    icons_map[overwrite_mode] = QIcon(":/toolbar/place/overwrite.png");
+
+    icons_map[properties]   = QIcon(":/toolbar/dock/properties.png");
+
+    icons_map[zoom_reset]   = QIcon(":/toolbar/view/zoom_reset.png");
+    icons_map[zoom_in]      = QIcon(":/toolbar/view/zoom_in.png");
+    icons_map[zoom_out]     = QIcon(":/toolbar/view/zoom_out.png");
+
+    icons_map[section_settings] = QIcon(":/toolbar/dock/section.png");
+    icons_map[section_settings_16] = QIcon(":/toolbar/dock/section16.png");
+    icons_map[doors]        = QIcon(":/toolbar/dock/doors.png");
+    icons_map[layers]       = QIcon(":/toolbar/dock/layers.png");
+    icons_map[events]       = QIcon(":/toolbar/dock/events.png");
+
+    icons_map[water]        = QIcon(":/toolbar/modes/draw_water.png");
+    icons_map[quicksand]    = QIcon(":/toolbar/modes/draw_sand.png");
+    icons_map[draw_player1] = QIcon(":/toolbar/modes/player1_start.png");
+    icons_map[draw_player2] = QIcon(":/toolbar/modes/player2_start.png");
 
     images_map[section_0_selected] = QPixmap(":/sections/sections/00.png");
     images_map[section_0_default]  = QPixmap(":/sections/sections/00_n.png");
@@ -186,55 +191,55 @@ void Themes::init()
     //images_map[section_21_selected] = QPixmap(":/sections/sections/21.png");
     //images_map[section_21_default] = QPixmap(":/sections/sections/21_n.png");
 
-    icons_map[section_goto_left_bottom] = QIcon(":/images/goto_left_bottom.png");
-    icons_map[section_goto_left_top] = QIcon(":/images/goto_left_top.png");
-    icons_map[section_goto_top_right] = QIcon(":/images/goto_top_right.png");
-    icons_map[section_goto_right_bottom] = QIcon(":/images/goto_right_bottom.png");
-    icons_map_dark[section_goto_left_bottom] = QIcon(":/images/goto_left_bottom_dark.png");
-    icons_map_dark[section_goto_left_top] = QIcon(":/images/goto_left_top_dark.png");
-    icons_map_dark[section_goto_top_right] = QIcon(":/images/goto_top_right_dark.png");
-    icons_map_dark[section_goto_right_bottom] = QIcon(":/images/goto_right_bottom_dark.png");
+    icons_map[section_goto_left_bottom] = QIcon(":/toolbar/goto/left_bottom.png");
+    icons_map[section_goto_left_top] = QIcon(":/toolbar/goto/left_top.png");
+    icons_map[section_goto_top_right] = QIcon(":/toolbar/goto/top_right.png");
+    icons_map[section_goto_right_bottom] = QIcon(":/toolbar/goto/right_bottom.png");
+    icons_map_dark[section_goto_left_bottom] = QIcon(":/toolbar/goto/left_bottom_dark.png");
+    icons_map_dark[section_goto_left_top] = QIcon(":/toolbar/goto/left_top_dark.png");
+    icons_map_dark[section_goto_top_right] = QIcon(":/toolbar/goto/top_right_dark.png");
+    icons_map_dark[section_goto_right_bottom] = QIcon(":/toolbar/goto/right_bottom_dark.png");
 
-    images_map[blocks_free] = QPixmap(":/locks/block_op.png");
-    images_map[blocks_locked] = QPixmap(":/locks/block_cl.png");
-    images_map[bgo_free] = QPixmap(":/locks/bgo_op.png");
-    images_map[bgo_locked] = QPixmap(":/locks/bgo_cl.png");
-    images_map[npc_free] = QPixmap(":/locks/npc_op.png");
-    images_map[npc_locked] = QPixmap(":/locks/npc_cl.png");
-    images_map[warps_free] = QPixmap(":/locks/door_op.png");
-    images_map[warps_locked] = QPixmap(":/locks/door_cl.png");
-    images_map[physenv_free] = QPixmap(":/locks/water_op.png");
-    images_map[physenv_locked] = QPixmap(":/locks/water_cl.png");
-    images_map[tiles_free] = QPixmap(":/images/lock_tile_op.png");
-    images_map[tiles_locked] = QPixmap(":/images/lock_tile_cl.png");
-    images_map[scenery_free] = QPixmap(":/images/lock_scenery_op.png");
-    images_map[scenery_locked] = QPixmap(":/images/lock_scenery_cl.png");
-    images_map[paths_free] = QPixmap(":/images/lock_paths_op.png");
-    images_map[paths_locked] = QPixmap(":/images/lock_paths_cl.png");
-    images_map[levels_free] = QPixmap(":/images/lock_levels_op.png");
-    images_map[levels_locked] = QPixmap(":/images/lock_levels_cl.png");
-    images_map[musicboxes_free] = QPixmap(":/images/lock_musicbox_op.png");
-    images_map[musicboxes_locked] = QPixmap(":/images/lock_musicbox_cl.png");
+    images_map[blocks_free] = QPixmap(":/toolbar/locks/block_op.png");
+    images_map[blocks_locked] = QPixmap(":/toolbar/locks/block_cl.png");
+    images_map[bgo_free] = QPixmap(":/toolbar/locks/bgo_op.png");
+    images_map[bgo_locked] = QPixmap(":/toolbar/locks/bgo_cl.png");
+    images_map[npc_free] = QPixmap(":/toolbar/locks/npc_op.png");
+    images_map[npc_locked] = QPixmap(":/toolbar/locks/npc_cl.png");
+    images_map[warps_free] = QPixmap(":/toolbar/locks/door_op.png");
+    images_map[warps_locked] = QPixmap(":/toolbar/locks/door_cl.png");
+    images_map[physenv_free] = QPixmap(":/toolbar/locks/water_op.png");
+    images_map[physenv_locked] = QPixmap(":/toolbar/locks/water_cl.png");
+    images_map[tiles_free] = QPixmap(":/toolbar/locks/tile_op.png");
+    images_map[tiles_locked] = QPixmap(":/toolbar/locks/tile_cl.png");
+    images_map[scenery_free] = QPixmap(":/toolbar/locks/scenery_op.png");
+    images_map[scenery_locked] = QPixmap(":/toolbar/locks/scenery_cl.png");
+    images_map[paths_free] = QPixmap(":/toolbar/locks/paths_op.png");
+    images_map[paths_locked] = QPixmap(":/toolbar/locks/paths_cl.png");
+    images_map[levels_free] = QPixmap(":/toolbar/locks/levels_op.png");
+    images_map[levels_locked] = QPixmap(":/toolbar/locks/levels_cl.png");
+    images_map[musicboxes_free] = QPixmap(":/toolbar/locks/musicbox_op.png");
+    images_map[musicboxes_locked] = QPixmap(":/toolbar/locks/musicbox_cl.png");
 
     //Load default images
 
     images_map[splash] = QPixmap(":/images/splash_editor.png");
 
-    images_map[cursor_pasting] = QPixmap(":/cur_pasta.png");
+    images_map[cursor_pasting] = QPixmap(":/cursors/pasta.png");
     int_map[cursor_pasting_x] = 0;
     int_map[cursor_pasting_y] = 0;
 
-    images_map[cursor_erasing] = QPixmap(":/cur_rubber.png");
+    images_map[cursor_erasing] = QPixmap(":/cursors/rubber.png");
     int_map[cursor_erasing_x] = 0;
     int_map[cursor_erasing_y] = 0;
 
-    images_map[cursor_flood_fill] = QPixmap(":/images/cur_flood_fill.png");
+    images_map[cursor_flood_fill] = QPixmap(":/cursors/flood_fill.png");
     int_map[cursor_flood_fill_x] = 2;
     int_map[cursor_flood_fill_y] = 21;
 
-    images_map[player_point] = QPixmap(":/player.png");
-    images_map[player1] = QPixmap(":/player1.png");
-    images_map[player2] = QPixmap(":/player2.png");
+    images_map[player_point] = QPixmap(":/players/point.png");
+    images_map[player1] = QPixmap(":/players/point1.png");
+    images_map[player2] = QPixmap(":/players/point2.png");
 
 
     //dummy images

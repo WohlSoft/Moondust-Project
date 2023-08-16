@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/cat_builder.ico</normaloff>:/cat_builder.ico</iconset>
+    <normaloff>:/appicon/app.ico</normaloff>:/appicon/app.ico</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,1000">
    <property name="sizeConstraint">
@@ -114,7 +114,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../_resources/editor.qrc">
-          <normaloff>:/pge_newui.png</normaloff>:/pge_newui.png</iconset>
+          <normaloff>:/introdialogue/ui_modern.png</normaloff>:/introdialogue/ui_modern.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -140,7 +140,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../_resources/editor.qrc">
-          <normaloff>:/pge_oldui.png</normaloff>:/pge_oldui.png</iconset>
+          <normaloff>:/introdialogue/ui_classic.png</normaloff>:/introdialogue/ui_classic.png</iconset>
         </property>
         <property name="iconSize">
          <size>

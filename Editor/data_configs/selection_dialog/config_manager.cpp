@@ -183,13 +183,13 @@ ConfigManager::ConfigManager(QWidget *parent) :
     setGeometry(util::alignToScreenCenter(size()));
 
 #ifdef Q_OS_MAC
-    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    this->setWindowIcon(QIcon(":/appicon/app.icns"));
     ui->frame->setAutoFillBackground(false);
     ui->frame->setFrameShape(QFrame::NoFrame);
     ui->frame->setLineWidth(0);
 #endif
 #ifdef Q_OS_WIN
-    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+    this->setWindowIcon(QIcon(":/appicon/app.ico"));
 
     if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA &&
        QSysInfo::WindowsVersion <= QSysInfo::WV_WINDOWS7)

@@ -550,10 +550,10 @@ endif()
 
 if(APPLE)
     add_definitions(-DQ_OS_MACX) # Workaround for MOC
-    file(GLOB PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/_resources/file_*.icns")
+    file(GLOB PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/_resources/_files/file_*.icns")
     set_source_files_properties(${MOONDUST_QT_LANG_BIN_FILES} PROPERTIES GENERATED TRUE) # WORKAROUND
     list(APPEND PGE_EDITOR_SRCS
-        _resources/cat_builder.icns
+        _resources/appicon/cat_builder.icns
         ${PGE_LANG_BIN_FILES}
         ${MOONDUST_QT_LANG_BIN_FILES}
         ${MOONDUST_QT_LANG_ICON_FILES}
@@ -767,7 +767,7 @@ if(APPLE)
         CPACK_BUNDLE_NAME "Moondust Editor"
         MACOSX_BUNDLE_INFO_STRING "Level and World map Editor for the Moondust Project"
     )
-    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/cat_builder.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/appicon/cat_builder.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties(${PGE_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
     set_source_files_properties(${MOONDUST_QT_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
     set_source_files_properties(${MOONDUST_QT_LANG_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")

@@ -34,12 +34,12 @@ TipOfDay::TipOfDay(QString language, QWidget* parent) :
     ui->setupUi(this);
 
     QFile ftips;
-    QString tipsFile = QString(":/tips/tips/tips_%1.html").arg(language);
+    QString tipsFile = QString(":/tips/tips_%1.html").arg(language);
 
     if(QFile::exists(tipsFile))
         ftips.setFileName(tipsFile);
     else // Fallback to English
-        ftips.setFileName(":/tips/tips/tips_en.html");
+        ftips.setFileName(":/tips/tips_en.html");
 
     ftips.open(QIODevice::ReadOnly | QIODevice::Text);
     QTextStream ts(&ftips);

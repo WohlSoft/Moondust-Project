@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
+    <normaloff>:/appicon/48.png</normaloff>:/appicon/48.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout" rowstretch="100,0">
    <property name="sizeConstraint">
@@ -94,7 +94,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="../../_resources/editor.qrc">:/warn.png</pixmap>
+         <pixmap resource="../../_resources/editor.qrc">:/dialogues/warn.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

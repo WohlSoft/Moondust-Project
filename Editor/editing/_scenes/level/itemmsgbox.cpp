@@ -28,7 +28,7 @@ ItemMsgBox::ItemMsgBox(Opened_By openedBy, QString text, bool isFriendly, QStrin
     QDialog(parent),
     ui(new Ui::ItemMsgBox)
 {
-    QFontDatabase::addApplicationFont(":/PressStart2P.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/PressStart2P.ttf");
 
     whoOpened = openedBy;
     currentText = text;

@@ -109,7 +109,7 @@ void WorldMusicBoxItemBox::initItemLists()
         {
             obj_music &musicItem = mw()->configs.main_music_wld[i];
             ItemBoxListModel::Element e;
-            e.pixmap = QPixmap(":/images/playmusic.png");
+            e.pixmap = QPixmap(":/toolbar/playmusic.png");
             e.name = musicItem.name.isEmpty() ? QString("musicbox-%1").arg(musicItem.id) : musicItem.name;
             e.description = QString("ID: %1").arg(musicItem.id);
             e.elementId = musicItem.id;

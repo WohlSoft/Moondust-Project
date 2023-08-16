@@ -49,7 +49,7 @@ LevelEdit::LevelEdit(MainWindow *mw, QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     m_recentExportPath = AppPathManager::userAppDir();
-    setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
+    setWindowIcon(QIcon(QPixmap(":/toolbar/dock/level16.png")));
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);

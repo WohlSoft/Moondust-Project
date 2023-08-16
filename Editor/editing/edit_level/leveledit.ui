@@ -36,10 +36,10 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/lvl16.png</normaloff>
-    <normalon>:/lvl16.png</normalon>
-    <activeoff>:/lvl16.png</activeoff>
-    <activeon>:/lvl16.png</activeon>:/lvl16.png</iconset>
+    <normaloff>:/toolbar/dock/level16.png</normaloff>
+    <normalon>:/toolbar/dock/level16.png</normalon>
+    <activeoff>:/toolbar/dock/level16.png</activeoff>
+    <activeon>:/toolbar/dock/level16.png</activeon>:/toolbar/dock/level16.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>

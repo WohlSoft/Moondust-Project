@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/world.png</normaloff>:/images/world.png</iconset>
+    <normaloff>:/toolbar/dock/world.png</normaloff>:/toolbar/dock/world.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="2" column="3" rowspan="2" colspan="4">
@@ -100,7 +100,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../_resources/editor.qrc">
-       <normaloff>:/images/search.png</normaloff>:/images/search.png</iconset>
+       <normaloff>:/toolbar/dock/search.png</normaloff>:/toolbar/dock/search.png</iconset>
      </property>
     </widget>
    </item>

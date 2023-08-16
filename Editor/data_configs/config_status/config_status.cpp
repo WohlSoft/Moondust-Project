@@ -42,12 +42,14 @@ static void setRequiredStatusEntry(QListWidget *w, long count, long total, QStri
 {
     QListWidgetItem *item = new QListWidgetItem(w);
     item->setText(status.arg(count).arg(total));
+
     if(count == 0)
-        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
+        item->setIcon(QIcon(QPixmap(":/config_status/bad.png")));
     else if(count < total)
-        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
+        item->setIcon(QIcon(QPixmap(":/config_status/warn.png")));
     else
-        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
+        item->setIcon(QIcon(QPixmap(":/config_status/good.png")));
+
     w->addItem(item);
 }
 
@@ -55,10 +57,12 @@ static void setOptionalStatusEntry(QListWidget *w, long count, long total, QStri
 {
     QListWidgetItem *item = new QListWidgetItem(w);
     item->setText(status.arg(count));
+
     if(count < total)
-        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
+        item->setIcon(QIcon(QPixmap(":/config_status/warn.png")));
     else
-        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
+        item->setIcon(QIcon(QPixmap(":/config_status/good.png")));
+
     w->addItem(item);
 }
 
@@ -76,10 +80,10 @@ ConfigStatus::ConfigStatus(DataConfig &conf, QWidget *parent) :
     setGeometry(util::alignToScreenCenter(size()));
 
 #ifdef Q_OS_MAC
-    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    this->setWindowIcon(QIcon(":/appicon/app.icns"));
 #endif
 #ifdef Q_OS_WIN
-    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+    this->setWindowIcon(QIcon(":/appicon/app.ico"));
 
     if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA &&
        QSysInfo::WindowsVersion <= QSysInfo::WV_WINDOWS7)

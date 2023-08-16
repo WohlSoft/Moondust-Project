@@ -36,10 +36,10 @@ SavingNotificationDialog::SavingNotificationDialog(bool showDiscardButton, Dialo
     else
     {
 #ifdef Q_OS_MAC
-        this->setWindowIcon(QIcon(":/cat_builder.icns"));
+        this->setWindowIcon(QIcon(":/appicon/app.icns"));
 #endif
 #ifdef Q_OS_WIN
-        this->setWindowIcon(QIcon(":/cat_builder.ico"));
+        this->setWindowIcon(QIcon(":/appicon/app.ico"));
 #endif
     }
 
@@ -68,8 +68,8 @@ SavingNotificationDialog::SavingNotificationDialog(bool showDiscardButton, Dialo
 #endif
     switch(dType)
     {
-        case D_WARN:       ui->icon->setPixmap(QPixmap(":/warn.png"));break;
-        case D_QUESTION:   ui->icon->setPixmap(QPixmap(":/question.png"));break;
+        case D_WARN:       ui->icon->setPixmap(QPixmap(":/dialogues/question.png"));break;
+        case D_QUESTION:   ui->icon->setPixmap(QPixmap(":/dialogues/warn.png"));break;
     }
 
 

@@ -41,6 +41,15 @@ TilesetGroupEditor::TilesetGroupEditor(QGraphicsScene *scene, QWidget *parent) :
 {
     scn = scene;
     ui->setupUi(this);
+
+    QIcon icon;
+    icon.addPixmap(QPixmap(":/engines/moondust/16.png"));
+    icon.addPixmap(QPixmap(":/engines/moondust/32.png"));
+    icon.addPixmap(QPixmap(":/engines/moondust/48.png"));
+    icon.addPixmap(QPixmap(":/engines/moondust/128.png"));
+    icon.addPixmap(QPixmap(":/engines/moondust/256.png"));
+    setWindowIcon(icon);
+
     MainWindow *mainWindow = qobject_cast<MainWindow *>(parent);
     if(!mainWindow)
     {
@@ -50,10 +59,10 @@ TilesetGroupEditor::TilesetGroupEditor(QGraphicsScene *scene, QWidget *parent) :
     m_configs = &mainWindow->configs;
 
     #ifdef Q_OS_MAC
-    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    this->setWindowIcon(QIcon(":/appicon/app.icns"));
     #endif
     #ifdef Q_OS_WIN
-    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+    this->setWindowIcon(QIcon(":/appicon/app.ico"));
     #endif
 
     layout = new FlowLayout();

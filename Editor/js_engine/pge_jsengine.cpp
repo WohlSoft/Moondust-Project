@@ -25,7 +25,7 @@ PGE_JsEngine::PGE_JsEngine(QObject *parent) :
     m_jsengine.installExtensions(QJSEngine::GarbageCollectionExtension);
 #endif
 
-    QFile bootFile(":/plugin/plugin/main_boot.js");
+    QFile bootFile(":/plugin/main_boot.js");
     bool openResult = bootFile.open(QIODevice::ReadOnly | QIODevice::Text);
     assert(openResult); // This file must open!
     Q_UNUSED(openResult)

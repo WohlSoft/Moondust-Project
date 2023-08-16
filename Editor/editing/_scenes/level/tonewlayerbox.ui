@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../../_resources/editor.qrc">
-    <normaloff>:/layers.png</normaloff>:/layers.png</iconset>
+    <normaloff>:/toolbar/dock/layers.png</normaloff>:/toolbar/dock/layers.png</iconset>
   </property>
   <layout class="QFormLayout" name="formLayout">
    <property name="sizeConstraint">
