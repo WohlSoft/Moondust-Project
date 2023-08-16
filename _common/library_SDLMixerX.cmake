@@ -22,6 +22,10 @@ else()
     set(SDL_MixerX_A_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2_mixer_ext${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
 endif()
 
+if(WIN32)
+    set(MIXERX_WIN32_CMAKE_FLAGS -DCMAKE_SHARED_LIBRARY_PREFIX="")
+endif()
+
 set(MixerX_Deps
     AudioCodecs_Local
 )
@@ -56,7 +60,7 @@ ExternalProject_Add(
         "-DUSE_WAVPACK=OFF"
         ${ANDROID_CMAKE_FLAGS}
         ${APPLE_CMAKE_FLAGS}
-        $<$<BOOL:WIN32>:-DCMAKE_SHARED_LIBRARY_PREFIX="">
+        ${MIXERX_WIN32_CMAKE_FLAGS}
     DEPENDS ${MixerX_Deps}
     BUILD_BYPRODUCTS
         "${SDL_MixerX_SO_Lib}"

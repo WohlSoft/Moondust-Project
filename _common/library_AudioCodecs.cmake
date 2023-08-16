@@ -18,6 +18,10 @@ else()
     target_link_libraries(PGE_ZLib INTERFACE "${libZLib_A_Lib}")
 endif()
 
+if(EMSCRIPTEN)
+    set(AUDIOCODECS_EMSCRIPTEN_CMAKE_FLAGS -DADLMIDI_USE_DOSBOX_EMULATOR=ON)
+endif()
+
 set(AudioCodecs_Deps)
 if(NOT SDL2_USE_SYSTEM)
     list(APPEND AudioCodecs_Deps SDL2_Local)
@@ -63,7 +67,7 @@ ExternalProject_Add(
         "-DBUILD_WAVPACK=OFF"
         ${ANDROID_CMAKE_FLAGS}
         ${APPLE_CMAKE_FLAGS}
-        $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DADLMIDI_USE_DOSBOX_EMULATOR=ON>
+        ${AUDIOCODECS_EMSCRIPTEN_CMAKE_FLAGS}
     DEPENDS ${AudioCodecs_Deps}
     BUILD_BYPRODUCTS
         ${AudioCodecs_Libs}

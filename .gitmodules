@@ -28,3 +28,11 @@
 	path = _Libs/LuaJIT
 	url = https://github.com/WohlSoft/LuaJIT.git
 	branch = 2.1
+[submodule "_Libs/libjpeg"]
+	path = _Libs/libjpeg
+	url = https://github.com/WohlSoft/libjpeg.git
+	branch = main
+[submodule "_Libs/libpng"]
+	path = _Libs/libpng
+	url = https://github.com/WohlSoft/libpng.git
+	branch = moondust
