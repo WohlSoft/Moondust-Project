@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/cat_builder.ico</normaloff>:/cat_builder.ico</iconset>
+    <normaloff>:/appicon/app.ico</normaloff>:/appicon/app.ico</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_7">
    <item row="2" column="0" colspan="2">
@@ -546,22 +546,6 @@
   <include location="../../_resources/editor.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>ogg_quality</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>ogg_quality_var</receiver>
-   <slot>setNum(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>388</x>
-     <y>294</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>392</x>
-     <y>311</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>mp3_set_birtate</sender>
    <signal>toggled(bool)</signal>

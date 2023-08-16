@@ -25,8 +25,7 @@ SimpleAnimator::SimpleAnimator(QObject *parent)
     frame_delay = 0;
     ticks_left  = 0.0f;
     m_currentFrame = 0;
-    QPixmap dummy(2, 2);
-    dummy.fill(Qt::white);
+    static QPixmap dummy(2, 2);
     setSettings(dummy, false, 1, 64, 0, -1, false, false);
 }
 
@@ -193,7 +192,7 @@ QRectF SimpleAnimator::frameRectF()
     return QRectF(m_frame_rect);
 }
 
-QPixmap &SimpleAnimator::wholeImage()
+const QPixmap &SimpleAnimator::wholeImage() const
 {
     return *m_texture;
 }

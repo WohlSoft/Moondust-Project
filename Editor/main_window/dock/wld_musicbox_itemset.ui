@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/playmusic.png</normaloff>:/images/playmusic.png</iconset>
+    <normaloff>:/toolbar/playmusic.png</normaloff>:/toolbar/playmusic.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>

@@ -37,7 +37,7 @@ class TipOfDay : public QDialog
     std::uniform_int_distribution<int> m_rand;
 
 public:
-    explicit TipOfDay(QWidget *parent = nullptr);
+    explicit TipOfDay(QString language, QWidget *parent = nullptr);
     ~TipOfDay();
 
 private slots:

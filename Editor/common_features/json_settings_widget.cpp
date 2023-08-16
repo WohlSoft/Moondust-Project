@@ -27,6 +27,7 @@
 #include <QComboBox>
 #include <QSpinBox>
 #include <QResizeEvent>
+#include <pge_qt_compat.h>
 
 #ifndef UNIT_TEST
 #include <editing/_dialogs/itemselectdialog.h>
@@ -768,7 +769,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             colorBox->setToolTip(tooltip);
             l->addWidget(colorBox, row, 1);
             QHBoxLayout *colorBoxL = new QHBoxLayout(colorBox);
-            colorBoxL->setMargin(0);
+            colorBoxL->setContentsMargins(0, 0, 0, 0);
             colorBox->setLayout(colorBoxL);
 
             ColorPreview *colorPreview = new ColorPreview(colorBox);
@@ -776,7 +777,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
 
             QLineEdit *colorString = new QLineEdit(colorBox);
             QString colorStringExpr = useAlpha ? "#[0-9a-fA-F]{6,8}" : "#[0-9a-fA-F]{6}";
-            colorString->setValidator(new QRegExpValidator(QRegExp(colorStringExpr), colorString));
+            colorString->setValidator(new Q_QRegExpValidator(Q_QRegExp(colorStringExpr), colorString));
             colorBoxL->addWidget(colorString, 1000);
 
             QPushButton *colorChoose = new QPushButton(colorBox);
@@ -855,7 +856,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             it->setPlaceholderText(placeholder);
             it->setMaxLength(maxLength);
             if(!validator.isEmpty())
-                it->setValidator(new QRegExpValidator(QRegExp(validator), it));
+                it->setValidator(new Q_QRegExpValidator(Q_QRegExp(validator), it));
             it->setReadOnly(readOnly);
 
             const QString id = setupTree.getPropertyId(name);
@@ -886,7 +887,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             multiText->setToolTip(tooltip);
             l->addWidget(multiText, row, 0, 1, 2);
             QVBoxLayout *multiTextL = new QVBoxLayout(multiText);
-            multiTextL->setMargin(0);
+            multiTextL->setContentsMargins(0, 0, 0, 0);
             multiText->setLayout(multiTextL);
 
             QPlainTextEdit *it = new QPlainTextEdit(target);
@@ -947,7 +948,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
 
             QFrame *fileBox = new QFrame(target);
             QHBoxLayout *fileBoxL = new QHBoxLayout(fileBox);
-            fileBoxL->setMargin(0);
+            fileBoxL->setContentsMargins(0, 0, 0, 0);
             fileBox->setLayout(fileBoxL);
             fileBox->setToolTip(tooltip);
 

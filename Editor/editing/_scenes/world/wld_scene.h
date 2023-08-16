@@ -29,6 +29,7 @@
 #include <QBitmap>
 #include <QPainter>
 #include <QMessageBox>
+#include <Utils/vptrlist.h>
 
 #include <common_features/simple_animator.h>
 #include <common_features/graphicsworkspace.h>
@@ -160,7 +161,7 @@ protected:
     // ///////////////////GFX Manager////////////////////////
 public:
     //! Pre-loaded custom images bank
-    QList<QPixmap> m_localImages;
+    VPtrList<QPixmap> m_localImages;
 
     //! Container of local terrain tiles configs
     PGE_DataArray<obj_w_tile > m_localConfigTerrain;
@@ -335,7 +336,7 @@ public:
 
     typedef QList<QGraphicsItem *> PGE_ItemList;
     bool checkGroupCollisions(QList<QGraphicsItem *> *items);
-    QGraphicsItem *itemCollidesWith(QGraphicsItem *item, QList<QGraphicsItem *> *itemgrp = nullptr);
+    QGraphicsItem *itemCollidesWith(QGraphicsItem *item, PGE_ItemList *itemgrp = nullptr, PGE_ItemList *allCollisions = nullptr);
     QGraphicsItem *itemCollidesCursor(QGraphicsItem *item);
 
     typedef RTree<QGraphicsItem *, double, 2, double > IndexTree;
@@ -428,6 +429,8 @@ public:
 
     bool m_mouseIsMoved; //Mouse was moved with right mouseKey
 
+    bool m_keyCtrlPressed = false;
+
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
     bool m_skipChildMousePressEvent;
@@ -437,6 +440,9 @@ public:
     bool m_skipChildMousReleaseEvent;
     void keyPressEvent(QKeyEvent *keyEvent);
     void keyReleaseEvent(QKeyEvent *keyEvent);
+
+    void focusInEvent(QFocusEvent* event);
+    void focusOutEvent(QFocusEvent* event);
 
     // ////////////////////////////////////////////////////////////////////////////////
     // ////////////////////////////WORLD SETTINGS//////////////////////////////////////

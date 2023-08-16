@@ -479,7 +479,9 @@ void ImageCalibrator::saveCalibrates()
 {
     // FIXME: Make grid size and frame size being dynamical, not fixed 100x100!!!
     QSettings conf(m_iniPath, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     conf.setIniCodec("UTF-8");
+#endif
 
     for(int i = 0; i < 10; i++)
     {
@@ -502,7 +504,9 @@ void ImageCalibrator::loadCalibrates()
 {
     // FIXME: Make grid size and frame size being dynamical, not fixed 100x100!!!
     QSettings conf(m_iniPath, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     conf.setIniCodec("UTF-8");
+#endif
 
     for(int i = 0; i < 10; i++)
     {

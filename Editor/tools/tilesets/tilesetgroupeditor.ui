@@ -18,7 +18,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/cat/cat_48.png</normaloff>:/images/cat/cat_48.png</iconset>
+    <normaloff>":/engines/moondust/48.png"</normaloff>":/engines/moondust/48.png"</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,100,0" columnstretch="0,0,0,0,0,0,0">
    <item row="3" column="2">

@@ -35,11 +35,13 @@ WorldEdit::WorldEdit(MainWindow *mw, QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
     m_isUntitled = true;
     latest_export_path = AppPathManager::userAppDir();
-    setWindowIcon(QIcon(QPixmap(":/images/world16.png")));
+    setWindowIcon(QIcon(QPixmap(":/toolbar/dock/world16.png")));
     ui->setupUi(this);
     updateTimer=NULL;
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
+#endif
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);
 

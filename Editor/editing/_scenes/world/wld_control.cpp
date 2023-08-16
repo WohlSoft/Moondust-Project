@@ -37,14 +37,35 @@
 // //////////////////////////////////////////////EVENTS START/////////////////////////////////////////////////
 void WldScene::keyPressEvent(QKeyEvent *keyEvent)
 {
-    if(m_editModeObj) m_editModeObj->keyPress(keyEvent);
+    if(m_editModeObj)
+        m_editModeObj->keyPress(keyEvent);
+
     QGraphicsScene::keyPressEvent(keyEvent);
+
+    if(keyEvent->key() == Qt::Key_Control)
+        m_keyCtrlPressed = true;
 }
 
 void WldScene::keyReleaseEvent(QKeyEvent *keyEvent)
 {
-    if(m_editModeObj) m_editModeObj->keyRelease(keyEvent);
+    if(m_editModeObj)
+        m_editModeObj->keyRelease(keyEvent);
+
     QGraphicsScene::keyReleaseEvent(keyEvent);
+
+    if(keyEvent->key() == Qt::Key_Control)
+        m_keyCtrlPressed = false;
+}
+
+void WldScene::focusInEvent(QFocusEvent *)
+{
+    m_keyCtrlPressed = (QApplication::queryKeyboardModifiers() & Qt::KeyboardModifier::ControlModifier) != 0;
+}
+
+void WldScene::focusOutEvent(QFocusEvent *)
+{
+    // Reset everything to avoid possible mess
+    m_keyCtrlPressed = false;
 }
 
 void WldScene::selectionChanged()
@@ -71,7 +92,6 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     //if(contextMenuOpened) return;
     m_contextMenuIsOpened = false;
-
     m_mouseIsMovedAfterKey = false;
 
     //Discard multi mouse key

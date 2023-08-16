@@ -2,6 +2,7 @@
 #ifndef HISTORYELEMENTREPLACEPLAYERPOINT_H
 #define HISTORYELEMENTREPLACEPLAYERPOINT_H
 
+#include <QVariant>
 #include "ihistoryelement.h"
 #include <PGE_File_Formats/file_formats.h>
 

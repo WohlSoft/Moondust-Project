@@ -17,7 +17,7 @@
  */
 
 #include <QtConcurrent>
-#include <QDesktopWidget>
+#include <pge_qt_compat.h>
 
 #include <editing/_scenes/world/wld_history_manager.h>
 #include <PGE_File_Formats/file_formats.h>
@@ -382,13 +382,18 @@ void WorldSettingsBox::on_WLD_Credirs_textChanged()
 /********************************Star counter begin**************************************************/
 unsigned long WorldSettingsBox::starCounter_checkLevelFile(QString FilePath, QSet<QString> &exists)
 {
-    QRegExp lvlext = QRegExp(".*\\.(lvl|lvlx)$");
+    Q_QRegExp lvlext = Q_QRegExp(".*\\.(lvl|lvlx)$");
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     lvlext.setCaseSensitivity(Qt::CaseInsensitive);
+#else
+    lvlext.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+#endif
+
     LevelData getLevelHead;
     unsigned long starCount = 0;
     getLevelHead.stars = 0;
 
-    if(lvlext.exactMatch(FilePath))
+    if(lvlext.Q_QRegExpMatch(FilePath))
     {
         if(!FileFormats::OpenLevelFile(FilePath, getLevelHead))
             return 0;
@@ -573,11 +578,20 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
                          &progress,
                          &QProgressDialog::setValue,
                          Qt::BlockingQueuedConnection);
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         QFuture<unsigned long> isOk = QtConcurrent::run(this,
                                       &WorldSettingsBox::doStarCount,
                                       QString(dirPath),
                                       edit->WldData.levels,
                                       edit->WldData.IntroLevel_file);
+#else
+        QFuture<unsigned long> isOk = QtConcurrent::run(&WorldSettingsBox::doStarCount,
+                                                        this,
+                                                        QString(dirPath),
+                                                        edit->WldData.levels,
+                                                        edit->WldData.IntroLevel_file);
+#endif
 
         /*************************Wait until star counter will do work***************************/
         while(!isOk.isFinished())

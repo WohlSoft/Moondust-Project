@@ -20,6 +20,7 @@
 #include <QtNetwork>
 #include <QMessageBox>
 #include <QFile>
+#include <pge_qt_compat.h>
 
 #include <version.h>
 #include <common_features/app_path.h>
@@ -32,6 +33,7 @@
 
 #include "check_updates.h"
 #include "ui_check_updates.h"
+
 
 UpdateChecker::UpdateChecker(QWidget *parent) :
     QDialog(parent),
@@ -90,10 +92,10 @@ static int Month2Code(QString &mon)
         return 1;
 }
 
-static unsigned int BuildDateToTimestamp(const char *buildTime)
+static qint64 BuildDateToTimestamp(const char *buildTime)
 {
     QString src(buildTime);
-    unsigned int result=0;
+    qint64 result = 0;
     QDate date;
     QTime time;
     int years = 0;
@@ -107,7 +109,7 @@ static unsigned int BuildDateToTimestamp(const char *buildTime)
     src.replace(' ', '-');
     src.replace('.', '-');
     src.replace(':', '-');
-    QStringList datetime = src.split('-', QString::SkipEmptyParts);
+    QStringList datetime = src.split('-', QSTRING_SPLIT_BEHAVIOUR(SkipEmptyParts));
 
     for(int i=0; i<datetime.size(); i++)
     {
@@ -132,13 +134,18 @@ static unsigned int BuildDateToTimestamp(const char *buildTime)
     date.setDate(years, months, days);
     time.setHMS(hours, minutes, seconds);
 
-    result = QDateTime(date, time).toTime_t();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 8, 0)
+    result = QDateTime(date, time).toSecsSinceEpoch();
+#else
+    result = (qint64)QDateTime(date, time).toTime_t();
+#endif
+
     return result;
 }
 
-static unsigned int DatetimeToTimestamp(QString src)
+static qint64 DatetimeToTimestamp(QString src)
 {
-    unsigned int result=0;
+    qint64 result = 0;
     QDate date;
     QTime time;
     int years = 0;
@@ -152,7 +159,7 @@ static unsigned int DatetimeToTimestamp(QString src)
     src.replace(' ', '-');
     src.replace('.', '-');
     src.replace(':', '-');
-    QStringList datetime = src.split('-', QString::SkipEmptyParts);
+    QStringList datetime = src.split('-', QSTRING_SPLIT_BEHAVIOUR(SkipEmptyParts));
 
     for(int i=0; i<datetime.size(); i++)
     {
@@ -176,7 +183,12 @@ static unsigned int DatetimeToTimestamp(QString src)
     date.setDate(years, months, days);
     time.setHMS(hours, minutes, seconds);
 
-    result = QDateTime(date, time).toTime_t();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 8, 0)
+    result = QDateTime(date, time).toSecsSinceEpoch();
+#else
+    result = (qint64)QDateTime(date, time).toTime_t();
+#endif
+
     return result;
 }
 

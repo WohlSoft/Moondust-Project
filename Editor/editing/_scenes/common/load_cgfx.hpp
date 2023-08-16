@@ -24,7 +24,7 @@
 #include <common_features/graphics_funcs.h>
 
 template<class T>
-inline void loadCustomIcon(CustomDirManager &uLVL, T &t_item, QList<QPixmap> &localImages)
+inline void loadCustomIcon(CustomDirManager &uLVL, T &t_item, VPtrList<QPixmap> &localImages)
 {
     t_item.icon = QPixmap(); // Enforce auto-generated icon for customized sprites if no custom given
     t_item.cur_icon = nullptr;
@@ -49,7 +49,7 @@ inline bool loadCustomImage(QImage &tempImg,
                             CustomDirManager &uLVL,
                             T &t_item,
                             D *itemD,
-                            QList<QPixmap> &localImages,
+                            VPtrList<QPixmap> &localImages,
                             bool *isInvalidImage,
                             QString *customImgPath = nullptr,
                             QSize *capturedSize = nullptr)

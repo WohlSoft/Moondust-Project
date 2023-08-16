@@ -8,6 +8,7 @@
 #include <QDirIterator>
 #include <QtConcurrent>
 #include <QStandardPaths>
+#include <pge_qt_compat.h>
 
 #include <QtDebug>
 
@@ -56,8 +57,14 @@ AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
     ui->ffmpeg_bin_path->setText(ffmpegBin);
 #endif
 
-    connect(&converter, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(nextStep(int, QProcess::ExitStatus)));
-    connect(&converter, SIGNAL(readyRead()), this, SLOT(consoleMessage()));
+    // Moved from UI file itself
+    QObject::connect(ui->ogg_quality, &QSlider::valueChanged,
+                     ui->ogg_quality_var,
+                     static_cast<void(QLabel::*)(int)>(&QLabel::setNum));
+
+    QObject::connect(&converter, SIGNAL(finished(int, QProcess::ExitStatus)),
+                    this, SLOT(nextStep(int, QProcess::ExitStatus)));
+    QObject::connect(&converter, SIGNAL(readyRead()), this, SLOT(consoleMessage()));
     converter.setTextModeEnabled(true);
     converter.setProcessChannelMode(QProcess::MergedChannels);
 
@@ -185,7 +192,11 @@ void AudioCvt_Sox_gui::start()
 
     if(execFetchEpisodeData)
     {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         fetcher = QtConcurrent::run(this, &AudioCvt_Sox_gui::CollectEpisodeData);
+#else
+        fetcher = QtConcurrent::run(&AudioCvt_Sox_gui::CollectEpisodeData, this);
+#endif
         ui->status->setText("Looking for a musics and level/world files...");
     }
     else
@@ -317,7 +328,11 @@ void AudioCvt_Sox_gui::nextStep(int retStatus, QProcess::ExitStatus exitStatus)
     {
         ui->status->setText(QString("Apply updated name for %1...")
                             .arg(strTail(current_musFileNew, 50)));
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         fetcher = QtConcurrent::run(this, &AudioCvt_Sox_gui::ProcessRenameMusic);
+#else
+        fetcher = QtConcurrent::run(&AudioCvt_Sox_gui::ProcessRenameMusic, this);
+#endif
         return;
     }
 
@@ -398,7 +413,7 @@ retry_queue:
             {
                 hasWork = true;
                 current_musFileOld = current_musFileNew;
-                current_musFileNew.replace(QRegExp("([^.]+)$"), "mp3");
+                current_musFileNew.replace(Q_QRegExp("([^.]+)$"), "mp3");
                 renameToBak = false;
             }
         }
@@ -408,7 +423,7 @@ retry_queue:
             {
                 hasWork = true;
                 current_musFileOld = current_musFileNew;
-                current_musFileNew.replace(QRegExp("([^.]+)$"), "ogg");
+                current_musFileNew.replace(Q_QRegExp("([^.]+)$"), "ogg");
                 renameToBak = false;
             }
         }
@@ -418,7 +433,7 @@ retry_queue:
             {
                 hasWork = true;
                 current_musFileOld = current_musFileNew;
-                current_musFileNew.replace(QRegExp("([^.]+)$"), "flac");
+                current_musFileNew.replace(Q_QRegExp("([^.]+)$"), "flac");
                 renameToBak = false;
             }
         }
@@ -428,7 +443,7 @@ retry_queue:
             {
                 hasWork = true;
                 current_musFileOld = current_musFileNew;
-                current_musFileNew.replace(QRegExp("([^.]+)$"), "wav");
+                current_musFileNew.replace(Q_QRegExp("([^.]+)$"), "wav");
                 renameToBak = false;
             }
         }
@@ -502,8 +517,10 @@ void AudioCvt_Sox_gui::consoleMessage()
     QByteArray strdata = converter.readAllStandardOutput();
     int made = 0;
     bool found = false;
+
     qDebug() << "OUTPUT: " << strdata;
     QStringList acceptedData = QString::fromUtf8(strdata).split('\r');
+
     foreach(QString entry, acceptedData)
     {
         entry.remove('\n');

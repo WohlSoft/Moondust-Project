@@ -67,6 +67,7 @@ void HistoryElementReplacePlayerPoint::historyRemovePlayerPoint(const PlayerPoin
 
     bool wasPlaced = false;
     PlayerPoint oPoint;
+
     if(!m_oldPos.isNull())
     {
         if(m_oldPos.type() == QVariant::List)

@@ -20,7 +20,9 @@
 #define LOGGER_SETS_H
 
 #include <QString>
-#include <QtMsgHandler>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#   include <QtMsgHandler>
+#endif
 
 class LogWriter
 {

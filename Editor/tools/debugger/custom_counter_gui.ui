@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/tileset_box.png</normaloff>:/images/tileset_box.png</iconset>
+    <normaloff>:/toolbar/dock/tileset_box.png</normaloff>:/toolbar/dock/tileset_box.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="1">

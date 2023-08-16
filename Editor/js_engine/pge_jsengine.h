@@ -47,7 +47,9 @@ public:
         }
 
         QTextStream str(&file);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         str.setCodec("UTF-8");
+#endif
 
         // TODO: Replace boot placeholders
         QString m_scriptContents = m_bootContents.second + str.readAll();

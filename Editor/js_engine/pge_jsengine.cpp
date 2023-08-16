@@ -25,13 +25,17 @@ PGE_JsEngine::PGE_JsEngine(QObject *parent) :
     m_jsengine.installExtensions(QJSEngine::GarbageCollectionExtension);
 #endif
 
-    QFile bootFile(":/plugin/plugin/main_boot.js");
+    QFile bootFile(":/plugin/main_boot.js");
     bool openResult = bootFile.open(QIODevice::ReadOnly | QIODevice::Text);
     assert(openResult); // This file must open!
     Q_UNUSED(openResult)
 
     QTextStream bootFileStream(&bootFile);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     bootFileStream.setCodec("UTF-8");
+#else
+    bootFileStream.setEncoding(QStringConverter::Utf8);
+#endif
 
     int numOfNewlines = 0;
     QString bootFileContents;
@@ -51,7 +55,11 @@ bool PGE_JsEngine::setFile(QString filePath)
         return false;
 
     QTextStream str(&file);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     str.setCodec("UTF-8");
+#else
+    str.setEncoding(QStringConverter::Utf8);
+#endif
 
     m_scriptContents    = str.readAll();
     m_scriptFile        = filePath;

@@ -39,10 +39,10 @@ aboutDialog::aboutDialog(QWidget *parent) :
     ui->setupUi(this);
 
 #ifdef Q_OS_MAC
-    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    this->setWindowIcon(QIcon(":/appicon/app.icns"));
 #endif
 #ifdef Q_OS_WIN
-    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+    this->setWindowIcon(QIcon(":/appicon/app.ico"));
 
     if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA &&
        QSysInfo::WindowsVersion <= QSysInfo::WV_WINDOWS7)
@@ -66,7 +66,7 @@ aboutDialog::aboutDialog(QWidget *parent) :
     const SDL_version *mixerXVer = Mix_Linked_Version();
 
     QString aboutText = QString("<div style=\"width: 100%; text-align: center;\">"
-        "<p><img src=\":/images/cat_builder/cat_builder_128_logo.png\" /></p>"
+        "<p><img src=\":/appicon/128.png\" /></p>"
 
         "<b>%1</b><br>"
         "<u>%2</u><br>"
@@ -98,7 +98,7 @@ aboutDialog::aboutDialog(QWidget *parent) :
         .arg(tr("This program is distributed under %1").arg("<a href=\"http://www.gnu.org/licenses/gpl.html\">GNU GPLv3</a>"));
 
 /*
-    <p align="center"><img src=":/images/cat_builder/cat_builder_128_logo.png" /></p>
+    <p align="center"><img src=":/appicon/128.png" /></p>
 
     <b>Moondust Project</b><br>
     <u>By Wohlstand</u><br>
@@ -120,7 +120,11 @@ aboutDialog::aboutDialog(QWidget *parent) :
         return;
 
     QTextStream in(&mFile);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     in.setCodec("UTF-8");
+#else
+    in.setEncoding(QStringConverter::Utf8);
+#endif
     QString mText = in.readAll();
     ui->About2->setText(mText);
     mFile.close();

@@ -12,7 +12,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/section.png</normaloff>:/images/section.png</iconset>
+    <normaloff>:/toolbar/dock/section.png</normaloff>:/toolbar/dock/section.png</iconset>
   </property>
   <property name="allowedAreas">
    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>

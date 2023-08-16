@@ -257,8 +257,11 @@ void GIFs2PNG::findConfigPacks()
         QString main_ini = p + "/main.ini";
         if(!QFile::exists(main_ini))
             continue;  // Is not a config pack
+
         QSettings m(main_ini, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0) // In Qt6, INI files are always UTF-8
         m.setIniCodec("UTF-8");
+#endif
 
         if(m.status() != QSettings::NoError)
             continue;  // Invalid main.ini

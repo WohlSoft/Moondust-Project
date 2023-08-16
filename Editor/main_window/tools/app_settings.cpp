@@ -49,7 +49,7 @@ AppSettings::AppSettings(QWidget *parent) :
     ui->setupUi(this);
 
 #ifdef Q_OS_MAC
-    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    this->setWindowIcon(QIcon(":/appicon/app.icns"));
     //Setting sizes of some elements to look nicer
     ui->gridLayout->setMargin(12);
     ui->npcDefaultsGrp->setMinimumHeight(166);
@@ -58,7 +58,7 @@ AppSettings::AppSettings(QWidget *parent) :
     updateGeometry();
 #endif
 #ifdef Q_OS_WIN
-    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+    this->setWindowIcon(QIcon(":/appicon/app.ico"));
 
     if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA &&
        QSysInfo::WindowsVersion <= QSysInfo::WV_WINDOWS7)

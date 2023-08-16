@@ -24,14 +24,10 @@ else()
     set(libJPEG_A_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}${JPEG_STATICLIB_NAME}${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
     set(JPEG_INCLUDE_DIRS "${DEPENDENCIES_INSTALL_DIR}/include")
 
-    set(libJPEGArchive ${CMAKE_SOURCE_DIR}/_Libs/_sources/jpeg-9d.tar.gz)
-    file(SHA256 ${libJPEGArchive} libJPEGArchive_hash)
-
     ExternalProject_Add(
         libJPEG_Local
         PREFIX ${CMAKE_BINARY_DIR}/external/libJPEG
-        URL ${libJPEGArchive}
-        URL_HASH SHA256=${libJPEGArchive_hash}
+        SOURCE_DIR ${CMAKE_SOURCE_DIR}/_Libs/libjpeg
         CMAKE_ARGS
             "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
             "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
@@ -44,6 +40,7 @@ else()
             ${APPLE_CMAKE_FLAGS}
             "-DJPEG_SHARED=OFF"
             "-DJPEG_STATIC=ON"
+            "-DJPEG_BUILD_EXECUTABLES=OFF"
         BUILD_BYPRODUCTS
             "${libJPEG_A_Lib}"
     )

@@ -58,7 +58,7 @@ bool LvlScene::checkGroupCollisions(PGE_ItemList *items)
     if(items->size() == 1)
     {
         LogDebug(QString("Collision check: single item"));
-        return (itemCollidesWith(items->first(), nullptr) != nullptr);
+        return (itemCollidesWith(items->first()) != nullptr);
     }
 
     //9 - width, 10 - height
@@ -116,7 +116,7 @@ bool LvlScene::checkGroupCollisions(PGE_ItemList *items)
 
 }
 
-QGraphicsItem *LvlScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *itemgrp)
+QGraphicsItem *LvlScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *itemgrp, PGE_ItemList *allCollisions)
 {
     qreal leftA, leftB;
     qreal rightA, rightB;
@@ -137,7 +137,7 @@ QGraphicsItem *LvlScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *ite
 
     PGE_ItemList collisions;
 
-    if(itemgrp && !itemgrp->isEmpty())
+    if(itemgrp)
         collisions = *itemgrp;
     else
     {
@@ -291,8 +291,13 @@ QGraphicsItem *LvlScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *ite
         if(leftA >= rightB)
             continue;
 
-        return it; // Collision found!
+        // Collision found!
+        if(allCollisions)
+            allCollisions->push_back(it); // Get all found items
+        else
+            return it; // First item only
     }
+
     return nullptr;
 }
 

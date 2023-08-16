@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/item_browser_world.png</normaloff>:/images/item_browser_world.png</iconset>
+    <normaloff>:/toolbar/dock/item_browser_world.png</normaloff>:/toolbar/dock/item_browser_world.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>

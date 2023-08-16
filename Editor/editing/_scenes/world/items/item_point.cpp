@@ -64,7 +64,7 @@ void ItemPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
     }
     else
     {
-        QPixmap &image = m_scene->m_pointSelector.m_animator.wholeImage();
+        const QPixmap &image = m_scene->m_pointSelector.m_animator.wholeImage();
         painter->drawPixmap(m_imageSize, image, m_scene->m_pointSelector.m_animator.frameRectF());
     }
 

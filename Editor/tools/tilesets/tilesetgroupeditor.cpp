@@ -19,6 +19,7 @@
 #include <QInputDialog>
 #include <QtDebug>
 #include <QSet>
+#include <pge_qt_compat.h>
 
 #include <common_features/main_window_ptr.h>
 #include <common_features/util.h>
@@ -40,6 +41,15 @@ TilesetGroupEditor::TilesetGroupEditor(QGraphicsScene *scene, QWidget *parent) :
 {
     scn = scene;
     ui->setupUi(this);
+
+    QIcon icon;
+    icon.addPixmap(QPixmap(":/engines/moondust/16.png"));
+    icon.addPixmap(QPixmap(":/engines/moondust/32.png"));
+    icon.addPixmap(QPixmap(":/engines/moondust/48.png"));
+    icon.addPixmap(QPixmap(":/engines/moondust/128.png"));
+    icon.addPixmap(QPixmap(":/engines/moondust/256.png"));
+    setWindowIcon(icon);
+
     MainWindow *mainWindow = qobject_cast<MainWindow *>(parent);
     if(!mainWindow)
     {
@@ -49,10 +59,10 @@ TilesetGroupEditor::TilesetGroupEditor(QGraphicsScene *scene, QWidget *parent) :
     m_configs = &mainWindow->configs;
 
     #ifdef Q_OS_MAC
-    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    this->setWindowIcon(QIcon(":/appicon/app.icns"));
     #endif
     #ifdef Q_OS_WIN
-    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+    this->setWindowIcon(QIcon(":/appicon/app.ico"));
     #endif
 
     layout = new FlowLayout();
@@ -97,7 +107,9 @@ void TilesetGroupEditor::SaveSimpleTilesetGroup(const QString &path, const Simpl
     modifiedPath = path;
 
     QSettings simpleTilesetGroupINI(modifiedPath, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     simpleTilesetGroupINI.setIniCodec("UTF-8");
+#endif
 
     simpleTilesetGroupINI.clear();
     simpleTilesetGroupINI.beginGroup("tileset-group"); //HEADER
@@ -115,7 +127,9 @@ void TilesetGroupEditor::SaveSimpleTilesetGroup(const QString &path, const Simpl
 bool TilesetGroupEditor::OpenSimpleTilesetGroup(const QString &path, SimpleTilesetGroup &tilesetGroup)
 {
     QSettings simpleTilesetINI(path, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     simpleTilesetINI.setIniCodec("UTF-8");
+#endif
 
     simpleTilesetINI.beginGroup("tileset-group");
     if(!simpleTilesetINI.contains("tilesets-count"))
@@ -230,15 +244,17 @@ void TilesetGroupEditor::on_Open_clicked()
         lastFileName = pathInfo.baseName();
         QString dirPath = pathInfo.absoluteDir().absolutePath();
         m_categories.reset(new QSettings(dirPath + "/categories.ini", QSettings::IniFormat, this));
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         if(!m_categories.isNull())
             m_categories->setIniCodec("UTF-8");
+#endif
 
         for(QString &tarName : t.tilesets)
         {
             QString rootTilesetDir = m_configs->config_dir + "tilesets/";
             SimpleTileset st;
             if(tileset::OpenSimpleTileset(rootTilesetDir + tarName, st))
-                tilesets << qMakePair<QString, SimpleTileset>(tarName, st);
+                tilesets << qMakePair<QString, SimpleTileset>((QString)tarName, (SimpleTileset)st);
         }
         fetchCategories(dirPath);
         ui->category->setCurrentText(t.groupCat);
@@ -324,11 +340,7 @@ void TilesetGroupEditor::on_tilesetUp_clicked()
 
     if(0 < i)
     {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
-        tilesets.swapItemsAt(i, i - 1);
-#else
-        tilesets.swap(i, i - 1);
-#endif
+        tilesets.Q_ListSwap(i, i - 1);
         redrawAll();
         ui->tilesetList->setCurrentRow(i - 1);
     }
@@ -343,11 +355,7 @@ void TilesetGroupEditor::on_tilesetDown_clicked()
 
     if(i + 1 < tilesets.size())
     {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
-        tilesets.swapItemsAt(i, i + 1);
-#else
-        tilesets.swap(i, i + 1);
-#endif
+        tilesets.Q_ListSwap(i, i + 1);
         redrawAll();
         ui->tilesetList->setCurrentRow(i + 1);
     }
@@ -426,12 +434,7 @@ void TilesetGroupEditor::movedTileset(const QModelIndex &sourceParent, int sourc
 
     qDebug() << "Tilesets moved";
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
-    tilesets.swapItemsAt(sourceStart, destinationRow);
-#else
-    tilesets.swap(sourceStart, destinationRow);
-#endif
+    tilesets.Q_ListSwap(sourceStart, destinationRow);
     redrawAll();
     ui->tilesetList->setCurrentRow(destinationRow);
 }
-

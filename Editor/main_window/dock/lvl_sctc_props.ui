@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/section16.png</normaloff>:/images/section16.png</iconset>
+    <normaloff>:/toolbar/dock/section16.png</normaloff>:/toolbar/dock/section16.png</iconset>
   </property>
   <property name="allowedAreas">
    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
@@ -415,7 +415,7 @@
                 </property>
                 <property name="icon">
                  <iconset resource="../../_resources/editor.qrc">
-                  <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+                  <normaloff>:/dock/wrench_16x16.png</normaloff>:/dock/wrench_16x16.png</iconset>
                 </property>
                 <property name="popupMode">
                  <enum>QToolButton::InstantPopup</enum>

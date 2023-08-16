@@ -24,7 +24,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/bug.png</normaloff>:/images/bug.png</iconset>
+    <normaloff>:/toolbar/dock/bookmarks.png</normaloff>:/toolbar/dock/bookmarks.png</iconset>
   </property>
   <property name="allowedAreas">
    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>

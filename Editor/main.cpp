@@ -156,7 +156,9 @@ int main(int argc, char *argv[])
     {
         //Initialize the HighDPI settings
         QSettings advSetup(AppPathManager::settingsFile(), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         advSetup.setIniCodec("UTF-8");
+#endif
 
         advSetup.beginGroup("extra");
         bool atr_hdpi   = advSetup.value("high-dpi-scaling", true).toBool();
@@ -165,7 +167,8 @@ int main(int argc, char *argv[])
         QApplication::setAttribute(Qt::AA_DontShowIconsInMenus, true);
         //QApplication::setAttribute(Qt::AA_NativeWindows, true);  //Experimentally
 #endif
-#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0) && QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         QApplication::setAttribute(Qt::AA_DisableHighDpiScaling, !atr_hdpi);
         QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, atr_hdpi);
         QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, atr_hdpi);

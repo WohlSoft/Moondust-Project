@@ -27,41 +27,7 @@ message("== Current GIT hash [${GIT_COMMIT_HASH}], branch [${GIT_BRANCH}], packa
 
 include(_common/build_env_pge.cmake)
 include(_common/deployment.cmake)
-
-set(PGE_ENABLE_QT_ENABLED_BY_DEFAULT ON)
-if(HAIKU OR EMSCRIPTEN OR ANDROID)
-    set(PGE_ENABLE_QT_ENABLED_BY_DEFAULT OFF)
-    message("== Qt-dependent components are not supported for this platform")
-    include(_common/find_linguist.cmake)
-endif()
-
-if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
-    find_package(Qt5 COMPONENTS Core QUIET) # Check is Qt available
-    if(Qt5_FOUND)
-        option(PGE_ENABLE_QT "Enable build of Qt-dependent components" ${PGE_ENABLE_QT_ENABLED_BY_DEFAULT})
-        option(PGE_ENABLE_STATIC_QT "Use static library deployment of Qt (Set this flag when you are using static build of Qt!)" OFF)
-        message("== Qt 5 has been found in ${Qt5_DIR}")
-        get_filename_component(QT5_BINARY_DIR "${Qt5_DIR}/../../bin" ABSOLUTE)
-
-        find_program(_QT_LRELEASE_PROGRAM NAMES lrelease lrelease-qt5 PATHS ${QT5_BINARY_DIR}/bin/)
-        if(_QT_LRELEASE_PROGRAM)
-            message(STATUS "Found ${_QT_LRELEASE_PROGRAM}, locales will be compiled!")
-        else()
-            message(WARNING "Unable to find lrelease, locales will NOT be built!")
-        endif()
-
-        find_program(_QT_LUPDATE_PROGRAM NAMES lupdate lupdate-qt5 PATHS ${QT5_BINARY_DIR}/bin/)
-        if(_QT_LUPDATE_PROGRAM)
-            message(STATUS "Found ${_QT_LUPDATE_PROGRAM}, locales can be refreshed!")
-        else()
-            message(WARNING "Unable to find lupdate, locales can't be refreshed!")
-        endif()
-    else()
-        message("== Qt 5 NOT FOUND! Qt-dependent components will be disabled!")
-    endif()
-else()
-    set(PGE_ENABLE_QT OFF)
-endif()
+include(_common/library_qt.cmake)
 
 if(WIN32)
     set(PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT OFF)

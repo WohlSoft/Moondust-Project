@@ -172,6 +172,22 @@ else()
         set(SDL2_BUILD_SHARED ON)
     endif()
 
+    if(WIN32)
+        set(SDL2_WIN32_CMAKE_FLAGS -DCMAKE_SHARED_LIBRARY_PREFIX="")
+    endif()
+
+    if(LINUX)
+        set(SDL2_LINUX_CMAKE_FLAGS -DSNDIO=OFF -DVIDEO_WAYLAND_QT_TOUCH=OFF)
+    endif()
+
+    if(ANDROID)
+        set(SDL2_ANDROID_CMAKE_FLAGS -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DEXTRA_CFLAGS=-fPIC)
+    endif()
+
+    if(EMSCRIPTEN)
+        set(SDL2_EMSCRIPTEN_CMAKE_FLAGS "-DEXTRA_CFLAGS=-s USE_PTHREADS=1" -DPTHREADS=ON -DPTHREADS_SEM=ON)
+    endif()
+
     ExternalProject_Add(
         SDL2_Local
         PREFIX ${CMAKE_BINARY_DIR}/external/SDL2
@@ -192,15 +208,11 @@ else()
             -DSDL_SHARED=${SDL2_BUILD_SHARED}
             -DLIBC=ON
             # $<$<BOOL:WIN32>:-DWASAPI=OFF>  #For some experiment, enable WASAPI support
-            $<$<BOOL:WIN32>:-DCMAKE_SHARED_LIBRARY_PREFIX="">
-            $<$<BOOL:LINUX>:-DSNDIO=OFF>
-            $<$<BOOL:LINUX>:-DVIDEO_WAYLAND_QT_TOUCH=OFF>
-            $<$<BOOL:ANDROID>:-DCMAKE_POSITION_INDEPENDENT_CODE=ON>
-            $<$<BOOL:ANDROID>:-DEXTRA_CFLAGS=-fPIC>
+            ${SDL2_WIN32_CMAKE_FLAGS}
+            ${SDL2_LINUX_CMAKE_FLAGS}
+            ${SDL2_ANDROID_CMAKE_FLAGS}
             ${ANDROID_CMAKE_FLAGS}
-            $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DEXTRA_CFLAGS=-s USE_PTHREADS=1>
-            $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DPTHREADS=ON>
-            $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DPTHREADS_SEM=ON>
+            ${SDL2_EMSCRIPTEN_CMAKE_FLAGS}
         BUILD_BYPRODUCTS
             "${SDL2_SO_Lib}"
             "${SDL2_A_Lib}"

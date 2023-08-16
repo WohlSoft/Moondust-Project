@@ -79,9 +79,10 @@ void PGE_JS_INIFile::open(QString filePath)
 {
     close();
     m_ini     = new QSettings(filePath, QSettings::IniFormat, this);
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     if(m_ini)
         m_ini->setIniCodec("UTF-8");
+#endif
 }
 
 void PGE_JS_INIFile::close()
@@ -108,6 +109,8 @@ QJSValue PGE_JS_INIFile::value(QString name, QJSValue defValue)
     if(m_ini)
     {
         QVariant value = m_ini->value(name, defValue.toVariant());
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         switch(value.type())
         {
         case QVariant::Int:
@@ -121,7 +124,23 @@ QJSValue PGE_JS_INIFile::value(QString name, QJSValue defValue)
         default:
             return QJSValue();
         }
+#else
+        switch(value.typeId())
+        {
+        case QMetaType::Int:
+            return QJSValue(value.toInt());
+        case QMetaType::UInt:
+            return QJSValue(value.toUInt());
+        case QMetaType::Double:
+            return QJSValue(value.toDouble());
+        case QMetaType::QString:
+            return QJSValue(value.toString());
+        default:
+            return QJSValue();
+        }
+#endif
     }
+
     return QJSValue();
 }
 

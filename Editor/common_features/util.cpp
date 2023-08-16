@@ -20,7 +20,9 @@
 #include <QWidgetItem>
 #include <QDialog>
 #include <QApplication>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QDesktopWidget>
+#endif
 #include <QScreen>
 #include <QStyle>
 #include <QLineEdit>
@@ -28,8 +30,10 @@
 #include <QTableWidget>
 #include <QComboBox>
 #include <QTabBar>
+#include <pge_qt_compat.h>
 
 #include "util.h"
+
 
 void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, int searchType)
 {
@@ -183,7 +187,7 @@ inline void CSV2IntArr_CODE(const QString &source, TList &dest, const typename T
     if(!source.isEmpty())
     {
         bool ok;
-        QStringList tmlL = source.split(',', QString::SkipEmptyParts);
+        QStringList tmlL = source.split(',', QSTRING_SPLIT_BEHAVIOUR(SkipEmptyParts));
         for(QString &fr : tmlL)
         {
             if(std::is_same<T, int>::value)
@@ -203,37 +207,41 @@ void util::CSV2IntArr(QString source, QList<int> &dest)
     CSV2IntArr_CODE(source, dest, 0);
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 void util::CSV2IntArr(QString source, QVector<int> &dest)
 {
     CSV2IntArr_CODE(source, dest, 0);
 }
+#endif
 
 void util::CSV2DoubleArr(QString source, QList<double> &dest)
 {
     CSV2IntArr_CODE(source, dest, 0.0);
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 void util::CSV2DoubleArr(QString source, QVector<double> &dest)
 {
     CSV2IntArr_CODE(source, dest, 0.0);
 }
+#endif
 
 QRect util::getScreenGeometry(int screenIndex)
 {
-    auto *d = qApp->desktop();
-    Q_ASSERT(d);
     auto screens = QGuiApplication::screens();
+    Q_ASSERT(screens.size() > 0);
 
-    if(screens.size() <= 1) // if 1 monitor only in use
-        return d->geometry();
+    if(screens.size() == 1) // if one monitor only in use
+        return screens.front()->geometry();
 
     QScreen *screen = QGuiApplication::primaryScreen();
+
     if(screenIndex < 0)
-        return screen ? screen->geometry() : d->geometry();
+        return screen ? screen->geometry() : screens.first()->geometry();
     else
     {
         if(screenIndex >= screens.size())
-            return d->geometry();
+            return screens.first()->geometry();
         else
             return screens[screenIndex]->geometry();
     }
@@ -241,5 +249,16 @@ QRect util::getScreenGeometry(int screenIndex)
 
 QRect util::alignToScreenCenter(const QSize size)
 {
-    return QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, size, getScreenGeometry());
+    QRect screenRect;
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 10, 0)
+    screenRect = getScreenGeometry(qApp->desktop()->screenNumber(QCursor::pos()));
+#else
+    QScreen *screen = QGuiApplication::screenAt(QCursor::pos());
+    if(!screen)
+        screen = QGuiApplication::primaryScreen();
+    screenRect = screen->geometry();
+#endif
+
+    return QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, size, screenRect);
 }

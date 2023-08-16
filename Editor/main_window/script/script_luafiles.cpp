@@ -49,7 +49,11 @@ static void processLuaMacros(QString luaFile, QString newFile, const QStringList
     f.open(QIODevice::ReadOnly/*|QIODevice::Text*/);
     of.open(QIODevice::WriteOnly/*|QIODevice::Text*/);
     QTextStream lua(&f);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     lua.setCodec("UTF-8");
+#else
+    lua.setEncoding(QStringConverter::Utf8);
+#endif
     QDate d = QDate::currentDate();
     QTime t = QTime::currentTime();
     QString dateTime = QString("%1:%2 %3-%4-%5")
@@ -227,14 +231,14 @@ void MainWindow::on_actionLunaLUA_lvl_triggered()
         {
             //If exists, open it
             openLuaFile(lvl->LvlData.meta.path + QStringLiteral("/") + lvl->LvlData.meta.filename, QStringLiteral("lunadll.lua"),
-                        QStringLiteral(":/lunalua/templates/lunadll.lua"));
+                        QStringLiteral(":/lunalua/templates/luna_level.lua"));
         }
         else
         {
             //or look for new file name
             openLuaFile(lvl->LvlData.meta.path + QStringLiteral("/") + lvl->LvlData.meta.filename,
                         LUNA_LEVEL_LOCAL,
-                        QStringLiteral(":/lunalua/templates/lunadll.lua"));
+                        QStringLiteral(":/lunalua/templates/luna_level.lua"));
         }
     }
     else if(wnd == WND_World)
@@ -255,13 +259,13 @@ void MainWindow::on_actionLunaLUA_lvl_triggered()
         {
             //If exists, open it
             openLuaFile(wld->WldData.meta.path + QStringLiteral("/") + wld->WldData.meta.filename, QStringLiteral("lunadll.lua"),
-                        QStringLiteral(":/lunalua/templates/lunadll.lua"));
+                        QStringLiteral(":/lunalua/templates/luna_level.lua"));
         }
         else
         {
             openLuaFile(wld->WldData.meta.path + "/" + wld->WldData.meta.filename,
                         LUNA_LEVEL_LOCAL,
-                        ":/lunalua/templates/lunadll.lua");
+                        ":/lunalua/templates/luna_level.lua");
         }
     }
 }
@@ -288,13 +292,13 @@ void MainWindow::on_actionLunaLUA_eps_triggered()
         {
             //If exists, open it
             openLuaFile(lvl->LvlData.meta.path, QStringLiteral("lunaworld.lua"),
-                        QStringLiteral(":/lunalua/templates/lunaworld.lua"));
+                        QStringLiteral(":/lunalua/templates/luna_level_all.lua"));
         }
         else
         {
             openLuaFile(lvl->LvlData.meta.path,
                         LUNA_LEVEL_GLOBAL,
-                        ":/lunalua/templates/lunaworld.lua");
+                        ":/lunalua/templates/luna_level_all.lua");
         }
     }
     else if(wnd == WND_World)
@@ -315,13 +319,13 @@ void MainWindow::on_actionLunaLUA_eps_triggered()
         {
             //If exists, open it
             openLuaFile(wld->WldData.meta.path, QStringLiteral("lunaworld.lua"),
-                        QStringLiteral(":/lunalua/templates/lunaworld.lua"));
+                        QStringLiteral(":/lunalua/templates/luna_level_all.lua"));
         }
         else
         {
             openLuaFile(wld->WldData.meta.path,
                         LUNA_LEVEL_GLOBAL,
-                        ":/lunalua/templates/lunaworld.lua");
+                        ":/lunalua/templates/luna_level_all.lua");
         }
     }
 }
@@ -354,7 +358,7 @@ void MainWindow::on_actionLunaLUA_wld_triggered()
         {
             openLuaFile(lvl->LvlData.meta.path,
                         LUNA_WORLD_GLOBAL,
-                        ":/lunalua/templates/lunaoverworld.lua");
+                        ":/lunalua/templates/luna_world_map.lua");
         }
     }
     else if(wnd == WND_World)
@@ -375,13 +379,13 @@ void MainWindow::on_actionLunaLUA_wld_triggered()
         {
             //If exists, open it
             openLuaFile(wld->WldData.meta.path, QStringLiteral("lunaoverworld.lua"),
-                        QStringLiteral(":/lunalua/templates/lunaoverworld.lua"));
+                        QStringLiteral(":/lunalua/templates/luna_world_map.lua"));
         }
         else
         {
             openLuaFile(wld->WldData.meta.path,
                         LUNA_WORLD_GLOBAL,
-                        ":/lunalua/templates/lunaoverworld.lua");
+                        ":/lunalua/templates/luna_world_map.lua");
         }
     }
 }

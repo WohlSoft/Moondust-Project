@@ -1,8 +1,12 @@
-#include "ui_reverb_tune.h"
 #include "reverb_tune.h"
+#include "ui_reverb_tune.h"
 #include <QSettings>
 #include <QTimer>
-#include <QRegExp>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#   include <QRegExp>
+#else
+#   include <QRegularExpression>
+#endif
 #include <QClipboard>
 #include "../Player/mus_player.h"
 #include "../Effects/reverb.h"
@@ -161,9 +165,16 @@ void ReverbTune::on_copySetup_clicked()
 
 static void textToReg(const QString &text, const QString &expr, float &reg)
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QRegExp regex(expr);
-    if(regex.indexIn(text))
-        reg = regex.cap(1).toFloat();
+    if(regex.indexIn(text) >= 0)
+        PGE_MusicPlayer::echoSetReg(reg, regex.cap(1).toInt());
+#else
+    QRegularExpression regex(expr);
+    QRegularExpressionMatch m = regex.match(text);
+    if(m.capturedStart(1) >= 0)
+        PGE_MusicPlayer::echoSetReg(reg, m.captured(1).toInt());
+#endif
 }
 
 void ReverbTune::on_pasteSetup_clicked()

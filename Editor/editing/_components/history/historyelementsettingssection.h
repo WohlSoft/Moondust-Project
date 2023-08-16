@@ -2,6 +2,7 @@
 #ifndef HISTORYELEMENTSETTINGSSECTION_H
 #define HISTORYELEMENTSETTINGSSECTION_H
 
+#include <QVariant>
 #include "ihistoryelement.h"
 #include <PGE_File_Formats/file_formats.h>
 #include <defines.h>

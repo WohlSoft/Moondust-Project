@@ -19,7 +19,7 @@
 #include <QtConcurrent>
 #include <QStyle>
 #include <QApplication>
-#include <QDesktopWidget>
+#include <pge_qt_compat.h>
 
 #include <common_features/util.h>
 #include "asyncstarcounter.h"
@@ -103,9 +103,9 @@ again:;
         }
     }
 
-    foreach(QString doneFile, m_doneFiles){
+    for(const QString &doneFile : m_doneFiles)
         m_toDoFiles.removeAll(doneFile);
-    }
+
     if(!m_toDoFiles.isEmpty())
         goto again;
 
@@ -126,31 +126,37 @@ int AsyncStarCounter::checkNextLevel(QString FilePath)
     addToDoneFiles(FilePath);
     qDebug() << "Scanning";
 
-    QRegExp lvlext = QRegExp(".*\\.(lvl|lvlx)$");
+    Q_QRegExp lvlext = Q_QRegExp(".*\\.(lvl|lvlx)$");
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     lvlext.setCaseSensitivity(Qt::CaseInsensitive);
+#else
+    lvlext.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+#endif
+
     LevelData getLevelHead;
     long starCount = 0;
     getLevelHead.stars = 0;
 
-    if( lvlext.exactMatch(FilePath) )
+    if(lvlext.Q_QRegExpMatch(FilePath))
     {
-        if( !FileFormats::OpenLevelFile(FilePath, getLevelHead) )
+        if(!FileFormats::OpenLevelFile(FilePath, getLevelHead))
             return 0;
 
         //qDebug() << "world "<< getLevelHead.stars << getLevelHead.filename;
 
         int foundStars=0;
         //Mark all stars
-        for(int q=0; q< getLevelHead.npc.size(); q++)
+        for(int q = 0; q < getLevelHead.npc.size(); ++q)
         {
            if(!m_configs->main_npc.contains(getLevelHead.npc[q].id)) continue;
            getLevelHead.npc[q].is_star = m_configs->main_npc[getLevelHead.npc[q].id].setup.is_star;
            if((getLevelHead.npc[q].is_star)&&(!getLevelHead.npc[q].friendly))
                 foundStars++;
         }
+
         starCount += foundStars;//getLevelHead.stars;
 
-        for(int i=0;i<getLevelHead.doors.size(); i++)
+        for(int i = 0; i < getLevelHead.doors.size(); ++i)
         {
             if(!getLevelHead.doors[i].lname.isEmpty())
             {
@@ -175,7 +181,18 @@ int AsyncStarCounter::checkNextLevel(QString FilePath)
 bool AsyncStarCounter::alreadyContainsInDoneFiles(const QString &path)
 {
     QMutexLocker locker(&m_mutex);
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    for(const auto &q : m_doneFiles)
+    {
+        if(q.compare(path, Qt::CaseInsensitive) == 0)
+            return true;
+    }
+
+    return false;
+#else
     return m_doneFiles.contains(path, Qt::CaseInsensitive);
+#endif
 }
 
 void AsyncStarCounter::addToDoneFiles(const QString &path)

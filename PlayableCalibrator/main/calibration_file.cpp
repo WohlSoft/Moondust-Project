@@ -19,6 +19,7 @@
 
 #include <QSettings>
 #include <QFileDialog>
+#include <pge_qt_compat.h>
 
 #include "calibration_main.h"
 #include "ui_calibration_main.h"
@@ -38,7 +39,9 @@ void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration
     createDirs();
 
     QSettings conf(fileName, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     conf.setIniCodec("UTF-8");
+#endif
 
     conf.beginGroup("common");
     {
@@ -56,17 +59,25 @@ void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration
     QSet<QString> animations;
     QSet<QPair<int, int > > framesKeys;
 
-    QRegExp aniKey("Animation([A-Za-z]+)_[LR]");
-    QRegExp frameKey("frame-(\\d+)-(\\d+)");
+    Q_QRegExp aniKey("Animation([A-Za-z]+)_[LR]");
+    Q_QRegExp frameKey("frame-(\\d+)-(\\d+)");
 
     for(auto &gn : a)
     {
-        if(aniKey.exactMatch(gn))
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        auto mk = aniKey.match(gn);
+        auto fk = frameKey.match(gn);
+
+        if(mk.hasMatch())
+            animations.insert(mk.captured(1));
+        else if(fk.hasMatch())
+            framesKeys.insert({mk.captured(1).toInt(), mk.captured(2).toInt()});
+#else
+        if(aniKey.Q_QRegExpMatch(gn))
             animations.insert(aniKey.cap(1));
-        else if(frameKey.exactMatch(gn))
-        {
+        else if(frameKey.Q_QRegExpMatch(gn))
             framesKeys.insert({frameKey.cap(1).toInt(), frameKey.cap(2).toInt()});
-        }
+#endif
     }
 
     int usedCount = 0;
@@ -277,7 +288,9 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
         QFile::remove(ini_sprite); // So, remove it before saving a new one
 
     QSettings conf(ini_sprite, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     conf.setIniCodec("UTF-8");
+#endif
 
     conf.clear();
 
@@ -376,7 +389,7 @@ struct SanBaEiLevelFile
 
         QString d = QString::fromUtf8(f.readAll());
         d.remove('\r');
-        lines = d.split('\n', QString::SkipEmptyParts);
+        lines = d.split('\n', QSTRING_SPLIT_BEHAVIOUR(SkipEmptyParts));
 
         if(lines.isEmpty())
             return false;
@@ -443,12 +456,23 @@ struct RelSize38A
 
 bool CalibrationMain::importFrom38A(Calibration &dst, QString imageName, QString fileName)
 {
-    QRegExp fileNameReg("(\\w+)-(\\d+).png");
+    Q_QRegExp fileNameReg("(\\w+)-(\\d+).png");
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    auto fileNameM = fileNameReg.match(imageName);
+
+    if(!fileNameM.hasMatch())
+        return false; // Unknown character
+
+    int charId = nameToInt(fileNameM.captured(1));
+    int stateId = fileNameM.captured(2).toInt();
+#else
     if(!fileNameReg.exactMatch(imageName))
         return false; // Unknown character
 
     int charId = nameToInt(fileNameReg.cap(1));
     int stateId = fileNameReg.cap(2).toInt();
+#endif
 
     SanBaEiLevelFile lev;
 
@@ -539,12 +563,25 @@ bool CalibrationMain::importFrom38A(Calibration &dst, QString imageName, QString
 
 bool CalibrationMain::exportTo38A(Calibration &src, QString imageName, QString fileName)
 {
-    QRegExp fileNameReg("(\\w+)-(\\d+).png");
+    Q_QRegExp fileNameReg("(\\w+)-(\\d+).png");
+
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    auto fileNameM = fileNameReg.match(imageName);
+
+    if(!fileNameM.hasMatch())
+        return false; // Unknown character
+
+    int charId = nameToInt(fileNameM.captured(1));
+    int stateId = fileNameM.captured(2).toInt();
+#else
     if(!fileNameReg.exactMatch(imageName))
         return false; // Unknown character
 
     int charId = nameToInt(fileNameReg.cap(1));
     int stateId = fileNameReg.cap(2).toInt();
+#endif
+
     bool possibleCrash = false;
 
     SanBaEiLevelFile lev;
@@ -590,7 +627,7 @@ bool CalibrationMain::exportTo38A(Calibration &src, QString imageName, QString f
         int outOffsetX = (relDefFrame.offsetX - frame.offsetX) + 64;
         int outOffsetY = (relDefFrame.offsetY - frame.offsetY) + 64;
 
-        if(outOffsetX < 0 || outOffsetX > 127)
+        if((outOffsetX < 0) || (outOffsetX > 127))
             possibleCrash = true;
 
         outputLine += QString("|%1,%2,%3,%4")

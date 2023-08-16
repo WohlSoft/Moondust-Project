@@ -20,7 +20,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/lvl16.png</normaloff>:/lvl16.png</iconset>
+    <normaloff>:/toolbar/dock/level16.png</normaloff>:/toolbar/dock/level16.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="sizeConstraint">

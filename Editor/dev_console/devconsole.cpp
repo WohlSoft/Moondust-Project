@@ -55,7 +55,9 @@ void DevConsole::init()
 
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     settings.setIniCodec("UTF-8");
+#endif
 
     settings.beginGroup("dev-console");
     currentDevConsole->restoreGeometry(settings.value("geometry", currentDevConsole->saveGeometry()).toByteArray());
@@ -125,10 +127,11 @@ DevConsole::DevConsole(QWidget *parent) :
     LogWriter::installConsole(this);
 
 #ifdef Q_OS_MAC
-    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    this->setWindowIcon(QIcon(":/appicon/app.icns"));
 #endif
+
 #ifdef Q_OS_WIN
-    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+    this->setWindowIcon(QIcon(":/appicon/app.ico"));
 
     QFont font = ui->plainTextEdit->font();
     font.setFamily("Courier New");
@@ -150,7 +153,7 @@ DevConsole::DevConsole(QWidget *parent) :
         }
     }
 
-#   if QT_VERSION_CHECK(5, 5, 0)
+#   if QT_VERSION >= QT_VERSION_CHECK(5, 5, 0)
     if(QSysInfo::WindowsVersion >= QSysInfo::WV_WINDOWS10)
     {
         // Erase style sheet from here, it won't work correctly...
@@ -158,7 +161,9 @@ DevConsole::DevConsole(QWidget *parent) :
     }
 #   endif
 #endif
-    if(!hasFocus()) setWindowOpacity(0.9);
+
+    if(!hasFocus())
+        setWindowOpacity(0.9);
 }
 
 DevConsole::~DevConsole()
@@ -219,13 +224,13 @@ QPlainTextEdit *DevConsole::getCurrentEdit()
 
 void DevConsole::registerCommand(const QString &commandName, DevConsole::command cmd, const QString &helpText)
 {
-    commands[commandName.toLower()] = qMakePair<command, QString>(cmd, helpText);
+    commands[commandName.toLower()] = qMakePair<command, QString>((command)cmd, (QString)helpText);
 }
 
 void DevConsole::registerCommand(const std::initializer_list<QString> &commandNames, DevConsole::command cmd, const QString &helpText)
 {
     for(const QString &tarCmd : commandNames)
-        commands[tarCmd.toLower()] = qMakePair<command, QString>(cmd, helpText);
+        commands[tarCmd.toLower()] = qMakePair<command, QString>((command)cmd, (QString)helpText);
 }
 
 void DevConsole::on_button_clearAllLogs_clicked()
@@ -246,7 +251,9 @@ void DevConsole::closeEvent(QCloseEvent *event)
 {
     QString iniFile = AppPathManager::settingsFile();
     QSettings settings(iniFile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     settings.setIniCodec("UTF-8");
+#endif
 
     settings.beginGroup("dev-console");
     settings.setValue("geometry", this->saveGeometry());

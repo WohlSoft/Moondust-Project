@@ -2,7 +2,11 @@
 #include "ui_echo_tune.h"
 #include <QSettings>
 #include <QTimer>
-#include <QRegExp>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#   include <QRegExp>
+#else
+#   include <QRegularExpression>
+#endif
 #include <QClipboard>
 #include <QFileDialog>
 #include <QDragEnterEvent>
@@ -426,9 +430,16 @@ void EchoTune::on_copySetup_clicked()
 
 static void textToReg(const QString &text, const QString &expr, int reg)
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QRegExp regex(expr);
-    if(regex.indexIn(text))
+    if(regex.indexIn(text) >= 0)
         PGE_MusicPlayer::echoSetReg(reg, regex.cap(1).toInt());
+#else
+    QRegularExpression regex(expr);
+    QRegularExpressionMatch m = regex.match(text);
+    if(m.capturedStart(1) >= 0)
+        PGE_MusicPlayer::echoSetReg(reg, m.captured(1).toInt());
+#endif
 }
 
 void EchoTune::on_pasteSetup_clicked()

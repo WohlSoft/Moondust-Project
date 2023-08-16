@@ -157,10 +157,11 @@ void LVL_ModeFill::attemptFlood(LvlScene *l_scene)
         QList<CoorPair> blackList; //items which don't pass the test anymore
         QList<CoorPair> nextList; //items to be checked next
         nextList << qMakePair<qreal, qreal>(l_scene->m_cursorItemImg->x(), l_scene->m_cursorItemImg->y());
+
         while(true)
         {
             QList<CoorPair> newList; //items to be checked next in the next loop
-            foreach(CoorPair coor, nextList)
+            for(const CoorPair &coor : nextList)
             {
                 if(blackList.contains(coor)) //don't check block in blacklist
                     continue;
@@ -181,6 +182,7 @@ void LVL_ModeFill::attemptFlood(LvlScene *l_scene)
                             continue;
                         }
                     }
+
                     //place block if collision test
                     LvlPlacingItems::blockSet.x = coor.first;
                     LvlPlacingItems::blockSet.y = coor.second;
@@ -192,11 +194,12 @@ void LVL_ModeFill::attemptFlood(LvlScene *l_scene)
                     l_scene->placeBlock(LvlPlacingItems::blockSet, true);
                     historyBuffer.blocks.push_back(LvlPlacingItems::blockSet);
                     //expand on all sides
-                    newList << qMakePair<qreal, qreal>(coor.first - LvlPlacingItems::blockSet.w, coor.second);
-                    newList << qMakePair<qreal, qreal>(coor.first, coor.second - LvlPlacingItems::blockSet.h);
-                    newList << qMakePair<qreal, qreal>(coor.first, coor.second + LvlPlacingItems::blockSet.h);
-                    newList << qMakePair<qreal, qreal>(coor.first + LvlPlacingItems::blockSet.w, coor.second);
+                    newList << qMakePair<qreal, qreal>(coor.first - LvlPlacingItems::blockSet.w, (qreal)coor.second);
+                    newList << qMakePair<qreal, qreal>((qreal)coor.first, coor.second - LvlPlacingItems::blockSet.h);
+                    newList << qMakePair<qreal, qreal>((qreal)coor.first, coor.second + LvlPlacingItems::blockSet.h);
+                    newList << qMakePair<qreal, qreal>(coor.first + LvlPlacingItems::blockSet.w, (qreal)coor.second);
                 }
+
                 blackList << coor; //add current item to black list as it passed the test.
             }
 
@@ -214,10 +217,12 @@ void LVL_ModeFill::attemptFlood(LvlScene *l_scene)
         QList<CoorPair> blackList; //items which don't pass the test anymore
         QList<CoorPair> nextList; //items to be checked next
         nextList << qMakePair<qreal, qreal>(l_scene->m_cursorItemImg->x(), l_scene->m_cursorItemImg->y());
+
         while(true)
         {
             QList<CoorPair> newList; //items to be checked next in the next loop
-            foreach(CoorPair coor, nextList)
+
+            for(const CoorPair &coor : nextList)
             {
                 if(blackList.contains(coor)) //don't check block in blacklist
                     continue;
@@ -246,11 +251,12 @@ void LVL_ModeFill::attemptFlood(LvlScene *l_scene)
                     l_scene->placeBGO(LvlPlacingItems::bgoSet);
                     historyBuffer.bgo.push_back(LvlPlacingItems::bgoSet);
                     //expand on all sides
-                    newList << qMakePair<qreal, qreal>(coor.first - LvlPlacingItems::itemW, coor.second);
-                    newList << qMakePair<qreal, qreal>(coor.first, coor.second - LvlPlacingItems::itemH);
-                    newList << qMakePair<qreal, qreal>(coor.first, coor.second + LvlPlacingItems::itemH);
-                    newList << qMakePair<qreal, qreal>(coor.first + LvlPlacingItems::itemW, coor.second);
+                    newList << qMakePair<qreal, qreal>(coor.first - LvlPlacingItems::itemW, (qreal)coor.second);
+                    newList << qMakePair<qreal, qreal>((qreal)coor.first, coor.second - LvlPlacingItems::itemH);
+                    newList << qMakePair<qreal, qreal>((qreal)coor.first, coor.second + LvlPlacingItems::itemH);
+                    newList << qMakePair<qreal, qreal>(coor.first + LvlPlacingItems::itemW, (qreal)coor.second);
                 }
+
                 blackList << coor; //add current item to black list as it passed the test.
             }
 

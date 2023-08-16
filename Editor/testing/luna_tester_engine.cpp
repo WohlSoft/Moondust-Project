@@ -640,10 +640,12 @@ bool LunaTesterEngine::writeToIPC(const QJsonDocument &out)
     QByteArray outputJSON = out.toJson();
     auto len = static_cast<size_t>(outputJSON.size());
 
-    QByteArray outData;
-    outData.append(QString::number(len)  + ":");
-    outData.append(outputJSON);
-    outData.push_back(',');
+    QString outDataS;
+    outDataS.append(QString::number(len)  + ":");
+    outDataS.append(outputJSON);
+    outDataS.push_back(',');
+
+    QByteArray outData = outDataS.toUtf8();
 
     auto ret = m_lunaGameIPC.write(outData);
     return (ret == qint64(outData.size()));
@@ -1008,7 +1010,7 @@ void LunaTesterEngine::killEngine()
 
         QEventLoop loop;
         QTimer waiter;
-        QObject::connect(&m_lunaGameIPC, static_cast<void (QProcess::*)(int)>(&QProcess::finished),
+        QObject::connect(&m_lunaGameIPC, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
                          &loop, &QEventLoop::quit);
         QObject::connect(&waiter, &QTimer::timeout,
                          &loop, &QEventLoop::quit);
@@ -1564,7 +1566,9 @@ bool LunaTesterEngine::verifyCompatibility()
 void LunaTesterEngine::loadSetup()
 {
     QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     settings.setIniCodec("UTF-8");
+#endif
 
     settings.beginGroup("LunaTester");
     {
@@ -1585,7 +1589,9 @@ void LunaTesterEngine::loadSetup()
 void LunaTesterEngine::saveSetup()
 {
     QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     settings.setIniCodec("UTF-8");
+#endif
 
     settings.beginGroup("LunaTester");
     {
@@ -1810,7 +1816,9 @@ bool LunaTesterEngine::doTestWorldFile(const QString &worldFile)
 
         SETTINGS_TestSettings  t = GlobalSettings::testing;
         QSettings autostartINI(autoStart, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         autostartINI.setIniCodec("UTF-8");
+#endif
 
         autostartINI.beginGroup("autostart");
         autostartINI.setValue("do-autostart", true);

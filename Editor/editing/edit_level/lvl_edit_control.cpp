@@ -97,12 +97,26 @@ void LevelEdit::setZoom(int percent)
         static_cast<GraphicsWorkspace *>(ui->graphicsView)->setZoom(qreal(percent) / 100.0);
 }
 
-int LevelEdit::getZoom()
+int LevelEdit::getZoom() const
 {
     if(QString(ui->graphicsView->metaObject()->className()) == "GraphicsWorkspace")
         return qRound(static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom() * 100.0);
     else
         return 100;
+}
+
+void LevelEdit::setZoomF(qreal percent)
+{
+    if(QString(ui->graphicsView->metaObject()->className()) == "GraphicsWorkspace")
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->setZoom(percent);
+}
+
+qreal LevelEdit::getZoomF() const
+{
+    if(QString(ui->graphicsView->metaObject()->className()) == "GraphicsWorkspace")
+        return static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
+    else
+        return 1.0;
 }
 
 

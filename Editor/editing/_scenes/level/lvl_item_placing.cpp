@@ -770,7 +770,7 @@ void LvlScene::setLabelBoxItem(bool show, QPointF pos, QString text)
 
         QFont font;
         font.setFamily("Times");
-        font.setWeight(99);
+        font.setWeight(QFont::Black);
         font.setPointSize(25);
         m_labelBox = new QGraphicsSimpleTextItem(text);
         m_labelBox->setPen(QPen(QBrush(Qt::black), 2));

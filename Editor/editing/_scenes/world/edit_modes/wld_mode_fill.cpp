@@ -151,10 +151,12 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
         QList<CoorPair> blackList; //items which don't pass the test anymore
         QList<CoorPair> nextList; //items to be checked next
         nextList << qMakePair<qreal, qreal>(scene->m_cursorItemImg->x(), scene->m_cursorItemImg->y());
+
         while(true)
         {
             QList<CoorPair> newList; //items to be checked next in the next loop
-            foreach(CoorPair coor, nextList)
+
+            for(const CoorPair &coor : nextList)
             {
                 if(blackList.contains(coor)) //don't check block in blacklist
                     continue;
@@ -175,11 +177,12 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     historyBuffer.tiles.push_back(WldPlacingItems::terrainSet);
 
                     //expand on all sides
-                    newList << qMakePair<qreal, qreal>(coor.first - WldPlacingItems::itemW, coor.second);
-                    newList << qMakePair<qreal, qreal>(coor.first, coor.second - WldPlacingItems::itemH);
-                    newList << qMakePair<qreal, qreal>(coor.first, coor.second + WldPlacingItems::itemH);
-                    newList << qMakePair<qreal, qreal>(coor.first + WldPlacingItems::itemW, coor.second);
+                    newList << qMakePair<qreal, qreal>(coor.first - WldPlacingItems::itemW, (qreal)coor.second);
+                    newList << qMakePair<qreal, qreal>((qreal)coor.first, coor.second - WldPlacingItems::itemH);
+                    newList << qMakePair<qreal, qreal>((qreal)coor.first, coor.second + WldPlacingItems::itemH);
+                    newList << qMakePair<qreal, qreal>(coor.first + WldPlacingItems::itemW, (qreal)coor.second);
                 }
+
                 blackList << coor; //add current item to black list as it passed the test.
             }
 
@@ -197,10 +200,12 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
         QList<CoorPair> blackList; //items which don't pass the test anymore
         QList<CoorPair> nextList; //items to be checked next
         nextList << qMakePair<qreal, qreal>(scene->m_cursorItemImg->x(), scene->m_cursorItemImg->y());
+
         while(true)
         {
             QList<CoorPair> newList; //items to be checked next in the next loop
-            foreach(CoorPair coor, nextList)
+
+            for(const CoorPair &coor : nextList)
             {
                 if(blackList.contains(coor)) //don't check block in blacklist
                     continue;
@@ -221,11 +226,12 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     historyBuffer.scenery.push_back(WldPlacingItems::sceneSet);
 
                     //expand on all sides
-                    newList << qMakePair<qreal, qreal>(coor.first - WldPlacingItems::itemW, coor.second);
-                    newList << qMakePair<qreal, qreal>(coor.first, coor.second - WldPlacingItems::itemH);
-                    newList << qMakePair<qreal, qreal>(coor.first, coor.second + WldPlacingItems::itemH);
-                    newList << qMakePair<qreal, qreal>(coor.first + WldPlacingItems::itemW, coor.second);
+                    newList << qMakePair<qreal, qreal>(coor.first - WldPlacingItems::itemW, (qreal)coor.second);
+                    newList << qMakePair<qreal, qreal>((qreal)coor.first, coor.second - WldPlacingItems::itemH);
+                    newList << qMakePair<qreal, qreal>((qreal)coor.first, coor.second + WldPlacingItems::itemH);
+                    newList << qMakePair<qreal, qreal>(coor.first + WldPlacingItems::itemW, (qreal)coor.second);
                 }
+
                 blackList << coor; //add current item to black list as it passed the test.
             }
 
@@ -243,10 +249,12 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
         QList<CoorPair> blackList; //items which don't pass the test anymore
         QList<CoorPair> nextList; //items to be checked next
         nextList << qMakePair<qreal, qreal>(scene->m_cursorItemImg->x(), scene->m_cursorItemImg->y());
+
         while(true)
         {
             QList<CoorPair> newList; //items to be checked next in the next loop
-            foreach(CoorPair coor, nextList)
+
+            for(const CoorPair &coor : nextList)
             {
                 if(blackList.contains(coor)) //don't check block in blacklist
                     continue;
@@ -267,11 +275,12 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     historyBuffer.paths.push_back(WldPlacingItems::pathSet);
 
                     //expand on all sides
-                    newList << qMakePair<qreal, qreal>(coor.first - WldPlacingItems::itemW, coor.second);
-                    newList << qMakePair<qreal, qreal>(coor.first, coor.second - WldPlacingItems::itemH);
-                    newList << qMakePair<qreal, qreal>(coor.first, coor.second + WldPlacingItems::itemH);
-                    newList << qMakePair<qreal, qreal>(coor.first + WldPlacingItems::itemW, coor.second);
+                    newList << qMakePair<qreal, qreal>(coor.first - WldPlacingItems::itemW, (qreal)coor.second);
+                    newList << qMakePair<qreal, qreal>((qreal)coor.first, coor.second - WldPlacingItems::itemH);
+                    newList << qMakePair<qreal, qreal>((qreal)coor.first, coor.second + WldPlacingItems::itemH);
+                    newList << qMakePair<qreal, qreal>(coor.first + WldPlacingItems::itemW, (qreal)coor.second);
                 }
+
                 blackList << coor; //add current item to black list as it passed the test.
             }
 
@@ -289,10 +298,12 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
         QList<CoorPair> blackList; //items which don't pass the test anymore
         QList<CoorPair> nextList; //items to be checked next
         nextList << qMakePair<qreal, qreal>(scene->m_cursorItemImg->x(), scene->m_cursorItemImg->y());
+
         while(true)
         {
             QList<CoorPair> newList; //items to be checked next in the next loop
-            foreach(CoorPair coor, nextList)
+
+            for(const CoorPair &coor : nextList)
             {
                 if(blackList.contains(coor)) //don't check block in blacklist
                     continue;
@@ -313,11 +324,12 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     historyBuffer.levels.push_back(WldPlacingItems::levelSet);
 
                     //expand on all sides
-                    newList << qMakePair<qreal, qreal>(coor.first - WldPlacingItems::itemW, coor.second);
-                    newList << qMakePair<qreal, qreal>(coor.first, coor.second - WldPlacingItems::itemH);
-                    newList << qMakePair<qreal, qreal>(coor.first, coor.second + WldPlacingItems::itemH);
-                    newList << qMakePair<qreal, qreal>(coor.first + WldPlacingItems::itemW, coor.second);
+                    newList << qMakePair<qreal, qreal>(coor.first - WldPlacingItems::itemW, (qreal)coor.second);
+                    newList << qMakePair<qreal, qreal>((qreal)coor.first, coor.second - WldPlacingItems::itemH);
+                    newList << qMakePair<qreal, qreal>((qreal)coor.first, coor.second + WldPlacingItems::itemH);
+                    newList << qMakePair<qreal, qreal>(coor.first + WldPlacingItems::itemW, (qreal)coor.second);
                 }
+
                 blackList << coor; //add current item to black list as it passed the test.
             }
 

@@ -37,14 +37,35 @@
 // //////////////////////////////////////////////EVENTS START/////////////////////////////////////////////////
 void LvlScene::keyPressEvent(QKeyEvent *keyEvent)
 {
-    if(m_editModeObj) m_editModeObj->keyPress(keyEvent);
+    if(m_editModeObj)
+        m_editModeObj->keyPress(keyEvent);
+
     QGraphicsScene::keyPressEvent(keyEvent);
+
+    if(keyEvent->key() == Qt::Key_Control)
+        m_keyCtrlPressed = true;
 }
 
 void LvlScene::keyReleaseEvent(QKeyEvent *keyEvent)
 {
-    if(m_editModeObj) m_editModeObj->keyRelease(keyEvent);
+    if(m_editModeObj)
+        m_editModeObj->keyRelease(keyEvent);
+
     QGraphicsScene::keyReleaseEvent(keyEvent);
+
+    if(keyEvent->key() == Qt::Key_Control)
+        m_keyCtrlPressed = false;
+}
+
+void LvlScene::focusInEvent(QFocusEvent *)
+{
+    m_keyCtrlPressed = (QApplication::queryKeyboardModifiers() & Qt::KeyboardModifier::ControlModifier) != 0;
+}
+
+void LvlScene::focusOutEvent(QFocusEvent *)
+{
+    // Reset everything to avoid possible mess
+    m_keyCtrlPressed = false;
 }
 
 

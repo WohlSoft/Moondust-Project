@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDesktopWidget>
 #include <QStandardPaths>
 
 #include <common_features/app_path.h>
@@ -77,7 +76,9 @@ void WorldEdit::ExportingReady() //slot
     bool cameraGridWasShown = false;
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     settings.setIniCodec("UTF-8");
+#endif
 
     settings.beginGroup("Main");
     latest_export_path = settings.value("export-path", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)).toString();

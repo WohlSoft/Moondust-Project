@@ -284,14 +284,23 @@ void EpisodeConverter::on_DoMadJob_clicked()
     m_worker.setBackup(ui->makeBacup->isChecked());
     emit setLocked(true);
 
-    QEventLoop loop;
+    // QEventLoop loop;
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     m_process = QtConcurrent::run<bool>(&m_worker,
                                         &EpisodeConverterWorker::initJob,
                                         ui->episodePath->text(),
                                         ui->lookForSubDirs->isChecked(),
                                         ui->targetFormat->currentIndex(),
                                         ui->targetFormatVer->value());
+#else
+    m_process = QtConcurrent::run(&EpisodeConverterWorker::initJob,
+                                  &m_worker,
+                                  ui->episodePath->text(),
+                                  ui->lookForSubDirs->isChecked(),
+                                  ui->targetFormat->currentIndex(),
+                                  ui->targetFormatVer->value());
+#endif
 
     while(m_process.isRunning())
     {
@@ -307,7 +316,12 @@ void EpisodeConverter::on_DoMadJob_clicked()
         return;
     }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     m_process = QtConcurrent::run<bool>(&m_worker, &EpisodeConverterWorker::runJob);
+#else
+    m_process = QtConcurrent::run(&EpisodeConverterWorker::runJob, &m_worker);
+#endif
+
     m_progressWatcher.start(100);
 }
 

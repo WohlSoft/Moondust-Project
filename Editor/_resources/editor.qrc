@@ -1,229 +1,76 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/new.png</file>
-        <file>images/open.png</file>
-        <file>images/save.png</file>
-        <file>images/saveas.png</file>
-        <file>images/mushroom.png</file>
-        <file>images/arrow.png</file>
-        <file>images/rubber.png</file>
-        <file>images/level.png</file>
-        <file>images/world.png</file>
-        <file>images/section.png</file>
-        <file>images/warp_exit.png</file>
-        <file>images/warp_entrance.png</file>
-        <file alias="lvl16.png">images/level16.png</file>
-        <file>images/mushroom16.png</file>
-        <file>images/section16.png</file>
-        <file>images/world16.png</file>
-        <file>images/coin.png</file>
-        <file>images/grid_snap.png</file>
-        <file>images/show_grid.png</file>
-        <file>images/camera_grid.png</file>
-        <file>images/reset_pos.png</file>
-        <file alias="locks/bgo_cl.png">images/lock_bgo_cl.png</file>
-        <file alias="locks/bgo_op.png">images/lock_bgo_op.png</file>
-        <file alias="locks/block_cl.png">images/lock_block_cl.png</file>
-        <file alias="locks/block_op.png">images/lock_block_op.png</file>
-        <file alias="locks/door_cl.png">images/lock_door_cl.png</file>
-        <file alias="locks/door_op.png">images/lock_door_op.png</file>
-        <file alias="locks/npc_cl.png">images/lock_npc_cl.png</file>
-        <file alias="locks/npc_op.png">images/lock_npc_op.png</file>
-        <file alias="locks/water_cl.png">images/lock_water_cl.png</file>
-        <file alias="locks/water_op.png">images/lock_water_op.png</file>
-        <file>images/player1_start.png</file>
-        <file>images/player2_start.png</file>
-        <file>images/playmusic.png</file>
-        <file alias="reload.png">images/reload_data.png</file>
-        <file alias="cur_rubber.png">images/cur_rubber.png</file>
-        <file alias="hand.png">images/hand.png</file>
-        <file alias="player1.png">images/player1_point.png</file>
-        <file alias="player2.png">images/player2_point.png</file>
-        <file alias="cur_pasta.png">images/cur_pasta.png</file>
-        <file alias="drawQuickSand.png">images/draw_sand.png</file>
-        <file alias="drawWater.png">images/draw_water.png</file>
-        <file alias="doors.png">images/doors.png</file>
-        <file alias="layers.png">images/layers.png</file>
-        <file alias="select_only.png">images/select_only.png</file>
-        <file>images/edit_copy.png</file>
-        <file>images/edit_cut.png</file>
-        <file>images/edit_paste.png</file>
-        <file>images/edit_redo.png</file>
-        <file>images/edit_undo.png</file>
-        <file alias="npc/proj.png">images/generator_proj.png</file>
-        <file alias="npc/warp.png">images/generator_warp.png</file>
-        <file>images/events.png</file>
-        <file>images/conf_bad.png</file>
-        <file>images/conf_good.png</file>
-        <file>images/conf_warn.png</file>
-        <file>images/splash_editor.png</file>
-        <file>images/animation.png</file>
-        <file>images/search.png</file>
-        <file>images/cat/cat_16.png</file>
-        <file>images/cat/cat_32.png</file>
-        <file>images/cat/cat_48.png</file>
-        <file>images/cat/cat_128.png</file>
-        <file>images/cat/cat_256.png</file>
-        <file>PressStart2P.ttf</file>
-        <file>images/lock_tile_cl.png</file>
-        <file>images/lock_musicbox_op.png</file>
-        <file>images/lock_musicbox_cl.png</file>
-        <file>images/lock_levels_op.png</file>
-        <file>images/lock_levels_cl.png</file>
-        <file>images/lock_paths_op.png</file>
-        <file>images/lock_paths_cl.png</file>
-        <file>images/lock_scenery_op.png</file>
-        <file>images/lock_scenery_cl.png</file>
-        <file>images/lock_tile_op.png</file>
-        <file>images/overwrite.png</file>
-        <file>images/square_fill.png</file>
-        <file>images/resize_cancel.png</file>
-        <file>images/resize_accept.png</file>
-        <file>images/line_fill.png</file>
-        <file>images/set_point.png</file>
-        <file>cat_builder.icns</file>
-        <file>cat_builder.ico</file>
-        <file>images/cat_builder/cat_builder_16.png</file>
-        <file>images/cat_builder/cat_builder_32.png</file>
-        <file>images/cat_builder/cat_builder_48.png</file>
-        <file>images/cat_builder/cat_builder_128.png</file>
-        <file>images/cat_builder/cat_builder_256.png</file>
-        <file>images/zoom_in.png</file>
-        <file>images/zoom_out.png</file>
-        <file>images/zoom_reset.png</file>
-        <file>images/external_tools/cat_gif2png_128.png</file>
-        <file>images/external_tools/cat_glasses_128.png</file>
-        <file>images/external_tools/cat_png2gif_128.png</file>
-        <file alias="fonts/degits.png">images/font_degits.png</file>
-        <file>images/bug.png</file>
-        <file>images/pencil_16x16.png</file>
-        <file>images/copy_16x16.png</file>
-        <file alias="player.png">images/player_point.png</file>
-        <file>images/cat_beaten/cat_beaten_128.png</file>
-        <file>images/cur_flood_fill.png</file>
-        <file>images/flood_fill.png</file>
-        <file>images/properties.png</file>
-        <file>images/bookmarks.png</file>
-        <file>images/tileset_box.png</file>
-        <file>images/lock_open.png</file>
-        <file>images/lock_closed.png</file>
-        <file>warn.png</file>
-        <file>question.png</file>
-        <file>images/goto_left_bottom.png</file>
-        <file>images/goto_left_top.png</file>
-        <file>images/cat_builder/cat_builder_256_logo.png</file>
-        <file>images/cat_builder/cat_builder_128_logo.png</file>
         <file>credits.html</file>
-        <file>images/circle_fill.png</file>
-        <file>images/goto_right_bottom.png</file>
-        <file>images/goto_top_right.png</file>
-        <file>lunalua.ico</file>
-        <file>contributors/Bossedit8.png</file>
-        <file>contributors/DarkoniusMavakar.png</file>
-        <file>contributors/h2643.png</file>
-        <file>contributors/HorikawaOtane.png</file>
-        <file>contributors/Kevsoft.png</file>
-        <file>contributors/Marina.png</file>
-        <file>contributors/SquishyRex.png</file>
-        <file>contributors/Valtteri.png</file>
-        <file>contributors/Wohlstand.png</file>
-        <file>contributors/Enjl.png</file>
-        <file>lunalua/templates/lunadll.lua</file>
-        <file>lunalua/templates/lunaoverworld.lua</file>
-        <file>lunalua/templates/lunaworld.lua</file>
-        <file>pge_newui.png</file>
-        <file>pge_oldui.png</file>
-        <file>lunalua/lunalua_16.png</file>
-        <file>contributors/AndrewPixel.png</file>
-        <file>images/wrench_16x16.png</file>
-        <file>images/item_browser_level.png</file>
-        <file>images/item_browser_world.png</file>
-        <file>images/musicboxes.png</file>
-        <file>images/38a.ico</file>
-        <file>contributors/Tails608.png</file>
-        <file>contributors/FunnyCat.png</file>
-        <file>images/camera_grid_dark.png</file>
-        <file>images/grid_snap_dark.png</file>
-        <file>images/playmusic_dark.png</file>
-        <file>images/show_grid_dark.png</file>
-        <file>images/warp_entrance_dark.png</file>
-        <file>images/warp_exit_dark.png</file>
-        <file>images/wrench_16x16_dark.png</file>
-        <file>images/goto_left_bottom_dark.png</file>
-        <file>images/goto_left_top_dark.png</file>
-        <file>images/goto_right_bottom_dark.png</file>
-        <file>images/goto_top_right_dark.png</file>
-        <file>contributors/_separator.png</file>
-        <file>contributors/_pix.png</file>
-        <file>contributors/_hele.png</file>
+        <file>images/set_point.png</file>
+        <file>images/splash_editor.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/00.png</file>
+        <file>sections/00_dark.png</file>
         <file>sections/00_n.png</file>
         <file>sections/01.png</file>
+        <file>sections/01_dark.png</file>
         <file>sections/01_n.png</file>
         <file>sections/02.png</file>
+        <file>sections/02_dark.png</file>
         <file>sections/02_n.png</file>
         <file>sections/03.png</file>
+        <file>sections/03_dark.png</file>
         <file>sections/03_n.png</file>
         <file>sections/04.png</file>
+        <file>sections/04_dark.png</file>
         <file>sections/04_n.png</file>
         <file>sections/05.png</file>
+        <file>sections/05_dark.png</file>
         <file>sections/05_n.png</file>
         <file>sections/06.png</file>
+        <file>sections/06_dark.png</file>
         <file>sections/06_n.png</file>
         <file>sections/07.png</file>
+        <file>sections/07_dark.png</file>
         <file>sections/07_n.png</file>
         <file>sections/08.png</file>
+        <file>sections/08_dark.png</file>
         <file>sections/08_n.png</file>
         <file>sections/09.png</file>
+        <file>sections/09_dark.png</file>
         <file>sections/09_n.png</file>
         <file>sections/10.png</file>
+        <file>sections/10_dark.png</file>
         <file>sections/10_n.png</file>
         <file>sections/11.png</file>
+        <file>sections/11_dark.png</file>
         <file>sections/11_n.png</file>
         <file>sections/12.png</file>
+        <file>sections/12_dark.png</file>
         <file>sections/12_n.png</file>
         <file>sections/13.png</file>
+        <file>sections/13_dark.png</file>
         <file>sections/13_n.png</file>
         <file>sections/14.png</file>
+        <file>sections/14_dark.png</file>
         <file>sections/14_n.png</file>
         <file>sections/15.png</file>
+        <file>sections/15_dark.png</file>
         <file>sections/15_n.png</file>
         <file>sections/16.png</file>
+        <file>sections/16_dark.png</file>
         <file>sections/16_n.png</file>
         <file>sections/17.png</file>
+        <file>sections/17_dark.png</file>
         <file>sections/17_n.png</file>
         <file>sections/18.png</file>
+        <file>sections/18_dark.png</file>
         <file>sections/18_n.png</file>
         <file>sections/19.png</file>
+        <file>sections/19_dark.png</file>
         <file>sections/19_n.png</file>
         <file>sections/20.png</file>
+        <file>sections/20_dark.png</file>
         <file>sections/20_n.png</file>
         <file>sections/21.png</file>
-        <file>sections/21_n.png</file>
-        <file>sections/00_dark.png</file>
-        <file>sections/01_dark.png</file>
-        <file>sections/02_dark.png</file>
-        <file>sections/03_dark.png</file>
-        <file>sections/04_dark.png</file>
-        <file>sections/05_dark.png</file>
-        <file>sections/06_dark.png</file>
-        <file>sections/07_dark.png</file>
-        <file>sections/08_dark.png</file>
-        <file>sections/09_dark.png</file>
-        <file>sections/10_dark.png</file>
-        <file>sections/11_dark.png</file>
-        <file>sections/12_dark.png</file>
-        <file>sections/13_dark.png</file>
-        <file>sections/14_dark.png</file>
-        <file>sections/15_dark.png</file>
-        <file>sections/16_dark.png</file>
-        <file>sections/17_dark.png</file>
-        <file>sections/18_dark.png</file>
-        <file>sections/19_dark.png</file>
-        <file>sections/20_dark.png</file>
         <file>sections/21_dark.png</file>
+        <file>sections/21_n.png</file>
     </qresource>
     <qresource prefix="/dummies">
         <file>dummies/dummy-bg.png</file>
@@ -250,33 +97,252 @@
         <file>arrows/red_left.png</file>
         <file>arrows/red_right.png</file>
         <file>arrows/red_up.png</file>
-        <file>images/warp_arrow_enter.png</file>
-        <file>images/warp_arrow_exit.png</file>
+        <file>arrows/warp_arrow_enter.png</file>
+        <file>arrows/warp_arrow_exit.png</file>
     </qresource>
     <qresource prefix="/_files">
-        <file>_files/pge-project-mimeinfo.xml</file>
         <file>_files/file_lvl/file_lvl_16.png</file>
+        <file>_files/file_lvl/file_lvl_256.png</file>
         <file>_files/file_lvl/file_lvl_32.png</file>
         <file>_files/file_lvl/file_lvl_48.png</file>
-        <file>_files/file_lvl/file_lvl_256.png</file>
         <file>_files/file_lvlx/file_lvlx_16.png</file>
+        <file>_files/file_lvlx/file_lvlx_256.png</file>
         <file>_files/file_lvlx/file_lvlx_32.png</file>
         <file>_files/file_lvlx/file_lvlx_48.png</file>
-        <file>_files/file_lvlx/file_lvlx_256.png</file>
         <file>_files/file_wld/file_wld_16.png</file>
+        <file>_files/file_wld/file_wld_256.png</file>
         <file>_files/file_wld/file_wld_32.png</file>
         <file>_files/file_wld/file_wld_48.png</file>
-        <file>_files/file_wld/file_wld_256.png</file>
         <file>_files/file_wldx/file_wldx_16.png</file>
+        <file>_files/file_wldx/file_wldx_256.png</file>
         <file>_files/file_wldx/file_wldx_32.png</file>
         <file>_files/file_wldx/file_wldx_48.png</file>
-        <file>_files/file_wldx/file_wldx_256.png</file>
+        <file>_files/pge-project-mimeinfo.xml</file>
         <file>_files/pge_editor.desktop</file>
     </qresource>
     <qresource prefix="/tips">
-        <file>tips/tips_en.html</file>
+        <file alias="tips_en.html">tips/tips_en.html</file>
+        <file alias="tips_ru.html">tips/tips_ru.html</file>
     </qresource>
     <qresource prefix="/plugin">
-        <file>plugin/main_boot.js</file>
+        <file alias="main_boot.js">plugin/main_boot.js</file>
+    </qresource>
+    <qresource prefix="/contributors">
+        <file alias="AndrewPixel.png">contributors/AndrewPixel.png</file>
+        <file alias="Bossedit8.png">contributors/Bossedit8.png</file>
+        <file alias="DarkoniusMavakar.png">contributors/DarkoniusMavakar.png</file>
+        <file alias="Enjl.png">contributors/Enjl.png</file>
+        <file alias="FunnyCat.png">contributors/FunnyCat.png</file>
+        <file alias="HorikawaOtane.png">contributors/HorikawaOtane.png</file>
+        <file alias="Kevsoft.png">contributors/Kevsoft.png</file>
+        <file alias="Marina.png">contributors/Marina.png</file>
+        <file alias="SquishyRex.png">contributors/SquishyRex.png</file>
+        <file alias="Tails608.png">contributors/Tails608.png</file>
+        <file alias="Valtteri.png">contributors/Valtteri.png</file>
+        <file alias="Wohlstand.png">contributors/Wohlstand.png</file>
+        <file alias="_hele.png">contributors/_hele.png</file>
+        <file alias="_pix.png">contributors/_pix.png</file>
+        <file alias="_separator.png">contributors/_separator.png</file>
+        <file alias="gravishdariusmarian.png">contributors/gravishdariusmarian.png</file>
+        <file alias="h2643.png">contributors/h2643.png</file>
+    </qresource>
+    <qresource prefix="/engines/thextech">
+        <file alias="128.png">engines/thextech/thextech_128.png</file>
+        <file alias="16.png">engines/thextech/thextech_16.png</file>
+        <file alias="256.png">engines/thextech/thextech_256.png</file>
+        <file alias="32.png">engines/thextech/thextech_32.png</file>
+        <file alias="48.png">engines/thextech/thextech_48.png</file>
+    </qresource>
+    <qresource prefix="/engines/moondust">
+        <file alias="128.png">engines/moondust/cat_128.png</file>
+        <file alias="16.png">engines/moondust/cat_16.png</file>
+        <file alias="256.png">engines/moondust/cat_256.png</file>
+        <file alias="32.png">engines/moondust/cat_32.png</file>
+        <file alias="48.png">engines/moondust/cat_48.png</file>
+    </qresource>
+    <qresource prefix="/engines/lunalua">
+        <file alias="16.png">engines/lunalua/lunalua_16.png</file>
+        <file alias="256.png">engines/lunalua/lunalua_256.png</file>
+        <file alias="32.png">engines/lunalua/lunalua_32.png</file>
+        <file alias="48.png">engines/lunalua/lunalua_48.png</file>
+    </qresource>
+    <qresource prefix="/engines/38a">
+        <file alias="38a.ico">engines/38a/38a.ico</file>
+        <file alias="16.png">engines/38a/38a_16.png</file>
+        <file alias="256.png">engines/38a/38a_256.png</file>
+        <file alias="32.png">engines/38a/38a_32.png</file>
+        <file alias="48.png">engines/38a/38a_48.png</file>
+    </qresource>
+    <qresource prefix="/engines/legacy">
+        <file alias="66.png">engines/legacy/legacy_16.png</file>
+        <file alias="77.png">engines/legacy/legacy_77.png</file>
+    </qresource>
+    <qresource prefix="/fonts">
+        <file alias="PressStart2P.ttf">fonts/PressStart2P.ttf</file>
+        <file alias="digits.png">fonts/font_digits.png</file>
+    </qresource>
+    <qresource prefix="/appicon">
+        <file alias="app.icns">appicon/cat_builder.icns</file>
+        <file alias="app.ico">appicon/cat_builder.ico</file>
+        <file alias="128.png">appicon/cat_builder_128.png</file>
+        <file alias="16.png">appicon/cat_builder_16.png</file>
+        <file alias="256.png">appicon/cat_builder_256.png</file>
+        <file alias="32.png">appicon/cat_builder_32.png</file>
+        <file alias="48.png">appicon/cat_builder_48.png</file>
+    </qresource>
+    <qresource prefix="/crashdialogue">
+        <file alias="128.png">crashdialogue/cat_beaten_128.png</file>
+    </qresource>
+    <qresource prefix="/introdialogue">
+        <file alias="ui_classic.png">introdialogue/ui_classic.png</file>
+        <file alias="ui_modern.png">introdialogue/ui_modern.png</file>
+    </qresource>
+    <qresource prefix="/dialogues">
+        <file alias="question.png">dialogues/question.png</file>
+        <file alias="warn.png">dialogues/warn.png</file>
+    </qresource>
+    <qresource prefix="/config_status">
+        <file alias="bad.png">config_status/conf_bad.png</file>
+        <file alias="good.png">config_status/conf_good.png</file>
+        <file alias="warn.png">config_status/conf_warn.png</file>
+    </qresource>
+    <qresource prefix="/lunalua">
+        <file alias="templates/luna_level.lua">lunalua/templates/luna_level.lua</file>
+        <file alias="templates/luna_level_all.lua">lunalua/templates/luna_level_all.lua</file>
+        <file alias="templates/luna_world_map.lua">lunalua/templates/luna_world_map.lua</file>
+    </qresource>
+    <qresource prefix="/npc">
+        <file alias="proj.png">npc/generator_proj.png</file>
+        <file alias="warp.png">npc/generator_warp.png</file>
+        <file alias="random_direction.png">npc/random_direction.png</file>
+    </qresource>
+    <qresource prefix="/players">
+        <file alias="point1.png">players/player1_point.png</file>
+        <file alias="point2.png">players/player2_point.png</file>
+        <file alias="point.png">players/player_point.png</file>
+    </qresource>
+    <qresource prefix="/cursors">
+        <file alias="flood_fill.png">cursors/flood_fill.png</file>
+        <file alias="pasta.png">cursors/pasta.png</file>
+        <file alias="rubber.png">cursors/rubber.png</file>
+    </qresource>
+    <qresource prefix="/toolbar/goto">
+        <file alias="left_bottom.png">toolbar/goto/left_bottom.png</file>
+        <file alias="left_bottom_dark.png">toolbar/goto/left_bottom_dark.png</file>
+        <file alias="left_top.png">toolbar/goto/left_top.png</file>
+        <file alias="left_top_dark.png">toolbar/goto/left_top_dark.png</file>
+        <file alias="right_bottom.png">toolbar/goto/right_bottom.png</file>
+        <file alias="right_bottom_dark.png">toolbar/goto/right_bottom_dark.png</file>
+        <file alias="start.png">toolbar/goto/start.png</file>
+        <file alias="top_right.png">toolbar/goto/top_right.png</file>
+        <file alias="top_right_dark.png">toolbar/goto/top_right_dark.png</file>
+    </qresource>
+    <qresource prefix="/toolbar/view">
+        <file alias="animation.png">toolbar/view/animation.png</file>
+        <file alias="camera_grid.png">toolbar/view/camera_grid.png</file>
+        <file alias="camera_grid_dark.png">toolbar/view/camera_grid_dark.png</file>
+        <file alias="show_grid.png">toolbar/view/show_grid.png</file>
+        <file alias="show_grid_dark.png">toolbar/view/show_grid_dark.png</file>
+        <file alias="zoom_in.png">toolbar/view/zoom_in.png</file>
+        <file alias="zoom_out.png">toolbar/view/zoom_out.png</file>
+        <file alias="zoom_reset.png">toolbar/view/zoom_reset.png</file>
+    </qresource>
+    <qresource prefix="/toolbar/place">
+        <file alias="fill_circle.png">toolbar/place/fill_circle.png</file>
+        <file alias="fill_flood.png">toolbar/place/fill_flood.png</file>
+        <file alias="fill_line.png">toolbar/place/fill_line.png</file>
+        <file alias="fill_rect.png">toolbar/place/fill_rect.png</file>
+        <file alias="overwrite.png">toolbar/place/overwrite.png</file>
+    </qresource>
+    <qresource prefix="/toolbar/file">
+        <file alias="new.png">toolbar/file/new.png</file>
+        <file alias="open.png">toolbar/file/open.png</file>
+        <file alias="reload.png">toolbar/file/reload.png</file>
+        <file alias="save.png">toolbar/file/save.png</file>
+        <file alias="save_as.png">toolbar/file/save_as.png</file>
+    </qresource>
+    <qresource prefix="/toolbar/locks">
+        <file alias="bg_cl.png">toolbar/lock/bgo_cl.png</file>
+        <file alias="bgo_op.png">toolbar/lock/bgo_op.png</file>
+        <file alias="block_cl.png">toolbar/lock/block_cl.png</file>
+        <file alias="block_op.png">toolbar/lock/block_op.png</file>
+        <file alias="door_cl.png">toolbar/lock/door_cl.png</file>
+        <file alias="door_op.png">toolbar/lock/door_op.png</file>
+        <file alias="levels_cl.png">toolbar/lock/levels_cl.png</file>
+        <file alias="levels_op.png">toolbar/lock/levels_op.png</file>
+        <file alias="closed.png">toolbar/lock/lock_closed.png</file>
+        <file alias="open.png">toolbar/lock/lock_open.png</file>
+        <file alias="musicbox_cl.png">toolbar/lock/musicbox_cl.png</file>
+        <file alias="musicbox_op.png">toolbar/lock/musicbox_op.png</file>
+        <file alias="npc_cl.png">toolbar/lock/npc_cl.png</file>
+        <file alias="npc_op.png">toolbar/lock/npc_op.png</file>
+        <file alias="paths_cl.png">toolbar/lock/paths_cl.png</file>
+        <file alias="paths_op.png">toolbar/lock/paths_op.png</file>
+        <file alias="scenery_cl.png">toolbar/lock/scenery_cl.png</file>
+        <file alias="scenery_op.png">toolbar/lock/scenery_op.png</file>
+        <file alias="tile_cl.png">toolbar/lock/tile_cl.png</file>
+        <file alias="tile_op.png">toolbar/lock/tile_op.png</file>
+        <file alias="water_cl.png">toolbar/lock/water_cl.png</file>
+        <file alias="water_op.png">toolbar/lock/water_op.png</file>
+    </qresource>
+    <qresource prefix="/toolbar/modes">
+        <file alias="accept.png">toolbar/modes/accept.png</file>
+        <file alias="cancel.png">toolbar/modes/cancel.png</file>
+        <file alias="drag.png">toolbar/modes/drag.png</file>
+        <file alias="draw_sand.png">toolbar/modes/draw_sand.png</file>
+        <file alias="draw_water.png">toolbar/modes/draw_water.png</file>
+        <file alias="erase.png">toolbar/modes/erase.png</file>
+        <file alias="player1_start.png">toolbar/modes/player1_start.png</file>
+        <file alias="player2_start.png">toolbar/modes/player2_start.png</file>
+        <file alias="select.png">toolbar/modes/select.png</file>
+        <file alias="select_only.png">toolbar/modes/select_only.png</file>
+    </qresource>
+    <qresource prefix="/toolbar/edit">
+        <file>toolbar/edit/copy.png</file>
+        <file>toolbar/edit/cut.png</file>
+        <file>toolbar/edit/grid_snap.png</file>
+        <file>toolbar/edit/grid_snap_dark.png</file>
+        <file>toolbar/edit/paste.png</file>
+        <file>toolbar/edit/redo.png</file>
+        <file>toolbar/edit/undo.png</file>
+    </qresource>
+    <qresource prefix="/dock">
+        <file alias="copy_16x16.png">dock/copy_16x16.png</file>
+        <file alias="pencil_16x16.png">dock/pencil_16x16.png</file>
+        <file alias="warp_entrance.png">dock/warp_entrance.png</file>
+        <file alias="warp_entrance_dark.png">dock/warp_entrance_dark.png</file>
+        <file alias="warp_exit.png">dock/warp_exit.png</file>
+        <file alias="warp_exit_dark.png">dock/warp_exit_dark.png</file>
+        <file alias="wrench_16x16.png">dock/wrench_16x16.png</file>
+        <file alias="wrench_16x16_dark.png">dock/wrench_16x16_dark.png</file>
+    </qresource>
+    <qresource prefix="/toolbar/dock">
+        <file alias="bookmarks.png">toolbar/dock/bookmarks.png</file>
+        <file alias="bug.png">toolbar/dock/bug.png</file>
+        <file alias="coin.png">toolbar/dock/coin.png</file>
+        <file alias="doors.png">toolbar/dock/doors.png</file>
+        <file alias="events.png">toolbar/dock/events.png</file>
+        <file alias="item_browser_level.png">toolbar/dock/item_browser_level.png</file>
+        <file alias="item_browser_world.png">toolbar/dock/item_browser_world.png</file>
+        <file alias="layers.png">toolbar/dock/layers.png</file>
+        <file alias="level.png">toolbar/dock/level.png</file>
+        <file alias="level16.png">toolbar/dock/level16.png</file>
+        <file alias="musicboxes.png">toolbar/dock/musicboxes.png</file>
+        <file alias="properties.png">toolbar/dock/properties.png</file>
+        <file alias="search.png">toolbar/dock/search.png</file>
+        <file alias="search_tiny.png">toolbar/dock/search_tiny.png</file>
+        <file alias="section.png">toolbar/dock/section.png</file>
+        <file alias="section16.png">toolbar/dock/section16.png</file>
+        <file alias="tileset_box.png">toolbar/dock/tileset_box.png</file>
+        <file alias="world.png">toolbar/dock/world.png</file>
+        <file alias="world16.png">toolbar/dock/world16.png</file>
+    </qresource>
+    <qresource prefix="/toolbar">
+        <file alias="playmusic.png">toolbar/playmusic.png</file>
+        <file alias="playmusic_dark.png">toolbar/playmusic_dark.png</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file alias="set_point.png">images/set_point.png</file>
+        <file alias="splash_editor.png">images/splash_editor.png</file>
     </qresource>
 </RCC>

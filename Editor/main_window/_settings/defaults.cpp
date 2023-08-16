@@ -17,7 +17,6 @@
  */
 
 #include <QFont>
-#include <QDesktopWidget>
 #include <QLineEdit>
 #include <QToolButton>
 #include <QCheckBox>
@@ -81,10 +80,10 @@ void MainWindow::setDefaults()
 void MainWindow::setUiDefults()
 {
 #ifdef Q_OS_MAC
-    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    this->setWindowIcon(QIcon(":/appicon/app.icns"));
 #endif
 #ifdef Q_OS_WIN
-    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+    this->setWindowIcon(QIcon(":/appicon/app.ico"));
 #endif
 
     //MainWindow Geometry;
@@ -186,6 +185,16 @@ void MainWindow::setUiDefults()
         ui->fileIoTooBar->insertWidget(ui->OpenFile, newAction);
     }
 
+    // Set nice icon on LunaLua menu
+    {
+        QIcon lunaIcon;
+        lunaIcon.addPixmap(QPixmap(":/engines/lunalua/16.png"));
+        lunaIcon.addPixmap(QPixmap(":/engines/lunalua/32.png"));
+        lunaIcon.addPixmap(QPixmap(":/engines/lunalua/48.png"));
+        lunaIcon.addPixmap(QPixmap(":/engines/lunalua/256.png"));
+        ui->menuLunaLUA_scripts->setIcon(lunaIcon);
+    }
+
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow *)), this, SLOT(updateMenus(QMdiSubWindow *)));
     //connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(recordSwitchedWindow(QMdiSubWindow*)));
     connect(this, &MainWindow::setSMBX64Strict, ui->actionCreateScriptLocal, &QAction::setDisabled);
@@ -206,7 +215,11 @@ void MainWindow::setUiDefults()
     ui->actionFloodSectionOnly->setEnabled(false);
 
     auto ziKey = QKeySequence::keyBindings(QKeySequence::ZoomIn);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     ziKey.append(QKeySequence(Qt::CTRL + Qt::Key_Equal));
+#else
+    ziKey.append(QKeySequence(QKeyCombination(Qt::CTRL, Qt::Key_Equal)));
+#endif
     ui->actionZoomIn->setShortcuts(ziKey);
     ui->actionZoomOut->setShortcuts(QKeySequence::ZoomOut);
 

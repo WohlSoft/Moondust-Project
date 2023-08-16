@@ -6,6 +6,7 @@
 #include <QHelpEvent>
 #include <QToolTip>
 #include <QStyleOptionFrame>
+#include <pge_qt_compat.h>
 
 
 /**
@@ -122,7 +123,9 @@ void DirectionSwitchWidget::mousePressEvent(QMouseEvent *e)
     if(e->button() != Qt::LeftButton)
         return;
 
-    Sides s = findSide(e->x(), e->y()); // Find the side under mouse cursor
+    QPoint pos = e->Q_EventPos();
+    Sides s = findSide(pos.x(), pos.y()); // Find the side under mouse cursor
+
     if(s != S_UNKNOWN) // If anything was found, press it!
     {
         m_pressSide = s;
@@ -133,7 +136,9 @@ void DirectionSwitchWidget::mousePressEvent(QMouseEvent *e)
 
 void DirectionSwitchWidget::mouseMoveEvent(QMouseEvent *e)
 {
-    Sides r = findSide(e->x(), e->y()); // Find the side under mouse cursor
+    QPoint pos = e->Q_EventPos();
+    Sides r = findSide(pos.x(), pos.y()); // Find the side under mouse cursor
+
     if(r != m_hoverSide) // If anything was found, highlight it!
     {
         m_hoverSide = r;
@@ -146,6 +151,8 @@ void DirectionSwitchWidget::mouseReleaseEvent(QMouseEvent *e)
 {
     if(e->button() != Qt::LeftButton)
         return;
+
+    QPoint pos = e->Q_EventPos();
 
     // The "Button pressed" event should happen once mouse was released together with hovering a target button
     // It's possible to "cancel" the pressing by moving mouse out of a button and releasing it
@@ -161,8 +168,9 @@ void DirectionSwitchWidget::mouseReleaseEvent(QMouseEvent *e)
             emit clicked(m_direction);
         }
     }
+
     m_pressSide = S_UNKNOWN; // Clear pressed state
-    m_hoverSide = findSide(e->x(), e->y()); // Keep hover side same
+    m_hoverSide = findSide(pos.x(), pos.y()); // Keep hover side same
     // Repaint widget
     update();
     repaint();

@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
+    <normaloff>:/toolbar/dock/level.png</normaloff>:/toolbar/dock/level.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="5" column="0" colspan="2">

@@ -12,7 +12,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/item_browser_level.png</normaloff>:/images/item_browser_level.png</iconset>
+    <normaloff>:/toolbar/dock/item_browser_level.png</normaloff>:/toolbar/dock/item_browser_level.png</iconset>
   </property>
   <property name="allowedAreas">
    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
@@ -184,7 +184,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../_resources/editor.qrc">
-         <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+         <normaloff>:/dock/wrench_16x16.png</normaloff>:/dock/wrench_16x16.png</iconset>
        </property>
        <property name="popupMode">
         <enum>QToolButton::InstantPopup</enum>
@@ -347,7 +347,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../_resources/editor.qrc">
-         <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+         <normaloff>:/dock/wrench_16x16.png</normaloff>:/dock/wrench_16x16.png</iconset>
        </property>
        <property name="popupMode">
         <enum>QToolButton::InstantPopup</enum>
@@ -507,7 +507,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../_resources/editor.qrc">
-         <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+         <normaloff>:/dock/wrench_16x16.png</normaloff>:/dock/wrench_16x16.png</iconset>
        </property>
        <property name="popupMode">
         <enum>QToolButton::InstantPopup</enum>

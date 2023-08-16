@@ -47,6 +47,15 @@ static const char *musicTypeC(Mix_Music *mus)
                "<Unknown>");
 }
 
+static QString timePosToString(double pos, const QString &format = "hh:mm:ss")
+{
+#if QT_VERSION >= QT_VERSION_CHECK(5, 8, 0)
+    return QDateTime::fromSecsSinceEpoch((uint)std::floor(pos), Qt::UTC).toString(format);
+#else
+    return QDateTime::fromTime_t((uint)std::floor(pos)).toUTC().toString(format);
+#endif
+}
+
 MultiMusicItem::MultiMusicItem(QString music, QWidget *parent) :
     QWidget(parent),
     m_curMusPath(music),
@@ -113,6 +122,7 @@ void MultiMusicItem::updatePositionSlider()
 
     const double pos = Mix_GetMusicPosition(m_curMus);
     m_positionWatcherLock = true;
+
     if(pos < 0.0)
     {
         m_seekBar->setEnabled(false);
@@ -121,8 +131,9 @@ void MultiMusicItem::updatePositionSlider()
     else
     {
         m_seekBar->setPosition(pos);
-        ui->playingTimeLabel->setText(QDateTime::fromTime_t((uint)std::floor(pos)).toUTC().toString("hh:mm:ss"));
+        ui->playingTimeLabel->setText(timePosToString(pos));
     }
+
     m_positionWatcherLock = false;
 }
 
@@ -141,7 +152,9 @@ void MultiMusicItem::closeMusic()
         m_seekBar->setPosition(0.0);
         m_seekBar->setEnabled(false);
     }
+
     ui->showMusicFX->setEnabled(false);
+
     if(m_musicFX)
     {
         m_musicFX->hide();
@@ -159,6 +172,7 @@ void MultiMusicItem::openMusic()
     m_curMus = Mix_LoadMUS_RW_ARG(SDL_RWFromFile(m_curMusPath.toUtf8().data(), "rb"),
                                   1,
                                   ui->pathArgs->text().toUtf8().data());
+
     if(!m_curMus)
         QMessageBox::warning(this, tr("Can't open music"), tr("Can't open music: %1").arg(Mix_GetError()));
     else
@@ -193,7 +207,7 @@ void MultiMusicItem::openMusic()
             m_seekBar->setLength(total);
             m_seekBar->setPosition(0.0);
             m_seekBar->setLoopPoints(loopStart, loopEnd);
-            ui->playingTimeLenghtLabel->setText(QDateTime::fromTime_t((uint)std::floor(total)).toUTC().toString("/ hh:mm:ss"));
+            ui->playingTimeLenghtLabel->setText(timePosToString(total, "/ hh:mm:ss"));
             m_positionWatcher.start(128);
         }
 
@@ -304,7 +318,7 @@ void MultiMusicItem::musicPosition_seeked(double value)
     if(Mix_PlayingMusicStream(m_curMus))
     {
         Mix_SetMusicPositionStream(m_curMus, value);
-        ui->playingTimeLabel->setText(QDateTime::fromTime_t((uint)value).toUTC().toString("hh:mm:ss"));
+        ui->playingTimeLabel->setText(timePosToString(value));
     }
 }
 

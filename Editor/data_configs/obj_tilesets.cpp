@@ -34,7 +34,9 @@ void DataConfig::loadTilesets()
 
     QSet<QString> tilesetCategoryNames;
     QSettings categories(tilesetGrpDirPath + "/categories.ini", QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     categories.setIniCodec("UTF-8");
+#endif
 
     if(QDir(tilesetDirPath).exists())
     {

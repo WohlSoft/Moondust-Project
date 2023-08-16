@@ -18,6 +18,7 @@
 
 #include <QIcon>
 #include <functional>
+#include <algorithm>
 
 #include <QLineEdit>
 #include <QListView>
@@ -501,8 +502,8 @@ void ItemBoxListModel::updateFilter()
         if(insertNeed)
         {
             beginInsertRows(QModelIndex(),
-                            std::max(m_elementsVisibleMap.size(), 0),
-                            std::max(m_elements.size() - 1, 0));
+                            std::max((int)m_elementsVisibleMap.size(), 0),
+                            std::max((int)m_elements.size() - 1, 0));
         }
 
         updateVisibilityMap();

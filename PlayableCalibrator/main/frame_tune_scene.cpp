@@ -4,6 +4,7 @@
 #include <QKeyEvent>
 #include <QtDebug>
 #include <cmath>
+#include <pge_qt_compat.h>
 
 
 class DrawTool : public QObject
@@ -17,7 +18,7 @@ public:
         QObject(parent),
         m_image(image),
         m_self(parent)
-    {};
+    {}
 
     virtual ~DrawTool() {}
 
@@ -46,7 +47,7 @@ class DrawToolPencil : public DrawTool
 public:
     explicit DrawToolPencil(QImage *image, FrameTuneScene *parent = 0) :
         DrawTool(image, parent)
-    {};
+    {}
 
     virtual bool mousePress(const QPoint &p)
     {
@@ -1034,12 +1035,12 @@ void FrameTuneScene::mousePressEvent(QMouseEvent *event)
     }
 
     pressed = true;
-    prevPos = event->localPos() / m_zoom;
+    prevPos = event->Q_EventLocalPos() / m_zoom;
     button = event->button();
 
     if(button == Qt::LeftButton && m_mode != MODE_NONE)
     {
-        if(m_curTool->mousePress(mapToImg(event->localPos())))
+        if(m_curTool->mousePress(mapToImg(event->Q_EventLocalPos())))
             repaint();
     }
 
@@ -1057,7 +1058,7 @@ void FrameTuneScene::mouseMoveEvent(QMouseEvent *event)
         return;
     }
 
-    auto p = event->localPos() / m_zoom;
+    auto p = event->Q_EventLocalPos() / m_zoom;
     auto &so = curScrollOffset();
     int dX = 0, dY = 0;
 
@@ -1075,7 +1076,7 @@ void FrameTuneScene::mouseMoveEvent(QMouseEvent *event)
 
     if(dX != 0 || dY != 0)
     {
-        if(button == Qt::MidButton && scrollPossible())
+        if(button == Qt::MiddleButton && scrollPossible())
         {
             so.setX(so.x() + dX);
             so.setY(so.y() + dY);
@@ -1083,7 +1084,7 @@ void FrameTuneScene::mouseMoveEvent(QMouseEvent *event)
         }
         else if(button == Qt::LeftButton && m_mode != MODE_NONE)
         {
-            if(m_curTool->mouseMove(mapToImg(event->localPos()), QPoint(dX, dY)))
+            if(m_curTool->mouseMove(mapToImg(event->Q_EventLocalPos()), QPoint(dX, dY)))
                 repaint();
         }
         else
@@ -1097,7 +1098,7 @@ void FrameTuneScene::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton && m_mode != MODE_NONE)
     {
-        if(m_curTool->mouseDoubleClick(mapToImg(event->localPos())))
+        if(m_curTool->mouseDoubleClick(mapToImg(event->Q_EventLocalPos())))
             repaint();
     }
 
@@ -1114,7 +1115,7 @@ void FrameTuneScene::mouseReleaseEvent(QMouseEvent *event)
 
     if(button == Qt::LeftButton && m_mode != MODE_NONE)
     {
-        if(m_curTool->mouseRelease(mapToImg(event->localPos())))
+        if(m_curTool->mouseRelease(mapToImg(event->Q_EventLocalPos())))
             repaint();
     }
 

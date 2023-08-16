@@ -88,6 +88,7 @@ void MainWindow::on_actionReload_triggered()
         //Remember last section ID and positions!
         int lastSection = 0;
         QHash<int, QPair<long, long> > sectionPoss;
+
         lastSection = lvlEdit->LvlData.CurSection;
         setCurrentLevelSection(lastSection); //Need to remember position of current section
 
@@ -97,6 +98,7 @@ void MainWindow::on_actionReload_triggered()
             sectionPoss[sct.id] = QPair<long, long >(sct.PositionX, sct.PositionY);
         }
 
+        qreal lastZoom = lvlEdit->getZoomF();
         long posX = lvlEdit->scene->m_viewPort->horizontalScrollBar()->value();
         long posY = lvlEdit->scene->m_viewPort->verticalScrollBar()->value();
         lvlEdit->close();//Close old widget without closing of sub-window
@@ -136,6 +138,7 @@ void MainWindow::on_actionReload_triggered()
             }
 
             setCurrentLevelSection(lastSection);
+            child->setZoomF(lastZoom);
             child->scene->m_viewPort->horizontalScrollBar()->setValue(static_cast<int>(posX));
             child->scene->m_viewPort->verticalScrollBar()->setValue(static_cast<int>(posY));
 
@@ -256,9 +259,11 @@ void MainWindow::on_actionReload_triggered()
         wldEdit->WldData.meta.modified = false;
         wnGeom = LastActiveSubWindow->geometry();
         QMdiSubWindow *worldWindow = LastActiveSubWindow;
+        qreal lastZoom = wldEdit->getZoomF();
         long posX = wldEdit->scene->m_viewPort->horizontalScrollBar()->value();
         long posY = wldEdit->scene->m_viewPort->verticalScrollBar()->value();
         wldEdit->close();
+
         WorldEdit *child = new WorldEdit(this, worldWindow);
         connect(child, &WorldEdit::forceReload, this, &MainWindow::on_actionReload_triggered);
         worldWindow->setWidget(child);
@@ -280,6 +285,7 @@ void MainWindow::on_actionReload_triggered()
                 dock_WldSettingsBox->raise();
             }
 
+            child->setZoomF(lastZoom);
             child->scene->m_viewPort->horizontalScrollBar()->setValue(static_cast<int>(posX));
             child->scene->m_viewPort->verticalScrollBar()->setValue(static_cast<int>(posY));
             statusBar()->showMessage(tr("World map file loaded"), 2000);

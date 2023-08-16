@@ -1,4 +1,5 @@
 #include "matrix_widget.h"
+#include <pge_qt_compat.h>
 #include <QPaintEvent>
 #include <QPainter>
 #include <cmath>
@@ -139,7 +140,7 @@ void MatrixWidget::paintEvent(QPaintEvent * /*event*/)
 
 void MatrixWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-    auto p = event->localPos();
+    auto p = event->Q_EventLocalPos();
     auto r = rect();
     int x = std::floor(m_gridW * (p.x() / r.width()));
     int y = std::floor(m_gridH * (p.y() / r.height()));
@@ -148,7 +149,7 @@ void MatrixWidget::mouseReleaseEvent(QMouseEvent *event)
     {
         if(event->button() == Qt::LeftButton)
             emit cellClicked(x, y);
-        else if(event->button() == Qt::MidButton)
+        else if(event->button() == Qt::MiddleButton)
             emit referenceSelected(x, y);
         else if(event->button() == Qt::RightButton)
         {

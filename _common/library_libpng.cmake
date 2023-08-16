@@ -24,14 +24,10 @@ else()
     set(libPNG_A_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}${PNG_STATICLIB_NAME}${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
     set(PNG_INCLUDE_DIRS "${DEPENDENCIES_INSTALL_DIR}/include")
 
-    set(libpngArchive ${CMAKE_SOURCE_DIR}/_Libs/_sources/libpng-1.6.36.tar.gz)
-    file(SHA256 ${libpngArchive} libpngArchive_hash)
-
     ExternalProject_Add(
         libpng_Local
         PREFIX ${CMAKE_BINARY_DIR}/external/libPNG
-        URL ${libpngArchive}
-        URL_HASH SHA256=${libpngArchive_hash}
+        SOURCE_DIR ${CMAKE_SOURCE_DIR}/_Libs/libpng
         CMAKE_ARGS
             "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
             "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"

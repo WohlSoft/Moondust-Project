@@ -39,10 +39,10 @@ TilesetEditor::TilesetEditor(DataConfig *conf, QGraphicsScene *scene, QWidget *p
     ui->setupUi(this);
 
 #ifdef Q_OS_MAC
-    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    this->setWindowIcon(QIcon(":/appicon/app.icns"));
 #endif
 #ifdef Q_OS_WIN
-    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+    this->setWindowIcon(QIcon(":/appicon/app.ico"));
 #endif
 
     scn = scene;
@@ -665,7 +665,9 @@ void TilesetEditor::showEvent(QShowEvent *event)
 void TilesetEditor::showNotify()
 {
     QSettings cCounters(AppPathManager::settingsFile(), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     cCounters.setIniCodec("UTF-8");
+#endif
 
     cCounters.beginGroup("message-boxes");
     bool showNotice = cCounters.value("tileset-editor-greeting", true).toBool();

@@ -60,7 +60,9 @@ static void pge_engine_alphatestingNotify(MainWindow *parent)
 {
     /************************Alpha-testing notify*****************************/
     QSettings cCounters(AppPathManager::settingsFile(), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     cCounters.setIniCodec("UTF-8");
+#endif
 
     cCounters.beginGroup("message-boxes");
     bool showNotice = cCounters.value("pge-engine-test-launch", true).toBool();

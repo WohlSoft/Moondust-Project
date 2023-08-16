@@ -51,21 +51,59 @@ include(../_common/Utils/Utils.cmake)
 include(../_common/Utils/UtilsQt.cmake)
 include(../_common/Graphics/bitmask2rgba.cmake)
 include(../_common/qt-modules/qt_modules.cmake)
+include(../_common/qt-modules/compat/pge_qt_compat.cmake)
 if(WIN32)
     include(../_common/StackWalker/StackWalker.cmake)
 endif()
 
-pge_cxx_standard(14)
+if(PGE_USE_QT5)
+    pge_cxx_standard(14)
+else()
+    pge_cxx_standard(17)
+endif()
 
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Gui REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Network REQUIRED)
-find_package(Qt5Concurrent REQUIRED)
-find_package(Qt5Qml REQUIRED)
-find_package(Qt5LinguistTools REQUIRED)
+set(QT_LIBS_LIST
+    ${QT_Qml_LIBRARIES}
+    ${QT_Concurrent_LIBRARIES}
+    ${QT_Widgets_LIBRARIES}
+    ${QT_Network_LIBRARIES}
+    ${QT_Gui_LIBRARIES}
+    ${QT_Core_LIBRARIES}
+)
+
+set(QT_DEFS_LIST
+    ${QT_Core_DEFINITIONS}
+    ${QT_Gui_DEFINITIONS}
+    ${QT_Widgets_DEFINITIONS}
+    ${QT_Network_DEFINITIONS}
+    ${QT_Concurrent_DEFINITIONS}
+    ${QT_Qml_DEFINITIONS}
+)
+
+set(QT_INCLUDES_LIST
+    ${QT_Core_INCLUDE_DIRS}
+    ${QT_Gui_INCLUDE_DIRS}
+    ${QT_Widgets_INCLUDE_DIRS}
+    ${QT_Network_INCLUDE_DIRS}
+    ${QT_Concurrent_INCLUDE_DIRS}
+    ${QT_Qml_INCLUDE_DIRS}
+)
+
+set(QT_EXECUTABLE_CXX_FLAGS
+    ${QT_Core_EXECUTABLE_COMPILE_FLAGS}
+    ${QT_Gui_EXECUTABLE_COMPILE_FLAGS}
+    ${QT_Widgets_EXECUTABLE_COMPILE_FLAGS}
+    ${QT_Network_EXECUTABLE_COMPILE_FLAGS}
+    ${QT_Concurrent_EXECUTABLE_COMPILE_FLAGS}
+    ${QT_Qml_EXECUTABLE_COMPILE_FLAGS}
+)
+
+
 if(WIN32)
-    find_package(Qt5WinExtras REQUIRED)
+    list(APPEND QT_LIBS_LIST ${QT_WinExtras_LIBRARIES})
+    list(APPEND QT_DEFS_LIST ${QT_WinExtras_DEFINITIONS})
+    list(APPEND QT_INCLUDES_LIST ${QT_WinExtras_INCLUDE_DIRS})
+    list(APPEND QT_EXECUTABLE_CXX_FLAGS ${QT_WinExtras_EXECUTABLE_COMPILE_FLAGS})
 endif()
 
 if(QT_DISABLE_NATIVE_FILE_DIALOG) # Disable native file dialogs when locally-built libPNG was been used to avoid the crash
@@ -83,7 +121,7 @@ FILE(GLOB PGE_LANG_SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.ts")
 
 set_source_files_properties(${PGE_LANG_SRC_FILES} PROPERTIES OUTPUT_LOCATION ${PGE_LANG_OUTPUT_DIR})
 set(PGE_LANG_BIN_FILES)
-qt5_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
+pge_qt_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
 add_custom_target(editor_translations ALL DEPENDS ${PGE_LANG_BIN_FILES})
 
 if(NOT APPLE AND NOT EMSCRIPTEN)
@@ -93,15 +131,7 @@ endif()
 
 # Executables fail to build with Qt 5 in the default configuration
 # without -fPIE. We add that here.
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Core_EXECUTABLE_COMPILE_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Gui_EXECUTABLE_COMPILE_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Network_EXECUTABLE_COMPILE_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Concurrent_EXECUTABLE_COMPILE_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Qml_EXECUTABLE_COMPILE_FLAGS}")
-if(WIN32)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5WinExtras_EXECUTABLE_COMPILE_FLAGS}")
-endif()
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${QT_EXECUTABLE_CXX_FLAGS}")
 
 set(PGE_EDITOR_UI)
 
@@ -157,7 +187,7 @@ list(APPEND PGE_EDITOR_UI
 )
 
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/editor.qrc)
-qt5_add_resources(RESOURCE_ADDED
+pge_qt_add_resources(RESOURCE_ADDED
     ${RESOURCE}
     ${MOONDUST_QT_MODULES_QRC}
 )
@@ -520,10 +550,10 @@ endif()
 
 if(APPLE)
     add_definitions(-DQ_OS_MACX) # Workaround for MOC
-    file(GLOB PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/_resources/file_*.icns")
+    file(GLOB PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/_resources/_files/file_*.icns")
     set_source_files_properties(${MOONDUST_QT_LANG_BIN_FILES} PROPERTIES GENERATED TRUE) # WORKAROUND
     list(APPEND PGE_EDITOR_SRCS
-        _resources/cat_builder.icns
+        _resources/appicon/cat_builder.icns
         ${PGE_LANG_BIN_FILES}
         ${MOONDUST_QT_LANG_BIN_FILES}
         ${MOONDUST_QT_LANG_ICON_FILES}
@@ -535,7 +565,7 @@ if(WIN32 AND NOT EMSCRIPTEN)
     list(APPEND PGE_EDITOR_SRCS _resources/pge_editor.rc)
 endif()
 
-qt5_wrap_ui(PGE_EDITOR_UI_HDRS ${PGE_EDITOR_UI})
+pge_qt_wrap_ui(PGE_EDITOR_UI_HDRS ${PGE_EDITOR_UI})
 
 list(APPEND PGE_EDITOR_SRCS
     ${PGE_EDITOR_UI_HDRS}
@@ -637,53 +667,21 @@ add_library(PGE_QtLibs INTERFACE)
 target_link_libraries(PGE_QtLibs INTERFACE
     ${QT_EXTRA_LIBS_PRE}
     PGE_FileFormatsQt
-    ${Qt5Qml_LIBRARIES}
-    ${Qt5Concurrent_LIBRARIES}
-    ${Qt5Widgets_LIBRARIES}
-    ${Qt5Network_LIBRARIES}
-    ${Qt5Gui_LIBRARIES}
-    ${Qt5Core_LIBRARIES}
+    ${QT_LIBS_LIST}
     ${QT_EXTRA_LIBS}
 )
-if(WIN32)
-    target_link_libraries(PGE_QtLibs INTERFACE
-        ${Qt5WinExtras_LIBRARIES}
-    )
-endif()
 
 # We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
 target_compile_definitions(PGE_QtLibs
     INTERFACE
-    ${Qt5Core_DEFINITIONS}
-    ${Qt5Gui_DEFINITIONS}
-    ${Qt5Widgets_DEFINITIONS}
-    ${Qt5Network_DEFINITIONS}
-    ${Qt5Concurrent_DEFINITIONS}
-    ${Qt5Qml_DEFINITIONS}
+    ${QT_DEFS_LIST}
     -DPGE_FILES_QT
 )
-if(WIN32)
-    target_compile_definitions(PGE_QtLibs
-        INTERFACE
-        ${Qt5WinExtras_DEFINITIONS}
-    )
-endif()
 
 target_include_directories(PGE_QtLibs
     INTERFACE
-    ${Qt5Core_INCLUDE_DIRS}
-    ${Qt5Gui_INCLUDE_DIRS}
-    ${Qt5Widgets_INCLUDE_DIRS}
-    ${Qt5Network_INCLUDE_DIRS}
-    ${Qt5Concurrent_INCLUDE_DIRS}
-    ${Qt5Qml_INCLUDE_DIRS}
+    ${QT_INCLUDES_LIST}
 )
-if(WIN32)
-    target_include_directories(PGE_QtLibs
-        INTERFACE
-        ${Qt5WinExtras_INCLUDE_DIRS}
-    )
-endif()
 
 
 target_compile_definitions(pge_editor
@@ -769,7 +767,7 @@ if(APPLE)
         CPACK_BUNDLE_NAME "Moondust Editor"
         MACOSX_BUNDLE_INFO_STRING "Level and World map Editor for the Moondust Project"
     )
-    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/cat_builder.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/appicon/cat_builder.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties(${PGE_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
     set_source_files_properties(${MOONDUST_QT_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
     set_source_files_properties(${MOONDUST_QT_LANG_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")

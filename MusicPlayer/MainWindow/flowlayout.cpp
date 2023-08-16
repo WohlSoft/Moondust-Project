@@ -128,11 +128,13 @@ QSize FlowLayout::sizeHint() const
 QSize FlowLayout::minimumSize() const
 {
     QSize size;
+    int left, top, right, bottom;
+    getContentsMargins(&left, &top, &right, &bottom);
 
     for(QLayoutItem *item : itemList)
         size = size.expandedTo(item->minimumSize());
 
-    size += QSize(2 * margin(), 2 * margin());
+    size += QSize(2 * qMax(left, right), 2 * qMax(top, bottom));
     return size;
 }
 

@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <pge_qt_compat.h>
 #include <common_features/app_path.h>
 #include <common_features/util.h>
 #include <audio/sdl_music_player.h>
@@ -28,9 +29,15 @@ AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
 #else
     ui->sox_bin_path->setText("/usr/bin/sox");
 #endif
-    connect(&converter, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(nextStep(int, QProcess::ExitStatus)));
-    connect(&converter, SIGNAL(readyReadStandardOutput()), this, SLOT(consoleMessage()));
-    connect(&converter, SIGNAL(readyReadStandardError()), this, SLOT(consoleMessageErr()));
+
+    // Moved from UI file itself
+    QObject::connect(ui->ogg_quality, &QSlider::valueChanged,
+                     ui->ogg_quality_var,
+                     static_cast<void(QLabel::*)(int)>(&QLabel::setNum));
+
+    QObject::connect(&converter, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(nextStep(int, QProcess::ExitStatus)));
+    QObject::connect(&converter, SIGNAL(readyReadStandardOutput()), this, SLOT(consoleMessage()));
+    QObject::connect(&converter, SIGNAL(readyReadStandardError()), this, SLOT(consoleMessageErr()));
     isLevel = (m_mw && m_mw->activeChildWindow() == MainWindow::WND_Level);
     ledit = NULL;
 
@@ -335,7 +342,7 @@ retry_queue:
             {
                 hasWork = true;
                 current_musFileOld = current_musFileNew;
-                current_musFileNew.replace(QRegExp("([^.]+)$"), "mp3");
+                current_musFileNew.replace(Q_QRegExp("([^.]+)$"), "mp3");
                 renameToBak = false;
             }
         }
@@ -345,7 +352,7 @@ retry_queue:
             {
                 hasWork = true;
                 current_musFileOld = current_musFileNew;
-                current_musFileNew.replace(QRegExp("([^.]+)$"), "ogg");
+                current_musFileNew.replace(Q_QRegExp("([^.]+)$"), "ogg");
                 renameToBak = false;
             }
         }
@@ -355,7 +362,7 @@ retry_queue:
             {
                 hasWork = true;
                 current_musFileOld = current_musFileNew;
-                current_musFileNew.replace(QRegExp("([^.]+)$"), "flac");
+                current_musFileNew.replace(Q_QRegExp("([^.]+)$"), "flac");
                 renameToBak = false;
             }
         }
@@ -365,7 +372,7 @@ retry_queue:
             {
                 hasWork = true;
                 current_musFileOld = current_musFileNew;
-                current_musFileNew.replace(QRegExp("([^.]+)$"), "wav");
+                current_musFileNew.replace(Q_QRegExp("([^.]+)$"), "wav");
                 renameToBak = false;
             }
         }
