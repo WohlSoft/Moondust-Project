@@ -1,0 +1,8 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/npc">
+        <file alias="proj.png">generator_proj.png</file>
+        <file alias="warp.png">generator_warp.png</file>
+        <file alias="random_direction.png">random_direction.png</file>
+    </qresource>
+</RCC>

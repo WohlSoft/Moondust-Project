@@ -1,0 +1,108 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/toolbar/goto">
+        <file alias="left_bottom.png">goto/left_bottom.png</file>
+        <file alias="left_bottom_dark.png">goto/left_bottom_dark.png</file>
+        <file alias="left_top.png">goto/left_top.png</file>
+        <file alias="left_top_dark.png">goto/left_top_dark.png</file>
+        <file alias="right_bottom.png">goto/right_bottom.png</file>
+        <file alias="right_bottom_dark.png">goto/right_bottom_dark.png</file>
+        <file alias="start.png">goto/start.png</file>
+        <file alias="top_right.png">goto/top_right.png</file>
+        <file alias="top_right_dark.png">goto/top_right_dark.png</file>
+    </qresource>
+    <qresource prefix="/toolbar/view">
+        <file alias="animation.png">view/animation.png</file>
+        <file alias="camera_grid.png">view/camera_grid.png</file>
+        <file alias="camera_grid_dark.png">view/camera_grid_dark.png</file>
+        <file alias="show_grid.png">view/show_grid.png</file>
+        <file alias="show_grid_dark.png">view/show_grid_dark.png</file>
+        <file alias="zoom_in.png">view/zoom_in.png</file>
+        <file alias="zoom_out.png">view/zoom_out.png</file>
+        <file alias="zoom_reset.png">view/zoom_reset.png</file>
+    </qresource>
+    <qresource prefix="/toolbar/place">
+        <file alias="fill_circle.png">place/fill_circle.png</file>
+        <file alias="fill_flood.png">place/fill_flood.png</file>
+        <file alias="fill_line.png">place/fill_line.png</file>
+        <file alias="fill_rect.png">place/fill_rect.png</file>
+        <file alias="overwrite.png">place/overwrite.png</file>
+    </qresource>
+    <qresource prefix="/toolbar/file">
+        <file alias="new.png">file/new.png</file>
+        <file alias="open.png">file/open.png</file>
+        <file alias="reload.png">file/reload.png</file>
+        <file alias="save.png">file/save.png</file>
+        <file alias="save_as.png">file/save_as.png</file>
+    </qresource>
+    <qresource prefix="/toolbar/locks">
+        <file alias="bg_cl.png">lock/bgo_cl.png</file>
+        <file alias="bgo_op.png">lock/bgo_op.png</file>
+        <file alias="block_cl.png">lock/block_cl.png</file>
+        <file alias="block_op.png">lock/block_op.png</file>
+        <file alias="door_cl.png">lock/door_cl.png</file>
+        <file alias="door_op.png">lock/door_op.png</file>
+        <file alias="levels_cl.png">lock/levels_cl.png</file>
+        <file alias="levels_op.png">lock/levels_op.png</file>
+        <file alias="closed.png">lock/lock_closed.png</file>
+        <file alias="open.png">lock/lock_open.png</file>
+        <file alias="musicbox_cl.png">lock/musicbox_cl.png</file>
+        <file alias="musicbox_op.png">lock/musicbox_op.png</file>
+        <file alias="npc_cl.png">lock/npc_cl.png</file>
+        <file alias="npc_op.png">lock/npc_op.png</file>
+        <file alias="paths_cl.png">lock/paths_cl.png</file>
+        <file alias="paths_op.png">lock/paths_op.png</file>
+        <file alias="scenery_cl.png">lock/scenery_cl.png</file>
+        <file alias="scenery_op.png">lock/scenery_op.png</file>
+        <file alias="tile_cl.png">lock/tile_cl.png</file>
+        <file alias="tile_op.png">lock/tile_op.png</file>
+        <file alias="water_cl.png">lock/water_cl.png</file>
+        <file alias="water_op.png">lock/water_op.png</file>
+    </qresource>
+    <qresource prefix="/toolbar/modes">
+        <file alias="accept.png">modes/accept.png</file>
+        <file alias="cancel.png">modes/cancel.png</file>
+        <file alias="drag.png">modes/drag.png</file>
+        <file alias="draw_sand.png">modes/draw_sand.png</file>
+        <file alias="draw_water.png">modes/draw_water.png</file>
+        <file alias="erase.png">modes/erase.png</file>
+        <file alias="player1_start.png">modes/player1_start.png</file>
+        <file alias="player2_start.png">modes/player2_start.png</file>
+        <file alias="select.png">modes/select.png</file>
+        <file alias="select_only.png">modes/select_only.png</file>
+    </qresource>
+    <qresource prefix="/toolbar/edit">
+        <file alias="copy.png">edit/copy.png</file>
+        <file alias="cut.png">edit/cut.png</file>
+        <file alias="grid_snap.png">edit/grid_snap.png</file>
+        <file alias="grid_snap_dark">edit/grid_snap_dark.png</file>
+        <file alias="paste.png">edit/paste.png</file>
+        <file alias="redo.png">edit/redo.png</file>
+        <file alias="undo.png">edit/undo.png</file>
+    </qresource>
+    <qresource prefix="/toolbar/dock">
+        <file alias="bookmarks.png">dock/bookmarks.png</file>
+        <file alias="bug.png">dock/bug.png</file>
+        <file alias="coin.png">dock/coin.png</file>
+        <file alias="doors.png">dock/doors.png</file>
+        <file alias="events.png">dock/events.png</file>
+        <file alias="item_browser_level.png">dock/item_browser_level.png</file>
+        <file alias="item_browser_world.png">dock/item_browser_world.png</file>
+        <file alias="layers.png">dock/layers.png</file>
+        <file alias="level.png">dock/level.png</file>
+        <file alias="level16.png">dock/level16.png</file>
+        <file alias="musicboxes.png">dock/musicboxes.png</file>
+        <file alias="properties.png">dock/properties.png</file>
+        <file alias="search.png">dock/search.png</file>
+        <file alias="search_tiny.png">dock/search_tiny.png</file>
+        <file alias="section.png">dock/section.png</file>
+        <file alias="section16.png">dock/section16.png</file>
+        <file alias="tileset_box.png">dock/tileset_box.png</file>
+        <file alias="world.png">dock/world.png</file>
+        <file alias="world16.png">dock/world16.png</file>
+    </qresource>
+    <qresource prefix="/toolbar">
+        <file alias="playmusic.png">playmusic.png</file>
+        <file alias="playmusic_dark.png">playmusic_dark.png</file>
+    </qresource>
+</RCC>

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>285</width>
+    <width>309</width>
     <height>135</height>
    </rect>
   </property>
@@ -14,7 +14,7 @@
    <string>Blocks per second calculator</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../_resources/editor.qrc">
+   <iconset resource="../../_resources/appicon/appicon.qrc">
     <normaloff>:/appicon/16.png</normaloff>:/appicon/16.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -116,7 +116,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../_resources/editor.qrc"/>
+  <include location="../../_resources/appicon/appicon.qrc"/>
  </resources>
  <connections>
   <connection>

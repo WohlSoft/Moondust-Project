@@ -38,7 +38,7 @@
    <string notr="true">喝了这</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="_resources/editor.qrc">
+   <iconset resource="_resources/appicon/appicon.qrc">
     <normaloff>:/appicon/48.png</normaloff>:/appicon/48.png</iconset>
   </property>
   <property name="tabShape">
@@ -109,7 +109,7 @@
       <string>New</string>
      </property>
      <property name="icon">
-      <iconset resource="_resources/editor.qrc">
+      <iconset resource="_resources/toolbar/toolbar.qrc">
        <normaloff>:/toolbar/file/new.png</normaloff>:/toolbar/file/new.png</iconset>
      </property>
      <addaction name="actionNewLevel"/>
@@ -702,7 +702,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/file/open.png</normaloff>:/toolbar/file/open.png</iconset>
    </property>
    <property name="text">
@@ -734,7 +734,7 @@
   </action>
   <action name="actionNewLevel">
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/level.png</normaloff>:/toolbar/dock/level.png</iconset>
    </property>
    <property name="text">
@@ -746,7 +746,7 @@
   </action>
   <action name="actionNewWorld_map">
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/world16.png</normaloff>:/toolbar/dock/world16.png</iconset>
    </property>
    <property name="text">
@@ -758,7 +758,7 @@
   </action>
   <action name="actionNewNPC_config">
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/coin.png</normaloff>:/toolbar/dock/coin.png</iconset>
    </property>
    <property name="text">
@@ -773,7 +773,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/file/save.png</normaloff>:/toolbar/file/save.png</iconset>
    </property>
    <property name="text">
@@ -797,7 +797,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/file/save_as.png</normaloff>:/toolbar/file/save_as.png</iconset>
    </property>
    <property name="text">
@@ -874,9 +874,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/00_n.png</normaloff>
-     <normalon>:/sections/sections/00.png</normalon>:/sections/sections/00_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/00_n.png</normaloff>
+     <normalon>:/sections/00.png</normalon>:/sections/00_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 0</string>
@@ -896,9 +896,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/01_n.png</normaloff>
-     <normalon>:/sections/sections/01.png</normalon>:/sections/sections/01_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/01_n.png</normaloff>
+     <normalon>:/sections/01.png</normalon>:/sections/01_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 1</string>
@@ -918,9 +918,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/02_n.png</normaloff>
-     <normalon>:/sections/sections/02.png</normalon>:/sections/sections/02_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/02_n.png</normaloff>
+     <normalon>:/sections/02.png</normalon>:/sections/02_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 2</string>
@@ -940,9 +940,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/03_n.png</normaloff>
-     <normalon>:/sections/sections/03.png</normalon>:/sections/sections/03_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/03_n.png</normaloff>
+     <normalon>:/sections/03.png</normalon>:/sections/03_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 3</string>
@@ -962,9 +962,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/04_n.png</normaloff>
-     <normalon>:/sections/sections/04.png</normalon>:/sections/sections/04_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/04_n.png</normaloff>
+     <normalon>:/sections/04.png</normalon>:/sections/04_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 4</string>
@@ -984,9 +984,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/05_n.png</normaloff>
-     <normalon>:/sections/sections/05.png</normalon>:/sections/sections/05_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/05_n.png</normaloff>
+     <normalon>:/sections/05.png</normalon>:/sections/05_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 5</string>
@@ -1006,9 +1006,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/06_n.png</normaloff>
-     <normalon>:/sections/sections/06.png</normalon>:/sections/sections/06_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/06_n.png</normaloff>
+     <normalon>:/sections/06.png</normalon>:/sections/06_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 6</string>
@@ -1028,9 +1028,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/07_n.png</normaloff>
-     <normalon>:/sections/sections/07.png</normalon>:/sections/sections/07_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/07_n.png</normaloff>
+     <normalon>:/sections/07.png</normalon>:/sections/07_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 7</string>
@@ -1050,9 +1050,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/08_n.png</normaloff>
-     <normalon>:/sections/sections/08.png</normalon>:/sections/sections/08_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/08_n.png</normaloff>
+     <normalon>:/sections/08.png</normalon>:/sections/08_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 8</string>
@@ -1072,9 +1072,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/09_n.png</normaloff>
-     <normalon>:/sections/sections/09.png</normalon>:/sections/sections/09_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/09_n.png</normaloff>
+     <normalon>:/sections/09.png</normalon>:/sections/09_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 9</string>
@@ -1094,9 +1094,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/10_n.png</normaloff>
-     <normalon>:/sections/sections/10.png</normalon>:/sections/sections/10_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/10_n.png</normaloff>
+     <normalon>:/sections/10.png</normalon>:/sections/10_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 10</string>
@@ -1116,9 +1116,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/11_n.png</normaloff>
-     <normalon>:/sections/sections/11.png</normalon>:/sections/sections/11_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/11_n.png</normaloff>
+     <normalon>:/sections/11.png</normalon>:/sections/11_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 11</string>
@@ -1138,9 +1138,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/12_n.png</normaloff>
-     <normalon>:/sections/sections/12.png</normalon>:/sections/sections/12_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/12_n.png</normaloff>
+     <normalon>:/sections/12.png</normalon>:/sections/12_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 12</string>
@@ -1160,9 +1160,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/13_n.png</normaloff>
-     <normalon>:/sections/sections/13.png</normalon>:/sections/sections/13_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/13_n.png</normaloff>
+     <normalon>:/sections/13.png</normalon>:/sections/13_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 13</string>
@@ -1182,9 +1182,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/14_n.png</normaloff>
-     <normalon>:/sections/sections/14.png</normalon>:/sections/sections/14_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/14_n.png</normaloff>
+     <normalon>:/sections/14.png</normalon>:/sections/14_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 14</string>
@@ -1204,9 +1204,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/15_n.png</normaloff>
-     <normalon>:/sections/sections/15.png</normalon>:/sections/sections/15_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/15_n.png</normaloff>
+     <normalon>:/sections/15.png</normalon>:/sections/15_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 15</string>
@@ -1226,9 +1226,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/16_n.png</normaloff>
-     <normalon>:/sections/sections/16.png</normalon>:/sections/sections/16_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/16_n.png</normaloff>
+     <normalon>:/sections/16.png</normalon>:/sections/16_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 16</string>
@@ -1248,9 +1248,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/17_n.png</normaloff>
-     <normalon>:/sections/sections/17.png</normalon>:/sections/sections/17_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/17_n.png</normaloff>
+     <normalon>:/sections/17.png</normalon>:/sections/17_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 17</string>
@@ -1270,9 +1270,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/18_n.png</normaloff>
-     <normalon>:/sections/sections/18.png</normalon>:/sections/sections/18_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/18_n.png</normaloff>
+     <normalon>:/sections/18.png</normalon>:/sections/18_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 18</string>
@@ -1292,9 +1292,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/19_n.png</normaloff>
-     <normalon>:/sections/sections/19.png</normalon>:/sections/sections/19_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/19_n.png</normaloff>
+     <normalon>:/sections/19.png</normalon>:/sections/19_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 19</string>
@@ -1314,9 +1314,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/20_n.png</normaloff>
-     <normalon>:/sections/sections/20.png</normalon>:/sections/sections/20_n.png</iconset>
+    <iconset resource="_resources/sections/sections.qrc">
+     <normaloff>:/sections/20_n.png</normaloff>
+     <normalon>:/sections/20.png</normalon>:/sections/20_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 20</string>
@@ -1441,7 +1441,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/item_browser_level.png</normaloff>:/toolbar/dock/item_browser_level.png</iconset>
    </property>
    <property name="text">
@@ -1459,7 +1459,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/item_browser_world.png</normaloff>:/toolbar/dock/item_browser_world.png</iconset>
    </property>
    <property name="text">
@@ -1483,7 +1483,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/modes/select.png</normaloff>:/toolbar/modes/select.png</iconset>
    </property>
    <property name="text">
@@ -1507,7 +1507,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/modes/erase.png</normaloff>:/toolbar/modes/erase.png</iconset>
    </property>
    <property name="text">
@@ -1525,7 +1525,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/section.png</normaloff>:/toolbar/dock/section.png</iconset>
    </property>
    <property name="text">
@@ -1557,7 +1557,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/goto/left_bottom.png</normaloff>:/toolbar/goto/left_bottom.png</iconset>
    </property>
    <property name="text">
@@ -1575,8 +1575,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/toolbar/edit/toolbar/edit/grid_snap.png</normaloff>:/toolbar/edit/toolbar/edit/grid_snap.png</iconset>
+    <iconset resource="_resources/toolbar/toolbar.qrc">
+     <normaloff>:/toolbar/edit/grid_snap.png</normaloff>:/toolbar/edit/grid_snap.png</iconset>
    </property>
    <property name="text">
     <string>Attach to grid</string>
@@ -1590,7 +1590,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/locks/block_op.png</normaloff>
      <normalon>:/toolbar/locks/block_cl.png</normalon>:/toolbar/locks/block_op.png</iconset>
    </property>
@@ -1603,7 +1603,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/locks/bgo_op.png</normaloff>
      <normalon>:/toolbar/locks/bgo_cl.png</normalon>:/toolbar/locks/bgo_op.png</iconset>
    </property>
@@ -1616,7 +1616,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/locks/npc_op.png</normaloff>
      <normalon>:/toolbar/locks/npc_cl.png</normalon>:/toolbar/locks/npc_op.png</iconset>
    </property>
@@ -1629,7 +1629,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/locks/door_op.png</normaloff>
      <normalon>:/toolbar/locks/door_cl.png</normalon>:/toolbar/locks/door_op.png</iconset>
    </property>
@@ -1642,7 +1642,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/locks/water_op.png</normaloff>
      <normalon>:/toolbar/locks/water_cl.png</normalon>:/toolbar/locks/water_op.png</iconset>
    </property>
@@ -1655,7 +1655,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/modes/player1_start.png</normaloff>:/toolbar/modes/player1_start.png</iconset>
    </property>
    <property name="text">
@@ -1670,7 +1670,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/modes/player2_start.png</normaloff>:/toolbar/modes/player2_start.png</iconset>
    </property>
    <property name="text">
@@ -1685,7 +1685,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/playmusic.png</normaloff>:/toolbar/playmusic.png</iconset>
    </property>
    <property name="text">
@@ -1703,7 +1703,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/file/reload.png</normaloff>:/toolbar/file/reload.png</iconset>
    </property>
    <property name="text">
@@ -1727,7 +1727,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/modes/drag.png</normaloff>:/toolbar/modes/drag.png</iconset>
    </property>
    <property name="text">
@@ -1745,8 +1745,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/toolbar/edit/toolbar/edit/undo.png</normaloff>:/toolbar/edit/toolbar/edit/undo.png</iconset>
+    <iconset resource="_resources/toolbar/toolbar.qrc">
+     <normaloff>:/toolbar/edit/undo.png</normaloff>:/toolbar/edit/undo.png</iconset>
    </property>
    <property name="text">
     <string>Undo</string>
@@ -1760,8 +1760,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/toolbar/edit/toolbar/edit/redo.png</normaloff>:/toolbar/edit/toolbar/edit/redo.png</iconset>
+    <iconset resource="_resources/toolbar/toolbar.qrc">
+     <normaloff>:/toolbar/edit/redo.png</normaloff>:/toolbar/edit/redo.png</iconset>
    </property>
    <property name="text">
     <string>Redo</string>
@@ -1775,7 +1775,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/doors.png</normaloff>:/toolbar/dock/doors.png</iconset>
    </property>
    <property name="text">
@@ -1790,7 +1790,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/view/animation.png</normaloff>:/toolbar/view/animation.png</iconset>
    </property>
    <property name="text">
@@ -1918,8 +1918,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/toolbar/edit/toolbar/edit/copy.png</normaloff>:/toolbar/edit/toolbar/edit/copy.png</iconset>
+    <iconset resource="_resources/toolbar/toolbar.qrc">
+     <normaloff>:/toolbar/edit/copy.png</normaloff>:/toolbar/edit/copy.png</iconset>
    </property>
    <property name="text">
     <string>Copy</string>
@@ -1951,7 +1951,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/modes/draw_water.png</normaloff>:/toolbar/modes/draw_water.png</iconset>
    </property>
    <property name="text">
@@ -1966,7 +1966,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/modes/draw_sand.png</normaloff>:/toolbar/modes/draw_sand.png</iconset>
    </property>
    <property name="text">
@@ -1981,8 +1981,8 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/toolbar/edit/toolbar/edit/paste.png</normaloff>:/toolbar/edit/toolbar/edit/paste.png</iconset>
+    <iconset resource="_resources/toolbar/toolbar.qrc">
+     <normaloff>:/toolbar/edit/paste.png</normaloff>:/toolbar/edit/paste.png</iconset>
    </property>
    <property name="text">
     <string>Paste</string>
@@ -1996,7 +1996,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/layers.png</normaloff>:/toolbar/dock/layers.png</iconset>
    </property>
    <property name="text">
@@ -2025,8 +2025,8 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/toolbar/edit/toolbar/edit/cut.png</normaloff>:/toolbar/edit/toolbar/edit/cut.png</iconset>
+    <iconset resource="_resources/toolbar/toolbar.qrc">
+     <normaloff>:/toolbar/edit/cut.png</normaloff>:/toolbar/edit/cut.png</iconset>
    </property>
    <property name="text">
     <string>Cut</string>
@@ -2057,7 +2057,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/modes/select_only.png</normaloff>:/toolbar/modes/select_only.png</iconset>
    </property>
    <property name="text">
@@ -2083,7 +2083,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/goto/left_top.png</normaloff>:/toolbar/goto/left_top.png</iconset>
    </property>
    <property name="text">
@@ -2098,7 +2098,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/events.png</normaloff>:/toolbar/dock/events.png</iconset>
    </property>
    <property name="text">
@@ -2124,7 +2124,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/search.png</normaloff>:/toolbar/dock/search.png</iconset>
    </property>
    <property name="text">
@@ -2193,7 +2193,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/section.png</normaloff>:/toolbar/dock/section.png</iconset>
    </property>
    <property name="text">
@@ -2208,7 +2208,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/locks/tile_op.png</normaloff>
      <normalon>:/toolbar/locks/tile_cl.png</normalon>:/toolbar/locks/tile_op.png</iconset>
    </property>
@@ -2221,7 +2221,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/locks/scenery_op.png</normaloff>
      <normalon>:/toolbar/locks/scenery_cl.png</normalon>:/toolbar/locks/scenery_op.png</iconset>
    </property>
@@ -2234,7 +2234,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/locks/paths_op.png</normaloff>
      <normalon>:/toolbar/locks/paths_cl.png</normalon>:/toolbar/locks/paths_op.png</iconset>
    </property>
@@ -2247,7 +2247,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/locks/levels_op.png</normaloff>
      <normalon>:/toolbar/locks/levels_cl.png</normalon>:/toolbar/locks/levels_op.png</iconset>
    </property>
@@ -2260,7 +2260,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/locks/musicbox_op.png</normaloff>
      <normalon>:/toolbar/locks/musicbox_cl.png</normalon>:/toolbar/locks/musicbox_op.png</iconset>
    </property>
@@ -2273,7 +2273,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/place/fill_rect.png</normaloff>:/toolbar/place/fill_rect.png</iconset>
    </property>
    <property name="text">
@@ -2291,7 +2291,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/place/overwrite.png</normaloff>:/toolbar/place/overwrite.png</iconset>
    </property>
    <property name="text">
@@ -2300,7 +2300,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
   </action>
   <action name="actionResizeApply">
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/modes/accept.png</normaloff>:/toolbar/modes/accept.png</iconset>
    </property>
    <property name="text">
@@ -2315,7 +2315,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
   </action>
   <action name="actionResizeCancel">
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/modes/cancel.png</normaloff>:/toolbar/modes/cancel.png</iconset>
    </property>
    <property name="text">
@@ -2333,7 +2333,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/place/fill_line.png</normaloff>:/toolbar/place/fill_line.png</iconset>
    </property>
    <property name="text">
@@ -2351,7 +2351,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/search.png</normaloff>:/toolbar/dock/search.png</iconset>
    </property>
    <property name="text">
@@ -2379,7 +2379,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
   </action>
   <action name="actionZoomIn">
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/view/zoom_in.png</normaloff>:/toolbar/view/zoom_in.png</iconset>
    </property>
    <property name="text">
@@ -2388,7 +2388,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
   </action>
   <action name="actionZoomOut">
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/view/zoom_out.png</normaloff>:/toolbar/view/zoom_out.png</iconset>
    </property>
    <property name="text">
@@ -2397,7 +2397,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
   </action>
   <action name="actionZoomReset">
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/view/zoom_reset.png</normaloff>:/toolbar/view/zoom_reset.png</iconset>
    </property>
    <property name="text">
@@ -2412,7 +2412,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/tileset_box.png</normaloff>:/toolbar/dock/tileset_box.png</iconset>
    </property>
    <property name="text">
@@ -2424,7 +2424,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/bug.png</normaloff>:/toolbar/dock/bug.png</iconset>
    </property>
    <property name="text">
@@ -2485,7 +2485,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/place/fill_flood.png</normaloff>:/toolbar/place/fill_flood.png</iconset>
    </property>
    <property name="text">
@@ -2508,7 +2508,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/properties.png</normaloff>:/toolbar/dock/properties.png</iconset>
    </property>
    <property name="text">
@@ -2545,7 +2545,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/bookmarks.png</normaloff>:/toolbar/dock/bookmarks.png</iconset>
    </property>
    <property name="text">
@@ -2790,7 +2790,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/place/fill_circle.png</normaloff>:/toolbar/place/fill_circle.png</iconset>
    </property>
    <property name="text">
@@ -2811,7 +2811,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/view/show_grid.png</normaloff>:/toolbar/view/show_grid.png</iconset>
    </property>
    <property name="text">
@@ -2829,7 +2829,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/view/camera_grid.png</normaloff>:/toolbar/view/camera_grid.png</iconset>
    </property>
    <property name="text">
@@ -2860,7 +2860,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/goto/top_right.png</normaloff>:/toolbar/goto/top_right.png</iconset>
    </property>
    <property name="text">
@@ -2872,7 +2872,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/goto/right_bottom.png</normaloff>:/toolbar/goto/right_bottom.png</iconset>
    </property>
    <property name="text">
@@ -2956,7 +2956,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="_resources/toolbar/toolbar.qrc">
      <normaloff>:/toolbar/dock/musicboxes.png</normaloff>:/toolbar/dock/musicboxes.png</iconset>
    </property>
    <property name="text">
@@ -3001,6 +3001,9 @@ Objects will not be able to be placed on top of each other, and attempting to do
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="_resources/editor.qrc"/>
+  <include location="_resources/appicon/appicon.qrc"/>
+  <include location="_resources/sections/sections.qrc"/>
+  <include location="_resources/toolbar/toolbar.qrc"/>
  </resources>
  <connections/>
 </ui>

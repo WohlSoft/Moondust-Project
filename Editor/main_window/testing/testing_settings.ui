@@ -14,7 +14,7 @@
    <string>Testing settings</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../_resources/editor.qrc">
+   <iconset resource="../../_resources/appicon/appicon.qrc">
     <normaloff>:/appicon/app.ico</normaloff>:/appicon/app.ico</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_5">
@@ -645,8 +645,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../_resources/editor.qrc"/>
-  <include location="../../_resources/editor.qrc"/>
+  <include location="../../_resources/appicon/appicon.qrc"/>
  </resources>
  <connections>
   <connection>

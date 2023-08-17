@@ -1,0 +1,34 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/engines/thextech">
+        <file alias="128.png">thextech/thextech_128.png</file>
+        <file alias="16.png">thextech/thextech_16.png</file>
+        <file alias="256.png">thextech/thextech_256.png</file>
+        <file alias="32.png">thextech/thextech_32.png</file>
+        <file alias="48.png">thextech/thextech_48.png</file>
+    </qresource>
+    <qresource prefix="/engines/moondust">
+        <file alias="128.png">moondust/cat_128.png</file>
+        <file alias="16.png">moondust/cat_16.png</file>
+        <file alias="256.png">moondust/cat_256.png</file>
+        <file alias="32.png">moondust/cat_32.png</file>
+        <file alias="48.png">moondust/cat_48.png</file>
+    </qresource>
+    <qresource prefix="/engines/lunalua">
+        <file alias="16.png">lunalua/lunalua_16.png</file>
+        <file alias="256.png">lunalua/lunalua_256.png</file>
+        <file alias="32.png">lunalua/lunalua_32.png</file>
+        <file alias="48.png">lunalua/lunalua_48.png</file>
+    </qresource>
+    <qresource prefix="/engines/38a">
+        <file alias="38a.ico">38a/38a.ico</file>
+        <file alias="16.png">38a/38a_16.png</file>
+        <file alias="256.png">38a/38a_256.png</file>
+        <file alias="32.png">38a/38a_32.png</file>
+        <file alias="48.png">38a/38a_48.png</file>
+    </qresource>
+    <qresource prefix="/engines/legacy">
+        <file alias="66.png">legacy/legacy_16.png</file>
+        <file alias="77.png">legacy/legacy_77.png</file>
+    </qresource>
+</RCC>

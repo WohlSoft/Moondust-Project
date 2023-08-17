@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../_resources/editor.qrc">
+   <iconset resource="../../_resources/toolbar/toolbar.qrc">
     <normaloff>:/toolbar/dock/world16.png</normaloff>:/toolbar/dock/world16.png</iconset>
   </property>
   <property name="allowedAreas">
@@ -265,7 +265,7 @@
              <string>You can set a condition to open path in specified direction (controls at each side of those arrows), dependent on level exit code.</string>
             </property>
             <property name="pixmap">
-             <pixmap resource="../../_resources/editor.qrc">:/arrows/arrows/box.png</pixmap>
+             <pixmap resource="../../_resources/arrows/arrows.qrc">:/arrows/box.png</pixmap>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -278,8 +278,8 @@
              <string notr="true">L</string>
             </property>
             <property name="icon">
-             <iconset resource="../../_resources/editor.qrc">
-              <normaloff>:/arrows/arrows/red_left.png</normaloff>:/arrows/arrows/red_left.png</iconset>
+             <iconset resource="../../_resources/arrows/arrows.qrc">
+              <normaloff>:/arrows/red_left.png</normaloff>:/arrows/red_left.png</iconset>
             </property>
             <property name="popupMode">
              <enum>QToolButton::InstantPopup</enum>
@@ -295,8 +295,8 @@
              <string notr="true">R</string>
             </property>
             <property name="icon">
-             <iconset resource="../../_resources/editor.qrc">
-              <normaloff>:/arrows/arrows/red_right.png</normaloff>:/arrows/arrows/red_right.png</iconset>
+             <iconset resource="../../_resources/arrows/arrows.qrc">
+              <normaloff>:/arrows/red_right.png</normaloff>:/arrows/red_right.png</iconset>
             </property>
             <property name="popupMode">
              <enum>QToolButton::InstantPopup</enum>
@@ -377,8 +377,8 @@
                 <string notr="true">T</string>
                </property>
                <property name="icon">
-                <iconset resource="../../_resources/editor.qrc">
-                 <normaloff>:/arrows/arrows/red_up.png</normaloff>:/arrows/arrows/red_up.png</iconset>
+                <iconset resource="../../_resources/arrows/arrows.qrc">
+                 <normaloff>:/arrows/red_up.png</normaloff>:/arrows/red_up.png</iconset>
                </property>
                <property name="popupMode">
                 <enum>QToolButton::InstantPopup</enum>
@@ -462,8 +462,8 @@
                 <string notr="true">B</string>
                </property>
                <property name="icon">
-                <iconset resource="../../_resources/editor.qrc">
-                 <normaloff>:/arrows/arrows/red_down.png</normaloff>:/arrows/arrows/red_down.png</iconset>
+                <iconset resource="../../_resources/arrows/arrows.qrc">
+                 <normaloff>:/arrows/red_down.png</normaloff>:/arrows/red_down.png</iconset>
                </property>
                <property name="popupMode">
                 <enum>QToolButton::InstantPopup</enum>
@@ -525,7 +525,8 @@
   </widget>
  </widget>
  <resources>
-  <include location="../../_resources/editor.qrc"/>
+  <include location="../../_resources/arrows/arrows.qrc"/>
+  <include location="../../_resources/toolbar/toolbar.qrc"/>
  </resources>
  <connections/>
 </ui>

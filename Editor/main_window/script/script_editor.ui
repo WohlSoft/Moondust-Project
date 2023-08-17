@@ -14,7 +14,7 @@
    <string>Script editor</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../_resources/editor.qrc">
+   <iconset resource="../../_resources/appicon/appicon.qrc">
     <normaloff>:/appicon/app.ico</normaloff>:/appicon/app.ico</iconset>
   </property>
   <widget class="QMdiArea" name="centralwidget"/>
@@ -24,7 +24,7 @@
      <x>0</x>
      <y>0</y>
      <width>607</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAddScript">
@@ -84,7 +84,7 @@
   </action>
  </widget>
  <resources>
-  <include location="../../_resources/editor.qrc"/>
+  <include location="../../_resources/appicon/appicon.qrc"/>
  </resources>
  <connections/>
 </ui>

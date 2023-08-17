@@ -1,0 +1,7 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/fonts">
+        <file>PressStart2P.ttf</file>
+        <file>font_digits.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,7 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/files">
+        <file>moondust_editor.desktop</file>
+        <file>moondust-project-mimeinfo.xml</file>
+    </qresource>
+</RCC>

@@ -65,7 +65,7 @@ void MainWindow::initTesting()
         pgeEngine.addPixmap(QPixmap(":/engines/moondust/128.png"));
         pgeEngine.addPixmap(QPixmap(":/engines/moondust/256.png"));
 
-        QMenu *pgeEngineMenu = ui->menuTest->addMenu(pgeEngine, "PGE Engine");
+        QMenu *pgeEngineMenu = ui->menuTest->addMenu(pgeEngine, "Moondust Engine [ALPHA]");
         ui->menuTest->insertMenu(menuNext, pgeEngineMenu);
 
         m_testPGE->initMenu(pgeEngineMenu);

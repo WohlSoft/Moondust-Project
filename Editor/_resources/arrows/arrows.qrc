@@ -1,0 +1,20 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/arrows">
+        <file>black_down.png</file>
+        <file>black_left.png</file>
+        <file>black_right.png</file>
+        <file>black_up.png</file>
+        <file>box.png</file>
+        <file>green_down.png</file>
+        <file>green_left.png</file>
+        <file>green_right.png</file>
+        <file>green_up.png</file>
+        <file>red_down.png</file>
+        <file>red_left.png</file>
+        <file>red_right.png</file>
+        <file>red_up.png</file>
+        <file>warp_arrow_enter.png</file>
+        <file>warp_arrow_exit.png</file>
+    </qresource>
+</RCC>

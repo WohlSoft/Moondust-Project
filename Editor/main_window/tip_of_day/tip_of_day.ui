@@ -14,7 +14,7 @@
    <string>Tip of day</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../_resources/editor.qrc">
+   <iconset resource="../../_resources/appicon/appicon.qrc">
     <normaloff>:/appicon/app.ico</normaloff>:/appicon/app.ico</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -30,7 +30,7 @@
       <enum>Qt::AutoText</enum>
      </property>
      <property name="pixmap">
-      <pixmap resource="../../_resources/editor.qrc">:/appicon/48.png</pixmap>
+      <pixmap resource="../../_resources/appicon/appicon.qrc">:/appicon/48.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>false</bool>
@@ -108,7 +108,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../_resources/editor.qrc"/>
+  <include location="../../_resources/appicon/appicon.qrc"/>
  </resources>
  <connections>
   <connection>

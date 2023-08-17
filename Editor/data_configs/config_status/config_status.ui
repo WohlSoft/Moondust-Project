@@ -20,7 +20,7 @@
    <string>Current configuration status</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../_resources/editor.qrc">
+   <iconset resource="../../_resources/appicon/appicon.qrc">
     <normaloff>:/appicon/48.png</normaloff>:/appicon/48.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -301,7 +301,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../_resources/editor.qrc"/>
+  <include location="../../_resources/appicon/appicon.qrc"/>
  </resources>
  <connections>
   <connection>

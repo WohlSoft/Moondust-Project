@@ -1,0 +1,7 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/tips">
+        <file>tips_en.html</file>
+        <file>tips_ru.html</file>
+    </qresource>
+</RCC>

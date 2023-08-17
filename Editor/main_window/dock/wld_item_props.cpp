@@ -62,20 +62,20 @@ WLD_ItemProps::WLD_ItemProps(QWidget *parent) :
     m_exitButtons[EXITCODE_BOTTOM] = ui->WLD_PROPS_ExitBottom;
 
     // Any
-    m_exitButtonIcons[EXITCODE_LEFT][0] = QIcon(":/arrows/arrows/red_left.png");
-    m_exitButtonIcons[EXITCODE_RIGHT][0] = QIcon(":/arrows/arrows/red_right.png");
-    m_exitButtonIcons[EXITCODE_TOP][0] = QIcon(":/arrows/arrows/red_up.png");
-    m_exitButtonIcons[EXITCODE_BOTTOM][0] = QIcon(":/arrows/arrows/red_down.png");
+    m_exitButtonIcons[EXITCODE_LEFT][0] = QIcon(":/arrows/red_left.png");
+    m_exitButtonIcons[EXITCODE_RIGHT][0] = QIcon(":/arrows/red_right.png");
+    m_exitButtonIcons[EXITCODE_TOP][0] = QIcon(":/arrows/red_up.png");
+    m_exitButtonIcons[EXITCODE_BOTTOM][0] = QIcon(":/arrows/red_down.png");
     // None
-    m_exitButtonIcons[EXITCODE_LEFT][1] = QIcon(":/arrows/arrows/black_left.png");
-    m_exitButtonIcons[EXITCODE_RIGHT][1] = QIcon(":/arrows/arrows/black_right.png");
-    m_exitButtonIcons[EXITCODE_TOP][1] = QIcon(":/arrows/arrows/black_up.png");
-    m_exitButtonIcons[EXITCODE_BOTTOM][1] = QIcon(":/arrows/arrows/black_down.png");
+    m_exitButtonIcons[EXITCODE_LEFT][1] = QIcon(":/arrows/black_left.png");
+    m_exitButtonIcons[EXITCODE_RIGHT][1] = QIcon(":/arrows/black_right.png");
+    m_exitButtonIcons[EXITCODE_TOP][1] = QIcon(":/arrows/black_up.png");
+    m_exitButtonIcons[EXITCODE_BOTTOM][1] = QIcon(":/arrows/black_down.png");
     // Code
-    m_exitButtonIcons[EXITCODE_LEFT][2] = QIcon(":/arrows/arrows/green_left.png");
-    m_exitButtonIcons[EXITCODE_RIGHT][2] = QIcon(":/arrows/arrows/green_right.png");
-    m_exitButtonIcons[EXITCODE_TOP][2] = QIcon(":/arrows/arrows/green_up.png");
-    m_exitButtonIcons[EXITCODE_BOTTOM][2] = QIcon(":/arrows/arrows/green_down.png");
+    m_exitButtonIcons[EXITCODE_LEFT][2] = QIcon(":/arrows/green_left.png");
+    m_exitButtonIcons[EXITCODE_RIGHT][2] = QIcon(":/arrows/green_right.png");
+    m_exitButtonIcons[EXITCODE_TOP][2] = QIcon(":/arrows/green_up.png");
+    m_exitButtonIcons[EXITCODE_BOTTOM][2] = QIcon(":/arrows/green_down.png");
 
     for(size_t i = 0; i < 4; ++i)
     {

@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
  <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
-	<!-- Internal PGE file formats-->
+	<!-- Internal Moondust file formats-->
    <mime-type type="application/x-pgex-level">
       <icon name="x-application-pgex-level"/>
-      <comment>PGE Level file</comment>
-      <comment xml:lang="ru">Файл Уровня PGE</comment>
+      <comment>Moondust Level file</comment>
+      <comment xml:lang="ru">Файл Уровня Moondust</comment>
       <glob pattern="*.lvlx"/>
    </mime-type>
    <mime-type type="application/x-pgex-world">
       <icon name="x-application-pgex-world"/>
-      <comment>PGE World Map file</comment>
-      <comment xml:lang="ru">Файл Карты Мира PGE</comment>
+      <comment>Moondust World Map file</comment>
+      <comment xml:lang="ru">Файл Карты Мира Moondust</comment>
       <glob pattern="*.wldx"/>
    </mime-type>
 	<!-- Legacy SMBX file formats-->

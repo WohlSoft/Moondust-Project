@@ -79,6 +79,17 @@ static bool xCopyFile(const QString &src, const QString &target)
     return ret;
 }
 
+static void xRemoveFile(const QString &target)
+{
+    if(QFile::exists(target))
+    {
+        if(QFile::remove(target))
+            qDebug() << "Deleted legacy file " << target;
+        else
+            qWarning() << "Failed to delete file" << target;
+    }
+}
+
 static bool xRunCommand(QString command, const QStringList &args)
 {
     QProcess xdg;
@@ -118,41 +129,60 @@ static bool xInstallIconResource(QString context, int iconSize, QString iconName
     return xRunCommand("xdg-icon-resource", args);
 }
 
+static bool xUnInstallIconResource(QString context, int iconSize, QString iconName, QString mimeName)
+{
+    QStringList args;
+    args << "uninstall";
+    args << "--context";
+    args << context;
+    args << "--size";
+    args << QString::number(iconSize);
+    args << QDir::home().absolutePath() + "/.local/share/icons/" + iconName.arg(iconSize);
+    args << mimeName;
+
+    return xRunCommand("xdg-icon-resource", args);
+}
+
 static bool xIconSize(int iconSize)
 {
     bool success = true;
     QString home = QDir::home().absolutePath();
 
-    if(success) success = xCopyFile(QString(":/_files/_files/file_lvl/file_lvl_%1.png")
+    // Clean-up legacy resources
+    xRemoveFile(QString("%1/.local/share/icons/PgeEditor-%2.png").arg(home).arg(iconSize));
+    xUnInstallIconResource("apps", iconSize, "PgeEditor-%1.png", "PgeEditor");
+
+    // Install new resources
+    if(success) success = xCopyFile(QString(":/files/lvl/lvl-%1.png")
                                             .arg(iconSize),
                                             QString("%1/.local/share/icons/smbx64-level-%2.png")
                                             .arg(home).arg(iconSize));
 
-    if(success) success = xCopyFile(QString(":/_files/_files/file_lvlx/file_lvlx_%1.png")
+    if(success) success = xCopyFile(QString(":/files/lvlx/lvlx-%1.png")
                                             .arg(iconSize),
                                             QString("%1/.local/share/icons/pgex-level-%2.png")
                                             .arg(home).arg(iconSize));
 
-    if(success) success = xCopyFile(QString(":/_files/_files/file_wld/file_wld_%1.png")
+    if(success) success = xCopyFile(QString(":/files/wld/wld-%1.png")
                                             .arg(iconSize),
                                             QString("%1/.local/share/icons/smbx64-world-%2.png")
                                             .arg(home).arg(iconSize));
 
-    if(success) success = xCopyFile(QString(":/_files/_files/file_wldx/file_wldx_%1.png")
+    if(success) success = xCopyFile(QString(":/files/wldx/wldx-%1.png")
                                             .arg(iconSize),
                                             QString("%1/.local/share/icons/pgex-world-%2.png")
                                             .arg(home).arg(iconSize));
 
-    if(success) success = xCopyFile(QString(":images/cat_builder/cat_builder_%1.png")
+    if(success) success = xCopyFile(QString(":/appicon/%1.png")
                                             .arg(iconSize),
-                                            QString("%1/.local/share/icons/PgeEditor-%2.png")
+                                            QString("%1/.local/share/icons/MoondustEditor-%2.png")
                                             .arg(home).arg(iconSize));
 
     if(success) success = xInstallIconResource("mimetypes", iconSize, "smbx64-level-%1.png", "x-application-smbx64-level");
     if(success) success = xInstallIconResource("mimetypes", iconSize, "smbx64-world-%1.png", "x-application-smbx64-world");
     if(success) success = xInstallIconResource("mimetypes", iconSize, "pgex-level-%1.png", "x-application-pgex-level");
     if(success) success = xInstallIconResource("mimetypes", iconSize, "pgex-world-%1.png", "x-application-pgex-world");
-    if(success) success = xInstallIconResource("apps", iconSize, "PgeEditor-%1.png", "PgeEditor");
+    if(success) success = xInstallIconResource("apps", iconSize, "MoondustEditor-%1.png", "MoondustEditor");
 
     return success;
 }
@@ -214,6 +244,7 @@ bool Installer::associateFiles_thread()
         l.write(QByteArray(raw.toStdString().c_str()));
         l.close();
     }
+
     success = w.open(QIODevice::WriteOnly);
     if(success)
     {
@@ -223,6 +254,7 @@ bool Installer::associateFiles_thread()
         w.write(QByteArray(raw.toStdString().c_str()));
         w.close();
     }
+
     success = lx.open(QIODevice::WriteOnly);
     if(success)
     {
@@ -232,6 +264,7 @@ bool Installer::associateFiles_thread()
         l.write(QByteArray(raw.toStdString().c_str()));
         l.close();
     }
+
     success = wx.open(QIODevice::WriteOnly);
     if(success)
     {
@@ -244,8 +277,8 @@ bool Installer::associateFiles_thread()
 
 
     // file extension(s)
-    registry_hkcu.setValue("Software/Classes/.lvlx/Default", "PGEWohlstand.Level"); //Reserved
-    registry_hkcu.setValue("Software/Classes/.wldx/Default", "PGEWohlstand.World"); //Reserved
+    registry_hkcu.setValue("Software/Classes/.lvlx/Default", "PGEWohlstand.Level");
+    registry_hkcu.setValue("Software/Classes/.wldx/Default", "PGEWohlstand.World");
     registry_hkcu.setValue("Software/Classes/.lvl/Default", "SMBX64.Level");
     registry_hkcu.setValue("Software/Classes/.wld/Default", "SMBX64.World");
 
@@ -309,7 +342,7 @@ bool Installer::associateFiles_thread()
     ret    += system("/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -domain local -domain system -domain user");
 
     success = (ret == 0); // remove this when associator was created
-    #elif defined Q_OS_ANDROID
+#elif defined Q_OS_ANDROID
     //Is not supported yet :P
     success = false;
 
@@ -321,21 +354,26 @@ bool Installer::associateFiles_thread()
     if(success) success = QDir().mkpath(home + "/.local/share/applications");
     if(success) success = QDir().mkpath(home + "/.local/share/icons");
 
-    xCopyFile(":/_files/_files/pge-project-mimeinfo.xml",
-              home + "/.local/share/mime/packages/pge-project-mimeinfo.xml");
+    // Remove legacy file
+    xRemoveFile(home + "/.local/share/mime/packages/pge-project-mimeinfo.xml");
+    xRemoveFile(home + "/.local/share/applications/pge_editor.desktop");
+
+    // Copy new file
+    xCopyFile(":/files/moondust-project-mimeinfo.xml",
+              home + "/.local/share/mime/packages/moondust-project-mimeinfo.xml");
 
     if(success) success = xIconSize(16);
     if(success) success = xIconSize(32);
     if(success) success = xIconSize(48);
     if(success) success = xIconSize(256);
 
-    QFile shortcut(":/_files/_files/pge_editor.desktop");
+    QFile shortcut(":/files/moondust_editor.desktop");
     if(success) success = shortcut.open(QFile::ReadOnly | QFile::Text);
     if(success)
     {
         QTextStream shtct(&shortcut);
         QString shortcut_text = shtct.readAll();
-        QFile saveAs(home + "/.local/share/applications/pge_editor.desktop");
+        QFile saveAs(home + "/.local/share/applications/moondust_editor.desktop");
 
         if(success) success = saveAs.open(QFile::WriteOnly | QFile::Text);
         if(success) QTextStream(&saveAs) << shortcut_text.arg(ApplicationPath_x);
