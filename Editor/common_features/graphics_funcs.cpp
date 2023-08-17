@@ -346,7 +346,7 @@ void GraphicsHelps::squareImageR(QPixmap &imageInOut, QSize targetSize)
 
 QPixmap GraphicsHelps::drawDegitFont(int number)
 {
-    QPixmap font = QPixmap(":/fonts/digits.png");
+    QPixmap font = QPixmap(":/fonts/font_digits.png");
     QString text = QString::number(number);
     QPixmap img(text.size() * 18, 16);
     img.fill(Qt::transparent);
