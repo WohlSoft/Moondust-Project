@@ -1507,10 +1507,6 @@ therefore you can use same link to get updated version</source>
         <translation>Une interface classique qui sera familière aux utilisateurs de longue date de l&apos;ancien éditeur SMBX.</translation>
     </message>
     <message>
-        <source>Welcome to PGE Editor!</source>
-        <translation>Bienvenue dans l&apos;Éditeur Moondust !</translation>
-    </message>
-    <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
 sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 &lt;br/&gt;
@@ -1524,6 +1520,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet éditeur vous permet également de sélectionner plusieurs objets à la fois !&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Astuce 3 :&lt;/b&gt; Utilisez le bouton central de la souris pour basculer entre le placement de l&apos;objet sélectionné et la copie d&apos;un groupe d&apos;objets !&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Welcome to Moondust Editor!</source>
+        <translation>Bienvenue dans l&apos;Éditeur Moondust !</translation>
     </message>
 </context>
 <context>
