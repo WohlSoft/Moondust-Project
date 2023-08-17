@@ -100,22 +100,22 @@
         <translation>Frame delay:</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="357"/>
+        <location filename="../animator/animation_edit.cpp" line="358"/>
         <source>Empty animation name</source>
         <translation>Empty animation name</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="358"/>
+        <location filename="../animator/animation_edit.cpp" line="359"/>
         <source>Animation name is empty!</source>
         <translation>Animation name is empty!</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="368"/>
+        <location filename="../animator/animation_edit.cpp" line="369"/>
         <source>Animation exist</source>
         <translation>Animation exist</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="369"/>
+        <location filename="../animator/animation_edit.cpp" line="370"/>
         <source>Animation with &apos;%1&apos; name already exist!</source>
         <translation>Animation with &apos;%1&apos; name already exist!</translation>
     </message>
@@ -690,17 +690,17 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation type="vanished">Saved</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="336"/>
+        <location filename="../main/calibration_file.cpp" line="349"/>
         <source>Configuration saved in file</source>
         <translation>Configuration saved in file</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="639"/>
+        <location filename="../main/calibration_file.cpp" line="676"/>
         <source>Bad data generated</source>
         <translation>Bad data generated</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="640"/>
+        <location filename="../main/calibration_file.cpp" line="677"/>
         <source>Some generated values are out of range, SMBX-38A may crash. File will not be patched.</source>
         <translation>Some generated values are out of range, SMBX-38A may crash. File will not be patched.</translation>
     </message>
@@ -907,17 +907,17 @@ If you want to use this sprite in vanilla SMBX, please, don&apos;t edit these se
 Do you want to continue?</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="81"/>
+        <location filename="../main/settings.cpp" line="85"/>
         <source>Graphical editor is not specified</source>
         <translation>Graphical editor is not specified</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="82"/>
+        <location filename="../main/settings.cpp" line="86"/>
         <source>External graphics editor application is not specified. Do you want to select it now?</source>
         <translation>External graphics editor application is not specified. Do you want to select it now?</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="104"/>
+        <location filename="../main/settings.cpp" line="108"/>
         <source>Select a path to the graphical editor executable</source>
         <comment>File dialog title</comment>
         <translation>Select a path to the graphical editor executable</translation>

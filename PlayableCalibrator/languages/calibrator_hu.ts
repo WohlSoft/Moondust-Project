@@ -69,22 +69,22 @@
         <translation>Képkockák (jobbra)</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="357"/>
+        <location filename="../animator/animation_edit.cpp" line="358"/>
         <source>Empty animation name</source>
         <translation>Animáció nevének ürítése</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="358"/>
+        <location filename="../animator/animation_edit.cpp" line="359"/>
         <source>Animation name is empty!</source>
         <translation>Az animáció neve üres!</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="368"/>
+        <location filename="../animator/animation_edit.cpp" line="369"/>
         <source>Animation exist</source>
         <translation>Az animáció már létezik</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="369"/>
+        <location filename="../animator/animation_edit.cpp" line="370"/>
         <source>Animation with &apos;%1&apos; name already exist!</source>
         <translation>Egy animáció a(z) „%1”néven már létezik!</translation>
     </message>
@@ -615,32 +615,32 @@ Jobb gomb - mozgasd a jobb alsó satkat a levágáshoz.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="336"/>
+        <location filename="../main/calibration_file.cpp" line="349"/>
         <source>Configuration saved in file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="639"/>
+        <location filename="../main/calibration_file.cpp" line="676"/>
         <source>Bad data generated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="640"/>
+        <location filename="../main/calibration_file.cpp" line="677"/>
         <source>Some generated values are out of range, SMBX-38A may crash. File will not be patched.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="81"/>
+        <location filename="../main/settings.cpp" line="85"/>
         <source>Graphical editor is not specified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="82"/>
+        <location filename="../main/settings.cpp" line="86"/>
         <source>External graphics editor application is not specified. Do you want to select it now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="104"/>
+        <location filename="../main/settings.cpp" line="108"/>
         <source>Select a path to the graphical editor executable</source>
         <comment>File dialog title</comment>
         <translation type="unfinished"></translation>

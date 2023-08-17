@@ -122,72 +122,72 @@
         <translation>Закрити</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="44"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="199"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="45"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="210"/>
         <source>Start</source>
         <translation>Почати</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="137"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="138"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="144"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="241"/>
         <source>SoX error</source>
         <translation>Помилка SoX</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="138"/>
         <source>SoX binary path is not defined.
 Please set SoX path first</source>
         <translation>Шлях до виконуваного файлу SoX не вказаний
 Будь ласка, вкажіть шлях SoX</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="137"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="144"/>
         <source>SoX binary path is wrong.
 Please set SoX path first</source>
         <translation>Невірний шлях виконуваного файлу SoX.
 Будь ласка, змініть шлях SoX</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="171"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="488"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="178"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="503"/>
         <source>Nothing to do</source>
         <translation>Нічого робити</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="171"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="178"/>
         <source>No files to convert</source>
         <translation>Немає файлів для конвертації</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="175"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="182"/>
         <source>Stop</source>
         <translation>Зупинити</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="241"/>
         <source>Operation cancaled</source>
         <translation>Операція скасована</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="297"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="308"/>
         <source>SoX was crashed</source>
         <translation>SoX зламався :(</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="307"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="318"/>
         <source>SoX returned non-zero code: %1
 %2</source>
         <translation>SoX завершився з ненульовим кодом: %1
 %2</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="339"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="354"/>
         <source>All works completed</source>
         <translation>Вся робота виконана</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="340"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="355"/>
         <source>All files successfully converted!
 Converted files: %1
 Overwritten levels: %2
@@ -200,32 +200,32 @@ Overwritten worlds: %3
 %4</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="488"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="503"/>
         <source>Tasks are not defined. Nothing to do.</source>
         <translation>Задачі не вказані, нічого робити.</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="549"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="566"/>
         <source>Open SoX binary path</source>
         <translation>Відкрити шлях до виконуваного файлу SoX</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="566"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="583"/>
         <source>Open FFMPEG binary path</source>
         <translation>Обрати шлях до виконувального файлу FFMPEG</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="579"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="596"/>
         <source>Add file to convert</source>
         <translation>Додати файл для конвертації</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="617"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="634"/>
         <source>Selecting a level file to convert custom music</source>
         <translation>Вибір рівня для конвертування корист. музики</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="630"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="647"/>
         <source>Open episode path to convert entire music set</source>
         <translation>Відкрити епізод, для конвертування всієї музики</translation>
     </message>
@@ -347,32 +347,32 @@ Overwritten worlds: %3
         <translation>Не вказаний шлях до епізоду. Будь ласка, виберіть цільовий епізод.</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="308"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="316"/>
         <source>Worker error</source>
         <translation>Помилка обробника</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="309"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="317"/>
         <source>Can&apos;t initialize job because %1</source>
         <translation>Неможливо ініціювати задачу, тому що %1</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="325"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="338"/>
         <source>Work finished</source>
         <translation>Робота виконана</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="325"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="338"/>
         <source>Case sensitive fixing work has been converted!</source>
         <translation>Робота по виправленню реєстрової залежності завершена!</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="328"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="341"/>
         <source>Error occouped while work process</source>
         <translation>Під час роботи сталася помилка</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="329"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="342"/>
         <source>Case fixer was aborted with an error: %1</source>
         <translation>Робота була завершена з помилкою: %1</translation>
     </message>
@@ -858,37 +858,37 @@ Supported formats:
         <translation>Не вказаний шлях до епізоду. Будь ласка, виберіть цільовий епізод.</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="305"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="314"/>
         <source>Worker error</source>
         <translation>Помилка обробника</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="306"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="315"/>
         <source>Can&apos;t initialize job because %1</source>
         <translation>Неможливо ініціалізувати задачу, тому що %1</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="316"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
         <source>Open target episode path</source>
         <translation>Вказати шлях до цільового епізоду</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="347"/>
         <source>Work finished</source>
         <translation>Робота виповнена</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="347"/>
         <source>Episode has been converted!</source>
         <translation>Епізод конвертовано!</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="336"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="350"/>
         <source>Error occouped while work process</source>
         <translation>Сталася помилка під час робочого процесу</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="337"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="351"/>
         <source>Episode conversion aborted with error: %1</source>
         <translation>Конвертування епізоду перервано помилкою: %1</translation>
     </message>
@@ -995,7 +995,7 @@ Supported formats:
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
-        <location filename="../Graphics/gifs2png.cpp" line="285"/>
+        <location filename="../Graphics/gifs2png.cpp" line="288"/>
         <source>Start</source>
         <translation>Почати</translation>
     </message>
@@ -1088,7 +1088,7 @@ Supported formats:
         <translation>Конвертування завершилось з помилками. У вихідному звіті можна побачити всі подробиці.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="283"/>
+        <location filename="../Graphics/gifs2png.cpp" line="286"/>
         <source>Stop</source>
         <translation>Зупинити</translation>
     </message>

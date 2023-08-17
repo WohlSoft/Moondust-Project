@@ -100,22 +100,22 @@
         <translation>Длительность кадра:</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="357"/>
+        <location filename="../animator/animation_edit.cpp" line="358"/>
         <source>Empty animation name</source>
         <translation>Пустое название анимации</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="358"/>
+        <location filename="../animator/animation_edit.cpp" line="359"/>
         <source>Animation name is empty!</source>
         <translation>Название анимации пустое!</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="368"/>
+        <location filename="../animator/animation_edit.cpp" line="369"/>
         <source>Animation exist</source>
         <translation>Анимация существует</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="369"/>
+        <location filename="../animator/animation_edit.cpp" line="370"/>
         <source>Animation with &apos;%1&apos; name already exist!</source>
         <translation>Анимация под названием &quot;%1&quot; уже существует!</translation>
     </message>
@@ -690,17 +690,17 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation type="vanished">Сохранено</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="336"/>
+        <location filename="../main/calibration_file.cpp" line="349"/>
         <source>Configuration saved in file</source>
         <translation>Конфигурация сохранена в файле</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="639"/>
+        <location filename="../main/calibration_file.cpp" line="676"/>
         <source>Bad data generated</source>
         <translation>Сгенерированы испорченные данные</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="640"/>
+        <location filename="../main/calibration_file.cpp" line="677"/>
         <source>Some generated values are out of range, SMBX-38A may crash. File will not be patched.</source>
         <translation>Некоторые сгенерированные значения находятся за пределами диапазонов, SMBX-38A может сломаться. Файл останется неизменным.</translation>
     </message>
@@ -907,17 +907,17 @@ Do you want to continue?</source>
 Продолжить?</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="81"/>
+        <location filename="../main/settings.cpp" line="85"/>
         <source>Graphical editor is not specified</source>
         <translation>Графический редактор не назначен</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="82"/>
+        <location filename="../main/settings.cpp" line="86"/>
         <source>External graphics editor application is not specified. Do you want to select it now?</source>
         <translation>Приложение внешнего графического редактора не назначено. Хотите выбрать его сейчас?</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="104"/>
+        <location filename="../main/settings.cpp" line="108"/>
         <source>Select a path to the graphical editor executable</source>
         <comment>File dialog title</comment>
         <translation>Выберите путь к приложению графического редактора</translation>

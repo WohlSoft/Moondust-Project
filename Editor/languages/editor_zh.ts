@@ -364,15 +364,18 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>分钟自动保存文件</translation>
     </message>
     <message>
-        <source>Locked Item Opacity</source>
+        <source>Opacity of locked items</source>
+        <comment>The title of group where user can set up the opacity level of locked items</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Opacity</source>
+        <comment>Opacity of locked items (label text)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
+        <comment>Explanation for the opacity of locked items</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
