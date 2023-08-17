@@ -741,7 +741,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
        <item row="0" column="0">
         <widget class="QGroupBox" name="groupBox_12">
          <property name="title">
-          <string>Locked Item Opacity</string>
+          <string comment="The title of group where user can set up the opacity level of locked items">Opacity of locked items</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
@@ -755,14 +755,14 @@ like when choosing an item from the item toolbox or from the tileset item box.</
                </size>
               </property>
               <property name="text">
-               <string>Opacity</string>
+               <string comment="Opacity of locked items (label text)">Opacity</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QDoubleSpinBox" name="lockedItemOpacity">
               <property name="toolTip">
-               <string>Defines the opacity level that will be applied to all locked elements of the scene.</string>
+               <string comment="Explanation for the opacity of locked items">Defines the opacity level that will be applied to all locked elements of the scene.</string>
               </property>
               <property name="minimum">
                <double>0.000000000000000</double>
