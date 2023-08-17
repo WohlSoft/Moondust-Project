@@ -87,6 +87,7 @@ private:
     QGraphicsItemGroup     *m_grp = nullptr;
     QGraphicsItem          *m_includedNPC = nullptr;
     QGraphicsPixmapItem    *m_generatorArrow = nullptr;
+    QGraphicsPixmapItem    *m_randomDirection = nullptr;
 
     QRectF  m_offseted;
     int     m_direction = -1;

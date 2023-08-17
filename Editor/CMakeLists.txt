@@ -196,7 +196,7 @@ set(RESOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/_resources/files/files.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/_resources/fonts/fonts.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/_resources/lunalua/lunalua.qrc
-    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/npc/pnc.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/npc/npc.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/_resources/sections/sections.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/_resources/tips/tips.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/_resources/toolbar/toolbar.qrc

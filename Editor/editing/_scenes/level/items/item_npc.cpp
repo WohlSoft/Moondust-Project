@@ -66,6 +66,7 @@ void ItemNPC::construct()
     m_offset_y = 0;
 
     m_generatorArrow = nullptr;
+    m_randomDirection = nullptr;
     m_includedNPC = nullptr;
     m_animated = false;
     m_direction = -1;
@@ -87,6 +88,8 @@ void ItemNPC::construct()
 ItemNPC::~ItemNPC()
 {
     if(m_includedNPC != nullptr) delete m_includedNPC;
+    if(m_randomDirection != nullptr) delete m_randomDirection;
+    if(m_generatorArrow != nullptr) delete m_generatorArrow;
     if(m_grp != nullptr) delete m_grp;
     if(!m_DisableScene) m_scene->unregisterElement(this);
     if(_internal_animator) delete _internal_animator;
@@ -553,6 +556,10 @@ void ItemNPC::setMetaSignsVisibility(bool visible)
 {
     if(m_includedNPC && !m_localProps.setup.container_show_contents)
         m_includedNPC->setVisible(visible);
+
+    if(m_randomDirection) // Sign of random
+        m_randomDirection->setVisible(visible);
+
     if(m_data.generator) //Generator NPCs are meta-signs by theme selves
         setVisible(visible);
 }
@@ -585,10 +592,29 @@ void ItemNPC::setLegacyBoss(bool boss)
 void ItemNPC::changeDirection(int dir)
 {
     m_data.direct = dir;
+
+    if(m_randomDirection != nullptr)
+    {
+        m_grp->removeFromGroup(m_randomDirection);
+        m_scene->removeItem(m_randomDirection);
+        delete m_randomDirection;
+        m_randomDirection = nullptr;
+    }
+
     if(dir == 0) //if direction=random
     {
         dir = randomDirection(); //set randomly 1 or -1
+        m_randomDirection = new QGraphicsPixmapItem;
+        m_randomDirection->setPixmap(QPixmap(":/npc/random_direction.png"));
+        m_scene->addItem(m_randomDirection);
+        m_randomDirection->setOpacity(qreal(0.9));
+        m_randomDirection->setPos(
+            this->scenePos().x() + ((qreal(m_localProps.setup.width) - 40.0) / 2.0),
+            this->scenePos().y() - 32.0
+        );
+        m_grp->addToGroup(m_randomDirection);
     }
+
     m_direction = dir;
     refreshOffsets();
     update();
@@ -745,12 +771,9 @@ void ItemNPC::setGenerator(bool enable, int direction, int type, bool init)
 
         //Default Generator arrow NPC pos
         m_generatorArrow->setPos(
-            (
-                offset.x() + this->scenePos().x() + qreal((qreal(m_localProps.setup.width) - qreal(32)) / qreal(2))
-            ),
-            (
-                offset.y() + this->scenePos().y() + qreal((qreal(m_localProps.setup.height) - qreal(32)) / qreal(2))
-            ));
+            offset.x() + this->scenePos().x() + ((qreal(m_localProps.setup.width) - 32.0) / 2.0),
+            offset.y() + this->scenePos().y() + ((qreal(m_localProps.setup.height) - 32.0) / 2.0)
+        );
 
         m_grp->addToGroup(m_generatorArrow);
 
@@ -802,6 +825,7 @@ void ItemNPC::arrayApply()
         m_scene->m_data->npc[m_data.meta.index] = m_data; //apply current npcData
     }
     else
+    {
         for(int i = 0; i < m_scene->m_data->npc.size(); i++)
         {
             //after find it into array
@@ -812,6 +836,8 @@ void ItemNPC::arrayApply()
                 break;
             }
         }
+    }
+
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
 
@@ -833,12 +859,12 @@ void ItemNPC::removeFromArray()
         if(m_data.meta.array_id == m_scene->m_data->npc[m_data.meta.index].meta.array_id)
             found = true;
     }
-    if(found)
-    {
-        //directlry
+
+    if(found) //directlry
         m_scene->m_data->npc.removeAt(m_data.meta.index);
-    }
     else
+    {
+        // Find in the list
         for(int i = 0; i < m_scene->m_data->npc.size(); i++)
         {
             if(m_scene->m_data->npc[i].meta.array_id == m_data.meta.array_id)
@@ -847,6 +873,7 @@ void ItemNPC::removeFromArray()
                 break;
             }
         }
+    }
 
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
@@ -918,7 +945,9 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bo
             // Zero custom values are not used (for LVLX)
             if(!m_localProps.setup.special_option)
                 m_data.special_data = 0;
-            else // When settings of special value aren't matching
+            else
+            {
+                // When settings of special value aren't matching
                 if(oldProps.isValid &&
                    (m_localProps.setup.special_name != oldProps.setup.special_name ||
                     m_localProps.setup.special_type != oldProps.setup.special_type ||
@@ -976,6 +1005,7 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bo
                         }
                     }
                 }
+            }
         }
 
         if((m_localProps.setup.container) && (m_data.contents > 0))
