@@ -122,72 +122,72 @@
         <translation>Zamknij</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="44"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="199"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="45"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="210"/>
         <source>Start</source>
         <translation>Uruchom</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="137"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="138"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="144"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="241"/>
         <source>SoX error</source>
         <translation>Błąd SoX&apos;a</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="138"/>
         <source>SoX binary path is not defined.
 Please set SoX path first</source>
         <translation>Ścieżka binarna SoX&apos;a nie została zdefiniowana.
 Proszę ustaw najpierw ścieżkę SoX&apos;a</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="137"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="144"/>
         <source>SoX binary path is wrong.
 Please set SoX path first</source>
         <translation>Ścieżka binarna SoX&apos;a jest zła.
 Proszę ustaw najpierw ścieżkę SoX&apos;a</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="171"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="488"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="178"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="503"/>
         <source>Nothing to do</source>
         <translation>Nie ma nic do zrobienia</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="171"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="178"/>
         <source>No files to convert</source>
         <translation>Nie ma plików do przekonwertowania</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="175"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="182"/>
         <source>Stop</source>
         <translation>Zatrzymaj</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="241"/>
         <source>Operation cancaled</source>
         <translation>Operacja została anulowana</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="297"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="308"/>
         <source>SoX was crashed</source>
         <translation>SoX został uszkodzony</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="307"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="318"/>
         <source>SoX returned non-zero code: %1
 %2</source>
         <translation>SoX powrócił do kodu niezerowego:%1
 %2</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="339"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="354"/>
         <source>All works completed</source>
         <translation>Wszystkie zadania zostały wykonane</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="340"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="355"/>
         <source>All files successfully converted!
 Converted files: %1
 Overwritten levels: %2
@@ -200,32 +200,32 @@ Nadpisane światy: %3
 %4</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="488"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="503"/>
         <source>Tasks are not defined. Nothing to do.</source>
         <translation>Zadania nie zostały zdefiniowane. Nie ma co robić.</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="549"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="566"/>
         <source>Open SoX binary path</source>
         <translation>Otwórz ścieżkę binarną SoX&apos;a</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="566"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="583"/>
         <source>Open FFMPEG binary path</source>
         <translation>Otwórz ścieżkę binarną FFMPEG</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="579"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="596"/>
         <source>Add file to convert</source>
         <translation>Dodaj plik do przekonwertowania</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="617"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="634"/>
         <source>Selecting a level file to convert custom music</source>
         <translation>Wybór pliku poziomu do konwertowania niestandardowej muzyki</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="630"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="647"/>
         <source>Open episode path to convert entire music set</source>
         <translation>Otwórz ścieżkę epizodu, aby przekonwertować cały zestaw muzyki</translation>
     </message>
@@ -347,32 +347,32 @@ Nadpisane światy: %3
         <translation>Ścieżka epizodu nie została zadeklarowana. Proszę wybierz najpierw docelową ścieżkę odcinka.</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="308"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="316"/>
         <source>Worker error</source>
         <translation>Błąd pracownika</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="309"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="317"/>
         <source>Can&apos;t initialize job because %1</source>
         <translation>Nie można zainicjować pracy ponieważ %1</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="325"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="338"/>
         <source>Work finished</source>
         <translation>Praca skończona</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="325"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="338"/>
         <source>Case sensitive fixing work has been converted!</source>
         <translation>Konwersja uwzględniająca wielkość liter została przekształcona!</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="328"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="341"/>
         <source>Error occouped while work process</source>
         <translation>Wystąpił błąd podczas procesu pracy</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="329"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="342"/>
         <source>Case fixer was aborted with an error: %1</source>
         <translation>Podręczny naprawiacz został przerwany z błędem: %1</translation>
     </message>
@@ -858,37 +858,37 @@ Wspierane formaty:
         <translation>Scieżka epizodu nie została zadeklarowana. Proszę najpierw wybierz docelową ścieżkę odcinka.</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="305"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="314"/>
         <source>Worker error</source>
         <translation>Błąd pracownika</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="306"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="315"/>
         <source>Can&apos;t initialize job because %1</source>
         <translation>Nie można zainicjować pracy ponieważ %1</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="316"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
         <source>Open target episode path</source>
         <translation>Otwórz docelową ścieżkę epizodu</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="347"/>
         <source>Work finished</source>
         <translation>Praca skończona</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="347"/>
         <source>Episode has been converted!</source>
         <translation>Epizod został przekonwertowany!</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="336"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="350"/>
         <source>Error occouped while work process</source>
         <translation>Wystąpił błąd podczas procesu pracy</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="337"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="351"/>
         <source>Episode conversion aborted with error: %1</source>
         <translation>Konwersja epizodów została przerwana z błędem: %1</translation>
     </message>
@@ -995,7 +995,7 @@ Wspierane formaty:
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
-        <location filename="../Graphics/gifs2png.cpp" line="285"/>
+        <location filename="../Graphics/gifs2png.cpp" line="288"/>
         <source>Start</source>
         <translation>Uruchom</translation>
     </message>
@@ -1088,7 +1088,7 @@ Wspierane formaty:
         <translation>Konwersja została skończona z błędami. Proszę poszukaj bardziej szczegółowych informacji w dzienniku wyjściowym.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="283"/>
+        <location filename="../Graphics/gifs2png.cpp" line="286"/>
         <source>Stop</source>
         <translation>Zatrzymaj</translation>
     </message>

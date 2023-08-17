@@ -69,22 +69,22 @@
         <translation>动画延迟：</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="357"/>
+        <location filename="../animator/animation_edit.cpp" line="358"/>
         <source>Empty animation name</source>
         <translation>动画名称为空</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="358"/>
+        <location filename="../animator/animation_edit.cpp" line="359"/>
         <source>Animation name is empty!</source>
         <translation>动画名称为空！</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="368"/>
+        <location filename="../animator/animation_edit.cpp" line="369"/>
         <source>Animation exist</source>
         <translation>动画已存在</translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.cpp" line="369"/>
+        <location filename="../animator/animation_edit.cpp" line="370"/>
         <source>Animation with &apos;%1&apos; name already exist!</source>
         <translation>动画名称 &apos;%1&apos; 已存在！</translation>
     </message>
@@ -646,17 +646,17 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="vanished">已保存</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="336"/>
+        <location filename="../main/calibration_file.cpp" line="349"/>
         <source>Configuration saved in file</source>
         <translation>设置已保存到文件</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="639"/>
+        <location filename="../main/calibration_file.cpp" line="676"/>
         <source>Bad data generated</source>
         <translation>数据生成错误</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="640"/>
+        <location filename="../main/calibration_file.cpp" line="677"/>
         <source>Some generated values are out of range, SMBX-38A may crash. File will not be patched.</source>
         <translation>某些生成的值超出范围，可能造成 SMBX-38A 异常，操作已中断。</translation>
     </message>
@@ -851,17 +851,17 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>设置已更改，但未保存，您要保存更改吗？</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="81"/>
+        <location filename="../main/settings.cpp" line="85"/>
         <source>Graphical editor is not specified</source>
         <translation>未设置图像编辑器</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="82"/>
+        <location filename="../main/settings.cpp" line="86"/>
         <source>External graphics editor application is not specified. Do you want to select it now?</source>
         <translation>未设置外部图像编辑器目录，您现在要设置吗？</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="104"/>
+        <location filename="../main/settings.cpp" line="108"/>
         <source>Select a path to the graphical editor executable</source>
         <comment>File dialog title</comment>
         <translation>选择图像编辑器所在的文件夹</translation>

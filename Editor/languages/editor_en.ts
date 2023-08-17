@@ -366,16 +366,19 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>minutes</translation>
     </message>
     <message>
-        <source>Locked Item Opacity</source>
-        <translation>Locked Item Opacity</translation>
+        <source>Opacity of locked items</source>
+        <comment>The title of group where user can set up the opacity level of locked items</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Opacity</source>
-        <translation>Opacity</translation>
+        <comment>Opacity of locked items (label text)</comment>
+        <translation type="unfinished">Opacity</translation>
     </message>
     <message>
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
-        <translation>Defines the opacity level that will be applied to all locked elements of the scene.</translation>
+        <comment>Explanation for the opacity of locked items</comment>
+        <translation type="unfinished">Defines the opacity level that will be applied to all locked elements of the scene.</translation>
     </message>
 </context>
 <context>

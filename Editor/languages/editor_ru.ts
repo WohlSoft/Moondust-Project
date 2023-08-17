@@ -365,16 +365,19 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>минут</translation>
     </message>
     <message>
-        <source>Locked Item Opacity</source>
-        <translation>Заблокированные элементы</translation>
+        <source>Opacity of locked items</source>
+        <comment>The title of group where user can set up the opacity level of locked items</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Opacity</source>
-        <translation>Непрозрачность</translation>
+        <comment>Opacity of locked items (label text)</comment>
+        <translation type="unfinished">Непрозрачность</translation>
     </message>
     <message>
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
-        <translation>Определяет степень видимости (непрозрачности), применяемую ко всем заблокированным элементам на сцене.</translation>
+        <comment>Explanation for the opacity of locked items</comment>
+        <translation type="unfinished">Определяет степень видимости (непрозрачности), применяемую ко всем заблокированным элементам на сцене.</translation>
     </message>
 </context>
 <context>

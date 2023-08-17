@@ -201,6 +201,24 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>기본값</translation>
     </message>
     <message>
+        <location filename="../main_window/tools/app_settings.ui" line="744"/>
+        <source>Opacity of locked items</source>
+        <comment>The title of group where user can set up the opacity level of locked items</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="758"/>
+        <source>Opacity</source>
+        <comment>Opacity of locked items (label text)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="765"/>
+        <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
+        <comment>Explanation for the opacity of locked items</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../main_window/tools/app_settings.ui" line="799"/>
         <source>Classic Events tabs to auto-expand</source>
         <translation>자동 확장 할 클래식 이벤트 탭</translation>
@@ -305,21 +323,6 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <location filename="../main_window/tools/app_settings.ui" line="731"/>
         <source>Right</source>
         <translation>오른쪽</translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/app_settings.ui" line="744"/>
-        <source>Locked Item Opacity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/app_settings.ui" line="758"/>
-        <source>Opacity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/app_settings.ui" line="765"/>
-        <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="870"/>
@@ -592,91 +595,91 @@ like when choosing an item from the item toolbox or from the tileset item box.</
 (대상 형식을 선택하려면 탭 선택)</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="25"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="173"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="26"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="180"/>
         <source>Start</source>
         <translation>시작</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="123"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="131"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="208"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="221"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="236"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="130"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="138"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="215"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="228"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="243"/>
         <source>SoX error</source>
         <translation>SoX 에러</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="124"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="131"/>
         <source>SoX executable path is not defined.
 Please set SoX path first</source>
         <translation>SoX 실행 경로가 정의되지 않았습니다.
 먼저 SoX 경로를 설정하십시오</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="132"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="139"/>
         <source>SoX executable path is invalid.
 Please set SoX path first</source>
         <translation>SoX 실행 경로가 잘못되었습니다.
 먼저 SoX 경로를 설정하십시오</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="155"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="421"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="162"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="428"/>
         <source>Nothing to do.</source>
         <translation>처리할 파일이 없습니다.</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="156"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="163"/>
         <source>No files to convert</source>
         <translation>변환 할 파일이 없습니다</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="160"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="167"/>
         <source>Stop</source>
         <translation>중지</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="209"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="216"/>
         <source>Operation canceled</source>
         <translation>작업이 취소되었습니다</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="222"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="229"/>
         <source>Sorry, SoX has crashed</source>
         <translation>죄송합니다. SoX가 다운되었습니다</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="237"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="244"/>
         <source>SoX returned a non-zero exit code: %1
 %2</source>
         <translation>SoX가 0이 아닌 종료 코드를 반환했습니다 : % 1
 % 2</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="296"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="303"/>
         <source>Operation complete</source>
         <translation>작업 완료</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="297"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="304"/>
         <source>All files successfully converted!
 %1</source>
         <translation>모든 파일이 성공적으로 변환되었습니다!
 %1</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="422"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="429"/>
         <source>No tasks defined. Nothing to do.</source>
         <translation>정의 된 작업이 없습니다. 할 것이 없다.</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="458"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="465"/>
         <source>Open SoX executable path</source>
         <translation>SoX 실행 경로 열기</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="471"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="478"/>
         <source>Select file to convert</source>
         <translation>변환 할 파일 선택</translation>
     </message>
@@ -794,7 +797,7 @@ You also can double-click an item to scroll to its bookmarked position.</source>
         <translation>BookmarksBox 이동 …</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/bookmarks_box.cpp" line="247"/>
+        <location filename="../main_window/dock/bookmarks_box.cpp" line="254"/>
         <source>Rename Bookmark</source>
         <translation>북마크 이름 변경</translation>
     </message>
@@ -817,12 +820,12 @@ You also can double-click an item to scroll to its bookmarked position.</source>
         <translation>모든 스타트 업에게 물어보세요</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="363"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="366"/>
         <source>No config packs were found</source>
         <translation>구성 팩을 찾을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="369"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="372"/>
         <source>No configuration packages were found!&lt;br&gt;
 Please download and install them into this directory&lt;br&gt;
 &lt;br&gt;
@@ -836,46 +839,46 @@ You can use any configuration package here:&lt;br&gt;%2</source>
  여기에서 구성 패키지를 사용할 수 있습니다. &lt;br&gt; % 2</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="529"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="538"/>
         <source>Integrational configuration package is incompatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="530"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="539"/>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="540"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="549"/>
         <source>Configuration package is not configured!</source>
         <translation>구성 패키지가 구성되지 않았습니다!</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="541"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="550"/>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
         <translation>&quot;% 1&quot;구성 패키지가 아직 구성되지 않았습니다.
 구성 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="596"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="605"/>
         <source>Configuration script failed</source>
         <translation>구성 스크립트 실패</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="597"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="606"/>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
         <translation>구성 도구에서 오류가 발생했습니다 : % 2 줄에 % 1.
 파일 경로 : % 3</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="609"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="618"/>
         <source>No configuration needed</source>
         <translation>구성이 필요하지 않습니다</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="610"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="619"/>
         <source>This config pack has no configuring tool.</source>
         <translation>이 구성 팩에는 구성 도구가 없습니다.</translation>
     </message>
@@ -938,107 +941,107 @@ File path: %3</source>
         <translation>구성로드 오류 :</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="109"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="113"/>
         <source>Level: Blocks (%1/%2)</source>
         <translation>레벨 : 블록 (% 1 / % 2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="111"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="115"/>
         <source>Level: Background objects (%1/%2)</source>
         <translation>수준 : 배경 개체 (% 1 / % 2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="113"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="117"/>
         <source>Level: Background images (%1/%2)</source>
         <translation>레벨 : 배경 이미지 (% 1 / % 2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="115"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="119"/>
         <source>Level: NPCs (%1/%2)</source>
         <translation>레벨 : NPC (% 1 / % 2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="117"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="121"/>
         <source>Music (level) (%1/%2)</source>
         <translation>음악 (레벨) (% 1 / % 2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="118"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="122"/>
         <source>Music (world map) (%1/%2)</source>
         <translation>음악 (세계지도) (% 1 / % 2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="119"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="123"/>
         <source>Music (special) (%1/%2)</source>
         <translation>음악 (특수) (% 1 / % 2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="121"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="125"/>
         <source>Sounds (%1/%2)</source>
         <translation>소리 (% 1 / % 2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="123"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="127"/>
         <source>World map: Terrain tiles (%1/%2)</source>
         <translation>세계지도 : 지형 타일 (% 1 / % 2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="125"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="129"/>
         <source>World map: Scenery (%1/%2)</source>
         <translation>세계지도 : 풍경 (% 1 / % 2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="127"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="131"/>
         <source>World map: Path tiles (%1/%2)</source>
         <translation>세계지도 : 경로 타일 (% 1 / % 2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="129"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="133"/>
         <source>World map: Level entrance tiles (%1/%2)</source>
         <translation>세계지도 : 레벨 입구 타일 (% 1 / % 2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="131"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="135"/>
         <source>Default rotation rules (%1)</source>
         <translation>기본 순환 규칙 (% 1)</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="135"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="139"/>
         <source>Level data</source>
         <translation>레벨 데이터</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="136"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="140"/>
         <source>World map data</source>
         <translation>세계지도 데이터</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="137"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="141"/>
         <source>Characters</source>
         <translation>캐릭터</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="138"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="142"/>
         <source>Game worlds</source>
         <translation>게임 세계</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="139"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="143"/>
         <source>Music</source>
         <translation>음악</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="140"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="144"/>
         <source>Sounds</source>
         <translation>소리</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="141"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="145"/>
         <source>Custom data</source>
         <translation>커스텀 데이터</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_status/config_status.cpp" line="149"/>
+        <location filename="../data_configs/config_status/config_status.cpp" line="153"/>
         <source>[Error list is empty, congratulations!]</source>
         <translation>[오류 목록이 비어 있습니다. 축하합니다!]</translation>
     </message>
@@ -1628,12 +1631,12 @@ therefore you can use same link to get updated version</source>
         <translation>더하다</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/debugger.cpp" line="484"/>
+        <location filename="../main_window/dock/debugger.cpp" line="488"/>
         <source>Edit</source>
         <translation>편집하다</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/debugger.cpp" line="485"/>
+        <location filename="../main_window/dock/debugger.cpp" line="489"/>
         <source>Remove</source>
         <translation>풀다</translation>
     </message>
@@ -1671,87 +1674,87 @@ therefore you can use same link to get updated version</source>
         <translation>시스템 로그 지우기</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="201"/>
+        <location filename="../dev_console/devconsole.cpp" line="206"/>
         <source>Clear %1 Log</source>
         <translation>% 1 로그 지우기</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="280"/>
+        <location filename="../dev_console/devconsole.cpp" line="287"/>
         <source>Prints this help text</source>
         <translation>이 도움말 텍스트를 인쇄합니다</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="281"/>
+        <location filename="../dev_console/devconsole.cpp" line="288"/>
         <source>Prints a test command</source>
         <translation>테스트 명령을 인쇄합니다</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="282"/>
+        <location filename="../dev_console/devconsole.cpp" line="289"/>
         <source>Prints the editor version</source>
         <translation>편집기 버전을 인쇄합니다</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="283"/>
+        <location filename="../dev_console/devconsole.cpp" line="290"/>
         <source>Quits the program</source>
         <translation>프로그램을 종료합니다</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="284"/>
+        <location filename="../dev_console/devconsole.cpp" line="291"/>
         <source>Saves the application settings</source>
         <translation>응용 프로그램 설정을 저장합니다</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="285"/>
+        <location filename="../dev_console/devconsole.cpp" line="292"/>
         <source>Args: {SomeString} Calculates MD5 hash of string</source>
         <translation>Args : {SomeString} 문자열의 MD5 해시를 계산합니다</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="286"/>
+        <location filename="../dev_console/devconsole.cpp" line="293"/>
         <source>Arg: {String array} validates the PGE-X string array</source>
         <translation>Args : {SomeString}의 MD5 해시를 계산합니다</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="289"/>
+        <location filename="../dev_console/devconsole.cpp" line="296"/>
         <source>Simulates crash signal</source>
         <translation>충돌 신호 시뮬레이션</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="290"/>
+        <location filename="../dev_console/devconsole.cpp" line="297"/>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
         <translation>인수 : {[Number] MB} | 선택한 양의 데이터로 메모리를 가득 채 웁니다 (조심하세요!)</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="291"/>
+        <location filename="../dev_console/devconsole.cpp" line="298"/>
         <source>Throws an unhandled exception to crash the editor</source>
         <translation>처리되지 않은 예외가 발생하여 편집기가 중단됩니다</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="292"/>
+        <location filename="../dev_console/devconsole.cpp" line="299"/>
         <source>Does a segmentation violation</source>
         <translation>크래시 테스트 목적으로 세분화 오류 발생</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="293"/>
+        <location filename="../dev_console/devconsole.cpp" line="300"/>
         <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
         <translation>메모리 누수 분석을위한 ItemSelectDialog 생성 및 삭제</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="295"/>
+        <location filename="../dev_console/devconsole.cpp" line="302"/>
         <source>Arg: {Path to file} tests if the file is in the PGE-X file format</source>
         <translation>Arg : {Path to file}은 파일이 PGE-X 파일 형식인지 테스트합니다</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="296"/>
+        <location filename="../dev_console/devconsole.cpp" line="303"/>
         <source>Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID</source>
         <translation>Args : {음악 유형 (lvl wld spc), 음악 ID} 특정 ID로 기본 음악 재생</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="297"/>
+        <location filename="../dev_console/devconsole.cpp" line="304"/>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
         <translation type="unfinished">Args : {engine commands} 실행중인 경우 PGE 엔진에 명령이나 메시지를 보냅니다</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="298"/>
+        <location filename="../dev_console/devconsole.cpp" line="305"/>
         <source>Shows various important paths!</source>
         <translation>다양한 중요한 경로를 보여줍니다!</translation>
     </message>
@@ -2068,31 +2071,31 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>Installer</name>
     <message>
-        <location filename="../common_features/installer.cpp" line="167"/>
-        <location filename="../common_features/installer.cpp" line="168"/>
+        <location filename="../common_features/installer.cpp" line="169"/>
+        <location filename="../common_features/installer.cpp" line="170"/>
         <source>Please wait...</source>
         <translation>잠시만 기다려주세요 ...</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="258"/>
+        <location filename="../common_features/installer.cpp" line="260"/>
         <source>PGE Level file</source>
         <comment>File Types</comment>
         <translation type="unfinished">PGE 레벨 파일</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="263"/>
+        <location filename="../common_features/installer.cpp" line="265"/>
         <source>PGE World Map</source>
         <comment>File Types</comment>
         <translation type="unfinished">PGE 세계지도</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="268"/>
+        <location filename="../common_features/installer.cpp" line="270"/>
         <source>SMBX Level file</source>
         <comment>File Types</comment>
         <translation>SMBX 레벨 파일</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="273"/>
+        <location filename="../common_features/installer.cpp" line="275"/>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
         <translation>SMBX 세계지도</translation>
@@ -2453,61 +2456,61 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>ItemBoxListModel</name>
     <message>
-        <location filename="../main_window/dock/itembox_list_model.cpp" line="30"/>
+        <location filename="../main_window/dock/itembox_list_model.cpp" line="31"/>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
         <translation>이름으로 검색</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/itembox_list_model.cpp" line="34"/>
+        <location filename="../main_window/dock/itembox_list_model.cpp" line="35"/>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
         <translation>아이디로 검색</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/itembox_list_model.cpp" line="37"/>
+        <location filename="../main_window/dock/itembox_list_model.cpp" line="38"/>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
         <translation>ID로 검색 (포함)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/itembox_list_model.cpp" line="41"/>
+        <location filename="../main_window/dock/itembox_list_model.cpp" line="42"/>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
         <translation>정렬 기준</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/itembox_list_model.cpp" line="43"/>
+        <location filename="../main_window/dock/itembox_list_model.cpp" line="44"/>
         <source>Name</source>
         <comment>Sort by name</comment>
         <translation>이름</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/itembox_list_model.cpp" line="47"/>
+        <location filename="../main_window/dock/itembox_list_model.cpp" line="48"/>
         <source>ID</source>
         <comment>Sort by ID</comment>
         <translation>아이디</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/itembox_list_model.cpp" line="51"/>
+        <location filename="../main_window/dock/itembox_list_model.cpp" line="52"/>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
         <translation>내림차순</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/itembox_list_model.cpp" line="58"/>
+        <location filename="../main_window/dock/itembox_list_model.cpp" line="59"/>
         <source>Uniform item sizes view</source>
         <comment>Align elements inside of Item Box list in uniform view</comment>
         <translation>균일 한 항목 크기보기</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/itembox_list_model.cpp" line="62"/>
+        <location filename="../main_window/dock/itembox_list_model.cpp" line="63"/>
         <source>Show custom elements</source>
         <comment>Show custom elements only in Item Box List</comment>
         <translation>맞춤 요소 표시</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/itembox_list_model.cpp" line="65"/>
+        <location filename="../main_window/dock/itembox_list_model.cpp" line="66"/>
         <source>Show standard elements</source>
         <comment>Show standard elements only in Item Box List</comment>
         <translation>표준 요소 표시</translation>
@@ -2856,178 +2859,178 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>ItemNPC</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="118"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="112"/>
         <source>Layer: </source>
         <translation>층: </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="121"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="115"/>
         <source>Add to new layer...</source>
         <translation>새 레이어에 추가 ...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="130"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="124"/>
         <source>[hidden]</source>
         <translation>[숨겨진]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="146"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="140"/>
         <source>Edit NPC-Configuration</source>
         <translation>NPC 구성 편집</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="148"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="142"/>
         <source>New NPC-Configuration</source>
         <translation>새로운 NPC 구성</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="153"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="147"/>
         <source>Set %1</source>
         <translation>% 1 설정</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="153"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="147"/>
         <source>Direction</source>
         <translation>방향</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="154"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="148"/>
         <source>Left</source>
         <translation>왼쪽</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="158"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="152"/>
         <source>Random</source>
         <translation>왼쪽</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="163"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="157"/>
         <source>Right</source>
         <translation>권리</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="169"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="163"/>
         <source>Friendly</source>
         <translation>친한</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="173"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="167"/>
         <source>Doesn&apos;t move</source>
         <translation>움직이지 않는다</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="177"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="171"/>
         <source>Set message...</source>
         <translation>메시지 설정 ...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="180"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="174"/>
         <source>Set as Boss</source>
         <translation>보스로 설정</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="185"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="179"/>
         <source>Transform into</source>
         <translation>변신</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="186"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="180"/>
         <source>Transform all %1 in this section into</source>
         <translation>이 섹션의 모든 % 1을</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="187"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="181"/>
         <source>Transform all %1 into</source>
         <translation>모든 % 1을 (를)</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="193"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="187"/>
         <source>Change included NPC...</source>
         <translation>포함 된 NPC 변경 ...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="198"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="192"/>
         <source>Copy preferences</source>
         <translation>복사 환경 설정</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="199"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="193"/>
         <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="194"/>
         <source>NPC-ID: %1</source>
         <translation>엔피시-ID: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="201"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="195"/>
         <source>Position: X, Y</source>
         <translation>위치 : X, Y</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="202"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="196"/>
         <source>Position: X, Y, Width, Height</source>
         <translation>위치 : X, Y, 너비, 높이</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="203"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="197"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation>위치 : 왼쪽, 위쪽, 오른쪽, 아래쪽</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="206"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
         <source>Copy</source>
         <translation>복사</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="201"/>
         <source>Cut</source>
         <translation>절단</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="209"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="203"/>
         <source>Remove</source>
         <translation>풀다</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="210"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="204"/>
         <source>Remove all %1 in this section</source>
         <translation>이 섹션의 모든 % 1 제거</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="211"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="205"/>
         <source>Remove all %1</source>
         <translation>모든 % 1 제거</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="213"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
         <source>Edit raw user data...</source>
         <translation>원시 사용자 데이터 편집 ...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="217"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="211"/>
         <source>Properties...</source>
         <translation>속성 ...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="257"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="491"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="251"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="485"/>
         <source>Margin of section</source>
         <translation>섹션 여백</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="258"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="492"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="252"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="486"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation>항목을 제거하려면 섹션 경계에서 얼마나 멀리 떨어져 있는지 (픽셀 단위) 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="321"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="326"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="335"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="346"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="357"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="315"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="320"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="329"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="340"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="351"/>
         <source>Preferences have been copied: %1</source>
         <translation>기본 설정이 복사되었습니다 : % 1</translation>
     </message>
@@ -3563,46 +3566,46 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>JsonSettingsWidget</name>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="964"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="965"/>
         <source>Browse</source>
         <translation>탐색</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="973"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="974"/>
         <source>Play</source>
         <translation>플레이</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1080"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1084"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1086"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1088"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1090"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1092"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1094"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1096"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1081"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1085"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1087"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1089"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1091"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1093"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1095"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1097"/>
         <source>[empty]</source>
         <translation>[공백]</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1083"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1084"/>
         <source>%1 coins</source>
         <translation>%1코인</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1312"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1365"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1590"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1690"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1313"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1366"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1591"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1691"/>
         <source>W</source>
         <comment>Width, shortly</comment>
         <translation>W</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1324"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1376"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1602"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1701"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1325"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1377"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1603"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1702"/>
         <source>H</source>
         <comment>Height, shortly</comment>
         <translation>H</translation>
@@ -3611,28 +3614,28 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>LevelEdit</name>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="138"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="140"/>
         <source>Export current section to image</source>
         <translation>현재 섹션을 이미지로 내보내기</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="143"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="145"/>
         <source>PNG Image (*.png)</source>
         <translation>PNG 이미지(*.png)</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="151"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="153"/>
         <source>Saving section image...</source>
         <translation>섹션 이미지를 저장...</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="151"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="153"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="577"/>
         <source>Abort</source>
         <translation>중단</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="152"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="154"/>
         <source>Please wait...</source>
         <translation>기다려주세요...</translation>
     </message>
@@ -4151,7 +4154,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="466"/>
         <location filename="../testing/luna_tester_engine.cpp" line="509"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1224"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1226"/>
         <source>LunaTester error</source>
         <translation>LunaTester 에러</translation>
     </message>
@@ -4191,125 +4194,125 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <translation>LunaLUA-SMBX로 레벨을 보내지 못했습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="663"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="665"/>
         <source>Error has occured: (Error %1) %2</source>
         <translation>에러가 발생했습니다:(에러%1)%2</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="733"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="735"/>
         <source>Checkpoints successfully reseted!</source>
         <translation>체크 포인트가 성공적으로 재설정되었습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1098"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1100"/>
         <source>LunaLUA tester is not started!</source>
         <translation>LunaLua 테스터가 시작되지 않았습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1111"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1113"/>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
         <translation>LunaTester를 종료 하시겠습니까? 레벨을 테스트하는 중이라면, 즉시 종료됩니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1119"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1121"/>
         <source>LunaTester has been successfully closed.</source>
         <translation>LunaTester가 성공적으로 종료되었습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1127"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1129"/>
         <source>LunaTester is not running.</source>
         <translation>LunaTester가 실행되고 있지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1137"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1236"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1277"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1139"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1238"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1279"/>
         <source>LunaTester is still active</source>
         <translation>LunaTester는 여전히 활성 상태입니다</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1138"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1140"/>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
         <translation>LunaTester의 경로를 변경하려면 현재 실행중인 게임을 종료해야합니다. 지금 LunaTester를 종료 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1147"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1149"/>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
         <translation>LunaTester 경로</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1154"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1156"/>
         <source>Please select a path to LunaTester:</source>
         <translation>LunaTester의 경로를 선택하십시오 :</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1163"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1165"/>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
         <translation>기본값 사용</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1166"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1168"/>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
         <translation>커스텀</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1170"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1172"/>
         <source>Browse...</source>
         <translation>검색...</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1194"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1196"/>
         <source>Save</source>
         <translation>저장</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1207"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1209"/>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
         <translation>LunaTester 위치 선택</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1225"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1227"/>
         <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
         <translation>선택한 LunaLua 경로의 기능을 인식하지 못하여, 게임이 작동하지 않을 수 있습니다. 다른 경로를 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1237"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1239"/>
         <source>To change an executable name, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1258"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1260"/>
         <source>Change the executable name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1259"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1261"/>
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1278"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1280"/>
         <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
         <translation>Wine 설정을 변경하려면 현재 작동중인 LunaTester를 종료해야합니다. 지금 LunaTester를 종료 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1480"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1482"/>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
         <translation>LunaTester 디렉터리 체크 실패</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1482"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1484"/>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
         <translation>&quot;% 1&quot;을 (를) 찾을 수 없기 때문에 LunaTester를 시작할 수 없습니다! 다음 이유 중 하나로 인해 발생할 수 있습니다:</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1486"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1488"/>
         <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
@@ -4319,7 +4322,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
 -잘못된 SMBX2 설치로 인해 파일이 누락되었습니다. 문제를 해결하려면 SMBX2를 다시 설치하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1493"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1495"/>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
@@ -4327,12 +4330,12 @@ the background or foreground, so the engine can be loaded from scratch.</comment
 -잘못된 SMBX2 설치로 인해 파일이 누락되었습니다. 문제를 해결하려면 SMBX2를 다시 설치하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1530"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1532"/>
         <source>Vanilla SMBX detected!</source>
         <translation>바닐라 SMBX가 감지되었습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1531"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1533"/>
         <source>&quot;%1&quot; not found!
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
@@ -4341,32 +4344,32 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
 즉, LunaTester로 레벨 테스트를 시작할 수 없습니다. SMBX Engine으로 레벨 테스트를 실행하려면 LunaLua가 필요합니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1544"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1546"/>
         <source>Incompatible LunaDll found</source>
         <translation>호환되지 않는 LunaDll 발견</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1545"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1547"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
         <translation>경로에서 발견 된 호환되지 않는 LunaDll.dll 모듈로 인해 LunaTester를 시작할 수 없습니다 : % 1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1554"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1556"/>
         <source>Incompatible LunaLua</source>
         <translation>호환되지 않는 LunaLua</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1555"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1557"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
         <translation>경로에 호환되지 않는 LunaLua로 인해 LunaTester를 시작할 수 없습니다 : % 1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1626"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1632"/>
         <source>SMBX64 limits are exceeded!</source>
         <translation>SMBX64 한도 초과!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1627"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1633"/>
         <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
@@ -4379,17 +4382,17 @@ Do you want to continue the process?</source>
 프로세스를 계속 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1759"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1765"/>
         <source>Impossible to launch an episode because of an invalid world file.</source>
         <translation>잘못된 월드 파일로 인해 에피소드를 시작할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1768"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1774"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
         <translation>세계지도 파일이 지원되지 않는 형식으로 저장되어있어 에피소드를 시작할 수 없습니다. SMBX64-WLD 형식으로 세계지도를 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1803"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1809"/>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
         <translation>LunaTester 월드 루트에서 에피소드를 시작할 수 없습니다.</translation>
     </message>
@@ -5319,19 +5322,19 @@ All elements of this layer will be removed too!</source>
 <context>
     <name>LvlScene</name>
     <message>
-        <location filename="../editing/_scenes/level/lvl_control.cpp" line="235"/>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="256"/>
         <source>LEVELSCENE_CONTEXTMENU_SectionProperties...</source>
         <comment>Section properties...</comment>
         <translation>섹션 특성...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_control.cpp" line="240"/>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="261"/>
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
         <translation>레벨 특성...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_control.cpp" line="273"/>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="294"/>
         <source>Player start points:		%1
 Blocks:			%2
 Background objects&apos;s:	%3
@@ -5348,32 +5351,32 @@ Physical env. zones:	%6
 </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="113"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="117"/>
         <source>Search User Backgrounds %1</source>
         <translation>사용자 정의 배경 % 1 검색</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="198"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="202"/>
         <source>Search User Blocks %1</source>
         <translation>사용자 정의 블록 % 1 검색</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="258"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="262"/>
         <source>Search User BGOs %1</source>
         <translation>사용자 정의 BGO % 1 검색</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="320"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="324"/>
         <source>Search User NPCs %1</source>
         <translation>사용자 정의 NPC % 1 검색</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="439"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="443"/>
         <source>Wrong custom images</source>
         <translation>잘못된 커스텀 이미지 파일</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="440"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="444"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
@@ -7539,37 +7542,37 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="70"/>
+        <location filename="../testing/pge_engine.cpp" line="72"/>
         <source>PGE Engine testing</source>
         <translation type="unfinished">PGE 엔진 테스트</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="73"/>
+        <location filename="../testing/pge_engine.cpp" line="75"/>
         <location filename="../mainwindow.cpp" line="138"/>
         <source>Don&apos;t show this message again.</source>
         <translation>이 메시지를 다시 표시하지 마십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="75"/>
+        <location filename="../testing/pge_engine.cpp" line="77"/>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
         <translation type="unfinished">여보세요! PGE 엔진에서 레벨을 테스트하려고합니다.
 PGE 엔진은 아직 개발 초기 단계에 있으며 누락되거나 올바르게 작동하지 않는 몇 가지 기능이 있습니다. 기존 SMBX 엔진 용 레벨이나 에피소드를 만들고 있고 완전한 기능 세트로 테스트하고 싶다면 SMBX에서 직접 테스트하십시오. PGE 엔진 자체를 테스트하거나 PGE 관련 기능으로 레벨을 테스트하려는 경우에 PGE 테스트를 사용하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="129"/>
+        <location filename="../testing/pge_engine.cpp" line="131"/>
         <source>Engine is not found</source>
         <translation>엔진을 찾을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="130"/>
+        <location filename="../testing/pge_engine.cpp" line="132"/>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, choose the engine application yourself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="134"/>
+        <location filename="../testing/pge_engine.cpp" line="136"/>
         <source>Choose the Engine application</source>
         <translation>엔진 애플리케이션 선택</translation>
     </message>
@@ -7613,41 +7616,41 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <translation>64 비트 프로세서에서 32 비트 버전의 Editor를 사용하고 있습니다. 이 편집기 버전은 레거시 아키텍처 및 Windows XP 호환성을 대상으로합니다. 최신 아키텍처와의 호환성을 높이고 메모리 사용 제한을 확장하려면 64 비트 버전의 편집기를 사용하는 것이 좋습니다. 32 비트 응용 프로그램의 경우 2GB 메모리 제한이 있습니다.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="238"/>
-        <location filename="../mainwindow.cpp" line="282"/>
-        <location filename="../mainwindow.cpp" line="297"/>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="196"/>
+        <location filename="../mainwindow.cpp" line="242"/>
+        <location filename="../mainwindow.cpp" line="286"/>
+        <location filename="../mainwindow.cpp" line="301"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="199"/>
         <source>Configuration error</source>
         <translation>구성 오류</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="239"/>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="197"/>
+        <location filename="../mainwindow.cpp" line="243"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="200"/>
         <source>Configuration package is loaded with errors.</source>
         <translation>로드 완료 중 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="244"/>
+        <location filename="../mainwindow.cpp" line="248"/>
         <source>Initializing dock widgets...</source>
         <translation>도크 위젯 초기화 중 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="261"/>
+        <location filename="../mainwindow.cpp" line="265"/>
         <source>Initalizing plugins...</source>
         <translation>플러그인 초기화 중 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="271"/>
+        <location filename="../mainwindow.cpp" line="275"/>
         <source>Loading theme...</source>
         <translation>테마로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="275"/>
+        <location filename="../mainwindow.cpp" line="279"/>
         <source>Finishing loading...</source>
         <translation>로드 완료 중 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="283"/>
+        <location filename="../mainwindow.cpp" line="287"/>
         <source>Configuration can&apos;t be loaded:
 %1.
 See %2 for more information.</source>
@@ -7656,7 +7659,7 @@ See %2 for more information.</source>
 자세한 내용은 % 2를 참조하십시오.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="298"/>
+        <location filename="../mainwindow.cpp" line="302"/>
         <source>Configuration can&apos;t be loaded.
 See %1 for more information.</source>
         <translation>구성을로드 할 수 없습니다.
@@ -7713,52 +7716,52 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
 이 작업은 Ctrl + Z를 사용하거나 편집 / 실행 취소를 클릭하여 취소 할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="71"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="70"/>
         <source>Configuration is busy</source>
         <translation>구성이 사용 중입니다</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="72"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="71"/>
         <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
         <translation>구성을 다시로드하면 열려있는 모든 파일이 닫히고 다시로드 된 후 복원됩니다. 계속 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
-        <location filename="../main_window/file/file_save.cpp" line="35"/>
-        <location filename="../main_window/file/file_save.cpp" line="84"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="67"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="112"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="375"/>
+        <location filename="../main_window/file/file_save.cpp" line="34"/>
+        <location filename="../main_window/file/file_save.cpp" line="83"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="66"/>
         <source>Abort</source>
         <translation>중단</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="117"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="116"/>
         <source>Reloading configuration pack</source>
         <translation>구성 팩 다시로드</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="188"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="191"/>
         <source>Reloading configuration</source>
         <translation>구성 다시로드</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="189"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="192"/>
         <source>Configuration successfully reloaded!</source>
         <translation>구성이 성공적으로 다시로드되었습니다!</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="214"/>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="240"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="217"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="243"/>
         <source>Configuration changed</source>
         <translation>구성이 변경되었습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="215"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="218"/>
         <source>The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="241"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="244"/>
         <source>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
         <translation>구성 팩이 변경되었습니다!
@@ -7767,20 +7770,20 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
     <message>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="36"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="46"/>
-        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="80"/>
+        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="81"/>
         <location filename="../main_window/file/file_reload.cpp" line="55"/>
-        <location filename="../main_window/file/file_reload.cpp" line="164"/>
-        <location filename="../main_window/file/file_reload.cpp" line="222"/>
+        <location filename="../main_window/file/file_reload.cpp" line="167"/>
+        <location filename="../main_window/file/file_reload.cpp" line="225"/>
         <source>File not saved</source>
         <translation>파일이 저장되지 않았습니다</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="37"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="47"/>
-        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="81"/>
+        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="82"/>
         <location filename="../main_window/file/file_reload.cpp" line="56"/>
-        <location filename="../main_window/file/file_reload.cpp" line="165"/>
-        <location filename="../main_window/file/file_reload.cpp" line="223"/>
+        <location filename="../main_window/file/file_reload.cpp" line="168"/>
+        <location filename="../main_window/file/file_reload.cpp" line="226"/>
         <source>File doesn&apos;t saved on disk.</source>
         <translation>파일이 디스크에 저장되지 않았습니다.</translation>
     </message>
@@ -7790,47 +7793,47 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
         <translation>가져올 사용자 정의 데이터가있는 디렉토리를 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="319"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="335"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="318"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="334"/>
         <source>File is untitled</source>
         <translation>파일에 제목이 없습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="320"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="336"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="319"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="335"/>
         <source>File doesn&apos;t use custom graphics.
 </source>
         <translation>파일이 사용자 정의 그래픽을 사용하지 않습니다.
 </translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="369"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="368"/>
         <source>Nothing to do.</source>
         <translation>할 것이 없다..</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="370"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="369"/>
         <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
         <translation>이 파일은 투명 마스크가있는 GIF 그래픽을 사용하지 않거나 사용자 정의 그래픽 파일이 아닙니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="375"/>
         <source>Fixing of masks...</source>
         <translation>마스크 수정 중 ...</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="377"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="68"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="67"/>
         <source>Please wait...</source>
         <translation>잠시만 기다려주세요 ...</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="417"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="416"/>
         <source>Done</source>
         <translation>끝난</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="418"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="417"/>
         <source>Masks has been fixed!
 Please reload current file to apply result.</source>
         <translation>마스크가 수정되었습니다!
@@ -7881,47 +7884,47 @@ Please reload current file to apply result.</source>
         <translation>[열린 파일 없음]</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="249"/>
+        <location filename="../main_window/testing/testing.cpp" line="264"/>
         <source>World map testing of saved file</source>
         <translation>저장된 파일의 세계지도 테스트</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="250"/>
+        <location filename="../main_window/testing/testing.cpp" line="265"/>
         <source>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
         <translation>파일이 저장되지 않았습니다!
 파일을 저장 하시겠습니까, 아니면 현재 디스크에 저장된 복사본에 대해 테스트를 실행 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_new.cpp" line="43"/>
-        <location filename="../main_window/file/file_new.cpp" line="72"/>
-        <location filename="../main_window/file/file_new.cpp" line="108"/>
+        <location filename="../main_window/file/file_new.cpp" line="41"/>
+        <location filename="../main_window/file/file_new.cpp" line="70"/>
+        <location filename="../main_window/file/file_new.cpp" line="106"/>
         <location filename="../main_window/file/file_open.cpp" line="162"/>
         <location filename="../main_window/file/file_open.cpp" line="284"/>
         <source>Configuration is loaded with errors</source>
         <translation>구성 팩에 오류가 있습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_new.cpp" line="44"/>
+        <location filename="../main_window/file/file_new.cpp" line="42"/>
         <source>Cannot create NPC config file:
 The configuration pack was loaded, but contains errors.</source>
         <translation>NPC 구성 파일을 만들 수 없습니다.
 구성 팩에 오류가 있습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_new.cpp" line="54"/>
+        <location filename="../main_window/file/file_new.cpp" line="52"/>
         <source>Create new NPC.txt configuration file</source>
         <translation>새 NPC 구성 파일 만들기</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_new.cpp" line="73"/>
+        <location filename="../main_window/file/file_new.cpp" line="71"/>
         <source>Cannot create level file:
 The configuration pack was loaded, but contains errors.</source>
         <translation>레벨 파일을 생성 할 수 없습니다 :
 구성 팩에 오류가 있습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_new.cpp" line="109"/>
+        <location filename="../main_window/file/file_new.cpp" line="107"/>
         <source>Cannot create world map file:
 The configuration pack was loaded, but contains errors.</source>
         <translation>세계지도 파일을 만들 수 없습니다.
@@ -7997,7 +8000,7 @@ The configuration pack was loaded, but contains errors.</source>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="304"/>
         <location filename="../main_window/file/file_reload.cpp" line="62"/>
-        <location filename="../main_window/file/file_reload.cpp" line="229"/>
+        <location filename="../main_window/file/file_reload.cpp" line="232"/>
         <source>File open error</source>
         <translation>파일 열기 오류</translation>
     </message>
@@ -8013,13 +8016,13 @@ The configuration pack was loaded, but contains errors.</source>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="392"/>
-        <location filename="../main_window/file/file_reload.cpp" line="285"/>
+        <location filename="../main_window/file/file_reload.cpp" line="291"/>
         <source>World map file loaded</source>
         <translation>로드 된 세계지도 파일</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="409"/>
-        <location filename="../main_window/file/file_reload.cpp" line="189"/>
+        <location filename="../main_window/file/file_reload.cpp" line="192"/>
         <source>Can&apos;t read the file</source>
         <translation>파일을 읽을 수 없습니다</translation>
     </message>
@@ -8044,30 +8047,30 @@ The configuration pack was loaded, but contains errors.</source>
         <translation>이 파일에는 알 수없는 확장자가 있습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_save.cpp" line="35"/>
+        <location filename="../main_window/file/file_save.cpp" line="34"/>
         <source>Saving of file...</source>
         <translation>파일 저장 중 ...</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_save.cpp" line="36"/>
-        <location filename="../main_window/file/file_save.cpp" line="86"/>
+        <location filename="../main_window/file/file_save.cpp" line="35"/>
+        <location filename="../main_window/file/file_save.cpp" line="85"/>
         <source>Saving</source>
         <translation>절약</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_save.cpp" line="55"/>
-        <location filename="../main_window/file/file_save.cpp" line="76"/>
+        <location filename="../main_window/file/file_save.cpp" line="54"/>
+        <location filename="../main_window/file/file_save.cpp" line="75"/>
         <source>File saved</source>
         <translation>저장된 파일</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_save.cpp" line="84"/>
+        <location filename="../main_window/file/file_save.cpp" line="83"/>
         <source>Saving of files...</source>
         <translation>파일 저장 중 ...</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="63"/>
-        <location filename="../main_window/file/file_reload.cpp" line="230"/>
+        <location filename="../main_window/file/file_reload.cpp" line="233"/>
         <source>Can&apos;t open the file!
 File not exist.</source>
         <translation>파일을 열 수 없습니다!
@@ -8075,90 +8078,90 @@ File not exist.</source>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="69"/>
-        <location filename="../main_window/file/file_reload.cpp" line="171"/>
-        <location filename="../main_window/file/file_reload.cpp" line="236"/>
+        <location filename="../main_window/file/file_reload.cpp" line="174"/>
+        <location filename="../main_window/file/file_reload.cpp" line="239"/>
         <source>Reload file and custom stuff</source>
         <translation>파일 및 사용자 지정 데이터 다시로드</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="70"/>
-        <location filename="../main_window/file/file_reload.cpp" line="172"/>
-        <location filename="../main_window/file/file_reload.cpp" line="237"/>
+        <location filename="../main_window/file/file_reload.cpp" line="175"/>
+        <location filename="../main_window/file/file_reload.cpp" line="240"/>
         <source>Do you want to save before reload stuff?</source>
         <translation>다시로드하기 전에 저장 하시겠습니까?</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="82"/>
-        <location filename="../main_window/file/file_reload.cpp" line="248"/>
+        <location filename="../main_window/file/file_reload.cpp" line="251"/>
         <source>Reloading error</source>
         <translation>다시로드하는 동안 오류가 발생했습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="122"/>
+        <location filename="../main_window/file/file_reload.cpp" line="124"/>
         <source>Level file reloaded</source>
         <translation>레벨 파일이 다시로드되었습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="203"/>
+        <location filename="../main_window/file/file_reload.cpp" line="206"/>
         <source>NPC Config reloaded</source>
         <translation>NPC 구성이 다시로드되었습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="67"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="66"/>
         <source>Clonning of section...</source>
         <translation>섹션 복제 중 ...</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="273"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="272"/>
         <source>Section has been clonned</source>
         <translation>섹션이 복제되었습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="274"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="273"/>
         <source>Section has been successfully cloned!
 Do you want to clone another section?</source>
         <translation>섹션이 성공적으로 복제되었습니다!
 다른 섹션을 복제 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="291"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="290"/>
         <source>Remove section</source>
         <translation>섹션 제거</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="292"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="291"/>
         <source>Do you want to remove all objects of this section?</source>
         <translation>이 섹션에서 모든 개체를 제거 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="296"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="381"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="415"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="449"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="483"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="295"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="380"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="414"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="448"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="482"/>
         <source>Margin of section</source>
         <translation>섹션 여백</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="297"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="296"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation>항목을 제거하려면 섹션 경계에서 얼마나 멀리 떨어져 있는지 (픽셀 단위) 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="332"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="331"/>
         <source>Section has been removed</source>
         <translation>섹션이 제거되었습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="333"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="332"/>
         <source>Section %1 has been successfully deleted!</source>
         <translation>% 1 섹션이 성공적으로 삭제되었습니다!</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="382"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="416"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="450"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="484"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="381"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="415"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="449"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="483"/>
         <source>Please select how far items can rotate beyond the section boundaries (in pixels) before they are removed.</source>
         <translation>항목이 제거되기 전에 섹션 경계 (픽셀)를 넘어 회전 할 수있는 거리를 선택하십시오.</translation>
     </message>
@@ -8204,7 +8207,7 @@ Do you want to clone another section?</source>
         <translation>로드 된 파일이 없습니다!</translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="308"/>
+        <location filename="../main_window/translator.cpp" line="310"/>
         <source>Current Language changed to %1</source>
         <translation>현재 언어가 % 1로 변경되었습니다</translation>
     </message>
@@ -8221,84 +8224,84 @@ Please save the file first.</source>
 먼저 파일을 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="219"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="232"/>
         <source>Default by item</source>
         <translation>항목 별 기본값</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="252"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="265"/>
         <source>Custom...</source>
         <translation>커스텀...</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="258"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="271"/>
         <source>Next grid size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="263"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="276"/>
         <source>Previous grid size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="275"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="277"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="288"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="290"/>
         <source>Select</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>고르다</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="288"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="290"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="301"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="303"/>
         <source>Erase</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>삭제</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="301"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="303"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="314"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="316"/>
         <source>Items</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>아이템</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="314"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="316"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="327"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="329"/>
         <source>Player</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>플레이어</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="330"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="332"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="343"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="345"/>
         <source>Section</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>부분</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="342"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="344"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="355"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="357"/>
         <source>World settings</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>세계 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="354"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="356"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="367"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="369"/>
         <source>Warps and Doors</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>워프 및 문</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="366"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="368"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="379"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="381"/>
         <source>Water</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>물</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="395"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="397"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="408"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="410"/>
         <source>Options</source>
         <translation>옵션</translation>
     </message>
@@ -8689,30 +8692,30 @@ Error description:
 <context>
     <name>PgeEngine</name>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="251"/>
+        <location filename="../testing/pge_engine.cpp" line="253"/>
         <source>Test level/world</source>
         <comment>Run the testing of current file in PGE Engine via interprocessing tunnel.</comment>
         <translation>테스트 수준 / 세계</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="256"/>
+        <location filename="../testing/pge_engine.cpp" line="258"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in PGE Engine from disk.</comment>
         <translation>저장된 레벨 / 세계 테스트</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="261"/>
+        <location filename="../testing/pge_engine.cpp" line="263"/>
         <source>Start Game</source>
         <comment>Launch PGE Engine as a normal game</comment>
         <translation>게임을 시작하다</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="282"/>
+        <location filename="../testing/pge_engine.cpp" line="284"/>
         <source>Unsupported yet</source>
         <translation>아직 지원되지 않음</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="283"/>
+        <location filename="../testing/pge_engine.cpp" line="285"/>
         <source>Currently this is not supported for world maps yet. Please use &apos;Test saved level/world&apos; action tu run a world map test.</source>
         <translation>현재이 기능은 아직 세계지도에서 지원되지 않습니다. 월드 맵 테스트를 실행하려면 &apos;저장된 레벨 / 월드 테스트&apos;액션을 사용하세요.</translation>
     </message>
@@ -8728,43 +8731,43 @@ Error description:
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../common_features/logger_sets.cpp" line="86"/>
+        <location filename="../common_features/logger_sets.cpp" line="87"/>
         <source>Disable logging</source>
         <translation>로깅 비활성화</translation>
     </message>
     <message>
-        <location filename="../common_features/logger_sets.cpp" line="87"/>
+        <location filename="../common_features/logger_sets.cpp" line="88"/>
         <source>System messages</source>
         <translation>시스템 메시지</translation>
     </message>
     <message>
-        <location filename="../common_features/logger_sets.cpp" line="88"/>
+        <location filename="../common_features/logger_sets.cpp" line="89"/>
         <source>Fatal</source>
         <translation>치명적인</translation>
     </message>
     <message>
-        <location filename="../common_features/logger_sets.cpp" line="89"/>
+        <location filename="../common_features/logger_sets.cpp" line="90"/>
         <source>Critical</source>
         <translation>위독한</translation>
     </message>
     <message>
-        <location filename="../common_features/logger_sets.cpp" line="90"/>
+        <location filename="../common_features/logger_sets.cpp" line="91"/>
         <source>Warning</source>
         <translation>경고</translation>
     </message>
     <message>
-        <location filename="../common_features/logger_sets.cpp" line="91"/>
+        <location filename="../common_features/logger_sets.cpp" line="92"/>
         <source>Debug</source>
         <translation>디버그</translation>
     </message>
     <message>
-        <location filename="../common_features/themes.cpp" line="727"/>
+        <location filename="../common_features/themes.cpp" line="736"/>
         <source>Default</source>
         <comment>Name of pallete</comment>
         <translation>기본</translation>
     </message>
     <message>
-        <location filename="../common_features/themes.cpp" line="728"/>
+        <location filename="../common_features/themes.cpp" line="737"/>
         <source>Dark blue</source>
         <comment>Name of pallete</comment>
         <translation>진한 파란색</translation>
@@ -9435,22 +9438,22 @@ Reason: %1
         <translation>타일로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="691"/>
+        <location filename="../data_configs/data_configs.cpp" line="693"/>
         <source>Finishing loading...</source>
         <translation>로드 완료 중 ...</translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_tilesets.cpp" line="44"/>
+        <location filename="../data_configs/obj_tilesets.cpp" line="46"/>
         <source>Loading Tilesets...</source>
         <translation>타일셋로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_tilesets.cpp" line="71"/>
+        <location filename="../data_configs/obj_tilesets.cpp" line="73"/>
         <source>Loading Tileset groups...</source>
         <translation>타일셋 그룹로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_tilesets.cpp" line="97"/>
+        <location filename="../data_configs/obj_tilesets.cpp" line="99"/>
         <source>Initializing tileset categories...</source>
         <translation>타일셋 범주 초기화 중 ...</translation>
     </message>
@@ -9480,30 +9483,30 @@ Reason: %1
         <translation>음악로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="349"/>
+        <location filename="../mainwindow.cpp" line="353"/>
         <source>Bad File</source>
         <translation>잘못된 파일</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="350"/>
+        <location filename="../mainwindow.cpp" line="354"/>
         <source>Bad file format
 File: %1</source>
         <translation>잘못된 파일 형식
 파일 : % 1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="352"/>
+        <location filename="../mainwindow.cpp" line="356"/>
         <source>Line Number: %1</source>
         <translation>줄 번호 : % 1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="353"/>
+        <location filename="../mainwindow.cpp" line="357"/>
         <source>Line Data: %1</source>
         <translation>줄 데이터 : % 1</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="409"/>
-        <location filename="../main_window/file/file_reload.cpp" line="189"/>
+        <location filename="../main_window/file/file_reload.cpp" line="192"/>
         <source>File open error</source>
         <translation>파일 열기 오류</translation>
     </message>
@@ -9520,7 +9523,7 @@ File: %1</source>
 파일을 저장하면</translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="147"/>
+        <location filename="../main_window/translator.cpp" line="149"/>
         <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
         <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
@@ -9735,107 +9738,107 @@ The maximum number of Music Boxes is %2.</source>
         <translation>게임을 시작하다</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="556"/>
+        <location filename="../testing/38a_engine.cpp" line="560"/>
         <source>Checkpoints successfully reseted!</source>
         <translation>체크 포인트가 성공적으로 재설정되었습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="568"/>
+        <location filename="../testing/38a_engine.cpp" line="572"/>
         <source>Path to SMBX-38A</source>
         <comment>Title of dialog</comment>
         <translation>SMBX-38A 경로</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="575"/>
+        <location filename="../testing/38a_engine.cpp" line="579"/>
         <source>Please select a path to SMBX-38A executable:</source>
         <translation>SMBX-38A 실행 파일의 경로를 선택하십시오:</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="584"/>
+        <location filename="../testing/38a_engine.cpp" line="588"/>
         <source>Use default</source>
         <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
         <translation>기본값 사용</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="587"/>
+        <location filename="../testing/38a_engine.cpp" line="591"/>
         <source>Custom</source>
         <comment>Using a user selected SMBX-38A path</comment>
         <translation>커스텀</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="591"/>
+        <location filename="../testing/38a_engine.cpp" line="595"/>
         <source>Browse...</source>
         <translation>검색...</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="615"/>
+        <location filename="../testing/38a_engine.cpp" line="619"/>
         <source>Save</source>
         <translation>저장</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="629"/>
+        <location filename="../testing/38a_engine.cpp" line="633"/>
         <source>Select a path to SMBX-38A executable</source>
         <comment>File dialog title</comment>
         <translation>SMBX-38A 실행 파일 경로 선택</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="655"/>
+        <location filename="../testing/38a_engine.cpp" line="659"/>
         <source>SMBX-38A is still active</source>
         <translation>SMBX-38A는 여전히 활성 상태입니다</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="656"/>
+        <location filename="../testing/38a_engine.cpp" line="660"/>
         <source>To change a setup of Wine, you will need to shut down a currently working SMBX-38A. Do you want to shut down the SMBX-38A now?</source>
         <translation>Wine 설정을 변경하려면 현재 작동중인 SMBX-38A를 종료해야합니다. 지금 SMBX-38A를 종료 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="805"/>
+        <location filename="../testing/38a_engine.cpp" line="809"/>
         <source>Executable not found</source>
         <translation>실행 파일을 찾을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="806"/>
+        <location filename="../testing/38a_engine.cpp" line="810"/>
         <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
         <translation>&quot;% 1&quot;을 (를) 찾을 수 없기 때문에 SMBX-38A 게임을 시작할 수 없습니다. SMBX-38A 실행 파일에 대한 잘못된 경로가 지정 되었기 때문에 발생할 수 있습니다. SMBX-38A 경로 설정을 확인하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="832"/>
+        <location filename="../testing/38a_engine.cpp" line="836"/>
         <source>Impossible to prepare a temp file for a test run.</source>
         <translation>테스트 실행을 위해 임시 파일을 준비 할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="894"/>
+        <location filename="../testing/38a_engine.cpp" line="898"/>
         <source>Impossible to launch a level because of an invalid file.</source>
         <translation>잘못된 파일로 인해 레벨을 시작할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="904"/>
+        <location filename="../testing/38a_engine.cpp" line="908"/>
         <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
         <translation>레벨 파일이 지원되지 않는 형식으로 저장되어있어 레벨을 시작할 수 없습니다. 레벨을 SMBX-38A 또는 SMBX64-LVL 형식으로 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="913"/>
-        <location filename="../testing/38a_engine.cpp" line="978"/>
+        <location filename="../testing/38a_engine.cpp" line="917"/>
+        <location filename="../testing/38a_engine.cpp" line="982"/>
         <source>Caution</source>
         <translation>주의</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="914"/>
+        <location filename="../testing/38a_engine.cpp" line="918"/>
         <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
         <translation>레벨이 SMBX-38A 형식이 아닙니다. 즉, 게임이 자동으로 SMBX-38A 형식으로 변환합니다. 레벨은 클래식 SMBX와 호환되지 않습니다. 계속해서 위험을 감수 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="959"/>
+        <location filename="../testing/38a_engine.cpp" line="963"/>
         <source>Impossible to launch an episode because of an invalid file.</source>
         <translation>잘못된 파일로 인해 에피소드를 시작할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="969"/>
+        <location filename="../testing/38a_engine.cpp" line="973"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
         <translation>세계지도 파일이 지원되지 않는 형식으로 저장되어있어 에피소드를 시작할 수 없습니다. SMBX-38A 또는 SMBX64-WLD 형식으로 세계지도를 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="979"/>
+        <location filename="../testing/38a_engine.cpp" line="983"/>
         <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
         <translation>세계지도가 SMBX-38A 형식이 아닙니다. 즉, 게임이 자동으로 SMBX-38A 형식으로 변환합니다. 에피소드는 클래식 SMBX와 호환되지 않습니다. 계속해서 위험을 감수 하시겠습니까?</translation>
     </message>
@@ -9907,7 +9910,7 @@ The maximum number of Music Boxes is %2.</source>
         <translation>새로운</translation>
     </message>
     <message>
-        <location filename="../main_window/script/script_editor.cpp" line="199"/>
+        <location filename="../main_window/script/script_editor.cpp" line="208"/>
         <source>Empty script has been added!</source>
         <translation>빈 스크립트가 추가되었습니다!</translation>
     </message>
@@ -10094,225 +10097,225 @@ The maximum number of Music Boxes is %2.</source>
 <context>
     <name>TheXTechEngine</name>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="169"/>
+        <location filename="../testing/thextech_engine.cpp" line="173"/>
         <source>Path to TheXTech</source>
         <comment>Title of dialog</comment>
         <translation>TheXTech로가는 길</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="176"/>
+        <location filename="../testing/thextech_engine.cpp" line="180"/>
         <source>Please select a path to TheXTech executable:</source>
         <translation>TheXTech 실행 파일의 경로를 선택하십시오 :</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="185"/>
+        <location filename="../testing/thextech_engine.cpp" line="189"/>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
         <translation>기본값 사용</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="188"/>
+        <location filename="../testing/thextech_engine.cpp" line="192"/>
         <source>Custom</source>
         <comment>Using a user selected TheXTech path</comment>
         <translation>커스텀</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="192"/>
+        <location filename="../testing/thextech_engine.cpp" line="196"/>
         <source>Browse...</source>
         <translation>검색...</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="216"/>
+        <location filename="../testing/thextech_engine.cpp" line="220"/>
         <source>Save</source>
         <translation>저장</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="229"/>
+        <location filename="../testing/thextech_engine.cpp" line="233"/>
         <source>Select a path to TheXTech executable</source>
         <comment>File dialog title</comment>
         <translation>TheXTech 실행 파일의 경로를 선택하십시오</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="653"/>
+        <location filename="../testing/thextech_engine.cpp" line="657"/>
         <source>Test level</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation>테스트 수준</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="658"/>
+        <location filename="../testing/thextech_engine.cpp" line="662"/>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation>전투 모드의 테스트 레벨</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="663"/>
+        <location filename="../testing/thextech_engine.cpp" line="667"/>
         <source>Test saved level</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
         <translation>저장된 레벨 테스트</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="669"/>
+        <location filename="../testing/thextech_engine.cpp" line="673"/>
         <source>Graphics type</source>
         <comment>Choose a rendering system: software or accelerated</comment>
         <translation>그래픽 유형</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="674"/>
+        <location filename="../testing/thextech_engine.cpp" line="678"/>
         <source>Default</source>
         <comment>Automatically selected rendering engine</comment>
         <translation>기본</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="679"/>
+        <location filename="../testing/thextech_engine.cpp" line="683"/>
         <source>Software</source>
         <comment>Software rendering</comment>
         <translation>소프트웨어 렌더링</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="684"/>
+        <location filename="../testing/thextech_engine.cpp" line="688"/>
         <source>Accelerated</source>
         <comment>Hardware accelerated rendering</comment>
         <translation>가속</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="689"/>
+        <location filename="../testing/thextech_engine.cpp" line="693"/>
         <source>Accelerated with V-Sync</source>
         <comment>Hardware accelerated rendering with vertical synchronization support</comment>
         <translation>V-Sync로 가속화</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="696"/>
+        <location filename="../testing/thextech_engine.cpp" line="700"/>
         <source>Compatibility level</source>
         <comment>Choose the compatibility level used by the game</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="701"/>
+        <location filename="../testing/thextech_engine.cpp" line="705"/>
         <source>Default</source>
         <comment>Use preferred compatibility level</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="706"/>
+        <location filename="../testing/thextech_engine.cpp" line="710"/>
         <source>Modern</source>
         <comment>Prefer all updates and bugfixes enabled</comment>
         <translation type="unfinished">현대</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="711"/>
+        <location filename="../testing/thextech_engine.cpp" line="715"/>
         <source>X2</source>
         <comment>Disable all bugfixes and updates exceot these made at X2</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="716"/>
+        <location filename="../testing/thextech_engine.cpp" line="720"/>
         <source>Strict SMBX 1.3</source>
         <comment>Strict compatibility mode, all bugfixes and updates will be disabled to prepresent an old behaviour.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="723"/>
+        <location filename="../testing/thextech_engine.cpp" line="727"/>
         <source>Speedruner&apos;s stopwatch</source>
         <comment>Speedrun mode menu</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="728"/>
+        <location filename="../testing/thextech_engine.cpp" line="732"/>
         <source>Disabled</source>
         <comment>Speedrun mode disabled</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="733"/>
+        <location filename="../testing/thextech_engine.cpp" line="737"/>
         <source>Mode 1 (Modern)</source>
         <comment>Enable speedrun with mode 1 (modern compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="738"/>
+        <location filename="../testing/thextech_engine.cpp" line="742"/>
         <source>Mode 2 (X2)</source>
         <comment>Enable speedrun with mode 2 (X2 compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="743"/>
+        <location filename="../testing/thextech_engine.cpp" line="747"/>
         <source>Mode 3 (Strict SMBX 1.3)</source>
         <comment>Enable speedrun with mode 3 (strict SMBX 1.3 compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="748"/>
+        <location filename="../testing/thextech_engine.cpp" line="752"/>
         <source>Semi-transparent stopwatch</source>
         <comment>Show the speedrun stopwatch with a semi-transparent font.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="755"/>
+        <location filename="../testing/thextech_engine.cpp" line="759"/>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
         <translation>마법의 손 활성화</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="757"/>
+        <location filename="../testing/thextech_engine.cpp" line="761"/>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
         <translation>실시간 편집 가능 : 레벨 씬에서 요소 선택, 새 요소 배치, 편집기에서 선택한 후 지우기. 저장된 파일의 테스트를 실행할 때 작동하지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="763"/>
+        <location filename="../testing/thextech_engine.cpp" line="767"/>
         <source>Enable max FPS</source>
         <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
         <translation>최대 FPS 활성화</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="765"/>
+        <location filename="../testing/thextech_engine.cpp" line="769"/>
         <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
         <translation>V-Sync없이 게임을 할 때는 가능한 최대 프레임 속도로 게임을 실행하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="769"/>
+        <location filename="../testing/thextech_engine.cpp" line="773"/>
         <source>Enable grab all</source>
         <comment>Allow player to grab absolutely any NPCs in a game.</comment>
         <translation>모두 가져 오기 활성화</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="771"/>
+        <location filename="../testing/thextech_engine.cpp" line="775"/>
         <source>Allow player to grab any NPCs in a game.</source>
         <translation>플레이어가 게임에서 NPC를 잡을 수 있도록합니다.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="778"/>
+        <location filename="../testing/thextech_engine.cpp" line="782"/>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
         <translation>TheXTech로 경로 변경 ...</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="780"/>
+        <location filename="../testing/thextech_engine.cpp" line="784"/>
         <source>Select the path to TheXTech executable.</source>
         <translation>TheXTech 실행 파일의 경로를 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="784"/>
+        <location filename="../testing/thextech_engine.cpp" line="788"/>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
         <translation>게임을 시작하다</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="793"/>
+        <location filename="../testing/thextech_engine.cpp" line="797"/>
         <source>Executable not found</source>
         <translation>실행 파일을 찾을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="794"/>
+        <location filename="../testing/thextech_engine.cpp" line="798"/>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
         <translation>&quot;% 1&quot;을 (를) 찾을 수 없기 때문에 TheXTech 게임을 시작할 수 없습니다. TheXTech 실행 파일에 대한 잘못된 경로가 지정 되었기 때문에 발생할 수 있습니다. TheXTech 경로 설정을 확인하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="803"/>
+        <location filename="../testing/thextech_engine.cpp" line="807"/>
         <source>TheXtech start failed</source>
         <translation>TheXtech 시작 실패</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="804"/>
+        <location filename="../testing/thextech_engine.cpp" line="808"/>
         <source>Can&apos;t start TheXTech because of following reason:
 %3.
 
@@ -10517,17 +10520,17 @@ Data may be corrupted!</source>
 데이터가 손상되었을 수 있습니다!</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tileset_editor.cpp" line="675"/>
+        <location filename="../tools/tilesets/tileset_editor.cpp" line="677"/>
         <source>Tileset box editor</source>
         <translation>타일셋 상자 편집기</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tileset_editor.cpp" line="680"/>
+        <location filename="../tools/tilesets/tileset_editor.cpp" line="682"/>
         <source>Don&apos;t show this message again.</source>
         <translation>이 메시지를 다시 표시하지 마십시오.</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tileset_editor.cpp" line="682"/>
+        <location filename="../tools/tilesets/tileset_editor.cpp" line="684"/>
         <source>Welcome to tileset editor!
 
 This is an editor of global tilesets.
@@ -10545,22 +10548,22 @@ If you wish to create level/world specific tilesets with using of custom graphic
 사용자 정의 그래픽으로 레벨 / 월드 별 타일셋을 생성하려면 타일셋 항목 상자를 열고 &quot;사용자 정의&quot;탭에서 &quot;새 타일셋&quot;버튼을 찾으십시오.</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tileset_editor.cpp" line="699"/>
+        <location filename="../tools/tilesets/tileset_editor.cpp" line="701"/>
         <source>Remove tileset</source>
         <translation>타일셋 제거</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tileset_editor.cpp" line="700"/>
+        <location filename="../tools/tilesets/tileset_editor.cpp" line="702"/>
         <source>Do you want to remove this tileset?</source>
         <translation>이 타일셋을 제거 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tileset_editor.cpp" line="706"/>
+        <location filename="../tools/tilesets/tileset_editor.cpp" line="708"/>
         <source>Tileset removed</source>
         <translation>타일셋 제거</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tileset_editor.cpp" line="706"/>
+        <location filename="../tools/tilesets/tileset_editor.cpp" line="708"/>
         <source>Tileset has been removed!</source>
         <translation>타일셋이 제거되었습니다!</translation>
     </message>
@@ -10643,54 +10646,54 @@ If you wish to create level/world specific tilesets with using of custom graphic
         <translation>저장</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="148"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="162"/>
         <source>Select Tileset</source>
         <translation>타일셋 선택</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="159"/>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="212"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="173"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="226"/>
         <source>There is already a file called &apos;%1&apos;!
 Import anyway and overwrite?</source>
         <translation>&apos;% 1&apos;이라는 파일이 이미 있습니다!
 그래도 가져 와서 덮어 쓰시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="182"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="196"/>
         <source>Failed to load tileset!</source>
         <translation>타일셋을로드하지 못했습니다!</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="183"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="197"/>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
         <translation>타일셋을로드하지 못했습니다!
 데이터가 손상되었을 수 있습니다!</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="199"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="213"/>
         <source>Select Tileset Group</source>
         <translation>타일셋 그룹 선택</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="256"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="272"/>
         <source>Failed to load tileset group!</source>
         <translation>타일셋 그룹을로드하지 못했습니다!</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="257"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="273"/>
         <source>Failed to load tileset group!
 Data may be corrupted!</source>
         <translation>타일셋 그룹을로드하지 못했습니다!
 데이터가 손상되었을 수 있습니다!</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="267"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="283"/>
         <source>Please enter a filename!</source>
         <translation>파일 이름을 입력하십시오!</translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="268"/>
+        <location filename="../tools/tilesets/tilesetgroupeditor.cpp" line="284"/>
         <source>Filename:</source>
         <translation>파일 이름:</translation>
     </message>
@@ -10713,17 +10716,17 @@ Data may be corrupted!</source>
         <translation>새로운 타일셋</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/tileset_item_box.cpp" line="171"/>
+        <location filename="../main_window/dock/tileset_item_box.cpp" line="170"/>
         <source>File not saved</source>
         <translation>파일이 저장되지 않았습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/tileset_item_box.cpp" line="172"/>
+        <location filename="../main_window/dock/tileset_item_box.cpp" line="171"/>
         <source>File doesn&apos;t saved on disk.</source>
         <translation>파일이 디스크에 저장되지 않았습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/tileset_item_box.cpp" line="310"/>
+        <location filename="../main_window/dock/tileset_item_box.cpp" line="309"/>
         <source>Group:</source>
         <translation>그룹:</translation>
     </message>
@@ -10854,52 +10857,52 @@ Data may be corrupted!</source>
         <translation>실험실 업데이트 확인</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.cpp" line="200"/>
-        <location filename="../main_window/updater/check_updates.cpp" line="216"/>
+        <location filename="../main_window/updater/check_updates.cpp" line="212"/>
+        <location filename="../main_window/updater/check_updates.cpp" line="228"/>
         <source>Checking...</source>
         <translation>확인 중...</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.cpp" line="282"/>
-        <location filename="../main_window/updater/check_updates.cpp" line="299"/>
-        <location filename="../main_window/updater/check_updates.cpp" line="385"/>
+        <location filename="../main_window/updater/check_updates.cpp" line="294"/>
+        <location filename="../main_window/updater/check_updates.cpp" line="311"/>
+        <location filename="../main_window/updater/check_updates.cpp" line="397"/>
         <source>HTTP</source>
         <translation>에이치티티피</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.cpp" line="283"/>
+        <location filename="../main_window/updater/check_updates.cpp" line="295"/>
         <source>Check failed: %1.</source>
         <translation>확인 실패 : % 1.</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.cpp" line="289"/>
-        <location filename="../main_window/updater/check_updates.cpp" line="292"/>
+        <location filename="../main_window/updater/check_updates.cpp" line="301"/>
+        <location filename="../main_window/updater/check_updates.cpp" line="304"/>
         <source>Check failed!</source>
         <translation>확인 실패!</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.cpp" line="300"/>
+        <location filename="../main_window/updater/check_updates.cpp" line="312"/>
         <source>Redirect to %1 ?</source>
         <translation>% 1 (으)로 리디렉션 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.cpp" line="333"/>
-        <location filename="../main_window/updater/check_updates.cpp" line="340"/>
+        <location filename="../main_window/updater/check_updates.cpp" line="345"/>
+        <location filename="../main_window/updater/check_updates.cpp" line="352"/>
         <source>You have a latest version!</source>
         <translation>최신 버전이 있습니다!</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.cpp" line="336"/>
+        <location filename="../main_window/updater/check_updates.cpp" line="348"/>
         <source>Available new update!</source>
         <translation>새 버전을 사용할 수 있습니다!</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.cpp" line="343"/>
+        <location filename="../main_window/updater/check_updates.cpp" line="355"/>
         <source>Latest update is</source>
         <translation>최신 버전은</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.cpp" line="386"/>
+        <location filename="../main_window/updater/check_updates.cpp" line="398"/>
         <source>One or more SSL errors has occurred: %1</source>
         <translation>하나 이상의 SSL 오류가 발생했습니다 : % 1</translation>
     </message>
@@ -11023,98 +11026,98 @@ Data may be corrupted!</source>
         <translation>검색</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="116"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="117"/>
         <source>Level ID: %1, Array ID: %2</source>
         <translation>레벨 ID : % 1, 어레이 ID : % 2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="117"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="118"/>
         <source>Position: [%1, %2]</source>
         <translation>위치 : [% 1, % 2]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="271"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="272"/>
         <source>Any</source>
         <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="272"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="273"/>
         <source>None</source>
         <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="273"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="274"/>
         <source>Card Roulette Exit</source>
         <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="274"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="275"/>
         <source>Ball Exit</source>
         <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="275"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="276"/>
         <source>Walked Offscreen</source>
         <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="276"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="277"/>
         <source>Secret Exit</source>
         <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="277"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="278"/>
         <source>Crystal Sphare Exit</source>
         <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="278"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="279"/>
         <source>Warp Exit</source>
         <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="279"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="280"/>
         <source>Star Exit</source>
         <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="280"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="281"/>
         <source>Tape Exit</source>
         <comment>Exit type name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="313"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="314"/>
         <source>&lt;Exit type %1&gt;</source>
         <comment>Fallback name for the exit code when it&apos;s blank</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="526"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="527"/>
         <source>Please save the file</source>
         <translation>파일을 저장하십시오</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="527"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="528"/>
         <source>Please save the file before selecting levels.</source>
         <translation>레벨을 선택하기 전에 파일을 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="754"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="760"/>
         <source>Placement mode</source>
         <translation>배치 모드</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="754"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="760"/>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>먼저 맵에 항목을 놓고 &apos;속성&apos;컨텍스트 메뉴 항목을 엽니 다.</translation>
     </message>
@@ -11167,63 +11170,63 @@ Data may be corrupted!</source>
         <translation>카메라 위치 재설정</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="136"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="138"/>
         <source>Configuration package has errors</source>
         <translation>구성 패키지에 오류가 있습니다</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="137"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="139"/>
         <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
         <translation>구성 패키지의 오류로 인해 &quot;% 1&quot;세계지도를로드 할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="174"/>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="175"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="176"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="177"/>
         <source>Loading World map data</source>
         <translation>세계지도 데이터로드</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="174"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="176"/>
         <source>Abort</source>
         <translation>중단</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="223"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="225"/>
         <source>1/%1 Loading user data</source>
         <translation>1 / % 1 사용자 지정 데이터로드 중</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="232"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="234"/>
         <source>1/%1 Applying Tiles</source>
         <translation>1 / % 1 타일 적용</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="242"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="244"/>
         <source>2/%1 Applying Sceneries...</source>
         <translation>2 / % 1 풍경 적용 중 ...</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="252"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="254"/>
         <source>3/%1 Applying Paths...</source>
         <translation>3 / % 1 경로 적용 중 ...</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="262"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="264"/>
         <source>4/%1 Applying Levels...</source>
         <translation>4 / % 1 레벨 적용 중 ...</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="273"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="275"/>
         <source>5/%1 Applying Musics...</source>
         <translation>5 / % 1 오르골 적용 중 ...</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="385"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="387"/>
         <source>Point is not selected</source>
         <translation>포인트가 선택되지 않았습니다</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="386"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="388"/>
         <source>Select the point on the world map first.</source>
         <translation>먼저 세계지도에서 지점을 선택하십시오.</translation>
     </message>
@@ -11489,7 +11492,7 @@ Data may be corrupted!</source>
         <translation>Meta Object 숨기기</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="295"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="296"/>
         <source>Will be exported:
 Top:	%1
 Left:	%2
@@ -11505,7 +11508,7 @@ Bottom:	%4</source>
 <context>
     <name>WldScene</name>
     <message>
-        <location filename="../editing/_scenes/world/wld_control.cpp" line="255"/>
+        <location filename="../editing/_scenes/world/wld_control.cpp" line="275"/>
         <source>Tiles:		%1
 Sceneries:			%2
 Paths:	%3
@@ -11520,32 +11523,32 @@ Music boxes:		%5
 </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="113"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="117"/>
         <source>Search User Tiles %1</source>
         <translation>사용자 지정 지형 타일 % 1 검색 중</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="173"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="177"/>
         <source>Search User Sceneries %1</source>
         <translation>사용자 설정 풍경 % 1 검색 중</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="231"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="235"/>
         <source>Search User Paths %1</source>
         <translation>사용자 정의 경로 % 1 검색 중</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="289"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="293"/>
         <source>Search User Levels %1</source>
         <translation>사용자 정의 수준 % 1 검색 중</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="352"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="356"/>
         <source>Wrong custom images</source>
         <translation>잘못된 사용자 지정 이미지 파일</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="353"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="357"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
@@ -11845,28 +11848,28 @@ Please, reconvert your images to valid format and try to reload this level.</sou
 <context>
     <name>WorldEdit</name>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="116"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="117"/>
         <source>Export selected area to image</source>
         <translation>선택한 영역을 이미지로 내보내기</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="120"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="121"/>
         <source>PNG Image (*.png)</source>
         <translation>PNG 이미지 (* .png)</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="129"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="130"/>
         <source>Saving section image...</source>
         <translation>섹션 이미지 저장 중 ...</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="129"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="130"/>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="477"/>
         <source>Abort</source>
         <translation>중단</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="130"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="131"/>
         <source>Please wait...</source>
         <translation>잠시만 기다려주세요 ...</translation>
     </message>
@@ -12169,22 +12172,22 @@ Do you want to save your changes?</source>
         <translation>주요 허브 수준 :</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="554"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="559"/>
         <source>Counting...</source>
         <translation>계산 중 ...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="559"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="564"/>
         <source>Calculating total star count in accessible levels</source>
         <translation>배치 된 레벨에서 별 세기</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="560"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="565"/>
         <source>Abort</source>
         <translation>중단</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="564"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="569"/>
         <source>Counting stars...</source>
         <translation>별을 세는 중 ...</translation>
     </message>
