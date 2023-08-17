@@ -366,17 +366,17 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>Opacity of locked items</source>
         <comment>The title of group where user can set up the opacity level of locked items</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">锁定对象透明度</translation>
     </message>
     <message>
         <source>Opacity</source>
         <comment>Opacity of locked items (label text)</comment>
-        <translation type="unfinished"></translation>
+        <translation>透明度</translation>
     </message>
     <message>
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
         <comment>Explanation for the opacity of locked items</comment>
-        <translation type="unfinished"></translation>
+        <translation>应用于场景中全部锁定对象的透明度设置。</translation>
     </message>
 </context>
 <context>
@@ -4173,7 +4173,7 @@ All elements of this layer will be removed too!</source>
     </message>
     <message>
         <source>Select all items</source>
-        <translation type="unfinished"></translation>
+        <translation>选中该图层的所有对象</translation>
     </message>
 </context>
 <context>
