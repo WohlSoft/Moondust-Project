@@ -911,7 +911,7 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
     ox = m_data.ox;
     oy = m_data.oy;
 
-    m_doorLabel = new QGraphicsPixmapItem(GraphicsHelps::drawDegitFont(m_data.meta.array_id));
+    m_doorLabel = new QGraphicsPixmapItem(GraphicsHelps::drawDigitFont(m_data.meta.array_id));
 
     if(m_pointSide == D_Entrance)
     {
