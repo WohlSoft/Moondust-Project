@@ -1,0 +1,22 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/contributors">
+        <file>AndrewPixel.png</file>
+        <file>Bossedit8.png</file>
+        <file>DarkoniusMavakar.png</file>
+        <file>Enjl.png</file>
+        <file>FunnyCat.png</file>
+        <file>HorikawaOtane.png</file>
+        <file>Kevsoft.png</file>
+        <file>Marina.png</file>
+        <file>SquishyRex.png</file>
+        <file>Tails608.png</file>
+        <file>Valtteri.png</file>
+        <file>Wohlstand.png</file>
+        <file>_hele.png</file>
+        <file>_pix.png</file>
+        <file>_separator.png</file>
+        <file>gravishdariusmarian.png</file>
+        <file>h2643.png</file>
+    </qresource>
+</RCC>

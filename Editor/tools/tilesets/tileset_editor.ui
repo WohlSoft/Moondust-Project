@@ -14,7 +14,7 @@
    <string>Tileset Editor</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../_resources/editor.qrc">
+   <iconset resource="../../_resources/appicon/appicon.qrc">
     <normaloff>:/appicon/48.png</normaloff>:/appicon/48.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
@@ -88,7 +88,7 @@
            <x>0</x>
            <y>0</y>
            <width>322</width>
-           <height>244</height>
+           <height>237</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
@@ -134,7 +134,7 @@
          <bool>true</bool>
         </property>
         <property name="dragDropMode">
-         <enum>QAbstractItemView::DragOnly</enum>
+         <enum>QAbstractItemView::DragDrop</enum>
         </property>
         <property name="defaultDropAction">
          <enum>Qt::IgnoreAction</enum>
@@ -359,6 +359,7 @@
  </tabstops>
  <resources>
   <include location="../../_resources/editor.qrc"/>
+  <include location="../../_resources/appicon/appicon.qrc"/>
  </resources>
  <connections/>
 </ui>

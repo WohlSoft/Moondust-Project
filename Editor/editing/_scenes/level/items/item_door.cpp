@@ -186,19 +186,19 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
         dirLeft = dir->addAction(tr("Left", "Direction of pipe"));
         dirLeft->setCheckable(true);
-        dirLeft->setIcon(QIcon(isEnter ? ":/arrows/arrows/red_left.png" : ":/arrows/arrows/green_left.png"));
+        dirLeft->setIcon(QIcon(isEnter ? ":/arrows/red_left.png" : ":/arrows/green_left.png"));
 
         dirUp = dir->addAction(tr("Up", "Direction of pipe"));
         dirUp->setCheckable(true);
-        dirUp->setIcon(QIcon(isEnter ? ":/arrows/arrows/red_up.png" : ":/arrows/arrows/green_up.png"));
+        dirUp->setIcon(QIcon(isEnter ? ":/arrows/red_up.png" : ":/arrows/green_up.png"));
 
         dirRight = dir->addAction(tr("Right", "Direction of pipe"));
         dirRight->setCheckable(true);
-        dirRight->setIcon(QIcon(isEnter ? ":/arrows/arrows/red_right.png" : ":/arrows/arrows/green_right.png"));
+        dirRight->setIcon(QIcon(isEnter ? ":/arrows/red_right.png" : ":/arrows/green_right.png"));
 
         dirDown = dir->addAction(tr("Down", "Direction of pipe"));
         dirDown->setCheckable(true);
-        dirDown->setIcon(QIcon(isEnter ? ":/arrows/arrows/red_down.png" : ":/arrows/arrows/green_down.png"));
+        dirDown->setIcon(QIcon(isEnter ? ":/arrows/red_down.png" : ":/arrows/green_down.png"));
 
         if(isEnter)
         {
@@ -206,19 +206,19 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             {
             case LevelDoor::ENTRANCE_LEFT:
                 dirLeft->setChecked(true);
-                dir->setIcon(QIcon(":/arrows/arrows/red_left.png"));
+                dir->setIcon(QIcon(":/arrows/red_left.png"));
                 break;
             case LevelDoor::ENTRANCE_UP:
                 dirUp->setChecked(true);
-                dir->setIcon(QIcon(":/arrows/arrows/red_up.png"));
+                dir->setIcon(QIcon(":/arrows/red_up.png"));
                 break;
             case LevelDoor::ENTRANCE_RIGHT:
                 dirRight->setChecked(true);
-                dir->setIcon(QIcon(":/arrows/arrows/red_right.png"));
+                dir->setIcon(QIcon(":/arrows/red_right.png"));
                 break;
             case LevelDoor::ENTRANCE_DOWN:
                 dirDown->setChecked(true);
-                dir->setIcon(QIcon(":/arrows/arrows/red_down.png"));
+                dir->setIcon(QIcon(":/arrows/red_down.png"));
                 break;
             }
         }
@@ -228,19 +228,19 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             {
             case LevelDoor::EXIT_LEFT:
                 dirLeft->setChecked(true);
-                dir->setIcon(QIcon(":/arrows/arrows/green_left.png"));
+                dir->setIcon(QIcon(":/arrows/green_left.png"));
                 break;
             case LevelDoor::EXIT_UP:
                 dirUp->setChecked(true);
-                dir->setIcon(QIcon(":/arrows/arrows/green_up.png"));
+                dir->setIcon(QIcon(":/arrows/green_up.png"));
                 break;
             case LevelDoor::EXIT_RIGHT:
                 dirRight->setChecked(true);
-                dir->setIcon(QIcon(":/arrows/arrows/green_right.png"));
+                dir->setIcon(QIcon(":/arrows/green_right.png"));
                 break;
             case LevelDoor::EXIT_DOWN:
                 dirDown->setChecked(true);
-                dir->setIcon(QIcon(":/arrows/arrows/green_down.png"));
+                dir->setIcon(QIcon(":/arrows/green_down.png"));
                 break;
             }
         }
@@ -644,7 +644,7 @@ void ItemDoor::refreshArrows()
         if((m_pointSide == D_Entrance) || m_data.two_way)
         {
             m_arrowEnter = new QGraphicsPixmapItem;
-            QPixmap pix(":/arrows/arrows/warp_arrow_enter.png");
+            QPixmap pix(":/arrows/warp_arrow_enter.png");
             m_arrowEnter->setPixmap(pix);
             m_scene->addItem(m_arrowEnter);
             m_arrowEnter->setOpacity(qreal(0.6));
@@ -700,7 +700,7 @@ void ItemDoor::refreshArrows()
         if((m_pointSide == D_Exit) || m_data.two_way)
         {
             m_arrowExit = new QGraphicsPixmapItem;
-            QPixmap pix(":/arrows/arrows/warp_arrow_exit.png");
+            QPixmap pix(":/arrows/warp_arrow_exit.png");
             m_arrowExit->setPixmap(pix);
             m_scene->addItem(m_arrowExit);
             m_arrowExit->setOpacity(qreal(0.6));
@@ -911,7 +911,7 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
     ox = m_data.ox;
     oy = m_data.oy;
 
-    m_doorLabel = new QGraphicsPixmapItem(GraphicsHelps::drawDegitFont(m_data.meta.array_id));
+    m_doorLabel = new QGraphicsPixmapItem(GraphicsHelps::drawDigitFont(m_data.meta.array_id));
 
     if(m_pointSide == D_Entrance)
     {

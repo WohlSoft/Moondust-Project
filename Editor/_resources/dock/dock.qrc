@@ -1,0 +1,13 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/dock">
+        <file>copy_16x16.png</file>
+        <file>pencil_16x16.png</file>
+        <file>warp_entrance.png</file>
+        <file>warp_entrance_dark.png</file>
+        <file>warp_exit.png</file>
+        <file>warp_exit_dark.png</file>
+        <file>wrench_16x16.png</file>
+        <file>wrench_16x16_dark.png</file>
+    </qresource>
+</RCC>

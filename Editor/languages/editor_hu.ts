@@ -1874,32 +1874,32 @@ therefore you can use same link to get updated version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="72"/>
+        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="71"/>
         <source>Modern</source>
         <translation>Modern</translation>
     </message>
     <message>
-        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="94"/>
+        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="92"/>
         <source>Classic</source>
         <translation>Klasszikus</translation>
     </message>
     <message>
-        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="110"/>
+        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="108"/>
         <source>Modern UI designed for convenience, works well on screens of various sizes.</source>
         <translation>Modern, kényelmes felület, jól működik sok képernyőmérettel.</translation>
     </message>
     <message>
-        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="136"/>
+        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="134"/>
         <source>A classic interface which will be familiar to long-time users of SMBX or the legacy editor.</source>
         <translation type="unfinished">Egy klasszikus felület, ami ismerős lesz azoknak, akik a régi SMBX szerkesztőt használták.</translation>
     </message>
     <message>
-        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="172"/>
-        <source>Welcome to PGE Editor!</source>
+        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="169"/>
+        <source>Welcome to Moondust Editor!</source>
         <translation>Üdvözlünk a Moondust szerkesztőben!</translation>
     </message>
     <message>
-        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="191"/>
+        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="188"/>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
 sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 &lt;br/&gt;
@@ -2070,31 +2070,31 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>Installer</name>
     <message>
-        <location filename="../common_features/installer.cpp" line="169"/>
-        <location filename="../common_features/installer.cpp" line="170"/>
+        <location filename="../common_features/installer.cpp" line="199"/>
+        <location filename="../common_features/installer.cpp" line="200"/>
         <source>Please wait...</source>
         <translation>Kérjük várjon...</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="260"/>
+        <location filename="../common_features/installer.cpp" line="293"/>
         <source>PGE Level file</source>
         <comment>File Types</comment>
         <translation>Moondust pályaállomány</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="265"/>
+        <location filename="../common_features/installer.cpp" line="298"/>
         <source>PGE World Map</source>
         <comment>File Types</comment>
         <translation>Moondust világtérkép</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="270"/>
+        <location filename="../common_features/installer.cpp" line="303"/>
         <source>SMBX Level file</source>
         <comment>File Types</comment>
         <translation>SMBX pályaállomány</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="275"/>
+        <location filename="../common_features/installer.cpp" line="308"/>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
         <translation>SMBX világtérkép</translation>
@@ -2857,178 +2857,178 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>ItemNPC</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="112"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="115"/>
         <source>Layer: </source>
         <translation type="unfinished">Réteg: </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="115"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="118"/>
         <source>Add to new layer...</source>
         <translation type="unfinished">Hozzáadás új réteghez</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="124"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="127"/>
         <source>[hidden]</source>
         <translation type="unfinished">[rejtett]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="140"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="143"/>
         <source>Edit NPC-Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="142"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="145"/>
         <source>New NPC-Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="147"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="150"/>
         <source>Set %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="147"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="150"/>
         <source>Direction</source>
         <translation type="unfinished">Irány</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="148"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="151"/>
         <source>Left</source>
         <translation type="unfinished">Bal</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="152"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="155"/>
         <source>Random</source>
         <translation type="unfinished">Véletlen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="157"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="160"/>
         <source>Right</source>
         <translation type="unfinished">Jobb</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="163"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="166"/>
         <source>Friendly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="167"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="170"/>
         <source>Doesn&apos;t move</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="171"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="174"/>
         <source>Set message...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="174"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="177"/>
         <source>Set as Boss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="179"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="182"/>
         <source>Transform into</source>
         <translation type="unfinished">Átalakítás ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="180"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="183"/>
         <source>Transform all %1 in this section into</source>
         <translation type="unfinished">Átalakítás minden %1 ebben a szekcióban ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="181"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="184"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished">Átakakítás minden %1 ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="187"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="190"/>
         <source>Change included NPC...</source>
         <translation type="unfinished">Tartalmazott NJK megváltoztatása...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="192"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="195"/>
         <source>Copy preferences</source>
         <translation type="unfinished">Beállítások másolása</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="193"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="196"/>
         <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="194"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="197"/>
         <source>NPC-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="195"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="198"/>
         <source>Position: X, Y</source>
         <translation type="unfinished">Hely (X, Y):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="196"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="199"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished">Hely (X, Y, Szélesség, Magasság):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="197"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished">Hely (Bal, Teteje, Jobb, Alja):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="203"/>
         <source>Copy</source>
         <translation type="unfinished">Másolás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="201"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="204"/>
         <source>Cut</source>
         <translation type="unfinished">Kivágás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="203"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="206"/>
         <source>Remove</source>
         <translation type="unfinished">Törlés</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="204"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
         <source>Remove all %1 in this section</source>
         <translation type="unfinished">Minden %1 törlése ebben a szekcióban</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="205"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="208"/>
         <source>Remove all %1</source>
         <translation type="unfinished">Minden %1 törlése</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="210"/>
         <source>Edit raw user data...</source>
         <translation type="unfinished">Nyers felhasználói adatok szerkesztése...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="211"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="214"/>
         <source>Properties...</source>
         <translation type="unfinished">Tulajdonságok...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="251"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="485"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="254"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="488"/>
         <source>Margin of section</source>
         <translation type="unfinished">Szekciómargó</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="252"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="486"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="255"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="489"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="315"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="320"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="329"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="340"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="351"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="318"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="323"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="332"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="343"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="354"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished">Beállítások másolva: %1</translation>
     </message>
@@ -10675,49 +10675,49 @@ Data may be corrupted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="80"/>
+        <location filename="../main_window/updater/check_updates.ui" line="79"/>
         <source>Laboratory builds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="93"/>
+        <location filename="../main_window/updater/check_updates.ui" line="92"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="100"/>
-        <location filename="../main_window/updater/check_updates.ui" line="171"/>
+        <location filename="../main_window/updater/check_updates.ui" line="99"/>
+        <location filename="../main_window/updater/check_updates.ui" line="169"/>
         <source>Check automatically every startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="113"/>
+        <location filename="../main_window/updater/check_updates.ui" line="112"/>
         <source>Here you can get bug fixes and new features before new stable will be released</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="139"/>
+        <location filename="../main_window/updater/check_updates.ui" line="137"/>
         <source>Stable builds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="152"/>
+        <location filename="../main_window/updater/check_updates.ui" line="150"/>
         <source>This is an update checker dialog. Here you can check available updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="198"/>
-        <location filename="../main_window/updater/check_updates.ui" line="208"/>
+        <location filename="../main_window/updater/check_updates.ui" line="196"/>
+        <location filename="../main_window/updater/check_updates.ui" line="206"/>
         <source>Click to check updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="224"/>
+        <location filename="../main_window/updater/check_updates.ui" line="222"/>
         <source>Check stable updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="237"/>
+        <location filename="../main_window/updater/check_updates.ui" line="235"/>
         <source>Check laboratory updates</source>
         <translation type="unfinished"></translation>
     </message>

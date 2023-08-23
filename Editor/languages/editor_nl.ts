@@ -1871,32 +1871,32 @@ therefore you can use same link to get updated version</source>
         <translation>Kies de werkruimte-indeling die u wilt gebruiken:</translation>
     </message>
     <message>
-        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="72"/>
+        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="71"/>
         <source>Modern</source>
         <translation>Modern</translation>
     </message>
     <message>
-        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="94"/>
+        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="92"/>
         <source>Classic</source>
         <translation>Klassiek</translation>
     </message>
     <message>
-        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="110"/>
+        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="108"/>
         <source>Modern UI designed for convenience, works well on screens of various sizes.</source>
         <translation>Moderne gebruikersinterface ontworpen voor gemak, werkt op alle schermen en diverse formaten.</translation>
     </message>
     <message>
-        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="136"/>
+        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="134"/>
         <source>A classic interface which will be familiar to long-time users of SMBX or the legacy editor.</source>
         <translation>Een klassiekere interface die meer zal lijken op het oude SMBX bewerkingsprogramma.</translation>
     </message>
     <message>
-        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="172"/>
-        <source>Welcome to PGE Editor!</source>
-        <translation type="unfinished">Welkom bij het PGE bewerkingsprogramma!</translation>
+        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="169"/>
+        <source>Welcome to Moondust Editor!</source>
+        <translation>Welkom bij het Moondust bewerkingsprogramma!</translation>
     </message>
     <message>
-        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="191"/>
+        <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="188"/>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
 sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 &lt;br/&gt;
@@ -2072,31 +2072,31 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
 <context>
     <name>Installer</name>
     <message>
-        <location filename="../common_features/installer.cpp" line="169"/>
-        <location filename="../common_features/installer.cpp" line="170"/>
+        <location filename="../common_features/installer.cpp" line="199"/>
+        <location filename="../common_features/installer.cpp" line="200"/>
         <source>Please wait...</source>
         <translation>Even geduld...</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="260"/>
+        <location filename="../common_features/installer.cpp" line="293"/>
         <source>PGE Level file</source>
         <comment>File Types</comment>
         <translation type="unfinished">PGE Niveau Bestand</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="265"/>
+        <location filename="../common_features/installer.cpp" line="298"/>
         <source>PGE World Map</source>
         <comment>File Types</comment>
         <translation type="unfinished">PGE Wereld Map</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="270"/>
+        <location filename="../common_features/installer.cpp" line="303"/>
         <source>SMBX Level file</source>
         <comment>File Types</comment>
         <translation>SMBX Niveau Bestand</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="275"/>
+        <location filename="../common_features/installer.cpp" line="308"/>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
         <translation>SMBX Wereld Map</translation>
@@ -2860,178 +2860,178 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
 <context>
     <name>ItemNPC</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="112"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="115"/>
         <source>Layer: </source>
         <translation>Laag: </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="115"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="118"/>
         <source>Add to new layer...</source>
         <translation>Toevoegen op nieuwe laag...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="124"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="127"/>
         <source>[hidden]</source>
         <translation>[Verborgen]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="140"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="143"/>
         <source>Edit NPC-Configuration</source>
         <translation>WIjzig NPC-instellingen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="142"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="145"/>
         <source>New NPC-Configuration</source>
         <translation>Nieuwe NPC-instelling</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="147"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="150"/>
         <source>Set %1</source>
         <translation>%1 bepalen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="147"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="150"/>
         <source>Direction</source>
         <translation>Richting</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="148"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="151"/>
         <source>Left</source>
         <translation>Links</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="152"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="155"/>
         <source>Random</source>
         <translation>Willekeurig</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="157"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="160"/>
         <source>Right</source>
         <translation>Rechts</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="163"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="166"/>
         <source>Friendly</source>
         <translation>Vriendelijk</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="167"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="170"/>
         <source>Doesn&apos;t move</source>
         <translation>Beweegt niet</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="171"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="174"/>
         <source>Set message...</source>
         <translation>Voeg dialoog toe...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="174"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="177"/>
         <source>Set as Boss</source>
         <translation>Instellen als Baas</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="179"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="182"/>
         <source>Transform into</source>
         <translation>Verander naar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="180"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="183"/>
         <source>Transform all %1 in this section into</source>
         <translation>Verander alle %1 in deze sectie naar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="181"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="184"/>
         <source>Transform all %1 into</source>
         <translation>Verander alle %1 naar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="187"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="190"/>
         <source>Change included NPC...</source>
         <translation>Inhoud wijzigen...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="192"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="195"/>
         <source>Copy preferences</source>
         <translation>Instellingen kopiëren</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="193"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="196"/>
         <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="194"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="197"/>
         <source>NPC-ID: %1</source>
         <translation>NPC-ID: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="195"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="198"/>
         <source>Position: X, Y</source>
         <translation>Positie: X, Y</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="196"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="199"/>
         <source>Position: X, Y, Width, Height</source>
         <translation>Positie X, Y, Breedte, Hoogte</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="197"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation>Positie: Links, Boven, Rechts, Onder</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="203"/>
         <source>Copy</source>
         <translation>Kopiëren</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="201"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="204"/>
         <source>Cut</source>
         <translation>Knippen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="203"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="206"/>
         <source>Remove</source>
         <translation>Verwijderen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="204"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
         <source>Remove all %1 in this section</source>
         <translation>Verwijder alle %1 in deze sectie</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="205"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="208"/>
         <source>Remove all %1</source>
         <translation>Verwijder alle %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="210"/>
         <source>Edit raw user data...</source>
         <translation>Ruwe gebruikersdata wijzigen...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="211"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="214"/>
         <source>Properties...</source>
         <translation>Instelllingen...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="251"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="485"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="254"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="488"/>
         <source>Margin of section</source>
         <translation>Sectiemarge</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="252"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="486"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="255"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="489"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation>Gelieve aan te geven hoe ver buiten de speelgrens (in pixels) voorwerpen verwijderd moeten worden.</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="315"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="320"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="329"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="340"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="351"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="318"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="323"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="332"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="343"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="354"/>
         <source>Preferences have been copied: %1</source>
         <translation>Instellingen zijn gekopiëerd: %1</translation>
     </message>
@@ -10790,7 +10790,7 @@ Data zou corrupt kunnen zijn!</translation>
         <translation>Controleren voor updates</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="139"/>
+        <location filename="../main_window/updater/check_updates.ui" line="137"/>
         <source>Stable builds</source>
         <translation>Stabiele versies</translation>
     </message>
@@ -10800,44 +10800,44 @@ Data zou corrupt kunnen zijn!</translation>
         <translation>Controleren voor nieuwe stabiele versies</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="100"/>
-        <location filename="../main_window/updater/check_updates.ui" line="171"/>
+        <location filename="../main_window/updater/check_updates.ui" line="99"/>
+        <location filename="../main_window/updater/check_updates.ui" line="169"/>
         <source>Check automatically every startup</source>
         <translation>Automatisch controleren bij opstarten</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="93"/>
+        <location filename="../main_window/updater/check_updates.ui" line="92"/>
         <source>Close</source>
         <translation>Sluiten</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="198"/>
-        <location filename="../main_window/updater/check_updates.ui" line="208"/>
+        <location filename="../main_window/updater/check_updates.ui" line="196"/>
+        <location filename="../main_window/updater/check_updates.ui" line="206"/>
         <source>Click to check updates</source>
         <translation>Klik om voor updates te controleren</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="237"/>
+        <location filename="../main_window/updater/check_updates.ui" line="235"/>
         <source>Check laboratory updates</source>
         <translation>Controleren voor laboratorium updates</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="113"/>
+        <location filename="../main_window/updater/check_updates.ui" line="112"/>
         <source>Here you can get bug fixes and new features before new stable will be released</source>
         <translation>Hier kunt u bugfixes en nieuwe functies krijgen voordat ze beschikbaar zijn op stabiele versies</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="80"/>
+        <location filename="../main_window/updater/check_updates.ui" line="79"/>
         <source>Laboratory builds</source>
         <translation>Laboratorium versies</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="224"/>
+        <location filename="../main_window/updater/check_updates.ui" line="222"/>
         <source>Check stable updates</source>
         <translation>Controleren voor stabiele updates</translation>
     </message>
     <message>
-        <location filename="../main_window/updater/check_updates.ui" line="152"/>
+        <location filename="../main_window/updater/check_updates.ui" line="150"/>
         <source>This is an update checker dialog. Here you can check available updates.</source>
         <translation>Dit is een update checker dialoogvenster. Hier kunt u controleren of er updates beschikbaar zijn.</translation>
     </message>

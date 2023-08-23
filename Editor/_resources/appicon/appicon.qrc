@@ -1,0 +1,12 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/appicon">
+        <file alias="app.icns">cat_builder.icns</file>
+        <file alias="app.ico">cat_builder.ico</file>
+        <file alias="128.png">cat_builder_128.png</file>
+        <file alias="16.png">cat_builder_16.png</file>
+        <file alias="256.png">cat_builder_256.png</file>
+        <file alias="32.png">cat_builder_32.png</file>
+        <file alias="48.png">cat_builder_48.png</file>
+    </qresource>
+</RCC>

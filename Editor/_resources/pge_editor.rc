@@ -1,8 +1,8 @@
 ICON_01                      ICON    DISCARDABLE     "appicon/cat_builder.ico"
-ICON_02_LVLX                 ICON    DISCARDABLE     "_files/file_lvlx.ico"
-ICON_03_WLDX                 ICON    DISCARDABLE     "_files/file_wldx.ico"
-ICON_04_LVL                  ICON    DISCARDABLE     "_files/file_lvl.ico"
-ICON_05_WLD                  ICON    DISCARDABLE     "_files/file_wld.ico"
+ICON_02_LVLX                 ICON    DISCARDABLE     "files/file_lvlx.ico"
+ICON_03_WLDX                 ICON    DISCARDABLE     "files/file_wldx.ico"
+ICON_04_LVL                  ICON    DISCARDABLE     "files/file_lvl.ico"
+ICON_05_WLD                  ICON    DISCARDABLE     "files/file_wld.ico"
 
 #include <windows.h>
 #include "../version.h"

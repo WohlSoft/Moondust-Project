@@ -133,6 +133,7 @@
  </widget>
  <resources>
   <include location="../../_resources/editor.qrc"/>
+  <include location="../../_resources/appicon/appicon.qrc"/>
  </resources>
  <connections/>
 </ui>

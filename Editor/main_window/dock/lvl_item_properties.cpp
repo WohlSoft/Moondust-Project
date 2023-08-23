@@ -71,15 +71,15 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
     setVisible(false);
     ui->setupUi(this);
 
-    ui->npcGeneratorDirection->setPixmap(DirectionSwitchWidget::S_CENTER, QPixmap(":/arrows/arrows/box.png"));
-    ui->npcGeneratorDirection->setPixmap(DirectionSwitchWidget::S_LEFT, QPixmap(":/arrows/arrows/black_left.png"));
-    ui->npcGeneratorDirection->setPixmap(DirectionSwitchWidget::S_RIGHT, QPixmap(":/arrows/arrows/black_right.png"));
-    ui->npcGeneratorDirection->setPixmap(DirectionSwitchWidget::S_TOP, QPixmap(":/arrows/arrows/black_up.png"));
-    ui->npcGeneratorDirection->setPixmap(DirectionSwitchWidget::S_BOTTOM, QPixmap(":/arrows/arrows/black_down.png"));
-    ui->npcGeneratorDirection->setPixmapOn(DirectionSwitchWidget::S_LEFT, QPixmap(":/arrows/arrows/green_left.png"));
-    ui->npcGeneratorDirection->setPixmapOn(DirectionSwitchWidget::S_RIGHT, QPixmap(":/arrows/arrows/green_right.png"));
-    ui->npcGeneratorDirection->setPixmapOn(DirectionSwitchWidget::S_TOP, QPixmap(":/arrows/arrows/green_up.png"));
-    ui->npcGeneratorDirection->setPixmapOn(DirectionSwitchWidget::S_BOTTOM, QPixmap(":/arrows/arrows/green_down.png"));
+    ui->npcGeneratorDirection->setPixmap(DirectionSwitchWidget::S_CENTER, QPixmap(":/arrows/box.png"));
+    ui->npcGeneratorDirection->setPixmap(DirectionSwitchWidget::S_LEFT, QPixmap(":/arrows/black_left.png"));
+    ui->npcGeneratorDirection->setPixmap(DirectionSwitchWidget::S_RIGHT, QPixmap(":/arrows/black_right.png"));
+    ui->npcGeneratorDirection->setPixmap(DirectionSwitchWidget::S_TOP, QPixmap(":/arrows/black_up.png"));
+    ui->npcGeneratorDirection->setPixmap(DirectionSwitchWidget::S_BOTTOM, QPixmap(":/arrows/black_down.png"));
+    ui->npcGeneratorDirection->setPixmapOn(DirectionSwitchWidget::S_LEFT, QPixmap(":/arrows/green_left.png"));
+    ui->npcGeneratorDirection->setPixmapOn(DirectionSwitchWidget::S_RIGHT, QPixmap(":/arrows/green_right.png"));
+    ui->npcGeneratorDirection->setPixmapOn(DirectionSwitchWidget::S_TOP, QPixmap(":/arrows/green_up.png"));
+    ui->npcGeneratorDirection->setPixmapOn(DirectionSwitchWidget::S_BOTTOM, QPixmap(":/arrows/green_down.png"));
     ui->npcGeneratorDirection->mapValue(DirectionSwitchWidget::S_LEFT, LevelNPC::NPC_GEN_LEFT);
     ui->npcGeneratorDirection->mapValue(DirectionSwitchWidget::S_RIGHT, LevelNPC::NPC_GEN_RIGHT);
     ui->npcGeneratorDirection->mapValue(DirectionSwitchWidget::S_TOP, LevelNPC::NPC_GEN_UP);

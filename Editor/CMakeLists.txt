@@ -186,7 +186,27 @@ list(APPEND PGE_EDITOR_UI
     ${MOONDUST_QT_MODULES_UI}
 )
 
-set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/editor.qrc)
+set(RESOURCE
+    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/appicon/appicon.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/arrows/arrows.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/contributors/contributors.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/dock/dock.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/dummies/dummies.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/engines/engines.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/files/files.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/fonts/fonts.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/lunalua/lunalua.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/npc/npc.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/sections/sections.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/tips/tips.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/toolbar/toolbar.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/_resources/editor.qrc
+)
+
+if(UNIX AND NOT APPLE)
+    list(APPEND RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/files/files-linux.qrc)
+endif()
+
 pge_qt_add_resources(RESOURCE_ADDED
     ${RESOURCE}
     ${MOONDUST_QT_MODULES_QRC}
@@ -550,7 +570,7 @@ endif()
 
 if(APPLE)
     add_definitions(-DQ_OS_MACX) # Workaround for MOC
-    file(GLOB PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/_resources/_files/file_*.icns")
+    file(GLOB PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/_resources/files/file_*.icns")
     set_source_files_properties(${MOONDUST_QT_LANG_BIN_FILES} PROPERTIES GENERATED TRUE) # WORKAROUND
     list(APPEND PGE_EDITOR_SRCS
         _resources/appicon/cat_builder.icns

@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=Moondust Editor
+Name[ru]=Редактор Moondust
+Name[ru_RU]=Редактор Moondust
+GenericName=Moondust Editor, for creating a levels, world maps and episodes
+GenericName[ru]=Редактор Moondust, для создания уровней, карт мира и эпизодов
+GenericName[ru_RU]=Редактор Moondust, для создания уровней, карт мира и эпизодов
+Icon=MoondustEditor
+Exec=%1/pge_editor %f
+Path=%1
+Terminal=false
+StartupNotify=false
+NoDisplay=true
+Categories=Application;Game;PlatformGame;
+MimeType=application/x-pgex-level;application/x-pgex-world;application/x-smbx64-level;application/x-smbx64-world;

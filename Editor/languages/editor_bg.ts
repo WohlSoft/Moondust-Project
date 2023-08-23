@@ -1507,10 +1507,6 @@ therefore you can use same link to get updated version</source>
         <translation>Класически интерфейс, който ще бъде познат на дългогодишните потребители на наследствения редактор на SMBX.</translation>
     </message>
     <message>
-        <source>Welcome to PGE Editor!</source>
-        <translation>Добре дошли в редактора Moondust!</translation>
-    </message>
-    <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
 sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 &lt;br/&gt;
@@ -1524,6 +1520,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 както и от кутиите с инструменти в лентите с инструменти и менютата. Този редактор също така ви позволява да избирате няколко обекта наведнъж!&lt;br&gt;
 &lt;br&gt;
 &lt;b&gt;Съвет 3:&lt;/b&gt; Използвайте средния бутон на мишката, за да превключвате между поставяне на избрания обект или копиране на група от тях!&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Welcome to Moondust Editor!</source>
+        <translation>Добре дошли в редактора Moondust!</translation>
     </message>
 </context>
 <context>

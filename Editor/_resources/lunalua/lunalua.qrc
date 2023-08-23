@@ -1,0 +1,8 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/lunalua">
+        <file>templates/luna_level.lua</file>
+        <file>templates/luna_level_all.lua</file>
+        <file>templates/luna_world_map.lua</file>
+    </qresource>
+</RCC>

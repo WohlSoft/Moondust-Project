@@ -57,7 +57,7 @@ public:
      * \param number Target number to draw
      * \return Image with drawn number value
      */
-    static QPixmap drawDegitFont(int number);
+    static QPixmap drawDigitFont(int number);
 };
 
 #endif // GRAPHICS_FUNCS_H

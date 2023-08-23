@@ -1,0 +1,14 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/dummies">
+        <file>dummy-bg.png</file>
+        <file>music_box.png</file>
+        <file>unknown_bgo.png</file>
+        <file>unknown_block.png</file>
+        <file>unknown_npc.png</file>
+        <file>unknown_path.png</file>
+        <file>unknown_scene.png</file>
+        <file>unknown_tile.png</file>
+        <file>unknown_wlvl.png</file>
+    </qresource>
+</RCC>

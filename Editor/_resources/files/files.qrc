@@ -1,0 +1,34 @@
+<RCC>
+    <qresource prefix="/files/lvl">
+        <file alias="lvl-16.png">lvl/file_lvl_16.png</file>
+        <file alias="lvl-32.png">lvl/file_lvl_32.png</file>
+        <file alias="lvl-48.png">lvl/file_lvl_48.png</file>
+        <file alias="lvl-256.png">lvl/file_lvl_256.png</file>
+        <file alias="lvl.icns">file_lvl.icns</file>
+        <file alias="lvl.ico">file_lvl.ico</file>
+    </qresource>
+    <qresource prefix="/files/lvlx">
+        <file alias="lvlx-16.png">lvlx/file_lvlx_16.png</file>
+        <file alias="lvlx-32.png">lvlx/file_lvlx_32.png</file>
+        <file alias="lvlx-48.png">lvlx/file_lvlx_48.png</file>
+        <file alias="lvlx-256.png">lvlx/file_lvlx_256.png</file>
+        <file alias="lvlx.icns">file_lvlx.icns</file>
+        <file alias="lvlx.ico">file_lvlx.ico</file>
+    </qresource>
+    <qresource prefix="/files/wld">
+        <file alias="wld-16.png">wld/file_wld_16.png</file>
+        <file alias="wld-32.png">wld/file_wld_32.png</file>
+        <file alias="wld-48.png">wld/file_wld_48.png</file>
+        <file alias="wld-256.png">wld/file_wld_256.png</file>
+        <file alias="wld.icns">file_wld.icns</file>
+        <file alias="wld.ico">file_wld.ico</file>
+    </qresource>
+    <qresource prefix="/files/wldx">
+        <file alias="wldx-16.png">wldx/file_wldx_16.png</file>
+        <file alias="wldx-32.png">wldx/file_wldx_32.png</file>
+        <file alias="wldx-48.png">wldx/file_wldx_48.png</file>
+        <file alias="wldx-256.png">wldx/file_wldx_256.png</file>
+        <file alias="wldx.icns">file_wldx.icns</file>
+        <file alias="wldx.ico">file_wldx.ico</file>
+    </qresource>
+</RCC>

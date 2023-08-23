@@ -634,7 +634,7 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
 
     if(npcID < 0)
     {
-        m_coinCounter = new QGraphicsPixmapItem(GraphicsHelps::drawDegitFont(abs(npcID)));
+        m_coinCounter = new QGraphicsPixmapItem(GraphicsHelps::drawDigitFont(abs(npcID)));
         m_coinCounter->setPos(x(), y());
         m_coinCounter->setOpacity(1.0);
         m_coinCounter->setZValue(m_scene->Z_Block + 11);

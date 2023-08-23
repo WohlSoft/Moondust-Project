@@ -1514,10 +1514,6 @@ therefore you can use same link to get updated version</source>
         <translation>Класичний інтерфейс знайомий тим, хто користувався старим редагувачем SMBX.</translation>
     </message>
     <message>
-        <source>Welcome to PGE Editor!</source>
-        <translation>Ласкаво просимо до Moondust Редагувача!</translation>
-    </message>
-    <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
 sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 &lt;br/&gt;
@@ -1530,6 +1526,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 &lt;b&gt;Порада 2:&lt;/b&gt; У відмінності від старого редагувача, більшість можливостей доступні через контекстне меню (відкривається натиском правою кнопкою миші), панель інструментів зі значками (в верхній частині вікна) й меню. Цей редагувач також дозволяє вибирати кілька елементів одночасно!&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Порада 3:&lt;/b&gt; Використовуйте середню кнопку миші щоб розмістити конкретний елемент, або дублюйте цілу групу елементів!&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Welcome to Moondust Editor!</source>
+        <translation>Ласкаво просимо до Moondust Редагувача!</translation>
     </message>
 </context>
 <context>
