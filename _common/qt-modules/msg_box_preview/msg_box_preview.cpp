@@ -13,17 +13,21 @@ static void s_splitString(std::vector<std::string>& out, const std::string& str,
 {
     std::string::size_type beg = 0;
     std::string::size_type end = 0;
+
+    out.clear();
+    if(str.empty())
+        return;
+
     do
     {
         end = str.find(delimiter, beg);
         if(end == std::string::npos)
             end = str.size();
-        out.emplace_back(str.substr(beg, end-beg));
+        out.emplace_back(str.substr(beg, end - beg));
         beg = end + 1;
     }
     while(end < str.size() - 1);
 }
-
 
 QString MsgBoxPreview::runPreProcessor()
 {
@@ -53,7 +57,7 @@ QString MsgBoxPreview::runPreProcessor()
         std::smatch m_elif;
 
         if((!st.open && std::regex_search(t, m_if, cond_if)) ||
-            (st.open && std::regex_search(t, m_elif, cond_elif)))
+           ( st.open && std::regex_search(t, m_elif, cond_elif)))
         {
             st.cond_true = false;
             if(st.open && st.skip_to_endif)
@@ -95,7 +99,7 @@ QString MsgBoxPreview::runPreProcessor()
         else if(st.open && t == cond_else)
         {
             st.open = true;
-            st.cond_true = true;
+            st.cond_true = !st.skip_to_endif;
             if(st.open && st.skip_to_endif)
                 continue;
 
