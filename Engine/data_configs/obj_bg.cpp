@@ -131,7 +131,7 @@ bool ConfigManager::loadLevelBackG()
         if(useDirectory)
             valid = loadLevelBackground(sbg, "background2", nullptr, fmt::format_ne("{0}/background2-{1}.ini", nestDir, i));
         else
-            valid = loadLevelBackground(sbg, std::string("background2-{0}", i), 0, "", &bgset);
+            valid = loadLevelBackground(sbg, fmt::format_ne("background2-{0}", i), nullptr, "", &bgset);
 
         if(valid)
         {
