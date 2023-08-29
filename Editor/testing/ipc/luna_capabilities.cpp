@@ -54,12 +54,15 @@
 #define DLLCHECK_SMBX2PAL           "LUNALUA 669b266"
 #define DLLCHECK_SMBX2BETA4         "LUNALUA 915bbba"
 #define DLLCHECK_SMBX2BETA4p1       "LUNALUA 82b1b88"
+#define DLLCHECK_SMBX2SEEMod        "LUNALUA SEE MOD"
 
 // Window titles defined in config/game.ini file to heuristically recognize capaitibilites
 #define HEURISTIC_SMBX2BETA3        "Super Mario Bros. X - 2.0.0 (Beta 3)"
 #define HEURISTIC_SMBX2MAGLX3       "Super Mario Bros. X2 - (2.0.0 bMAGLX3)"
 #define HEURISTIC_SMBX2PAL          "Super Mario Bros. X2 - (2.0.0 PAL)"
 #define HEURISTIC_SMBX2b4           "Super Mario Bros. X2 - (2.0.0 b4)"
+
+#define HEURISTIC_SMBX2SEEMod       "Super Mario Bros. X2 (SEE Mod)"
 
 
 /**
@@ -126,6 +129,25 @@ static void fillCapsBeta4(LunaLuaCapabilities &caps)
     caps.ipcCommands << "echo" << "testLevel" <<
                         "getWindowHandle" << "resetCheckPoints" <<
                         "getSupportedFeatures";
+    caps.args << "patch" << "game" << "leveleditor" << "noframeskip" <<
+                 "nosound" << "debugger" << "logger" << "newlauncher" <<
+                 "console" << "nogl" << "testLevel" << "waitForIPC" <<
+                 "hideOnCloseIPC" << "oldLvlLoader" <<
+                 "softGL" << "forceHardGL";
+    caps.isCompatible = true;
+}
+
+/**
+ * @brief Fills capatibilities of SMBX3-Beta4 LunaLua
+ * @param caps Target capatibilities structure
+ */
+static void fillCapsSEEMod(LunaLuaCapabilities &caps)
+{
+    caps.type = "heuristic BETA4";
+    caps.features << "LVLX";
+    caps.ipcCommands << "echo" << "testLevel" <<
+                        "getWindowHandle" << "resetCheckPoints" <<
+                        "getSupportedFeatures" << "sendItemPlacing";
     caps.args << "patch" << "game" << "leveleditor" << "noframeskip" <<
                  "nosound" << "debugger" << "logger" << "newlauncher" <<
                  "console" << "nogl" << "testLevel" << "waitForIPC" <<
@@ -251,6 +273,12 @@ static bool getRawLunaCapabilities(LunaLuaCapabilities &caps, const QString &pat
                 caps.type = "DLL-Check Beta4 Patch 1";
                 return true;
             }
+            else if(a.indexOf(DLLCHECK_SMBX2SEEMod) > 0)
+            {
+                fillCapsSEEMod(caps);
+                caps.type = "DLL-Check SEE Mod";
+                return true;
+            }
             else
             {
                 for(const auto &v : knownButNot)
@@ -327,6 +355,11 @@ static bool getLunaHeuristicCapabilities(LunaLuaCapabilities &caps, const QStrin
         else if(gt.indexOf(HEURISTIC_SMBX2b4) >= 0)
         {
             fillCapsBeta4(caps);
+            return true;
+        }
+        else if(gt.indexOf(HEURISTIC_SMBX2SEEMod) >= 0)
+        {
+            fillCapsSEEMod(caps);
             return true;
         }
 

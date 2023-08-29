@@ -74,7 +74,8 @@ class LunaTesterEngine : public AbstractRuntimeEngine
         PendC_CheckPoint,
         PendC_ShowWindow,
         PendC_Quit,
-        PendC_Kill
+        PendC_Kill,
+        PendC_SendPlacingItem
     };
     QSet<PendingCmd>    m_pendingCommands;
 
@@ -176,6 +177,24 @@ public slots:
      * @brief Change the executable name (apply into config pack specific settings)
      */
     void chooseExeName();
+    
+    /**
+     * @brief Turn on the block placing mode (or change properties)
+     * @param block Block data structure
+     */
+    void sendPlacingBlock(const LevelBlock &block);
+
+    /**
+     * @brief Turn on the BGO placing mode (or change properties)
+     * @param bgo BGO data structure
+     */
+    void sendPlacingBGO(const LevelBGO &bgo);
+
+    /**
+     * @brief Turn on the NPC placing mode (or change properties)
+     * @param npc NPC data structure
+     */
+    void sendPlacingNPC(const LevelNPC &npc);
 
 #ifndef _WIN32
 private:
@@ -209,6 +228,13 @@ private:
 
     void loadSetup();
     void saveSetup();
+    
+    /**
+     * @brief Send a raw data of a placing item
+     * @param raw Encoded setting of an object to place
+     * @return true on a succes sending
+     */
+    bool sendItemPlacing(const QString &rawData, PendingCmd ipcPendCmd);
 
 public:
     explicit LunaTesterEngine(QObject *parent = nullptr);
