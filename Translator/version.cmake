@@ -7,7 +7,7 @@ set(TRANSLATOR_VERSION_3 0)
 # Patch
 set(TRANSLATOR_VERSION_4 0)
 # Type of version: "-alpha","-beta","-dev", or "" aka "release"
-set(TRANSLATOR_VERSION_REL "-beta2")
+set(TRANSLATOR_VERSION_REL "-alpha")
 
 add_definitions(-DTRANSLATOR_VERSION_1=${TRANSLATOR_VERSION_1})
 add_definitions(-DTRANSLATOR_VERSION_2=${TRANSLATOR_VERSION_2})

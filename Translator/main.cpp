@@ -48,6 +48,13 @@ int main(int argc, char *argv[])
 
     TranslatorMain w;
 
+    w.setWindowTitle(QString("Moondust Translator - v%1%2 %3-%4, %5")
+                         .arg(V_FILE_VERSION)
+                         .arg(V_FILE_RELEASE)
+                         .arg(V_BUILD_VER)
+                         .arg(V_BUILD_BRANCH)
+                         .arg(FILE_CPU));
+
     w.show();
 
     return a.exec();
