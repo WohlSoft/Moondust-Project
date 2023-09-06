@@ -4,6 +4,7 @@ on:
     branches:
       - master
       - stable
+      - wip-translator
   pull_request:
     branches:
       - master
