@@ -76,6 +76,7 @@ pge_qt_wrap_ui(UIS_HDRS
     translate_field.ui
     dialogue_item.ui
     about/about.ui
+    lang_select/lang_select.ui
 )
 
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/translator.qrc)
@@ -102,6 +103,7 @@ list(APPEND PGE_TRANSLATOR_SRCS
     textdata/files_strings.h textdata/files_strings.cpp
     textdata/langs_list_model.h textdata/langs_list_model.cpp
     about/about.h about/about.cpp
+    lang_select/lang_select.h lang_select/lang_select.cpp
     translator_main.h translator_main.cpp
     translate_field.h translate_field.cpp
     dialogue_item.h dialogue_item.cpp

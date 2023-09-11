@@ -320,10 +320,6 @@ bool TextDataProcessor::scanSingleLevel(const QString &file, TranslateProject &p
     if(QFile::exists(lunaTxtPath))
         importScript(origin, lunaTxtPath, f_d.relativeFilePath(lunaTxtPath));
 
-    // FIXME: Remove this after adding the "languages manager" module
-    updateTranslation(proj, "ru");
-    updateTranslation(proj, "zh-cn");
-
     saveJSONs(directory, proj);
 
     return true;
@@ -1267,6 +1263,8 @@ void TextDataProcessor::updateTranslation(TranslateProject &proj, const QString 
 {
     auto &origin = proj["origin"];
     auto &tr = proj[trName];
+    Q_ASSERT(trName != "origin"); // Never call this function over the Meta File
+
 
     // Add missing entries at translation
 
@@ -1407,6 +1405,8 @@ void TextDataProcessor::updateTranslation(TranslateProject &proj, const QString 
             }
         }
     }
+
+    recountStats(proj, tr, false);
 }
 
 void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &trName, const QString &filePath)

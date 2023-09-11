@@ -33,6 +33,8 @@
 #include "textdata/dialogues_list_model.h"
 #include "textdata/langs_list_model.h"
 
+#include "lang_select/lang_select.h"
+
 #include "qfile_dialogs_default_options.hpp"
 #include "translate_field.h"
 #include "dialogue_item.h"
@@ -698,3 +700,42 @@ void TranslatorMain::on_actionAbout_triggered()
     a.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     a.exec();
 }
+
+void TranslatorMain::on_languagesAdd_clicked()
+{
+    if(m_currentPath.isEmpty())
+        return; // No opened project
+
+    LangSelect a(this);
+    a.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+    a.setData(tr("Add new language to project"),
+              tr("Please select a language to add into this project."));
+
+    if(a.exec() == QDialog::Accepted)
+    {
+        QString newLang = a.currentLanguageCode();
+        if(newLang.isEmpty())
+        {
+            QMessageBox::warning(this,
+                                 tr("Language selection"),
+                                 tr("An invalid language had been selected."),
+                                 QMessageBox::Ok);
+            return;
+        }
+
+        if(m_project.contains(newLang))
+        {
+            QMessageBox::information(this,
+                                     tr("Language selection"),
+                                     tr("The selected language %1 is already in the project.").arg(newLang),
+                                     QMessageBox::Ok);
+            return;
+        }
+
+        TextDataProcessor t;
+        t.createTranslation(m_project, newLang);
+
+        m_langsListModel->refreshData();
+    }
+}
+

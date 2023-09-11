@@ -63,6 +63,8 @@ private slots:
 
     void on_actionAbout_triggered();
 
+    void on_languagesAdd_clicked();
+
 private:
     Ui::TranslatorMain *ui;
 
