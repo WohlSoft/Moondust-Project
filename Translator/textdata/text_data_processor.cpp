@@ -180,10 +180,14 @@ bool TextDataProcessor::loadProject(const QString &directory, TranslateProject &
                      QDirIterator::NoIteratorFlags);
     bool hasTranslations = false;
 
-    QString meta_file = directory + "/i18n/translation_origin.json";
+    QString meta_file = directory + "/i18n/translation_metadata.json";
+    QString meta_file_legacy = directory + "/i18n/translation_origin.json";
+
+    if(!QFile::exists(meta_file) && QFile::exists(meta_file_legacy))
+        meta_file = meta_file_legacy; // Load legacy translation if presented
 
     if(QFile::exists(meta_file)) // Load metafile first
-        loadTranslation(proj, "origin", meta_file);
+        loadTranslation(proj, "metadata", meta_file);
 
     while(dit.hasNext())
     {
@@ -191,7 +195,7 @@ bool TextDataProcessor::loadProject(const QString &directory, TranslateProject &
         QFileInfo fi(f);
         QStringList cap = s_getRegExMatches("translation_([a-zA-Z-]*)\\.json", fi.fileName());
 
-        if(cap.size() >= 2 && cap[1] != "origin")
+        if(cap.size() >= 2 && cap[1] != "origin" && cap[1] != "metadata")
         {
             loadTranslation(proj, cap[1], f);
             hasTranslations = true;
@@ -228,10 +232,14 @@ bool TextDataProcessor::loadProjectLevel(const QString &file, TranslateProject &
 
     bool hasTranslations = false;
 
-    QString meta_file = directory + "/i18n/translation_origin.json";
+    QString meta_file = directory + "/i18n/translation_metadata.json";
+    QString meta_file_legacy = directory + "/i18n/translation_origin.json";
 
     if(QFile::exists(meta_file)) // Load metafile first
-        loadTranslation(proj, "origin", meta_file);
+        loadTranslation(proj, "metadata", meta_file);
+
+    if(!QFile::exists(meta_file) && QFile::exists(meta_file_legacy))
+        meta_file = meta_file_legacy; // Load legacy translation if presented
 
     while(dit.hasNext())
     {
@@ -239,7 +247,7 @@ bool TextDataProcessor::loadProjectLevel(const QString &file, TranslateProject &
         QFileInfo fi(f);
         QStringList cap = s_getRegExMatches("translation_([a-zA-Z-]*)\\.json", fi.fileName());
 
-        if(cap.size() >= 2 && cap[1] != "origin")
+        if(cap.size() >= 2 && cap[1] != "origin" && cap[1] != "metadata")
         {
             loadTranslation(proj, cap[1], f);
             hasTranslations = true;
@@ -272,7 +280,7 @@ bool TextDataProcessor::scanEpisode(const QString &directory, TranslateProject &
                      QDirIterator::Subdirectories);
 
     // Fill the original language
-    auto &origin = proj["origin"];
+    auto &origin = proj["metadata"];
 
     while(dit.hasNext())
     {
@@ -310,7 +318,7 @@ bool TextDataProcessor::scanSingleLevel(const QString &file, TranslateProject &p
     QString directory = f_d.absolutePath() + "/" + f.completeBaseName();
 
     // Fill the original language
-    auto &origin = proj["origin"];
+    auto &origin = proj["metadata"];
 
     // Import level
     importLevel(origin, file, f_d.relativeFilePath(file));
@@ -790,7 +798,7 @@ void TextDataProcessor::importScript(TranslationData &origin, const QString &pat
 
 void TextDataProcessor::recountStats(TranslateProject &proj, TranslationData &tr, bool isOrigin)
 {
-    TranslationData &origin = proj["origin"];
+    TranslationData &origin = proj["metadata"];
 
     tr.t_strings = isOrigin ? 0 : origin.t_strings;
     tr.t_translated = 0;
@@ -947,13 +955,13 @@ void TextDataProcessor::recountStats(TranslateProject &proj, TranslationData &tr
 bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &proj)
 {
     bool ret = true;
-    auto &origin = proj["origin"];
+    auto &origin = proj["metadata"];
 
     for(auto it = proj.begin(); it != proj.end(); ++it)
     {
         QJsonObject o;
 
-        bool isOrigin = (it.key() == "origin");
+        bool isOrigin = (it.key() == "metadata");
 
         if(isOrigin)
             o["use-tr-id"] = it->useTrId;
@@ -1256,15 +1264,19 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
             ret &= false;
     }
 
+    // Remove legacy "origin" file as new "metadata" got been written instead of this
+    QString legacy_meta = directory + "/i18n/translation_origin.json";
+    if(QFile::exists(legacy_meta))
+        QFile::remove(legacy_meta);
+
     return ret;
 }
 
 void TextDataProcessor::updateTranslation(TranslateProject &proj, const QString &trName)
 {
-    auto &origin = proj["origin"];
+    auto &origin = proj["metadata"];
     auto &tr = proj[trName];
-    Q_ASSERT(trName != "origin"); // Never call this function over the Meta File
-
+    Q_ASSERT(trName != "origin" && trName != "metadata"); // Never call this function over the Meta File
 
     // Add missing entries at translation
 
@@ -1434,7 +1446,7 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
     }
 
     QJsonObject r = d.object();
-    bool isOrigin = (trName == "origin");
+    bool isOrigin = (trName == "metadata");
 
     auto &tr = proj[trName];
 

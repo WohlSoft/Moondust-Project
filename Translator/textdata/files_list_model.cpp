@@ -26,7 +26,7 @@
 
 void FilesListModel::rebuildView(const QString &path)
 {
-    const TranslationData &origin = m_project->value("origin");
+    const TranslationData &origin = m_project->value("metadata");
     m_path = path;
     QFileInfo p(path);
     m_title = p.completeBaseName();

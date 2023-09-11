@@ -61,8 +61,8 @@ QString DialogueItem::getText() const
 void DialogueItem::updateLabel()
 {
     const auto &l = (*m_project)[m_lang].levels[m_level];
-    const auto &orig = (*m_project)["origin"].levels[m_level];
-    const bool isOrigin = m_lang == "origin";
+    const auto &orig = (*m_project)["metadata"].levels[m_level];
+    const bool isOrigin = m_lang == "metadata";
 
     switch(m_type)
     {

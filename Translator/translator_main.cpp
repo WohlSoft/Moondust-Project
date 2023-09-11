@@ -119,10 +119,10 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
         auto &index = ar.first();
         QString key = index.data(FilesListModel::R_KEY).toString();
         int type = index.data(FilesListModel::R_TYPE).toInt();
-        m_filesStringsModel->setData("origin", type, key);
+        m_filesStringsModel->setData("metadata", type, key);
 
         if(type == FilesListModel::T_LEVEL)
-            m_dialoguesListModel->setData("origin", key);
+            m_dialoguesListModel->setData("metadata", key);
         else
             m_dialoguesListModel->clear();
     });
@@ -187,7 +187,7 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
                                  this,
                 [this, d, lk]()->void
                 {
-                    auto &l = m_project["origin"].levels[lk];
+                    auto &l = m_project["metadata"].levels[lk];
                     auto &it = l.npc[d.item_index];
                     updateTranslationFields(TextTypes::S_LEVEL,
                                             lk,
@@ -214,7 +214,7 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
                                  this,
                 [this, d, lk]()->void
                 {
-                    auto &l = m_project["origin"].levels[lk];
+                    auto &l = m_project["metadata"].levels[lk];
                     auto &it = l.events[d.item_index];
                     updateTranslationFields(TextTypes::S_LEVEL,
                                             lk,
@@ -296,7 +296,7 @@ bool TranslatorMain::eventFilter(QObject *object, QEvent *event)
     {
         if(object == ui->sourceLineRO || object == ui->sourceLineNote)
         {
-            m_recentLang = "origin";
+            m_recentLang = "metadata";
             ui->previewZone->setText(ui->sourceLineRO->toPlainText());
             for(auto &d : m_dialogueItems)
                 d->setLang(m_recentLang);
@@ -399,7 +399,7 @@ void TranslatorMain::on_actionSaveTranslations_triggered()
 
 void TranslatorMain::on_actionCloseProject_triggered()
 {
-    m_recentLang = "origin";
+    m_recentLang = "metadata";
     m_translateFields.clear();
     m_project.clear();
     ui->previewZone->clearText();
@@ -514,7 +514,7 @@ void TranslatorMain::openProject(const QString &d, bool singleLevel)
                              QMessageBox::Ok);
     }
 
-    m_recentLang = "origin";
+    m_recentLang = "metadata";
     ui->previewZone->clearText();
     m_dialogueItems.clear();
     m_dialoguesListModel->clear();
@@ -590,7 +590,7 @@ void TranslatorMain::updateTranslationFields(int group,
                                              const QString &text,
                                              const QString &tr_note)
 {
-    bool isOrigin = m_recentLang == "origin";
+    bool isOrigin = m_recentLang == "metadata";
     bool translated = false;
     ui->sourceLineRO->setPlainText(text);
     ui->sourceLineNote->setText(tr_note);
@@ -655,7 +655,7 @@ void TranslatorMain::updateTranslateFields()
 
     for(auto k = m_project.begin(); k != m_project.end(); ++k)
     {
-        if(k.key() == "origin")
+        if(k.key() == "metadata")
             continue; // Ignore origin translation
 
         QSharedPointer<TranslateField> f(new TranslateField(&m_project, ui->translationGroup));

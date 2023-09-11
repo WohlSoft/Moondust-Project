@@ -47,8 +47,8 @@ void LangsListModel::refreshData()
 
     for(auto it = m_project->begin(); it != m_project->end(); ++it)
     {
-        if(it.key() == "origin")
-            continue; // The "origin" is a meta-entry, don't list it!
+        if(it.key() == "metadata")
+            continue; // The "metadata" is a meta-entry, don't list it!
 
         auto &et = it.value();
 

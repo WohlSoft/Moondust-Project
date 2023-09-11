@@ -85,7 +85,7 @@ private:
     QString m_currentLevel;
     bool    m_isSingleLevel = false;
     QString m_curTranslation;
-    QString m_recentLang = "origin";
+    QString m_recentLang = "metadata";
     QString *m_sourceNotePtr = nullptr;
     QMap<QString, QSharedPointer<TranslateField>> m_translateFields;
     QVector<QSharedPointer<DialogueItem>> m_dialogueItems;
