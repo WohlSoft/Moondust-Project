@@ -44,6 +44,7 @@ struct TranslationData_NPC
     int npc_index = -1;
     int talk_trigger = -1;
     int npc_id = -1;
+    QString talk_tr_id;
     TrLine talk;
 };
 
@@ -53,6 +54,7 @@ struct TranslationData_EVENT
     int trigger_next = -1;
     QVector<int> triggered_by_npc;
     QVector<int> triggered_by_event;
+    QString message_tr_id;
     TrLine message;
 };
 
@@ -94,6 +96,7 @@ struct TranslationData_Level
 struct TranslationData_LEVEL
 {
     int level_index = -1;
+    QString title_tr_id;
     TrLine title;
     QString filename;
 };
@@ -114,6 +117,7 @@ struct TranslationData_World
 struct TranslationData_ScriptLine
 {
     int line = -1;
+    QString line_tr_id;
     QString source;
     TrLine translation;
 };
