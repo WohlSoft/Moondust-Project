@@ -242,7 +242,7 @@ QVariant LangsListModel::data(const QModelIndex &index, int role) const
         switch(index.column())
         {
         case C_VISIBLE:
-            return it.vis ? 1 : 0;
+            return it.vis ? Qt::Checked : Qt::Unchecked;
         case C_TOTAL_STRINGS:
             return it.strings;
         case C_TOTAL_TRANSLATED:
@@ -251,6 +251,15 @@ QVariant LangsListModel::data(const QModelIndex &index, int role) const
             return it.code;
         case C_LANG_NAME:
             return it.lang_name;
+        }
+
+        break;
+
+    case Qt::CheckStateRole:
+        switch(index.column())
+        {
+        case C_VISIBLE:
+            return it.vis ? Qt::Checked : Qt::Unchecked;
         }
 
         break;
@@ -265,4 +274,47 @@ QVariant LangsListModel::data(const QModelIndex &index, int role) const
     }
 
     return QVariant();
+}
+
+bool LangsListModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if(!index.isValid() || index.row() >= m_view.size())
+        return false;
+
+    auto &it = m_view[index.row()];
+
+    if(role == Qt::CheckStateRole)
+    {
+        switch(index.column())
+        {
+        case C_VISIBLE:
+            it.vis = (value.toInt() == Qt::Checked);
+            emit dataChanged(index, index, {role});
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    return false;
+}
+
+Qt::ItemFlags LangsListModel::flags(const QModelIndex &index) const
+{
+    if(!index.isValid())
+        return QAbstractItemModel::flags(index);
+
+    Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+
+    switch(index.column())
+    {
+    case C_VISIBLE:
+        flags |= Qt::ItemIsUserCheckable;
+        break;
+    default:
+        break;
+    }
+
+    return flags;
 }

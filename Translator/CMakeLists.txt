@@ -102,6 +102,7 @@ list(APPEND PGE_TRANSLATOR_SRCS
     textdata/dialogues_list_model.h textdata/dialogues_list_model.cpp
     textdata/files_strings.h textdata/files_strings.cpp
     textdata/langs_list_model.h textdata/langs_list_model.cpp
+    textdata/delegates/checkbox_delegate.cpp textdata/delegates/checkbox_delegate.h
     about/about.h about/about.cpp
     lang_select/lang_select.h lang_select/lang_select.cpp
     translator_main.h translator_main.cpp

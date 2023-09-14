@@ -33,6 +33,8 @@
 #include "textdata/dialogues_list_model.h"
 #include "textdata/langs_list_model.h"
 
+#include "textdata/delegates/checkbox_delegate.h"
+
 #include "lang_select/lang_select.h"
 
 #include "qfile_dialogs_default_options.hpp"
@@ -69,6 +71,8 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
     ui->languagesTable->setColumnWidth(1, 35);
     ui->languagesTable->setColumnWidth(2, 35);
     ui->languagesTable->setColumnWidth(3, 35);
+    CheckBoxDelegate *langSelectVis = new CheckBoxDelegate();
+    ui->languagesTable->setItemDelegateForColumn(LangsListModel::C_VISIBLE, langSelectVis);
 
     ui->sourceLineRO->installEventFilter(this);
     ui->sourceLineNote->installEventFilter(this);
