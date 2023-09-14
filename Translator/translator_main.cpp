@@ -617,6 +617,7 @@ void TranslatorMain::updateTranslationFields(int group,
 void TranslatorMain::updateActions()
 {
     bool isLoaded = !m_currentPath.isEmpty();
+    ui->languagesAdd->setEnabled(isLoaded);
     ui->actionRescan->setEnabled(isLoaded);
     ui->actionSaveTranslations->setEnabled(isLoaded);
     ui->actionCloseProject->setEnabled(isLoaded);
@@ -651,6 +652,9 @@ void TranslatorMain::updateRecent()
 
 void TranslatorMain::updateTranslateFields()
 {
+    ui->sourceLineRO->clear();
+    ui->sourceLineNote->clear();
+
     m_translateFields.clear();
 
     for(auto k = m_project.begin(); k != m_project.end(); ++k)
@@ -735,7 +739,14 @@ void TranslatorMain::on_languagesAdd_clicked()
         TextDataProcessor t;
         t.createTranslation(m_project, newLang);
 
+        m_recentLang = "metadata";
+        ui->previewZone->clearText();
+        m_dialogueItems.clear();
+        m_dialoguesListModel->clear();
+        m_filesStringsModel->clear();
+        m_filesListModel->rebuildView(m_recentPath);
         m_langsListModel->refreshData();
+        updateTranslateFields();
     }
 }
 
