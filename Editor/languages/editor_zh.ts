@@ -1370,7 +1370,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Arg: {String array} validates the PGE-X string array</source>
-        <translation>Arg: {String array} 确认是 PGE-X 字符串数组</translation>
+        <translation>Arg: {String array} 确认是 PGE-X 字符串索引</translation>
     </message>
     <message>
         <source>Simulates crash signal</source>
@@ -1823,7 +1823,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -1968,7 +1968,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2129,7 +2129,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2204,7 +2204,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2288,7 +2288,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2427,7 +2427,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2482,7 +2482,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2601,7 +2601,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2679,7 +2679,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2813,7 +2813,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -4034,7 +4034,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Block ID: %1, Array ID: %2</source>
-        <translation>砖块编号：%1，数组编号：%2</translation>
+        <translation>砖块编号：%1，对象索引：%2</translation>
     </message>
     <message>
         <source>Position: [%1, %2]</source>
@@ -4050,11 +4050,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>BGO ID: %1, Array ID: %2</source>
-        <translation>背景编号：%1，数组编号：%2</translation>
+        <translation>背景编号：%1，对象索引：%2</translation>
     </message>
     <message>
         <source>NPC ID: %1, Array ID: %2</source>
-        <translation>NPC 编号：%1，数组编号：%2</translation>
+        <translation>NPC 编号：%1，对象索引：%2</translation>
     </message>
     <message>
         <source>[none]</source>
@@ -8668,7 +8668,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Level ID: %1, Array ID: %2</source>
-        <translation>关卡编号：%1，数组编号：%2</translation>
+        <translation>关卡编号：%1，对象索引：%2</translation>
     </message>
     <message>
         <source>Position: [%1, %2]</source>
