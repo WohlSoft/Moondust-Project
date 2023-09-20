@@ -1125,6 +1125,7 @@ public:
 // ////////////////////////////////////////////////////////////////////////////////
     private:
         void initTesting();
+        void updateTestingCaps();
         void closeTesting();
 
     private slots:
@@ -1169,7 +1170,7 @@ public:
         friend class TheXTechEngine;
         friend class SanBaEiRuntimeEngine;
         //! Default testing engine
-        AbstractRuntimeEngine *m_testEngine;
+        AbstractRuntimeEngine *m_testEngine = nullptr;
         //! All available engines
         QVector<std::unique_ptr<AbstractRuntimeEngine> *> m_testAllEngines;
         //! PGE Engine

@@ -24,6 +24,7 @@
 #include <QMutex>
 
 #include "ipc/pge_engine_ipc.h"
+#include "ipc/thextech_capabilities.h"
 #include "abstract_engine.h"
 
 class MainWindow;
@@ -42,12 +43,16 @@ class TheXTechEngine : public AbstractRuntimeEngine
     static const size_t m_menuItemsSize = 30;
     //! List of registered menu items
     QAction *m_menuItems[m_menuItemsSize];
+    QAction *m_menuRunTestFile = nullptr;
+    QAction *m_menuRunTestIPC = nullptr;
 
     /************** Settings **************/
     //! Default executable filename
     QString m_defaultEngineName;
     //! Path to custom TheXTech executable
     QString m_customEnginePath;
+    //! Capabilities of given TheXTech build
+    TheXTechCapabilities m_caps;
     //! Enable magic-hand functionality (IPC mode only)
     bool    m_enableMagicHand = true;
     //! Enable magic-hand functionality (IPC mode only)
@@ -70,6 +75,9 @@ class TheXTechEngine : public AbstractRuntimeEngine
     PgeEngineIpcClient m_interface;
 
     QString getEnginePath();
+
+    void rescanCapabilities();
+    void updateMenuCapabilities();
 
     void loadSetup();
     void saveSetup();
@@ -97,7 +105,7 @@ public:
     virtual bool doTestLevelFile(const QString &levelFile);
 
 //    virtual bool doTestWorldIPC(const WorldData &d);
-//    virtual bool doTestWorldFile(const QString &worldFile);
+    virtual bool doTestWorldFile(const QString &worldFile);
 
     virtual bool runNormalGame();
 

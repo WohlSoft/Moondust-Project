@@ -65,7 +65,27 @@ QString TheXTechEngine::getEnginePath()
 {
     return m_customEnginePath.isEmpty() ?
            getDefaultEnginePath(m_defaultEngineName) :
-           m_customEnginePath;
+               m_customEnginePath;
+}
+
+void TheXTechEngine::rescanCapabilities()
+{
+    QString execPath = getEnginePath();
+
+    if(!getTheXTechCapabilities(m_caps, execPath))
+        qWarning() << "Failed to load capabilities for TheXTech executable" << execPath;
+
+    updateMenuCapabilities();
+}
+
+void TheXTechEngine::updateMenuCapabilities()
+{
+    Q_ASSERT(m_w);
+
+    if(m_menuRunTestFile)
+        m_menuRunTestFile->setEnabled(m_caps.features.contains("test-world-file"));
+
+    m_w->updateTestingCaps();
 }
 
 void TheXTechEngine::loadSetup()
@@ -91,6 +111,8 @@ void TheXTechEngine::loadSetup()
         m_speedRunTimerST = settings.value("speedrun-st-stopwatch", false).toBool();
     }
     settings.endGroup();
+
+    rescanCapabilities();
 }
 
 void TheXTechEngine::saveSetup()
@@ -148,6 +170,21 @@ void TheXTechEngine::startSafeTestAction()
 
         m_battleMode = false;
         doTestLevelFile(edit->curFile);
+    }
+    else if(m_w->activeChildWindow() == MainWindow::WND_World)
+    {
+        WorldEdit *edit = m_w->activeWldEditWin();
+        if(!edit)
+            return;
+
+        if(edit->isUntitled())
+        {
+            AbstractRuntimeEngine::rejectUntitled(m_w);
+            return;
+        }
+
+        m_battleMode = false;
+        doTestWorldFile(edit->curFile);
     }
 }
 
@@ -261,6 +298,8 @@ void TheXTechEngine::chooseEnginePath()
             }
         }
 #endif
+
+        rescanCapabilities();
     }
 }
 
@@ -330,13 +369,40 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
         {
             auto *m = m_menuItems[menuItemId - 1];
             if(wld)
-                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
+                m->setVisible(false);
         });
         QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
         {
             auto *m = m_menuItems[menuItemId - 1];
             if(lvl)
+            {
+                m->setVisible(true);
                 m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC));
+            }
+        });
+    }
+
+    {
+        QAction *RunWorldTest = destmenu->addAction("runWorldTesting");
+        QObject::connect(RunWorldTest,   &QAction::triggered,
+                         this,               &TheXTechEngine::startTestAction,
+                         Qt::QueuedConnection);
+        m_menuRunTestIPC = RunWorldTest;
+        m_menuItems[menuItemId++] = RunWorldTest;
+        QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(wld)
+            {
+                m->setVisible(true);
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
+            }
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(lvl)
+                m->setVisible(false);
         });
     }
 
@@ -365,18 +431,46 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
         QObject::connect(RunLevelSafeTest,   &QAction::triggered,
                     this,               &TheXTechEngine::startSafeTestAction,
                     Qt::QueuedConnection);
+        m_menuRunTestFile = RunLevelSafeTest;
         m_menuItems[menuItemId++] = RunLevelSafeTest;
         QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
         {
             auto *m = m_menuItems[menuItemId - 1];
             if(wld)
-                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_WORLD_FILE));
+                m->setVisible(false);
         });
         QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
         {
             auto *m = m_menuItems[menuItemId - 1];
             if(lvl)
+            {
+                m->setVisible(true);
                 m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_LEVEL_FILE));
+            }
+        });
+    }
+
+    {
+        QAction *RunWorldSafeTest = destmenu->addAction("runWorldSafeTesting");
+        QObject::connect(RunWorldSafeTest,   &QAction::triggered,
+                         this,               &TheXTechEngine::startSafeTestAction,
+                         Qt::QueuedConnection);
+        m_menuRunTestFile = RunWorldSafeTest;
+        m_menuItems[menuItemId++] = RunWorldSafeTest;
+        QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(wld)
+            {
+                m->setVisible(true);
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_WORLD_FILE));
+            }
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(lvl)
+                m->setVisible(false);
         });
     }
 
@@ -647,6 +741,8 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
 
     retranslateMenu();
     QObject::connect(m_w, &MainWindow::languageSwitched, this, &TheXTechEngine::retranslateMenu);
+
+    updateMenuCapabilities();
 }
 
 void TheXTechEngine::retranslateMenu()
@@ -659,6 +755,11 @@ void TheXTechEngine::retranslateMenu()
     }
     {
         QAction *runTest = m_menuItems[menuItemId++];
+        runTest->setText(tr("Test world",
+                            "Run the testing of current file in TheXTech via interprocessing tunnel."));
+    }
+    {
+        QAction *runTest = m_menuItems[menuItemId++];
         runTest->setText(tr("Test level in battle mode",
                                 "Run a battle testing of current file in TheXTech via interprocessing tunnel."));
     }
@@ -666,6 +767,11 @@ void TheXTechEngine::retranslateMenu()
         QAction *runTest = m_menuItems[menuItemId++];
         runTest->setText(tr("Test saved level",
                                 "Run the testing of current file in TheXTech from disk."));
+    }
+    {
+        QAction *runTest = m_menuItems[menuItemId++];
+        runTest->setText(tr("Test saved world",
+                            "Run the testing of current file in TheXTech from disk."));
     }
 
     {
@@ -1004,6 +1110,88 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
     }
 }
 
+bool TheXTechEngine::doTestWorldFile(const QString &worldFile)
+{
+    Q_ASSERT(m_w);
+
+    m_errorString.clear();
+
+    if((capabilities() & CAP_WORLD_FILE) == 0)
+    {
+        QMessageBox::warning(m_w,
+                             tr("Incompatible version of engine"),
+                             tr("This version of TheXTech doesn't support the world map testing. "
+                                "You are required to have TheXTech at least 1.3.6.1 to run episode tests."),
+                             QMessageBox::Ok);
+        return false;
+    }
+
+    QString command = getEnginePath();
+
+    if(!QFile::exists(command))
+    {
+        msgNotFound(m_w, command);
+        return false;
+    }
+
+    QMutexLocker mlocker(&m_engineMutex);
+    Q_UNUSED(mlocker)
+
+    QStringList args;
+    //    args << "--debug";
+    //    args << "--config=\"" + m_w->configs.config_dir + "\"";
+
+    SETTINGS_TestSettings t = GlobalSettings::testing;
+    args << "--num-players" << QString::number(t.numOfPlayers);
+    args << "--player1" << QString("c%1;s%2;m%3;t%4")
+                               .arg(t.p1_char)
+                               .arg(t.p1_state)
+                               .arg(t.p1_vehicleID)
+                               .arg(t.p1_vehicleType);
+    args << "--player2" << QString("c%1;s%2;m%3;t%4")
+                               .arg(t.p2_char)
+                               .arg(t.p2_state)
+                               .arg(t.p2_vehicleID)
+                               .arg(t.p2_vehicleType);
+
+    if(t.xtra_god) args << "--god-mode";
+    if(t.xtra_showFPS) args << "--show-fps";
+    if(m_enableMaxFps) args << "--max-fps";
+    if(m_enableGrabAll) args << "--grab-all";
+
+    if(m_renderType >= 0)
+    {
+        switch(m_renderType)
+        {
+        case 0:
+            args << "--render" << "sw";
+            break;
+        case 1:
+            args << "--render" << "hw";
+            break;
+        case 2:
+            args << "--render" << "vsync";
+            break;
+        }
+    }
+
+    args << "--save-slot" << 0;
+    args << worldFile;
+
+    m_engineProc.start(command, args);
+    if(m_engineProc.waitForStarted())
+    {
+        testStarted();
+        return true;
+    }
+    else
+    {
+        msgStartFailed(m_w, command, args, m_engineProc);
+        m_errorString = "Failed to start TheXTech!" + command + "with args" + args.join(" ");
+        return false;
+    }
+}
+
 bool TheXTechEngine::runNormalGame()
 {
     Q_ASSERT(m_w);
@@ -1046,5 +1234,6 @@ int TheXTechEngine::capabilities()
     return  CAP_LEVEL_IPC |
             CAP_LEVEL_FILE |
             CAP_RUN_GAME |
-            CAP_HAS_MENU;
+            CAP_HAS_MENU |
+            (m_caps.features.contains("test-world-file") ? CAP_WORLD_FILE : 0);
 }
