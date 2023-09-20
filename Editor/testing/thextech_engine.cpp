@@ -1428,14 +1428,7 @@ bool TheXTechEngine::doTestWorldFile(const QString &worldFile)
     m_errorString.clear();
 
     if((capabilities() & CAP_WORLD_FILE) == 0)
-    {
-        QMessageBox::warning(m_w,
-                             tr("Incompatible version of engine"),
-                             tr("This version of TheXTech doesn't support the world map testing. "
-                                "You are required to have TheXTech at least 1.3.6.1 to run episode tests."),
-                             QMessageBox::Ok);
         return false;
-    }
 
     QString command = getEnginePath();
 

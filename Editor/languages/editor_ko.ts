@@ -10415,16 +10415,6 @@ Arguments: %2</source>
 명령 : &quot;% 1&quot;
 인수 : % 2</translation>
     </message>
-    <message>
-        <location filename="../testing/thextech_engine.cpp" line="1433"/>
-        <source>Incompatible version of engine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/thextech_engine.cpp" line="1434"/>
-        <source>This version of TheXTech doesn&apos;t support the world map testing. You are required to have TheXTech at least 1.3.6.1 to run episode tests.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>TilesetEditor</name>

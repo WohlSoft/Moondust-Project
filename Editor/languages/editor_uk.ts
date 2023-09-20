@@ -8172,14 +8172,6 @@ Arguments: %2</source>
         <comment>Enable the vertical synchronisation if available</comment>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Incompatible version of engine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This version of TheXTech doesn&apos;t support the world map testing. You are required to have TheXTech at least 1.3.6.1 to run episode tests.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>TilesetEditor</name>
