@@ -161,11 +161,7 @@ void MainWindow::initTesting()
         break;
     }
 
-    ui->action_doTest->setEnabled(m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC));
-    ui->action_doSafeTest->setEnabled(m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_FILE));
-
-    ui->action_doTestWld->setEnabled(m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
-    ui->action_doSafeTest->setEnabled(m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_WORLD_FILE));
+    updateTestingCaps();
 
     QObject::connect(&g_intEngine, &IntEngineSignals::engineNumStarsChanged, this, [](int stars)
     {
@@ -191,6 +187,18 @@ void MainWindow::initTesting()
             t.p2_vehicleType = vehicleType;
         }
     });
+}
+
+void MainWindow::updateTestingCaps()
+{
+    if(!m_testEngine)
+        return;
+
+    ui->action_doTest->setEnabled(m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC));
+    ui->action_doSafeTest->setEnabled(m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_FILE));
+
+    ui->action_doTestWld->setEnabled(m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
+    ui->action_doSafeTestWld->setEnabled(m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_WORLD_FILE));
 }
 
 void MainWindow::closeTesting()

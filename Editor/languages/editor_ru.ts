@@ -8112,6 +8112,79 @@ Arguments: %2</source>
         <comment>Enable speedrun with mode 2 (X2 compatibility level)</comment>
         <translation>Режим 2 (X2)</translation>
     </message>
+    <message>
+        <source>Select the entrance warp</source>
+        <translation>Выберите начальный проход</translation>
+    </message>
+    <message>
+        <source>Please select the entrance warp number (if you specify 0, the level will start from the usual start point):</source>
+        <translation>Пожалуйста, укажите номер входа (если указать 0, то уровень начнётся со своей обычной начальной точки):</translation>
+    </message>
+    <message>
+        <source>Test world</source>
+        <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
+        <translation>Тестировать карту мира</translation>
+    </message>
+    <message>
+        <source>Test saved world</source>
+        <comment>Run the testing of current file in TheXTech from disk.</comment>
+        <translation>Тестировать файл карты мира</translation>
+    </message>
+    <message>
+        <source>Choose a start warp...</source>
+        <comment>Select the warp number at which the game will be started.</comment>
+        <translation>Выбрать начальный проход...</translation>
+    </message>
+    <message>
+        <source>Save slot</source>
+        <comment>Select a save slot for playing the world map.</comment>
+        <translation>Слот сохранения</translation>
+    </message>
+    <message>
+        <source>Don&apos;t save</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation>Не сохранять</translation>
+    </message>
+    <message>
+        <source>Save slot 1</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation>Слот сохранения 1</translation>
+    </message>
+    <message>
+        <source>Save slot 2</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation>Слот сохранения 2</translation>
+    </message>
+    <message>
+        <source>Save slot 3</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation>Слот сохранения 3</translation>
+    </message>
+    <message>
+        <source>Modern OpenGL</source>
+        <comment>Hardware accelerated with modern OpenGL</comment>
+        <translation>Современный OpenGL</translation>
+    </message>
+    <message>
+        <source>Legacy OpenGL 1.1</source>
+        <comment>Hardware accelerated with legacy OpenGL</comment>
+        <translation>Устаревший OpenGL 1.1</translation>
+    </message>
+    <message>
+        <source>Modern OpenGL ES</source>
+        <comment>Hardware accelerated with modern OpenGL ES</comment>
+        <translation>Современный OpenGL ES</translation>
+    </message>
+    <message>
+        <source>Legacy OpenGL ES 1.1</source>
+        <comment>Hardware accelerated with legacy OpenGL ES</comment>
+        <translation>Устаревший OpenGL ES 1.1</translation>
+    </message>
+    <message>
+        <source>Enable V-Sync</source>
+        <comment>Enable the vertical synchronisation if available</comment>
+        <translation>Включить вертикальную синхронизацию</translation>
+    </message>
 </context>
 <context>
     <name>TilesetEditor</name>

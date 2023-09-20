@@ -7780,12 +7780,12 @@ Please reload current file to apply result.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="264"/>
+        <location filename="../main_window/testing/testing.cpp" line="272"/>
         <source>World map testing of saved file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="265"/>
+        <location filename="../main_window/testing/testing.cpp" line="273"/>
         <source>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
         <translation type="unfinished"></translation>
@@ -9949,225 +9949,313 @@ The maximum number of Music Boxes is %2.</source>
 <context>
     <name>TheXTechEngine</name>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="173"/>
+        <location filename="../testing/thextech_engine.cpp" line="241"/>
         <source>Path to TheXTech</source>
         <comment>Title of dialog</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="180"/>
+        <location filename="../testing/thextech_engine.cpp" line="248"/>
         <source>Please select a path to TheXTech executable:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="189"/>
+        <location filename="../testing/thextech_engine.cpp" line="257"/>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="192"/>
+        <location filename="../testing/thextech_engine.cpp" line="260"/>
         <source>Custom</source>
         <comment>Using a user selected TheXTech path</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="196"/>
+        <location filename="../testing/thextech_engine.cpp" line="264"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="220"/>
+        <location filename="../testing/thextech_engine.cpp" line="288"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="233"/>
+        <location filename="../testing/thextech_engine.cpp" line="301"/>
         <source>Select a path to TheXTech executable</source>
         <comment>File dialog title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="657"/>
+        <location filename="../testing/thextech_engine.cpp" line="519"/>
+        <source>Select the entrance warp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="520"/>
+        <source>Please select the entrance warp number (if you specify 0, the level will start from the usual start point):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="925"/>
         <source>Test level</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="662"/>
+        <location filename="../testing/thextech_engine.cpp" line="930"/>
+        <source>Test world</source>
+        <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="935"/>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="667"/>
+        <location filename="../testing/thextech_engine.cpp" line="940"/>
         <source>Test saved level</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="673"/>
+        <location filename="../testing/thextech_engine.cpp" line="945"/>
+        <source>Test saved world</source>
+        <comment>Run the testing of current file in TheXTech from disk.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="951"/>
+        <source>Choose a start warp...</source>
+        <comment>Select the warp number at which the game will be started.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="957"/>
+        <source>Save slot</source>
+        <comment>Select a save slot for playing the world map.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="963"/>
+        <source>Don&apos;t save</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="968"/>
+        <source>Save slot 1</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="973"/>
+        <source>Save slot 2</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="978"/>
+        <source>Save slot 3</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="986"/>
         <source>Graphics type</source>
         <comment>Choose a rendering system: software or accelerated</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="678"/>
+        <location filename="../testing/thextech_engine.cpp" line="991"/>
         <source>Default</source>
         <comment>Automatically selected rendering engine</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="683"/>
+        <location filename="../testing/thextech_engine.cpp" line="996"/>
         <source>Software</source>
         <comment>Software rendering</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="688"/>
+        <location filename="../testing/thextech_engine.cpp" line="1001"/>
         <source>Accelerated</source>
         <comment>Hardware accelerated rendering</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="693"/>
+        <location filename="../testing/thextech_engine.cpp" line="1006"/>
         <source>Accelerated with V-Sync</source>
         <comment>Hardware accelerated rendering with vertical synchronization support</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="700"/>
+        <location filename="../testing/thextech_engine.cpp" line="1011"/>
+        <source>Modern OpenGL</source>
+        <comment>Hardware accelerated with modern OpenGL</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="1016"/>
+        <source>Legacy OpenGL 1.1</source>
+        <comment>Hardware accelerated with legacy OpenGL</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="1021"/>
+        <source>Modern OpenGL ES</source>
+        <comment>Hardware accelerated with modern OpenGL ES</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="1026"/>
+        <source>Legacy OpenGL ES 1.1</source>
+        <comment>Hardware accelerated with legacy OpenGL ES</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="1032"/>
+        <source>Enable V-Sync</source>
+        <comment>Enable the vertical synchronisation if available</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="1039"/>
         <source>Compatibility level</source>
         <comment>Choose the compatibility level used by the game</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="705"/>
+        <location filename="../testing/thextech_engine.cpp" line="1044"/>
         <source>Default</source>
         <comment>Use preferred compatibility level</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="710"/>
+        <location filename="../testing/thextech_engine.cpp" line="1049"/>
         <source>Modern</source>
         <comment>Prefer all updates and bugfixes enabled</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="715"/>
+        <location filename="../testing/thextech_engine.cpp" line="1054"/>
         <source>X2</source>
         <comment>Disable all bugfixes and updates exceot these made at X2</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="720"/>
+        <location filename="../testing/thextech_engine.cpp" line="1059"/>
         <source>Strict SMBX 1.3</source>
         <comment>Strict compatibility mode, all bugfixes and updates will be disabled to prepresent an old behaviour.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="727"/>
+        <location filename="../testing/thextech_engine.cpp" line="1066"/>
         <source>Speedruner&apos;s stopwatch</source>
         <comment>Speedrun mode menu</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="732"/>
+        <location filename="../testing/thextech_engine.cpp" line="1071"/>
         <source>Disabled</source>
         <comment>Speedrun mode disabled</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="737"/>
+        <location filename="../testing/thextech_engine.cpp" line="1076"/>
         <source>Mode 1 (Modern)</source>
         <comment>Enable speedrun with mode 1 (modern compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="742"/>
+        <location filename="../testing/thextech_engine.cpp" line="1081"/>
         <source>Mode 2 (X2)</source>
         <comment>Enable speedrun with mode 2 (X2 compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="747"/>
+        <location filename="../testing/thextech_engine.cpp" line="1086"/>
         <source>Mode 3 (Strict SMBX 1.3)</source>
         <comment>Enable speedrun with mode 3 (strict SMBX 1.3 compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="752"/>
+        <location filename="../testing/thextech_engine.cpp" line="1091"/>
         <source>Semi-transparent stopwatch</source>
         <comment>Show the speedrun stopwatch with a semi-transparent font.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="759"/>
+        <location filename="../testing/thextech_engine.cpp" line="1098"/>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="761"/>
+        <location filename="../testing/thextech_engine.cpp" line="1100"/>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="767"/>
+        <location filename="../testing/thextech_engine.cpp" line="1106"/>
         <source>Enable max FPS</source>
         <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="769"/>
+        <location filename="../testing/thextech_engine.cpp" line="1108"/>
         <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="773"/>
+        <location filename="../testing/thextech_engine.cpp" line="1112"/>
         <source>Enable grab all</source>
         <comment>Allow player to grab absolutely any NPCs in a game.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="775"/>
+        <location filename="../testing/thextech_engine.cpp" line="1114"/>
         <source>Allow player to grab any NPCs in a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="782"/>
+        <location filename="../testing/thextech_engine.cpp" line="1121"/>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="784"/>
+        <location filename="../testing/thextech_engine.cpp" line="1123"/>
         <source>Select the path to TheXTech executable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="788"/>
+        <location filename="../testing/thextech_engine.cpp" line="1127"/>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="797"/>
+        <location filename="../testing/thextech_engine.cpp" line="1136"/>
         <source>Executable not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="798"/>
+        <location filename="../testing/thextech_engine.cpp" line="1137"/>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="807"/>
+        <location filename="../testing/thextech_engine.cpp" line="1146"/>
         <source>TheXtech start failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="808"/>
+        <location filename="../testing/thextech_engine.cpp" line="1147"/>
         <source>Can&apos;t start TheXTech because of following reason:
 %3.
 

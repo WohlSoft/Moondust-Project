@@ -8099,6 +8099,79 @@ Arguments: %2</source>
         <comment>Enable speedrun with mode 2 (X2 compatibility level)</comment>
         <translation>Режим 2 (Х2)</translation>
     </message>
+    <message>
+        <source>Select the entrance warp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the entrance warp number (if you specify 0, the level will start from the usual start point):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test world</source>
+        <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test saved world</source>
+        <comment>Run the testing of current file in TheXTech from disk.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a start warp...</source>
+        <comment>Select the warp number at which the game will be started.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save slot</source>
+        <comment>Select a save slot for playing the world map.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t save</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save slot 1</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save slot 2</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save slot 3</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modern OpenGL</source>
+        <comment>Hardware accelerated with modern OpenGL</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Legacy OpenGL 1.1</source>
+        <comment>Hardware accelerated with legacy OpenGL</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modern OpenGL ES</source>
+        <comment>Hardware accelerated with modern OpenGL ES</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Legacy OpenGL ES 1.1</source>
+        <comment>Hardware accelerated with legacy OpenGL ES</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable V-Sync</source>
+        <comment>Enable the vertical synchronisation if available</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TilesetEditor</name>
