@@ -40,11 +40,19 @@ class TheXTechEngine : public AbstractRuntimeEngine
 
     MainWindow *m_w = nullptr;
     //! Size of the menu items array
-    static const size_t m_menuItemsSize = 30;
+    static const size_t m_menuItemsSize = 40;
     //! List of registered menu items
     QAction *m_menuItems[m_menuItemsSize];
-    QAction *m_menuRunTestFile = nullptr;
-    QAction *m_menuRunTestIPC = nullptr;
+    QAction *m_menuRunWorldTestFile = nullptr;
+    QAction *m_menuRunWorldTestIPC = nullptr;
+
+    QAction *m_renderVSync = nullptr;
+    QAction *m_renderModernOpenGL = nullptr;
+    QAction *m_renderLegacyOpenGL = nullptr;
+    QAction *m_renderModernOpenGLES = nullptr;
+    QAction *m_renderLegacyOpenGLES = nullptr;
+
+    QAction *m_renderVSyncFlag = nullptr;
 
     /************** Settings **************/
     //! Default executable filename
@@ -61,6 +69,8 @@ class TheXTechEngine : public AbstractRuntimeEngine
     bool    m_enableGrabAll = false;
     //! Renderer type
     int     m_renderType = -1;
+    //! Enable VSync if available
+    bool    m_vsyncEnable = false;
     //! Start game in battle mode
     bool    m_battleMode = false;
     //! Compatibility level

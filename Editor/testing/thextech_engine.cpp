@@ -82,8 +82,26 @@ void TheXTechEngine::updateMenuCapabilities()
 {
     Q_ASSERT(m_w);
 
-    if(m_menuRunTestFile)
-        m_menuRunTestFile->setEnabled(m_caps.features.contains("test-world-file"));
+    if(m_menuRunWorldTestFile)
+        m_menuRunWorldTestFile->setEnabled(m_caps.features.contains("test-world-file"));
+
+    if(m_renderVSync)
+        m_renderVSync->setVisible(!m_caps.features.contains("vsync-flag"));
+
+    if(m_renderVSyncFlag)
+        m_renderVSyncFlag->setEnabled(m_caps.features.contains("vsync-flag"));
+
+    if(m_renderModernOpenGL)
+        m_renderModernOpenGL->setVisible(m_caps.renders.contains("opengl"));
+
+    if(m_renderLegacyOpenGL)
+        m_renderLegacyOpenGL->setVisible(m_caps.renders.contains("opengl11"));
+
+    if(m_renderModernOpenGLES)
+        m_renderModernOpenGLES->setVisible(m_caps.renders.contains("opengles"));
+
+    if(m_renderLegacyOpenGLES)
+        m_renderLegacyOpenGLES->setVisible(m_caps.renders.contains("opengles11"));
 
     m_w->updateTestingCaps();
 }
@@ -106,6 +124,7 @@ void TheXTechEngine::loadSetup()
         m_customEnginePath = settings.value("custom-runtime-path", QString()).toString();
         m_enableMagicHand = settings.value("enable-magic-hand", true).toBool();
         m_renderType = settings.value("render-type", -1).toInt();
+        m_vsyncEnable = settings.value("render-vsync", false).toBool();
         m_compatLevel = settings.value("compat-level", -1).toInt();
         m_speedRunMode = settings.value("speedrun-mode", -1).toInt();
         m_speedRunTimerST = settings.value("speedrun-st-stopwatch", false).toBool();
@@ -127,6 +146,7 @@ void TheXTechEngine::saveSetup()
         settings.setValue("custom-runtime-path", m_customEnginePath);
         settings.setValue("enable-magic-hand", m_enableMagicHand);
         settings.setValue("render-type", m_renderType);
+        settings.setValue("render-vsync", m_vsyncEnable);
         settings.setValue("compat-level", m_compatLevel);
         settings.setValue("speedrun-mode", m_speedRunMode);
         settings.setValue("speedrun-st-stopwatch", m_speedRunTimerST);
@@ -387,7 +407,7 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
         QObject::connect(RunWorldTest,   &QAction::triggered,
                          this,               &TheXTechEngine::startTestAction,
                          Qt::QueuedConnection);
-        m_menuRunTestIPC = RunWorldTest;
+        m_menuRunWorldTestIPC = RunWorldTest;
         m_menuItems[menuItemId++] = RunWorldTest;
         QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
         {
@@ -431,7 +451,7 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
         QObject::connect(RunLevelSafeTest,   &QAction::triggered,
                     this,               &TheXTechEngine::startSafeTestAction,
                     Qt::QueuedConnection);
-        m_menuRunTestFile = RunLevelSafeTest;
+        m_menuRunWorldTestFile = RunLevelSafeTest;
         m_menuItems[menuItemId++] = RunLevelSafeTest;
         QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
         {
@@ -455,7 +475,7 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
         QObject::connect(RunWorldSafeTest,   &QAction::triggered,
                          this,               &TheXTechEngine::startSafeTestAction,
                          Qt::QueuedConnection);
-        m_menuRunTestFile = RunWorldSafeTest;
+        m_menuRunWorldTestFile = RunWorldSafeTest;
         m_menuItems[menuItemId++] = RunWorldSafeTest;
         QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
         {
@@ -480,64 +500,101 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
         QMenu *renderType = destmenu->addMenu("renderType");
         m_menuItems[menuItemId++] = renderType->menuAction();
 
-        QAction *r_d, *r_s, *r_a, *r_v;
+        QAction *r_d, *r_s, *r_a, *r_v, *r_gl, *r_gl11, *r_es, *r_es11;
 
-        r_d = renderType->addAction("renderDefault");
-        r_d->setCheckable(true);
-        r_d->setChecked(m_renderType == -1);
-        m_menuItems[menuItemId++] = r_d;
+        auto addRender = [this, renderType, &menuItemId](int id, const char *name)->QAction*
+        {
+            QAction *ret = renderType->addAction(name);
+            ret->setCheckable(true);
+            ret->setChecked(m_renderType == id);
+            m_menuItems[menuItemId++] = ret;
+            return ret;
+        };
 
-        r_s = renderType->addAction("renderSoftware");
-        r_s->setCheckable(true);
-        r_s->setChecked(m_renderType == 0);
-        m_menuItems[menuItemId++] = r_s;
+        r_d = addRender(-1, "renderDefault");
+        r_s = addRender(0, "renderSoftware");
+        r_a = addRender(1, "renderAccelerated");
+        m_renderVSync = r_v = addRender(2, "renderVSync");
+        m_renderModernOpenGL = r_gl = addRender(3, "renderGL");
+        m_renderLegacyOpenGL = r_gl11 = addRender(4, "renderGL11");
+        m_renderModernOpenGLES = r_es = addRender(5, "renderGLES");
+        m_renderLegacyOpenGLES = r_es11 = addRender(6, "renderGLES11");
 
-        r_a = renderType->addAction("renderAccelerated");
-        r_a->setCheckable(true);
-        r_a->setChecked(m_renderType == 1);
-        m_menuItems[menuItemId++] = r_a;
-
-        r_v = renderType->addAction("renderVSync");
-        r_v->setCheckable(true);
-        r_v->setChecked(m_renderType == 2);
-        m_menuItems[menuItemId++] = r_v;
+        auto updateMenu = [this, r_d, r_s, r_a, r_v, r_gl, r_gl11, r_es, r_es11]()->void
+        {
+            r_d->setChecked(m_renderType == -1);
+            r_s->setChecked(m_renderType == 0);
+            r_a->setChecked(m_renderType == 1);
+            r_v->setChecked(m_renderType == 2);
+            r_gl->setChecked(m_renderType == 3);
+            r_gl11->setChecked(m_renderType == 4);
+            r_es->setChecked(m_renderType == 5);
+            r_es11->setChecked(m_renderType == 6);
+        };
 
         QObject::connect(r_d,   &QAction::triggered,
-                    [this, r_d, r_s, r_a, r_v](bool)
+        [this, updateMenu](bool)
         {
-            r_d->setChecked(true);
-            r_s->setChecked(false);
-            r_a->setChecked(false);
-            r_v->setChecked(false);
             m_renderType = -1;
+            updateMenu();
         });
         QObject::connect(r_s,   &QAction::triggered,
-                    [this, r_d, r_s, r_a, r_v](bool)
+        [this, updateMenu](bool)
         {
-            r_d->setChecked(false);
-            r_s->setChecked(true);
-            r_a->setChecked(false);
-            r_v->setChecked(false);
             m_renderType = 0;
+            updateMenu();
         });
         QObject::connect(r_a,   &QAction::triggered,
-                    [this, r_d, r_s, r_a, r_v](bool)
+        [this, updateMenu](bool)
         {
-            r_d->setChecked(false);
-            r_s->setChecked(false);
-            r_a->setChecked(true);
-            r_v->setChecked(false);
             m_renderType = 1;
+            updateMenu();
         });
         QObject::connect(r_v,   &QAction::triggered,
-                    [this, r_d, r_s, r_a, r_v](bool)
+        [this, updateMenu](bool)
         {
-            r_d->setChecked(false);
-            r_s->setChecked(false);
-            r_a->setChecked(true);
-            r_v->setChecked(false);
             m_renderType = 2;
+            updateMenu();
         });
+        QObject::connect(r_gl,   &QAction::triggered,
+        [this, updateMenu](bool)
+        {
+            m_renderType = 3;
+            updateMenu();
+        });
+        QObject::connect(r_gl11,   &QAction::triggered,
+        [this, updateMenu](bool)
+        {
+            m_renderType = 4;
+            updateMenu();
+        });
+        QObject::connect(r_es,   &QAction::triggered,
+        [this, updateMenu](bool)
+        {
+            m_renderType = 5;
+            updateMenu();
+        });
+        QObject::connect(r_es11,   &QAction::triggered,
+        [this, updateMenu](bool)
+        {
+            m_renderType = 6;
+            updateMenu();
+        });
+
+        renderType->addSeparator();
+
+        {
+            QAction *enableVSync;
+            m_renderVSyncFlag = enableVSync = renderType->addAction("enableVSync");
+            enableVSync->setCheckable(true);
+            enableVSync->setChecked(m_vsyncEnable);
+            QObject::connect(enableVSync,   &QAction::toggled,
+                             [this](bool state)
+                             {
+                                 m_vsyncEnable = state;
+                             });
+            m_menuItems[menuItemId++] = enableVSync;
+        }
     }
 
     {
@@ -799,6 +856,32 @@ void TheXTechEngine::retranslateMenu()
             renderType->setText(tr("Accelerated with V-Sync",
                                    "Hardware accelerated rendering with vertical synchronization support"));
         }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Modern OpenGL",
+                                   "Hardware accelerated with modern OpenGL"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Legacy OpenGL 1.1",
+                                   "Hardware accelerated with legacy OpenGL"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Modern OpenGL ES",
+                                   "Hardware accelerated with modern OpenGL ES"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Legacy OpenGL ES 1.1",
+                                   "Hardware accelerated with legacy OpenGL ES"));
+        }
+
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Enable V-Sync",
+                                   "Enable the vertical synchronisation if available"));
+        }
     }
 
     {
@@ -982,8 +1065,27 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
         case 2:
             args << "--render" << "vsync";
             break;
+        case 3:
+            if(m_caps.renders.contains("opengl"))
+                args << "--render" << "opengl";
+            break;
+        case 4:
+            if(m_caps.renders.contains("opengl11"))
+                args << "--render" << "opengl11";
+            break;
+        case 5:
+            if(m_caps.renders.contains("opengles"))
+                args << "--render" << "opengles";
+            break;
+        case 6:
+            if(m_caps.renders.contains("opengles11"))
+                args << "--render" << "opengles11";
+            break;
         }
     }
+
+    if(m_caps.features.contains("vsync-flag") && m_vsyncEnable)
+        args << "--vsync";
 
     if(m_speedRunMode >= 0)
     {
@@ -1091,8 +1193,27 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
         case 2:
             args << "--render" << "vsync";
             break;
+        case 3:
+            if(m_caps.renders.contains("opengl"))
+                args << "--render" << "opengl";
+            break;
+        case 4:
+            if(m_caps.renders.contains("opengl11"))
+                args << "--render" << "opengl11";
+            break;
+        case 5:
+            if(m_caps.renders.contains("opengles"))
+                args << "--render" << "opengles";
+            break;
+        case 6:
+            if(m_caps.renders.contains("opengles11"))
+                args << "--render" << "opengles11";
+            break;
         }
     }
+
+    if(m_caps.features.contains("vsync-flag") && m_vsyncEnable)
+        args << "--vsync";
 
     args << "-l" << levelFile;
 
@@ -1172,8 +1293,27 @@ bool TheXTechEngine::doTestWorldFile(const QString &worldFile)
         case 2:
             args << "--render" << "vsync";
             break;
+        case 3:
+            if(m_caps.renders.contains("opengl"))
+                args << "--render" << "opengl";
+            break;
+        case 4:
+            if(m_caps.renders.contains("opengl11"))
+                args << "--render" << "opengl11";
+            break;
+        case 5:
+            if(m_caps.renders.contains("opengles"))
+                args << "--render" << "opengles";
+            break;
+        case 6:
+            if(m_caps.renders.contains("opengles11"))
+                args << "--render" << "opengles11";
+            break;
         }
     }
+
+    if(m_caps.features.contains("vsync-flag") && m_vsyncEnable)
+        args << "--vsync";
 
     args << "--save-slot" << 0;
     args << worldFile;
