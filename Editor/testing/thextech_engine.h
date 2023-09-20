@@ -24,6 +24,7 @@
 #include <QMutex>
 
 #include "ipc/pge_engine_ipc.h"
+#include "ipc/thextech_capabilities.h"
 #include "abstract_engine.h"
 
 class MainWindow;
@@ -39,15 +40,30 @@ class TheXTechEngine : public AbstractRuntimeEngine
 
     MainWindow *m_w = nullptr;
     //! Size of the menu items array
-    static const size_t m_menuItemsSize = 30;
+    static const size_t m_menuItemsSize = 40;
     //! List of registered menu items
     QAction *m_menuItems[m_menuItemsSize];
+    QAction *m_menuRunWorldTestFile = nullptr;
+    QAction *m_menuRunWorldTestIPC = nullptr;
+
+    QAction *m_startWarpAction = nullptr;
+    QAction *m_saveSlotMenu = nullptr;
+
+    QAction *m_renderVSync = nullptr;
+    QAction *m_renderModernOpenGL = nullptr;
+    QAction *m_renderLegacyOpenGL = nullptr;
+    QAction *m_renderModernOpenGLES = nullptr;
+    QAction *m_renderLegacyOpenGLES = nullptr;
+
+    QAction *m_renderVSyncFlag = nullptr;
 
     /************** Settings **************/
     //! Default executable filename
     QString m_defaultEngineName;
     //! Path to custom TheXTech executable
     QString m_customEnginePath;
+    //! Capabilities of given TheXTech build
+    TheXTechCapabilities m_caps;
     //! Enable magic-hand functionality (IPC mode only)
     bool    m_enableMagicHand = true;
     //! Enable magic-hand functionality (IPC mode only)
@@ -56,6 +72,8 @@ class TheXTechEngine : public AbstractRuntimeEngine
     bool    m_enableGrabAll = false;
     //! Renderer type
     int     m_renderType = -1;
+    //! Enable VSync if available
+    bool    m_vsyncEnable = false;
     //! Start game in battle mode
     bool    m_battleMode = false;
     //! Compatibility level
@@ -64,12 +82,19 @@ class TheXTechEngine : public AbstractRuntimeEngine
     int     m_speedRunMode = -1;
     //! Enable semi-transparent timer showing
     bool    m_speedRunTimerST = false;
+    //! Save slot for world run
+    int     m_saveSlot = 0;
+    //! Select warp entrance for a level test
+    int     m_startWarp = 0;
     /************** Settings **************/
 
 
     PgeEngineIpcClient m_interface;
 
     QString getEnginePath();
+
+    void rescanCapabilities();
+    void updateMenuCapabilities();
 
     void loadSetup();
     void saveSetup();
@@ -97,7 +122,7 @@ public:
     virtual bool doTestLevelFile(const QString &levelFile);
 
 //    virtual bool doTestWorldIPC(const WorldData &d);
-//    virtual bool doTestWorldFile(const QString &worldFile);
+    virtual bool doTestWorldFile(const QString &worldFile);
 
     virtual bool runNormalGame();
 

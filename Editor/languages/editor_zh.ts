@@ -1370,7 +1370,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Arg: {String array} validates the PGE-X string array</source>
-        <translation>Arg: {String array} 确认是 PGE-X 字符串数组</translation>
+        <translation>Arg: {String array} 确认是 PGE-X 字符串索引</translation>
     </message>
     <message>
         <source>Simulates crash signal</source>
@@ -1823,7 +1823,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -1968,7 +1968,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2129,7 +2129,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2204,7 +2204,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2288,7 +2288,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2427,7 +2427,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2482,7 +2482,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2601,7 +2601,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2679,7 +2679,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -2813,7 +2813,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation>数组编号：%1</translation>
+        <translation>对象索引：%1</translation>
     </message>
 </context>
 <context>
@@ -4034,7 +4034,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Block ID: %1, Array ID: %2</source>
-        <translation>砖块编号：%1，数组编号：%2</translation>
+        <translation>砖块编号：%1，对象索引：%2</translation>
     </message>
     <message>
         <source>Position: [%1, %2]</source>
@@ -4050,11 +4050,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>BGO ID: %1, Array ID: %2</source>
-        <translation>背景编号：%1，数组编号：%2</translation>
+        <translation>背景编号：%1，对象索引：%2</translation>
     </message>
     <message>
         <source>NPC ID: %1, Array ID: %2</source>
-        <translation>NPC 编号：%1，数组编号：%2</translation>
+        <translation>NPC 编号：%1，对象索引：%2</translation>
     </message>
     <message>
         <source>[none]</source>
@@ -8102,6 +8102,79 @@ Arguments: %2</source>
         <comment>Enable speedrun with mode 2 (X2 compatibility level)</comment>
         <translation>模式 2（SMBX2）</translation>
     </message>
+    <message>
+        <source>Select the entrance warp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the entrance warp number (if you specify 0, the level will start from the usual start point):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test world</source>
+        <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test saved world</source>
+        <comment>Run the testing of current file in TheXTech from disk.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a start warp...</source>
+        <comment>Select the warp number at which the game will be started.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save slot</source>
+        <comment>Select a save slot for playing the world map.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t save</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save slot 1</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save slot 2</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save slot 3</source>
+        <comment>Save slot sub-menu item.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modern OpenGL</source>
+        <comment>Hardware accelerated with modern OpenGL</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Legacy OpenGL 1.1</source>
+        <comment>Hardware accelerated with legacy OpenGL</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modern OpenGL ES</source>
+        <comment>Hardware accelerated with modern OpenGL ES</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Legacy OpenGL ES 1.1</source>
+        <comment>Hardware accelerated with legacy OpenGL ES</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable V-Sync</source>
+        <comment>Enable the vertical synchronisation if available</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TilesetEditor</name>
@@ -8668,7 +8741,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Level ID: %1, Array ID: %2</source>
-        <translation>关卡编号：%1，数组编号：%2</translation>
+        <translation>关卡编号：%1，对象索引：%2</translation>
     </message>
     <message>
         <source>Position: [%1, %2]</source>

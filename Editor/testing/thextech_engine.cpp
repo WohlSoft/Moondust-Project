@@ -22,6 +22,7 @@
 #include <QRadioButton>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QInputDialog>
 
 #include "thextech_engine.h"
 
@@ -65,7 +66,51 @@ QString TheXTechEngine::getEnginePath()
 {
     return m_customEnginePath.isEmpty() ?
            getDefaultEnginePath(m_defaultEngineName) :
-           m_customEnginePath;
+               m_customEnginePath;
+}
+
+void TheXTechEngine::rescanCapabilities()
+{
+    QString execPath = getEnginePath();
+
+    if(!getTheXTechCapabilities(m_caps, execPath))
+        qWarning() << "Failed to load capabilities for TheXTech executable" << execPath;
+
+    updateMenuCapabilities();
+}
+
+void TheXTechEngine::updateMenuCapabilities()
+{
+    Q_ASSERT(m_w);
+
+    if(m_menuRunWorldTestFile)
+        m_menuRunWorldTestFile->setEnabled(m_caps.features.contains("test-world-file"));
+
+    if(m_renderVSync)
+        m_renderVSync->setVisible(!m_caps.features.contains("vsync-flag"));
+
+    if(m_renderVSyncFlag)
+        m_renderVSyncFlag->setEnabled(m_caps.features.contains("vsync-flag"));
+
+    if(m_renderModernOpenGL)
+        m_renderModernOpenGL->setVisible(m_caps.renders.contains("opengl"));
+
+    if(m_renderLegacyOpenGL)
+        m_renderLegacyOpenGL->setVisible(m_caps.renders.contains("opengl11"));
+
+    if(m_renderModernOpenGLES)
+        m_renderModernOpenGLES->setVisible(m_caps.renders.contains("opengles"));
+
+    if(m_renderLegacyOpenGLES)
+        m_renderLegacyOpenGLES->setVisible(m_caps.renders.contains("opengles11"));
+
+    if(m_startWarpAction)
+        m_startWarpAction->setEnabled(m_caps.arguments.contains("start-warp"));
+
+    if(m_saveSlotMenu)
+        m_saveSlotMenu->setEnabled(m_caps.arguments.contains("save-slot"));
+
+    m_w->updateTestingCaps();
 }
 
 void TheXTechEngine::loadSetup()
@@ -86,11 +131,16 @@ void TheXTechEngine::loadSetup()
         m_customEnginePath = settings.value("custom-runtime-path", QString()).toString();
         m_enableMagicHand = settings.value("enable-magic-hand", true).toBool();
         m_renderType = settings.value("render-type", -1).toInt();
+        m_vsyncEnable = settings.value("render-vsync", false).toBool();
         m_compatLevel = settings.value("compat-level", -1).toInt();
         m_speedRunMode = settings.value("speedrun-mode", -1).toInt();
         m_speedRunTimerST = settings.value("speedrun-st-stopwatch", false).toBool();
+        m_saveSlot = settings.value("save-slot", 0).toInt();
+        m_startWarp = settings.value("start-warp", 0).toInt();
     }
     settings.endGroup();
+
+    rescanCapabilities();
 }
 
 void TheXTechEngine::saveSetup()
@@ -105,9 +155,12 @@ void TheXTechEngine::saveSetup()
         settings.setValue("custom-runtime-path", m_customEnginePath);
         settings.setValue("enable-magic-hand", m_enableMagicHand);
         settings.setValue("render-type", m_renderType);
+        settings.setValue("render-vsync", m_vsyncEnable);
         settings.setValue("compat-level", m_compatLevel);
         settings.setValue("speedrun-mode", m_speedRunMode);
         settings.setValue("speedrun-st-stopwatch", m_speedRunTimerST);
+        settings.setValue("save-slot", m_saveSlot);
+        settings.setValue("start-warp", m_startWarp);
     }
     settings.endGroup();
 }
@@ -148,6 +201,21 @@ void TheXTechEngine::startSafeTestAction()
 
         m_battleMode = false;
         doTestLevelFile(edit->curFile);
+    }
+    else if(m_w->activeChildWindow() == MainWindow::WND_World)
+    {
+        WorldEdit *edit = m_w->activeWldEditWin();
+        if(!edit)
+            return;
+
+        if(edit->isUntitled())
+        {
+            AbstractRuntimeEngine::rejectUntitled(m_w);
+            return;
+        }
+
+        m_battleMode = false;
+        doTestWorldFile(edit->curFile);
     }
 }
 
@@ -261,6 +329,8 @@ void TheXTechEngine::chooseEnginePath()
             }
         }
 #endif
+
+        rescanCapabilities();
     }
 }
 
@@ -330,13 +400,40 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
         {
             auto *m = m_menuItems[menuItemId - 1];
             if(wld)
-                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
+                m->setVisible(false);
         });
         QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
         {
             auto *m = m_menuItems[menuItemId - 1];
             if(lvl)
+            {
+                m->setVisible(true);
                 m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC));
+            }
+        });
+    }
+
+    {
+        QAction *RunWorldTest = destmenu->addAction("runWorldTesting");
+        QObject::connect(RunWorldTest,   &QAction::triggered,
+                         this,               &TheXTechEngine::startTestAction,
+                         Qt::QueuedConnection);
+        m_menuRunWorldTestIPC = RunWorldTest;
+        m_menuItems[menuItemId++] = RunWorldTest;
+        QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(wld)
+            {
+                m->setVisible(true);
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
+            }
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(lvl)
+                m->setVisible(false);
         });
     }
 
@@ -365,19 +462,151 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
         QObject::connect(RunLevelSafeTest,   &QAction::triggered,
                     this,               &TheXTechEngine::startSafeTestAction,
                     Qt::QueuedConnection);
+        m_menuRunWorldTestFile = RunLevelSafeTest;
         m_menuItems[menuItemId++] = RunLevelSafeTest;
         QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
         {
             auto *m = m_menuItems[menuItemId - 1];
             if(wld)
-                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_WORLD_FILE));
+                m->setVisible(false);
         });
         QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
         {
             auto *m = m_menuItems[menuItemId - 1];
             if(lvl)
+            {
+                m->setVisible(true);
                 m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_LEVEL_FILE));
+            }
         });
+    }
+
+    {
+        QAction *RunWorldSafeTest = destmenu->addAction("runWorldSafeTesting");
+        QObject::connect(RunWorldSafeTest,   &QAction::triggered,
+                         this,               &TheXTechEngine::startSafeTestAction,
+                         Qt::QueuedConnection);
+        m_menuRunWorldTestFile = RunWorldSafeTest;
+        m_menuItems[menuItemId++] = RunWorldSafeTest;
+        QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(wld)
+            {
+                m->setVisible(true);
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_WORLD_FILE));
+            }
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(lvl)
+                m->setVisible(false);
+        });
+    }
+
+    destmenu->addSeparator();
+
+    {
+        QAction *selectStartWarp;
+        m_startWarpAction = selectStartWarp = destmenu->addAction("setStartWarp");
+        m_menuItems[menuItemId++] = selectStartWarp;
+        QObject::connect(selectStartWarp, &QAction::triggered,
+        [this](bool)
+        {
+            bool ok = false;
+            int ret = QInputDialog::getInt(m_w,
+                                           tr("Select the entrance warp"),
+                                           tr("Please select the entrance warp number "
+                                              "(if you specify 0, the level will start from the usual start point):"),
+                                           m_startWarp,
+                                           0, 5000, 1, &ok);
+            if(ok)
+                m_startWarp = ret;
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(wld)
+                m->setVisible(false);
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(lvl)
+                m->setVisible(true);
+        });
+    }
+
+    {
+        QMenu *saveSlot = destmenu->addMenu("testGameSave");
+        m_saveSlotMenu = m_menuItems[menuItemId++] = saveSlot->menuAction();
+
+        QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(wld)
+                m->setVisible(true);
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(lvl)
+                m->setVisible(false);
+        });
+
+        {
+            QAction *sn, *s1, *s2, *s3;
+
+            auto addSaveSlot = [this, saveSlot, &menuItemId](int id, const char *name)->QAction*
+            {
+                QAction *ret = saveSlot->addAction(name);
+                ret->setCheckable(true);
+                ret->setChecked(m_saveSlot == id);
+                m_menuItems[menuItemId++] = ret;
+                return ret;
+            };
+
+            sn = addSaveSlot(0, "saveNone");
+            saveSlot->addSeparator();
+            s1 = addSaveSlot(1, "save1");
+            s2 = addSaveSlot(2, "save2");
+            s3 = addSaveSlot(3, "save3");
+
+            auto updateMenu = [this, sn, s1, s2, s3]()->void
+            {
+                sn->setChecked(m_saveSlot == 0);
+                s1->setChecked(m_saveSlot == 1);
+                s2->setChecked(m_saveSlot == 2);
+                s3->setChecked(m_saveSlot == 3);
+            };
+
+            QObject::connect(sn,   &QAction::triggered,
+            [this, updateMenu](bool)
+            {
+                m_saveSlot = 0;
+                updateMenu();
+            });
+            QObject::connect(s1,   &QAction::triggered,
+            [this, updateMenu](bool)
+            {
+                m_saveSlot = 1;
+                updateMenu();
+            });
+            QObject::connect(s2,   &QAction::triggered,
+            [this, updateMenu](bool)
+            {
+                m_saveSlot = 2;
+                updateMenu();
+            });
+            QObject::connect(s3,   &QAction::triggered,
+            [this, updateMenu](bool)
+            {
+                m_saveSlot = 3;
+                updateMenu();
+            });
+        }
+
     }
 
     destmenu->addSeparator();
@@ -386,64 +615,101 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
         QMenu *renderType = destmenu->addMenu("renderType");
         m_menuItems[menuItemId++] = renderType->menuAction();
 
-        QAction *r_d, *r_s, *r_a, *r_v;
+        QAction *r_d, *r_s, *r_a, *r_v, *r_gl, *r_gl11, *r_es, *r_es11;
 
-        r_d = renderType->addAction("renderDefault");
-        r_d->setCheckable(true);
-        r_d->setChecked(m_renderType == -1);
-        m_menuItems[menuItemId++] = r_d;
+        auto addRender = [this, renderType, &menuItemId](int id, const char *name)->QAction*
+        {
+            QAction *ret = renderType->addAction(name);
+            ret->setCheckable(true);
+            ret->setChecked(m_renderType == id);
+            m_menuItems[menuItemId++] = ret;
+            return ret;
+        };
 
-        r_s = renderType->addAction("renderSoftware");
-        r_s->setCheckable(true);
-        r_s->setChecked(m_renderType == 0);
-        m_menuItems[menuItemId++] = r_s;
+        r_d = addRender(-1, "renderDefault");
+        r_s = addRender(0, "renderSoftware");
+        r_a = addRender(1, "renderAccelerated");
+        m_renderVSync = r_v = addRender(2, "renderVSync");
+        m_renderModernOpenGL = r_gl = addRender(3, "renderGL");
+        m_renderLegacyOpenGL = r_gl11 = addRender(4, "renderGL11");
+        m_renderModernOpenGLES = r_es = addRender(5, "renderGLES");
+        m_renderLegacyOpenGLES = r_es11 = addRender(6, "renderGLES11");
 
-        r_a = renderType->addAction("renderAccelerated");
-        r_a->setCheckable(true);
-        r_a->setChecked(m_renderType == 1);
-        m_menuItems[menuItemId++] = r_a;
-
-        r_v = renderType->addAction("renderVSync");
-        r_v->setCheckable(true);
-        r_v->setChecked(m_renderType == 2);
-        m_menuItems[menuItemId++] = r_v;
+        auto updateMenu = [this, r_d, r_s, r_a, r_v, r_gl, r_gl11, r_es, r_es11]()->void
+        {
+            r_d->setChecked(m_renderType == -1);
+            r_s->setChecked(m_renderType == 0);
+            r_a->setChecked(m_renderType == 1);
+            r_v->setChecked(m_renderType == 2);
+            r_gl->setChecked(m_renderType == 3);
+            r_gl11->setChecked(m_renderType == 4);
+            r_es->setChecked(m_renderType == 5);
+            r_es11->setChecked(m_renderType == 6);
+        };
 
         QObject::connect(r_d,   &QAction::triggered,
-                    [this, r_d, r_s, r_a, r_v](bool)
+        [this, updateMenu](bool)
         {
-            r_d->setChecked(true);
-            r_s->setChecked(false);
-            r_a->setChecked(false);
-            r_v->setChecked(false);
             m_renderType = -1;
+            updateMenu();
         });
         QObject::connect(r_s,   &QAction::triggered,
-                    [this, r_d, r_s, r_a, r_v](bool)
+        [this, updateMenu](bool)
         {
-            r_d->setChecked(false);
-            r_s->setChecked(true);
-            r_a->setChecked(false);
-            r_v->setChecked(false);
             m_renderType = 0;
+            updateMenu();
         });
         QObject::connect(r_a,   &QAction::triggered,
-                    [this, r_d, r_s, r_a, r_v](bool)
+        [this, updateMenu](bool)
         {
-            r_d->setChecked(false);
-            r_s->setChecked(false);
-            r_a->setChecked(true);
-            r_v->setChecked(false);
             m_renderType = 1;
+            updateMenu();
         });
         QObject::connect(r_v,   &QAction::triggered,
-                    [this, r_d, r_s, r_a, r_v](bool)
+        [this, updateMenu](bool)
         {
-            r_d->setChecked(false);
-            r_s->setChecked(false);
-            r_a->setChecked(true);
-            r_v->setChecked(false);
             m_renderType = 2;
+            updateMenu();
         });
+        QObject::connect(r_gl,   &QAction::triggered,
+        [this, updateMenu](bool)
+        {
+            m_renderType = 3;
+            updateMenu();
+        });
+        QObject::connect(r_gl11,   &QAction::triggered,
+        [this, updateMenu](bool)
+        {
+            m_renderType = 4;
+            updateMenu();
+        });
+        QObject::connect(r_es,   &QAction::triggered,
+        [this, updateMenu](bool)
+        {
+            m_renderType = 5;
+            updateMenu();
+        });
+        QObject::connect(r_es11,   &QAction::triggered,
+        [this, updateMenu](bool)
+        {
+            m_renderType = 6;
+            updateMenu();
+        });
+
+        renderType->addSeparator();
+
+        {
+            QAction *enableVSync;
+            m_renderVSyncFlag = enableVSync = renderType->addAction("enableVSync");
+            enableVSync->setCheckable(true);
+            enableVSync->setChecked(m_vsyncEnable);
+            QObject::connect(enableVSync,   &QAction::toggled,
+                             [this](bool state)
+                             {
+                                 m_vsyncEnable = state;
+                             });
+            m_menuItems[menuItemId++] = enableVSync;
+        }
     }
 
     {
@@ -647,6 +913,8 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
 
     retranslateMenu();
     QObject::connect(m_w, &MainWindow::languageSwitched, this, &TheXTechEngine::retranslateMenu);
+
+    updateMenuCapabilities();
 }
 
 void TheXTechEngine::retranslateMenu()
@@ -659,6 +927,11 @@ void TheXTechEngine::retranslateMenu()
     }
     {
         QAction *runTest = m_menuItems[menuItemId++];
+        runTest->setText(tr("Test world",
+                            "Run the testing of current file in TheXTech via interprocessing tunnel."));
+    }
+    {
+        QAction *runTest = m_menuItems[menuItemId++];
         runTest->setText(tr("Test level in battle mode",
                                 "Run a battle testing of current file in TheXTech via interprocessing tunnel."));
     }
@@ -667,6 +940,46 @@ void TheXTechEngine::retranslateMenu()
         runTest->setText(tr("Test saved level",
                                 "Run the testing of current file in TheXTech from disk."));
     }
+    {
+        QAction *runTest = m_menuItems[menuItemId++];
+        runTest->setText(tr("Test saved world",
+                            "Run the testing of current file in TheXTech from disk."));
+    }
+
+    {
+        QAction *startWarp = m_menuItems[menuItemId++];
+        startWarp->setText(tr("Choose a start warp...",
+                              "Select the warp number at which the game will be started."));
+    }
+
+    {
+        QAction *saveSlot = m_menuItems[menuItemId++];
+        saveSlot->setText(tr("Save slot",
+                             "Select a save slot for playing the world map."));
+
+        //  Sub-menu
+        {
+            QAction *saveSlot = m_menuItems[menuItemId++];
+            saveSlot->setText(tr("Don't save",
+                                 "Save slot sub-menu item."));
+        }
+        {
+            QAction *saveSlot = m_menuItems[menuItemId++];
+            saveSlot->setText(tr("Save slot 1",
+                                 "Save slot sub-menu item."));
+        }
+        {
+            QAction *saveSlot = m_menuItems[menuItemId++];
+            saveSlot->setText(tr("Save slot 2",
+                                 "Save slot sub-menu item."));
+        }
+        {
+            QAction *saveSlot = m_menuItems[menuItemId++];
+            saveSlot->setText(tr("Save slot 3",
+                                 "Save slot sub-menu item."));
+        }
+    }
+
 
     {
         QAction *renderType = m_menuItems[menuItemId++];
@@ -692,6 +1005,32 @@ void TheXTechEngine::retranslateMenu()
             QAction *renderType = m_menuItems[menuItemId++];
             renderType->setText(tr("Accelerated with V-Sync",
                                    "Hardware accelerated rendering with vertical synchronization support"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Modern OpenGL",
+                                   "Hardware accelerated with modern OpenGL"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Legacy OpenGL 1.1",
+                                   "Hardware accelerated with legacy OpenGL"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Modern OpenGL ES",
+                                   "Hardware accelerated with modern OpenGL ES"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Legacy OpenGL ES 1.1",
+                                   "Hardware accelerated with legacy OpenGL ES"));
+        }
+
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Enable V-Sync",
+                                   "Enable the vertical synchronisation if available"));
         }
     }
 
@@ -876,8 +1215,30 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
         case 2:
             args << "--render" << "vsync";
             break;
+        case 3:
+            if(m_caps.renders.contains("opengl"))
+                args << "--render" << "opengl";
+            break;
+        case 4:
+            if(m_caps.renders.contains("opengl11"))
+                args << "--render" << "opengl11";
+            break;
+        case 5:
+            if(m_caps.renders.contains("opengles"))
+                args << "--render" << "opengles";
+            break;
+        case 6:
+            if(m_caps.renders.contains("opengles11"))
+                args << "--render" << "opengles11";
+            break;
         }
     }
+
+    if(m_caps.features.contains("vsync-flag") && m_vsyncEnable)
+        args << "--vsync";
+
+    if(m_caps.arguments.contains("start-warp") && m_startWarp > 0)
+        args << "--start-warp" << QString::number(m_startWarp);
 
     if(m_speedRunMode >= 0)
     {
@@ -985,10 +1346,160 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
         case 2:
             args << "--render" << "vsync";
             break;
+        case 3:
+            if(m_caps.renders.contains("opengl"))
+                args << "--render" << "opengl";
+            break;
+        case 4:
+            if(m_caps.renders.contains("opengl11"))
+                args << "--render" << "opengl11";
+            break;
+        case 5:
+            if(m_caps.renders.contains("opengles"))
+                args << "--render" << "opengles";
+            break;
+        case 6:
+            if(m_caps.renders.contains("opengles11"))
+                args << "--render" << "opengles11";
+            break;
+        }
+    }
+
+    if(m_caps.features.contains("vsync-flag") && m_vsyncEnable)
+        args << "--vsync";
+
+    if(m_caps.arguments.contains("start-warp") && m_startWarp > 0)
+        args << "--start-warp" << QString::number(m_startWarp);
+
+    if(m_speedRunMode >= 0)
+    {
+        switch(m_speedRunMode)
+        {
+        case 0:
+            args << "--speed-run-mode" << "1";
+            break;
+        case 1:
+            args << "--speed-run-mode" << "2";
+            break;
+        case 2:
+            args << "--speed-run-mode" << "3";
+            break;
+        }
+
+        if(m_speedRunTimerST)
+            args << "--speed-run-semitransparent";
+    }
+    else if(m_compatLevel >= 0)
+    {
+        switch(m_compatLevel)
+        {
+        case 0:
+            args << "--compat-level" << "modern";
+            break;
+        case 1:
+            args << "--compat-level" << "smbx2";
+            break;
+        case 2:
+            args << "--compat-level" << "smbx13";
+            break;
         }
     }
 
     args << "-l" << levelFile;
+
+    m_engineProc.start(command, args);
+    if(m_engineProc.waitForStarted())
+    {
+        testStarted();
+        return true;
+    }
+    else
+    {
+        msgStartFailed(m_w, command, args, m_engineProc);
+        m_errorString = "Failed to start TheXTech!" + command + "with args" + args.join(" ");
+        return false;
+    }
+}
+
+bool TheXTechEngine::doTestWorldFile(const QString &worldFile)
+{
+    Q_ASSERT(m_w);
+
+    m_errorString.clear();
+
+    if((capabilities() & CAP_WORLD_FILE) == 0)
+        return false;
+
+    QString command = getEnginePath();
+
+    if(!QFile::exists(command))
+    {
+        msgNotFound(m_w, command);
+        return false;
+    }
+
+    QMutexLocker mlocker(&m_engineMutex);
+    Q_UNUSED(mlocker)
+
+    QStringList args;
+    //    args << "--debug";
+    //    args << "--config=\"" + m_w->configs.config_dir + "\"";
+
+    SETTINGS_TestSettings t = GlobalSettings::testing;
+    args << "--num-players" << QString::number(t.numOfPlayers);
+    args << "--player1" << QString("c%1;s%2;m%3;t%4")
+                               .arg(t.p1_char)
+                               .arg(t.p1_state)
+                               .arg(t.p1_vehicleID)
+                               .arg(t.p1_vehicleType);
+    args << "--player2" << QString("c%1;s%2;m%3;t%4")
+                               .arg(t.p2_char)
+                               .arg(t.p2_state)
+                               .arg(t.p2_vehicleID)
+                               .arg(t.p2_vehicleType);
+
+    if(t.xtra_god) args << "--god-mode";
+    if(t.xtra_showFPS) args << "--show-fps";
+    if(m_enableMaxFps) args << "--max-fps";
+    if(m_enableGrabAll) args << "--grab-all";
+
+    if(m_renderType >= 0)
+    {
+        switch(m_renderType)
+        {
+        case 0:
+            args << "--render" << "sw";
+            break;
+        case 1:
+            args << "--render" << "hw";
+            break;
+        case 2:
+            args << "--render" << "vsync";
+            break;
+        case 3:
+            if(m_caps.renders.contains("opengl"))
+                args << "--render" << "opengl";
+            break;
+        case 4:
+            if(m_caps.renders.contains("opengl11"))
+                args << "--render" << "opengl11";
+            break;
+        case 5:
+            if(m_caps.renders.contains("opengles"))
+                args << "--render" << "opengles";
+            break;
+        case 6:
+            if(m_caps.renders.contains("opengles11"))
+                args << "--render" << "opengles11";
+            break;
+        }
+    }
+
+    if(m_caps.features.contains("vsync-flag") && m_vsyncEnable)
+        args << "--vsync";
+
+    args << "--save-slot" << QString::number(m_saveSlot);
+    args << worldFile;
 
     m_engineProc.start(command, args);
     if(m_engineProc.waitForStarted())
@@ -1046,5 +1557,6 @@ int TheXTechEngine::capabilities()
     return  CAP_LEVEL_IPC |
             CAP_LEVEL_FILE |
             CAP_RUN_GAME |
-            CAP_HAS_MENU;
+            CAP_HAS_MENU |
+            (m_caps.features.contains("test-world-file") ? CAP_WORLD_FILE : 0);
 }
