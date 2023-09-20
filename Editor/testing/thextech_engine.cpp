@@ -22,6 +22,7 @@
 #include <QRadioButton>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QInputDialog>
 
 #include "thextech_engine.h"
 
@@ -103,6 +104,12 @@ void TheXTechEngine::updateMenuCapabilities()
     if(m_renderLegacyOpenGLES)
         m_renderLegacyOpenGLES->setVisible(m_caps.renders.contains("opengles11"));
 
+    if(m_startWarpAction)
+        m_startWarpAction->setEnabled(m_caps.arguments.contains("start-warp"));
+
+    if(m_saveSlotMenu)
+        m_saveSlotMenu->setEnabled(m_caps.arguments.contains("save-slot"));
+
     m_w->updateTestingCaps();
 }
 
@@ -128,6 +135,8 @@ void TheXTechEngine::loadSetup()
         m_compatLevel = settings.value("compat-level", -1).toInt();
         m_speedRunMode = settings.value("speedrun-mode", -1).toInt();
         m_speedRunTimerST = settings.value("speedrun-st-stopwatch", false).toBool();
+        m_saveSlot = settings.value("save-slot", 0).toInt();
+        m_startWarp = settings.value("start-warp", 0).toInt();
     }
     settings.endGroup();
 
@@ -150,6 +159,8 @@ void TheXTechEngine::saveSetup()
         settings.setValue("compat-level", m_compatLevel);
         settings.setValue("speedrun-mode", m_speedRunMode);
         settings.setValue("speedrun-st-stopwatch", m_speedRunTimerST);
+        settings.setValue("save-slot", m_saveSlot);
+        settings.setValue("start-warp", m_startWarp);
     }
     settings.endGroup();
 }
@@ -497,6 +508,110 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
     destmenu->addSeparator();
 
     {
+        QAction *selectStartWarp;
+        m_startWarpAction = selectStartWarp = destmenu->addAction("setStartWarp");
+        m_menuItems[menuItemId++] = selectStartWarp;
+        QObject::connect(selectStartWarp, &QAction::triggered,
+        [this](bool)
+        {
+            bool ok = false;
+            int ret = QInputDialog::getInt(m_w,
+                                           tr("Select the entrance warp"),
+                                           tr("Please select the entrance warp number "
+                                              "(if you specify 0, the level will start from the usual start point):"),
+                                           m_startWarp,
+                                           0, 5000, 1, &ok);
+            if(ok)
+                m_startWarp = ret;
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(wld)
+                m->setVisible(false);
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(lvl)
+                m->setVisible(true);
+        });
+    }
+
+    {
+        QMenu *saveSlot = destmenu->addMenu("testGameSave");
+        m_saveSlotMenu = m_menuItems[menuItemId++] = saveSlot->menuAction();
+
+        QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(wld)
+                m->setVisible(true);
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(lvl)
+                m->setVisible(false);
+        });
+
+        {
+            QAction *sn, *s1, *s2, *s3;
+
+            auto addSaveSlot = [this, saveSlot, &menuItemId](int id, const char *name)->QAction*
+            {
+                QAction *ret = saveSlot->addAction(name);
+                ret->setCheckable(true);
+                ret->setChecked(m_saveSlot == id);
+                m_menuItems[menuItemId++] = ret;
+                return ret;
+            };
+
+            sn = addSaveSlot(0, "saveNone");
+            saveSlot->addSeparator();
+            s1 = addSaveSlot(1, "save1");
+            s2 = addSaveSlot(2, "save2");
+            s3 = addSaveSlot(3, "save3");
+
+            auto updateMenu = [this, sn, s1, s2, s3]()->void
+            {
+                sn->setChecked(m_saveSlot == 0);
+                s1->setChecked(m_saveSlot == 1);
+                s2->setChecked(m_saveSlot == 2);
+                s3->setChecked(m_saveSlot == 3);
+            };
+
+            QObject::connect(sn,   &QAction::triggered,
+            [this, updateMenu](bool)
+            {
+                m_saveSlot = 0;
+                updateMenu();
+            });
+            QObject::connect(s1,   &QAction::triggered,
+            [this, updateMenu](bool)
+            {
+                m_saveSlot = 1;
+                updateMenu();
+            });
+            QObject::connect(s2,   &QAction::triggered,
+            [this, updateMenu](bool)
+            {
+                m_saveSlot = 2;
+                updateMenu();
+            });
+            QObject::connect(s3,   &QAction::triggered,
+            [this, updateMenu](bool)
+            {
+                m_saveSlot = 3;
+                updateMenu();
+            });
+        }
+
+    }
+
+    destmenu->addSeparator();
+
+    {
         QMenu *renderType = destmenu->addMenu("renderType");
         m_menuItems[menuItemId++] = renderType->menuAction();
 
@@ -832,6 +947,41 @@ void TheXTechEngine::retranslateMenu()
     }
 
     {
+        QAction *startWarp = m_menuItems[menuItemId++];
+        startWarp->setText(tr("Choose a start warp...",
+                              "Select the warp number at which the game will be started."));
+    }
+
+    {
+        QAction *saveSlot = m_menuItems[menuItemId++];
+        saveSlot->setText(tr("Save slot",
+                             "Select a save slot for playing the world map."));
+
+        //  Sub-menu
+        {
+            QAction *saveSlot = m_menuItems[menuItemId++];
+            saveSlot->setText(tr("Don't save",
+                                 "Save slot sub-menu item."));
+        }
+        {
+            QAction *saveSlot = m_menuItems[menuItemId++];
+            saveSlot->setText(tr("Save slot 1",
+                                 "Save slot sub-menu item."));
+        }
+        {
+            QAction *saveSlot = m_menuItems[menuItemId++];
+            saveSlot->setText(tr("Save slot 2",
+                                 "Save slot sub-menu item."));
+        }
+        {
+            QAction *saveSlot = m_menuItems[menuItemId++];
+            saveSlot->setText(tr("Save slot 3",
+                                 "Save slot sub-menu item."));
+        }
+    }
+
+
+    {
         QAction *renderType = m_menuItems[menuItemId++];
         renderType->setText(tr("Graphics type",
                                "Choose a rendering system: software or accelerated"));
@@ -1087,6 +1237,9 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
     if(m_caps.features.contains("vsync-flag") && m_vsyncEnable)
         args << "--vsync";
 
+    if(m_caps.arguments.contains("start-warp") && m_startWarp > 0)
+        args << "--start-warp" << QString::number(m_startWarp);
+
     if(m_speedRunMode >= 0)
     {
         switch(m_speedRunMode)
@@ -1215,6 +1368,43 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
     if(m_caps.features.contains("vsync-flag") && m_vsyncEnable)
         args << "--vsync";
 
+    if(m_caps.arguments.contains("start-warp") && m_startWarp > 0)
+        args << "--start-warp" << QString::number(m_startWarp);
+
+    if(m_speedRunMode >= 0)
+    {
+        switch(m_speedRunMode)
+        {
+        case 0:
+            args << "--speed-run-mode" << "1";
+            break;
+        case 1:
+            args << "--speed-run-mode" << "2";
+            break;
+        case 2:
+            args << "--speed-run-mode" << "3";
+            break;
+        }
+
+        if(m_speedRunTimerST)
+            args << "--speed-run-semitransparent";
+    }
+    else if(m_compatLevel >= 0)
+    {
+        switch(m_compatLevel)
+        {
+        case 0:
+            args << "--compat-level" << "modern";
+            break;
+        case 1:
+            args << "--compat-level" << "smbx2";
+            break;
+        case 2:
+            args << "--compat-level" << "smbx13";
+            break;
+        }
+    }
+
     args << "-l" << levelFile;
 
     m_engineProc.start(command, args);
@@ -1315,7 +1505,7 @@ bool TheXTechEngine::doTestWorldFile(const QString &worldFile)
     if(m_caps.features.contains("vsync-flag") && m_vsyncEnable)
         args << "--vsync";
 
-    args << "--save-slot" << 0;
+    args << "--save-slot" << QString::number(m_saveSlot);
     args << worldFile;
 
     m_engineProc.start(command, args);

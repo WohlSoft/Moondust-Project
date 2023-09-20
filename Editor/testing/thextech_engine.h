@@ -46,6 +46,9 @@ class TheXTechEngine : public AbstractRuntimeEngine
     QAction *m_menuRunWorldTestFile = nullptr;
     QAction *m_menuRunWorldTestIPC = nullptr;
 
+    QAction *m_startWarpAction = nullptr;
+    QAction *m_saveSlotMenu = nullptr;
+
     QAction *m_renderVSync = nullptr;
     QAction *m_renderModernOpenGL = nullptr;
     QAction *m_renderLegacyOpenGL = nullptr;
@@ -79,6 +82,10 @@ class TheXTechEngine : public AbstractRuntimeEngine
     int     m_speedRunMode = -1;
     //! Enable semi-transparent timer showing
     bool    m_speedRunTimerST = false;
+    //! Save slot for world run
+    int     m_saveSlot = 0;
+    //! Select warp entrance for a level test
+    int     m_startWarp = 0;
     /************** Settings **************/
 
 
