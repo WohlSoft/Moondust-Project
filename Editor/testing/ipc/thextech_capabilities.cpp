@@ -19,6 +19,7 @@
 #include "thextech_capabilities.h"
 #include <QProcess>
 #include <QFileInfo>
+#include <QVariant>
 
 #include <QJsonDocument>
 #include <QJsonArray>
