@@ -956,6 +956,7 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
 {
     bool ret = true;
     auto &origin = proj["metadata"];
+    bool useTrId = origin.useTrId;
 
     for(auto it = proj.begin(); it != proj.end(); ++it)
     {
@@ -992,7 +993,15 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
                 for(auto &n : la.npc)
                 {
                     QJsonObject entry;
-                    entry["i"] = n.npc_index;
+                    if(useTrId)
+                    {
+                        entry["tr-id"] = n.talk_tr_id;
+                        if(isOrigin)
+                            entry["i"] = n.npc_index;
+                    }
+                    else
+                        entry["i"] = n.npc_index;
+
                     entry["talk"] = n.talk.text;
                     if(!n.talk.note.isEmpty())
                         entry["talk-n"] = n.talk.note;
@@ -1027,7 +1036,16 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
                 for(auto &e : la.events)
                 {
                     QJsonObject entry;
-                    entry["i"] = e.event_index;
+
+                    if(useTrId)
+                    {
+                        entry["tr-id"] = e.message_tr_id;
+                        if(isOrigin)
+                            entry["i"] = e.event_index;
+                    }
+                    else
+                        entry["i"] = e.event_index;
+
                     entry["msg"] = e.message.text;
                     if(!e.message.note.isEmpty())
                         entry["msg-n"] = e.message.note;
@@ -1164,7 +1182,16 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
                 for(auto &l : wa.level_titles)
                 {
                     QJsonObject entry;
-                    entry["i"] = l.level_index;
+
+                    if(useTrId)
+                    {
+                        entry["tr-id"] = l.title_tr_id;
+                        if(isOrigin)
+                            entry["i"] = l.level_index;
+                    }
+                    else
+                        entry["i"] = l.level_index;
+
                     entry["tit"] = l.title.text;
                     if(!l.title.note.isEmpty())
                         entry["tit-n"] = l.title.note;
@@ -1216,8 +1243,18 @@ bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &pr
                 for(auto &i : sa.lines)
                 {
                     QJsonObject entry;
-                    entry["i"] = i.line;
-                    entry["src"] = i.source;
+
+                    if(useTrId)
+                    {
+                        entry["tr-id"] = i.line_tr_id;
+                        if(isOrigin)
+                            entry["i"] = i.line;
+                    }
+                    else
+                    {
+                        entry["i"] = i.line;
+                        entry["src"] = i.source;
+                    }
 
                     if(!isOrigin)
                     {
@@ -1529,6 +1566,7 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
     bool isOrigin = (trName == "metadata");
 
     auto &tr = proj[trName];
+    auto &tr_orig = proj["metadata"];
 
     if(isOrigin)
         tr.useTrId = r.value("use-tr-id").toBool(false);
@@ -1559,12 +1597,28 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                 for(const auto &it : arr)
                 {
                     auto ito = it.toObject();
-                    int i;
                     TranslationData_EVENT et;
-                    i = ito["i"].toInt(-1);
-                    if(i < 0)
+                    et.event_index = ito["i"].toInt(-1);
+                    et.message_tr_id = ito["tr-id"].toString();
+
+                    if(et.event_index < 0 && et.message_tr_id.isEmpty())
                         continue; // Skip invalid entries
-                    et.event_index = i;
+
+                    if(tr.useTrId)
+                    {
+                        if(isOrigin)
+                        {
+                            Q_ASSERT(et.event_index >= 0);
+                            Q_ASSERT(!et.message_tr_id.isEmpty());
+                            tr.trId_map_lvl_events.insert(et.message_tr_id, et.event_index);
+                        }
+                        else
+                        {
+                            Q_ASSERT(tr_orig.trId_map_lvl_events.contains(et.message_tr_id));
+                            et.event_index = tr_orig.trId_map_lvl_events[et.message_tr_id];
+                        }
+                    }
+
                     et.message.text = ito["msg"].toString();
                     et.message.note = ito["msg-n"].toString();
                     et.message.unfinished = ito["u"].toBool();
@@ -1585,7 +1639,7 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                             et.triggered_by_event.push_back(be.toInt(-1));
                     }
 
-                    lvl.events.insert(i, et);
+                    lvl.events.insert(et.event_index, et);
                 }
             }
 
@@ -1595,19 +1649,35 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                 for(const auto &it : arr)
                 {
                     auto ito = it.toObject();
-                    int i;
                     TranslationData_NPC et;
-                    i = ito["i"].toInt(-1);
-                    if(i < 0)
+                    et.npc_index = ito["i"].toInt(-1);
+                    et.talk_tr_id = ito["tr-id"].toString();
+
+                    if(et.npc_index < 0 && et.talk_tr_id.isEmpty())
                         continue; // Skip invalid entries
-                    et.npc_index = i;
+
+                    if(tr.useTrId)
+                    {
+                        if(isOrigin)
+                        {
+                            Q_ASSERT(et.npc_index >= 0);
+                            Q_ASSERT(!et.talk_tr_id.isEmpty());
+                            tr.trId_map_lvl_npc.insert(et.talk_tr_id, et.npc_index);
+                        }
+                        else
+                        {
+                            Q_ASSERT(tr_orig.trId_map_lvl_npc.contains(et.talk_tr_id));
+                            et.npc_index = tr_orig.trId_map_lvl_npc[et.talk_tr_id];
+                        }
+                    }
+
                     et.npc_id = ito["t"].toInt(-1);
                     et.talk.text = ito["talk"].toString();
                     et.talk.note = ito["talk-n"].toString();
                     et.talk.unfinished = ito["u"].toBool();
                     et.talk.vanished = ito["v"].toBool();
                     et.talk_trigger = ito["trig"].toInt(-1);
-                    lvl.npc.insert(i, et);
+                    lvl.npc.insert(et.npc_index, et);
                 }
             }
 
@@ -1709,18 +1779,34 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                 for(const auto &it : arr)
                 {
                     auto ito = it.toObject();
-                    int i;
                     TranslationData_LEVEL et;
-                    i = ito["i"].toInt(-1);
-                    if(i < 0)
+                    et.level_index = ito["i"].toInt(-1);
+                    et.title_tr_id = ito["tr-id"].toString();
+
+                    if(et.level_index < 0 && et.title_tr_id.isEmpty())
                         continue; // Skip invalid entries
-                    et.level_index = i;
+
+                    if(tr.useTrId)
+                    {
+                        if(isOrigin)
+                        {
+                            Q_ASSERT(et.level_index >= 0);
+                            Q_ASSERT(!et.title_tr_id.isEmpty());
+                            tr.trId_map_wld_levels.insert(et.title_tr_id, et.level_index);
+                        }
+                        else
+                        {
+                            Q_ASSERT(tr_orig.trId_map_wld_levels.contains(et.title_tr_id));
+                            et.level_index = tr_orig.trId_map_wld_levels[et.title_tr_id];
+                        }
+                    }
+
                     et.title.text = ito["tit"].toString();
                     et.title.note = ito["tit-u"].toString();
                     et.title.unfinished = ito["u"].toBool(false);
                     et.title.vanished = ito["v"].toBool(false);
                     et.filename = ito["f"].toString("");
-                    wld.level_titles.insert(i, et);
+                    wld.level_titles.insert(et.level_index, et);
                 }
             }
 
@@ -1744,8 +1830,26 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                     TranslationData_ScriptLine l;
                     auto ito = it.toObject();
                     l.line = ito["i"].toInt(-1);
-                    if(l.line < 0)
+                    l.line_tr_id = ito["tr-id"].toString();
+
+                    if(l.line < 0 && l.line_tr_id.isEmpty())
                         continue; // Skip invalid entries
+
+                    if(tr.useTrId)
+                    {
+                        if(isOrigin)
+                        {
+                            Q_ASSERT(l.line >= 0);
+                            Q_ASSERT(!l.line_tr_id.isEmpty());
+                            tr.trId_map_script_lines.insert(l.line_tr_id, l.line);
+                        }
+                        else
+                        {
+                            Q_ASSERT(tr_orig.trId_map_script_lines.contains(l.line_tr_id));
+                            l.line = tr_orig.trId_map_script_lines[l.line_tr_id];
+                        }
+                    }
+
                     l.source = ito["src"].toString();
 
                     if(isOrigin)

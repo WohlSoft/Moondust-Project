@@ -146,6 +146,12 @@ struct TranslationData
     QMap<QString, TranslationData_Level> levels;
     QMap<QString, TranslationData_World> worlds;
     QMap<QString, TranslationData_Script> scripts;
+
+    // Meta-file only: TrId maps to inten indexes
+    QMap<QString, int> trId_map_lvl_npc;
+    QMap<QString, int> trId_map_lvl_events;
+    QMap<QString, int> trId_map_wld_levels;
+    QMap<QString, int> trId_map_script_lines;
 };
 
 typedef QMap<QString, TranslationData> TranslateProject;
