@@ -1278,6 +1278,7 @@ void TextDataProcessor::updateTranslation(TranslateProject &proj, const QString 
     auto &tr = proj[trName];
     Q_ASSERT(trName != "origin" && trName != "metadata"); // Never call this function over the Meta File
 
+
     // Add missing entries at translation
 
     for(auto it = origin.levels.begin(); it != origin.levels.end(); ++it)
@@ -1417,6 +1418,85 @@ void TextDataProcessor::updateTranslation(TranslateProject &proj, const QString 
             }
         }
     }
+
+
+    // Delete empty entries marked as "vanished"
+
+    for(auto it = tr.levels.begin(); it != tr.levels.end(); ++it)
+    {
+        auto &ls = it.value();
+
+        for(auto nit = ls.npc.begin(); nit != ls.npc.end(); )
+        {
+            const auto &n = nit.value();
+            if(n.talk.vanished && n.talk.text.isEmpty())
+                nit = ls.npc.erase(nit);
+            else
+                ++nit;
+        }
+
+        for(auto eit = ls.events.begin(); eit != ls.events.end(); )
+        {
+            const auto &n = eit.value();
+            if(n.message.vanished && n.message.text.isEmpty())
+                eit = ls.events.erase(eit);
+            else
+                ++eit;
+        }
+    }
+
+    for(auto it = tr.worlds.begin(); it != tr.worlds.end(); ++it)
+    {
+        auto &ls = it.value();
+        for(auto eit = ls.level_titles.begin(); eit != ls.level_titles.end(); )
+        {
+            const auto &n = eit.value();
+            if(n.title.vanished && n.title.text.isEmpty())
+                eit = ls.level_titles.erase(eit);
+            else
+                ++eit;
+        }
+    }
+
+    for(auto it = tr.scripts.begin(); it != tr.scripts.end(); ++it)
+    {
+        auto &ls = it.value();
+
+        for(auto lit = ls.lines.begin(); lit != ls.lines.end(); )
+        {
+            const auto &n = lit.value();
+            if(n.translation.vanished && n.translation.text.isEmpty())
+                lit = ls.lines.erase(lit);
+            else
+                ++lit;
+        }
+    }
+
+
+    // If content doesn't matches, update and clear it
+
+    for(auto it = tr.scripts.begin(); it != tr.scripts.end(); ++it)
+    {
+        auto &ls = it.value();
+        auto &ld = origin.scripts[it.key()];
+
+        for(auto lit = ls.lines.begin(); lit != ls.lines.end(); ++lit)
+        {
+            auto &n = ls.lines[lit.key()];
+            if(n.translation.vanished)
+                continue; // Skip vanished translations
+
+            auto &n_orig = ld.lines[lit.key()];
+
+            if(n.source != n_orig.source)
+            {
+                n.source = n_orig.source;
+                n.translation.text.clear();
+                n.translation.unfinished = true;
+            }
+        }
+    }
+
 
     recountStats(proj, tr, false);
 }
