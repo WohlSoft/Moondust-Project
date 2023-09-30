@@ -61,7 +61,8 @@ class JsonSettingsWidget : public QObject
         void removeElement(const QString &propertyId);
     };
 
-    class JsonListSettingsGroup {
+    class JsonListSettingsGroup
+    {
     public:
         QGroupBox* groupBox;
         QJsonArray children;
@@ -120,8 +121,8 @@ private:
 
     QVariant retrieve_property(const SetupStack &setupTree, QString prop, const QVariant &defaultValue);
 
-    void AddListElement(SetupStack setupTree, QString id);
-    void RemoveListElement(SetupStack setupTree, QString id, QFrame* itemSubGroup);
+    void addListElement(SetupStack setupTree, QString id);
+    void removeListElement(SetupStack setupTree, QString id, QFrame* itemSubGroup);
 
     bool entryHasType(const QString &type);
     void loadLayoutEntries(SetupStack setupTree,
