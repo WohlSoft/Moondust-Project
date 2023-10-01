@@ -200,7 +200,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Generator</source>
-        <translation>连续出现</translation>
+        <translation>生成器</translation>
     </message>
     <message>
         <source>Type:</source>
@@ -371,7 +371,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>Opacity</source>
         <comment>Opacity of locked items (label text)</comment>
-        <translation>透明度</translation>
+        <translation>锁定对象透明度</translation>
     </message>
     <message>
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
@@ -3317,7 +3317,7 @@ Suggested to remove all excess elements.
 Do you want to continue the process?</source>
         <translation>已超出 SMBX64 标准！
 %1
-, SMBX 1.3 引擎可能异常终止！
+，SMBX 1.3 引擎可能异常终止！
 建议移除所有超出部分的对象。
 您要继续吗？</translation>
     </message>
@@ -3544,7 +3544,7 @@ Do you want to continue?</source>
     <name>LvlEventsBox</name>
     <message>
         <source>Classic Events</source>
-        <translation>传统事件</translation>
+        <translation>事件</translation>
     </message>
     <message>
         <source>Events list</source>
@@ -3990,7 +3990,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Generator</source>
-        <translation>连续出现</translation>
+        <translation>生成器</translation>
     </message>
     <message>
         <source>Type:</source>
@@ -4959,7 +4959,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Create the duplicate warp entry with same settings (except for already placed points)</source>
-        <translation>使用当前设置新建传送点（已放置的地点除外）</translation>
+        <translation>使用当前设置创建传送点（已放置的地点除外）</translation>
     </message>
     <message>
         <source>Apply to all</source>
@@ -5086,7 +5086,7 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>Warps and Doors</source>
-        <translation>传送和门</translation>
+        <translation>传送点</translation>
     </message>
     <message>
         <source>Events</source>
@@ -5346,7 +5346,7 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>Restart level after fail</source>
-        <translation>死后重新开始关卡</translation>
+        <translation>通关失败之后重新开始</translation>
     </message>
     <message>
         <source>Select and Move</source>
@@ -6304,7 +6304,7 @@ Please save the file first.</source>
     <message>
         <source>Warps and Doors</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation>传送和门</translation>
+        <translation>传送点</translation>
     </message>
     <message>
         <source>Water</source>
@@ -7203,7 +7203,7 @@ Error description:
     </message>
     <message>
         <source>Restart after fail</source>
-        <translation>死后重新开始当前关卡</translation>
+        <translation>通关失败之后重新开始当前关卡</translation>
     </message>
     <message>
         <source>Total stars</source>
@@ -7345,51 +7345,51 @@ File: %1</source>
         <source>SMBX64 standard isn&apos;t allows to save %1 section
 The maximum number of sections is %2.
 All boundaries and settings of more than 21 sections will be lost.</source>
-        <translation>SMBX64 标准不允许保存 %1 个场景，
+        <translation>在 SMBX64 标准下，不允许保存 %1 个场景。
 场景数量上限为 %2，
-如果你继续保存该格式的文件，
-所有超过 21 的场景设置将会丢失。</translation>
+如果你继续保存为该格式的文件，
+所有超过 21 的场景的内容都将丢失。</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 blocks
 The maximum number of blocks is %2.</source>
-        <translation>SMBX64 标准不允许保存 %1 个砖块。
+        <translation>在 SMBX64 标准下，不允许保存 %1 个砖块。
 砖块数量上限为 %2。</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
 The maximum number of Background Objects is %2.</source>
-        <translation>SMBX64 标准不允许保存 %1 个背景。
+        <translation>在 SMBX64 标准下，不允许保存 %1 个背景。
 背景数量上限为 %2。</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
 The maximum number of NPC&apos;s is %2.</source>
-        <translation>SMBX64 标准不允许保存 %1 个 NPC。
+        <translation>在 SMBX64 标准下，不允许保存 %1 个 NPC。
 NPC 数量上限为 %2。</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Warps
 The maximum number of Warps is %2.</source>
-        <translation>SMBX64 标准不允许保存 %1 个传送点。
+        <translation>在 SMBX64 标准下，不允许保存 %1 个传送点。
 传送点数量上限为 %2。</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
 The maximum number of Water Boxes is %2.</source>
-        <translation>SMBX64 标准不允许保存 %1 个水流区域。
+        <translation>在 SMBX64 标准下，不允许保存 %1 个水流区域。
 水流区域数量上限为 %2。</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Layers
 The maximum number of Layers is %2.</source>
-        <translation>SMBX64 标准不允许保存 %1 个图层。
+        <translation>在 SMBX64 标准下，不允许保存 %1 个图层。
 图层数量上限为 %2。</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Events
 The maximum number of Events is %2.</source>
-        <translation>SMBX64 标准不允许保存 %1 个事件。
+        <translation>在 SMBX64 标准下，不允许保存 %1 个事件。
 事件数量上限为 %2。</translation>
     </message>
     <message>
@@ -7403,31 +7403,31 @@ The maximum number of Events is %2.</source>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
 The maximum number of Tiles is %2.</source>
-        <translation>SMBX64 标准不允许保存 %1 个地形。
+        <translation>在 SMBX64 标准下，不允许保存 %1 个地形。
 地形数量上限为 %2。</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
 The maximum number of Sceneries is %2.</source>
-        <translation>SMBX64 标准不允许保存 %1 个风景。
+        <translation>在 SMBX64 标准下，不允许保存 %1 个风景。
 风景数量上限为 %2。</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Paths
 The maximum number of Paths is %2.</source>
-        <translation>SMBX64 标准不允许保存 %1 个路线。
+        <translation>在 SMBX64 标准下，不允许保存 %1 个路线。
 路线数量上限为 %2。</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Levels
 The maximum number of Levels is %2.</source>
-        <translation>SMBX64 标准不允许保存 %1 个关卡对象。
+        <translation>在 SMBX64 标准下，不允许保存 %1 个关卡对象。
 关卡对象数量上限为 %2。</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
 The maximum number of Music Boxes is %2.</source>
-        <translation>SMBX64 标准不允许保存 %1 个音乐盒。
+        <translation>在 SMBX64 标准下，不允许保存 %1 个音乐盒。
 音乐盒数量上限为 %2。</translation>
     </message>
     <message>
@@ -7691,7 +7691,7 @@ Reason: %1
     </message>
     <message>
         <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
-        <translation>您的关卡不是 SMBX-38A 格式，因此该游戏将自动转换为 SMBX-38A 格式，且不再兼容经典版的 SMBX。您要接受风险并继续吗？</translation>
+        <translation>您的关卡不是 SMBX-38A 格式，因此该游戏将自动转换为 SMBX-38A 格式，且不再与原版 SMBX 兼容。您要接受风险并继续吗？</translation>
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid file.</source>
@@ -7703,7 +7703,7 @@ Reason: %1
     </message>
     <message>
         <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
-        <translation>您的大地图不是 SMBX-38A 格式，因此该游戏将自动转换为 SMBX-38A 格式，且不再兼容经典版的 SMBX。您要接受风险并继续吗？</translation>
+        <translation>您的大地图不是 SMBX-38A 格式，因此该游戏将自动转换为 SMBX-38A 格式，且不再与原版 SMBX 兼容。您要接受风险并继续吗？</translation>
     </message>
     <message>
         <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
@@ -9563,7 +9563,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Restart last level after fail</source>
-        <translation>死后重新开始关卡</translation>
+        <translation>通关失败之后重新开始上次关卡</translation>
     </message>
     <message>
         <source>Hub-styled world (without world map)</source>
