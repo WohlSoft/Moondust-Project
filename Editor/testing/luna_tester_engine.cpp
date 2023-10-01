@@ -872,7 +872,7 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
         if(!obj["error"].isNull())
             lunaErrorMsg(m_w, obj);
         break;
-    
+
     case PendC_SendPlacingItem:
         LogDebug("LunaTester: Sent editor item to game!");
         if(!obj["error"].isNull())
