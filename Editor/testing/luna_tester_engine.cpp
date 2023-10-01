@@ -851,7 +851,7 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
 #endif // _WIN32
         }
         break;
-    
+
     case PendC_SendLevel:
         LogDebug("LunaTester: <- Level data has been sent!");
         if(!obj["error"].isNull())
