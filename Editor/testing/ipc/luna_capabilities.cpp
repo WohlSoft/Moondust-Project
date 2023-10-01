@@ -128,7 +128,7 @@ static void fillCapsBeta4(LunaLuaCapabilities &caps)
     caps.features << "LVLX";
     caps.ipcCommands << "echo" << "testLevel" <<
                         "getWindowHandle" << "resetCheckPoints" <<
-                        "getSupportedFeatures";
+                        "getSupportedFeatures" << "sendItemPlacing";
     caps.args << "patch" << "game" << "leveleditor" << "noframeskip" <<
                  "nosound" << "debugger" << "logger" << "newlauncher" <<
                  "console" << "nogl" << "testLevel" << "waitForIPC" <<
