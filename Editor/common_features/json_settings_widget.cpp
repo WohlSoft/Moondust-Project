@@ -123,6 +123,18 @@ void ColorPreview::paintEvent(QPaintEvent *)
 }
 
 
+struct JsonListSettingsGroup
+{
+    QGroupBox* groupBox;
+    QJsonArray children;
+    int size = 0;
+    int maxSize = 0;
+    QPushButton* addButton;
+    QWidget* parent;
+    QString err;
+};
+
+
 QJsonObject JsonSettingsWidget::SetupStack::rectToArray(QVariant r)
 {
     QRect rekt = r.toRect();
@@ -649,7 +661,7 @@ static unsigned int getFlagBoxValue(const QVector<QCheckBox *> &flagBox)
     return value;
 }
 
-void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupTree,
+void JsonSettingsWidget::loadLayoutEntries(SetupStack setupTree,
                                            const QJsonArray &elements,
                                            QWidget *target,
                                            const QString &err,
@@ -1877,7 +1889,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             if(!children.isEmpty())
             {
                 // Pre-fetch the entries that are currently in the list, so they can be initialized at the bottom
-                QJsonObject entries = retrieve_property(setupTree, name, QVariant()).toJsonObject();
+                /*QJsonObject entries =*/ retrieve_property(setupTree, name, QVariant()).toJsonObject();
 
                 // Initialize the item tree
                 QGroupBox *subGroup = new QGroupBox(target);
@@ -1923,12 +1935,12 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 setupTree.m_setupTree.push(name);
 
                 // Create the settings group object to organize data
-                JsonListSettingsGroup settingsGroup = JsonListSettingsGroup();
-                settingsGroup.groupBox = itemGroup;
-                settingsGroup.children = children;
-                settingsGroup.maxSize = o["max-items"].toInt(0);
-                settingsGroup.addButton = addButton;
-                m_instantiatedQJsonLists.insert(id, settingsGroup);
+                QSharedPointer<JsonListSettingsGroup> settingsGroup(new JsonListSettingsGroup);
+                settingsGroup->groupBox = itemGroup;
+                settingsGroup->children = children;
+                settingsGroup->maxSize = o["max-items"].toInt(0);
+                settingsGroup->addButton = addButton;
+                m_instantiatedQJsonLists.insert(id, std::move(settingsGroup));
 
                 // Keep track of the number of items
                 m_setupStack.setValue(setupTree.getPropertyId("count"), 0);
@@ -1964,10 +1976,10 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
     }
 }
 
-void JsonSettingsWidget::addListElement(SetupStack setupTree, QString id)
+void JsonSettingsWidget::addListElement(SetupStack setupTree, const QString &id)
 {
     // Initialize values
-    auto settingsGroup = m_instantiatedQJsonLists[id];
+    auto &settingsGroup = *m_instantiatedQJsonLists[id];
     int idx = settingsGroup.size;
     settingsGroup.size++;
     const QString id2 = setupTree.getPropertyId(QString::number(idx));
@@ -1991,9 +2003,6 @@ void JsonSettingsWidget::addListElement(SetupStack setupTree, QString id)
     remButton->setText("-");
     remButton->setToolTip(tr("Remove item", "The \"-\" button to remove an extra settings list element"));
 
-    // Update settingsGroup
-    m_instantiatedQJsonLists[id] = settingsGroup;
-
     // Bind the button event
     QObject::connect(remButton, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked),
     [setupTree, itemSubGroup, id, this](bool)
@@ -2011,32 +2020,32 @@ void JsonSettingsWidget::addListElement(SetupStack setupTree, QString id)
     setupTree.m_setupTree.pop();
 }
 
-void JsonSettingsWidget::removeListElement(SetupStack setupTree, QString id, QFrame* itemSubGroup)
+void JsonSettingsWidget::removeListElement(SetupStack setupTree, const QString &id, QFrame* itemSubGroup)
 {
     // Initialize values
-    auto settingsGroup = m_instantiatedQJsonLists[id];
+    auto &settingsGroup = *m_instantiatedQJsonLists[id];
     auto items = settingsGroup.groupBox->children();
     int num = items.indexOf(itemSubGroup) - 1;
-    m_instantiatedQJsonLists[id].size--;
+    settingsGroup.size--;
     int count = items.count() - 1;
 
-    if(settingsGroup.maxSize > 0 && m_instantiatedQJsonLists[id].size < settingsGroup.maxSize)
+    if(settingsGroup.maxSize > 0 && settingsGroup.size < settingsGroup.maxSize)
         settingsGroup.addButton->setEnabled(true);
 
     // Remove the data
     m_setupStack.removeElement(setupTree.getPropertyId(QString::number(num)));
     setupTree.m_setupCache = m_setupStack.m_setupCache;
-    m_setupStack.setValue(setupTree.getPropertyId("count"), m_instantiatedQJsonLists[id].size);
+    m_setupStack.setValue(setupTree.getPropertyId("count"), settingsGroup.size);
 
     // Remove the last widget
-    QWidget* last = m_instantiatedQJsonLists[id].groupBox->findChild<QWidget*>(setupTree.getPropertyId(QString::number(count-1)), Qt::FindChildrenRecursively);
-    m_instantiatedQJsonLists[id].groupBox->layout()->removeWidget(last->parentWidget());
+    QWidget* last = settingsGroup.groupBox->findChild<QWidget*>(setupTree.getPropertyId(QString::number(count-1)), Qt::FindChildrenRecursively);
+    settingsGroup.groupBox->layout()->removeWidget(last->parentWidget());
     last->parentWidget()->deleteLater();
 
     // Shift the data one over
     for(int i = num; i < count - 1; i++)
     {
-        QWidget* wid = m_instantiatedQJsonLists[id].groupBox->findChild<QWidget*>(setupTree.getPropertyId(QString::number(i)), Qt::FindChildrenRecursively);
+        QWidget* wid = settingsGroup.groupBox->findChild<QWidget*>(setupTree.getPropertyId(QString::number(i)), Qt::FindChildrenRecursively);
 
         setupTree.m_setupTree.push(QString::number(i));
         loadLayoutEntries(setupTree, settingsGroup.children, wid, settingsGroup.err, settingsGroup.parent);
