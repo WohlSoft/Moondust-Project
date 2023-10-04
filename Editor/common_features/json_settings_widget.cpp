@@ -1903,21 +1903,22 @@ void JsonSettingsWidget::loadLayoutEntries(SetupStack setupTree,
 
                 QPushButton *addButton = new QPushButton(subGroup);
                 addButton->setText("+");
-                addButton->setToolTip("Add new item");
+                addButton->setToolTip(tr("Add new item"));
                 addButton->setObjectName("Add item");
 
                 bool collapsible = o["collapse"].toBool(false);
+                QPushButton *collapseButton = nullptr;
 
                 if(collapsible)
                 {
-                    QPushButton *collapseButton = new QPushButton(target);
+                    collapseButton = new QPushButton(target);
                     if(o["default-collapsed"].toBool(false))
                     {
                         itemGroup->setVisible(false);
-                        collapseButton->setText("Expand list");
+                        collapseButton->setText(tr("Expand list"));
                     }
                     else
-                        collapseButton->setText("Collapse list");
+                        collapseButton->setText(tr("Collapse list"));
 
                     subGroupLayout->addWidget(collapseButton);
                     row++;
@@ -1926,7 +1927,7 @@ void JsonSettingsWidget::loadLayoutEntries(SetupStack setupTree,
                                     [itemGroup, collapseButton](bool)
                                     {
                                         itemGroup->setVisible(!itemGroup->isVisible());
-                                        collapseButton->setText((itemGroup->isVisible() ? "Collapse list" : "Expand list"));
+                                        collapseButton->setText((itemGroup->isVisible() ? tr("Collapse list") : tr("Expand list")));
                                     });
                 }
 
@@ -1947,8 +1948,10 @@ void JsonSettingsWidget::loadLayoutEntries(SetupStack setupTree,
 
                 // Connect the button
                 QObject::connect(addButton, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked),
-                [setupTree, id, this](bool)
+                [setupTree, collapseButton, itemGroup, id, this](bool)
                 {
+                    if(collapseButton && !itemGroup->isVisible())
+                        collapseButton->click();
                     addListElement(setupTree, id);
                     emit settingsChanged();
                 });
