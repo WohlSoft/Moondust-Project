@@ -6,7 +6,6 @@
 #include <QWidget>
 #include <QLabel>
 #include <QJsonDocument>
-#include <QSharedPointer>
 
 class ColorPreview : public QWidget
 {
@@ -30,7 +29,6 @@ signals:
     void sizeChanged(QSize newSize);
 };
 
-struct JsonListSettingsGroup;
 class DataConfig;
 class JsonSettingsWidget : public QObject
 {
@@ -57,7 +55,6 @@ class JsonSettingsWidget : public QObject
 
         void clear();
         void setValue(const QString &propertyId, QVariant value);
-        void removeElement(const QString &propertyId);
     };
 
 public:
@@ -102,20 +99,15 @@ private:
     QString m_directoryEpisode;
     QString m_directoryData;
 
-    QMap<QString, QSharedPointer<JsonListSettingsGroup>> m_instantiatedQJsonLists;
-
     DataConfig *m_configPack = nullptr;
 
     QVariant retrieve_property(const SetupStack &setupTree, QString prop, const QVariant &defaultValue);
-
-    void addListElement(SetupStack setupTree, const QString &id);
-    void removeListElement(SetupStack setupTree, const QString &id, QFrame* itemSubGroup);
 
     bool entryHasType(const QString &type);
     void loadLayoutEntries(SetupStack setupTree,
                       const QJsonArray &elements,
                       QWidget *target,
-                      const QString &err,
+                      QString &err,
                       QWidget *parent = nullptr);
 
     QWidget *loadLayoutDetail(SetupStack &stack,
