@@ -123,6 +123,18 @@ void ColorPreview::paintEvent(QPaintEvent *)
 }
 
 
+struct JsonListSettingsGroup
+{
+    QGroupBox* groupBox;
+    QJsonArray children;
+    int size = 0;
+    int maxSize = 0;
+    QPushButton* addButton;
+    QWidget* parent;
+    QString err;
+};
+
+
 QJsonObject JsonSettingsWidget::SetupStack::rectToArray(QVariant r)
 {
     QRect rekt = r.toRect();
@@ -205,6 +217,7 @@ bool JsonSettingsWidget::SetupStack::loadSetup(const QByteArray &layoutJson, QSt
     }
 
     m_setupCache = QJsonDocument::fromJson(layoutJson, &errCode);
+    QJsonObject o = m_setupCache.object();
     if(errCode.error != QJsonParseError::NoError)
     {
         clear();
@@ -265,6 +278,52 @@ void JsonSettingsWidget::SetupStack::setValue(const QString &propertyId, QVarian
         o[top] = QJsonValue::fromVariant(value);
         break;
     }
+
+    for(int i = stack.size() - 2; i >= 0; i--)
+    {
+        QString &s = stack[i];
+        QJsonObject oo = stack_o.pop();
+        oo[s] = o;
+        o = oo;
+    }
+
+    m_setupCache.setObject(o);
+}
+
+void JsonSettingsWidget::SetupStack::removeElement(const QString &propertyId)
+{
+    QStringList stack = propertyId.split("/");
+    QJsonObject o = m_setupCache.object();
+    QStack<QJsonObject> stack_o;
+    QString top;
+    int index = -1;
+
+    for(int i = 0; i <= stack.size() - 1; i++)
+    {
+        QString &t = stack[i];
+        top = t;
+
+        if(i == stack.size() - 1)
+        {
+            index = t.toInt();
+            break;
+        }
+
+        stack_o.push(o);
+        o = o[t].toObject();
+    }
+
+    if(!o.contains(QString::number(index)))
+        return;
+
+    int i = index;
+    while (o.contains(QString::number(i + 1)))
+    {
+        o[QString::number(i)] = o[QString::number(i + 1)];
+        i = i + 1;
+    }
+
+    o.remove(QString::number(i));
 
     for(int i = stack.size() - 2; i >= 0; i--)
     {
@@ -602,17 +661,15 @@ static unsigned int getFlagBoxValue(const QVector<QCheckBox *> &flagBox)
     return value;
 }
 
-void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupTree,
+void JsonSettingsWidget::loadLayoutEntries(SetupStack setupTree,
                                            const QJsonArray &elements,
                                            QWidget *target,
-                                           QString &err,
+                                           const QString &err,
                                            QWidget *parent)
 {
     int row = 0;
     if(!target->layout())
-    {
         target->setLayout(new QGridLayout(target));
-    }
 
     QGridLayout *l = qobject_cast<QGridLayout *>(target->layout());
     Q_ASSERT(l);
@@ -632,8 +689,10 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
 
         if(control.isEmpty())
             continue;//invalid
+
         if(entryHasType(control) && (type.isEmpty() || type == "invalid"))
             continue;
+
         if(name.isEmpty())
             continue;//invalid
 
@@ -751,7 +810,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             row++;
         }
 
-        // Color box
+        // Colour box
         else if(!control.compare("color", Qt::CaseInsensitive))
         {
             QColor valueDefault = QColor(o["value-default"].toString());
@@ -1006,12 +1065,16 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 if(isGenericFile)
                 {
                     FileListBrowser file(lookAtEpisode ? m_directoryEpisode : m_directoryData, it->text(), target);
+
                     if(!dialogTitle.isEmpty())
                         file.setWindowTitle(dialogTitle);
+
                     if(!dialogDescription.isEmpty())
                         file.setDescription(dialogDescription);
+
                     if(!filters.isEmpty())
                         file.setFilters(filters);
+
                     file.startListBuilder();
                     if(file.exec() == QDialog::Accepted)
                     {
@@ -1023,10 +1086,13 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 else if(isLevel)
                 {
                     LevelFileList levels(lookAtEpisode ? m_directoryEpisode : m_directoryData, it->text(), target);
+
                     if(!dialogTitle.isEmpty())
                         levels.setWindowTitle(dialogTitle);
+
                     if(!dialogDescription.isEmpty())
                         levels.setDescription(dialogDescription);
+
                     if(levels.exec() == QDialog::Accepted)
                     {
                         it->setText(levels.currentFile());
@@ -1037,10 +1103,13 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 else
                 {
                     MusicFileList muz(lookAtEpisode ? m_directoryEpisode : m_directoryData, it->text(), target, isSFX);
+
                     if(!dialogTitle.isEmpty())
                         muz.setWindowTitle(dialogTitle);
+
                     if(!dialogDescription.isEmpty())
                         muz.setDescription(dialogDescription);
+
                     if(muz.exec() == QDialog::Accepted)
                     {
                         it->setText(muz.currentFile());
@@ -1779,6 +1848,30 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 if(!noBranch)
                     setupTree.m_setupTree.push(name);
 
+                bool collapsible = o["collapse"].toBool(false);
+
+                if(collapsible)
+                {
+                    QPushButton *collapseButton = new QPushButton(target);
+                    if(o["default-collapsed"].toBool(false))
+                    {
+                        subGroup->setVisible(false);
+                        collapseButton->setText("Expand " + title);
+                    }
+                    else
+                        collapseButton->setText("Collapse " + title);
+
+                    l->addWidget(collapseButton, row, 0, 1, 2);
+                    row++;
+
+                    QObject::connect(collapseButton, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked),
+                    [subGroup, collapseButton](bool)
+                    {
+                        subGroup->setVisible(!subGroup->isVisible());
+                        collapseButton->setText((subGroup->isVisible() ? "Collapse " : "Expand ") + subGroup->title());
+                    });
+                }
+
                 l->addWidget(subGroup, row, 0, 1, 2);
 
                 loadLayoutEntries(setupTree, children, subGroup, err, parent);
@@ -1788,12 +1881,183 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 row++;
             }
         }
+
+        // List group
+        else if(!control.compare("listGroup", Qt::CaseInsensitive))
+        {
+            QJsonArray children = o["children"].toArray();
+            if(!children.isEmpty())
+            {
+                // Pre-fetch the entries that are currently in the list, so they can be initialized at the bottom
+                /*QJsonObject entries =*/ retrieve_property(setupTree, name, QVariant()).toJsonObject();
+
+                // Initialize the item tree
+                QGroupBox *subGroup = new QGroupBox(target);
+                subGroup->setTitle(title);
+                QLayout* subGroupLayout = new QVBoxLayout(subGroup);
+                subGroupLayout->setSizeConstraint(QBoxLayout::SizeConstraint::SetMaximumSize);
+
+                QGroupBox* itemGroup = new QGroupBox();
+                itemGroup->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
+                new QVBoxLayout(itemGroup);
+
+                QPushButton *addButton = new QPushButton(subGroup);
+                addButton->setText("+");
+                addButton->setToolTip("Add new item");
+                addButton->setObjectName("Add item");
+
+                bool collapsible = o["collapse"].toBool(false);
+
+                if(collapsible)
+                {
+                    QPushButton *collapseButton = new QPushButton(target);
+                    if(o["default-collapsed"].toBool(false))
+                    {
+                        itemGroup->setVisible(false);
+                        collapseButton->setText("Expand list");
+                    }
+                    else
+                        collapseButton->setText("Collapse list");
+
+                    subGroupLayout->addWidget(collapseButton);
+                    row++;
+
+                    QObject::connect(collapseButton, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked),
+                                    [itemGroup, collapseButton](bool)
+                                    {
+                                        itemGroup->setVisible(!itemGroup->isVisible());
+                                        collapseButton->setText((itemGroup->isVisible() ? "Collapse list" : "Expand list"));
+                                    });
+                }
+
+                // Go one layer deeper
+                const QString id = setupTree.getPropertyId(name);
+                setupTree.m_setupTree.push(name);
+
+                // Create the settings group object to organize data
+                QSharedPointer<JsonListSettingsGroup> settingsGroup(new JsonListSettingsGroup);
+                settingsGroup->groupBox = itemGroup;
+                settingsGroup->children = children;
+                settingsGroup->maxSize = o["max-items"].toInt(0);
+                settingsGroup->addButton = addButton;
+                m_instantiatedQJsonLists.insert(id, std::move(settingsGroup));
+
+                // Keep track of the number of items
+                m_setupStack.setValue(setupTree.getPropertyId("count"), 0);
+
+                // Connect the button
+                QObject::connect(addButton, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked),
+                [setupTree, id, this](bool)
+                {
+                    addListElement(setupTree, id);
+                    emit settingsChanged();
+                });
+
+                // Connect the widgets
+                subGroupLayout->addWidget(addButton);
+                subGroupLayout->addWidget(itemGroup);
+                l->addWidget(subGroup, row, 0, 1, 2);
+
+                // Add pre-existing elements
+                int maxNum = retrieve_property(setupTree, "count", 0).toInt();
+
+                for(int i = 0; i < maxNum; i++)
+                    addListElement(setupTree, id);
+
+                // Emit if pre-existing elements exist
+                if(maxNum > 0)
+                    emit settingsChanged();
+
+                // Done
+                setupTree.m_setupTree.pop();
+                row++;
+            }
+        }
     }
 }
 
+void JsonSettingsWidget::addListElement(SetupStack setupTree, const QString &id)
+{
+    // Initialize values
+    auto &settingsGroup = *m_instantiatedQJsonLists[id];
+    int idx = settingsGroup.size;
+    settingsGroup.size++;
+    const QString id2 = setupTree.getPropertyId(QString::number(idx));
+    m_setupStack.setValue(setupTree.getPropertyId("count"), settingsGroup.size);
+
+    if(settingsGroup.maxSize > 0 && settingsGroup.size == settingsGroup.maxSize)
+        settingsGroup.addButton->setEnabled(false);
+
+    // Build the new layout tree
+    QFrame* itemSubGroup = new QFrame();
+    QLayout* itemSubGroupLayout = new QHBoxLayout(itemSubGroup);
+    settingsGroup.groupBox->layout()->addWidget(itemSubGroup);
+
+    QFrame* childSettings = new QFrame();
+    new QGridLayout(childSettings);
+    childSettings->setObjectName(id2);
+
+    QPushButton *remButton = new QPushButton(itemSubGroup);
+    remButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    remButton->setFixedWidth(24);
+    remButton->setText("-");
+    remButton->setToolTip(tr("Remove item", "The \"-\" button to remove an extra settings list element"));
+
+    // Bind the button event
+    QObject::connect(remButton, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked),
+    [setupTree, itemSubGroup, id, this](bool)
+    {
+        removeListElement(setupTree, id, itemSubGroup);
+    });
+
+    // Link the tree items
+    itemSubGroupLayout->addWidget(remButton);
+    itemSubGroupLayout->addWidget(childSettings);
+
+    // Go down one layer, build the values
+    setupTree.m_setupTree.push(QString::number(idx));
+    loadLayoutEntries(setupTree, settingsGroup.children, childSettings, settingsGroup.err, settingsGroup.parent);
+    setupTree.m_setupTree.pop();
+}
+
+void JsonSettingsWidget::removeListElement(SetupStack setupTree, const QString &id, QFrame* itemSubGroup)
+{
+    // Initialize values
+    auto &settingsGroup = *m_instantiatedQJsonLists[id];
+    auto items = settingsGroup.groupBox->children();
+    int num = items.indexOf(itemSubGroup) - 1;
+    settingsGroup.size--;
+    int count = items.count() - 1;
+
+    if(settingsGroup.maxSize > 0 && settingsGroup.size < settingsGroup.maxSize)
+        settingsGroup.addButton->setEnabled(true);
+
+    // Remove the data
+    m_setupStack.removeElement(setupTree.getPropertyId(QString::number(num)));
+    setupTree.m_setupCache = m_setupStack.m_setupCache;
+    m_setupStack.setValue(setupTree.getPropertyId("count"), settingsGroup.size);
+
+    // Remove the last widget
+    QWidget* last = settingsGroup.groupBox->findChild<QWidget*>(setupTree.getPropertyId(QString::number(count-1)), Qt::FindChildrenRecursively);
+    settingsGroup.groupBox->layout()->removeWidget(last->parentWidget());
+    last->parentWidget()->deleteLater();
+
+    // Shift the data one over
+    for(int i = num; i < count - 1; i++)
+    {
+        QWidget* wid = settingsGroup.groupBox->findChild<QWidget*>(setupTree.getPropertyId(QString::number(i)), Qt::FindChildrenRecursively);
+
+        setupTree.m_setupTree.push(QString::number(i));
+        loadLayoutEntries(setupTree, settingsGroup.children, wid, settingsGroup.err, settingsGroup.parent);
+        setupTree.m_setupTree.pop();
+    }
+
+    emit settingsChanged();
+}
+
 QWidget *JsonSettingsWidget::loadLayoutDetail(JsonSettingsWidget::SetupStack &stack,
-                                                                const QByteArray &layoutJson,
-                                                                QString &err)
+                                              const QByteArray &layoutJson,
+                                              QString &err)
 {
     QWidget *widget = nullptr;
     QString style;
@@ -1812,6 +2076,7 @@ QWidget *JsonSettingsWidget::loadLayoutDetail(JsonSettingsWidget::SetupStack &st
 
     style = layoutData["style"].toString();
     title = layoutData["title"].toString();
+
     if(style == "groupbox")
     {
         QGroupBox *gui_w = new QGroupBox(qobject_cast<QWidget*>(parent()));
