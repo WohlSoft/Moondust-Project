@@ -628,6 +628,10 @@ void LunaTesterEngine::sendPlacingBlock(const LevelBlock &block)
 {
     if(!isEngineActive())
         return;
+
+    if(!m_caps.ipcCommands.contains("sendItemPlacing"))
+        return; // This command is not supported by this LunaLua build
+
     LevelData buffer;
     FileFormats::CreateLevelData(buffer);
     buffer.blocks.push_back(block);
@@ -642,6 +646,10 @@ void LunaTesterEngine::sendPlacingNPC(const LevelNPC &npc)
 {
     if(!isEngineActive())
         return;
+
+    if(!m_caps.ipcCommands.contains("sendItemPlacing"))
+        return; // This command is not supported by this LunaLua build
+
     LevelData buffer;
     FileFormats::CreateLevelData(buffer);
     buffer.npc.push_back(npc);
@@ -656,6 +664,10 @@ void LunaTesterEngine::sendPlacingBGO(const LevelBGO &bgo)
 {
     if(!isEngineActive())
         return;
+
+    if(!m_caps.ipcCommands.contains("sendItemPlacing"))
+        return; // This command is not supported by this LunaLua build
+
     LevelData buffer;
     FileFormats::CreateLevelData(buffer);
     buffer.bgo.push_back(bgo);
@@ -673,6 +685,10 @@ bool LunaTesterEngine::sendItemPlacing(const QString &rawData, PendingCmd ipcPen
     
     if(!isEngineActive())
         return false;
+
+    if(!m_caps.ipcCommands.contains("sendItemPlacing"))
+        return false; // This command is not supported by this LunaLua build
+
     QJsonDocument jsonOut;
     QJsonObject jsonObj;
     jsonObj["jsonrpc"]  = "2.0";
