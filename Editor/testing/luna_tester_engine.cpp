@@ -64,6 +64,7 @@
 #include <common_features/logger.h>
 #include <dev_console/devconsole.h>
 #include <main_window/global_settings.h>
+#include <networking/engine_intproc.h>
 
 #include "qfile_dialogs_default_options.hpp"
 
@@ -230,6 +231,13 @@ void LunaTesterEngine::init()
                      this, &LunaTesterEngine::gameReadyReadStandardError);
     QObject::connect(&m_lunaGameIPC, &QProcess::readyReadStandardOutput,
                      this, &LunaTesterEngine::gameReadyReadStandardOutput);
+                     
+    QObject::connect(&g_intEngine, &IntEngineSignals::sendPlacingBlock,
+                     this, &LunaTesterEngine::sendPlacingBlock);
+    QObject::connect(&g_intEngine, &IntEngineSignals::sendPlacingNPC,
+                     this, &LunaTesterEngine::sendPlacingNPC);
+    QObject::connect(&g_intEngine, &IntEngineSignals::sendPlacingBGO,
+                     this, &LunaTesterEngine::sendPlacingBGO);
 
     QObject::connect(this, &LunaTesterEngine::testStarted,
                      m_w, &MainWindow::stopMusicForTesting);
@@ -616,6 +624,75 @@ void LunaTesterEngine::gameReadyReadStandardOutput()
     }
 }
 
+void LunaTesterEngine::sendPlacingBlock(const LevelBlock &block)
+{
+    if(!isEngineActive())
+        return;
+    LevelData buffer;
+    FileFormats::CreateLevelData(buffer);
+    buffer.blocks.push_back(block);
+    buffer.layers.clear();
+    buffer.events.clear();
+    QString encoded;
+    if(FileFormats::WriteExtendedLvlFileRaw(buffer, encoded))
+        sendItemPlacing(encoded, PendC_SendPlacingItem);
+}
+
+void LunaTesterEngine::sendPlacingNPC(const LevelNPC &npc)
+{
+    if(!isEngineActive())
+        return;
+    LevelData buffer;
+    FileFormats::CreateLevelData(buffer);
+    buffer.npc.push_back(npc);
+    buffer.layers.clear();
+    buffer.events.clear();
+    QString encoded;
+    if(FileFormats::WriteExtendedLvlFileRaw(buffer, encoded))
+        sendItemPlacing(encoded, PendC_SendPlacingItem);
+}
+
+void LunaTesterEngine::sendPlacingBGO(const LevelBGO &bgo)
+{
+    if(!isEngineActive())
+        return;
+    LevelData buffer;
+    FileFormats::CreateLevelData(buffer);
+    buffer.bgo.push_back(bgo);
+    buffer.layers.clear();
+    buffer.events.clear();
+    QString encoded;
+    if(FileFormats::WriteExtendedLvlFileRaw(buffer, encoded))
+        sendItemPlacing(encoded, PendC_SendPlacingItem);
+}
+
+bool LunaTesterEngine::sendItemPlacing(const QString &rawData, PendingCmd ipcPendCmd)
+{
+    //{"jsonrpc": "2.0", "method": "sendItemPlacing", "params":
+    //   {"sendItemPlacing": <RAW ITEM DATA> }}
+    
+    if(!isEngineActive())
+        return false;
+    QJsonDocument jsonOut;
+    QJsonObject jsonObj;
+    jsonObj["jsonrpc"]  = "2.0";
+    jsonObj["method"]   = "sendItemPlacing";
+    QJsonObject JSONparams;
+    JSONparams["sendItemPlacing"] = rawData;
+    jsonObj["params"] = JSONparams;
+    jsonObj["id"] = static_cast<int>(ipcPendCmd);
+    jsonOut.setObject(jsonObj);
+    
+    LogDebug("ENGINE: Place item command: " + rawData);
+    
+    if (writeToIPC(jsonOut))
+    {
+        m_pendingCommands += ipcPendCmd;
+        return true;
+    }
+    return false;
+}
+
 bool LunaTesterEngine::sendSimpleCommand(const QString &cmd, PendingCmd ipcPendCmd)
 {
     QJsonDocument jsonOut;
@@ -792,6 +869,12 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
 
     case PendC_Quit:
         LogDebug("LunaTester: Got a Quit feedback");
+        if(!obj["error"].isNull())
+            lunaErrorMsg(m_w, obj);
+        break;
+
+    case PendC_SendPlacingItem:
+        LogDebug("LunaTester: Sent editor item to game!");
         if(!obj["error"].isNull())
             lunaErrorMsg(m_w, obj);
         break;
