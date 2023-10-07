@@ -49,7 +49,35 @@ static QString s_getExecRawOutput(const QString &exec, const QStringList &args)
     return ret;
 }
 
-static void fillCapsLegacy(TheXTechCapabilities &caps)
+static void fillCapsNoIPC(TheXTechCapabilities &caps)
+{
+    caps.type = "Legacy No-IPC build";
+    caps.version = "legacy-no-ipc";
+
+    caps.ipcProtocols << "no-ipc" << "--END--";
+    caps.arguments << "frameskip"
+                   << "no-sound"
+                   << "never-pause"
+                   << "render"
+                   << "leveltest"
+                   << "num-players"
+                   << "battle"
+                   << "player1"
+                   << "player2"
+                   << "god-mode"
+                   << "grab-all"
+                   << "show-fps"
+                   << "max-fps"
+                   << "levelpath"
+                   << "--END--";
+
+    caps.renders << "sw" << "hw" << "vsync" << "--END--";
+    caps.features << "test-level-file" << "leveltest-arg-required" << "--END--";
+
+    caps.isCompatible = true;
+}
+
+static void fillCapsLegacy(TheXTechCapabilities &caps, const QString &input)
 {
     caps.type = "legacy fallback";
     caps.version = "legacy";
@@ -61,7 +89,6 @@ static void fillCapsLegacy(TheXTechCapabilities &caps)
                    << "no-frameskip"
                    << "no-sound"
                    << "never-pause"
-                   << "bg-input"
                    << "render"
                    << "leveltest"
                    << "num-players"
@@ -72,21 +99,46 @@ static void fillCapsLegacy(TheXTechCapabilities &caps)
                    << "grab-all"
                    << "show-fps"
                    << "max-fps"
-                   << "magic-hand"
-                   << "editor"
                    << "interprocessing"
-                   << "compat-level"
-                   << "speed-run-mode"
-                   << "speed-run-semitransparent"
-                   << "speed-run-blink-mode"
-                   << "show-controls"
-                   << "show-battery-status"
-                   << "verbose"
-                   << "levelpath"
-                   << "--END--";
+                   << "levelpath";
+
+    if(input.contains("--bg-input"))
+        caps.arguments << "bg-input";
+
+    if(input.contains("--magic-hand"))
+        caps.arguments << "magic-hand";
+
+    if(input.contains("--editor"))
+    {
+        caps.arguments << "editor";
+        caps.features << "stars-number" << "editor";
+    }
+
+    if(input.contains("--compat-level"))
+        caps.arguments << "compat-level";
+
+    if(input.contains("--speed-run-mode"))
+        caps.arguments << "speed-run-mode";
+
+    if(input.contains("--speed-run-semitransparent"))
+        caps.arguments << "speed-run-semitransparent";
+
+    if(input.contains("--speed-run-blink-mode"))
+        caps.arguments << "speed-run-blink-mode";
+
+    if(input.contains("--show-controls"))
+        caps.arguments << "show-controls";
+
+    if(input.contains("--show-battery-status"))
+        caps.arguments << "show-battery-status";
+
+    if(input.contains("--verbose"))
+        caps.arguments << "verbose";
+
+    caps.arguments << "--END--";
 
     caps.renders << "sw" << "hw" << "vsync" << "--END--";
-    caps.features << "stars-number" << "editor" << "test-level-file" << "test-level-ipc" << "--END--";
+    caps.features << "test-level-file" << "test-level-ipc" << "--END--";
 
     caps.isCompatible = true;
 }
@@ -149,8 +201,10 @@ bool getTheXTechCapabilities(TheXTechCapabilities &caps, const QString &path)
 
     input = s_getExecRawOutput(path, {"--help"});
 
-    if(!input.contains("--capabilities")) // Fill with legacy preset
-        fillCapsLegacy(caps);
+    if(!input.contains("--interprocessing")) // Version of engine is too old
+        fillCapsNoIPC(caps);
+    else if(!input.contains("--capabilities")) // Fill with legacy preset
+        fillCapsLegacy(caps, input);
     else // Parse from JSON
     {
         input = s_getExecRawOutput(path, {"--capabilities"});

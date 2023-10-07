@@ -83,6 +83,9 @@ void TheXTechEngine::updateMenuCapabilities()
 {
     Q_ASSERT(m_w);
 
+    if(m_menuRunLevelTestIPC)
+        m_menuRunLevelTestIPC->setEnabled(m_caps.features.contains("test-level-ipc"));
+
     if(m_menuRunWorldTestFile)
         m_menuRunWorldTestFile->setEnabled(m_caps.features.contains("test-world-file"));
 
@@ -231,7 +234,18 @@ void TheXTechEngine::startBattleTestAction()
             return;
 
         m_battleMode = true;
-        doTestLevelIPC(edit->LvlData);
+        if(!m_caps.ipcProtocols.contains("no-ipc"))
+            doTestLevelIPC(edit->LvlData);
+        else
+        {
+            if(edit->isUntitled())
+            {
+                AbstractRuntimeEngine::rejectUntitled(m_w);
+                return;
+            }
+
+            doTestLevelFile(edit->curFile);
+        }
     }
 }
 
@@ -395,6 +409,7 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
         QObject::connect(RunLevelTest,   &QAction::triggered,
                     this,               &TheXTechEngine::startTestAction,
                     Qt::QueuedConnection);
+        m_menuRunLevelTestIPC = RunLevelTest;
         m_menuItems[menuItemId++] = RunLevelTest;
         QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
         {
@@ -447,13 +462,13 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
         {
             auto *m = m_menuItems[menuItemId - 1];
             if(wld)
-                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
+                m->setEnabled(false);
         });
         QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
         {
             auto *m = m_menuItems[menuItemId - 1];
             if(lvl)
-                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC));
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC | AbstractRuntimeEngine::CAP_LEVEL_FILE));
         });
     }
 
@@ -1157,6 +1172,9 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
 
     m_errorString.clear();
 
+    if((capabilities() & CAP_LEVEL_IPC) == 0)
+        return false;
+
     QString command = getEnginePath();
 
     if(!QFile::exists(command))
@@ -1240,7 +1258,7 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
     if(m_caps.arguments.contains("start-warp") && m_startWarp > 0)
         args << "--start-warp" << QString::number(m_startWarp);
 
-    if(m_speedRunMode >= 0)
+    if(m_speedRunMode >= 0 && m_caps.arguments.contains("speed-run-mode"))
     {
         switch(m_speedRunMode)
         {
@@ -1258,7 +1276,7 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
         if(m_speedRunTimerST)
             args << "--speed-run-semitransparent";
     }
-    else if(m_compatLevel >= 0)
+    else if(m_compatLevel >= 0 && m_caps.arguments.contains("compat-level"))
     {
         switch(m_compatLevel)
         {
@@ -1314,6 +1332,8 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
     QStringList args;
 //    args << "--debug";
 //    args << "--config=\"" + m_w->configs.config_dir + "\"";
+
+    if(m_battleMode) args << "--battle";
 
     SETTINGS_TestSettings t = GlobalSettings::testing;
     args << "--num-players" << QString::number(t.numOfPlayers);
@@ -1371,7 +1391,7 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
     if(m_caps.arguments.contains("start-warp") && m_startWarp > 0)
         args << "--start-warp" << QString::number(m_startWarp);
 
-    if(m_speedRunMode >= 0)
+    if(m_speedRunMode >= 0 && m_caps.arguments.contains("speed-run-mode"))
     {
         switch(m_speedRunMode)
         {
@@ -1386,10 +1406,10 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
             break;
         }
 
-        if(m_speedRunTimerST)
+        if(m_speedRunTimerST && m_caps.arguments.contains("speed-run-semitransparent"))
             args << "--speed-run-semitransparent";
     }
-    else if(m_compatLevel >= 0)
+    else if(m_compatLevel >= 0 && m_caps.arguments.contains("compat-level"))
     {
         switch(m_compatLevel)
         {
@@ -1554,7 +1574,7 @@ bool TheXTechEngine::isRunning()
 
 int TheXTechEngine::capabilities()
 {
-    return  CAP_LEVEL_IPC |
+    return  (m_caps.features.contains("test-level-ipc") ? CAP_LEVEL_IPC : 0) |
             CAP_LEVEL_FILE |
             CAP_RUN_GAME |
             CAP_HAS_MENU |
