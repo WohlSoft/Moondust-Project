@@ -43,6 +43,7 @@ class TheXTechEngine : public AbstractRuntimeEngine
     static const size_t m_menuItemsSize = 40;
     //! List of registered menu items
     QAction *m_menuItems[m_menuItemsSize];
+    QAction *m_menuRunLevelTestIPC = nullptr;
     QAction *m_menuRunWorldTestFile = nullptr;
     QAction *m_menuRunWorldTestIPC = nullptr;
 
