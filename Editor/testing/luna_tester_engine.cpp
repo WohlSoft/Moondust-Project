@@ -638,6 +638,7 @@ void LunaTesterEngine::sendPlacingBlock(const LevelBlock &block)
     buffer.layers.clear();
     buffer.events.clear();
     QString encoded;
+
     if(FileFormats::WriteExtendedLvlFileRaw(buffer, encoded))
         sendItemPlacing(encoded, PendC_SendPlacingItem);
 }
@@ -656,6 +657,7 @@ void LunaTesterEngine::sendPlacingNPC(const LevelNPC &npc)
     buffer.layers.clear();
     buffer.events.clear();
     QString encoded;
+
     if(FileFormats::WriteExtendedLvlFileRaw(buffer, encoded))
         sendItemPlacing(encoded, PendC_SendPlacingItem);
 }
@@ -674,6 +676,7 @@ void LunaTesterEngine::sendPlacingBGO(const LevelBGO &bgo)
     buffer.layers.clear();
     buffer.events.clear();
     QString encoded;
+
     if(FileFormats::WriteExtendedLvlFileRaw(buffer, encoded))
         sendItemPlacing(encoded, PendC_SendPlacingItem);
 }
@@ -701,11 +704,12 @@ bool LunaTesterEngine::sendItemPlacing(const QString &rawData, PendingCmd ipcPen
     
     LogDebug("ENGINE: Place item command: " + rawData);
     
-    if (writeToIPC(jsonOut))
+    if(writeToIPC(jsonOut))
     {
         m_pendingCommands += ipcPendCmd;
         return true;
     }
+
     return false;
 }
 
@@ -720,11 +724,13 @@ bool LunaTesterEngine::sendSimpleCommand(const QString &cmd, PendingCmd ipcPendC
     jsonObj["params"] = JSONparams;
     jsonObj["id"] = static_cast<int>(ipcPendCmd);
     jsonOut.setObject(jsonObj);
-    if (writeToIPC(jsonOut))
+
+    if(writeToIPC(jsonOut))
     {
         m_pendingCommands += ipcPendCmd;
         return true;
     }
+
     return false;
 }
 
@@ -749,10 +755,13 @@ static void lunaErrorMsg(QWidget *m_w, QJsonObject &obj)
     int errCode = -1;
     QString errMsg = "<unknown>";
     auto error = obj["error"].toObject();
+
     if(!error["code"].isNull())
         errCode = error["code"].toInt();
+
     if(!error["message"].isNull())
         errMsg = error["message"].toString();
+
     QMessageBox::warning(m_w,
                          "LunaTester",
                          LunaTesterEngine::tr("Error has occured: (Error %1) %2")
@@ -772,13 +781,9 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
         {
             LogDebug("LunaTester: Got a ready confirmation!");
             if(sendLevelData(m_levelTestBuffer))
-            {
                 LogDebug("LunaTester: Sent a level data");
-            }
             else
-            {
                 LogWarning("LunaTester: Fail to send a level data.");
-            }
         }
         else if (call == "closedToBackgroundNotification")
         {
@@ -806,10 +811,8 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
     PendingCmd ipcPendCmd = static_cast<PendingCmd>(obj["id"].toInt(PendC_NONE));
 
     // If kill is pending or unexpected response, don't react to any message exept to log errors
-    if (m_pendingCommands.contains(PendC_Kill) || !m_pendingCommands.contains(ipcPendCmd))
-    {
+    if(m_pendingCommands.contains(PendC_Kill) || !m_pendingCommands.contains(ipcPendCmd))
         ipcPendCmd = PendC_NONE;
-    }
 
     // Mark as no longer pending
     m_pendingCommands -= ipcPendCmd;
@@ -1058,7 +1061,8 @@ void LunaTesterEngine::killProcess()
         }
         else
             LogDebugNC(QString("LunaEngineWorker: No matching PIDs found for %1:").arg(smbxExeName));
-#else // _WIN32
+#else // anything but _WIN32
+
 #   ifdef __APPLE__
         LogDebugNC(QString("LunaEngineWorker: Killing %1 by 'kill'...").arg(smbxExeName));
         QProcess ps;
@@ -1081,15 +1085,18 @@ void LunaTesterEngine::killProcess()
                 pos += psReg.matchedLength();
             }
         }
-#   else
+
+#   else // anything but __APPLE__
         pid_t pid = find_pid(lunaExecPath + smbxExeName);
         LogDebugNC(QString("LunaEngineWorker: Killing %1 by pid %2...")
             .arg(smbxExeName)
             .arg(pid));
+
         if(pid > 0)
             ::kill(pid, SIGKILL);
-#   endif //__APPLE__
-#endif // _WIN32
+#   endif // __APPLE__ else
+
+#endif // _WIN32 else
 
         LogDebugNC(QString("LunaEngineWorker: Killing by QProcess::kill()..."));
         m_lunaGameIPC.kill();
@@ -1120,9 +1127,7 @@ void LunaTesterEngine::killEngine()
         loop.exec();
 
         if(isEngineActive())
-        {
-            killProcess();
-        }
+            killProcess(); // if engine stuck, kill it
     }
     else
     {
@@ -1142,8 +1147,10 @@ void LunaTesterEngine::startTestAction()
         LevelEdit *edit = m_w->activeLvlEditWin();
         if(!edit)
             return;
+
         if(m_killPreviousSession)
             killEngine();
+
         LevelData l = edit->LvlData;
         edit->prepareLevelFile(l);
         doTestLevelIPC(l);
@@ -1343,16 +1350,7 @@ void LunaTesterEngine::chooseExeName()
         killEngine();
     }
 
-    QString cur;
-
-    if(m_customExeName.isEmpty())
-    {
-        cur = ConfStatus::SmbxEXE_Name;
-    }
-    else
-    {
-        cur = m_customExeName;
-    }
+    QString cur = m_customExeName.isEmpty() ? ConfStatus::SmbxEXE_Name : m_customExeName;
 
     bool ok;
     QString en = QInputDialog::getText(m_w,
@@ -1388,10 +1386,11 @@ void LunaTesterEngine::runWineSetup()
     d.setModal(true);
     d.setSetup(m_wineSetup);
     int ret = d.exec();
+
     if(ret == QDialog::Accepted)
         m_wineSetup = d.getSetup();
 }
-#endif
+#endif // _WIN32
 
 
 /*****************************************Private functions*************************************************/
@@ -1405,9 +1404,7 @@ bool LunaTesterEngine::switchToSmbxWindow()
         return true; // this workaround is no more needed
 
     if(sendSimpleCommand("getWindowHandle", PendC_ShowWindow))
-    {
         return true;
-    }
 
     return false;
 }
@@ -1439,7 +1436,6 @@ bool LunaTesterEngine::sendLevelData(LevelData &lvl)
 
     QJsonObject JSONparams;
     QString levelPathOut;
-    QString smbxPath = getEnginePath();
     QString x = (hasLvlxSupport && !lvl.meta.smbx64strict ? "x" : "");
 
     if(isUntitled)
@@ -1505,6 +1501,7 @@ bool LunaTesterEngine::sendLevelData(LevelData &lvl)
         m_pendingCommands += PendC_SendLevel;
         return true;
     }
+
     LogWarning("<- Fail to send level data and testing request into LunaTester!");
     return false;
 }
@@ -1753,11 +1750,7 @@ bool LunaTesterEngine::doTestLevelIPC(const LevelData &d)
         //Attempt to switch SMBX Window
         switchToSmbxWindow();
         //Then send level data to SMBX Engine
-        if(sendLevelData(m_levelTestBuffer))
-        {
-            return true;
-        }
-        return false;
+        return sendLevelData(m_levelTestBuffer);
     }
 
     QString command = execProxy;
