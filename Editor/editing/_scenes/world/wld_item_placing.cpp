@@ -702,18 +702,13 @@ void WldScene::setMessageBoxItem(bool show, QPointF pos, QString text)
         if(!show)
             return;
 
-        QFont font;
-        font.setFamily("Times");
-        font.setWeight(QFont::Black);
-        font.setPointSize(25);
         m_labelBox = new QGraphicsSimpleTextItem(text);
-        m_labelBox->setPen(QPen(QBrush(Qt::black), 2));
-        m_labelBox->setBrush(QBrush(Qt::white));
+        m_labelBox->setPen(GlobalSettings::LvlOpts.labelBoxPen);
+        m_labelBox->setBrush(GlobalSettings::LvlOpts.labelBoxBrush);
         m_labelBox->setBoundingRegionGranularity(1);
         m_labelBox->setZValue(10000);
-        m_labelBox->setFont(font);
+        m_labelBox->setFont(GlobalSettings::LvlOpts.labelBoxFont);
         this->addItem(m_labelBox);
         m_labelBox->setPos(pos);
     }
-
 }

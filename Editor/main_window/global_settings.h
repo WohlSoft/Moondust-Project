@@ -22,6 +22,9 @@
 
 #include <memory>
 #include <QString>
+#include <QFont>
+#include <QBrush>
+#include <QPen>
 #include <QMdiArea>
 
 struct EditingSettings
@@ -41,6 +44,10 @@ struct EditingSettings
     // Auto-saving
     bool autoSave_enable = true;
     int  autoSave_interval = 3; //!< Autosave interval in minutes
+    // Font for the label box during the placing
+    QFont labelBoxFont;
+    QBrush labelBoxBrush;
+    QPen labelBoxPen;
 };
 
 struct SETTINGS_ItemDefaults
