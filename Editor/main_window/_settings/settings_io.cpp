@@ -34,7 +34,7 @@
 #include <mainwindow.h>
 
 static void loadToolboxProps(QSettings &s,
-                             QString keyprefix,
+                             const QString &keyprefix,
                              MWDock_Base *widget,
                              bool defViz,
                              bool forceDefault,
@@ -47,7 +47,7 @@ static void loadToolboxProps(QSettings &s,
 }
 
 static void saveToolboxProps(QSettings &s,
-                             QString keyprefix,
+                             const QString &keyprefix,
                              MWDock_Base *widget)
 {
     QDockWidget *dw = dynamic_cast<QDockWidget *>(widget);
@@ -56,6 +56,49 @@ static void saveToolboxProps(QSettings &s,
     s.setValue(keyprefix + QStringLiteral("-geometry"), dw->saveGeometry());
 }
 
+static void loadFontProps(QSettings &s,
+                          QString keyprefix,
+                          QFont &dst_f,
+                          QBrush &dst_b,
+                          QPen &dst_p,
+                          const QString &def_family,
+                          QFont::Style def_style,
+                          QFont::Weight def_weight,
+                          int def_point_size,
+                          bool def_underline,
+                          bool def_strikeout,
+                          const QBrush &def_brush,
+                          const QPen &def_pen)
+{
+    dst_f.setFamily(s.value(keyprefix + QStringLiteral("-family"), def_family).toString());
+    dst_f.setStyle((QFont::Style)s.value(keyprefix + QStringLiteral("-style"), def_style).toInt());
+    dst_f.setWeight((QFont::Weight)s.value(keyprefix + QStringLiteral("-weight"), def_weight).toInt());
+    dst_f.setPointSize(s.value(keyprefix + QStringLiteral("-size"), def_point_size).toInt());
+    dst_f.setUnderline(s.value(keyprefix + QStringLiteral("-underline"), def_underline).toBool());
+    dst_f.setStrikeOut(s.value(keyprefix + QStringLiteral("-strikeout"), def_strikeout).toBool());
+
+    dst_b.setColor(s.value(keyprefix + QStringLiteral("-colour"), def_brush.color().name(QColor::HexArgb)).toString());
+    dst_p.setColor(s.value(keyprefix + QStringLiteral("-border-colour"), def_pen.color().name(QColor::HexArgb)).toString());
+    dst_p.setWidth(s.value(keyprefix + QStringLiteral("-border-width"), def_pen.width()).toInt());
+}
+
+static void saveFontProps(QSettings &s,
+                          const QString &keyprefix,
+                          const QFont &src_f,
+                          const QBrush &src_b,
+                          const QPen &src_p)
+{
+    s.setValue(keyprefix + QStringLiteral("-family"), src_f.family());
+    s.setValue(keyprefix + QStringLiteral("-style"), (int)src_f.style());
+    s.setValue(keyprefix + QStringLiteral("-weight"), (int)src_f.weight());
+    s.setValue(keyprefix + QStringLiteral("-size"), src_f.pointSize());
+    s.setValue(keyprefix + QStringLiteral("-underline"), src_f.underline());
+    s.setValue(keyprefix + QStringLiteral("-strikeout"), src_f.strikeOut());
+
+    s.setValue(keyprefix + QStringLiteral("-colour"), src_b.color().name(QColor::HexArgb));
+    s.setValue(keyprefix + QStringLiteral("-border-colour"), src_p.color().name(QColor::HexArgb));
+    s.setValue(keyprefix + QStringLiteral("-border-width"), src_p.width());
+}
 
 
 void MainWindow::loadBasicSettings()
@@ -100,6 +143,13 @@ void MainWindow::loadSettings()
         GlobalSettings::LvlOpts.grid_show = settings.value("grid-show", false).toBool();
         GlobalSettings::LvlOpts.camera_grid_show = settings.value("camera-grid-show", false).toBool();
         GlobalSettings::LvlOpts.default_zoom = settings.value("default-zoom", 100).toUInt();
+
+        loadFontProps(settings, "label-box-font",
+                      GlobalSettings::LvlOpts.labelBoxFont,
+                      GlobalSettings::LvlOpts.labelBoxBrush,
+                      GlobalSettings::LvlOpts.labelBoxPen,
+                      "Times", QFont::StyleNormal, QFont::Black, 25, false, false,
+                      Qt::white, QPen(Qt::black, 2));
 
         GlobalSettings::LvlItemDefaults.LockedItemOpacity = settings.value("locked-item-opacity", 0.3).toDouble();
         GlobalSettings::LvlItemDefaults.npc_direction = settings.value("defaults-npc-directuin", -1).toInt();
@@ -315,6 +365,11 @@ void MainWindow::saveSettings()
         settings.setValue("camera-grid-show", GlobalSettings::LvlOpts.camera_grid_show);
         settings.setValue("default-zoom", GlobalSettings::LvlOpts.default_zoom);
         settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
+
+        saveFontProps(settings, "label-box-font",
+                      GlobalSettings::LvlOpts.labelBoxFont,
+                      GlobalSettings::LvlOpts.labelBoxBrush,
+                      GlobalSettings::LvlOpts.labelBoxPen);
 
         settings.setValue("defaults-npc-directuin", GlobalSettings::LvlItemDefaults.npc_direction);
         settings.setValue("defaults-npc-gen-type", GlobalSettings::LvlItemDefaults.npc_generator_type);

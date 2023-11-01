@@ -18,17 +18,27 @@
 
 #include "global_settings.h"
 
-EditingSettings::EditingSettings()
+EditingSettings::EditingSettings() :
+    labelBoxBrush(Qt::white),
+    labelBoxPen(Qt::black, 2)
 {
-    animationEnabled=true;
-    collisionsEnabled=true;
-    grid_snap=true;
-    grid_override=false;
+    animationEnabled = true;
+    collisionsEnabled = true;
+    grid_snap = true;
+    grid_override = false;
     customGrid.setWidth(0);
     customGrid.setHeight(0);
-    grid_show=false;
-    camera_grid_show=false;
-    semiTransparentPaths=false;
+    grid_show = false;
+    camera_grid_show = false;
+    semiTransparentPaths = false;
+
+    labelBoxFont.setFamily("Times");
+    labelBoxFont.setWeight(QFont::Black);
+    labelBoxFont.setPointSize(25);
+
+    labelBoxBrush.setColor(Qt::white);
+    labelBoxPen.setColor(Qt::black);
+    labelBoxPen.setWidth(2);
 }
 
 QString GlobalSettings::locale          = "";
