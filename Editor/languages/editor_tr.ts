@@ -289,22 +289,22 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="705"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Yön</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="717"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Sol</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="724"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>Rastgele</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="731"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağ</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="744"/>
