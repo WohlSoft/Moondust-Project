@@ -432,7 +432,7 @@ configuratiepakketten zijn gevonden!</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_TTL">
         <source>Missing config pack data directory</source>
-        <translation>Ontbrekende configuratiepakket  datamap</translation>
+        <translation>Ontbrekende configuratiepakket datamap</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_MSG">
         <source>Config pack data path not exists:
