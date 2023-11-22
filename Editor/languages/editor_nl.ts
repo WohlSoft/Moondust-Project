@@ -327,7 +327,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="889"/>
         <source>1 - Pipe</source>
-        <translation>1 -  Pijp</translation>
+        <translation>1 - Pijp</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="894"/>
