@@ -1,6 +1,6 @@
 #include "dir_list_ci_qt.h"
 
-#include "../DirManager/dirman.h"
+#include <DirManager/dirman.h>
 #include "strings.h"
 
 

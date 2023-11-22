@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <cstring>
 #include <QDialog>
 #include <QGroupBox>
 #include <QGridLayout>

@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <cstring>
 #include <PGE_File_Formats/lvl_filedata.h>
 #include <common_features/json_settings_widget.h>
 
