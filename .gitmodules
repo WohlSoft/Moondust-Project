@@ -36,3 +36,15 @@
 	path = _Libs/libpng
 	url = https://github.com/WohlSoft/libpng.git
 	branch = moondust
+[submodule "_Libs/DirManager"]
+	path = _Libs/DirManager
+	url = https://github.com/WohlSoft/DirManager.git
+	branch = master
+[submodule "_Libs/IniProcessor"]
+	path = _Libs/IniProcessor
+	url = https://github.com/WohlSoft/IniProcessing.git
+	branch = master
+[submodule "_Libs/FileMapper"]
+	path = _Libs/FileMapper
+	url = https://github.com/WohlSoft/FileMapper.git
+	branch = master

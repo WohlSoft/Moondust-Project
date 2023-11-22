@@ -25,11 +25,11 @@ include(../_common/build_props.cmake)
 include(../_common/executable_build_props.cmake)
 
 include(../_common/tclap/tclap.cmake)
-include(../_common/DirManager/dirman.cmake)
+include(../_Libs/DirManager/dirman.cmake)
 include(../_common/Utils/Utils.cmake)
-include(../_common/FileMapper/FileMapper.cmake)
+include(../_Libs/FileMapper/FileMapper.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
-include(../_common/IniProcessor/IniProcessor.cmake)
+include(../_Libs/IniProcessor/IniProcessor.cmake)
 
 pge_cxx_standard(14)
 
