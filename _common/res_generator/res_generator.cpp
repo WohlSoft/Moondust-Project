@@ -25,9 +25,10 @@
 
 #include <cstdio>
 #include <string>
+#include <cstring>
 #include <vector>
 #include <map>
-#include <ini_processing.h>
+#include <IniProcessor/ini_processing.h>
 #include <utf8main.h>
 
 #ifdef _WIN32

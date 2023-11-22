@@ -43,9 +43,9 @@ include(../_common/static_qt.cmake)
 
 # include shared code modules
 include(../_common/ConfigPackManager/PGE_ConfigPackManager.cmake)
-include(../_common/DirManager/dirman.cmake)
+include(../_Libs/DirManager/dirman.cmake)
 add_definitions(-DINI_PROCESSING_ALLOW_QT_TYPES)
-include(../_common/IniProcessor/IniProcessor.cmake)
+include(../_Libs/IniProcessor/IniProcessor.cmake)
 include(../_common/tclap/tclap.cmake)
 include(../_common/Utils/Utils.cmake)
 include(../_common/Utils/UtilsQt.cmake)

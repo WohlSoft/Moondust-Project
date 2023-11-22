@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <cstring>
 #include <QStringList>
 
 #include <common_features/main_window_ptr.h>
