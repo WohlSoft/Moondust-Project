@@ -9642,11 +9642,11 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>[Copy this description]</source>
-        <translation type="unfinished"></translation>
+        <translation>[复制此描述]</translation>
     </message>
     <message>
         <source>[Copied!]</source>
-        <translation type="unfinished"></translation>
+        <translation>[复制成功！]</translation>
     </message>
 </context>
 <context>
