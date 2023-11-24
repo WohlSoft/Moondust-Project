@@ -67,6 +67,7 @@ void ItemNPC::construct()
 
     m_generatorArrow = nullptr;
     m_randomDirection = nullptr;
+    m_talking = nullptr;
     m_includedNPC = nullptr;
     m_animated = false;
     m_direction = -1;
@@ -89,6 +90,7 @@ ItemNPC::~ItemNPC()
 {
     if(m_includedNPC != nullptr) delete m_includedNPC;
     if(m_randomDirection != nullptr) delete m_randomDirection;
+    if(m_talking != nullptr) delete m_talking;
     if(m_generatorArrow != nullptr) delete m_generatorArrow;
     if(m_grp != nullptr) delete m_grp;
     if(!m_DisableScene) m_scene->unregisterElement(this);
@@ -560,6 +562,9 @@ void ItemNPC::setMetaSignsVisibility(bool visible)
     if(m_randomDirection) // Sign of random
         m_randomDirection->setVisible(visible);
 
+    if(m_talking)
+        m_talking->setVisible(visible);
+
     if(m_data.generator) //Generator NPCs are meta-signs by theme selves
         setVisible(visible);
 }
@@ -574,6 +579,7 @@ void ItemNPC::setFriendly(bool fri)
 void ItemNPC::setMsg(QString message)
 {
     m_data.msg = message;
+    updateTalking();
     arrayApply();//Apply changes into array
 }
 
@@ -617,6 +623,7 @@ void ItemNPC::changeDirection(int dir)
 
     m_direction = dir;
     refreshOffsets();
+    updateTalking();
     update();
 
     arrayApply();
@@ -879,6 +886,30 @@ void ItemNPC::removeFromArray()
     m_scene->m_data->meta.modified = true;
 }
 
+void ItemNPC::updateTalking()
+{
+    if(m_talking)
+    {
+        m_grp->removeFromGroup(m_talking);
+        m_scene->removeItem(m_talking);
+        delete m_talking;
+        m_talking = nullptr;
+    }
+
+    if(!m_data.msg.isEmpty())
+    {
+        m_talking = new QGraphicsPixmapItem;
+        m_talking->setPixmap(QPixmap(":/npc/talking.png"));
+        m_scene->addItem(m_talking);
+        m_talking->setOpacity(qreal(0.5));
+        m_talking->setPos(
+            (m_data.direct < 0 ? this->scenePos().x() : this->scenePos().x() + qreal(m_localProps.setup.width)) - 8,
+            this->scenePos().y() - 8
+        );
+        m_grp->addToGroup(m_talking);
+    }
+}
+
 
 void ItemNPC::returnBack()
 {
@@ -923,7 +954,8 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bo
         return;
     }
 
-    if(!m_scene) return;
+    if(!m_scene)
+        return;
 
     if(mergedSet)
     {
@@ -1024,6 +1056,7 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bo
     setPos(m_data.x, m_data.y);
 
     changeDirection(m_data.direct);
+    updateTalking();
 
     setGenerator(m_data.generator,
                  m_data.generator_direct,

@@ -53,7 +53,38 @@ static bool testCanImport(const QString &fName, const QString &prefix)
            (fName.endsWith(".gif", Qt::CaseInsensitive) ||
             fName.endsWith(".png", Qt::CaseInsensitive) ||
             fName.endsWith(".ini", Qt::CaseInsensitive) ||
-            fName.endsWith(".txt", Qt::CaseInsensitive));
+            fName.endsWith(".txt", Qt::CaseInsensitive) ||
+            fName.endsWith(".lua", Qt::CaseInsensitive));
+}
+
+static void findFilesInScript(const QString &importPath, const QStringList &allFiles, QStringList &outFiles)
+{
+    outFiles.clear();
+
+    // HACKY, LAZILY AND TEMPORARY SOLUTION: just find any filename mentioned in the script or text file explicitly.
+    // This thing does NOT finds any static filename menitoned in the script, but it does NOT builds filenames
+    // based on strings computed by the code
+    for(const QString &tarFile : allFiles)
+    {
+        if(tarFile.endsWith(".lua", Qt::CaseInsensitive) ||
+           tarFile.endsWith(".txt", Qt::CaseInsensitive) ||
+           tarFile.endsWith(".ini", Qt::CaseInsensitive))
+        {
+            QFile x(importPath + tarFile);
+
+            if(x.open(QIODevice::ReadOnly | QIODevice::Text))
+            {
+                QString content = QString::fromUtf8(x.readAll());
+                x.close();
+
+                for(const QString &subFile : allFiles)
+                {
+                    if(content.contains(subFile, Qt::CaseInsensitive))
+                        outFiles << subFile;
+                }
+            }
+        }
+    }
 }
 
 bool SmartImporter::attemptFastImport()
@@ -65,40 +96,47 @@ bool SmartImporter::attemptFastImport()
             QMessageBox::warning(parentWid, tr("File not saved"), tr("You need to save the level, so you can import custom graphics!"), QMessageBox::Ok);
             return false;
         }
+
         CustomDirManager uLVL(targetLevelWindow->LvlData.meta.path, targetLevelWindow->LvlData.meta.filename);
         QDir sourceDir(importPath);
         if(!sourceDir.exists())
             return false;
 
         QStringList allFiles = sourceDir.entryList(QDir::Files | QDir::Readable, QDir::Name);
+
+        QStringList extra_referred_files;
+        findFilesInScript(importPath, allFiles, extra_referred_files);
+
         QStringList filteredFiles;
         for(const QString &tarFile : allFiles)
         {
-            if(tarFile.endsWith(".tileset.ini", Qt::CaseInsensitive))
+            if(extra_referred_files.contains(tarFile)) // Any file mentioned in lua/txt/ini file
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "block-"))
+            else if(tarFile.endsWith(".tileset.ini", Qt::CaseInsensitive))
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "background-"))
+            else if(testCanImport(tarFile, "block-"))
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "background2-"))
+            else if(testCanImport(tarFile, "background-"))
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "npc-"))
+            else if(testCanImport(tarFile, "background2-"))
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "effect-"))
+            else if(testCanImport(tarFile, "npc-"))
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "yoshib-"))
+            else if(testCanImport(tarFile, "effect-"))
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "yoshit-"))
+            else if(testCanImport(tarFile, "yoshib-"))
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "mario-"))
+            else if(testCanImport(tarFile, "yoshit-"))
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "luigi-"))
+            else if(testCanImport(tarFile, "mario-"))
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "peach-"))
+            else if(testCanImport(tarFile, "luigi-"))
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "toat-"))
+            else if(testCanImport(tarFile, "peach-"))
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "link-"))
+            else if(testCanImport(tarFile, "toat-"))
+                filteredFiles << importPath + tarFile;
+            else if(testCanImport(tarFile, "link-"))
                 filteredFiles << importPath + tarFile;
         }
 
@@ -120,19 +158,25 @@ bool SmartImporter::attemptFastImport()
             return false;
 
         QStringList allFiles = sourceDir.entryList(QDir::Files | QDir::Readable, QDir::Name);
+
+        QStringList extra_referred_files;
+        findFilesInScript(importPath, allFiles, extra_referred_files);
+
         QStringList filteredFiles;
         for(const QString &tarFile : allFiles)
         {
             //Also import global used custom level data
-            if(testCanImport(tarFile, "player-"))
+            if(extra_referred_files.contains(tarFile)) // Any file mentioned in lua/txt/ini file
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "tile-"))
+            else if(testCanImport(tarFile, "player-"))
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "path-"))
+            else if(testCanImport(tarFile, "tile-"))
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "level-"))
+            else if(testCanImport(tarFile, "path-"))
                 filteredFiles << importPath + tarFile;
-            if(testCanImport(tarFile, "scene-"))
+            else if(testCanImport(tarFile, "level-"))
+                filteredFiles << importPath + tarFile;
+            else if(testCanImport(tarFile, "scene-"))
                 filteredFiles << importPath + tarFile;
         }
 
@@ -152,4 +196,3 @@ void SmartImporter::setImportPath(const QString &value)
 {
     importPath = value;
 }
-

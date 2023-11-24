@@ -57,6 +57,8 @@ public:
     void arrayApply();
     void removeFromArray();
 
+    void updateSlippery();
+
     void returnBack();
     QPoint sourcePos();
 
@@ -74,6 +76,7 @@ public:
 private:
     QGraphicsItemGroup *m_grp = nullptr;
     QGraphicsItem       *m_includedNPC = nullptr;
+    QGraphicsItem       *m_slipperyShade = nullptr;
     QGraphicsPixmapItem *m_coinCounter = nullptr;
     QPixmap              m_currentImage;
     bool                 m_sizable = false;

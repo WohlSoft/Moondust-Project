@@ -9642,6 +9642,14 @@ Do you want to save your changes?</translation>
         <source>Architecture: %1</source>
         <translation>Architecture: %1</translation>
     </message>
+    <message>
+        <source>[Copy this description]</source>
+        <translation>[Copy this description]</translation>
+    </message>
+    <message>
+        <source>[Copied!]</source>
+        <translation>[Copied!]</translation>
+    </message>
 </context>
 <context>
     <name>tileset</name>

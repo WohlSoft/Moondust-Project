@@ -148,11 +148,8 @@ p, li { white-space: pre-wrap; }
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
      </property>
-     <property name="openExternalLinks">
-      <bool>true</bool>
-     </property>
      <property name="textInteractionFlags">
-      <set>Qt::LinksAccessibleByMouse</set>
+      <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
      </property>
     </widget>
    </item>

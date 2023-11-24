@@ -9652,6 +9652,14 @@ Do you want to save your changes?</source>
         <source>Architecture: %1</source>
         <translation>Архитектура: %1</translation>
     </message>
+    <message>
+        <source>[Copy this description]</source>
+        <translation>[Скопировать это описание]</translation>
+    </message>
+    <message>
+        <source>[Copied!]</source>
+        <translation>[Скопировано!]</translation>
+    </message>
 </context>
 <context>
     <name>tileset</name>

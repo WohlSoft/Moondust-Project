@@ -37,6 +37,10 @@ beta2
 - Added "Select all items" context menu options at the layers list (Thanks to @Emral)
 - Added an ability to place items with overlapping while holding the CTRL key (Thanks to @Emral)
 - Added the indicator of random direction for NPCs
+- Added an ability to copy the description from the About Dialogue
+- Added the indicator of the presense of the talking message for NPCs
+- Added the indicator of the slippery block
+- Selection frame of triangular blocks will be triangular
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

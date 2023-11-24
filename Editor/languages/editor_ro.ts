@@ -3989,7 +3989,7 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.cpp" line="98"/>
+        <location filename="../editing/edit_level/levelprops.cpp" line="99"/>
         <source>Error in the file %1:
 %2</source>
         <translation type="unfinished"></translation>
@@ -3998,276 +3998,276 @@ Do you want to save your changes?</source>
 <context>
     <name>LunaTesterEngine</name>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="397"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="405"/>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="399"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="407"/>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="405"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="413"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in LunaTester from disk.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="410"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="418"/>
         <source>Reset checkpoints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="411"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="419"/>
         <source>Reset all checkpoint states to initial state.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="415"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="423"/>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="416"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="424"/>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="422"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="430"/>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="424"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="432"/>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="430"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="438"/>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="433"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="441"/>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="437"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="445"/>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="439"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="447"/>
         <source>Select the location of LunaTester.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="443"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="451"/>
         <source>Change the executable name...</source>
         <comment>Open a dialog to choose the name for executable LunaTester will use.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="445"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="453"/>
         <source>Select the name of executable for the LunaTester.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="450"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="458"/>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="452"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="460"/>
         <source>Select a Wine toolchain for use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="457"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="465"/>
         <source>Start Game</source>
         <comment>Launch LunaTester as a normal game.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="459"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="467"/>
         <source>Launch LunaTester as a normal game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="466"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="509"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1226"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="474"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="517"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1332"/>
         <source>LunaTester error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="471"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="479"/>
         <source>Failed to start: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="474"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="482"/>
         <source>Crashed: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="477"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="485"/>
         <source>Timed out: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="480"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="488"/>
         <source>Write error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="483"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="491"/>
         <source>Read error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="487"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="495"/>
         <source>Unknown error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="510"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="518"/>
         <source>Failed to send level into LunaLUA-SMBX!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="665"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="767"/>
         <source>Error has occured: (Error %1) %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="735"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="831"/>
         <source>Checkpoints successfully reseted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1100"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1206"/>
         <source>LunaLUA tester is not started!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1113"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1219"/>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1121"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1227"/>
         <source>LunaTester has been successfully closed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1129"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1235"/>
         <source>LunaTester is not running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1139"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1238"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1279"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1245"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1344"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1376"/>
         <source>LunaTester is still active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1140"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1246"/>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1149"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1255"/>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1156"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1262"/>
         <source>Please select a path to LunaTester:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1165"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1271"/>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1168"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1274"/>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1172"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1278"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1196"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1302"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1209"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1315"/>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1227"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1333"/>
         <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1239"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1345"/>
         <source>To change an executable name, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1260"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1357"/>
         <source>Change the executable name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1261"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1358"/>
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1280"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1377"/>
         <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1482"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1578"/>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1484"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1580"/>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1488"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1584"/>
         <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
@@ -4275,51 +4275,51 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1495"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1591"/>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1532"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1628"/>
         <source>Vanilla SMBX detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1533"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1629"/>
         <source>&quot;%1&quot; not found!
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1546"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1642"/>
         <source>Incompatible LunaDll found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1547"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1643"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1556"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1652"/>
         <source>Incompatible LunaLua</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1557"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1653"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1632"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1728"/>
         <source>SMBX64 limits are exceeded!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1633"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1729"/>
         <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
@@ -4328,17 +4328,17 @@ Do you want to continue the process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1765"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1857"/>
         <source>Impossible to launch an episode because of an invalid world file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1774"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1866"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1809"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1901"/>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7449,36 +7449,36 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="72"/>
+        <location filename="../testing/pge_engine.cpp" line="73"/>
         <source>PGE Engine testing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="75"/>
+        <location filename="../testing/pge_engine.cpp" line="76"/>
         <location filename="../mainwindow.cpp" line="138"/>
         <source>Don&apos;t show this message again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="77"/>
+        <location filename="../testing/pge_engine.cpp" line="78"/>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="131"/>
+        <location filename="../testing/pge_engine.cpp" line="132"/>
         <source>Engine is not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="132"/>
+        <location filename="../testing/pge_engine.cpp" line="133"/>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, choose the engine application yourself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="136"/>
+        <location filename="../testing/pge_engine.cpp" line="137"/>
         <source>Choose the Engine application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8565,30 +8565,30 @@ Error description:
 <context>
     <name>PgeEngine</name>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="253"/>
+        <location filename="../testing/pge_engine.cpp" line="254"/>
         <source>Test level/world</source>
         <comment>Run the testing of current file in PGE Engine via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="258"/>
+        <location filename="../testing/pge_engine.cpp" line="259"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in PGE Engine from disk.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="263"/>
+        <location filename="../testing/pge_engine.cpp" line="264"/>
         <source>Start Game</source>
         <comment>Launch PGE Engine as a normal game</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="284"/>
+        <location filename="../testing/pge_engine.cpp" line="285"/>
         <source>Unsupported yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="285"/>
+        <location filename="../testing/pge_engine.cpp" line="286"/>
         <source>Currently this is not supported for world maps yet. Please use &apos;Test saved level/world&apos; action tu run a world map test.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9512,185 +9512,185 @@ The maximum number of Music Boxes is %2.</source>
 <context>
     <name>SanBaEiRuntimeEngine</name>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="270"/>
+        <location filename="../testing/38a_engine.cpp" line="271"/>
         <source>Test level</source>
         <comment>Run the testing of current file in SMBX-38A via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="275"/>
+        <location filename="../testing/38a_engine.cpp" line="276"/>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in SMBX-38A via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="280"/>
+        <location filename="../testing/38a_engine.cpp" line="281"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in SMBX-38A from disk.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="287"/>
+        <location filename="../testing/38a_engine.cpp" line="288"/>
         <source>Reset checkpoints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="288"/>
+        <location filename="../testing/38a_engine.cpp" line="289"/>
         <source>Reset all checkpoint states to initial state.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="294"/>
+        <location filename="../testing/38a_engine.cpp" line="295"/>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="296"/>
+        <location filename="../testing/38a_engine.cpp" line="297"/>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="302"/>
+        <location filename="../testing/38a_engine.cpp" line="303"/>
         <source>Don&apos;t auto-suspend game</source>
         <comment>Don&apos;t pause game when it&apos;s window is unfocused</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="304"/>
+        <location filename="../testing/38a_engine.cpp" line="305"/>
         <source>Game will always run and it will never suspend while window is unfocused.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="308"/>
+        <location filename="../testing/38a_engine.cpp" line="309"/>
         <source>Change the path to SMBX-38A...</source>
         <comment>Select the path to SMBX-38A executable.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="310"/>
+        <location filename="../testing/38a_engine.cpp" line="311"/>
         <source>Select the path to SMBX-38A executable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="316"/>
+        <location filename="../testing/38a_engine.cpp" line="317"/>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="318"/>
+        <location filename="../testing/38a_engine.cpp" line="319"/>
         <source>Select a Wine toolchain for use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="324"/>
+        <location filename="../testing/38a_engine.cpp" line="325"/>
         <source>Start Game</source>
         <comment>Launch SMBX-38A as a normal game</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="560"/>
+        <location filename="../testing/38a_engine.cpp" line="561"/>
         <source>Checkpoints successfully reseted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="572"/>
+        <location filename="../testing/38a_engine.cpp" line="573"/>
         <source>Path to SMBX-38A</source>
         <comment>Title of dialog</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="579"/>
+        <location filename="../testing/38a_engine.cpp" line="580"/>
         <source>Please select a path to SMBX-38A executable:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="588"/>
+        <location filename="../testing/38a_engine.cpp" line="589"/>
         <source>Use default</source>
         <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="591"/>
+        <location filename="../testing/38a_engine.cpp" line="592"/>
         <source>Custom</source>
         <comment>Using a user selected SMBX-38A path</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="595"/>
+        <location filename="../testing/38a_engine.cpp" line="596"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="619"/>
+        <location filename="../testing/38a_engine.cpp" line="620"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="633"/>
+        <location filename="../testing/38a_engine.cpp" line="634"/>
         <source>Select a path to SMBX-38A executable</source>
         <comment>File dialog title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="659"/>
+        <location filename="../testing/38a_engine.cpp" line="660"/>
         <source>SMBX-38A is still active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="660"/>
+        <location filename="../testing/38a_engine.cpp" line="661"/>
         <source>To change a setup of Wine, you will need to shut down a currently working SMBX-38A. Do you want to shut down the SMBX-38A now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="809"/>
+        <location filename="../testing/38a_engine.cpp" line="810"/>
         <source>Executable not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="810"/>
+        <location filename="../testing/38a_engine.cpp" line="811"/>
         <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="836"/>
+        <location filename="../testing/38a_engine.cpp" line="837"/>
         <source>Impossible to prepare a temp file for a test run.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="898"/>
+        <location filename="../testing/38a_engine.cpp" line="899"/>
         <source>Impossible to launch a level because of an invalid file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="908"/>
+        <location filename="../testing/38a_engine.cpp" line="909"/>
         <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="917"/>
-        <location filename="../testing/38a_engine.cpp" line="982"/>
+        <location filename="../testing/38a_engine.cpp" line="918"/>
+        <location filename="../testing/38a_engine.cpp" line="983"/>
         <source>Caution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="918"/>
+        <location filename="../testing/38a_engine.cpp" line="919"/>
         <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="963"/>
+        <location filename="../testing/38a_engine.cpp" line="964"/>
         <source>Impossible to launch an episode because of an invalid file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="973"/>
+        <location filename="../testing/38a_engine.cpp" line="974"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="983"/>
+        <location filename="../testing/38a_engine.cpp" line="984"/>
         <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9949,313 +9949,313 @@ The maximum number of Music Boxes is %2.</source>
 <context>
     <name>TheXTechEngine</name>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="241"/>
+        <location filename="../testing/thextech_engine.cpp" line="257"/>
         <source>Path to TheXTech</source>
         <comment>Title of dialog</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="248"/>
+        <location filename="../testing/thextech_engine.cpp" line="264"/>
         <source>Please select a path to TheXTech executable:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="257"/>
+        <location filename="../testing/thextech_engine.cpp" line="273"/>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="260"/>
+        <location filename="../testing/thextech_engine.cpp" line="276"/>
         <source>Custom</source>
         <comment>Using a user selected TheXTech path</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="264"/>
+        <location filename="../testing/thextech_engine.cpp" line="280"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="288"/>
+        <location filename="../testing/thextech_engine.cpp" line="304"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="301"/>
+        <location filename="../testing/thextech_engine.cpp" line="317"/>
         <source>Select a path to TheXTech executable</source>
         <comment>File dialog title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="519"/>
+        <location filename="../testing/thextech_engine.cpp" line="536"/>
         <source>Select the entrance warp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="520"/>
+        <location filename="../testing/thextech_engine.cpp" line="537"/>
         <source>Please select the entrance warp number (if you specify 0, the level will start from the usual start point):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="925"/>
+        <location filename="../testing/thextech_engine.cpp" line="942"/>
         <source>Test level</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="930"/>
+        <location filename="../testing/thextech_engine.cpp" line="947"/>
         <source>Test world</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="935"/>
+        <location filename="../testing/thextech_engine.cpp" line="952"/>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="940"/>
+        <location filename="../testing/thextech_engine.cpp" line="957"/>
         <source>Test saved level</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="945"/>
+        <location filename="../testing/thextech_engine.cpp" line="962"/>
         <source>Test saved world</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="951"/>
+        <location filename="../testing/thextech_engine.cpp" line="968"/>
         <source>Choose a start warp...</source>
         <comment>Select the warp number at which the game will be started.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="957"/>
+        <location filename="../testing/thextech_engine.cpp" line="974"/>
         <source>Save slot</source>
         <comment>Select a save slot for playing the world map.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="963"/>
+        <location filename="../testing/thextech_engine.cpp" line="980"/>
         <source>Don&apos;t save</source>
         <comment>Save slot sub-menu item.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="968"/>
+        <location filename="../testing/thextech_engine.cpp" line="985"/>
         <source>Save slot 1</source>
         <comment>Save slot sub-menu item.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="973"/>
+        <location filename="../testing/thextech_engine.cpp" line="990"/>
         <source>Save slot 2</source>
         <comment>Save slot sub-menu item.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="978"/>
+        <location filename="../testing/thextech_engine.cpp" line="995"/>
         <source>Save slot 3</source>
         <comment>Save slot sub-menu item.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="986"/>
+        <location filename="../testing/thextech_engine.cpp" line="1003"/>
         <source>Graphics type</source>
         <comment>Choose a rendering system: software or accelerated</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="991"/>
+        <location filename="../testing/thextech_engine.cpp" line="1008"/>
         <source>Default</source>
         <comment>Automatically selected rendering engine</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="996"/>
+        <location filename="../testing/thextech_engine.cpp" line="1013"/>
         <source>Software</source>
         <comment>Software rendering</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1001"/>
+        <location filename="../testing/thextech_engine.cpp" line="1018"/>
         <source>Accelerated</source>
         <comment>Hardware accelerated rendering</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1006"/>
+        <location filename="../testing/thextech_engine.cpp" line="1023"/>
         <source>Accelerated with V-Sync</source>
         <comment>Hardware accelerated rendering with vertical synchronization support</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1011"/>
+        <location filename="../testing/thextech_engine.cpp" line="1028"/>
         <source>Modern OpenGL</source>
         <comment>Hardware accelerated with modern OpenGL</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1016"/>
+        <location filename="../testing/thextech_engine.cpp" line="1033"/>
         <source>Legacy OpenGL 1.1</source>
         <comment>Hardware accelerated with legacy OpenGL</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1021"/>
+        <location filename="../testing/thextech_engine.cpp" line="1038"/>
         <source>Modern OpenGL ES</source>
         <comment>Hardware accelerated with modern OpenGL ES</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1026"/>
+        <location filename="../testing/thextech_engine.cpp" line="1043"/>
         <source>Legacy OpenGL ES 1.1</source>
         <comment>Hardware accelerated with legacy OpenGL ES</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1032"/>
+        <location filename="../testing/thextech_engine.cpp" line="1049"/>
         <source>Enable V-Sync</source>
         <comment>Enable the vertical synchronisation if available</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1039"/>
+        <location filename="../testing/thextech_engine.cpp" line="1056"/>
         <source>Compatibility level</source>
         <comment>Choose the compatibility level used by the game</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1044"/>
+        <location filename="../testing/thextech_engine.cpp" line="1061"/>
         <source>Default</source>
         <comment>Use preferred compatibility level</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1049"/>
+        <location filename="../testing/thextech_engine.cpp" line="1066"/>
         <source>Modern</source>
         <comment>Prefer all updates and bugfixes enabled</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1054"/>
+        <location filename="../testing/thextech_engine.cpp" line="1071"/>
         <source>X2</source>
         <comment>Disable all bugfixes and updates exceot these made at X2</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1059"/>
+        <location filename="../testing/thextech_engine.cpp" line="1076"/>
         <source>Strict SMBX 1.3</source>
         <comment>Strict compatibility mode, all bugfixes and updates will be disabled to prepresent an old behaviour.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1066"/>
+        <location filename="../testing/thextech_engine.cpp" line="1083"/>
         <source>Speedruner&apos;s stopwatch</source>
         <comment>Speedrun mode menu</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1071"/>
+        <location filename="../testing/thextech_engine.cpp" line="1088"/>
         <source>Disabled</source>
         <comment>Speedrun mode disabled</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1076"/>
+        <location filename="../testing/thextech_engine.cpp" line="1093"/>
         <source>Mode 1 (Modern)</source>
         <comment>Enable speedrun with mode 1 (modern compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1081"/>
+        <location filename="../testing/thextech_engine.cpp" line="1098"/>
         <source>Mode 2 (X2)</source>
         <comment>Enable speedrun with mode 2 (X2 compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1086"/>
+        <location filename="../testing/thextech_engine.cpp" line="1103"/>
         <source>Mode 3 (Strict SMBX 1.3)</source>
         <comment>Enable speedrun with mode 3 (strict SMBX 1.3 compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1091"/>
+        <location filename="../testing/thextech_engine.cpp" line="1108"/>
         <source>Semi-transparent stopwatch</source>
         <comment>Show the speedrun stopwatch with a semi-transparent font.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1098"/>
+        <location filename="../testing/thextech_engine.cpp" line="1115"/>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1100"/>
+        <location filename="../testing/thextech_engine.cpp" line="1117"/>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1106"/>
+        <location filename="../testing/thextech_engine.cpp" line="1123"/>
         <source>Enable max FPS</source>
         <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1108"/>
+        <location filename="../testing/thextech_engine.cpp" line="1125"/>
         <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1112"/>
+        <location filename="../testing/thextech_engine.cpp" line="1129"/>
         <source>Enable grab all</source>
         <comment>Allow player to grab absolutely any NPCs in a game.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1114"/>
+        <location filename="../testing/thextech_engine.cpp" line="1131"/>
         <source>Allow player to grab any NPCs in a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1121"/>
+        <location filename="../testing/thextech_engine.cpp" line="1138"/>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1123"/>
+        <location filename="../testing/thextech_engine.cpp" line="1140"/>
         <source>Select the path to TheXTech executable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1127"/>
+        <location filename="../testing/thextech_engine.cpp" line="1144"/>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1136"/>
+        <location filename="../testing/thextech_engine.cpp" line="1153"/>
         <source>Executable not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1137"/>
+        <location filename="../testing/thextech_engine.cpp" line="1154"/>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1146"/>
+        <location filename="../testing/thextech_engine.cpp" line="1163"/>
         <source>TheXtech start failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1147"/>
+        <location filename="../testing/thextech_engine.cpp" line="1164"/>
         <source>Can&apos;t start TheXTech because of following reason:
 %3.
 
@@ -12112,38 +12112,53 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="83"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="87"/>
         <source>By Wohlstand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="84"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="88"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="178"/>
         <source>Editor, version %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="85"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="89"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="179"/>
         <source>Architecture: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="88"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="92"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="186"/>
         <source>Revision</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="91"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="95"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="189"/>
         <source>Build date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="97"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="101"/>
         <source>Our project site</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="98"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="102"/>
         <source>This program is distributed under %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="103"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="161"/>
+        <source>[Copy this description]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="159"/>
+        <source>[Copied!]</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
