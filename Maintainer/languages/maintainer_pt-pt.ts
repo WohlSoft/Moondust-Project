@@ -936,43 +936,48 @@ Supported formats:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="142"/>
-        <location filename="../Graphics/gifs2png.ui" line="156"/>
+        <location filename="../Graphics/gifs2png.ui" line="149"/>
+        <location filename="../Graphics/gifs2png.ui" line="195"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="149"/>
+        <location filename="../Graphics/gifs2png.ui" line="188"/>
         <source>Remove source images after conversion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="163"/>
+        <location filename="../Graphics/gifs2png.ui" line="216"/>
+        <source>Skip images with non-black-and-white masks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Graphics/gifs2png.ui" line="156"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="170"/>
+        <location filename="../Graphics/gifs2png.ui" line="178"/>
         <source>Process all content of subdirectories</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="180"/>
+        <location filename="../Graphics/gifs2png.ui" line="202"/>
         <source>Path to an input directory with a source data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="187"/>
+        <location filename="../Graphics/gifs2png.ui" line="209"/>
         <source>Path to a configuration package directory to use</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="194"/>
+        <location filename="../Graphics/gifs2png.ui" line="142"/>
         <source>Configuration package path (needed to find missing mask files):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="207"/>
+        <location filename="../Graphics/gifs2png.ui" line="168"/>
         <source>Flags</source>
         <translation type="unfinished"></translation>
     </message>
@@ -983,7 +988,7 @@ Supported formats:
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
-        <location filename="../Graphics/gifs2png.cpp" line="288"/>
+        <location filename="../Graphics/gifs2png.cpp" line="291"/>
         <source>Start</source>
         <translation type="unfinished">Iniciar</translation>
     </message>
@@ -1041,42 +1046,42 @@ Supported formats:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="162"/>
+        <location filename="../Graphics/gifs2png.cpp" line="165"/>
         <source>Select a config pack directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="181"/>
+        <location filename="../Graphics/gifs2png.cpp" line="184"/>
         <source>Select an input directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="204"/>
+        <location filename="../Graphics/gifs2png.cpp" line="207"/>
         <source>Process was exited with a code %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="214"/>
+        <location filename="../Graphics/gifs2png.cpp" line="217"/>
         <source>Process was terminated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="215"/>
+        <location filename="../Graphics/gifs2png.cpp" line="218"/>
         <source>Conversion has been termiated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="220"/>
+        <location filename="../Graphics/gifs2png.cpp" line="223"/>
         <source>Unsuccess exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="221"/>
+        <location filename="../Graphics/gifs2png.cpp" line="224"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="286"/>
+        <location filename="../Graphics/gifs2png.cpp" line="289"/>
         <source>Stop</source>
         <translation type="unfinished">Parar</translation>
     </message>

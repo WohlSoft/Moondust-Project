@@ -948,43 +948,48 @@ Supported formats:
         <translation>레벨 / 에피소드 일괄 변환</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="142"/>
-        <location filename="../Graphics/gifs2png.ui" line="156"/>
+        <location filename="../Graphics/gifs2png.ui" line="149"/>
+        <location filename="../Graphics/gifs2png.ui" line="195"/>
         <source>Browse...</source>
         <translation>검색...</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="149"/>
+        <location filename="../Graphics/gifs2png.ui" line="188"/>
         <source>Remove source images after conversion</source>
         <translation>변환 후 소스 이미지 제거</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="163"/>
+        <location filename="../Graphics/gifs2png.ui" line="216"/>
+        <source>Skip images with non-black-and-white masks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Graphics/gifs2png.ui" line="156"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
         <translation>입력 디렉토리 (예 : 에피소드 루트 또는 레벨 사용자 지정 폴더) :</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="170"/>
+        <location filename="../Graphics/gifs2png.ui" line="178"/>
         <source>Process all content of subdirectories</source>
         <translation>하위 디렉터리의 모든 내용 처리</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="180"/>
+        <location filename="../Graphics/gifs2png.ui" line="202"/>
         <source>Path to an input directory with a source data</source>
         <translation>소스 데이터가있는 입력 디렉토리 경로</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="187"/>
+        <location filename="../Graphics/gifs2png.ui" line="209"/>
         <source>Path to a configuration package directory to use</source>
         <translation>사용할 구성 패키지 디렉토리 경로</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="194"/>
+        <location filename="../Graphics/gifs2png.ui" line="142"/>
         <source>Configuration package path (needed to find missing mask files):</source>
         <translation>구성 패키지 경로 (누락 된 마스크 파일을 찾는 데 필요) :</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="207"/>
+        <location filename="../Graphics/gifs2png.ui" line="168"/>
         <source>Flags</source>
         <translation>플래그</translation>
     </message>
@@ -995,7 +1000,7 @@ Supported formats:
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
-        <location filename="../Graphics/gifs2png.cpp" line="288"/>
+        <location filename="../Graphics/gifs2png.cpp" line="291"/>
         <source>Start</source>
         <translation>스타트</translation>
     </message>
@@ -1053,42 +1058,42 @@ Supported formats:
         <translation>주어진 입력 디렉토리 경로가 존재하지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="162"/>
+        <location filename="../Graphics/gifs2png.cpp" line="165"/>
         <source>Select a config pack directory</source>
         <translation>구성 팩 디렉토리 선택</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="181"/>
+        <location filename="../Graphics/gifs2png.cpp" line="184"/>
         <source>Select an input directory</source>
         <translation>입력 디렉토리 선택</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="204"/>
+        <location filename="../Graphics/gifs2png.cpp" line="207"/>
         <source>Process was exited with a code %1.</source>
         <translation>프로세스가 코드 % 1로 종료되었습니다.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="214"/>
+        <location filename="../Graphics/gifs2png.cpp" line="217"/>
         <source>Process was terminated</source>
         <translation>프로세스가 종료되었습니다</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="215"/>
+        <location filename="../Graphics/gifs2png.cpp" line="218"/>
         <source>Conversion has been termiated.</source>
         <translation>변환이 종료되었습니다.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="220"/>
+        <location filename="../Graphics/gifs2png.cpp" line="223"/>
         <source>Unsuccess exit</source>
         <translation>실패한 종료</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="221"/>
+        <location filename="../Graphics/gifs2png.cpp" line="224"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
         <translation>변환이 완료되었지만 오류가 있습니다. 자세한 정보는 출력 로그를 참조하십시오.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="286"/>
+        <location filename="../Graphics/gifs2png.cpp" line="289"/>
         <source>Stop</source>
         <translation>중지</translation>
     </message>
