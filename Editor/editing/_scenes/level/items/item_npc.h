@@ -58,6 +58,7 @@ public:
 
     void arrayApply();
     void removeFromArray();
+    void updateTalking();
 
     void returnBack();
     QPoint sourcePos();
@@ -88,6 +89,7 @@ private:
     QGraphicsItem          *m_includedNPC = nullptr;
     QGraphicsPixmapItem    *m_generatorArrow = nullptr;
     QGraphicsPixmapItem    *m_randomDirection = nullptr;
+    QGraphicsPixmapItem    *m_talking = nullptr;
 
     QRectF  m_offseted;
     int     m_direction = -1;
