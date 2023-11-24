@@ -39,6 +39,7 @@ beta2
 - Added the indicator of random direction for NPCs
 - Added an ability to copy the description from the About Dialogue
 - Added the indicator of the presense of the talking message for NPCs
+- Added the indicator of the slippery block
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

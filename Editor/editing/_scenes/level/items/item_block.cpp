@@ -61,6 +61,7 @@ void ItemBlock::construct()
     setData(ITEM_TYPE, "Block");
     m_includedNPC = nullptr;
     m_coinCounter = nullptr;
+    m_slipperyShade = nullptr;
     m_grp = nullptr;
 }
 
@@ -69,6 +70,7 @@ ItemBlock::~ItemBlock()
 {
     if(m_includedNPC != nullptr) delete m_includedNPC;
     if(m_coinCounter != nullptr) delete m_coinCounter;
+    if(m_slipperyShade != nullptr) delete m_slipperyShade;
     if(m_grp != nullptr) delete m_grp;
     m_scene->unregisterElement(this);
 }
@@ -527,6 +529,8 @@ void ItemBlock::setMetaSignsVisibility(bool visible)
         m_includedNPC->setVisible(visible);
     if(m_coinCounter)
         m_coinCounter->setVisible(visible);
+    if(m_slipperyShade)
+        m_slipperyShade->setVisible(visible);
 }
 
 void ItemBlock::updateSizableBorder(const QPixmap &srcimg)
@@ -561,6 +565,7 @@ void ItemBlock::updateSizableBorder(const QPixmap &srcimg)
 void ItemBlock::setSlippery(bool slip)
 {
     m_data.slippery = slip;
+    updateSlippery();
     arrayApply(); //Apply changes into array
 }
 
@@ -604,6 +609,7 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
         delete m_includedNPC;
         m_includedNPC = nullptr;
     }
+
     if(m_coinCounter != nullptr)
     {
         m_grp->removeFromGroup(m_coinCounter);
@@ -731,6 +737,73 @@ void ItemBlock::removeFromArray()
     m_scene->m_data->meta.modified = true;
 }
 
+void ItemBlock::updateSlippery()
+{
+    if(m_slipperyShade)
+    {
+        m_grp->removeFromGroup(m_slipperyShade);
+        m_scene->removeItem(m_slipperyShade);
+        delete m_slipperyShade;
+        m_slipperyShade = nullptr;
+    }
+
+    if(m_data.slippery)
+    {
+        QGraphicsRectItem *rectIt = nullptr;
+        QGraphicsPolygonItem *polygonIt = nullptr;
+        QPolygon p;
+        int semiHeight = (m_data.h > 8 ? 8 : m_data.h / 2);
+        int semiWidth = qRound(m_data.w * (semiHeight / qreal(m_data.h)));
+
+        switch(m_localProps.setup.phys_shape)
+        {
+        case BlockSetup::SHAPE_triangle_right_bottom:
+            polygonIt = new QGraphicsPolygonItem;
+            m_slipperyShade = polygonIt;
+            polygonIt->setBrush(QBrush("blue"));
+            polygonIt->setPen(QPen(Qt::NoPen));
+            polygonIt->setOpacity(0.75);
+            p.clear();
+            p.append(QPoint(m_data.w, 0));
+            p.append(QPoint(m_data.w, semiHeight));
+            p.append(QPoint(semiWidth, m_data.h));
+            p.append(QPoint(0, m_data.h));
+            polygonIt->setPolygon(p);
+            break;
+
+        case BlockSetup::SHAPE_triangle_left_bottom:
+            polygonIt = new QGraphicsPolygonItem;
+            m_slipperyShade = polygonIt;
+            polygonIt->setBrush(QBrush("blue"));
+            polygonIt->setPen(QPen(Qt::NoPen));
+            polygonIt->setOpacity(0.75);
+            p.clear();
+            p.append(QPoint(0, 0));
+            p.append(QPoint(0, semiHeight));
+            p.append(QPoint(m_data.w - semiWidth, m_data.h));
+            p.append(QPoint(m_data.w, m_data.h));
+            polygonIt->setPolygon(p);
+            break;
+
+        default:
+            rectIt = new QGraphicsRectItem;
+            m_slipperyShade = rectIt;
+            rectIt->setBrush(QBrush("blue"));
+            rectIt->setPen(QPen(Qt::NoPen));
+            rectIt->setOpacity(0.75);
+            rectIt->setRect(
+                0, 0,
+                m_data.w,
+                semiHeight
+            );
+            break;
+        }
+
+        m_slipperyShade->setPos(this->scenePos());
+        m_grp->addToGroup(m_slipperyShade);
+    }
+}
+
 void ItemBlock::returnBack()
 {
     this->setPos(m_data.x, m_data.y);
@@ -816,6 +889,7 @@ void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animato
         setOpacity(qreal(0.5));
 
     setIncludedNPC(m_data.npc_id, true);
+    updateSlippery();
 
     m_imageSize = QRectF(0, 0, m_data.w, m_data.h);
 
@@ -903,6 +977,7 @@ void ItemBlock::setScenePoint(LvlScene *theScene)
     m_grp = new QGraphicsItemGroup(this);
     m_includedNPC = nullptr;
     m_coinCounter = nullptr;
+    m_slipperyShade = nullptr;
 }
 
 bool ItemBlock::itemTypeIsLocked()
