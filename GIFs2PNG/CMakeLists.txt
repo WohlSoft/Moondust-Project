@@ -39,6 +39,8 @@ set(GIFs2PNG_SRCS)
 list(APPEND GIFs2PNG_SRCS
     gifs2png.cpp
     common_features/config_manager.cpp
+    common_features/config_manager.h
+    version.h
 )
 
 if(WIN32 AND NOT EMSCRIPTEN)
