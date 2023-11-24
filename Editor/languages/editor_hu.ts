@@ -2268,186 +2268,186 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>ItemBlock</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="91"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="93"/>
         <source>Layer: </source>
         <translation type="unfinished">Réteg: </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="94"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="96"/>
         <source>Add to new layer...</source>
         <translation type="unfinished">Hozzáadás új réteghez</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="103"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="105"/>
         <source>[hidden]</source>
         <translation type="unfinished">[rejtett]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="114"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="116"/>
         <source>Invisible</source>
         <translation>Láthatatlan</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="118"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="120"/>
         <source>Slippery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="122"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="124"/>
         <source>Resize</source>
         <translation>Átméretezés</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="126"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="128"/>
         <source>Change included NPC...</source>
         <translation>Tartalmazott NJK megváltoztatása...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="128"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="129"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="130"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="131"/>
         <source>Transform into</source>
         <translation type="unfinished">Átalakítás ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="130"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="132"/>
         <source>Transform all %1 in this section into</source>
         <translation type="unfinished">Átalakítás minden %1 ebben a szekcióban ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="131"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="133"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished">Átakakítás minden %1 ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="132"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="134"/>
         <source>Make message box...</source>
         <translation>Üzenetdoboz létrehozása...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="136"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="138"/>
         <source>Copy preferences</source>
         <translation type="unfinished">Beállítások másolása</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="137"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="139"/>
         <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="138"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="140"/>
         <source>Block-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="139"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="141"/>
         <source>Position: X, Y</source>
         <translation type="unfinished">Hely (X, Y):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="140"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="142"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished">Hely (X, Y, Szélesség, Magasság):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="141"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="143"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished">Hely (Bal, Teteje, Jobb, Alja):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="144"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="146"/>
         <source>Copy</source>
         <translation>Másolás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="145"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="147"/>
         <source>Cut</source>
         <translation>Kivágás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="148"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="150"/>
         <source>Remove</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="149"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="151"/>
         <source>Remove all %1 in this section</source>
         <translation type="unfinished">Minden %1 törlése ebben a szekcióban</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="150"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="152"/>
         <source>Remove all %1</source>
         <translation type="unfinished">Minden %1 törlése</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="153"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="155"/>
         <source>Edit raw user data...</source>
         <translation type="unfinished">Nyers felhasználói adatok szerkesztése...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="156"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="158"/>
         <source>Properties...</source>
         <translation>Tulajdonságok...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="168"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="173"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="182"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="193"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="204"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="170"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="175"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="184"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="195"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="206"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished">Beállítások másolva: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="245"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="449"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="247"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="451"/>
         <source>Margin of section</source>
         <translation type="unfinished">Szekciómargó</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="246"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="450"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="248"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="452"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="321"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="323"/>
         <source>Event name</source>
         <translation>Esemény neve</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="322"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="324"/>
         <source>Please enter the name of event:</source>
         <translation>Írd be az esemény nevét:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="329"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="331"/>
         <source>Please enter the message which will be shown.
 (Max line length is 27 characters)</source>
         <translation>Írd be a megjeleníteni kívánt üzenet szövegét.
 (Egy sorba legfeljebb 27 karakter fér)</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="330"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="332"/>
         <source>Hit message text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="360"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="362"/>
         <source>Event created</source>
         <translation>Esemény létrehozva</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="361"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="363"/>
         <source>Message event created!</source>
         <translation>Üzenetesemény létrehozva!</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="366"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="368"/>
         <source>&apos;Hit&apos; event slot is used</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="367"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="369"/>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2857,178 +2857,178 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>ItemNPC</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="115"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="117"/>
         <source>Layer: </source>
         <translation type="unfinished">Réteg: </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="118"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="120"/>
         <source>Add to new layer...</source>
         <translation type="unfinished">Hozzáadás új réteghez</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="127"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="129"/>
         <source>[hidden]</source>
         <translation type="unfinished">[rejtett]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="143"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="145"/>
         <source>Edit NPC-Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="145"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="147"/>
         <source>New NPC-Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="150"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="152"/>
         <source>Set %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="150"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="152"/>
         <source>Direction</source>
         <translation type="unfinished">Irány</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="151"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="153"/>
         <source>Left</source>
         <translation type="unfinished">Bal</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="155"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="157"/>
         <source>Random</source>
         <translation type="unfinished">Véletlen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="160"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="162"/>
         <source>Right</source>
         <translation type="unfinished">Jobb</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="166"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="168"/>
         <source>Friendly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="170"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="172"/>
         <source>Doesn&apos;t move</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="174"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="176"/>
         <source>Set message...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="177"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="179"/>
         <source>Set as Boss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="182"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="184"/>
         <source>Transform into</source>
         <translation type="unfinished">Átalakítás ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="183"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="185"/>
         <source>Transform all %1 in this section into</source>
         <translation type="unfinished">Átalakítás minden %1 ebben a szekcióban ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="184"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="186"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished">Átakakítás minden %1 ezzé</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="190"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="192"/>
         <source>Change included NPC...</source>
         <translation type="unfinished">Tartalmazott NJK megváltoztatása...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="195"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="197"/>
         <source>Copy preferences</source>
         <translation type="unfinished">Beállítások másolása</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="196"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="198"/>
         <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="197"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="199"/>
         <source>NPC-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="198"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
         <source>Position: X, Y</source>
         <translation type="unfinished">Hely (X, Y):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="199"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="201"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished">Hely (X, Y, Szélesség, Magasság):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="202"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished">Hely (Bal, Teteje, Jobb, Alja):</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="203"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="205"/>
         <source>Copy</source>
         <translation type="unfinished">Másolás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="204"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="206"/>
         <source>Cut</source>
         <translation type="unfinished">Kivágás</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="206"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="208"/>
         <source>Remove</source>
         <translation type="unfinished">Törlés</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="209"/>
         <source>Remove all %1 in this section</source>
         <translation type="unfinished">Minden %1 törlése ebben a szekcióban</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="208"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="210"/>
         <source>Remove all %1</source>
         <translation type="unfinished">Minden %1 törlése</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="210"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="212"/>
         <source>Edit raw user data...</source>
         <translation type="unfinished">Nyers felhasználói adatok szerkesztése...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="214"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="216"/>
         <source>Properties...</source>
         <translation type="unfinished">Tulajdonságok...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="254"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="488"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="256"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="490"/>
         <source>Margin of section</source>
         <translation type="unfinished">Szekciómargó</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="255"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="489"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="257"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="491"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="318"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="323"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="332"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="343"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="354"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="320"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="325"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="334"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="345"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="356"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished">Beállítások másolva: %1</translation>
     </message>
@@ -9797,18 +9797,18 @@ The maximum number of Music Boxes is %2.</source>
 <context>
     <name>SmartImporter</name>
     <message>
-        <location filename="../tools/smart_import/smartimporter.cpp" line="65"/>
-        <location filename="../tools/smart_import/smartimporter.cpp" line="113"/>
+        <location filename="../tools/smart_import/smartimporter.cpp" line="96"/>
+        <location filename="../tools/smart_import/smartimporter.cpp" line="151"/>
         <source>File not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/smart_import/smartimporter.cpp" line="65"/>
+        <location filename="../tools/smart_import/smartimporter.cpp" line="96"/>
         <source>You need to save the level, so you can import custom graphics!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/smart_import/smartimporter.cpp" line="113"/>
+        <location filename="../tools/smart_import/smartimporter.cpp" line="151"/>
         <source>You need to save the world, so you can import custom graphics!</source>
         <translation type="unfinished"></translation>
     </message>

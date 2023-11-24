@@ -145,9 +145,9 @@ void MainWindow::loadSettings()
         GlobalSettings::LvlOpts.default_zoom = settings.value("default-zoom", 100).toUInt();
 
         loadFontProps(settings, "label-box-font",
-                      GlobalSettings::LvlOpts.labelBoxFont,
-                      GlobalSettings::LvlOpts.labelBoxBrush,
-                      GlobalSettings::LvlOpts.labelBoxPen,
+                      *GlobalSettings::LvlOpts.labelBoxFont,
+                      *GlobalSettings::LvlOpts.labelBoxBrush,
+                      *GlobalSettings::LvlOpts.labelBoxPen,
                       "Times", QFont::StyleNormal, QFont::Black, 25, false, false,
                       Qt::white, QPen(Qt::black, 2));
 
@@ -367,9 +367,9 @@ void MainWindow::saveSettings()
         settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
 
         saveFontProps(settings, "label-box-font",
-                      GlobalSettings::LvlOpts.labelBoxFont,
-                      GlobalSettings::LvlOpts.labelBoxBrush,
-                      GlobalSettings::LvlOpts.labelBoxPen);
+                      *GlobalSettings::LvlOpts.labelBoxFont,
+                      *GlobalSettings::LvlOpts.labelBoxBrush,
+                      *GlobalSettings::LvlOpts.labelBoxPen);
 
         settings.setValue("defaults-npc-directuin", GlobalSettings::LvlItemDefaults.npc_direction);
         settings.setValue("defaults-npc-gen-type", GlobalSettings::LvlItemDefaults.npc_generator_type);

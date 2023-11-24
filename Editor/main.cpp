@@ -46,6 +46,7 @@
 #include <common_features/file_keeper.h>
 #include <SingleApplication/singleapplication.h>
 #include <SingleApplication/editor_application.h>
+#include "main_window/global_settings.h"
 
 #include <data_configs/selection_dialog/config_manager.h>
 
@@ -125,6 +126,8 @@ static void pgeEditorQuit()
     QApplication::quit();
     QApplication::exit();
 
+    GlobalSettings::LvlOpts.deInit();
+
     if(app)
     {
         LogDebugNC("Deleting Qt-Application...");
@@ -196,6 +199,8 @@ int main(int argc, char *argv[])
 
     int ret = 0;
     appSingle = new SingleApplication(args);
+
+    GlobalSettings::LvlOpts.postQApplicationInit();
 
     if(!appSingle->shouldContinue())
     {

@@ -145,6 +145,9 @@ void GIFs2PNG::on_doMadJob_clicked()
     if(ui->flagScanSubdirs->isChecked())
         args << "-d";
 
+    if(ui->flagSkipNoBW->isChecked())
+        args << "-n";
+
     if(ui->flagRemoveOld->isChecked())
         args << "-r";
 

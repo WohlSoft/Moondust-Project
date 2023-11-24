@@ -30,6 +30,9 @@
 struct EditingSettings
 {
     EditingSettings();
+    void postQApplicationInit();
+    void deInit();
+
     // Common
     bool animationEnabled = true;
     bool collisionsEnabled = true;
@@ -45,9 +48,9 @@ struct EditingSettings
     bool autoSave_enable = true;
     int  autoSave_interval = 3; //!< Autosave interval in minutes
     // Font for the label box during the placing
-    QFont labelBoxFont;
-    QBrush labelBoxBrush;
-    QPen labelBoxPen;
+    QFont *labelBoxFont = nullptr;
+    QBrush *labelBoxBrush = nullptr;
+    QPen *labelBoxPen = nullptr;
 };
 
 struct SETTINGS_ItemDefaults

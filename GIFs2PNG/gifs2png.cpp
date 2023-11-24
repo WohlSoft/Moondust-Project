@@ -22,6 +22,7 @@
 #include <set>
 #include <algorithm>
 #include <cctype>
+#include <cstring>
 #include <stdio.h>
 
 #include <FileMapper/file_mapper.h>
@@ -74,8 +75,33 @@ static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)
     return img;
 }
 
-static void mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask, FIBITMAP *extMask = nullptr)
+static bool hasNonBW(FIBITMAP *mask)
 {
+    const RGBQUAD black = {0x00, 0x00, 0x00, 0xFF};
+    const RGBQUAD white = {0xFF, 0xFF, 0xFF, 0xFF};
+
+    RGBQUAD colour;
+    int w = FreeImage_GetWidth(mask);
+    int h = FreeImage_GetHeight(mask);
+
+    for(int y = 0; y < h; ++y)
+    {
+        for(int x = 0; x < w; ++x)
+        {
+            FreeImage_GetPixelColor(mask, x, y, &colour);
+            colour.rgbReserved = 0xFF;
+            if(std::memcmp(&colour, &black, sizeof(RGBQUAD)) != 0 &&
+               std::memcmp(&colour, &white, sizeof(RGBQUAD)) != 0)
+                return true;
+        }
+    }
+
+    return false;
+}
+
+static void mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask, bool do_skip_non_bw, bool &out_skip, FIBITMAP *extMask = nullptr)
+{
+    out_skip = false;
     if(!image)
         return;
 
@@ -86,6 +112,14 @@ static void mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask, FI
 
     if(!mask)
         return;//Nothing to do
+
+    if(do_skip_non_bw && hasNonBW(mask))
+    {
+        if(!extMask)
+            FreeImage_Unload(mask);
+        out_skip = true;
+        return;
+    }
 
     bitmask_to_rgba(image, mask);
 
@@ -117,6 +151,8 @@ struct GIFs2PNG_Setup
     bool walkSubDirs        = false;
     //! Skip background2-*.gif images (which are rendering buggy in LunaLua in PNG format, in GIF there are valid)
     bool skipBackground2    = false;
+    //! Skip conversion of images that contains the non-black-and-white mask (that leads a semi-transparent result)
+    bool skipNonBW          = false;
     //! Count of successfully converted images
     unsigned int count_success  = 0;
     //! Count of failed conversions
@@ -191,10 +227,11 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
     }
 
     bool isFail = false;
+    bool doSkip = false;
     bool maskIsExists = Files::fileExists(maskPathIn);
 
     if(maskIsExists) /* When mask exists, use it */
-        mergeBitBltToRGBA(image, maskPathIn);
+        mergeBitBltToRGBA(image, maskPathIn, setup.skipNonBW, doSkip);
     else if(!isBackground2)/* Try to find the PNG as source of the mask, except of backgrounds */
     {
         maskFileIn = Files::changeSuffix(imgFileIn, ".png");
@@ -209,7 +246,7 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
                 std::cout << ".PNG-AS-MASK.";
                 bitmask_get_mask_from_rgba(front, &mask);
                 FreeImage_Unload(front);
-                mergeBitBltToRGBA(image, "", mask);
+                mergeBitBltToRGBA(image, "", setup.skipNonBW, doSkip, mask);
                 FreeImage_Unload(mask);
             }
             else
@@ -217,6 +254,13 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
                 std::cout << ".NO-MASK.";
             }
         }
+    }
+
+    if(doSkip && image)
+    {
+        std::cout << ".NON-BW.";
+        FreeImage_Unload(image);
+        image = nullptr;
     }
 
     if(image)
@@ -238,23 +282,32 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
     }
     else
     {
-        setup.count_success++;
-        if(setup.removeSource)// Detele old files
+        if(doSkip)
         {
-            if(Files::deleteFile(imgPathIn))
-                std::cout << ".F-DEL.";
-            //Try to delete or delete-late mask if it is exist and is not read-only
-            if(maskIsExists && !maskIsReadOnly)
-            {
-                /* Delete-Later if mask file is stored in the root of episode directory.
-                   Mask file is dependent to images are inside the subfolder */
-                if(!setup.listOfFiles && setup.walkSubDirs && (setup.pathIn == Files::dirname(maskPathIn)))
-                    setup.deleteLater.insert(maskPathIn);
-                else if(Files::deleteFile(maskPathIn)) //Or just delete the mask file
-                    std::cout << ".M-DEL.";
-            }
+            setup.count_skipped++;
+            std::cout << "...SKIP!\n";
         }
-        std::cout << "...done\n";
+        else
+        {
+            setup.count_success++;
+            if(setup.removeSource)// Detele old files
+            {
+                if(Files::deleteFile(imgPathIn))
+                    std::cout << ".F-DEL.";
+                //Try to delete or delete-late mask if it is exist and is not read-only
+                if(maskIsExists && !maskIsReadOnly)
+                {
+                    /* Delete-Later if mask file is stored in the root of episode directory.
+                       Mask file is dependent to images are inside the subfolder */
+                    if(!setup.listOfFiles && setup.walkSubDirs && (setup.pathIn == Files::dirname(maskPathIn)))
+                        setup.deleteLater.insert(maskPathIn);
+                    else if(Files::deleteFile(maskPathIn)) //Or just delete the mask file
+                        std::cout << ".M-DEL.";
+                }
+            }
+
+            std::cout << "...done\n";
+        }
     }
 
     std::cout.flush();
@@ -283,6 +336,7 @@ int main(int argc, char *argv[])
 
         TCLAP::SwitchArg switchRemove("r", "remove", "Remove source images after a succesful conversion", false);
         TCLAP::SwitchArg switchSkipBG("b", "ingnore-bg", "Skip all \"background2-*.gif\" sprites", false);
+        TCLAP::SwitchArg switchSkipNonBW("n", "skip-non-bw", "Skip all images with non-black-and-white masks", false);
         TCLAP::SwitchArg switchDigRecursive("d", "dig-recursive", "Look for images in subdirectories", false);
         TCLAP::SwitchArg switchDigRecursiveDEP("w", "dig-recursive-old", "Look for images in subdirectories [deprecated]", false);
 
@@ -300,6 +354,7 @@ int main(int argc, char *argv[])
 
         cmd.add(&switchRemove);
         cmd.add(&switchSkipBG);
+        cmd.add(&switchSkipNonBW);
         cmd.add(&switchDigRecursive);
         cmd.add(&switchDigRecursiveDEP);
         cmd.add(&outputDirectory);
@@ -308,10 +363,10 @@ int main(int argc, char *argv[])
 
         cmd.parse(argc, argv);
 
-        setup.removeSource      = switchRemove.getValue();
+        setup.removeSource    = switchRemove.getValue();
         setup.skipBackground2 = switchSkipBG.getValue();
+        setup.skipNonBW       = switchSkipNonBW.getValue();
         setup.walkSubDirs     = switchDigRecursive.getValue() | switchDigRecursiveDEP.getValue();
-        //nopause         = switchNoPause.getValue();
 
         setup.pathOut     = outputDirectory.getValue();
         setup.configPath  = configDirectory.getValue();
@@ -463,7 +518,7 @@ int main(int argc, char *argv[])
            "============================================================================\n"
            "Successfully merged:        %d\n"
            "Conversion failed:          %d\n"
-           "Skipped files (bg2-*):      %d\n"
+           "Skipped files:              %d\n"
            "\n",
            setup.count_success,
            setup.count_failed,

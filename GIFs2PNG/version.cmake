@@ -1,7 +1,7 @@
 # Major
 set(GIFS2PNG_VERSION_1 3)
 # Minor
-set(GIFS2PNG_VERSION_2 1)
+set(GIFS2PNG_VERSION_2 2)
 # Revision
 set(GIFS2PNG_VERSION_3 0)
 # Patch
@@ -30,4 +30,3 @@ if(NOT "${GIFS2PNG_VERSION_REL}" STREQUAL "")
 endif()
 
 message("== GIFs2PNG version ${GIFS2PNG_VERSION_STRING} ==")
-

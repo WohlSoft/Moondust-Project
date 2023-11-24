@@ -25,14 +25,14 @@ jobs:
             os: ubuntu-latest,
             container: "ubuntu:18.04",
             generator: "Ninja",
-            extra_path: "/home/runner/Qt/5.15.2_static/bin",
+            extra_path: "/home/runner/Qt/5.15.10_static/bin",
             build_type: "Release",
             upload_directory: "www/ubuntu-18-04/",
-            qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/qt-5.15.2-static-ubuntu-18-04-x64-gcc8.tar.bz2",
+            qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/qt-5.15.10-static-ubuntu-18-04-x64-gcc8.tar.bz2",
             qt_install_dir: "/home/runner/Qt",
-            qt_ver: "5.15.2_static",
-            qt_dir: "/home/runner/Qt/5.15.2_static/bin",
-            qt_lib_dir: "/home/runner/Qt/5.15.2_static/lib",
+            qt_ver: "5.15.10_static",
+            qt_dir: "/home/runner/Qt/5.15.10_static/bin",
+            qt_lib_dir: "/home/runner/Qt/5.15.10_static/lib",
             readline6_download: "https://wohlsoft.ru/docs/Software/libreadline6_6.3-8_amd64-ubuntu1804.deb",
             lftp_download: "https://wohlsoft.ru/docs/Software/lftp_4.9.1-1_amd64-ubuntu1604.deb",
 
@@ -43,13 +43,14 @@ jobs:
             && add-apt-repository -y \"ppa:ubuntu-toolchain-r/test\" \
             && apt-get update --fix-missing -qq \
             && apt-get install -f -qq \
-            && apt-get install -qq sudo git p7zip-full ninja-build wget lftp \
+            && apt-get install -qq \
+            sudo git p7zip-full ninja-build wget lftp \
             \"^libxcb.*\" libx11-dev libx11-xcb-dev libgtk-3-dev libgegl-dev libxcursor-dev \
             libxrender-dev libxrandr-dev libxext-dev libxi-dev libxss-dev libxt-dev libxv-dev \
             libxxf86vm-dev libxinerama-dev libxkbcommon-dev libfontconfig1-dev libasound2-dev \
             libpulse-dev libdbus-1-dev udev mtdev-tools webp libudev-dev libglm-dev libwayland-dev \
             libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libgles2-mesa \
-            libgles2-mesa-dev libmirclient-dev libproxy-dev libtiff-dev libxkbcommon-x11-dev \
+            libgles2-mesa-dev libproxy-dev libtiff-dev libxkbcommon-x11-dev \
             gcc-8 g++-8 libc6 libstdc++6 \
             libexpat1 readline-common libgnutls30 libtinfo5 zlib1g \
             && wget https://github.com/Kitware/CMake/releases/download/v3.27.1/cmake-3.27.1-linux-x86_64.tar.gz -O cmake.tar.gz \
@@ -230,7 +231,7 @@ jobs:
 
         TZ=Europe/Moscow date +"%Y-%m-%d %H:%M:%S" > build-temp/build_date_${BRANCH_NAME_RES}_linux.txt
 
-        ./build.sh no-pause ninja deploy static-qt portable
+        ./build.sh no-pause ninja deploy static-qt qt-png portable
 
     - name: Deploy to builds.wohlsoft.ru
       if: success() && github.event_name != 'pull_request' && steps.event-check.outputs.is_pull_request == 'false' && steps.upload-check.outputs.available == 'true'

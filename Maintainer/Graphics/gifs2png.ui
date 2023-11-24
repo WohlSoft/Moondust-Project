@@ -136,10 +136,49 @@ border-radius: 15px;</string>
        <string>Batch conversion for level/episode</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Configuration package path (needed to find missing mask files):</string>
+         </property>
+        </widget>
+       </item>
        <item row="4" column="1">
         <widget class="QPushButton" name="inPathBrowse">
          <property name="text">
           <string>Browse...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Input directory (for example, an episode root or level custom folder):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="2">
+        <widget class="QLabel" name="label_4">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Flags</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QComboBox" name="configPackChoose"/>
+       </item>
+       <item row="7" column="0" colspan="2">
+        <widget class="QCheckBox" name="flagScanSubdirs">
+         <property name="text">
+          <string>Process all content of subdirectories</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -157,23 +196,6 @@ border-radius: 15px;</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Input directory (for example, an episode root or level custom folder):</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0" colspan="2">
-        <widget class="QCheckBox" name="flagScanSubdirs">
-         <property name="text">
-          <string>Process all content of subdirectories</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="0">
         <widget class="QLineEdit" name="inPath">
          <property name="placeholderText">
@@ -188,28 +210,12 @@ border-radius: 15px;</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="label_5">
+       <item row="8" column="0" colspan="2">
+        <widget class="QCheckBox" name="flagSkipNoBW">
          <property name="text">
-          <string>Configuration package path (needed to find missing mask files):</string>
+          <string>Skip images with non-black-and-white masks</string>
          </property>
         </widget>
-       </item>
-       <item row="5" column="0" colspan="2">
-        <widget class="QLabel" name="label_4">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Flags</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QComboBox" name="configPackChoose"/>
        </item>
       </layout>
      </widget>

@@ -2,18 +2,35 @@
 
 option(USE_SYSTEM_LIBPNG "Use libPNG and ZLib from the system" OFF)
 
+if(PGE_ENABLE_STATIC_QT)
+    option(USE_QT_LIBPNG "Use libPNG and ZLib from the static Qt toolchain" OFF)
+endif()
+
 add_library(PGE_libPNG INTERFACE)
 
 if(USE_SYSTEM_LIBPNG)
     add_library(libpng_Local INTERFACE)
 
-    find_package(PNG)
+    find_package(PNG REQUIRED)
     message("-- Found libPNG: ${PNG_LIBRARIES} --")
     target_link_libraries(PGE_libPNG INTERFACE "${PNG_LIBRARIES}")
     target_include_directories(PGE_libPNG INTERFACE "${PNG_INCLUDE_DIRS}")
     target_compile_definitions(PGE_libPNG INTERFACE "${PNG_DEFINITIONS}")
 
     set(libPNG_A_Lib "${PNG_LIBRARIES}")
+
+elseif(USE_QT_LIBPNG)
+    add_library(libpng_Local INTERFACE)
+
+    find_library(QT_LIBPNG qtlibpng)
+    if(NOT QT_LIBPNG)
+        message(FATAL_ERROR "Can't find the qtlibpng!")
+    endif()
+
+    message("-- Found Qt libPNG: ${QT_LIBPNG} --")
+    target_link_libraries(PGE_libPNG INTERFACE "${QT_LIBPNG}")
+    target_include_directories(PGE_libPNG INTERFACE "${MOONDUST_STATIC_QT_ROOT}/include/qtlibpng")
+    set(libPNG_A_Lib "${QT_LIBPNG}")
 
 else()
     if(NOT MSVC)

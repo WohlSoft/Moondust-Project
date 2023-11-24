@@ -948,43 +948,48 @@ Wspierane formaty:
         <translation>Partia konwersacji dla poziomu/epizodu</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="142"/>
-        <location filename="../Graphics/gifs2png.ui" line="156"/>
+        <location filename="../Graphics/gifs2png.ui" line="149"/>
+        <location filename="../Graphics/gifs2png.ui" line="195"/>
         <source>Browse...</source>
         <translation>Przeglądaj...</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="149"/>
+        <location filename="../Graphics/gifs2png.ui" line="188"/>
         <source>Remove source images after conversion</source>
         <translation>Usuń obrazki źródłowe po konwersacji</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="163"/>
+        <location filename="../Graphics/gifs2png.ui" line="216"/>
+        <source>Skip images with non-black-and-white masks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Graphics/gifs2png.ui" line="156"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
         <translation>Katalog wejściowy (dla przykładu, folder główny lub niestandardowy folder poziomu):</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="170"/>
+        <location filename="../Graphics/gifs2png.ui" line="178"/>
         <source>Process all content of subdirectories</source>
         <translation>Przetwarzaj całą zawartość podkatalogów</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="180"/>
+        <location filename="../Graphics/gifs2png.ui" line="202"/>
         <source>Path to an input directory with a source data</source>
         <translation>Ścieżka do katalogu wejściowego z danymi źródłowymi</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="187"/>
+        <location filename="../Graphics/gifs2png.ui" line="209"/>
         <source>Path to a configuration package directory to use</source>
         <translation>Ścieżka do katalogu pakietu konfiguracji do użycia</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="194"/>
+        <location filename="../Graphics/gifs2png.ui" line="142"/>
         <source>Configuration package path (needed to find missing mask files):</source>
         <translation>Ścieżka pakietu konfiguracji (trzeba znaleźć brakujące pliki maskujące):</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="207"/>
+        <location filename="../Graphics/gifs2png.ui" line="168"/>
         <source>Flags</source>
         <translation>Flagi</translation>
     </message>
@@ -995,7 +1000,7 @@ Wspierane formaty:
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
-        <location filename="../Graphics/gifs2png.cpp" line="288"/>
+        <location filename="../Graphics/gifs2png.cpp" line="291"/>
         <source>Start</source>
         <translation>Uruchom</translation>
     </message>
@@ -1053,42 +1058,42 @@ Wspierane formaty:
         <translation>Podany katalog wejściowy ścieżki nie działa.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="162"/>
+        <location filename="../Graphics/gifs2png.cpp" line="165"/>
         <source>Select a config pack directory</source>
         <translation>Wybierz katalog pakietu konfiguracji</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="181"/>
+        <location filename="../Graphics/gifs2png.cpp" line="184"/>
         <source>Select an input directory</source>
         <translation>Wybierz katalog wejściowy</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="204"/>
+        <location filename="../Graphics/gifs2png.cpp" line="207"/>
         <source>Process was exited with a code %1.</source>
         <translation>Proces został zakończony za pomocą kodu %1.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="214"/>
+        <location filename="../Graphics/gifs2png.cpp" line="217"/>
         <source>Process was terminated</source>
         <translation>Proces został zakończony</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="215"/>
+        <location filename="../Graphics/gifs2png.cpp" line="218"/>
         <source>Conversion has been termiated.</source>
         <translation>Konwersja została zakończona.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="220"/>
+        <location filename="../Graphics/gifs2png.cpp" line="223"/>
         <source>Unsuccess exit</source>
         <translation>Nieudane wyjście</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="221"/>
+        <location filename="../Graphics/gifs2png.cpp" line="224"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
         <translation>Konwersja została skończona z błędami. Proszę poszukaj bardziej szczegółowych informacji w dzienniku wyjściowym.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="286"/>
+        <location filename="../Graphics/gifs2png.cpp" line="289"/>
         <source>Stop</source>
         <translation>Zatrzymaj</translation>
     </message>

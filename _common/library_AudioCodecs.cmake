@@ -5,7 +5,7 @@ add_library(PGE_AudioCodecs INTERFACE)
 set(libZLib_A_Lib_buit    "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}zlib${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
 
 if(USE_SYSTEM_LIBPNG)
-    find_package(ZLIB)
+    find_package(ZLIB REQUIRED)
     message("-- Found ZLib: ${ZLIB_LIBRARIES} --")
     target_link_libraries(PGE_ZLib INTERFACE "${LIBZLIB_LIBRARY}")
     target_include_directories(PGE_ZLib INTERFACE "${ZLIB_INCLUDE_DIRS}")

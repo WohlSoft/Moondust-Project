@@ -948,43 +948,48 @@ Formats pris en charge :
         <translation>Conversion par lot pour un niveau/épisode</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="142"/>
-        <location filename="../Graphics/gifs2png.ui" line="156"/>
+        <location filename="../Graphics/gifs2png.ui" line="149"/>
+        <location filename="../Graphics/gifs2png.ui" line="195"/>
         <source>Browse...</source>
         <translation>Parcourir…</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="149"/>
+        <location filename="../Graphics/gifs2png.ui" line="188"/>
         <source>Remove source images after conversion</source>
         <translation>Supprimer les images source après la conversion</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="163"/>
+        <location filename="../Graphics/gifs2png.ui" line="216"/>
+        <source>Skip images with non-black-and-white masks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Graphics/gifs2png.ui" line="156"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
         <translation>Dossier d&apos;entrée (par exemple, le dossier racine d&apos;un épisode ou niveau personnalisé) :</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="170"/>
+        <location filename="../Graphics/gifs2png.ui" line="178"/>
         <source>Process all content of subdirectories</source>
         <translation>Traiter tout le contenu des sous-dossiers</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="180"/>
+        <location filename="../Graphics/gifs2png.ui" line="202"/>
         <source>Path to an input directory with a source data</source>
         <translation>Chemin vers un dossier d&apos;entrée avec des données sources</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="187"/>
+        <location filename="../Graphics/gifs2png.ui" line="209"/>
         <source>Path to a configuration package directory to use</source>
         <translation>Chemin vers un dossier de paquet de configuration à utiliser</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="194"/>
+        <location filename="../Graphics/gifs2png.ui" line="142"/>
         <source>Configuration package path (needed to find missing mask files):</source>
         <translation>Chemin vers un paquet de configuration (nécessaire pour rechercher les fichiers de masque manquants) :</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="207"/>
+        <location filename="../Graphics/gifs2png.ui" line="168"/>
         <source>Flags</source>
         <translation>Drapeaux</translation>
     </message>
@@ -995,7 +1000,7 @@ Formats pris en charge :
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
-        <location filename="../Graphics/gifs2png.cpp" line="288"/>
+        <location filename="../Graphics/gifs2png.cpp" line="291"/>
         <source>Start</source>
         <translation>Démarrer</translation>
     </message>
@@ -1053,42 +1058,42 @@ Formats pris en charge :
         <translation>Le chemin vers le dossier d&apos;entrée n&apos;existe pas.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="162"/>
+        <location filename="../Graphics/gifs2png.cpp" line="165"/>
         <source>Select a config pack directory</source>
         <translation>Sélectionner un dossier de paquet de configuration</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="181"/>
+        <location filename="../Graphics/gifs2png.cpp" line="184"/>
         <source>Select an input directory</source>
         <translation>Sélectionner un dossier d&apos;entrée</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="204"/>
+        <location filename="../Graphics/gifs2png.cpp" line="207"/>
         <source>Process was exited with a code %1.</source>
         <translation>Le processus s&apos;est terminé avec le code %1.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="214"/>
+        <location filename="../Graphics/gifs2png.cpp" line="217"/>
         <source>Process was terminated</source>
         <translation>Le processus a été interrompu</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="215"/>
+        <location filename="../Graphics/gifs2png.cpp" line="218"/>
         <source>Conversion has been termiated.</source>
         <translation>La conversion a été interrompue.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="220"/>
+        <location filename="../Graphics/gifs2png.cpp" line="223"/>
         <source>Unsuccess exit</source>
         <translation>Sortie sans succès</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="221"/>
+        <location filename="../Graphics/gifs2png.cpp" line="224"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
         <translation>La conversion s&apos;est terminée avec des erreurs. Veuillez consulter le journal de sortie pour des informations plus détaillées.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="286"/>
+        <location filename="../Graphics/gifs2png.cpp" line="289"/>
         <source>Stop</source>
         <translation>Arrêter</translation>
     </message>
