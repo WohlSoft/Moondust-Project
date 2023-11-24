@@ -961,7 +961,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="216"/>
         <source>Skip images with non-black-and-white masks</source>
-        <translation type="unfinished"></translation>
+        <translation>Пропускать изображения с не-чёрно-белыми масками</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="156"/>
