@@ -70,7 +70,7 @@ static void findFilesInScript(const QString &importPath, const QStringList &allF
            tarFile.endsWith(".txt", Qt::CaseInsensitive) ||
            tarFile.endsWith(".ini", Qt::CaseInsensitive))
         {
-            QFile x(tarFile);
+            QFile x(importPath + tarFile);
 
             if(x.open(QIODevice::ReadOnly | QIODevice::Text))
             {
@@ -80,7 +80,7 @@ static void findFilesInScript(const QString &importPath, const QStringList &allF
                 for(const QString &subFile : allFiles)
                 {
                     if(content.contains(subFile, Qt::CaseInsensitive))
-                        extra_referred_files << subFile;
+                        outFiles << subFile;
                 }
             }
         }
