@@ -943,10 +943,61 @@ void ItemBlock::paint(QPainter *painter, const QStyleOptionGraphicsItem */*optio
 
     if(this->isSelected())
     {
-        painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
-        painter->drawRect(1, 1, m_imageSize.width() - 2, m_imageSize.height() - 2);
-        painter->setPen(QPen(QBrush(Qt::green), 2, Qt::DotLine));
-        painter->drawRect(1, 1, m_imageSize.width() - 2, m_imageSize.height() - 2);
+        QPolygon p;
+        QPen pen1 = QPen(QBrush(Qt::black), 2, Qt::SolidLine);
+        QPen pen2 = QPen(QBrush(Qt::green), 2, Qt::DotLine);
+        int w = m_imageSize.width() - 2;
+        int h = m_imageSize.height() - 2;
+
+        switch(m_localProps.setup.phys_shape)
+        {
+        case BlockSetup::SHAPE_triangle_left_bottom:
+            p.append(QPoint(1, 1));
+            p.append(QPoint(w, h));
+            p.append(QPoint(1, h));
+            painter->setPen(pen1);
+            painter->drawPolygon(p);
+            painter->setPen(pen2);
+            painter->drawPolygon(p);
+            break;
+
+        case BlockSetup::SHAPE_triangle_right_bottom:
+            p.append(QPoint(w, 1));
+            p.append(QPoint(w, h));
+            p.append(QPoint(1, h));
+            painter->setPen(pen1);
+            painter->drawPolygon(p);
+            painter->setPen(pen2);
+            painter->drawPolygon(p);
+            break;
+
+        case BlockSetup::SHAPE_triangle_left_top:
+            p.append(QPoint(1, 1));
+            p.append(QPoint(w, 1));
+            p.append(QPoint(1, h));
+            painter->setPen(pen1);
+            painter->drawPolygon(p);
+            painter->setPen(pen2);
+            painter->drawPolygon(p);
+            break;
+
+        case BlockSetup::SHAPE_triangle_right_top:
+            p.append(QPoint(1, 1));
+            p.append(QPoint(w, 1));
+            p.append(QPoint(w, h));
+            painter->setPen(pen1);
+            painter->drawPolygon(p);
+            painter->setPen(pen2);
+            painter->drawPolygon(p);
+            break;
+
+        default:
+            painter->setPen(pen1);
+            painter->drawRect(1, 1, w, h);
+            painter->setPen(pen2);
+            painter->drawRect(1, 1, w, h);
+            break;
+        }
     }
 
 }
