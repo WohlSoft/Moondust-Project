@@ -23,9 +23,9 @@
 PGE_OSXApplication::PGE_OSXApplication(int &argc, char **argv)
     : QApplication(argc, argv)
 {
-    #ifdef Q_OS_MACX
+#ifdef Q_OS_MACX
     m_connected = false;
-    #endif
+#endif
 }
 
 PGE_OSXApplication::~PGE_OSXApplication()

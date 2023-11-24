@@ -82,6 +82,7 @@ do
             echo "--- Compile options ---"
             printf " \E[1;4msystem-png\E[0m       - Prefer to use libPNG and ZLib from system\n"
             printf " \E[1;4msystem-libs\E[0m      - Prefer to use most of libraries from system\n"
+            printf " \E[1;4mqt-png\E[0m           - Prefer to use libPNG and ZLib from the static Qt toolchain\n"
             if [[ "$OSTYPE" == "darwin"* ]]; then
                 printf " \E[1;4mmac-universal\E[0m    - Attempt to build the universal build for ARM64 and x86_64\n"
             fi
@@ -275,6 +276,9 @@ do
             ;;
         system-png)
             CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DUSE_SYSTEM_LIBPNG=ON"
+            ;;
+        qt-png)
+            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DUSE_QT_LIBPNG=ON"
             ;;
         system-libs)
             CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DUSE_SYSTEM_LIBC=ON -DUSE_SYSTEM_LIBFREETYPE=ON -DUSE_SYSTEM_LIBPNG=ON -DUSE_SYSTEM_LIBJPEG=ON -DUSE_SYSTEM_SDL2=ON -DUSE_SYSTEM_SQLITE=ON -DPGE_STATIC_SDLMIXER=OFF -DUSE_SHARED_FREEIMAGE=ON"

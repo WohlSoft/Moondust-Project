@@ -18,9 +18,7 @@
 
 #include "global_settings.h"
 
-EditingSettings::EditingSettings() :
-    labelBoxBrush(Qt::white),
-    labelBoxPen(Qt::black, 2)
+EditingSettings::EditingSettings()
 {
     animationEnabled = true;
     collisionsEnabled = true;
@@ -31,14 +29,31 @@ EditingSettings::EditingSettings() :
     grid_show = false;
     camera_grid_show = false;
     semiTransparentPaths = false;
+}
 
-    labelBoxFont.setFamily("Times");
-    labelBoxFont.setWeight(QFont::Black);
-    labelBoxFont.setPointSize(25);
+void EditingSettings::postQApplicationInit()
+{
+    labelBoxFont = new QFont();
+    labelBoxFont->setFamily("Times");
+    labelBoxFont->setWeight(QFont::Black);
+    labelBoxFont->setPointSize(25);
 
-    labelBoxBrush.setColor(Qt::white);
-    labelBoxPen.setColor(Qt::black);
-    labelBoxPen.setWidth(2);
+    labelBoxBrush = new QBrush(Qt::white);
+    labelBoxBrush->setColor(Qt::white);
+
+    labelBoxPen = new QPen(Qt::black, 2);
+    labelBoxPen->setColor(Qt::black);
+    labelBoxPen->setWidth(2);
+}
+
+void EditingSettings::deInit()
+{
+    delete labelBoxFont;
+    labelBoxFont = nullptr;
+    delete labelBoxBrush;
+    labelBoxBrush = nullptr;
+    delete labelBoxPen;
+    labelBoxPen = nullptr;
 }
 
 QString GlobalSettings::locale          = "";

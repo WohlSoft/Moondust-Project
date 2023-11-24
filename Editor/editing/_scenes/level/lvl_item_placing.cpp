@@ -769,11 +769,11 @@ void LvlScene::setLabelBoxItem(bool show, QPointF pos, QString text)
             return;
 
         m_labelBox = new QGraphicsSimpleTextItem(text);
-        m_labelBox->setPen(GlobalSettings::LvlOpts.labelBoxPen);
-        m_labelBox->setBrush(GlobalSettings::LvlOpts.labelBoxBrush);
+        m_labelBox->setPen(*GlobalSettings::LvlOpts.labelBoxPen);
+        m_labelBox->setBrush(*GlobalSettings::LvlOpts.labelBoxBrush);
         m_labelBox->setBoundingRegionGranularity(1);
         m_labelBox->setZValue(10000);
-        m_labelBox->setFont(GlobalSettings::LvlOpts.labelBoxFont);
+        m_labelBox->setFont(*GlobalSettings::LvlOpts.labelBoxFont);
         this->addItem(m_labelBox);
         m_labelBox->setPos(pos);
     }
