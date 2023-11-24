@@ -9586,6 +9586,14 @@ Vuoi salvare le modifiche?</translation>
         <source>Architecture: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>[Copy this description]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[Copied!]</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>tileset</name>

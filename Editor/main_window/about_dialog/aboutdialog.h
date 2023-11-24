@@ -37,6 +37,7 @@ public:
 
 private slots:
     void on_pushButton_clicked();
+    void on_About1_linkActivated(const QString &link);
 
     //void on_actionCloseDialog_activated();
 

@@ -4030,7 +4030,7 @@ Do you want to save your changes?</source>
         <translation>레벨 이름:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.cpp" line="98"/>
+        <location filename="../editing/edit_level/levelprops.cpp" line="99"/>
         <source>Error in the file %1:
 %2</source>
         <translation>파일에 오류가 있습니다 %1:
@@ -4040,13 +4040,13 @@ Do you want to save your changes?</source>
 <context>
     <name>LunaTesterEngine</name>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="397"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="405"/>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
         <translation>테스트 레벨</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="399"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="407"/>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
@@ -4054,40 +4054,40 @@ Otherwise, it will be very limited.</source>
 이 기능을 사용하려면 LunaLua가 필요합니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="405"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="413"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in LunaTester from disk.</comment>
         <translation>저장된 레벨 / 세계 테스트</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="410"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="418"/>
         <source>Reset checkpoints</source>
         <translation>체크포인트 초기화</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="411"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="419"/>
         <source>Reset all checkpoint states to initial state.</source>
         <translation>모든 체크포인트 초기화.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="415"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="423"/>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
         <translation>OpenGL 비활성화</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="416"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="424"/>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
         <translation>OpenGL 렌더링 엔진을 비활성화하고 대신 GDI를 사용하십시오. 비디오 카드가 OpenGL을 지원하지 않거나 사용하려고 할 때 LunaLua가 충돌하는 경우 유용합니다. 이로 인해 기능이 크게 감소합니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="422"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="430"/>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
         <translation>백그라운드에서 계속 실행</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="424"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="432"/>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
@@ -4096,223 +4096,223 @@ Suggested to disable this feature on slow machines or if any troubles are happen
 느린 시스템에서 또는 레벨 테스트를 시도하는 동안 문제가 발생하는 경우이 기능을 비활성화하는 것이 좋습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="430"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="438"/>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="433"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="441"/>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation>LunaTester 프로세스를 종료하여 엔진을 처음부터로드 할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="437"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="445"/>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
         <translation>LunaTest로 경로를 변경...</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="439"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="447"/>
         <source>Select the location of LunaTester.</source>
         <translation>LunaTester 위치 선택.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="443"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="451"/>
         <source>Change the executable name...</source>
         <comment>Open a dialog to choose the name for executable LunaTester will use.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="445"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="453"/>
         <source>Select the name of executable for the LunaTester.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="450"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="458"/>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
         <translation>Wine 설정 ...</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="452"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="460"/>
         <source>Select a Wine toolchain for use.</source>
         <translation>사용할 Wine 툴모음을 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="457"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="465"/>
         <source>Start Game</source>
         <comment>Launch LunaTester as a normal game.</comment>
         <translation>게임 시작</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="459"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="467"/>
         <source>Launch LunaTester as a normal game.</source>
         <translation>LunaTester를 일반 게임으로 실행.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="466"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="509"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1226"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="474"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="517"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1332"/>
         <source>LunaTester error</source>
         <translation>LunaTester 에러</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="471"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="479"/>
         <source>Failed to start: %1</source>
         <translation>시작 실패:%1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="474"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="482"/>
         <source>Crashed: %1</source>
         <translation>충돌:%1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="477"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="485"/>
         <source>Timed out: %1</source>
         <translation>시간 초과:%1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="480"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="488"/>
         <source>Write error: %1</source>
         <translation>쓰기 에러:%1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="483"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="491"/>
         <source>Read error: %1</source>
         <translation>읽기 에러:%1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="487"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="495"/>
         <source>Unknown error: %1</source>
         <translation>알려지지 않은 에러:%1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="510"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="518"/>
         <source>Failed to send level into LunaLUA-SMBX!</source>
         <translation>LunaLUA-SMBX로 레벨을 보내지 못했습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="665"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="767"/>
         <source>Error has occured: (Error %1) %2</source>
         <translation>에러가 발생했습니다:(에러%1)%2</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="735"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="831"/>
         <source>Checkpoints successfully reseted!</source>
         <translation>체크 포인트가 성공적으로 재설정되었습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1100"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1206"/>
         <source>LunaLUA tester is not started!</source>
         <translation>LunaLua 테스터가 시작되지 않았습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1113"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1219"/>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
         <translation>LunaTester를 종료 하시겠습니까? 레벨을 테스트하는 중이라면, 즉시 종료됩니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1121"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1227"/>
         <source>LunaTester has been successfully closed.</source>
         <translation>LunaTester가 성공적으로 종료되었습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1129"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1235"/>
         <source>LunaTester is not running.</source>
         <translation>LunaTester가 실행되고 있지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1139"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1238"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1279"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1245"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1344"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1376"/>
         <source>LunaTester is still active</source>
         <translation>LunaTester는 여전히 활성 상태입니다</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1140"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1246"/>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
         <translation>LunaTester의 경로를 변경하려면 현재 실행중인 게임을 종료해야합니다. 지금 LunaTester를 종료 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1149"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1255"/>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
         <translation>LunaTester 경로</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1156"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1262"/>
         <source>Please select a path to LunaTester:</source>
         <translation>LunaTester의 경로를 선택하십시오 :</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1165"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1271"/>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
         <translation>기본값 사용</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1168"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1274"/>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
         <translation>커스텀</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1172"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1278"/>
         <source>Browse...</source>
         <translation>검색...</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1196"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1302"/>
         <source>Save</source>
         <translation>저장</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1209"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1315"/>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
         <translation>LunaTester 위치 선택</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1227"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1333"/>
         <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
         <translation>선택한 LunaLua 경로의 기능을 인식하지 못하여, 게임이 작동하지 않을 수 있습니다. 다른 경로를 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1239"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1345"/>
         <source>To change an executable name, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1260"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1357"/>
         <source>Change the executable name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1261"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1358"/>
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1280"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1377"/>
         <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
         <translation>Wine 설정을 변경하려면 현재 작동중인 LunaTester를 종료해야합니다. 지금 LunaTester를 종료 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1482"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1578"/>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
         <translation>LunaTester 디렉터리 체크 실패</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1484"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1580"/>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
         <translation>&quot;% 1&quot;을 (를) 찾을 수 없기 때문에 LunaTester를 시작할 수 없습니다! 다음 이유 중 하나로 인해 발생할 수 있습니다:</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1488"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1584"/>
         <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
@@ -4322,7 +4322,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
 -잘못된 SMBX2 설치로 인해 파일이 누락되었습니다. 문제를 해결하려면 SMBX2를 다시 설치하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1495"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1591"/>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
@@ -4330,12 +4330,12 @@ the background or foreground, so the engine can be loaded from scratch.</comment
 -잘못된 SMBX2 설치로 인해 파일이 누락되었습니다. 문제를 해결하려면 SMBX2를 다시 설치하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1532"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1628"/>
         <source>Vanilla SMBX detected!</source>
         <translation>바닐라 SMBX가 감지되었습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1533"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1629"/>
         <source>&quot;%1&quot; not found!
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
@@ -4344,32 +4344,32 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
 즉, LunaTester로 레벨 테스트를 시작할 수 없습니다. SMBX Engine으로 레벨 테스트를 실행하려면 LunaLua가 필요합니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1546"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1642"/>
         <source>Incompatible LunaDll found</source>
         <translation>호환되지 않는 LunaDll 발견</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1547"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1643"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
         <translation>경로에서 발견 된 호환되지 않는 LunaDll.dll 모듈로 인해 LunaTester를 시작할 수 없습니다 : % 1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1556"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1652"/>
         <source>Incompatible LunaLua</source>
         <translation>호환되지 않는 LunaLua</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1557"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1653"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
         <translation>경로에 호환되지 않는 LunaLua로 인해 LunaTester를 시작할 수 없습니다 : % 1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1632"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1728"/>
         <source>SMBX64 limits are exceeded!</source>
         <translation>SMBX64 한도 초과!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1633"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1729"/>
         <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
@@ -4382,17 +4382,17 @@ Do you want to continue the process?</source>
 프로세스를 계속 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1765"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1857"/>
         <source>Impossible to launch an episode because of an invalid world file.</source>
         <translation>잘못된 월드 파일로 인해 에피소드를 시작할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1774"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1866"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
         <translation>세계지도 파일이 지원되지 않는 형식으로 저장되어있어 에피소드를 시작할 수 없습니다. SMBX64-WLD 형식으로 세계지도를 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1809"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1901"/>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
         <translation>LunaTester 월드 루트에서 에피소드를 시작할 수 없습니다.</translation>
     </message>
@@ -7542,37 +7542,37 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="72"/>
+        <location filename="../testing/pge_engine.cpp" line="73"/>
         <source>PGE Engine testing</source>
         <translation type="unfinished">PGE 엔진 테스트</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="75"/>
+        <location filename="../testing/pge_engine.cpp" line="76"/>
         <location filename="../mainwindow.cpp" line="138"/>
         <source>Don&apos;t show this message again.</source>
         <translation>이 메시지를 다시 표시하지 마십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="77"/>
+        <location filename="../testing/pge_engine.cpp" line="78"/>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
         <translation type="unfinished">여보세요! PGE 엔진에서 레벨을 테스트하려고합니다.
 PGE 엔진은 아직 개발 초기 단계에 있으며 누락되거나 올바르게 작동하지 않는 몇 가지 기능이 있습니다. 기존 SMBX 엔진 용 레벨이나 에피소드를 만들고 있고 완전한 기능 세트로 테스트하고 싶다면 SMBX에서 직접 테스트하십시오. PGE 엔진 자체를 테스트하거나 PGE 관련 기능으로 레벨을 테스트하려는 경우에 PGE 테스트를 사용하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="131"/>
+        <location filename="../testing/pge_engine.cpp" line="132"/>
         <source>Engine is not found</source>
         <translation>엔진을 찾을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="132"/>
+        <location filename="../testing/pge_engine.cpp" line="133"/>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, choose the engine application yourself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="136"/>
+        <location filename="../testing/pge_engine.cpp" line="137"/>
         <source>Choose the Engine application</source>
         <translation>엔진 애플리케이션 선택</translation>
     </message>
@@ -8692,30 +8692,30 @@ Error description:
 <context>
     <name>PgeEngine</name>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="253"/>
+        <location filename="../testing/pge_engine.cpp" line="254"/>
         <source>Test level/world</source>
         <comment>Run the testing of current file in PGE Engine via interprocessing tunnel.</comment>
         <translation>테스트 수준 / 세계</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="258"/>
+        <location filename="../testing/pge_engine.cpp" line="259"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in PGE Engine from disk.</comment>
         <translation>저장된 레벨 / 세계 테스트</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="263"/>
+        <location filename="../testing/pge_engine.cpp" line="264"/>
         <source>Start Game</source>
         <comment>Launch PGE Engine as a normal game</comment>
         <translation>게임을 시작하다</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="284"/>
+        <location filename="../testing/pge_engine.cpp" line="285"/>
         <source>Unsupported yet</source>
         <translation>아직 지원되지 않음</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="285"/>
+        <location filename="../testing/pge_engine.cpp" line="286"/>
         <source>Currently this is not supported for world maps yet. Please use &apos;Test saved level/world&apos; action tu run a world map test.</source>
         <translation>현재이 기능은 아직 세계지도에서 지원되지 않습니다. 월드 맵 테스트를 실행하려면 &apos;저장된 레벨 / 월드 테스트&apos;액션을 사용하세요.</translation>
     </message>
@@ -9660,185 +9660,185 @@ The maximum number of Music Boxes is %2.</source>
 <context>
     <name>SanBaEiRuntimeEngine</name>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="270"/>
+        <location filename="../testing/38a_engine.cpp" line="271"/>
         <source>Test level</source>
         <comment>Run the testing of current file in SMBX-38A via interprocessing tunnel.</comment>
         <translation>테스트 수준</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="275"/>
+        <location filename="../testing/38a_engine.cpp" line="276"/>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in SMBX-38A via interprocessing tunnel.</comment>
         <translation>전투 모드의 테스트 레벨</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="280"/>
+        <location filename="../testing/38a_engine.cpp" line="281"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in SMBX-38A from disk.</comment>
         <translation>저장된 레벨 / 세계 테스트</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="287"/>
+        <location filename="../testing/38a_engine.cpp" line="288"/>
         <source>Reset checkpoints</source>
         <translation>체크 포인트 재설정</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="288"/>
+        <location filename="../testing/38a_engine.cpp" line="289"/>
         <source>Reset all checkpoint states to initial state.</source>
         <translation>모든 체크 포인트를 재설정합니다.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="294"/>
+        <location filename="../testing/38a_engine.cpp" line="295"/>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
         <translation>마법의 손 활성화</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="296"/>
+        <location filename="../testing/38a_engine.cpp" line="297"/>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
         <translation>실시간 편집 가능 : 레벨 씬에서 요소 선택, 새 요소 배치, 편집기에서 선택한 후 지우기. 저장된 파일의 테스트를 실행할 때 작동하지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="302"/>
+        <location filename="../testing/38a_engine.cpp" line="303"/>
         <source>Don&apos;t auto-suspend game</source>
         <comment>Don&apos;t pause game when it&apos;s window is unfocused</comment>
         <translation>게임을 자동 일시 중단하지 마십시오</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="304"/>
+        <location filename="../testing/38a_engine.cpp" line="305"/>
         <source>Game will always run and it will never suspend while window is unfocused.</source>
         <translation>게임은 항상 실행되며 창이 초점이 맞지 않는 동안에는 일시 중단되지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="308"/>
+        <location filename="../testing/38a_engine.cpp" line="309"/>
         <source>Change the path to SMBX-38A...</source>
         <comment>Select the path to SMBX-38A executable.</comment>
         <translation>SMBX-38A로 경로 변경 ...</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="310"/>
+        <location filename="../testing/38a_engine.cpp" line="311"/>
         <source>Select the path to SMBX-38A executable.</source>
         <translation>SMBX-38A 실행 파일의 경로를 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="316"/>
+        <location filename="../testing/38a_engine.cpp" line="317"/>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
         <translation>와인 설정 ...</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="318"/>
+        <location filename="../testing/38a_engine.cpp" line="319"/>
         <source>Select a Wine toolchain for use.</source>
         <translation>사용할 Wine 도구 모음을 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="324"/>
+        <location filename="../testing/38a_engine.cpp" line="325"/>
         <source>Start Game</source>
         <comment>Launch SMBX-38A as a normal game</comment>
         <translation>게임을 시작하다</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="560"/>
+        <location filename="../testing/38a_engine.cpp" line="561"/>
         <source>Checkpoints successfully reseted!</source>
         <translation>체크 포인트가 성공적으로 재설정되었습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="572"/>
+        <location filename="../testing/38a_engine.cpp" line="573"/>
         <source>Path to SMBX-38A</source>
         <comment>Title of dialog</comment>
         <translation>SMBX-38A 경로</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="579"/>
+        <location filename="../testing/38a_engine.cpp" line="580"/>
         <source>Please select a path to SMBX-38A executable:</source>
         <translation>SMBX-38A 실행 파일의 경로를 선택하십시오:</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="588"/>
+        <location filename="../testing/38a_engine.cpp" line="589"/>
         <source>Use default</source>
         <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
         <translation>기본값 사용</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="591"/>
+        <location filename="../testing/38a_engine.cpp" line="592"/>
         <source>Custom</source>
         <comment>Using a user selected SMBX-38A path</comment>
         <translation>커스텀</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="595"/>
+        <location filename="../testing/38a_engine.cpp" line="596"/>
         <source>Browse...</source>
         <translation>검색...</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="619"/>
+        <location filename="../testing/38a_engine.cpp" line="620"/>
         <source>Save</source>
         <translation>저장</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="633"/>
+        <location filename="../testing/38a_engine.cpp" line="634"/>
         <source>Select a path to SMBX-38A executable</source>
         <comment>File dialog title</comment>
         <translation>SMBX-38A 실행 파일 경로 선택</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="659"/>
+        <location filename="../testing/38a_engine.cpp" line="660"/>
         <source>SMBX-38A is still active</source>
         <translation>SMBX-38A는 여전히 활성 상태입니다</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="660"/>
+        <location filename="../testing/38a_engine.cpp" line="661"/>
         <source>To change a setup of Wine, you will need to shut down a currently working SMBX-38A. Do you want to shut down the SMBX-38A now?</source>
         <translation>Wine 설정을 변경하려면 현재 작동중인 SMBX-38A를 종료해야합니다. 지금 SMBX-38A를 종료 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="809"/>
+        <location filename="../testing/38a_engine.cpp" line="810"/>
         <source>Executable not found</source>
         <translation>실행 파일을 찾을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="810"/>
+        <location filename="../testing/38a_engine.cpp" line="811"/>
         <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
         <translation>&quot;% 1&quot;을 (를) 찾을 수 없기 때문에 SMBX-38A 게임을 시작할 수 없습니다. SMBX-38A 실행 파일에 대한 잘못된 경로가 지정 되었기 때문에 발생할 수 있습니다. SMBX-38A 경로 설정을 확인하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="836"/>
+        <location filename="../testing/38a_engine.cpp" line="837"/>
         <source>Impossible to prepare a temp file for a test run.</source>
         <translation>테스트 실행을 위해 임시 파일을 준비 할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="898"/>
+        <location filename="../testing/38a_engine.cpp" line="899"/>
         <source>Impossible to launch a level because of an invalid file.</source>
         <translation>잘못된 파일로 인해 레벨을 시작할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="908"/>
+        <location filename="../testing/38a_engine.cpp" line="909"/>
         <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
         <translation>레벨 파일이 지원되지 않는 형식으로 저장되어있어 레벨을 시작할 수 없습니다. 레벨을 SMBX-38A 또는 SMBX64-LVL 형식으로 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="917"/>
-        <location filename="../testing/38a_engine.cpp" line="982"/>
+        <location filename="../testing/38a_engine.cpp" line="918"/>
+        <location filename="../testing/38a_engine.cpp" line="983"/>
         <source>Caution</source>
         <translation>주의</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="918"/>
+        <location filename="../testing/38a_engine.cpp" line="919"/>
         <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
         <translation>레벨이 SMBX-38A 형식이 아닙니다. 즉, 게임이 자동으로 SMBX-38A 형식으로 변환합니다. 레벨은 클래식 SMBX와 호환되지 않습니다. 계속해서 위험을 감수 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="963"/>
+        <location filename="../testing/38a_engine.cpp" line="964"/>
         <source>Impossible to launch an episode because of an invalid file.</source>
         <translation>잘못된 파일로 인해 에피소드를 시작할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="973"/>
+        <location filename="../testing/38a_engine.cpp" line="974"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
         <translation>세계지도 파일이 지원되지 않는 형식으로 저장되어있어 에피소드를 시작할 수 없습니다. SMBX-38A 또는 SMBX64-WLD 형식으로 세계지도를 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="983"/>
+        <location filename="../testing/38a_engine.cpp" line="984"/>
         <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
         <translation>세계지도가 SMBX-38A 형식이 아닙니다. 즉, 게임이 자동으로 SMBX-38A 형식으로 변환합니다. 에피소드는 클래식 SMBX와 호환되지 않습니다. 계속해서 위험을 감수 하시겠습니까?</translation>
     </message>
@@ -10097,313 +10097,313 @@ The maximum number of Music Boxes is %2.</source>
 <context>
     <name>TheXTechEngine</name>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="241"/>
+        <location filename="../testing/thextech_engine.cpp" line="257"/>
         <source>Path to TheXTech</source>
         <comment>Title of dialog</comment>
         <translation>TheXTech로가는 길</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="248"/>
+        <location filename="../testing/thextech_engine.cpp" line="264"/>
         <source>Please select a path to TheXTech executable:</source>
         <translation>TheXTech 실행 파일의 경로를 선택하십시오 :</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="257"/>
+        <location filename="../testing/thextech_engine.cpp" line="273"/>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
         <translation>기본값 사용</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="260"/>
+        <location filename="../testing/thextech_engine.cpp" line="276"/>
         <source>Custom</source>
         <comment>Using a user selected TheXTech path</comment>
         <translation>커스텀</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="264"/>
+        <location filename="../testing/thextech_engine.cpp" line="280"/>
         <source>Browse...</source>
         <translation>검색...</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="288"/>
+        <location filename="../testing/thextech_engine.cpp" line="304"/>
         <source>Save</source>
         <translation>저장</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="301"/>
+        <location filename="../testing/thextech_engine.cpp" line="317"/>
         <source>Select a path to TheXTech executable</source>
         <comment>File dialog title</comment>
         <translation>TheXTech 실행 파일의 경로를 선택하십시오</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="519"/>
+        <location filename="../testing/thextech_engine.cpp" line="536"/>
         <source>Select the entrance warp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="520"/>
+        <location filename="../testing/thextech_engine.cpp" line="537"/>
         <source>Please select the entrance warp number (if you specify 0, the level will start from the usual start point):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="925"/>
+        <location filename="../testing/thextech_engine.cpp" line="942"/>
         <source>Test level</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation>테스트 수준</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="930"/>
+        <location filename="../testing/thextech_engine.cpp" line="947"/>
         <source>Test world</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="935"/>
+        <location filename="../testing/thextech_engine.cpp" line="952"/>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation>전투 모드의 테스트 레벨</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="940"/>
+        <location filename="../testing/thextech_engine.cpp" line="957"/>
         <source>Test saved level</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
         <translation>저장된 레벨 테스트</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="945"/>
+        <location filename="../testing/thextech_engine.cpp" line="962"/>
         <source>Test saved world</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="951"/>
+        <location filename="../testing/thextech_engine.cpp" line="968"/>
         <source>Choose a start warp...</source>
         <comment>Select the warp number at which the game will be started.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="957"/>
+        <location filename="../testing/thextech_engine.cpp" line="974"/>
         <source>Save slot</source>
         <comment>Select a save slot for playing the world map.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="963"/>
+        <location filename="../testing/thextech_engine.cpp" line="980"/>
         <source>Don&apos;t save</source>
         <comment>Save slot sub-menu item.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="968"/>
+        <location filename="../testing/thextech_engine.cpp" line="985"/>
         <source>Save slot 1</source>
         <comment>Save slot sub-menu item.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="973"/>
+        <location filename="../testing/thextech_engine.cpp" line="990"/>
         <source>Save slot 2</source>
         <comment>Save slot sub-menu item.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="978"/>
+        <location filename="../testing/thextech_engine.cpp" line="995"/>
         <source>Save slot 3</source>
         <comment>Save slot sub-menu item.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="986"/>
+        <location filename="../testing/thextech_engine.cpp" line="1003"/>
         <source>Graphics type</source>
         <comment>Choose a rendering system: software or accelerated</comment>
         <translation>그래픽 유형</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="991"/>
+        <location filename="../testing/thextech_engine.cpp" line="1008"/>
         <source>Default</source>
         <comment>Automatically selected rendering engine</comment>
         <translation>기본</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="996"/>
+        <location filename="../testing/thextech_engine.cpp" line="1013"/>
         <source>Software</source>
         <comment>Software rendering</comment>
         <translation>소프트웨어 렌더링</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1001"/>
+        <location filename="../testing/thextech_engine.cpp" line="1018"/>
         <source>Accelerated</source>
         <comment>Hardware accelerated rendering</comment>
         <translation>가속</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1006"/>
+        <location filename="../testing/thextech_engine.cpp" line="1023"/>
         <source>Accelerated with V-Sync</source>
         <comment>Hardware accelerated rendering with vertical synchronization support</comment>
         <translation>V-Sync로 가속화</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1011"/>
+        <location filename="../testing/thextech_engine.cpp" line="1028"/>
         <source>Modern OpenGL</source>
         <comment>Hardware accelerated with modern OpenGL</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1016"/>
+        <location filename="../testing/thextech_engine.cpp" line="1033"/>
         <source>Legacy OpenGL 1.1</source>
         <comment>Hardware accelerated with legacy OpenGL</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1021"/>
+        <location filename="../testing/thextech_engine.cpp" line="1038"/>
         <source>Modern OpenGL ES</source>
         <comment>Hardware accelerated with modern OpenGL ES</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1026"/>
+        <location filename="../testing/thextech_engine.cpp" line="1043"/>
         <source>Legacy OpenGL ES 1.1</source>
         <comment>Hardware accelerated with legacy OpenGL ES</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1032"/>
+        <location filename="../testing/thextech_engine.cpp" line="1049"/>
         <source>Enable V-Sync</source>
         <comment>Enable the vertical synchronisation if available</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1039"/>
+        <location filename="../testing/thextech_engine.cpp" line="1056"/>
         <source>Compatibility level</source>
         <comment>Choose the compatibility level used by the game</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1044"/>
+        <location filename="../testing/thextech_engine.cpp" line="1061"/>
         <source>Default</source>
         <comment>Use preferred compatibility level</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1049"/>
+        <location filename="../testing/thextech_engine.cpp" line="1066"/>
         <source>Modern</source>
         <comment>Prefer all updates and bugfixes enabled</comment>
         <translation type="unfinished">현대</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1054"/>
+        <location filename="../testing/thextech_engine.cpp" line="1071"/>
         <source>X2</source>
         <comment>Disable all bugfixes and updates exceot these made at X2</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1059"/>
+        <location filename="../testing/thextech_engine.cpp" line="1076"/>
         <source>Strict SMBX 1.3</source>
         <comment>Strict compatibility mode, all bugfixes and updates will be disabled to prepresent an old behaviour.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1066"/>
+        <location filename="../testing/thextech_engine.cpp" line="1083"/>
         <source>Speedruner&apos;s stopwatch</source>
         <comment>Speedrun mode menu</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1071"/>
+        <location filename="../testing/thextech_engine.cpp" line="1088"/>
         <source>Disabled</source>
         <comment>Speedrun mode disabled</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1076"/>
+        <location filename="../testing/thextech_engine.cpp" line="1093"/>
         <source>Mode 1 (Modern)</source>
         <comment>Enable speedrun with mode 1 (modern compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1081"/>
+        <location filename="../testing/thextech_engine.cpp" line="1098"/>
         <source>Mode 2 (X2)</source>
         <comment>Enable speedrun with mode 2 (X2 compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1086"/>
+        <location filename="../testing/thextech_engine.cpp" line="1103"/>
         <source>Mode 3 (Strict SMBX 1.3)</source>
         <comment>Enable speedrun with mode 3 (strict SMBX 1.3 compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1091"/>
+        <location filename="../testing/thextech_engine.cpp" line="1108"/>
         <source>Semi-transparent stopwatch</source>
         <comment>Show the speedrun stopwatch with a semi-transparent font.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1098"/>
+        <location filename="../testing/thextech_engine.cpp" line="1115"/>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
         <translation>마법의 손 활성화</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1100"/>
+        <location filename="../testing/thextech_engine.cpp" line="1117"/>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
         <translation>실시간 편집 가능 : 레벨 씬에서 요소 선택, 새 요소 배치, 편집기에서 선택한 후 지우기. 저장된 파일의 테스트를 실행할 때 작동하지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1106"/>
+        <location filename="../testing/thextech_engine.cpp" line="1123"/>
         <source>Enable max FPS</source>
         <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
         <translation>최대 FPS 활성화</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1108"/>
+        <location filename="../testing/thextech_engine.cpp" line="1125"/>
         <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
         <translation>V-Sync없이 게임을 할 때는 가능한 최대 프레임 속도로 게임을 실행하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1112"/>
+        <location filename="../testing/thextech_engine.cpp" line="1129"/>
         <source>Enable grab all</source>
         <comment>Allow player to grab absolutely any NPCs in a game.</comment>
         <translation>모두 가져 오기 활성화</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1114"/>
+        <location filename="../testing/thextech_engine.cpp" line="1131"/>
         <source>Allow player to grab any NPCs in a game.</source>
         <translation>플레이어가 게임에서 NPC를 잡을 수 있도록합니다.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1121"/>
+        <location filename="../testing/thextech_engine.cpp" line="1138"/>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
         <translation>TheXTech로 경로 변경 ...</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1123"/>
+        <location filename="../testing/thextech_engine.cpp" line="1140"/>
         <source>Select the path to TheXTech executable.</source>
         <translation>TheXTech 실행 파일의 경로를 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1127"/>
+        <location filename="../testing/thextech_engine.cpp" line="1144"/>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
         <translation>게임을 시작하다</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1136"/>
+        <location filename="../testing/thextech_engine.cpp" line="1153"/>
         <source>Executable not found</source>
         <translation>실행 파일을 찾을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1137"/>
+        <location filename="../testing/thextech_engine.cpp" line="1154"/>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
         <translation>&quot;% 1&quot;을 (를) 찾을 수 없기 때문에 TheXTech 게임을 시작할 수 없습니다. TheXTech 실행 파일에 대한 잘못된 경로가 지정 되었기 때문에 발생할 수 있습니다. TheXTech 경로 설정을 확인하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1146"/>
+        <location filename="../testing/thextech_engine.cpp" line="1163"/>
         <source>TheXtech start failed</source>
         <translation>TheXtech 시작 실패</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="1147"/>
+        <location filename="../testing/thextech_engine.cpp" line="1164"/>
         <source>Can&apos;t start TheXTech because of following reason:
 %3.
 
@@ -12293,39 +12293,54 @@ Do you want to save your changes?</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="83"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="87"/>
         <source>By Wohlstand</source>
         <translation>Wohlstand 제작</translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="84"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="88"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="178"/>
         <source>Editor, version %1</source>
         <translation>편집자, 버전 % 1</translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="85"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="89"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="179"/>
         <source>Architecture: %1</source>
         <translation>아키텍처 : % 1</translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="88"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="92"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="186"/>
         <source>Revision</source>
         <translation>개정</translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="91"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="95"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="189"/>
         <source>Build date</source>
         <translation>빌드 날짜</translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="97"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="101"/>
         <source>Our project site</source>
         <translation>프로젝트 사이트</translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="98"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="102"/>
         <source>This program is distributed under %1</source>
         <translation>이 프로그램은 % 1에 배포됩니다</translation>
+    </message>
+    <message>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="103"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="161"/>
+        <source>[Copy this description]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="159"/>
+        <source>[Copied!]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
