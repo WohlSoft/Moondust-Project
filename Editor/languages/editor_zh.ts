@@ -4006,7 +4006,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Delay (seconds):</source>
-        <translation>延迟（秒）：</translation>
+        <translation>间隔（秒）：</translation>
     </message>
     <message>
         <source>Contains of current NPC-Container</source>
