@@ -27,6 +27,7 @@ jobs:
             extra_path: "/home/runner/Qt/5.15.10_static/bin",
             build_type: "Release",
             upload_directory: "www/ubuntu-18-04/",
+            versions_upload_directory: "www/_versions/",
             qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/qt-5.15.10-static-ubuntu-18-04-x64-gcc8.tar.bz2",
             qt_install_dir: "/home/runner/Qt",
             qt_ver: "5.15.10_static",
@@ -251,11 +252,11 @@ jobs:
         for q in ./bin-cmake-release/*.tar.bz2; do
             UPLOAD_LIST="${UPLOAD_LIST} put -O ${{ matrix.config.upload_directory }} $q;"
         done
-        UPLOAD_LIST="${UPLOAD_LIST} put -O ./www/_versions build-temp/build_date_${BRANCH_NAME_RES}_linux.txt;"
-        UPLOAD_LIST="${UPLOAD_LIST} put -O ./www/_versions bin-cmake-release/versions/editor_${BRANCH_NAME_RES}.txt;"
-        UPLOAD_LIST="${UPLOAD_LIST} put -O ./www/_versions bin-cmake-release/versions/editor_stable_${BRANCH_NAME_RES}.txt;"
-        UPLOAD_LIST="${UPLOAD_LIST} put -O ./www/_versions bin-cmake-release/versions/engine_${BRANCH_NAME_RES}.txt;"
-        UPLOAD_LIST="${UPLOAD_LIST} put -O ./www/_versions bin-cmake-release/versions/engine_stable_${BRANCH_NAME_RES}.txt;"
+        UPLOAD_LIST="${UPLOAD_LIST} put -O ${{ matrix.config.versions_upload_directory }} build-temp/build_date_${BRANCH_NAME_RES}_linux.txt;"
+        UPLOAD_LIST="${UPLOAD_LIST} put -O ${{ matrix.config.versions_upload_directory }} bin-cmake-release/versions/editor_${BRANCH_NAME_RES}.txt;"
+        UPLOAD_LIST="${UPLOAD_LIST} put -O ${{ matrix.config.versions_upload_directory }} bin-cmake-release/versions/editor_stable_${BRANCH_NAME_RES}.txt;"
+        UPLOAD_LIST="${UPLOAD_LIST} put -O ${{ matrix.config.versions_upload_directory }} bin-cmake-release/versions/engine_${BRANCH_NAME_RES}.txt;"
+        UPLOAD_LIST="${UPLOAD_LIST} put -O ${{ matrix.config.versions_upload_directory }} bin-cmake-release/versions/engine_stable_${BRANCH_NAME_RES}.txt;"
 
         lftp -e "${UPLOAD_LIST} exit" -u ${{ secrets.builds_login }},${{ secrets.builds_password }} ${{ secrets.builds_host }}
 
