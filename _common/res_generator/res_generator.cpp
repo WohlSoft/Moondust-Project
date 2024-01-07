@@ -2,7 +2,7 @@
  * RES_Generator - A small resource generator which converts list of files
  * into C++ arrays are can be accessible via friendly functions
  *
- * Copyright (c) 2018-2023 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2018-2024 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the “Software”), to deal in
