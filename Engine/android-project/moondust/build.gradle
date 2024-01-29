@@ -92,7 +92,7 @@ println "Project version: " + xTechVersionString + ", version code: " + xTechVer
 
 
 android {
-    compileSdkVersion 33
+    compileSdk 34
 
     // Note: The NDK 23 is SIGNIFICANTLY important, because of the support for non-NEON and older Android versions
     //       The NDK 24 removes the support for Android 4.1, 4.2, and 4.3.
@@ -104,7 +104,7 @@ android {
             applicationId "ru.wohlsoft.moondust"
         }
         minSdkVersion 16
-        targetSdkVersion 33
+        targetSdkVersion 34
 
         versionName xTechVersionString
         versionCode xTechVersionNumber
