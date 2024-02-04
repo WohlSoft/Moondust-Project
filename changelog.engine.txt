@@ -4,6 +4,7 @@
 - Added the support for custom WOPL bank files at libADLMIDI synthesizer
 - Added the support for custom WOPN bank files at libOPNMIDI synthesizer
 - Added the support for the FluidSynth at MixerX library
+- Fixed the phone storage recognition on some devices
 
 0.3.3-dev
 - Fixed crash on missing player animation sequence
