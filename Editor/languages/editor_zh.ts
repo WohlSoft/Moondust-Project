@@ -706,7 +706,7 @@ File path: %3</source>
         <translation>不兼容的集成配置包</translation>
     </message>
     <message>
-        <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
+        <source>This integrational configuration package is older than API version 42 and it is no longer compatible with this version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
         <translation>此集成配置包的 API 版本低于 42，无法兼容当前版本的月尘开发工具包。从 API 42 版本起，集成配置包必须使用独立配置文件，而非覆盖 main.ini。</translation>
     </message>
 </context>

@@ -708,7 +708,7 @@ File path: %3</source>
         <translation>Несовместимый интеграционный конфигурационный пакет</translation>
     </message>
     <message>
-        <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
+        <source>This integrational configuration package is older than API version 42 and it is no longer compatible with this version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
         <translation>Данный интграционный конфигурационный пакет с версией API старее, чем 42, больше не совместим с данной версий набора разработки Moondust. Начиная с API версии 42, интеграционные конфигурационные пакеты должны использовать локальный файл настроек вместо перезаписи файла main.ini.</translation>
     </message>
 </context>

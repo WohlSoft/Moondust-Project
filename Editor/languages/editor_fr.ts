@@ -707,7 +707,7 @@ Chemin d&apos;accès : %3</translation>
         <translation>Le paquet de configuration d&apos;intégration est incompatible</translation>
     </message>
     <message>
-        <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
+        <source>This integrational configuration package is older than API version 42 and it is no longer compatible with this version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
         <translation>Ce paquet de configuration d&apos;intégration est plus ancien que la version 42 de l&apos;API et n&apos;est plus compatible avec cette version de Moondust Devkit. Depuis la version 42 de l&apos;API, les paquets de configuration d&apos;intégration doivent utiliser le fichier de paramètres locaux au lieu du fichier main.ini.</translation>
     </message>
 </context>

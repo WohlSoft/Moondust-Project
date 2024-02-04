@@ -845,7 +845,7 @@ You can use any configuration package here:&lt;br&gt;%2</source>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="539"/>
-        <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
+        <source>This integrational configuration package is older than API version 42 and it is no longer compatible with this version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
