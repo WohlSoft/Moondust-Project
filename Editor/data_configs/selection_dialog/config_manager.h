@@ -46,6 +46,12 @@ public:
     QString m_currentConfig;
     //! Path to currently selected configuration package
     QString m_currentConfigPath;
+    //! Current incompatibility level
+    int     m_currentIncompatLevel = 0;
+    //! Current API Version
+    int     m_currentAPIVersion = 0;
+    //! Official homepage of the config pack
+    QString m_currentConfigHomeUrl;
     //! Default theme pack associate with this configuration package
     QString m_themePackName;
 
@@ -65,11 +71,6 @@ public:
      * @return true if config pack is non-configurable or already configured
      */
     bool isConfigured();
-    /**
-     * @brief Check the integrational config pack for compatibiltiy
-     * @return true if config pack compatible or false if not
-     */
-    bool isIntegrationCompatible();
     /**
      * @brief Starts configure tool if available
      * @return true on success configuring, false if no config tool found, rejected or script was been errored
@@ -98,6 +99,7 @@ private:
      */
     bool checkForConfigureTool();
     void checkIsIntegrational();
+    bool verifyCompatibility();
 
     Ui::ConfigManager *ui;
 };

@@ -812,12 +812,12 @@ You also can double-click an item to scroll to its bookmarked position.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="366"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="437"/>
         <source>No config packs were found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="372"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="443"/>
         <source>No configuration packages were found!&lt;br&gt;
 Please download and install them into this directory&lt;br&gt;
 &lt;br&gt;
@@ -827,44 +827,115 @@ You can use any configuration package here:&lt;br&gt;%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="538"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="631"/>
+        <source>You have a legacy configuration package.&lt;br&gt;
+Editor will be started, but you may have a some problems with items or settings.&lt;br&gt;
+&lt;br&gt;
+Please download and install latest version of a configuration package:&lt;br&gt;
+&lt;br&gt;
+Download: %1&lt;br&gt;
+Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="656"/>
+        <source>You have a legacy and incompatible configuration package.&lt;br&gt;
+This configuration package has the API version older than the minimum supported, and therefore, it can&apos;t be used in this version of the Editor.&lt;br&gt;
+&lt;br&gt;
+You can download the compatible configuration package at here:&lt;br&gt;
+%1&lt;br&gt;
+&lt;br&gt;
+Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="672"/>
         <source>Integrational configuration package is incompatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="539"/>
-        <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="673"/>
+        <source>This integrational configuration package is older than API version 42 and it is no longer compatible with this version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="549"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="592"/>
         <source>Configuration package is not configured!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="550"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="154"/>
+        <source>Outdated</source>
+        <comment>Level of config pack incompatibility. Outdated means it MAY work, but some minor errors are possible.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="157"/>
+        <source>Legacy, incompatible</source>
+        <comment>Level of config pack incompatibility. Legacy means this config pack is too old to work on this version of Editor.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="160"/>
+        <source>Incompatible integrational</source>
+        <comment>Level of config pack incompatibility. An obsolete and incompatible integrational config package.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="163"/>
+        <source>Incompatible</source>
+        <comment>Level of config pack incompatibility. Incompatible, means, it&apos;s a totally incompatible config pack, probably, created for a modified version of the Moondust.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="593"/>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="605"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="626"/>
+        <source>Legacy configuration package</source>
+        <comment>Warning message box title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="651"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="683"/>
+        <source>Incompatible configuration package</source>
+        <comment>Warning message box title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="688"/>
+        <source>You have an incompatible configuration package designed for the SMBX2 project to use it with the modified version of the DevKit which is incompatible to the mainstream.
+To use this configuration package, you should use the compatible Devkit maintained by developers of the SMBX2 project.&lt;br&gt;
+&lt;br&gt;
+You can obtain the compatible Devkit by downloading the SMBX2 Beta5 or newer:&lt;br&gt;
+%1
+&lt;br&gt;
+&lt;br&gt;
+The Official Moondust Devkit has a support of the SMBX2 Beta4 and older only. However, you still can run any other configuration package and run the level tests using an SMBX2 engine from the outside.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="745"/>
         <source>Configuration script failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="606"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="746"/>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="618"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="758"/>
         <source>No configuration needed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="619"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="759"/>
         <source>This config pack has no configuring tool.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1554,15 +1625,13 @@ Please save them before doing anything else.</source>
 <context>
     <name>DataConfig</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="351"/>
-        <source>You have a legacy configuration package.
-&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
-&lt;br&gt;
-&lt;br&gt;Please download and install latest version of a configuration package:
-&lt;br&gt;
-&lt;br&gt;Download: %1
-&lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
-therefore you can use same link to get updated version</source>
+        <location filename="../data_configs/data_configs.cpp" line="330"/>
+        <source>Invalid config pack version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/data_configs.cpp" line="331"/>
+        <source>Can&apos;t load the configuration package: the &quot;api-version&quot; field is missing at the main.ini.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9194,7 +9263,7 @@ File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="693"/>
+        <location filename="../data_configs/data_configs.cpp" line="670"/>
         <source>Finishing loading...</source>
         <translation type="unfinished"></translation>
     </message>

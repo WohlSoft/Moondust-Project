@@ -321,44 +321,21 @@ bool DataConfig::loadBasics()
     else
         data_dir = config_dir + "data/";
 
-    QString url     = guiset.value("home-page", "http://wohlsoft.ru/config_packs/").toQString();
-    QString version = guiset.value("pge-editor-version", "0.0").toQString();
     bool    hasApiVersion = guiset.hasKey("api-version");
-    unsigned int apiVersion = guiset.value("api-version", 1).toUInt();
-    bool ver_notify = guiset.value("enable-version-notify", true).toBool();
-    bool ver_invalid = false;
+    api_version = guiset.value("api-version", -1).toUInt();
 
-    if(hasApiVersion)
-        ver_invalid = (apiVersion != V_CP_API) || (apiVersion < 41);
-    else
-        ver_invalid = (version != VersionCmp::compare(QString("%1").arg(V_FILE_VERSION), version));
-
-    LogDebug(QString("Config pack version validation: "
-                     "has API version: %1, has invalid version: %2")
-                     .arg(hasApiVersion).arg(ver_invalid));
-
-    if(ver_notify && ver_invalid)
+    if(!hasApiVersion || api_version < 41)
     {
-        LogWarning(QString("Config pack version is invalid: "
-                           "has API version: %1, has invalid version: %2, current version %3, version wanted: %4")
-                           .arg(hasApiVersion).arg(ver_invalid).arg(V_FILE_VERSION).arg(version));
-        QMessageBox box;
-        box.setWindowTitle("Legacy configuration package");
-        box.setTextFormat(Qt::RichText);
-        #if (QT_VERSION >= 0x050100)
-        box.setTextInteractionFlags(Qt::TextBrowserInteraction);
-        #endif
-        box.setText(tr("You have a legacy configuration package.\n<br>"
-                       "Editor will be started, but you may have a some problems with items or settings.\n<br>\n<br>"
-                       "Please download and install latest version of a configuration package:\n<br>\n<br>Download: %1\n<br>"
-                       "Note: most of config packs are updates togeter with PGE,<br>\n"
-                       "therefore you can use same link to get updated version")
-                    .arg("<a href=\"%1\">%1</a>").arg(url));
-        box.setStandardButtons(QMessageBox::Ok);
-        box.setIcon(QMessageBox::Warning);
-        box.exec();
+        QMessageBox::critical(nullptr,
+                              tr("Invalid config pack version"),
+                              tr("Can't load the configuration package: the \"api-version\" field is missing at the main.ini."),
+                              QMessageBox::Ok);
+        return false;
     }
+
+    LogDebug(QString("Config pack API version: %1").arg(api_version));
     closeSection(&guiset);
+
 
     if(!splash_logo.isEmpty())
     {

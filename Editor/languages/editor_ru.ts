@@ -708,8 +708,87 @@ File path: %3</source>
         <translation>Несовместимый интеграционный конфигурационный пакет</translation>
     </message>
     <message>
-        <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
+        <source>This integrational configuration package is older than API version 42 and it is no longer compatible with this version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
         <translation>Данный интграционный конфигурационный пакет с версией API старее, чем 42, больше не совместим с данной версий набора разработки Moondust. Начиная с API версии 42, интеграционные конфигурационные пакеты должны использовать локальный файл настроек вместо перезаписи файла main.ini.</translation>
+    </message>
+    <message>
+        <source>Legacy configuration package</source>
+        <comment>Warning message box title</comment>
+        <translation>Устаревший конфигурационный пакет</translation>
+    </message>
+    <message>
+        <source>Incompatible configuration package</source>
+        <comment>Warning message box title</comment>
+        <translation>Несовместимый конфигурационный пакет</translation>
+    </message>
+    <message>
+        <source>You have an incompatible configuration package designed for the SMBX2 project to use it with the modified version of the DevKit which is incompatible to the mainstream.
+To use this configuration package, you should use the compatible Devkit maintained by developers of the SMBX2 project.&lt;br&gt;
+&lt;br&gt;
+You can obtain the compatible Devkit by downloading the SMBX2 Beta5 or newer:&lt;br&gt;
+%1
+&lt;br&gt;
+&lt;br&gt;
+The Official Moondust Devkit has a support of the SMBX2 Beta4 and older only. However, you still can run any other configuration package and run the level tests using an SMBX2 engine from the outside.</source>
+        <translation>У вас несовместимый конфигурационный пакет, созданный для проекта SMBX2 и предназначенный для использования с модицицированной версией набора разработки, которая не совместима с официальной версий.
+Чтобы использовать данный конфиг-пакет, вы должны использовать совместимый набор разработки, поддерживаемый разработчиками проекта SMBX2.&lt;br&gt;
+&lt;br&gt;
+Вы сможете загрузить совместимую версию набора разработки, если загрузите SMBX2 Beta5 или новее:&lt;br&gt;
+%1&lt;br&gt;
+&lt;br&gt;
+Официальный выпуск Moondust Devkit поддерживает только SMBX2 Beta4 и старее. Однако, вы по прежнему сможете использовать любой другой конфиг-пакет и запускать тестирование уровней с помощью движка SMBX2 снаружи.</translation>
+    </message>
+    <message>
+        <source>Outdated</source>
+        <comment>Level of config pack incompatibility. Outdated means it MAY work, but some minor errors are possible.</comment>
+        <translation>Устаревший</translation>
+    </message>
+    <message>
+        <source>Legacy, incompatible</source>
+        <comment>Level of config pack incompatibility. Legacy means this config pack is too old to work on this version of Editor.</comment>
+        <translation>Устаревший, несовместимый</translation>
+    </message>
+    <message>
+        <source>Incompatible integrational</source>
+        <comment>Level of config pack incompatibility. An obsolete and incompatible integrational config package.</comment>
+        <translation>Несовместимый интеграционный</translation>
+    </message>
+    <message>
+        <source>Incompatible</source>
+        <comment>Level of config pack incompatibility. Incompatible, means, it&apos;s a totally incompatible config pack, probably, created for a modified version of the Moondust.</comment>
+        <translation>Несовместимый</translation>
+    </message>
+    <message>
+        <source>You have a legacy configuration package.&lt;br&gt;
+Editor will be started, but you may have a some problems with items or settings.&lt;br&gt;
+&lt;br&gt;
+Please download and install latest version of a configuration package:&lt;br&gt;
+&lt;br&gt;
+Download: %1&lt;br&gt;
+Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
+        <translation>Данный конфиг-пакет является устаревшим.&lt;br&gt;
+Редактор хоть и запустится, но могут возникнуть некоторые проблемы с элементами или настройками.&lt;br&gt;
+&lt;br&gt;
+Пожалуйста, загрузите и установите последнюю версию конфигурационного пакета:&lt;br&gt;
+&lt;br&gt;
+Загрузить: %1&lt;br&gt;
+Примечание: Большинство конфиг-пакетов обновляется совместно с новыми выпусками Moondust Project. Поэтому вы можете использовать ту же самую ссылку для загрузки обновлённой версии.</translation>
+    </message>
+    <message>
+        <source>You have a legacy and incompatible configuration package.&lt;br&gt;
+This configuration package has the API version older than the minimum supported, and therefore, it can&apos;t be used in this version of the Editor.&lt;br&gt;
+&lt;br&gt;
+You can download the compatible configuration package at here:&lt;br&gt;
+%1&lt;br&gt;
+&lt;br&gt;
+Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
+        <translation>Данный конфиг-пакет является устаревшим и несовместимым.&lt;br&gt;
+Данный конфиг-пакет содержит версию API ниже, чем минимально-поддерживаемая. Поэтому, его нельзя использовать с данной версией редактора.&lt;br&gt;
+&lt;br&gt;
+Пожалуйста, загрузите совместимую версию конфигурационного пакета тут:&lt;br&gt;
+&lt;br&gt;
+%1&lt;br&gt;
+Примечание: Большинство конфиг-пакетов обновляется совместно с новыми выпусками Moondust Project. Поэтому вы можете использовать ту же самую ссылку для загрузки обновлённой версии.</translation>
     </message>
 </context>
 <context>
@@ -1254,22 +1333,12 @@ Please save them before doing anything else.</source>
 <context>
     <name>DataConfig</name>
     <message>
-        <source>You have a legacy configuration package.
-&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
-&lt;br&gt;
-&lt;br&gt;Please download and install latest version of a configuration package:
-&lt;br&gt;
-&lt;br&gt;Download: %1
-&lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
-therefore you can use same link to get updated version</source>
-        <translation>Обнаружено, что используется устаревший конфигурационный пакет.
-&lt;br&gt;Редактор запустится, однако, имеются возможные проблемы с игровыми элементами или с их настройками.
-&lt;br&gt;
-&lt;br&gt;Пожалуйста, загрузите и установите последнюю версию вашего конфиг-пакета:
-&lt;br&gt;
-&lt;br&gt;Загрузить: %1
-&lt;br&gt;Примечание: большинство конфиг-пакетов обновляются вместе с комплектом Moondust,&lt;br&gt;
-поэтому вы можете использовать ту же самую ссылку чтобы получить обновлённую версию.</translation>
+        <source>Invalid config pack version</source>
+        <translation>Некорректная версия конфиг-пакета</translation>
+    </message>
+    <message>
+        <source>Can&apos;t load the configuration package: the &quot;api-version&quot; field is missing at the main.ini.</source>
+        <translation>Невозможно загрузить конфигурационный пакет: отсутствует поле &quot;api-version&quot; в файле &quot;main.ini&quot;.</translation>
     </message>
 </context>
 <context>
