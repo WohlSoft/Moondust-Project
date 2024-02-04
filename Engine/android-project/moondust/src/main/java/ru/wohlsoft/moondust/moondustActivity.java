@@ -48,7 +48,7 @@ public class moondustActivity extends SDLActivity
 {
     final String LOG_TAG = "Moondust";
     public static final int READWRITE_PERMISSION_FOR_GAME = 1;
-    private Bundle m_savedInstanceState = null;
+    private final Bundle m_savedInstanceState = null;
 
     protected String[] getLibraries()
     {
@@ -86,6 +86,7 @@ public class moondustActivity extends SDLActivity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setSdCardPath(Environment.getExternalStorageDirectory().getAbsolutePath());
 
         if(!hasManageAppFS())
             return;
@@ -115,6 +116,8 @@ public class moondustActivity extends SDLActivity
 
         return true;
     }
+
+    public static native void setSdCardPath(String path);
 
     public static native void setKeyPos(int cmd, float left, float top, float right, float bottom);
     public static native void setCanvasSize(float width, float height);
