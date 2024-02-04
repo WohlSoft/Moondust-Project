@@ -373,8 +373,8 @@ bool ConfigManager::hasConfigPacks()
                "Please download and install them into this directory<br>\n<br>\n%1<br>\n<br>\n"
                "You can use any configuration package here:<br>%2")
             .arg(AppPathManager::userAppDir() + "/configs")
-            .arg("<a href=\"http://wohlsoft.ru/config_packs/\">"
-                 "http://wohlsoft.ru/config_packs/"
+            .arg("<a href=\"https://wohlsoft.ru/config_packs/\">"
+                 "https://wohlsoft.ru/config_packs/"
                  "</a>")
         );
         QSize mSize = msgBox.sizeHint();
