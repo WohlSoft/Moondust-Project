@@ -709,6 +709,68 @@ File path: %3</source>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with this version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
         <translation>此集成配置包的 API 版本低于 42，无法兼容当前版本的月尘开发工具包。从 API 42 版本起，集成配置包必须使用独立配置文件，而非覆盖 main.ini。</translation>
     </message>
+    <message>
+        <source>Legacy configuration package</source>
+        <comment>Warning message box title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have a legacy configuration package.
+&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
+&lt;br&gt;
+&lt;br&gt;Please download and install latest version of a configuration package:
+&lt;br&gt;
+&lt;br&gt;Download: %1
+&lt;br&gt;Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incompatible configuration package</source>
+        <comment>Warning message box title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have a legacy and incompatible configuration package.
+&lt;br&gt;This configuration package has the API version older than the minimum supported, and therefore, it can&apos;t be used in this version of the Editor.&lt;br&gt;
+&lt;br&gt;
+You can download the compatible configuration package at here:&lt;br&gt;
+%1
+&lt;br&gt;
+&lt;br&gt;Note: most of config packs gets being updates with Moondust Project togeter.
+Therefore, you can use the same link to download the updated version.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have an incompatible configuration package designed for the SMBX2 project to use it with the modified version of the DevKit which is incompatible to the mainstream.
+To use this configuration package, you should use the compatible Devkit maintained by developers of the SMBX2 project.&lt;br&gt;
+&lt;br&gt;
+You can obtain the compatible Devkit by downloading the SMBX2 Beta5 or newer:&lt;br&gt;
+%1
+&lt;br&gt;
+&lt;br&gt;
+The Official Moondust Devkit has a support of the SMBX2 Beta4 and older only. However, you still can run any other configuration package and run the level tests using an SMBX2 engine from the outside.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outdated</source>
+        <comment>Level of config pack incompatibility. Outdated means it MAY work, but some minor errors are possible.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Legacy, incompatible</source>
+        <comment>Level of config pack incompatibility. Legacy means this config pack is too old to work on this version of Editor.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incompatible integrational</source>
+        <comment>Level of config pack incompatibility. An obsolete and incompatible integrational config package.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incompatible</source>
+        <comment>Level of config pack incompatibility. Incompatible, means, it&apos;s a totally incompatible config pack, probably, created for a modified version of the Moondust.</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ConfigStatus</name>
@@ -1253,22 +1315,12 @@ Please save them before doing anything else.</source>
 <context>
     <name>DataConfig</name>
     <message>
-        <source>You have a legacy configuration package.
-&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
-&lt;br&gt;
-&lt;br&gt;Please download and install latest version of a configuration package:
-&lt;br&gt;
-&lt;br&gt;Download: %1
-&lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
-therefore you can use same link to get updated version</source>
-        <translation>您的配置包版本过旧。
-&lt;br&gt;编辑器即将启动，但您会在对象和设置中遇到问题。
-&lt;br&gt;
-&lt;br&gt;请下载并安装最新版本的配置包：
-&lt;br&gt;
-&lt;br&gt;下载: %1
-&lt;br&gt;注：部分配置包和月尘引擎同步更新，
-&lt;br&gt;确保可以在同一链接里下载到新版本。</translation>
+        <source>Invalid config pack version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t load the configuration package: the &quot;api-version&quot; field is missing at the main.ini.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

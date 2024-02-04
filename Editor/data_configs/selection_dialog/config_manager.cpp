@@ -151,16 +151,16 @@ void ListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
     switch(incompat)
     {
     case CPIncompatible_OutdatedApi:
-        incompatString = tr("Outdated", "Level of config pack incompatibility. Outdated means it MAY work, but some minor errors are possible.");
+        incompatString = ConfigManager::tr("Outdated", "Level of config pack incompatibility. Outdated means it MAY work, but some minor errors are possible.");
         break;
     case CPIncompatible_IncompatibleApi:
-        incompatString = tr("Legacy, incompatible", "Level of config pack incompatibility. Legacy means this config pack is too old to work on this version of Editor.");
+        incompatString = ConfigManager::tr("Legacy, incompatible", "Level of config pack incompatibility. Legacy means this config pack is too old to work on this version of Editor.");
         break;
     case CPIncompatible_IncompatibleIntegrat:
-        incompatString = tr("Incompatible integrational", "Level of config pack incompatibility. An obsolete and incompatible integrational config package.");
+        incompatString = ConfigManager::tr("Incompatible integrational", "Level of config pack incompatibility. An obsolete and incompatible integrational config package.");
         break;
     case CPIncompatible_IncompatibleX2:
-        incompatString = tr("Incompatible", "Level of config pack incompatibility. Incompatible, means, it's a totally incompatible config pack, probably, created for a modified version of the Moondust.");
+        incompatString = ConfigManager::tr("Incompatible", "Level of config pack incompatibility. Incompatible, means, it's a totally incompatible config pack, probably, created for a modified version of the Moondust.");
         break;
     default:
         break;
