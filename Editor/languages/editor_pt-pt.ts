@@ -712,29 +712,8 @@ File path: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You have a legacy configuration package.
-&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
-&lt;br&gt;
-&lt;br&gt;Please download and install latest version of a configuration package:
-&lt;br&gt;
-&lt;br&gt;Download: %1
-&lt;br&gt;Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Incompatible configuration package</source>
         <comment>Warning message box title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You have a legacy and incompatible configuration package.
-&lt;br&gt;This configuration package has the API version older than the minimum supported, and therefore, it can&apos;t be used in this version of the Editor.&lt;br&gt;
-&lt;br&gt;
-You can download the compatible configuration package at here:&lt;br&gt;
-%1
-&lt;br&gt;
-&lt;br&gt;Note: most of config packs gets being updates with Moondust Project togeter.
-Therefore, you can use the same link to download the updated version.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -766,6 +745,26 @@ The Official Moondust Devkit has a support of the SMBX2 Beta4 and older only. Ho
     <message>
         <source>Incompatible</source>
         <comment>Level of config pack incompatibility. Incompatible, means, it&apos;s a totally incompatible config pack, probably, created for a modified version of the Moondust.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have a legacy configuration package.&lt;br&gt;
+Editor will be started, but you may have a some problems with items or settings.&lt;br&gt;
+&lt;br&gt;
+Please download and install latest version of a configuration package:&lt;br&gt;
+&lt;br&gt;
+Download: %1&lt;br&gt;
+Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have a legacy and incompatible configuration package.&lt;br&gt;
+This configuration package has the API version older than the minimum supported, and therefore, it can&apos;t be used in this version of the Editor.&lt;br&gt;
+&lt;br&gt;
+You can download the compatible configuration package at here:&lt;br&gt;
+%1&lt;br&gt;
+&lt;br&gt;
+Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

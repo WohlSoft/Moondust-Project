@@ -840,12 +840,34 @@ Kérjük töltsd le és másold azokat ebbe a könyvtárba&lt;br&gt;
 Itt bármely konfigurációs csomagot használhatod:&lt;br&gt;%2</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="669"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="631"/>
+        <source>You have a legacy configuration package.&lt;br&gt;
+Editor will be started, but you may have a some problems with items or settings.&lt;br&gt;
+&lt;br&gt;
+Please download and install latest version of a configuration package:&lt;br&gt;
+&lt;br&gt;
+Download: %1&lt;br&gt;
+Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="656"/>
+        <source>You have a legacy and incompatible configuration package.&lt;br&gt;
+This configuration package has the API version older than the minimum supported, and therefore, it can&apos;t be used in this version of the Editor.&lt;br&gt;
+&lt;br&gt;
+You can download the compatible configuration package at here:&lt;br&gt;
+%1&lt;br&gt;
+&lt;br&gt;
+Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="672"/>
         <source>Integrational configuration package is incompatible</source>
         <translation>Az integrált konfigurációs csomag nem kompatibilis</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="670"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="673"/>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with this version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
         <translation>Az integrált konfigurációs csomag API verziója régebbi, mint 42, ezért nem kompatibilis a Moondust szerkesztő jelenlegi verziójával mert a 42-es verziótól az integráét konfigurációs csomagok a helyi beállítófájlt használják a main.ini helyett.</translation>
     </message>
@@ -892,37 +914,14 @@ Szeretnéd beállítani?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="631"/>
-        <source>You have a legacy configuration package.
-&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
-&lt;br&gt;
-&lt;br&gt;Please download and install latest version of a configuration package:
-&lt;br&gt;
-&lt;br&gt;Download: %1
-&lt;br&gt;Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="648"/>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="680"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="651"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="683"/>
         <source>Incompatible configuration package</source>
         <comment>Warning message box title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="653"/>
-        <source>You have a legacy and incompatible configuration package.
-&lt;br&gt;This configuration package has the API version older than the minimum supported, and therefore, it can&apos;t be used in this version of the Editor.&lt;br&gt;
-&lt;br&gt;
-You can download the compatible configuration package at here:&lt;br&gt;
-%1
-&lt;br&gt;
-&lt;br&gt;Note: most of config packs gets being updates with Moondust Project togeter.
-Therefore, you can use the same link to download the updated version.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="685"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="688"/>
         <source>You have an incompatible configuration package designed for the SMBX2 project to use it with the modified version of the DevKit which is incompatible to the mainstream.
 To use this configuration package, you should use the compatible Devkit maintained by developers of the SMBX2 project.&lt;br&gt;
 &lt;br&gt;
@@ -934,24 +933,24 @@ The Official Moondust Devkit has a support of the SMBX2 Beta4 and older only. Ho
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="742"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="745"/>
         <source>Configuration script failed</source>
         <translation>Konfigurációs szkript hiba</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="743"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="746"/>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
         <translation>A konfigurációs eszköz hibával tért vissza: %1 a %2 sorban.
 Fájl útvonala: %3</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="755"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="758"/>
         <source>No configuration needed</source>
         <translation>Konfiguráció nem szükséges</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="756"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="759"/>
         <source>This config pack has no configuring tool.</source>
         <translation>Ennek a csomagnak nincs beállítóeszköze.</translation>
     </message>

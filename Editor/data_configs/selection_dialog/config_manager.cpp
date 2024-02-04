@@ -628,9 +628,12 @@ bool ConfigManager::verifyCompatibility()
 #if (QT_VERSION >= 0x050100)
         box.setTextInteractionFlags(Qt::TextBrowserInteraction);
 #endif
-        box.setText(tr("You have a legacy configuration package.\n<br>"
-                       "Editor will be started, but you may have a some problems with items or settings.\n<br>\n<br>"
-                       "Please download and install latest version of a configuration package:\n<br>\n<br>Download: %1\n<br>"
+        box.setText(tr("You have a legacy configuration package.<br>\n"
+                       "Editor will be started, but you may have a some problems with items or settings.<br>\n"
+                       "<br>\n"
+                       "Please download and install latest version of a configuration package:<br>\n"
+                       "<br>\n"
+                       "Download: %1<br>\n"
                        "Note: most of config packs gets being updates with Moondust Project togeter. "
                        "Therefore, you can use the same link to download the updated version.")
                         .arg("<a href=\"%1\">%1</a>").arg(m_currentConfigHomeUrl));
@@ -650,13 +653,13 @@ bool ConfigManager::verifyCompatibility()
 #if (QT_VERSION >= 0x050100)
         box.setTextInteractionFlags(Qt::TextBrowserInteraction);
 #endif
-        box.setText(tr("You have a legacy and incompatible configuration package.\n<br>"
-                       "This configuration package has the API version older than the minimum supported, "
-                       "and therefore, it can't be used in this version of the Editor.<br>\n<br>\n"
+        box.setText(tr("You have a legacy and incompatible configuration package.<br>\n"
+                       "This configuration package has the API version older than the minimum supported, and therefore, it can't be used in this version of the Editor.<br>\n"
+                       "<br>\n"
                        "You can download the compatible configuration package at here:<br>\n"
-                       "%1\n<br>\n<br>"
-                       "Note: most of config packs gets being updates with Moondust Project togeter.\n"
-                       "Therefore, you can use the same link to download the updated version.")
+                       "%1<br>\n"
+                       "<br>\n"
+                       "Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.")
                         .arg("<a href=\"%1\">%1</a>").arg(m_currentConfigHomeUrl));
         box.setStandardButtons(QMessageBox::Ok);
         box.setIcon(QMessageBox::Warning);
