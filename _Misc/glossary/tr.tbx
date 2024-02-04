@@ -31,6 +31,14 @@
                 <langSet xml:lang="en"><tig><term>arpegio</term></tig></langSet>
                 <langSet xml:lang="tr"><tig><term>arpej</term></tig></langSet>
             </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>Direction</term></tig></langSet>
+                <langSet xml:lang="tr"><tig><term>Yön</term></tig></langSet>
+            </termEntry>
+            <termEntry id="1">
+                <langSet xml:lang="en"><tig><term>Direction</term></tig></langSet>
+                <langSet xml:lang="tr"><tig><term>Yön</term></tig></langSet>
+            </termEntry>
         </body>
     </text>
 </martif>

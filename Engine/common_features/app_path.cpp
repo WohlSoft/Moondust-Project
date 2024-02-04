@@ -86,6 +86,17 @@ static void saveCustomState()
 }
 #endif
 
+#ifdef __ANDROID__
+#   include <unistd.h>
+#   include <jni.h>
+#   if 1
+#       undef JNIEXPORT
+#       undef JNICALL
+#       define JNIEXPORT extern "C"
+#       define JNICALL
+#   endif
+#endif
+
 #include "app_path.h"
 #include "../version.h"
 
@@ -100,6 +111,25 @@ std::string AppPathManager::m_userPath;
 #define UserDirName "/PGE Project"
 #else
 #define UserDirName "/.PGE_Project"
+#endif
+
+#ifdef __ANDROID__
+//! Default path to the internal sotrage directory
+static std::string m_androidSdCardPath = "/storage/emulated/0";
+
+JNIEXPORT void JNICALL
+Java_ru_wohlsoft_moondust_moondustActivity_setSdCardPath(
+    JNIEnv *env,
+    jclass type,
+    jstring sdcardPath_j
+)
+{
+    const char *sdcardPath;
+    (void)type;
+    sdcardPath = env->GetStringUTFChars(sdcardPath_j, nullptr);
+    m_androidSdCardPath = sdcardPath;
+    env->ReleaseStringUTFChars(sdcardPath_j, sdcardPath);
+}
 #endif
 
 /**
@@ -131,7 +161,7 @@ static std::string getPgeUserDirectory()
         path.resize(path_len);
     }
 #elif defined(__ANDROID__)
-    path = "/sdcard/";
+    path = m_androidSdCardPath;
 #elif defined(__HAIKU__)
     {
         const char *home = SDL_getenv("HOME");
@@ -143,6 +173,7 @@ static std::string getPgeUserDirectory()
         path.append(pw->pw_dir);
     }
 #endif
+
     return path.empty() ? std::string(".") : (path + UserDirName);
 }
 

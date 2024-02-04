@@ -617,7 +617,7 @@ static void pgeLevelPlayScreen(AppInstance &a)
 
         case LvlExit::EXIT_PlayerDeath:
         {
-            playAgain = a.gameState.m_isEpisode ? a.gameState.m_autoRestartFailedLevel : true;
+            playAgain = !a.gameState.m_isEpisode || a.gameState.m_autoRestartFailedLevel;
             a.goToOnLevelEnd = a.gameState.m_isEpisode ?
                                     AppInstance::RETURN_TO_WORLDMAP :
                                     AppInstance::RETURN_TO_MAIN_MENU;
