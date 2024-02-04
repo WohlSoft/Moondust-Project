@@ -41,6 +41,9 @@ beta2
 - Added the indicator of the presense of the talking message for NPCs
 - Added the indicator of the slippery block
 - Selection frame of triangular blocks will be triangular
+- Added the better configuration packages compatibility check
+- Stopped support of legacy configuration packages (which don't have API version specified)
+- Stopped support of the SMBX2 newer than Beta4: On an attempt to run the configuration package for the X2 Beta5 and newer an error will be shown up
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

@@ -7,6 +7,8 @@
 - Fixed the legacy auto-scroll conversion from the SMBX64-LVL files into SMBX-38A-LVL files
 - API version has changed to 42 due to integrational configuration packages supporting rework
 - GIFs2PNG now is able to skip images with non-black-and-white masks (which leads any kind of the semi-transparency)
+- Stopped support of legacy configuration packages (which don't have API version specified)
+- Stopped support of the SMBX2 newer than Beta4: On an attempt to run the configuration package for the X2 Beta5 and newer an error will be shown up
 
 0.4.3
 - Native support for MSYS2 build environment via build.sh script
