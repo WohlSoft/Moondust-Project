@@ -263,6 +263,9 @@ public:
     QString splash_logo;
     QList<obj_splash_ani > animations;
 
+    //! API version
+    int api_version = -1;
+
     //! An identify key to mark level and world files to maintain a compatibility between different config packs.
     QString configPackId;
     //! Target engine name, shown in the incompatibility warning message

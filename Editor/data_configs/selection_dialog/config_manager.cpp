@@ -43,13 +43,26 @@
 #include <js_engine/proxies/js_system.h>
 
 #include "../data_configs.h"
+#include "version.h"
 
 #define CONFIGURE_TOOL_NAME "configure.js"
 
-#define CP_NAME_ROLE        (Qt::ToolTipRole)
-#define CP_DESC_ROLE        (Qt::UserRole+1)
-#define CP_SMBX64FLAG_ROLE  (Qt::UserRole+2)
-#define CP_FULLDIR_ROLE     (Qt::UserRole+3)
+#define CP_NAME_ROLE         (Qt::ToolTipRole)
+#define CP_DESC_ROLE         (Qt::UserRole + 1)
+#define CP_SMBX64FLAG_ROLE   (Qt::UserRole + 2)
+#define CP_FULLDIR_ROLE      (Qt::UserRole + 3)
+#define CP_INCOMPATIBLE_ROLE (Qt::UserRole + 4)
+#define CP_API_VERSION_ROLE  (Qt::UserRole + 5)
+#define CP_HOMEPAGE_ROLE     (Qt::UserRole + 6)
+
+enum CPIncompatibleLevel
+{
+    CPIncompatible_Compatible = 0,
+    CPIncompatible_OutdatedApi,
+    CPIncompatible_IncompatibleApi,
+    CPIncompatible_IncompatibleIntegrat,
+    CPIncompatible_IncompatibleX2,
+};
 
 class ListDelegate : public QAbstractItemDelegate
 {
@@ -79,6 +92,9 @@ void ListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
     //Color: #333
     QPen fontPen(QColor::fromRgb(51, 51, 51), 1, Qt::SolidLine);
+
+    //Color: #f00
+    QPen fontPenNotice(QColor::fromRgb(0xFF, 0, 0), 1, Qt::SolidLine);
 
     //Color: #fff
     QPen fontMarkedPen(Qt::white, 1, Qt::SolidLine);
@@ -129,6 +145,26 @@ void ListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
     QIcon ic = QIcon(qvariant_cast<QPixmap>(index.data(Qt::DecorationRole)));
     QString title       = index.data(Qt::DisplayRole).toString();
     QString description = index.data(CP_DESC_ROLE).toString();
+    CPIncompatibleLevel incompat = static_cast<CPIncompatibleLevel>(index.data(CP_INCOMPATIBLE_ROLE).toInt());
+    QString incompatString;
+
+    switch(incompat)
+    {
+    case CPIncompatible_OutdatedApi:
+        incompatString = tr("Outdated", "Level of config pack incompatibility. Outdated means it MAY work, but some minor errors are possible.");
+        break;
+    case CPIncompatible_IncompatibleApi:
+        incompatString = tr("Legacy, incompatible", "Level of config pack incompatibility. Legacy means this config pack is too old to work on this version of Editor.");
+        break;
+    case CPIncompatible_IncompatibleIntegrat:
+        incompatString = tr("Incompatible integrational", "Level of config pack incompatibility. An obsolete and incompatible integrational config package.");
+        break;
+    case CPIncompatible_IncompatibleX2:
+        incompatString = tr("Incompatible", "Level of config pack incompatibility. Incompatible, means, it's a totally incompatible config pack, probably, created for a modified version of the Moondust.");
+        break;
+    default:
+        break;
+    }
 
     int imageSpace_l = 10, imageSpace_r = 10;
     if(!ic.isNull())
@@ -151,6 +187,18 @@ void ListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
     r = option.rect.adjusted(imageSpace_l, 30, -imageSpace_r, 30);
     painter->setFont(QFont("Lucida Grande", PGEDefaultFontSize, QFont::Normal));
     painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignLeft, description, &r);
+
+    if(incompat > CPIncompatible_Compatible)
+    {
+        //Incompatibility notice
+        painter->save();
+        painter->setPen(fontPenNotice);
+        painter->setBrush(QColor(252, 0, 0));
+        r = option.rect.adjusted(imageSpace_l, 0, -imageSpace_r, -30);
+        painter->setFont(QFont("Lucida Grande", PGEDefaultFontSize, QFont::Normal));
+        painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignRight, incompatString, &r);
+        painter->restore();
+    }
 }
 
 QSize ListDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -283,11 +331,18 @@ void ConfigManager::loadConfigPackList()
         QString cpFullDirPath   = confD.second;
         QString configName;
         QString cpDesc;
+        QString homePage;
         bool    cpSmbx64Flag;
+        bool    cpIsX2;
+        bool    cpIsIntegrat;
+        int     apiVersion;
+        CPIncompatibleLevel cpIncompatible = CPIncompatible_Compatible;
         QString data_dir;
         QString splash_logo;
 
         QString gui_ini = cpFullDirPath + "main.ini";
+
+        cpIsIntegrat = QFile::exists(cpFullDirPath + CONFIGURE_TOOL_NAME);
 
         if(!QFileInfo(gui_ini).exists())
             continue; //Skip if it is not a config pack directory
@@ -308,9 +363,12 @@ void ConfigManager::loadConfigPackList()
                     ApplicationPath + "/" :
                     cpFullDirPath + "data/");
 
-        configName = guiset.value("config_name", QDir(cpFullDirPath).dirName()).toString();
-        cpDesc = guiset.value("config_desc", cpFullDirPath).toString();
+        configName =    guiset.value("config_name", QDir(cpFullDirPath).dirName()).toString();
+        cpDesc =        guiset.value("config_desc", cpFullDirPath).toString();
         cpSmbx64Flag =  guiset.value("smbx-compatible", false).toBool();
+        apiVersion =    guiset.value("api-version", -1).toInt();
+        cpIsX2 =        guiset.value("is-smbx2", false).toBool();
+        homePage =      guiset.value("home-page", "https://wohlsoft.ru/config_packs/").toString();
         guiset.endGroup();
 
         QPixmap cpSplashImg;
@@ -329,12 +387,25 @@ void ConfigManager::loadConfigPackList()
         cpSplashImg.load(splash_logo);
         GraphicsHelps::squareImageR(cpSplashImg, QSize(70, 40));
 
+        //Incompatibility level
+        if(cpIsX2)
+            cpIncompatible = CPIncompatible_IncompatibleX2;
+        else if(cpIsIntegrat && apiVersion < 42)
+            cpIncompatible = CPIncompatible_IncompatibleIntegrat;
+        else if(apiVersion < 41)
+            cpIncompatible = CPIncompatible_IncompatibleApi;
+        else if(apiVersion < V_CP_API)
+            cpIncompatible = CPIncompatible_OutdatedApi;
+
         item = new QListWidgetItem(configName);
         item->setData(Qt::DecorationRole,   cpSplashImg);
         item->setData(CP_NAME_ROLE,         cpName);
         item->setData(CP_DESC_ROLE,         cpDesc);
         item->setData(CP_SMBX64FLAG_ROLE,   cpSmbx64Flag);
         item->setData(CP_FULLDIR_ROLE,      cpFullDirPath);
+        item->setData(CP_INCOMPATIBLE_ROLE, static_cast<int>(cpIncompatible));
+        item->setData(CP_API_VERSION_ROLE,  apiVersion);
+        item->setData(CP_HOMEPAGE_ROLE,     homePage);
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         ui->configList->addItem(item);
     }
@@ -448,6 +519,9 @@ QString ConfigManager::loadConfigs()
     if(availableConfigs.size() == 1)
         m_doAskAgain = false;
 
+    if(!verifyCompatibility())
+        return QString();
+
     checkIsIntegrational();
 
     if((!m_currentConfigPath.isEmpty()) && (!m_doAskAgain))
@@ -467,27 +541,23 @@ void ConfigManager::setAskAgain(bool _x)
 
 void ConfigManager::on_configList_itemDoubleClicked(QListWidgetItem *item)
 {
-    m_currentConfig       = item->data(CP_NAME_ROLE).toString();
-    m_currentConfigPath   = item->data(CP_FULLDIR_ROLE).toString();
-    m_doAskAgain          = ui->AskAgain->isChecked();
+    m_currentConfig         = item->data(CP_NAME_ROLE).toString();
+    m_currentConfigPath     = item->data(CP_FULLDIR_ROLE).toString();
+    m_currentIncompatLevel  = item->data(CP_INCOMPATIBLE_ROLE).toInt();
+    m_currentAPIVersion     = item->data(CP_API_VERSION_ROLE).toInt();
+    m_currentConfigHomeUrl  = item->data(CP_HOMEPAGE_ROLE).toString();
+    m_doAskAgain            = ui->AskAgain->isChecked();
 
-    checkIsIntegrational();
-
-    if(checkForConfigureTool())
+    if(verifyCompatibility())
         this->accept();
 }
 
 void ConfigManager::on_buttonBox_accepted()
 {
-    if(ui->configList->selectedItems().isEmpty()) return;
-    m_currentConfig = ui->configList->selectedItems().first()->data(CP_NAME_ROLE).toString();
-    m_currentConfigPath = ui->configList->selectedItems().first()->data(CP_FULLDIR_ROLE).toString();
-    m_doAskAgain = ui->AskAgain->isChecked();
+    if(ui->configList->selectedItems().isEmpty())
+        return;
 
-    checkIsIntegrational();
-
-    if(checkForConfigureTool())
-        this->accept();
+    on_configList_itemDoubleClicked(ui->configList->selectedItems().first());
 }
 
 bool ConfigManager::isConfigured()
@@ -512,38 +582,11 @@ bool ConfigManager::isConfigured()
     return ret;
 }
 
-bool ConfigManager::isIntegrationCompatible()
-{
-    int apiVersion;
-    QSettings settings(m_currentConfigPath + "main.ini", QSettings::IniFormat);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    settings.setIniCodec("UTF-8");
-#endif
-
-    settings.beginGroup("main");
-    apiVersion = settings.value("api-version", -1).toInt();
-    settings.endGroup();
-    // Integrational config packs since API 42 were compatible
-    return (apiVersion >= 42);
-}
-
 bool ConfigManager::checkForConfigureTool()
 {
     //If configure tool has been detected
     if(ConfStatus::configIsIntegrational && (!isConfigured()))
     {
-        if(!isIntegrationCompatible())
-        {
-            QMessageBox::warning(this,
-                                 tr("Integrational configuration package is incompatible"),
-                                 tr("This integrational configuration package is older than API version 42 and it "
-                                    "is no longer compatible with this version of Moondust Devkit. "
-                                    "Since API 42, integrational configuration packages must use the local settings "
-                                    "file instead the main.ini overriding."),
-                                 QMessageBox::Ok);
-            return false;
-        }
-
         QMessageBox::StandardButton reply =
             QMessageBox::information(this,
                                      tr("Configuration package is not configured!"),
@@ -564,6 +607,100 @@ void ConfigManager::checkIsIntegrational()
 {
     ConfStatus::configConfigureTool = m_currentConfigPath + CONFIGURE_TOOL_NAME;
     ConfStatus::configIsIntegrational = QFile::exists(ConfStatus::configConfigureTool);
+}
+
+bool ConfigManager::verifyCompatibility()
+{
+    checkIsIntegrational();
+
+    switch(static_cast<CPIncompatibleLevel>(m_currentIncompatLevel))
+    {
+    default:
+        break;
+
+    case CPIncompatible_OutdatedApi:
+    {
+        LogWarning(QString("Config pack version is outdated: "
+                           "has API version: %1, wanted: %2").arg(m_currentAPIVersion).arg(V_CP_API));
+        QMessageBox box;
+        box.setWindowTitle(tr("Legacy configuration package", "Warning message box title"));
+        box.setTextFormat(Qt::RichText);
+#if (QT_VERSION >= 0x050100)
+        box.setTextInteractionFlags(Qt::TextBrowserInteraction);
+#endif
+        box.setText(tr("You have a legacy configuration package.\n<br>"
+                       "Editor will be started, but you may have a some problems with items or settings.\n<br>\n<br>"
+                       "Please download and install latest version of a configuration package:\n<br>\n<br>Download: %1\n<br>"
+                       "Note: most of config packs gets being updates with Moondust Project togeter. "
+                       "Therefore, you can use the same link to download the updated version.")
+                        .arg("<a href=\"%1\">%1</a>").arg(m_currentConfigHomeUrl));
+        box.setStandardButtons(QMessageBox::Ok);
+        box.setIcon(QMessageBox::Warning);
+        box.exec();
+        break;
+    }
+
+    case CPIncompatible_IncompatibleApi:
+    {
+        LogWarning(QString("Config pack version is incompatible: "
+                           "has API version: %1, wanted: %2").arg(m_currentAPIVersion).arg(V_CP_API));
+        QMessageBox box;
+        box.setWindowTitle(tr("Incompatible configuration package", "Warning message box title"));
+        box.setTextFormat(Qt::RichText);
+#if (QT_VERSION >= 0x050100)
+        box.setTextInteractionFlags(Qt::TextBrowserInteraction);
+#endif
+        box.setText(tr("You have a legacy and incompatible configuration package.\n<br>"
+                       "This configuration package has the API version older than the minimum supported, "
+                       "and therefore, it can't be used in this version of the Editor.<br>\n<br>\n"
+                       "You can download the compatible configuration package at here:<br>\n"
+                       "%1\n<br>\n<br>"
+                       "Note: most of config packs gets being updates with Moondust Project togeter.\n"
+                       "Therefore, you can use the same link to download the updated version.")
+                        .arg("<a href=\"%1\">%1</a>").arg(m_currentConfigHomeUrl));
+        box.setStandardButtons(QMessageBox::Ok);
+        box.setIcon(QMessageBox::Warning);
+        box.exec();
+        return false;
+    }
+
+    case CPIncompatible_IncompatibleIntegrat:
+        QMessageBox::warning(this,
+                             tr("Integrational configuration package is incompatible"),
+                             tr("This integrational configuration package is older than API version 42 and it "
+                                "is no longer compatible with this version of Moondust Devkit. "
+                                "Since API 42, integrational configuration packages must use the local settings "
+                                "file instead the main.ini overriding."),
+                             QMessageBox::Ok);
+        return false;
+
+    case CPIncompatible_IncompatibleX2:
+    {
+        QMessageBox box;
+        box.setWindowTitle(tr("Incompatible configuration package", "Warning message box title"));
+        box.setTextFormat(Qt::RichText);
+#if (QT_VERSION >= 0x050100)
+        box.setTextInteractionFlags(Qt::TextBrowserInteraction);
+#endif
+        box.setText(tr("You have an incompatible configuration package designed for the "
+                       "SMBX2 project to use it with the modified version of the DevKit "
+                       "which is incompatible to the mainstream.\n"
+                       "To use this configuration package, you should use the compatible "
+                       "Devkit maintained by developers of the SMBX2 project.<br>\n<br>\n"
+                       "You can obtain the compatible Devkit by downloading the SMBX2 Beta5 or newer:<br>\n"
+                       "%1\n<br>\n<br>\n"
+                       "The Official Moondust Devkit has a support of the SMBX2 Beta4 and older only. "
+                       "However, you still can run any other configuration package and run the level "
+                       "tests using an SMBX2 engine from the outside.")
+                        .arg("<a href=\"%1\">%1</a>").arg(m_currentConfigHomeUrl));
+        box.setStandardButtons(QMessageBox::Ok);
+        box.setIcon(QMessageBox::Warning);
+        box.exec();
+        return false;
+    }
+    }
+
+    return checkForConfigureTool();
 }
 
 bool ConfigManager::runConfigureTool()
