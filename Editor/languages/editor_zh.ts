@@ -712,12 +712,12 @@ File path: %3</source>
     <message>
         <source>Legacy configuration package</source>
         <comment>Warning message box title</comment>
-        <translation type="unfinished"></translation>
+        <translation>配置包版本过旧</translation>
     </message>
     <message>
         <source>Incompatible configuration package</source>
         <comment>Warning message box title</comment>
-        <translation type="unfinished"></translation>
+        <translation>不兼容的配置包</translation>
     </message>
     <message>
         <source>You have an incompatible configuration package designed for the SMBX2 project to use it with the modified version of the DevKit which is incompatible to the mainstream.
@@ -728,27 +728,34 @@ You can obtain the compatible Devkit by downloading the SMBX2 Beta5 or newer:&lt
 &lt;br&gt;
 &lt;br&gt;
 The Official Moondust Devkit has a support of the SMBX2 Beta4 and older only. However, you still can run any other configuration package and run the level tests using an SMBX2 engine from the outside.</source>
-        <translation type="unfinished"></translation>
+        <translation>您使用的配置包是为SMBX2定制的。您需要使用修改版月尘工具包才能使用此配置包，与官方版本不兼容。
+若要使用此配置包，请使用一个由SMBX2开发人员管理的修改版编辑器加载它。
+&lt;br&gt;
+&lt;br&gt;
+您可以在下方下载SMBX2 Beta 5及更高版本：&lt;br&gt;
+%1&lt;br&gt;
+&lt;br&gt;
+月尘官方工具包仅支持SMBX2 Beta 4及之前的版本。当然您也可以加载其他配置包，并通过外部工具进行SMBX2引擎的关卡测试。</translation>
     </message>
     <message>
         <source>Outdated</source>
         <comment>Level of config pack incompatibility. Outdated means it MAY work, but some minor errors are possible.</comment>
-        <translation type="unfinished"></translation>
+        <translation>已过期</translation>
     </message>
     <message>
         <source>Legacy, incompatible</source>
         <comment>Level of config pack incompatibility. Legacy means this config pack is too old to work on this version of Editor.</comment>
-        <translation type="unfinished"></translation>
+        <translation>不兼容的旧版本</translation>
     </message>
     <message>
         <source>Incompatible integrational</source>
         <comment>Level of config pack incompatibility. An obsolete and incompatible integrational config package.</comment>
-        <translation type="unfinished"></translation>
+        <translation>不兼容的集成配置包</translation>
     </message>
     <message>
         <source>Incompatible</source>
         <comment>Level of config pack incompatibility. Incompatible, means, it&apos;s a totally incompatible config pack, probably, created for a modified version of the Moondust.</comment>
-        <translation type="unfinished"></translation>
+        <translation>不兼容</translation>
     </message>
     <message>
         <source>You have a legacy configuration package.&lt;br&gt;
@@ -758,7 +765,13 @@ Please download and install latest version of a configuration package:&lt;br&gt;
 &lt;br&gt;
 Download: %1&lt;br&gt;
 Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
-        <translation type="unfinished"></translation>
+        <translation>您的配置包版本过旧。&lt;br&gt;
+编辑器即将启动，但您可能会遇到对象或设置的相关问题。&lt;br&gt;
+&lt;br&gt;
+请下载并安装最新版本的配置包：&lt;br&gt;
+&lt;br&gt;
+下载地址：%1&lt;br&gt;
+注：部分配置包和月尘引擎同步更新，因此您可以通过相同链接下载更新版本。</translation>
     </message>
     <message>
         <source>You have a legacy and incompatible configuration package.&lt;br&gt;
@@ -768,7 +781,13 @@ You can download the compatible configuration package at here:&lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
 Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
-        <translation type="unfinished"></translation>
+        <translation>您的配置包版本过旧，且不是兼容配置包。&lt;br&gt;
+此配置包的API版本低于最低需求，因此无法在当前版本使用。&lt;br&gt;
+&lt;br&gt;
+请在下方下载一个兼容配置包：&lt;br&gt;
+&lt;br&gt;
+%1&lt;br&gt;
+注：部分配置包和月尘引擎同步更新，因此您可以通过相同链接下载更新版本。</translation>
     </message>
 </context>
 <context>
@@ -1315,11 +1334,11 @@ Please save them before doing anything else.</source>
     <name>DataConfig</name>
     <message>
         <source>Invalid config pack version</source>
-        <translation type="unfinished"></translation>
+        <translation>无效配置包版本号</translation>
     </message>
     <message>
         <source>Can&apos;t load the configuration package: the &quot;api-version&quot; field is missing at the main.ini.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法加载配置包：文件“main.ini”中字段“api-version”未找到。</translation>
     </message>
 </context>
 <context>
