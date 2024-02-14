@@ -128,7 +128,11 @@ void FileKeeper::restore()
     if(!m_origPath.isEmpty() && !m_tempPath.isEmpty() && QFile::exists(m_tempPath))
     {
 #ifndef __WIN32
+#   ifdef __HAIKU__
+        int fd = open(m_tempPath.toUtf8().data(), O_SYNC | O_APPEND, 0660);
+#   else
         int fd = open(m_tempPath.toUtf8().data(), O_FSYNC | O_APPEND, 0660);
+#   endif
 
         if(fd)
         {

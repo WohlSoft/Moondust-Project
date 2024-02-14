@@ -209,7 +209,7 @@ if(WIN32)
         version
     )
 else()
-    if(UNIX AND NOT APPLE)
+    if(UNIX AND NOT APPLE AND NOT HAIKU)
         list(APPEND PGE_MAINTAINER_LINK_LIBS dl)
     endif()
 endif()

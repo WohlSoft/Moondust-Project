@@ -1,6 +1,6 @@
 set(PGE_ENABLE_QT_ENABLED_BY_DEFAULT ON)
 
-if(HAIKU OR EMSCRIPTEN OR ANDROID)
+if(EMSCRIPTEN OR ANDROID)
     set(PGE_ENABLE_QT_ENABLED_BY_DEFAULT OFF)
     message("== Qt-dependent components are not supported for this platform")
     include(_common/find_linguist.cmake)

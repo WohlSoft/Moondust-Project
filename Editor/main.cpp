@@ -23,7 +23,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QSettings>
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && QT_VERSION >= QT_VERSION_CHECK(5, 8, 0)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(Q_OS_HAIKU) && QT_VERSION >= QT_VERSION_CHECK(5, 8, 0)
 #include <QLibraryInfo>
 #define MOONDUST_QSTYLERPOXY_WORKAROUND_NEEDED
 #endif

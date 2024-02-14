@@ -50,6 +50,29 @@
 #define STR_EXPAND(tok) #tok
 #define STR(tok) STR_EXPAND(tok)
 
+// Exclude platforms that don't have SIG_INFO support
+#if    !defined(_WIN32) \
+&& !defined(__3DS__) \
+    && !defined(__WII__) \
+    && !defined(__WIIU__) \
+    && !defined(__SWITCH__) \
+    && !defined(VITA)
+#   define HAS_SIG_INFO
+#endif
+
+// Exclude personal data removal from platforms where API doesn't allows to recognise the user and/or home directory
+#if    !defined(VITA) \
+    && !defined(__3DS__) \
+    && !defined(__WII__) \
+    && !defined(__WIIU__)  \
+    && !defined(__SWITCH__) \
+    && !defined(__EMSCRIPTEN__) \
+    && !defined(__ANDROID__) \
+    && !defined(__HAIKU__)
+#   define DO_REMOVE_PERSONAL_DATA
+#endif
+
+
 static const char *g_messageToUser =
     "\n"
     "================================================\n"
@@ -126,6 +149,7 @@ static bool GetStackWalk(std::string &outWalk)
 }
 #endif
 
+#ifdef DO_REMOVE_PERSONAL_DATA
 static QString getCurrentUserName()
 {
     QString user;
@@ -162,7 +186,7 @@ static void removePersonalData(QString &log)
     }
     log.replace(user, "anonymouse");
 }
-
+#endif // DO_REMOVE_PERSONAL_DATA
 
 QString CrashHandler::getStacktrace()
 {
@@ -187,7 +211,9 @@ QString CrashHandler::getStacktrace()
 
 #endif
 
+#ifdef DO_REMOVE_PERSONAL_DATA
     removePersonalData(bkTrace);
+#endif
     return bkTrace;
 }
 
