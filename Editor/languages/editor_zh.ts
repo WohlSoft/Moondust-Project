@@ -1556,6 +1556,10 @@ Please save them before doing anything else.</source>
         <source>Please select a file from the list:</source>
         <translation>请从下方列表选择文件：</translation>
     </message>
+    <message>
+        <source>Filter...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GreetingDialog</name>
@@ -2913,6 +2917,34 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>%1 coins</source>
         <translation>%1 个金币</translation>
+    </message>
+    <message>
+        <source>Add new item into the list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected item from the list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play selected file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open...</source>
+        <translation type="unfinished">打开……</translation>
+    </message>
+    <message>
+        <source>Open selected file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add new line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter a text line to add:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6562,6 +6594,36 @@ Please, choose the Moondust Maintainer application yourself!</source>
         <source>Please select music file to use as custom</source>
         <translation>请选择自定义音乐</translation>
     </message>
+    <message>
+        <source>Test SFX</source>
+        <comment>Preview selected sound file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music play/stop</source>
+        <comment>Preview selected music file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extra settings are not specified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extra settings are not supported for this music file format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music settings arguments:
+This is a special string that allows to set an extra settings for this music file to alternate its playing behaviour and/or sounding.
+These settings are different depending on the file format.
+
+You can&apos;t set these settings if given file format doesn&apos;t support them.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NpcEdit</name>
@@ -7627,6 +7689,10 @@ Reason: %1
 原因：%1
 
 </translation>
+    </message>
+    <message>
+        <source>World map extra settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9670,6 +9736,20 @@ Do you want to save your changes?</source>
     <message>
         <source>Main hub level:</source>
         <translation>中心关卡：</translation>
+    </message>
+    <message>
+        <source>Open current intro level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished">打开</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished">文件 %1 出错:
+%2</translation>
     </message>
 </context>
 <context>
