@@ -48,3 +48,24 @@
 	path = _Libs/FileMapper
 	url = https://github.com/WohlSoft/FileMapper.git
 	branch = master
+[submodule "XTConvert/tex3ds"]
+	path = Maintainer/XTConvert/3rdparty/tex3ds
+	url = https://github.com/WohlSoft/xtconvert-tex3ds.git
+[submodule "XTConvert/3dstools"]
+	path = Maintainer/XTConvert/3rdparty/3dstools
+	url = https://github.com/WohlSoft/xtconvert-3dstools.git
+[submodule "XTConvert/libimagequant"]
+	path = Maintainer/XTConvert/3rdparty/libimagequant
+	url = https://github.com/WohlSoft/xtconvert-libimagequant.git
+[submodule "XTConvert/libarchive"]
+	path = Maintainer/XTConvert/3rdparty/libarchive
+	url = https://github.com/WohlSoft/xtconvert-libarchive.git
+[submodule "XTConvert/gamecube-tools"]
+	path = Maintainer/XTConvert/3rdparty/gamecube-tools
+	url = https://github.com/WohlSoft/xtconvert-gamecube-tools.git
+[submodule "XTConvert/mbediso"]
+	path = Maintainer/XTConvert/3rdparty/mbediso
+	url = https://github.com/ds-sloth/mbediso.git
+[submodule "XTConvert/spc2it"]
+	path = Maintainer/XTConvert/3rdparty/spc2it
+	url = https://github.com/ds-sloth/spc2it.git

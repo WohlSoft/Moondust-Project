@@ -8,6 +8,7 @@
 #include <Graphics/palette_filter.h>
 #include <EpisodeCvt/episode_converter.h>
 #include <EpisodeCvt/case_fixer.h>
+#include <XTConvert/xt_convert.h>
 #include <common_features/app_path.h>
 #include <QMessageBox>
 
@@ -127,5 +128,15 @@ void MaintainerMain::on_pathcase_fixer_clicked()
     casefixer.setWindowModality(Qt::NonModal);
     this->hide();
     casefixer.exec();
+    this->show();
+}
+
+void MaintainerMain::on_xt_convert_clicked()
+{
+    XTConvert xt_convert(nullptr);
+    xt_convert.setWindowFlags(g_dialogFlags);
+    xt_convert.setWindowModality(Qt::NonModal);
+    this->hide();
+    xt_convert.exec();
     this->show();
 }

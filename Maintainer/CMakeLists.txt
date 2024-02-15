@@ -107,6 +107,7 @@ pge_qt_wrap_ui(UIS_HDRS
     Graphics/png2gifs.ui
     Graphics/lazyfix.ui
     Graphics/palette_filter.ui
+    XTConvert/xt_convert.ui
 )
 
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/maintainer.qrc)
@@ -135,6 +136,7 @@ list(APPEND PGE_MAINTAINER_SRCS
     Graphics/png2gifs.cpp
     Graphics/lazyfix.cpp
     Graphics/palette_filter.cpp
+    XTConvert/xt_convert.cpp
     ${UTF8MAIN_SRCS}
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
