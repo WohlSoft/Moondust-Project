@@ -2270,7 +2270,9 @@ QWidget *JsonSettingsWidget::loadLayoutDetail(JsonSettingsWidget::SetupStack &st
 
 void JsonSettingsWidget::valTrInitLang()
 {
-    QLocale loc = m_browser ? m_browser->locale() : QLocale::system();
+    QWidget *w = qobject_cast<QWidget*>(parent());
+    QLocale loc = w ? w->locale() : QLocale::system();
+
     m_langFull = loc.name().toLower().replace('_', '-');
     m_langShort.clear();
 
