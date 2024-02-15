@@ -32,6 +32,7 @@ private slots:
     void on_lazyfix_tool_clicked();
     void on_palette_filter_clicked();
     void on_pathcase_fixer_clicked();
+    void on_xt_convert_clicked();
 
 private:
     Ui::MaintainerMain *ui;
