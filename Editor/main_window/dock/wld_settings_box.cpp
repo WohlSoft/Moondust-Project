@@ -232,7 +232,7 @@ void WorldSettingsBox::setCurrentWorldSettings()
         ui->WLD_Credirs->setText(edit->WldData.authors);
         LogDebug("-> Character List");
 
-        ui->openIntroLevel->setVisible(QFile::exists(edit->WldData.meta.path + "/" + edit->WldData.IntroLevel_file));
+        ui->openIntroLevel->setVisible(!edit->WldData.IntroLevel_file.isEmpty() && QFile::exists(edit->WldData.meta.path + "/" + edit->WldData.IntroLevel_file));
 
         //clear character list
         while(!m_charactersCheckBoxes.isEmpty())
@@ -433,7 +433,7 @@ void WorldSettingsBox::on_WLD_AutostartLvl_editingFinished()
         edit->WldData.IntroLevel_file = ui->WLD_AutostartLvl->text();
         edit->WldData.meta.modified = true;
 
-        ui->openIntroLevel->setVisible(QFile::exists(edit->WldData.meta.path + "/" + edit->WldData.IntroLevel_file));
+        ui->openIntroLevel->setVisible(!edit->WldData.IntroLevel_file.isEmpty() && QFile::exists(edit->WldData.meta.path + "/" + edit->WldData.IntroLevel_file));
     }
 }
 

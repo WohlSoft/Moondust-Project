@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished"></translation>
+        <translation>Фильтр...</translation>
     </message>
 </context>
 <context>
@@ -360,24 +360,24 @@
     <message>
         <source>Test SFX</source>
         <comment>Preview selected sound file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тест звука</translation>
     </message>
     <message>
         <source>Music play/stop</source>
         <comment>Preview selected music file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Играть музыку</translation>
     </message>
     <message>
         <source>Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки...</translation>
     </message>
     <message>
         <source>Extra settings are not specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Доп.настройки не указаны</translation>
     </message>
     <message>
         <source>Extra settings are not supported for this music file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Доп.настройки не поддерживаются данным форматом музыка</translation>
     </message>
     <message>
         <source>Music settings arguments:
@@ -385,7 +385,11 @@ This is a special string that allows to set an extra settings for this music fil
 These settings are different depending on the file format.
 
 You can&apos;t set these settings if given file format doesn&apos;t support them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Аргументы настройки музыки:
+Это особая строка, которая позволяет указать дополнительные настройки для файла музыки, чтобы изменить поведение воспроизведения и/или звучание.
+У каждого формата файла свои собственные настройки.
+
+Если выбранный формат файла не поддерживает доп.настройки, то их невозможно назначить.</translation>
     </message>
 </context>
 </TS>

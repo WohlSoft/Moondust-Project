@@ -1559,7 +1559,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished"></translation>
+        <translation>Фильтр...</translation>
     </message>
 </context>
 <context>
@@ -2920,15 +2920,15 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Add new item into the list</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить новый элемент в список</translation>
     </message>
     <message>
         <source>Remove selected item from the list</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить выбранный элемент из списка</translation>
     </message>
     <message>
         <source>Play selected file</source>
-        <translation type="unfinished"></translation>
+        <translation>Воспроизвести выбранный файл</translation>
     </message>
     <message>
         <source>Open...</source>
@@ -2936,15 +2936,15 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Open selected file</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть выбранный файл</translation>
     </message>
     <message>
         <source>Add new line</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить новую строку</translation>
     </message>
     <message>
         <source>Please enter a text line to add:</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите стрку, чтобы добавить её в список:</translation>
     </message>
 </context>
 <context>
@@ -6607,24 +6607,24 @@ Please, choose the Moondust Maintainer application yourself!</source>
     <message>
         <source>Test SFX</source>
         <comment>Preview selected sound file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тест звука</translation>
     </message>
     <message>
         <source>Music play/stop</source>
         <comment>Preview selected music file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Играть музыку</translation>
     </message>
     <message>
         <source>Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки...</translation>
     </message>
     <message>
         <source>Extra settings are not specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Доп.настройки не указаны</translation>
     </message>
     <message>
         <source>Extra settings are not supported for this music file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Доп.настройки не поддерживаются данным форматом музыка</translation>
     </message>
     <message>
         <source>Music settings arguments:
@@ -6632,7 +6632,11 @@ This is a special string that allows to set an extra settings for this music fil
 These settings are different depending on the file format.
 
 You can&apos;t set these settings if given file format doesn&apos;t support them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Аргументы настройки музыки:
+Это особая строка, которая позволяет указать дополнительные настройки для файла музыки, чтобы изменить поведение воспроизведения и/или звучание.
+У каждого формата файла свои собственные настройки.
+
+Если выбранный формат файла не поддерживает доп.настройки, то их невозможно назначить.</translation>
     </message>
 </context>
 <context>
@@ -7701,7 +7705,7 @@ Reason: %1
     </message>
     <message>
         <source>World map extra settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Доп.настройки карты мира</translation>
     </message>
 </context>
 <context>
@@ -9750,7 +9754,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Open current intro level</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть этот начальный уровень</translation>
     </message>
     <message>
         <source>Open</source>
