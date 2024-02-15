@@ -20,6 +20,8 @@
 #define CUSTOM_MUSIC_SETUP_H
 
 #include <QDialog>
+#include <QModelIndex>
+
 
 namespace Ui {
 class CustomMusicSetup;
@@ -86,7 +88,7 @@ public:
 
     void initLists();
 
-    void setDirectory(const QString &root, const QString &data);
+    void setDirectory(const QString &root, const QString &data = QString());
     void setMusicPath(const QString &music);
     void setMusicPlayState(bool checked);
     bool settingsNeeded();

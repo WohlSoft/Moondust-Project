@@ -1,13 +1,39 @@
 {
     "alienShit": {
-        "child1": 23,
+        "child1": 22,
         "child2": "a sh9t",
         "child3": "52624"
     },
-    "checkMe": false,
+    "arrOfMusik": [
+        "some/My Files/Composed by me/Fox fantasy - v2 - finger.imf",
+        "some/My Files/Examples/CC tests/Pitch/PitchBend-Slide.vgz",
+        "some/My Files/Composed by me/BigTavel/Ecu_10_Bass_xg-hr.mid",
+        "some/My Files/AliBaba/Alibaba-3-1.mid",
+        "some/My Files/Among_Drip1.mid"
+    ],
+    "arrOfSFEEKZ": [
+        "some/My Files/Examples/Ice ball-1.wav",
+        "some/My Files/Examples/CC tests/Pitch/high, high, high!.mid - before.ogg",
+        "some/My Files/Subway_spc.spc",
+        "some/My Files/Examples/CC tests/Pitch/high, high, high!.mid - before.ogg"
+    ],
+    "arrayOfFilez": [
+        "some/My Files/ネコマン山.skj",
+        "build-extra_settings-InSystem_Qt_5-Debug/custom_music_setup.o",
+        "build-extra_settings-InSystem_Qt_5-Debug/ui_musicfilelist.h"
+    ],
+    "arrayOfWhat": [
+        "461416146",
+        "kokoko",
+        "fbwrb",
+        "qrhrqhqrhrqh",
+        "wwww",
+        "wqrhqwrwqrh"
+    ],
+    "checkMe": true,
     "checkMeNot": false,
-    "choice": 2,
-    "choice2": 21,
+    "choice": 1,
+    "choice2": 11,
     "colorness": "#5aff1445",
     "colornessOfTea": "#349dff",
     "fanSeeYou": {
@@ -18,11 +44,11 @@
     },
     "floatOfWhere": {
         "x": -56.98,
-        "y": 18.896
+        "y": 13.896
     },
     "floatTest": 7.986999988555908,
     "floatingBrick": {
-        "h": 8,
+        "h": 5,
         "w": 24.2
     },
     "iCanSeeYou": {
@@ -31,7 +57,7 @@
         "x": 85,
         "y": -44
     },
-    "meinMuzik": "some/019_ChurchOrgan.mid",
+    "meinMuzik": "some/My Files/Composed by me/Subway-loop.mid|s0;b88;l0;o1;j0;g=4;",
     "sizeOfMyAss": {
         "h": 2778,
         "w": 1306
@@ -39,9 +65,9 @@
     "someAnother": {
         "kekVision": -29
     },
-    "testNumber": 30,
+    "testNumber": 28,
     "whereIsMySombrero": {
         "x": -33,
-        "y": -22
+        "y": -24
     }
 }

@@ -3,6 +3,7 @@
 #include <QFile>
 
 #include <QJsonParseError>
+#include <QFileIconProvider>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
@@ -14,6 +15,10 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QToolButton>
+#include <QListWidget>
+#include <QListWidgetItem>
+#include <QInputDialog>
 #include <QLabel>
 #include <QPlainTextEdit>
 #include <QColorDialog>
@@ -32,7 +37,9 @@
 #ifndef UNIT_TEST
 #include <editing/_dialogs/itemselectdialog.h>
 #include <common_features/util.h>
+#include <audio/music_player.h>
 #include <audio/sdl_music_player.h>
+#include <common_features/main_window_ptr.h>
 #endif
 
 #include "file_list_browser/musicfilelist.h"
@@ -95,7 +102,7 @@ void ColorPreview::paintEvent(QPaintEvent *)
 
     QBrush lg = QBrush(Qt::lightGray);
     QBrush dg = QBrush(Qt::darkGray);
-    QBrush bl = QBrush(Qt::black);
+    // QBrush bl = QBrush(Qt::black);
     QPen noPen = QPen(Qt::NoPen);
 
     QPainter painter(this);
@@ -123,7 +130,7 @@ void ColorPreview::paintEvent(QPaintEvent *)
 }
 
 
-QJsonObject JsonSettingsWidget::SetupStack::rectToArray(QVariant r)
+QJsonObject JsonSettingsWidget::SetupStack::rectToArray(const QVariant &r)
 {
     QRect rekt = r.toRect();
     QJsonObject a;
@@ -134,7 +141,7 @@ QJsonObject JsonSettingsWidget::SetupStack::rectToArray(QVariant r)
     return a;
 }
 
-QJsonObject JsonSettingsWidget::SetupStack::rectfToArray(QVariant r)
+QJsonObject JsonSettingsWidget::SetupStack::rectfToArray(const QVariant& r)
 {
     QRectF rekt = r.toRectF();
     QJsonObject a;
@@ -145,7 +152,7 @@ QJsonObject JsonSettingsWidget::SetupStack::rectfToArray(QVariant r)
     return a;
 }
 
-QJsonObject JsonSettingsWidget::SetupStack::sizeToArray(QVariant r)
+QJsonObject JsonSettingsWidget::SetupStack::sizeToArray(const QVariant& r)
 {
     QSize rekt = r.toSize();
     QJsonObject a;
@@ -154,7 +161,7 @@ QJsonObject JsonSettingsWidget::SetupStack::sizeToArray(QVariant r)
     return a;
 }
 
-QJsonObject JsonSettingsWidget::SetupStack::sizefToArray(QVariant r)
+QJsonObject JsonSettingsWidget::SetupStack::sizefToArray(const QVariant& r)
 {
     QSizeF rekt = r.toSizeF();
     QJsonObject a;
@@ -163,7 +170,7 @@ QJsonObject JsonSettingsWidget::SetupStack::sizefToArray(QVariant r)
     return a;
 }
 
-QJsonObject JsonSettingsWidget::SetupStack::pointToArray(QVariant r)
+QJsonObject JsonSettingsWidget::SetupStack::pointToArray(const QVariant& r)
 {
     QPoint rekt = r.toPoint();
     QJsonObject a;
@@ -172,7 +179,7 @@ QJsonObject JsonSettingsWidget::SetupStack::pointToArray(QVariant r)
     return a;
 }
 
-QJsonObject JsonSettingsWidget::SetupStack::pointfToArray(QVariant r)
+QJsonObject JsonSettingsWidget::SetupStack::pointfToArray(const QVariant& r)
 {
     QPointF rekt = r.toPointF();
     QJsonObject a;
@@ -184,7 +191,7 @@ QJsonObject JsonSettingsWidget::SetupStack::pointfToArray(QVariant r)
 QString JsonSettingsWidget::SetupStack::getPropertyId(const QString &name)
 {
     QString outPr;
-    for(const QString & t : m_setupTree)
+    for(const QString& t : m_setupTree)
     {
         outPr.append(t);
         outPr.append('/');
@@ -225,12 +232,13 @@ void JsonSettingsWidget::SetupStack::clear()
     m_setupCache = QJsonDocument();
 }
 
-void JsonSettingsWidget::SetupStack::setValue(const QString &propertyId, QVariant value)
+void JsonSettingsWidget::SetupStack::setValue(const QString &propertyId, const QVariant& value)
 {
     QStringList stack = propertyId.split("/");
     QJsonObject o = m_setupCache.object();
     QStack<QJsonObject> stack_o;
     QString top;
+
     for(int i = 0; i < stack.size(); i++)
     {
         QString &t = stack[i];
@@ -265,6 +273,36 @@ void JsonSettingsWidget::SetupStack::setValue(const QString &propertyId, QVarian
         o[top] = QJsonValue::fromVariant(value);
         break;
     }
+
+    for(int i = stack.size() - 2; i >= 0; i--)
+    {
+        QString &s = stack[i];
+        QJsonObject oo = stack_o.pop();
+        oo[s] = o;
+        o = oo;
+    }
+
+    m_setupCache.setObject(o);
+}
+
+void JsonSettingsWidget::SetupStack::setValue(const QString& propertyId, const QJsonArray& value)
+{
+    QStringList stack = propertyId.split("/");
+    QJsonObject o = m_setupCache.object();
+    QStack<QJsonObject> stack_o;
+    QString top;
+
+    for(int i = 0; i < stack.size(); i++)
+    {
+        QString &t = stack[i];
+        top = t;
+        if(i == stack.size() - 1)
+            break;
+        stack_o.push(o);
+        o = o[t].toObject();
+    }
+
+    o[top] = value;
 
     for(int i = stack.size() - 2; i >= 0; i--)
     {
@@ -380,6 +418,7 @@ QJsonDocument JsonSettingsWidget::getSettings()
 
 bool JsonSettingsWidget::loadLayout(const QByteArray &layout)
 {
+    valTrInitLang();
     m_browser = loadLayoutDetail(m_setupStack, layout, m_errorString);
     return m_browser != nullptr;
 }
@@ -525,6 +564,41 @@ QVariant JsonSettingsWidget::retrieve_property(const JsonSettingsWidget::SetupSt
     return out;
 }
 
+QJsonArray JsonSettingsWidget::retrieve_property(const SetupStack& setupTree, QString prop, const QJsonArray& defaultValue)
+{
+    const QJsonDocument d = setupTree.m_setupCache;
+    QJsonObject o = d.object();
+    QJsonArray out;
+    QString outPr;
+
+    for(const QString & t : setupTree.m_setupTree)
+    {
+        outPr.append(t);
+        outPr.append(" << ");
+        if(!o.contains(t))
+        {
+#ifdef DEBUG_BUILD
+            qDebug() << outPr << prop << defaultValue << "DEFAULT-TREE";
+#endif
+            return defaultValue;
+        }
+        o = o[t].toObject();
+        out = o[t].toArray();
+    }
+
+    if(!o.contains(prop))
+    {
+#ifdef DEBUG_BUILD
+        qDebug() << outPr << prop << defaultValue << "DEFAULT-PROP";
+#endif
+        return defaultValue;
+    }
+
+    out = o[prop].toArray();
+
+    return out;
+}
+
 static const QHash<QString, bool> loadPropertiesLoayout_requiredTypes =
 {
     {"group", false},
@@ -568,13 +642,13 @@ static QColor colorFromHexValue(QString color)
 
     if(color.size() >= 6)
     {
-        newRgba.setRed(color.mid(0, 2).toInt(nullptr, 16));
-        newRgba.setGreen(color.mid(2, 2).toInt(nullptr, 16));
-        newRgba.setBlue(color.mid(4, 2).toInt(nullptr, 16));
+        newRgba.setRed(color.midRef(0, 2).toInt(nullptr, 16));
+        newRgba.setGreen(color.midRef(2, 2).toInt(nullptr, 16));
+        newRgba.setBlue(color.midRef(4, 2).toInt(nullptr, 16));
     }
 
     if(color.size() == 8)
-        newRgba.setAlpha(color.mid(6, 2).toInt(nullptr, 16));
+        newRgba.setAlpha(color.midRef(6, 2).toInt(nullptr, 16));
     else
         newRgba.setAlpha(255);
 
@@ -602,6 +676,160 @@ static unsigned int getFlagBoxValue(const QVector<QCheckBox *> &flagBox)
     return value;
 }
 
+static void setListWidgetValue(QListWidget* widget,
+                               const QJsonArray &value,
+                               Qt::ItemFlag extraFlags,
+                               bool hasIcon, const QString &root)
+{
+    widget->clear();
+    if(value.isEmpty())
+        return;
+
+    QFileIconProvider prov;
+
+    for(const QJsonValue& item : value)
+    {
+        if(!item.isString())
+            return;
+
+        QListWidgetItem *it = new QListWidgetItem(widget);
+        QString line = item.toString();
+        it->setText(line);
+        if(hasIcon)
+            it->setIcon(prov.icon(QFileInfo(root + line)));
+        it->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled | extraFlags);
+        widget->addItem(it);
+    }
+}
+
+static QJsonArray getListWidgetValue(QListWidget* widget)
+{
+    QJsonArray ret;
+    int count = widget->count();
+
+    for(int i = 0; i < count; ++i)
+    {
+        auto *it = widget->item(i);
+        ret.append(it->text());
+    }
+
+    return ret;
+}
+
+
+QString JsonSettingsWidget::browseForFileValue(QWidget* target, LineEditType type,
+                                               const QString& root, const QString& filePath,
+                                               const QStringList& filters,
+                                               const QString& dialogueTitle, const QString& dialogueDescription,
+                                               bool *ok)
+{
+    QString ret;
+
+    if(ok)
+        *ok = false;
+
+    if(type == JSS_LineEdit_File)
+    {
+        FileListBrowser file(root, filePath, target);
+        if(!dialogueTitle.isEmpty())
+            file.setWindowTitle(dialogueTitle);
+
+        if(!dialogueDescription.isEmpty())
+            file.setDescription(dialogueDescription);
+
+        if(!filters.isEmpty())
+            file.setFilters(filters);
+
+        file.startListBuilder();
+
+        if(file.exec() == QDialog::Accepted)
+        {
+            ret = file.currentFile();
+            if(ok)
+                *ok = true;
+        }
+    }
+    else if(type == JSS_LineEdit_Level)
+    {
+        LevelFileList levels(root, filePath, target);
+        if(!dialogueTitle.isEmpty())
+            levels.setWindowTitle(dialogueTitle);
+
+        if(!dialogueDescription.isEmpty())
+            levels.setDescription(dialogueDescription);
+
+        if(levels.exec() == QDialog::Accepted)
+        {
+            ret = levels.currentFile();
+            if(ok)
+                *ok = true;
+        }
+    }
+    else
+    {
+        QString audioPath = filePath;
+        MusicFileList muz(root, audioPath, target, (type == JSS_LineEdit_SFX));
+
+        if(!dialogueTitle.isEmpty())
+            muz.setWindowTitle(dialogueTitle);
+
+        if(!dialogueDescription.isEmpty())
+            muz.setDescription(dialogueDescription);
+
+#ifndef UNIT_TEST
+        if(type != JSS_LineEdit_SFX)
+            muz.setMusicPlayState(MainWinConnect::pMainWin->getPlayMusicAction()->isChecked());
+
+        QObject::connect(&muz, &MusicFileList::musicFileChanged, [&audioPath](const QString &music)->void
+        {
+            audioPath = music;
+        });
+
+        QObject::connect(&muz, &MusicFileList::updateSongPlay, [this, &root, &audioPath]()->void
+        {
+            if(MainWinConnect::pMainWin->getPlayMusicAction()->isChecked())
+                LvlMusPlay::previewCustomMusicAbs(root + audioPath);
+        });
+
+        QObject::connect(&muz, &MusicFileList::musicTempoChanged, [](double tempo)->void
+        {
+            LvlMusPlay::setTempo(tempo);
+        });
+
+        QObject::connect(&muz, &MusicFileList::playSoundFile, [this, &audioPath](const QString &file)->void
+        {
+            PGE_SfxPlayer::playFile(file);
+        });
+
+        QObject::connect(&muz, &MusicFileList::musicButtonClicked, [this, &root, &audioPath](bool st)->void
+        {
+            MainWinConnect::pMainWin->getPlayMusicAction()->setChecked(st);
+            if(st)
+                LvlMusPlay::previewCustomMusicAbs(root + audioPath);
+            else
+                LvlMusPlay::previewSilence();
+        });
+#endif
+
+        if(muz.exec() == QDialog::Accepted)
+        {
+            ret = muz.currentFile();
+            if(ok)
+                *ok = true;
+        }
+
+#ifndef UNIT_TEST
+        if(type == JSS_LineEdit_SFX)
+            PGE_SfxPlayer::freeBuffer();
+        else
+            LvlMusPlay::previewReset(MainWinConnect::pMainWin);
+#endif
+    }
+
+    return ret;
+}
+
+
 void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupTree,
                                            const QJsonArray &elements,
                                            QWidget *target,
@@ -626,9 +854,9 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
         QJsonObject o = ov.toObject();
         QString type = o["type"].toString("invalid");
         QString name = o["name"].toString(type);
-        QString title = o["title"].toString(name);
+        QString title = valTr(o, "title").toString(name);
         QString control = o["control"].toString();
-        QString tooltip = o["tooltip"].toString();
+        QString tooltip = valTr(o, "tooltip").toString();
 
         if(control.isEmpty())
             continue;//invalid
@@ -665,7 +893,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
 
                 const QString id = setupTree.getPropertyId(name);
                 l->addWidget(it, row, 1);
-                QObject::connect(it, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), [id, this](int val)
+                QObject::connect(it, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, [id, this](int val)
                 {
 #ifdef DEBUG_BUILD
                     qDebug() << "changed:" << id << val;
@@ -698,7 +926,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
 
                 const QString id = setupTree.getPropertyId(name);
                 l->addWidget(it, row, 1);
-                QObject::connect(it, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                QObject::connect(it, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this,
                 [id, this](double val)
                 {
 #ifdef DEBUG_BUILD
@@ -739,7 +967,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 l->addWidget(it, row, 0, 1, 2);
             else
                 l->addWidget(it, row, 1);
-            QObject::connect(it, static_cast<void(QCheckBox::*)(bool)>(&QCheckBox::clicked),
+            QObject::connect(it, static_cast<void(QCheckBox::*)(bool)>(&QCheckBox::clicked), this,
             [id, this](bool val)
             {
 #ifdef DEBUG_BUILD
@@ -791,7 +1019,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
 
             const QString id = setupTree.getPropertyId(name);
 
-            QObject::connect(colorChoose, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked),
+            QObject::connect(colorChoose, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked), this,
             [id, target, useAlpha, colorPreview, colorString, this](bool)
             {
                 QColor oldRgba = colorFromHexValue(colorString->text());
@@ -812,7 +1040,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 }
             });
 
-            QObject::connect(colorString, &QLineEdit::editingFinished,
+            QObject::connect(colorString, &QLineEdit::editingFinished, this,
             [id, colorPreview, colorString, valueDefault, this]()
             {
                 QString val = colorString->text();
@@ -838,7 +1066,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             int maxLength = o["max-length"].toInt(-1);
             QString valueDefault = o["value-default"].toString();
             QString validator = o["validator"].toString();
-            QString placeholder = o["placeholder"].toString();
+            QString placeholder = valTr(o, "placeholder").toString();
             bool readOnly = false;
 
             if(o.keys().contains("read-only"))
@@ -861,7 +1089,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
 
             const QString id = setupTree.getPropertyId(name);
             l->addWidget(it, row, 1);
-            QObject::connect(it, static_cast<void(QLineEdit::*)(const QString &)>(&QLineEdit::textChanged),
+            QObject::connect(it, static_cast<void(QLineEdit::*)(const QString &)>(&QLineEdit::textChanged), this,
             [id, this](const QString &val)
             {
 #ifdef DEBUG_BUILD
@@ -898,7 +1126,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             multiTextL->addWidget(it, row);
 
             const QString id = setupTree.getPropertyId(name);
-            QObject::connect(it, &QPlainTextEdit::textChanged,
+            QObject::connect(it, &QPlainTextEdit::textChanged, this,
             [id, it, this]()
             {
                 QString val = it->toPlainText();
@@ -920,24 +1148,34 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
         )
         {
             QString valueDefault = o["value-default"].toString();
-            QString placeholder = o["placeholder"].toString();
-            QString dialogTitle = o["dialog-title"].toString();
-            QString dialogDescription = o["dialog-description"].toString();
+            QString placeholder = valTr(o, "placeholder").toString();
+            QString dialogTitle = valTr(o, "dialog-title").toString();
+            QString dialogDescription = valTr(o, "dialog-description").toString();
 
             QStringList filters;
             QVariantList filtersList = o["filters"].toArray().toVariantList();
             for(QVariant &j : filtersList)
                 filters.push_back(j.toString());
 
-            bool isMusic = !control.compare("musicFile", Qt::CaseInsensitive);
-            bool isSFX = !control.compare("soundFile", Qt::CaseInsensitive);
-            bool isLevel = !control.compare("levelFile", Qt::CaseInsensitive);
-            bool isGenericFile = !control.compare("file", Qt::CaseInsensitive);
+            LineEditType lineType = JSS_LineEdit_Text;
 
-            bool lookAtEpisode = isLevel;
+            if(!control.compare("musicFile", Qt::CaseInsensitive))
+                lineType = JSS_LineEdit_Music;
+            else if(!control.compare("soundFile", Qt::CaseInsensitive))
+                lineType = JSS_LineEdit_SFX;
+            else if(!control.compare("levelFile", Qt::CaseInsensitive))
+                lineType = JSS_LineEdit_Level;
+            else if(!control.compare("file", Qt::CaseInsensitive))
+                lineType = JSS_LineEdit_File;
+
+            bool lookAtEpisode = true;
 
             if(o.keys().contains("directory"))
-                lookAtEpisode = !o["directory"].toString(isLevel ? "data" : "episode").compare("episode", Qt::CaseInsensitive);
+                lookAtEpisode = !o["directory"].toString("episode").compare("episode", Qt::CaseInsensitive);
+
+            QString root = lookAtEpisode ? m_directoryEpisode : m_directoryData;
+            if(!root.endsWith('/'))
+                root.append('/');
 
             const QString id = setupTree.getPropertyId(name);
 
@@ -965,7 +1203,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             browse->setToolTip(tr("Browse"));
             fileBoxL->addWidget(browse, 0);
 
-            if(isMusic || isSFX)
+            if(lineType == JSS_LineEdit_Music || lineType == JSS_LineEdit_SFX)
             {
                 QPushButton *preview = new QPushButton(fileBox);
                 preview->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Ignored);
@@ -974,25 +1212,20 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 preview->setToolTip(tr("Play"));
                 fileBoxL->addWidget(preview, 0);
 
-                QObject::connect(preview, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked),
-                [id, it, isSFX, lookAtEpisode, this](bool)
+                QObject::connect(preview, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked), this,
+                [id, it, lineType, root, lookAtEpisode, this](bool)
                 {
-                    QString root = lookAtEpisode ? m_directoryEpisode : m_directoryData;
-                    if(!root.endsWith('/'))
-                        root.append('/');
                     QString file = it->text();
                     QString fileNA = file.split('|').first();
+
                     if(!file.isEmpty() && QFile::exists(root + fileNA))
                     {
                         qDebug() << "Trying to play music" << root + file;
 #ifndef UNIT_TEST
-                        if(isSFX)
+                        if(lineType == JSS_LineEdit_SFX)
                             PGE_SfxPlayer::playFile(root + file);
                         else
-                        {
-                            PGE_MusPlayer::openFile(root + file);
-                            PGE_MusPlayer::play();
-                        }
+                            LvlMusPlay::previewCustomMusicAbs(root + file);
 #endif
                     }
                 });
@@ -1000,57 +1233,23 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
 
             l->addWidget(fileBox, row, 1);
 
-            QObject::connect(browse, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked),
-            [id, it, isSFX, isLevel, isGenericFile, target, lookAtEpisode, dialogTitle, dialogDescription, filters, this](bool)
+            QObject::connect(browse, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked), this,
+            [id, it, lineType, target, root, dialogTitle, dialogDescription, filters, this](bool)
             {
-                if(isGenericFile)
+                bool ok;
+                QString newFile = browseForFileValue(target, lineType, root, it->text(),
+                                                     filters,
+                                                     dialogTitle, dialogDescription, &ok);
+
+                if(ok)
                 {
-                    FileListBrowser file(lookAtEpisode ? m_directoryEpisode : m_directoryData, it->text(), target);
-                    if(!dialogTitle.isEmpty())
-                        file.setWindowTitle(dialogTitle);
-                    if(!dialogDescription.isEmpty())
-                        file.setDescription(dialogDescription);
-                    if(!filters.isEmpty())
-                        file.setFilters(filters);
-                    file.startListBuilder();
-                    if(file.exec() == QDialog::Accepted)
-                    {
-                        it->setText(file.currentFile());
-                        m_setupStack.setValue(id, file.currentFile());
-                        emit settingsChanged();
-                    }
-                }
-                else if(isLevel)
-                {
-                    LevelFileList levels(lookAtEpisode ? m_directoryEpisode : m_directoryData, it->text(), target);
-                    if(!dialogTitle.isEmpty())
-                        levels.setWindowTitle(dialogTitle);
-                    if(!dialogDescription.isEmpty())
-                        levels.setDescription(dialogDescription);
-                    if(levels.exec() == QDialog::Accepted)
-                    {
-                        it->setText(levels.currentFile());
-                        m_setupStack.setValue(id, levels.currentFile());
-                        emit settingsChanged();
-                    }
-                }
-                else
-                {
-                    MusicFileList muz(lookAtEpisode ? m_directoryEpisode : m_directoryData, it->text(), target, isSFX);
-                    if(!dialogTitle.isEmpty())
-                        muz.setWindowTitle(dialogTitle);
-                    if(!dialogDescription.isEmpty())
-                        muz.setDescription(dialogDescription);
-                    if(muz.exec() == QDialog::Accepted)
-                    {
-                        it->setText(muz.currentFile());
-                        m_setupStack.setValue(id, muz.currentFile());
-                        emit settingsChanged();
-                    }
+                    it->setText(newFile);
+                    m_setupStack.setValue(id, newFile);
+                    emit settingsChanged();
                 }
             });
 
-            QObject::connect(it, static_cast<void(QLineEdit::*)(const QString &)>(&QLineEdit::textChanged),
+            QObject::connect(it, static_cast<void(QLineEdit::*)(const QString &)>(&QLineEdit::textChanged), this,
             [id, this](const QString &val)
             {
 #ifdef DEBUG_BUILD
@@ -1059,6 +1258,240 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 m_setupStack.setValue(id, val);
                 emit settingsChanged();
             });
+            row++;
+        }
+
+        // Array of strings
+        else if(
+            !control.compare("lineArray", Qt::CaseInsensitive) ||
+            !control.compare("musicFileArray", Qt::CaseInsensitive) ||
+            !control.compare("soundFileArray", Qt::CaseInsensitive) ||
+            !control.compare("levelFileArray", Qt::CaseInsensitive) ||
+            !control.compare("fileArray", Qt::CaseInsensitive)
+            )
+        {
+            const QJsonArray arrayValue = retrieve_property(setupTree, name, o["value-default"].toArray());
+            QString dialogTitle = valTr(o, "dialog-title").toString();
+            QString dialogDescription = valTr(o, "dialog-description").toString();
+
+            QStringList filters;
+            QVariantList filtersList = o["filters"].toArray().toVariantList();
+            for(QVariant &j : filtersList)
+                filters.push_back(j.toString());
+
+            LineEditType lineType = JSS_LineEdit_Text;
+            Qt::ItemFlag extraFlags = Qt::NoItemFlags;
+
+            if(!control.compare("musicFileArray", Qt::CaseInsensitive))
+                lineType = JSS_LineEdit_Music;
+            else if(!control.compare("soundFileArray", Qt::CaseInsensitive))
+                lineType = JSS_LineEdit_SFX;
+            else if(!control.compare("levelFileArray", Qt::CaseInsensitive))
+                lineType = JSS_LineEdit_Level;
+            else if(!control.compare("fileArray", Qt::CaseInsensitive))
+                lineType = JSS_LineEdit_File;
+
+            bool lookAtEpisode = true;
+
+            if(o.keys().contains("directory"))
+                lookAtEpisode = !o["directory"].toString("episode").compare("episode", Qt::CaseInsensitive);
+
+            if(lineType == JSS_LineEdit_Text)
+                extraFlags = Qt::ItemIsEditable;
+
+            QString root = lookAtEpisode ? m_directoryEpisode : m_directoryData;
+            if(!root.endsWith('/'))
+                root.append('/');
+
+
+            QGroupBox *sizeBox = new QGroupBox(target);
+            sizeBox->setTitle(title);
+            sizeBox->setToolTip(tooltip);
+            QGridLayout *sizeBoxL = new QGridLayout(sizeBox);
+            sizeBox->setLayout(sizeBoxL);
+            sizeBox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
+
+            const QString id = setupTree.getPropertyId(name);
+            int col = 0;
+
+            QToolButton *button_add = new QToolButton(sizeBox);
+            button_add->setText("+");
+            button_add->setToolTip(tr("Add new item into the list"));
+            sizeBoxL->addWidget(button_add, 0, col++);
+
+            QToolButton *button_remove = new QToolButton(sizeBox);
+            button_remove->setText("-");
+            button_remove->setToolTip(tr("Remove selected item from the list"));
+            sizeBoxL->addWidget(button_remove, 0, col++);
+
+            sizeBoxL->addItem(new QSpacerItem(20, 20), 0, col++);
+
+            QToolButton *button_preview = nullptr;
+
+            if(lineType == JSS_LineEdit_Music || lineType == JSS_LineEdit_SFX)
+            {
+                button_preview = new QToolButton(sizeBox);
+                button_preview->setText("▶️");
+                button_preview->setToolTip(tr("Play selected file"));
+                sizeBoxL->addWidget(button_preview, 0, col++);
+            }
+
+            QToolButton *button_open = nullptr;
+
+            if(lineType == JSS_LineEdit_Level)
+            {
+                button_open = new QToolButton(sizeBox);
+                button_open->setText(tr("Open..."));
+                button_open->setToolTip(tr("Open selected file"));
+                sizeBoxL->addWidget(button_open, 0, col++);
+            }
+
+            QListWidget *list = new QListWidget(sizeBox);
+            sizeBoxL->addWidget(list, 1, 0, 1, col);
+            list->setDragEnabled(true);
+            list->setDragDropMode(QAbstractItemView::InternalMove);
+            list->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
+
+            if(button_preview)
+            {
+                QObject::connect(button_preview, static_cast<void(QToolButton::*)(bool)>(&QToolButton::clicked), this,
+                [id, list, lineType, root, lookAtEpisode, this](bool)
+                {
+                    auto selected = list->selectedItems();
+                    if(selected.isEmpty())
+                        return;
+
+                    QString file = selected.first()->text();
+                    QString fileNA = file.split('|').first();
+
+                    if(!file.isEmpty() && QFile::exists(root + fileNA))
+                    {
+                        qDebug() << "Trying to play music" << root + file;
+#ifndef UNIT_TEST
+                        if(lineType == JSS_LineEdit_SFX)
+                            PGE_SfxPlayer::playFile(root + file);
+                        else
+                            LvlMusPlay::previewCustomMusicAbs(root + file);
+#endif
+                    }
+                });
+            }
+
+            if(button_open)
+            {
+                QObject::connect(button_open, static_cast<void(QToolButton::*)(bool)>(&QToolButton::clicked), this,
+                [id, list, root, this](bool)
+                {
+                    auto selected = list->selectedItems();
+                    if(selected.isEmpty())
+                        return;
+
+                    QString file = selected.first()->text();
+                    emit fileOpenRequested(root + file);
+                });
+            }
+
+            QObject::connect(button_add, static_cast<void(QToolButton::*)(bool)>(&QToolButton::clicked), this,
+            [this, list, id, lineType, root, filters, target, dialogTitle, dialogDescription](bool)->void
+            {
+                bool ok;
+                QString newLine;
+                bool hasIcon = false;
+                Qt::ItemFlag extraFlags = Qt::NoItemFlags;
+
+                switch(lineType)
+                {
+                case JSS_LineEdit_Text:
+                    newLine = QInputDialog::getText(m_browser,
+                                                    tr("Add new line"),
+                                                    tr("Please enter a text line to add:"),
+                                                    QLineEdit::Normal,
+                                                    QString(), &ok);
+                    extraFlags = Qt::ItemIsEditable;
+                    break;
+
+                case JSS_LineEdit_File:
+                case JSS_LineEdit_Music:
+                case JSS_LineEdit_SFX:
+                case JSS_LineEdit_Level:
+                    newLine = browseForFileValue(target, lineType, root, QString(),
+                                                 filters,
+                                                 dialogTitle, dialogDescription, &ok);
+                    hasIcon = true;
+                    break;
+
+                default:
+                    return;
+                }
+
+                if(!ok || newLine.isEmpty())
+                    return;
+
+                QListWidgetItem *it = new QListWidgetItem(list);
+                it->setText(newLine);
+                it->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled | extraFlags);
+                if(hasIcon)
+                {
+                    QFileIconProvider prov;
+                    QFileInfo info(root + newLine);
+                    it->setIcon(prov.icon(info));
+                }
+                list->addItem(it);
+                it->setSelected(true);
+                list->scrollToItem(it);
+
+                m_setupStack.setValue(id, getListWidgetValue(list));
+                emit settingsChanged();
+            });
+
+            QObject::connect(button_remove, static_cast<void(QToolButton::*)(bool)>(&QToolButton::clicked), this,
+            [this, list, id](bool)->void
+            {
+                auto selected = list->selectedItems();
+                if(selected.isEmpty())
+                    return;
+
+                delete selected.first();
+
+                m_setupStack.setValue(id, getListWidgetValue(list));
+                emit settingsChanged();
+            });
+
+            // Item edited as a string
+            QObject::connect(list, &QListWidget::itemChanged, this,
+            [this, list, id](QListWidgetItem*)->void
+            {
+                m_setupStack.setValue(id, getListWidgetValue(list));
+                emit settingsChanged();
+            });
+
+            // Opening an editor of item
+            QObject::connect(list, &QListWidget::itemDoubleClicked, this,
+            [this, list, id, lineType, root, filters, target, dialogTitle, dialogDescription](QListWidgetItem* item)->void
+            {
+                if(lineType == JSS_LineEdit_Text)
+                    return;
+
+                bool ok;
+                QString newLine = browseForFileValue(target, lineType, root, item->text(),
+                                                     filters,
+                                                     dialogTitle, dialogDescription, &ok);
+                if(!ok)
+                    return;
+
+                item->setText(newLine);
+            });
+
+            QObject::connect(list->model(), &QAbstractItemModel::rowsMoved, this,
+            [this, list, id](QModelIndex, int, int, QModelIndex, int)->void
+            {
+                m_setupStack.setValue(id, getListWidgetValue(list));
+                emit settingsChanged();
+            });
+
+            setListWidgetValue(list, arrayValue, extraFlags, lineType != JSS_LineEdit_Text, root);
+
+            l->addWidget(sizeBox, row, 0, 1, 2);
             row++;
         }
 
@@ -1198,12 +1631,12 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
         // Description block
         else if(!control.compare("description", Qt::CaseInsensitive))
         {
-            QString text = o["text"].toString();
+            QString text = valTr(o, "text").toString();
             QLabel *label = new QLabel(target);
             label->setText(text);
             label->setToolTip(tooltip);
             label->setWordWrap(true);
-            label->setAlignment(Qt::AlignLeft|Qt::AlignTop);
+            label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
             label->setOpenExternalLinks(true);
             l->addWidget(label, row, 0, 1, 2);
             row++;
@@ -1230,7 +1663,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
 
             const QString id = setupTree.getPropertyId(name);
             l->addWidget(it, row, 1);
-            QObject::connect(it, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            QObject::connect(it, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
             [id, this](int val)
             {
 #ifdef DEBUG_BUILD
@@ -1268,7 +1701,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
 
             for(QCheckBox *cb : values)
             {
-                QObject::connect(cb, static_cast<void(QCheckBox::*)(bool)>(&QCheckBox::clicked),
+                QObject::connect(cb, static_cast<void(QCheckBox::*)(bool)>(&QCheckBox::clicked), this,
                 [id, values, this](bool)
                 {
                     unsigned int val = getFlagBoxValue(values);
@@ -1333,7 +1766,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 h->setValue(value.height());
                 sizeBoxL->addWidget(h, 1000);
 
-                QObject::connect(w, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                QObject::connect(w, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this,
                 [id, h, this](double val)
                 {
                     QSizeF v(val, h->value());
@@ -1344,7 +1777,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                     emit settingsChanged();
                 });
 
-                QObject::connect(h, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                QObject::connect(h, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this,
                 [id, w, this](double val)
                 {
                     QSizeF v(w->value(), val);
@@ -1384,7 +1817,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 h->setValue(value.height());
                 sizeBoxL->addWidget(h, 1000);
 
-                QObject::connect(w, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                QObject::connect(w, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this,
                 [id, h, this](int val)
                 {
                     QSize v(val, h->value());
@@ -1395,7 +1828,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                     emit settingsChanged();
                 });
 
-                QObject::connect(h, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                QObject::connect(h, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this,
                 [id, w, this](int val)
                 {
                     QSize v(w->value(), val);
@@ -1459,7 +1892,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 y->setValue(value.y());
                 pointBoxL->addWidget(y, 1000);
 
-                QObject::connect(x, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                QObject::connect(x, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this,
                 [id, y, this](double val)
                 {
                     QPointF v(val, y->value());
@@ -1470,7 +1903,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                     emit settingsChanged();
                 });
 
-                QObject::connect(y, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                QObject::connect(y, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this,
                 [id, x, this](double val)
                 {
                     QPointF v(x->value(), val);
@@ -1510,7 +1943,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 y->setValue(value.y());
                 pointBoxL->addWidget(y, 1000);
 
-                QObject::connect(x, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                QObject::connect(x, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this,
                 [id, y, this](int val)
                 {
                     QPoint v(val, y->value());
@@ -1521,7 +1954,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                     emit settingsChanged();
                 });
 
-                QObject::connect(y, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                QObject::connect(y, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this,
                 [id, x, this](int val)
                 {
                     QPoint v(x->value(), val);
@@ -1611,7 +2044,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 h->setValue(value.height());
                 rectBoxL->addWidget(h, 1, 3);
 
-                QObject::connect(x, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                QObject::connect(x, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this,
                 [id, y, w, h, this](double val)
                 {
                     QRectF v(val, y->value(), w->value(), h->value());
@@ -1622,7 +2055,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                     emit settingsChanged();
                 });
 
-                QObject::connect(y, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                QObject::connect(y, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this,
                 [id, x, w, h, this](double val)
                 {
                     QRectF v(x->value(), val, w->value(), h->value());
@@ -1633,7 +2066,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                     emit settingsChanged();
                 });
 
-                QObject::connect(w, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                QObject::connect(w, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this,
                 [id, x, y, h, this](double val)
                 {
                     QRectF v(x->value(), y->value(), val, h->value());
@@ -1644,7 +2077,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                     emit settingsChanged();
                 });
 
-                QObject::connect(h, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                QObject::connect(h, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this,
                 [id, x, y, w, this](double val)
                 {
                     QRectF v(x->value(), y->value(), w->value(), val);
@@ -1709,7 +2142,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 h->setValue(value.height());
                 rectBoxL->addWidget(h, 1, 3);
 
-                QObject::connect(x, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                QObject::connect(x, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this,
                 [id, y, w, h, this](int val)
                 {
                     QRect v(val, y->value(), w->value(), h->value());
@@ -1720,7 +2153,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                     emit settingsChanged();
                 });
 
-                QObject::connect(y, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                QObject::connect(y, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this,
                 [id, x, w, h, this](int val)
                 {
                     QRect v(x->value(), val, w->value(), h->value());
@@ -1731,7 +2164,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                     emit settingsChanged();
                 });
 
-                QObject::connect(w, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                QObject::connect(w, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this,
                 [id, x, y, h, this](int val)
                 {
                     QRect v(x->value(), y->value(), val, h->value());
@@ -1742,7 +2175,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                     emit settingsChanged();
                 });
 
-                QObject::connect(h, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                QObject::connect(h, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this,
                 [id, x, y, w, this](int val)
                 {
                     QRect v(x->value(), y->value(), w->value(), val);
@@ -1792,8 +2225,8 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
 }
 
 QWidget *JsonSettingsWidget::loadLayoutDetail(JsonSettingsWidget::SetupStack &stack,
-                                                                const QByteArray &layoutJson,
-                                                                QString &err)
+                                              const QByteArray &layoutJson,
+                                              QString &err)
 {
     QWidget *widget = nullptr;
     QString style;
@@ -1811,7 +2244,7 @@ QWidget *JsonSettingsWidget::loadLayoutDetail(JsonSettingsWidget::SetupStack &st
     QJsonObject layoutData = layout.object();
 
     style = layoutData["style"].toString();
-    title = layoutData["title"].toString();
+    title = valTr(layoutData, "title").toString();
     if(style == "groupbox")
     {
         QGroupBox *gui_w = new QGroupBox(qobject_cast<QWidget*>(parent()));
@@ -1833,4 +2266,31 @@ QWidget *JsonSettingsWidget::loadLayoutDetail(JsonSettingsWidget::SetupStack &st
     m_browser = widget;
 
     return widget;
+}
+
+void JsonSettingsWidget::valTrInitLang()
+{
+    QLocale loc = m_browser ? m_browser->locale() : QLocale::system();
+    m_langFull = loc.name().toLower().replace('_', '-');
+    m_langShort.clear();
+
+    if(m_langFull.contains('-'))
+        m_langShort = m_langFull.mid(0, m_langFull.indexOf('-'));
+}
+
+QJsonValue JsonSettingsWidget::valTr(const QJsonObject& v, const QString& key)
+{
+    QString tKey = QString("%1-%2").arg(key).arg(m_langFull);
+
+    if(v.contains(tKey))
+        return v.value(tKey);
+
+    else if(!m_langShort.isEmpty())
+    {
+        tKey = QString("%1-%2").arg(key).arg(m_langShort);
+        if(v.contains(tKey))
+            return v.value(tKey);
+    }
+
+    return v.value(key);
 }

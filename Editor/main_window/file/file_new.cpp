@@ -87,7 +87,7 @@ void MainWindow::on_actionNewLevel_triggered()
         dock_LvlWarpProps->init();
         dock_LvlLayers->setLayersBox();
         if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
-        LvlMusPlay::musicForceReset=true; //reset musics
+        LvlMusPlay::musicForceReset = true; //reset musics
         on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
     } else {
         if( activeLvlEditWin(SubWindow) )

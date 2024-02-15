@@ -41,6 +41,7 @@ long LvlMusPlay::currentSpcMusicId = 0;
 bool LvlMusPlay::musicButtonChecked;
 bool LvlMusPlay::musicForceReset = false;
 int LvlMusPlay::musicType = LvlMusPlay::LevelMusic;
+static bool s_previewActive = false;
 
 
 void MainWindow::on_actionPlayMusic_triggered(bool checked)
@@ -49,20 +50,8 @@ void MainWindow::on_actionPlayMusic_triggered(bool checked)
     setMusic(checked);
 }
 
-// TODO: Refactor this
-void LvlMusPlay::setMusic(MainWindow *mw, LvlMusPlay::MusicType mt, unsigned long id, QString cmus)
+static void getRootAndData(MainWindow *mw, QString &root, QString &data)
 {
-    QString root = "./";
-    QString data;
-    if(!mw)
-        return;
-
-    if(id == 0)
-    {
-        setNoMusic();
-        return;
-    }
-
     if(mw->activeChildWindow() == MainWindow::WND_Level)
     {
         auto *w = mw->activeLvlEditWin();
@@ -81,6 +70,39 @@ void LvlMusPlay::setMusic(MainWindow *mw, LvlMusPlay::MusicType mt, unsigned lon
             data = w->WldData.meta.filename + "/";
         }
     }
+}
+
+static void processPathArguments(const QString &root, const QString &data, const QString &cpMusic, QString &inoutPath, QString &outArgs)
+{
+    outArgs.clear();
+
+    if(inoutPath.contains('|'))
+    {
+        QStringList x = inoutPath.split("|");
+        inoutPath = x[0];
+        outArgs = x[1];
+        // Replace macros with the absoulte paths:
+        outArgs.replace("{e}", root); // Episode root
+        outArgs.replace("{d}", root + data); // Level/World data directory
+        outArgs.replace("{r}", cpMusic); // Config pack music root
+    }
+}
+
+// TODO: Refactor this
+void LvlMusPlay::setMusic(MainWindow *mw, LvlMusPlay::MusicType mt, unsigned long id, QString cmus)
+{
+    QString root = "./";
+    QString data;
+    if(!mw)
+        return;
+
+    if(id == 0)
+    {
+        setNoMusic();
+        return;
+    }
+
+    getRootAndData(mw, root, data);
 
     DirListCIQt ci(root);
 
@@ -145,16 +167,7 @@ void LvlMusPlay::setMusic(MainWindow *mw, LvlMusPlay::MusicType mt, unsigned lon
     LogDebug(QString("path is %1").arg(currentMusicPath));
 
     QString pathArguments;
-    if(currentMusicPath.contains('|'))
-    {
-        QStringList x = currentMusicPath.split("|");
-        currentMusicPath = x[0];
-        pathArguments = x[1];
-        // Replace macros with the absoulte paths:
-        pathArguments.replace("{e}", root); // Episode root
-        pathArguments.replace("{d}", root + data); // Level/World data directory
-        pathArguments.replace("{r}", mw->configs.dirs.music); // Config pack music root
-    }
+    processPathArguments(root, data, mw->configs.dirs.music, currentMusicPath, pathArguments);
 
     QFileInfo mus(currentMusicPath);
 
@@ -210,9 +223,15 @@ void LvlMusPlay::updateMusic(MainWindow *mw)
     }
 }
 
-void LvlMusPlay::updatePlayerState(MainWindow *mw, bool playing)
+void LvlMusPlay::updatePlayerState(MainWindow *mw, bool playing, bool force)
 {
-    if(!LvlMusPlay::musicForceReset)
+    if(s_previewActive)
+    {
+        force = true;
+        s_previewActive = false;
+    }
+
+    if(!LvlMusPlay::musicForceReset && !force)
     {
         if(
             (!lastMusicPath.isNull()) &&
@@ -246,6 +265,66 @@ void LvlMusPlay::stopMusic(MainWindow *mw)
 {
     setNoMusic();
     updatePlayerState(mw, false);
+}
+
+void LvlMusPlay::previewCustomMusic(MainWindow *mw, QString cmus)
+{
+    QString root = "./";
+    QString data;
+    QString previewCurrentMusicPath;
+
+    if(!mw)
+        return;
+
+    getRootAndData(mw, root, data);
+
+    DirListCIQt ci(root);
+
+    //Force correction of Windows paths into UNIX style
+    cmus.replace('\\', '/');
+
+    LogDebug(QString("get Custom music path"));
+    previewCurrentMusicPath = root + ci.resolveFileCase(cmus);
+
+    LogDebug(QString("path is %1").arg(previewCurrentMusicPath));
+
+    QString pathArguments;
+    processPathArguments(root, data, mw->configs.dirs.music, previewCurrentMusicPath, pathArguments);
+
+    QFileInfo mus(previewCurrentMusicPath);
+
+    if((!mus.exists()) || (!mus.isFile()))
+        return;
+
+    if(!pathArguments.isEmpty())
+        previewCurrentMusicPath = previewCurrentMusicPath + "|" + pathArguments;
+
+    previewCustomMusicAbs(previewCurrentMusicPath);
+    s_previewActive = true;
+}
+
+void LvlMusPlay::previewCustomMusicAbs(QString absMusicPath)
+{
+    PGE_MusPlayer::stop();
+    PGE_MusPlayer::openFile(absMusicPath);
+    PGE_MusPlayer::sendVolume();
+    PGE_MusPlayer::play();
+    s_previewActive = true;
+}
+
+void LvlMusPlay::previewSilence()
+{
+    s_previewActive = true;
+    PGE_MusPlayer::stop();
+}
+
+void LvlMusPlay::previewReset(MainWindow *mw)
+{
+    if(s_previewActive)
+    {
+        updatePlayerState(mw, musicButtonChecked, true);
+        s_previewActive = false;
+    }
 }
 
 /*******************************************************************************/

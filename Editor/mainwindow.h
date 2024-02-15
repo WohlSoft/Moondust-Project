@@ -273,7 +273,7 @@ public:
         /// \brief OpenFile - Open file in the editor
         /// \param FilePath - path to file
         ///
-        void OpenFile(QString FilePath, bool addToRecentList = true);
+        void OpenFile(const QString &FilePath, bool addToRecentList = true);
 
         ///
         /// \brief on_actionReload_triggered - Reload/Reopen current file
@@ -325,6 +325,8 @@ public:
         QMenu *getWindowMenu();
         QMenu *getPluginsMenu();
         QMenu *getHelpMenu();
+
+        QAction *getPlayMusicAction();
 
     private:
         QTimer m_autoSaveTimer;

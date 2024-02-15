@@ -21,6 +21,7 @@
 #include <common_features/graphics_funcs.h>
 #include <common_features/data_array.h>
 #include <common_features/items.h>
+#include <audio/music_player.h>
 
 #include "file_list_browser/musicfilelist.h"
 
@@ -911,10 +912,10 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
         QString dirPath;
         WorldEdit *edit = MainWinConnect::pMainWin->activeWldEditWin();
         if(!edit)
-        {
             return;
-        }
+
         dirPath = edit->WldData.meta.path;
+
         if(edit->isUntitled())
         {
             QMessageBox::information(this, tr("Please, save file"), tr("Please, save file first, if you want to select custom music file."), QMessageBox::Ok);
@@ -922,10 +923,43 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
         }
 
         MusicFileList musicList(dirPath, "");
+        musicList.setMusicPlayState(MainWinConnect::pMainWin->getPlayMusicAction()->isChecked());
+        QString testMusicFile;
+
+        QObject::connect(&musicList, &MusicFileList::musicFileChanged,
+        [&testMusicFile](const QString &music)->void
+        {
+            testMusicFile = music;
+        });
+
+        QObject::connect(&musicList, &MusicFileList::updateSongPlay, [this, edit, &testMusicFile]()->void
+        {
+            if(MainWinConnect::pMainWin->getPlayMusicAction()->isChecked())
+                LvlMusPlay::previewCustomMusic(MainWinConnect::pMainWin, testMusicFile);
+        });
+
+        QObject::connect(&musicList, &MusicFileList::musicTempoChanged, [](double tempo)->void
+        {
+            LvlMusPlay::setTempo(tempo);
+        });
+
+        QObject::connect(&musicList, &MusicFileList::musicButtonClicked, [this, &testMusicFile](bool st)->void
+        {
+            MainWinConnect::pMainWin->getPlayMusicAction()->setChecked(st);
+            if(st)
+                LvlMusPlay::previewCustomMusic(MainWinConnect::pMainWin, testMusicFile);
+            else
+                LvlMusPlay::previewSilence();
+        });
+
+
         if(musicList.exec() == QDialog::Accepted)
             musicFile = musicList.currentFile();
         else
+        {
+            LvlMusPlay::previewReset(MainWinConnect::pMainWin);
             return;
+        }
     }
 
     if(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC) != -1)

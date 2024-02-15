@@ -18,29 +18,45 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.setStyle("Windows");
 
-    JsonSettingsWidget extraSettings;
+    QDialog dlg;
 
-    if(!extraSettings.loadLayoutFromFile(g_sample_settings, g_sample_layout))
+    QVBoxLayout *preLayout = new QVBoxLayout();
+    preLayout->setMargin(0);
+    dlg.setLayout(preLayout);
+
+    QScrollArea *scrollWidget = new QScrollArea(&dlg);
+    scrollWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    scrollWidget->updateGeometry();
+
+    JsonSettingsWidget *extraSettings = new JsonSettingsWidget(scrollWidget);
+    scrollWidget->setWidgetResizable(true);
+
+    preLayout->addWidget(scrollWidget);
+
+    if(!extraSettings->loadLayoutFromFile(g_sample_settings, g_sample_layout))
     {
-        QMessageBox::warning(nullptr, "oops", extraSettings.errorString());
+        QMessageBox::warning(nullptr, "oops", extraSettings->errorString());
         return 1;
     }
 
-    extraSettings.connect(&extraSettings, &JsonSettingsWidget::settingsChanged,
+    QWidget *w = extraSettings->getWidget();
+    scrollWidget->setWidget(w);
+
+    dlg.resize(w->sizeHint().width() + 24, 800);
+
+    QObject::connect(extraSettings, &JsonSettingsWidget::settingsChanged,
                             []()
     {
         qDebug() << "Setup Changed!";
     });
 
-    QWidget *w = extraSettings.getWidget();
 //    QScrollArea box;
-//    box.resize(w->sizeHint().width() + 24, 800);
 //    box.setWidget(w);
-    w->show();
+    dlg.show();
 
     int ret = app.exec();
 
-    extraSettings.saveSettingsIntoFile(g_sample_settings);
+    extraSettings->saveSettingsIntoFile(g_sample_settings);
 
     return ret;
 }

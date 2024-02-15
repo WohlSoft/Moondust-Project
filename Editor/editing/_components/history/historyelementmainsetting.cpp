@@ -108,6 +108,10 @@ void HistoryElementMainSetting::processWorldUndo()
     {
         wldScene->m_data->IntroLevel_file = m_modData.toList()[0].toString();
     }
+    else if(m_modWorldSetting == HistorySettings::SETTING_WLD_XTRA)
+    {
+        wldScene->m_data->custom_params = m_modData.toList()[0].toString();
+    }
     else if(m_modWorldSetting == HistorySettings::SETTING_CHARACTER)
     {
         int ind = MainWinConnect::pMainWin->configs.getCharacterI(m_modData.toList()[0].toInt());
@@ -173,6 +177,10 @@ void HistoryElementMainSetting::processWorldRedo()
     else if(m_modWorldSetting == HistorySettings::SETTING_INTROLEVEL)
     {
         wldScene->m_data->IntroLevel_file = m_modData.toList()[1].toString();
+    }
+    else if(m_modWorldSetting == HistorySettings::SETTING_WLD_XTRA)
+    {
+        wldScene->m_data->custom_params = m_modData.toList()[1].toString();
     }
     else if(m_modWorldSetting == HistorySettings::SETTING_CHARACTER)
     {

@@ -362,6 +362,11 @@ QMenu *MainWindow::getHelpMenu()
     return ui->menuHelp;
 }
 
+QAction *MainWindow::getPlayMusicAction()
+{
+    return ui->actionPlayMusic;
+}
+
 
 void MainWindow::UpdateCustomItems()
 {

@@ -72,6 +72,11 @@ void PGE_MusPlayer::changeVolume(int vlm)
     Mix_VolumeMusicStream(play_mus, volume);
 }
 
+void PGE_MusPlayer::sendVolume()
+{
+    Mix_VolumeMusicStream(play_mus, volume);
+}
+
 int PGE_MusPlayer::currentVolume()
 {
     return volume;
@@ -144,13 +149,10 @@ void PGE_MusPlayer::play()
     if(play_mus)
     {
         qDebug() << QString("Play Music (SDL2_mixer)");
-        if(Mix_PlayingMusicStream(play_mus) == 0)
+        if(!Mix_PlayingMusicStream(play_mus) && Mix_PlayMusic(play_mus, -1) < 0)
         {
-            if(Mix_PlayMusic(play_mus, -1) == -1)
-            {
-                qDebug() << QString("Mix_PlayMusic: %1").arg(Mix_GetError());
-                // well, there's no music, but most games don't break without music...
-            }
+            qDebug() << QString("Mix_PlayMusic: %1").arg(Mix_GetError());
+            // well, there's no music, but most games don't break without music...
         }
         qDebug() << QString("Music is %1").arg(Mix_PlayingMusicStream(play_mus) == 1 ? "Playing" : "Silence");
     }
@@ -169,7 +171,7 @@ void PGE_MusPlayer::setTempo(double tempo)
 
 // //////////////////////// Sound Player //////////////////////////////////////
 
-void PGE_SfxPlayer::playFile(QString sndFile)
+void PGE_SfxPlayer::playFile(const QString &sndFile)
 {
     if(currentSound != sndFile)
     {
@@ -178,11 +180,14 @@ void PGE_SfxPlayer::playFile(QString sndFile)
             Mix_FreeChunk(sound);
             sound = nullptr;
         }
+
         sound = Mix_LoadWAV(sndFile.toUtf8().data());
+
         if(!sound)
             qDebug() << QString("Mix_LoadWAV: %1").arg(SDL_GetError());
         else
             Mix_VolumeChunk(sound, MIX_MAX_VOLUME);
+
         currentSound = sndFile;
     }
 
@@ -199,5 +204,6 @@ void PGE_SfxPlayer::freeBuffer()
     {
         Mix_FreeChunk(sound);
         sound = nullptr;
+        currentSound.clear();
     }
 }

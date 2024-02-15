@@ -374,10 +374,41 @@ void WorldItemBox::MusicList_itemClicked(const QModelIndex &item)
 
             QString dirPath = edit->WldData.meta.path;
             MusicFileList musicList(dirPath, "");
+            musicList.setMusicPlayState(mw()->getPlayMusicAction()->isChecked());
+
+            QObject::connect(&musicList, &MusicFileList::musicFileChanged,
+            [&customMusicFile](const QString &music)->void
+            {
+                customMusicFile = music;
+            });
+
+            QObject::connect(&musicList, &MusicFileList::updateSongPlay, [this, edit, &customMusicFile]()->void
+            {
+                if(mw()->getPlayMusicAction()->isChecked())
+                    LvlMusPlay::previewCustomMusic(mw(), customMusicFile);
+            });
+
+            QObject::connect(&musicList, &MusicFileList::musicTempoChanged, [](double tempo)->void
+            {
+                LvlMusPlay::setTempo(tempo);
+            });
+
+            QObject::connect(&musicList, &MusicFileList::musicButtonClicked, [this, &customMusicFile](bool st)->void
+            {
+                mw()->getPlayMusicAction()->setChecked(st);
+                if(st)
+                    LvlMusPlay::previewCustomMusic(mw(), customMusicFile);
+                else
+                    LvlMusPlay::previewSilence();
+            });
+
             if(musicList.exec() == QDialog::Accepted)
                 customMusicFile = musicList.currentFile();
             else
+            {
+                LvlMusPlay::previewReset(mw());
                 return;
+            }
         }
 
         WldPlacingItems::musicSet.music_file = customMusicFile;
@@ -390,63 +421,5 @@ void WorldItemBox::MusicList_itemClicked(const QModelIndex &item)
                              edit->currentMusic,
                              edit->currentCustomMusic);
         mw()->setMusic();
-
-        // Set music properties if needed
-        if(CustomMusicSetup::settingsNeeded(customMusicFile))
-        {
-            CustomMusicSetup set(mw());
-            set.initLists();
-
-            QString musicPath = customMusicFile;
-            set.setMusicPath(musicPath);
-            set.setDirectory(edit->WldData.meta.path, edit->WldData.meta.filename);
-            set.setMusicPlayState(mw()->ui->actionPlayMusic->isChecked());
-
-            QObject::connect(&set, &CustomMusicSetup::musicSetupChanged, [&musicPath](const QString &music)->void
-            {
-                musicPath = music;
-            });
-
-            QObject::connect(&set, &CustomMusicSetup::updateSongPlay, [this,edit, &musicPath]()->void
-            {
-                LvlMusPlay::setMusic(mw(), LvlMusPlay::WorldMusic,
-                                     edit->currentMusic,
-                                     musicPath);
-                mw()->setMusic();
-            });
-
-            QObject::connect(&set, &CustomMusicSetup::updateSongTempo, [](double tempo)->void
-            {
-                LvlMusPlay::setTempo(tempo);
-            });
-
-            QObject::connect(&set, &CustomMusicSetup::musicButtonClicked, [this](bool)->void
-            {
-                mw()->ui->actionPlayMusic->trigger();
-            });
-
-            set.show();
-            set.adjustSize();
-            int ret = set.exec();
-
-            if(ret == QDialog::Accepted)
-            {
-                // Apply the new music state if changed
-                if(customMusicFile != musicPath)
-                {
-                    customMusicFile = musicPath;
-                    edit->currentCustomMusic = musicPath;
-                    WldPlacingItems::musicSet.music_file = customMusicFile;
-                }
-            }
-            else
-            {
-                // Reset music without changing of properties
-                LvlMusPlay::setMusic(mw(), LvlMusPlay::WorldMusic,
-                                     edit->currentMusic,
-                                     edit->currentCustomMusic);
-                mw()->setMusic();
-            }
-        }
     }
 }

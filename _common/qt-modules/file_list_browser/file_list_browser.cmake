@@ -2,6 +2,8 @@ set(FILE_LIST_BROWSER_SRC
     # Main class
     ${CMAKE_CURRENT_LIST_DIR}/file_list_browser.cpp
     ${CMAKE_CURRENT_LIST_DIR}/file_list_browser.h
+    ${CMAKE_CURRENT_LIST_DIR}/file_list_model.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/file_list_model.h
 
     # Level file lists
     ${CMAKE_CURRENT_LIST_DIR}/levelfilelist.cpp

@@ -16,7 +16,42 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <SDL2/SDL_mixer_ext.h>
+#ifndef UNIT_TEST
+#   include <SDL2/SDL_mixer_ext.h>
+#else
+
+// Fallback for the unit test
+#   define SDL_atoi atoi
+typedef enum {
+    MIDI_ADLMIDI,
+    MIDI_Native,
+    MIDI_Timidity,
+    MIDI_OPNMIDI,
+    MIDI_Fluidsynth,
+    MIDI_EDMIDI,
+    MIDI_ANY,
+    MIDI_KnownPlayers, /* Count of MIDI player types */
+    MIDI_KnownDevices = MIDI_KnownPlayers /* Backward compatibility */
+} Mix_MIDI_Player;
+
+typedef enum {
+    ADLMIDI_VM_AUTO,
+    ADLMIDI_VM_GENERIC,
+    ADLMIDI_VM_NATIVE,
+    ADLMIDI_VM_DMX,
+    ADLMIDI_VM_APOGEE,
+    ADLMIDI_VM_9X,
+    ADLMIDI_VM_DMX_FIXED,
+    ADLMIDI_VM_APOGEE_FIXED,
+    ADLMIDI_VM_AIL,
+    ADLMIDI_VM_9X_GENERIC_FM,
+    ADLMIDI_VM_HMI,
+    ADLMIDI_VM_HMI_OLD,
+    /* Deprecated */
+    ADLMIDI_VM_CMF = ADLMIDI_VM_NATIVE
+} Mix_ADLMIDI_VolumeModel;
+#endif
+
 #include <QFileInfo>
 #include <cstdlib>
 
@@ -855,22 +890,28 @@ CustomMusicSetup::~CustomMusicSetup()
 void CustomMusicSetup::initLists()
 {
     blockSignals(true);
-
+#ifndef UNIT_TEST
     int totalBanks = Mix_ADLMIDI_getTotalBanks();
     const char *const *banks = Mix_ADLMIDI_getBankNames();
     ui->midiExAdlBank->clear();
 
     for(int i = 0; i < totalBanks; ++i)
         ui->midiExAdlBank->addItem(QString("%1: %2").arg(i).arg(banks[i]), i);
-
+#else
+    ui->midiExAdlBank->clear();
+    for(int i = 0; i < 100; ++i)
+        ui->midiExAdlBank->addItem(QString("%1: %2").arg(i).arg(QString("Test %1").arg(i)), i);
+#endif
     blockSignals(false);
 
+#ifndef UNIT_TEST
     adlDefaultBank = Mix_ADLMIDI_getBankID();
     adlDefaultChips = Mix_ADLMIDI_getChipsCount();
     adlDefaultVolumeModel = Mix_ADLMIDI_getVolumeModel();
 
     opnDefaultChips = Mix_OPNMIDI_getChipsCount();
     opnDefaultVolumeModel = Mix_OPNMIDI_getVolumeModel();
+#endif
 
     fluidDefaultPolyphony = 256;
 

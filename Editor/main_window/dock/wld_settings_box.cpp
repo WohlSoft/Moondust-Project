@@ -22,6 +22,7 @@
 #include <editing/_scenes/world/wld_history_manager.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/main_window_ptr.h>
+#include <common_features/json_settings_widget.h>
 
 #include "file_list_browser/levelfilelist.h"
 
@@ -43,7 +44,9 @@ WorldSettingsBox::WorldSettingsBox(QWidget *parent) :
     setVisible(false);
     setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
+
     m_lockSettings = false;
+
     QRect mwg = mw()->geometry();
     int GOffset = 10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
@@ -55,6 +58,9 @@ WorldSettingsBox::WorldSettingsBox(QWidget *parent) :
         width(),
         height()
     );
+
+    m_extraSettingsSpacer.reset(new QSpacerItem(100, 999999, QSizePolicy::Minimum, QSizePolicy::Expanding));
+
     m_lastVisibilityState = isVisible();
     mw()->docks_world.
     addState(this, &m_lastVisibilityState);
@@ -63,10 +69,20 @@ WorldSettingsBox::WorldSettingsBox(QWidget *parent) :
     {
         updateLevelIntroLabel();
     });
+
+    QObject::connect(ui->openIntroLevel, static_cast<void(QToolButton::*)(bool)>(&QToolButton::clicked),
+                     this,
+                     &WorldSettingsBox::autostartLvlOpenClicked);
 }
 
 WorldSettingsBox::~WorldSettingsBox()
 {
+    if(m_extraSettings.get())
+        ui->extraSettings->layout()->removeWidget(m_extraSettings.get()->getWidget());
+    ui->extraSettings->layout()->removeItem(m_extraSettingsSpacer.get());
+    m_extraSettings.reset();
+    m_extraSettingsSpacer.reset();
+
     delete ui;
 }
 
@@ -75,6 +91,103 @@ void WorldSettingsBox::re_translate()
     ui->retranslateUi(this);
     setCurrentWorldSettings();
     updateLevelIntroLabel();
+}
+
+
+void WorldSettingsBox::updateExtraSettingsWidget()
+{
+    WorldEdit *edit = nullptr;
+    QString defaultDir = mw()->configs.config_dir;
+
+    if((mw()->activeChildWindow() == MainWindow::WND_World) && (edit = mw()->activeWldEditWin()))
+    {
+        QMutexLocker mlock(&m_mutex); Q_UNUSED(mlock)
+        // bool spacerNeeded = false;
+
+        CustomDirManager uWLD(edit->WldData.meta.path, edit->WldData.meta.filename);
+        uWLD.setDefaultDir(defaultDir);
+
+        QString esLayoutFile = uWLD.getCustomFile("wld_settings.json");
+        if(esLayoutFile.isEmpty())
+            return;
+
+        auto &wld_extra = edit->WldData.custom_params;
+
+        QFile layoutFile(esLayoutFile);
+        if(!layoutFile.open(QIODevice::ReadOnly))
+            return;
+
+        ui->extraSettings->setToolTip("");
+        ui->extraSettings->setMinimumHeight(0);
+        ui->extraSettings->setStyleSheet("");
+        if(m_extraSettings.get())
+            ui->extraSettings->layout()->removeWidget(m_extraSettings.get()->getWidget());
+        ui->extraSettings->layout()->removeItem(m_extraSettingsSpacer.get());
+        m_extraSettings.reset();
+
+        QByteArray rawLayout = layoutFile.readAll();
+        m_extraSettings.reset(new JsonSettingsWidget(ui->extraSettings));
+
+        if(m_extraSettings.get())
+        {
+            m_extraSettings->setSearchDirectories(edit->WldData.meta.path, edit->WldData.meta.filename);
+            m_extraSettings->setConfigPack(&mw()->configs);
+
+            if(!m_extraSettings->loadLayout(wld_extra.toUtf8(), rawLayout))
+            {
+                LogWarning(m_extraSettings->errorString());
+                ui->extraSettings->setToolTip(tr("Error in the file %1:\n%2")
+                                                  .arg(esLayoutFile)
+                                                  .arg(m_extraSettings->errorString()));
+                ui->extraSettings->setMinimumHeight(12);
+                ui->extraSettings->setStyleSheet("*{background-color: #FF0000;}");
+            }
+
+            auto *widget = m_extraSettings->getWidget();
+            if(widget)
+            {
+                widget->layout()->setContentsMargins(0, 0, 0, 0);
+                ui->extraSettings->layout()->addWidget(widget);
+                JsonSettingsWidget::connect(m_extraSettings.get(),
+                                            &JsonSettingsWidget::settingsChanged,
+                                            this,
+                                            &WorldSettingsBox::onExtraSettingsChanged);
+                JsonSettingsWidget::connect(m_extraSettings.get(),
+                                            &JsonSettingsWidget::fileOpenRequested,
+                                            mw(),
+                                            [this](const QString &f)->void
+                                            {
+                                                mw()->OpenFile(f);
+                                            });
+                // spacerNeeded = spacerNeeded || m_extraSettings->spacerNeeded();
+            }
+        }
+
+        layoutFile.close();
+
+        // ui->extraSettings->setMinimumHeight(spacerNeeded ? 0 : 150);
+        // if(spacerNeeded)
+        //     ui->extraSettings->layout()->addItem(m_extraSettingsSpacer.get());
+    }
+}
+
+void WorldSettingsBox::onExtraSettingsChanged()
+{
+    if(mw()->activeChildWindow() == MainWindow::WND_World)
+    {
+        WorldEdit *edit = mw()->activeWldEditWin();
+        if(!edit)
+            return;
+
+        auto &wld_extra = edit->WldData.custom_params;
+        QString wld_extra_new = m_extraSettings->saveSettings();
+        QList<QVariant> xtraSetupData;
+        xtraSetupData.push_back(wld_extra);
+        xtraSetupData.push_back(wld_extra_new);
+        edit->scene->m_history->addChangeWorldSettingsHistory(HistorySettings::SETTING_WLD_XTRA, xtraSetupData);
+        wld_extra = wld_extra_new;
+        edit->WldData.meta.modified = true;
+    }
 }
 
 
@@ -119,6 +232,8 @@ void WorldSettingsBox::setCurrentWorldSettings()
         ui->WLD_Credirs->setText(edit->WldData.authors);
         LogDebug("-> Character List");
 
+        ui->openIntroLevel->setVisible(QFile::exists(edit->WldData.meta.path + "/" + edit->WldData.IntroLevel_file));
+
         //clear character list
         while(!m_charactersCheckBoxes.isEmpty())
         {
@@ -148,6 +263,8 @@ void WorldSettingsBox::setCurrentWorldSettings()
             connect(cur, SIGNAL(clicked(bool)), this, SLOT(characterActivated(bool)));
             ui->WLD_DisableCharacters->layout()->addWidget(cur);
         }
+
+        updateExtraSettingsWidget();
 
         LogDebug("-> Done");
     }
@@ -315,6 +432,8 @@ void WorldSettingsBox::on_WLD_AutostartLvl_editingFinished()
         edit->scene->m_history->addChangeWorldSettingsHistory(HistorySettings::SETTING_INTROLEVEL, var);
         edit->WldData.IntroLevel_file = ui->WLD_AutostartLvl->text();
         edit->WldData.meta.modified = true;
+
+        ui->openIntroLevel->setVisible(QFile::exists(edit->WldData.meta.path + "/" + edit->WldData.IntroLevel_file));
     }
 }
 
@@ -341,6 +460,18 @@ void WorldSettingsBox::on_WLD_AutostartLvlBrowse_clicked()
             on_WLD_AutostartLvl_editingFinished();
         }
     }
+}
+
+void WorldSettingsBox::autostartLvlOpenClicked()
+{
+    WorldEdit *edit = nullptr;
+
+    if(mw()->activeChildWindow() == MainWindow::WND_World)
+        edit = mw()->activeWldEditWin();
+    else
+        return;
+
+    mw()->OpenFile(edit->WldData.meta.path + "/" + edit->WldData.IntroLevel_file);
 }
 
 void WorldSettingsBox::on_WLD_Stars_valueChanged(int arg1)
