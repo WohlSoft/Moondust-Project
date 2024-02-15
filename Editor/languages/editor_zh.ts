@@ -2593,31 +2593,31 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Add new item into the list</source>
-        <translation type="unfinished"></translation>
+        <translation>添加新对象到列表中</translation>
     </message>
     <message>
         <source>Remove selected item from the list</source>
-        <translation type="unfinished"></translation>
+        <translation>从列表中移除对象</translation>
     </message>
     <message>
         <source>Play selected file</source>
-        <translation type="unfinished"></translation>
+        <translation>播放所选文件</translation>
     </message>
     <message>
         <source>Open...</source>
-        <translation type="unfinished">打开……</translation>
+        <translation>打开……</translation>
     </message>
     <message>
         <source>Open selected file</source>
-        <translation type="unfinished"></translation>
+        <translation>打开选择的文件</translation>
     </message>
     <message>
         <source>Add new line</source>
-        <translation type="unfinished"></translation>
+        <translation>添加文字</translation>
     </message>
     <message>
         <source>Please enter a text line to add:</source>
-        <translation type="unfinished"></translation>
+        <translation>请输入要添加的文字：</translation>
     </message>
 </context>
 <context>
@@ -5639,7 +5639,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Reloading configuration</source>
-        <translation>配置重新加载中</translation>
+        <translation>重新加载配置包</translation>
     </message>
     <message>
         <source>Configuration successfully reloaded!</source>
@@ -7208,7 +7208,7 @@ Reason: %1
     </message>
     <message>
         <source>World map extra settings</source>
-        <translation type="unfinished"></translation>
+        <translation>大地图附加设置</translation>
     </message>
 </context>
 <context>
@@ -9255,16 +9255,16 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Open current intro level</source>
-        <translation type="unfinished"></translation>
+        <translation>打开当前开场关卡</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished">打开</translation>
+        <translation>打开</translation>
     </message>
     <message>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished">文件 %1 出错:
+        <translation>文件 %1 发生错误:
 %2</translation>
     </message>
 </context>
