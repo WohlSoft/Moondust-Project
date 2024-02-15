@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished"></translation>
+        <translation>筛选……</translation>
     </message>
 </context>
 <context>
@@ -360,24 +360,24 @@
     <message>
         <source>Test SFX</source>
         <comment>Preview selected sound file</comment>
-        <translation type="unfinished"></translation>
+        <translation>测试音效</translation>
     </message>
     <message>
         <source>Music play/stop</source>
         <comment>Preview selected music file</comment>
-        <translation type="unfinished"></translation>
+        <translation>播放/停止音乐</translation>
     </message>
     <message>
         <source>Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>设置……</translation>
     </message>
     <message>
         <source>Extra settings are not specified</source>
-        <translation type="unfinished"></translation>
+        <translation>未指定附加设置</translation>
     </message>
     <message>
         <source>Extra settings are not supported for this music file format</source>
-        <translation type="unfinished"></translation>
+        <translation>当前音乐文件不支持附加设置</translation>
     </message>
     <message>
         <source>Music settings arguments:
@@ -385,7 +385,11 @@ This is a special string that allows to set an extra settings for this music fil
 These settings are different depending on the file format.
 
 You can&apos;t set these settings if given file format doesn&apos;t support them.</source>
-        <translation type="unfinished"></translation>
+        <translation>音乐附加参数：
+此为特殊字符串，用于设置当前音乐文件的参数，以改变播放音乐的方式。
+设置随音乐文件格式变化。
+
+如果您的文件格式不支持附加参数，则无法设置。</translation>
     </message>
 </context>
 </TS>
