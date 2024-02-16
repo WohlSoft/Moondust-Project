@@ -1317,10 +1317,12 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             QToolButton *button_add = new QToolButton(sizeBox);
             button_add->setText("+");
             button_add->setToolTip(tr("Add new item into the list"));
+            button_add->setMinimumWidth(25);
             sizeBoxL->addWidget(button_add, 0, col++);
 
             QToolButton *button_remove = new QToolButton(sizeBox);
             button_remove->setText("-");
+            button_remove->setMinimumWidth(25);
             button_remove->setToolTip(tr("Remove selected item from the list"));
             sizeBoxL->addWidget(button_remove, 0, col++);
 
