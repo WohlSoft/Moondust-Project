@@ -29,6 +29,41 @@
 			"directory" : "episode"
 		},
 		{
+			"control": "lineArray",
+			"name": "arrayOfWhat",
+			"title": "Fill this by a random crap",
+			"value-default": ["one", "jerk", "is", "idiot"],
+			"tooltip" : "Array of ... what?"
+		},
+		{
+			"control": "musicFileArray",
+			"name": "arrOfMusik",
+			"title": "Any music you want",
+			"value-default": [],
+			"tooltip" : "Really, anything you want!"
+		},
+		{
+			"control": "soundFileArray",
+			"name": "arrOfSFEEKZ",
+			"title": "Any SFX you want",
+			"value-default": [],
+			"tooltip" : "Really, anything you want!"
+		},
+		{
+			"control": "levelFileArray",
+			"name": "arrayOfLevelz",
+			"title": "Any level you want",
+			"value-default": [],
+			"tooltip" : "Really, anything you want!"
+		},
+		{
+			"control": "fileArray",
+			"name": "arrayOfFilez",
+			"title": "Any regular file you want",
+			"value-default": [],
+			"tooltip" : "Really, anything you want!"
+		},
+		{
 			"control": "checkbox",
 			"name": "checkMeNot",
 			"title": "Don't check me, jerk",

@@ -91,7 +91,7 @@ list(APPEND PaletteFilter_INSTALLS
     PaletteFilter
 )
 
-if(NOT APPLE AND NOT MSVC AND NOT USE_SYSTEM_LIBC)
+if(NOT APPLE AND NOT HAIKU AND NOT MSVC AND NOT USE_SYSTEM_LIBC)
     set_property(TARGET PaletteFilter APPEND_STRING PROPERTY LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 

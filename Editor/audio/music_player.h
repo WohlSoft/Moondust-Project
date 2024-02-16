@@ -50,8 +50,13 @@ public:
     static void setNoMusic();
     static void setTempo(double tempo);
     static void updateMusic(MainWindow *mw);
-    static void updatePlayerState(MainWindow *mw, bool playing = true);
+    static void updatePlayerState(MainWindow *mw, bool playing = true, bool force = false);
     static void stopMusic(MainWindow *mw);
+
+    static void previewCustomMusic(MainWindow *mw, QString cmus);
+    static void previewCustomMusicAbs(QString absMusicPath);
+    static void previewSilence();
+    static void previewReset(MainWindow *mw);
 
 };
 

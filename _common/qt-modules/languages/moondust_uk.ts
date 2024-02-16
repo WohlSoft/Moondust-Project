@@ -323,6 +323,10 @@
         <source>Please select a file from the list:</source>
         <translation>Будь ласка, виберіть файл зі списку:</translation>
     </message>
+    <message>
+        <source>Filter...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -352,6 +356,36 @@
     <message>
         <source>Please select music file to use as custom</source>
         <translation>Будь ласка, виберіть корист. музику</translation>
+    </message>
+    <message>
+        <source>Test SFX</source>
+        <comment>Preview selected sound file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music play/stop</source>
+        <comment>Preview selected music file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extra settings are not specified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extra settings are not supported for this music file format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music settings arguments:
+This is a special string that allows to set an extra settings for this music file to alternate its playing behaviour and/or sounding.
+These settings are different depending on the file format.
+
+You can&apos;t set these settings if given file format doesn&apos;t support them.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -17,24 +17,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH += \
+    ../../../_common/qt-modules/compat \
+    ../../../_common/qt-modules/
+
 SOURCES += \
     ../../../Editor/common_features/json_settings_widget.cpp \
-    ../../../Editor/editing/_dialogs/file_list_browser.cpp \
-    ../../../Editor/editing/_dialogs/levelfilelist.cpp \
-    ../../../Editor/editing/_dialogs/musicfilelist.cpp \
+    ../../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp \
+    ../../../_common/qt-modules/file_list_browser/bankfilelist.cpp \
+    ../../../_common/qt-modules/file_list_browser/file_list_browser.cpp \
+    ../../../_common/qt-modules/file_list_browser/file_list_model.cpp \
+    ../../../_common/qt-modules/file_list_browser/levelfilelist.cpp \
+    ../../../_common/qt-modules/file_list_browser/musicfilelist.cpp \
     main.cpp
 
 HEADERS += \
-    ../../../Editor/common_features/json_settings_widget.h \ \
-    ../../../Editor/editing/_dialogs/file_list_browser.h \
-    ../../../Editor/editing/_dialogs/levelfilelist.h \
-    ../../../Editor/editing/_dialogs/musicfilelist.h
-
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+    ../../../Editor/common_features/json_settings_widget.h \
+    ../../../_common/qt-modules/custom_music_setup/custom_music_setup.h \
+    ../../../_common/qt-modules/file_list_browser/bankfilelist.h \
+    ../../../_common/qt-modules/file_list_browser/file_list_browser.h \
+    ../../../_common/qt-modules/file_list_browser/file_list_model.h \
+    ../../../_common/qt-modules/file_list_browser/levelfilelist.h \
+    ../../../_common/qt-modules/file_list_browser/musicfilelist.h
 
 FORMS += \
-    ../../../Editor/editing/_dialogs/file_list_browser.ui
+    ../../../_common/qt-modules/custom_music_setup/custom_music_setup.ui \
+    ../../../_common/qt-modules/file_list_browser/file_list_browser.ui

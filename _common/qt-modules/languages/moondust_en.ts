@@ -323,6 +323,10 @@
         <source>Please select a file from the list:</source>
         <translation>Please select a file from the list:</translation>
     </message>
+    <message>
+        <source>Filter...</source>
+        <translation>Filter...</translation>
+    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -352,6 +356,40 @@
     <message>
         <source>Please select music file to use as custom</source>
         <translation>Please select a music file to use as custom</translation>
+    </message>
+    <message>
+        <source>Test SFX</source>
+        <comment>Preview selected sound file</comment>
+        <translation>Test SFX</translation>
+    </message>
+    <message>
+        <source>Music play/stop</source>
+        <comment>Preview selected music file</comment>
+        <translation>Music play/stop</translation>
+    </message>
+    <message>
+        <source>Settings...</source>
+        <translation>Settings...</translation>
+    </message>
+    <message>
+        <source>Extra settings are not specified</source>
+        <translation>Extra settings are not specified</translation>
+    </message>
+    <message>
+        <source>Extra settings are not supported for this music file format</source>
+        <translation>Extra settings are not supported for this music file format</translation>
+    </message>
+    <message>
+        <source>Music settings arguments:
+This is a special string that allows to set an extra settings for this music file to alternate its playing behaviour and/or sounding.
+These settings are different depending on the file format.
+
+You can&apos;t set these settings if given file format doesn&apos;t support them.</source>
+        <translation>Music settings arguments:
+This is a special string that allows to set an extra settings for this music file to alternate its playing behaviour and/or sounding.
+These settings are different depending on the file format.
+
+You can&apos;t set these settings if given file format doesn&apos;t support them.</translation>
     </message>
 </context>
 </TS>

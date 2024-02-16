@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>261</width>
-    <height>438</height>
+    <width>283</width>
+    <height>513</height>
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../_resources/editor.qrc">
+   <iconset resource="../../_resources/toolbar/toolbar.qrc">
     <normaloff>:/toolbar/dock/section.png</normaloff>:/toolbar/dock/section.png</iconset>
   </property>
   <property name="allowedAreas">
@@ -21,54 +21,20 @@
    <string>World Settings</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents_3">
-   <layout class="QGridLayout" name="gridLayout_18" rowstretch="0,0,0,0,0,0,0,0,0,0,80" columnstretch="20,80,0">
+   <layout class="QGridLayout" name="gridLayout_18" rowstretch="0,0,0,0,0,0,0,0,0,0,0,0,0" columnstretch="20,0">
     <property name="sizeConstraint">
      <enum>QLayout::SetMinimumSize</enum>
     </property>
-    <item row="9" column="0" colspan="3">
-     <widget class="QTextEdit" name="WLD_Credirs">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>80</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>80</height>
-       </size>
-      </property>
-      <property name="autoFormatting">
-       <set>QTextEdit::AutoNone</set>
-      </property>
-      <property name="html">
-       <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Tahoma'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="acceptRichText">
-       <bool>false</bool>
-      </property>
-      <property name="placeholderText">
-       <string notr="true"/>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="2">
-     <widget class="QPushButton" name="WLD_DoCountStars">
-      <property name="text">
-       <string>Count</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0" colspan="3">
+    <item row="6" column="0" colspan="2">
      <widget class="QLabel" name="introLevelLabel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="font">
        <font>
-        <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
@@ -80,7 +46,172 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </item>
-    <item row="10" column="0" colspan="3">
+    <item row="10" column="0" colspan="2">
+     <widget class="QLabel" name="label_60">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Credits of this episode (SMBX allows only 5 lines):</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0" colspan="2">
+     <widget class="Line" name="line_13">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QLineEdit" name="WLD_Title">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="0" colspan="2">
+     <widget class="QFrame" name="frame_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1000,0">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_59">
+         <property name="text">
+          <string>Total stars:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="WLD_Stars">
+         <property name="maximum">
+          <number>999999999</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="WLD_DoCountStars">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Count</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="7" column="0" colspan="2">
+     <widget class="QFrame" name="frame">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="10000,0,0">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLineEdit" name="WLD_AutostartLvl">
+         <property name="toolTip">
+          <string>The name of the level that will be loaded when the game first loads.</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="openIntroLevel">
+         <property name="toolTip">
+          <string>Open current intro level</string>
+         </property>
+         <property name="text">
+          <string>Open</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="WLD_AutostartLvlBrowse">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Browse</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="2">
+     <widget class="QCheckBox" name="WLD_RestartLevel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Restart last level after fail</string>
+      </property>
+     </widget>
+    </item>
+    <item row="12" column="0" colspan="2">
      <widget class="QGroupBox" name="WLD_DisableCharacters">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -125,38 +256,16 @@ p, li { white-space: pre-wrap; }
       </layout>
      </widget>
     </item>
-    <item row="5" column="0" colspan="2">
-     <widget class="QLineEdit" name="WLD_AutostartLvl">
-      <property name="toolTip">
-       <string>The name of the level that will be loaded when the game first loads.</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="1">
-     <widget class="QSpinBox" name="WLD_Stars">
-      <property name="maximum">
-       <number>999999999</number>
-      </property>
-     </widget>
-    </item>
-    <item row="8" column="0" colspan="3">
-     <widget class="QLabel" name="label_60">
-      <property name="font">
-       <font>
-        <weight>50</weight>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Credits of this episode (SMBX allows only 5 lines):</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0" colspan="3">
+    <item row="0" column="0" colspan="2">
      <widget class="QLabel" name="label_57">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="font">
        <font>
-        <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
@@ -165,49 +274,95 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </item>
-    <item row="3" column="0" colspan="3">
-     <widget class="QCheckBox" name="WLD_RestartLevel">
-      <property name="text">
-       <string>Restart last level after fail</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0" colspan="3">
+    <item row="2" column="0" colspan="2">
      <widget class="QCheckBox" name="WLD_NoWorldMap">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="text">
        <string>Hub-styled world (without world map)</string>
       </property>
      </widget>
     </item>
-    <item row="6" column="0">
-     <widget class="QLabel" name="label_59">
-      <property name="text">
-       <string>Total stars:</string>
+    <item row="11" column="0" colspan="2">
+     <widget class="QTextEdit" name="WLD_Credirs">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>80</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>80</height>
+       </size>
+      </property>
+      <property name="autoFormatting">
+       <set>QTextEdit::AutoNone</set>
+      </property>
+      <property name="html">
+       <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Tahoma'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="acceptRichText">
+       <bool>false</bool>
+      </property>
+      <property name="placeholderText">
+       <string notr="true"/>
       </property>
      </widget>
     </item>
-    <item row="1" column="0" colspan="3">
-     <widget class="QLineEdit" name="WLD_Title"/>
-    </item>
-    <item row="7" column="0" colspan="3">
-     <widget class="Line" name="line_13">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+    <item row="4" column="0" colspan="2">
+     <widget class="QFrame" name="extraSettings">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>5</verstretch>
+       </sizepolicy>
       </property>
-     </widget>
-    </item>
-    <item row="5" column="2">
-     <widget class="QPushButton" name="WLD_AutostartLvlBrowse">
-      <property name="text">
-       <string>Browse</string>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
       </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMaximumSize</enum>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
      </widget>
     </item>
    </layout>
   </widget>
  </widget>
  <resources>
-  <include location="../../_resources/editor.qrc"/>
+  <include location="../../_resources/toolbar/toolbar.qrc"/>
  </resources>
  <connections/>
 </ui>

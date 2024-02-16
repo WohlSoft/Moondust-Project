@@ -58,6 +58,7 @@ public:
         SETTING_RESTARTAFTERFAIL,
         SETTING_TOTALSTARS,
         SETTING_INTROLEVEL,
+        SETTING_WLD_XTRA,           //extraData: String
         SETTING_PATHBACKGROUND,
         SETTING_BIGPATHBACKGROUND,
         SETTING_ALWAYSVISIBLE,
@@ -284,6 +285,7 @@ public:
         case SETTING_INTROLEVEL: return QObject::tr("Intro Level");
         case SETTING_LEVELFILE: return QObject::tr("Level file");
         case SETTING_LEVELTITLE: return QObject::tr("Level title");
+        case SETTING_WLD_XTRA: return QObject::tr("World map extra settings");
         case SETTING_PATHBACKGROUND: return QObject::tr("Path Background");
         case SETTING_PATHBYBOTTOM: return QObject::tr("Exit at bottom");
         case SETTING_PATHBYLEFT: return QObject::tr("Exit at left");

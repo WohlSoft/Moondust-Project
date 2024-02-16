@@ -29,6 +29,7 @@ class WldSearchBox;
     friend class BookmarksBox;\
     friend class DebuggerBox;\
     friend class VariablesBox;\
+    friend class ItemSelectDialog;\
     \
     friend class LevelItemBox;\
     friend class LvlItemProperties;\

@@ -1558,6 +1558,10 @@ Please save them before doing anything else.</translation>
         <source>Please select a file from the list:</source>
         <translation>Please select a file from the list:</translation>
     </message>
+    <message>
+        <source>Filter...</source>
+        <translation>Filter...</translation>
+    </message>
 </context>
 <context>
     <name>GreetingDialog</name>
@@ -2912,6 +2916,34 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>%1 coins</source>
         <translation>%1 coin(s)</translation>
+    </message>
+    <message>
+        <source>Add new item into the list</source>
+        <translation>Add new item into the list</translation>
+    </message>
+    <message>
+        <source>Remove selected item from the list</source>
+        <translation>Remove selected item from the list</translation>
+    </message>
+    <message>
+        <source>Play selected file</source>
+        <translation>Play selected file</translation>
+    </message>
+    <message>
+        <source>Open...</source>
+        <translation>Open...</translation>
+    </message>
+    <message>
+        <source>Open selected file</source>
+        <translation>Open selected file</translation>
+    </message>
+    <message>
+        <source>Add new line</source>
+        <translation>Add new line</translation>
+    </message>
+    <message>
+        <source>Please enter a text line to add:</source>
+        <translation>Please enter a text line to add:</translation>
     </message>
 </context>
 <context>
@@ -6564,6 +6596,40 @@ Please, choose the Moondust Maintainer application yourself!</translation>
         <source>Please select music file to use as custom</source>
         <translation>Please select a music file to use as custom</translation>
     </message>
+    <message>
+        <source>Test SFX</source>
+        <comment>Preview selected sound file</comment>
+        <translation>Test SFX</translation>
+    </message>
+    <message>
+        <source>Music play/stop</source>
+        <comment>Preview selected music file</comment>
+        <translation>Music play/stop</translation>
+    </message>
+    <message>
+        <source>Settings...</source>
+        <translation>Settings...</translation>
+    </message>
+    <message>
+        <source>Extra settings are not specified</source>
+        <translation>Extra settings are not specified</translation>
+    </message>
+    <message>
+        <source>Extra settings are not supported for this music file format</source>
+        <translation>Extra settings are not supported for this music file format</translation>
+    </message>
+    <message>
+        <source>Music settings arguments:
+This is a special string that allows to set an extra settings for this music file to alternate its playing behaviour and/or sounding.
+These settings are different depending on the file format.
+
+You can&apos;t set these settings if given file format doesn&apos;t support them.</source>
+        <translation>Music settings arguments:
+This is a special string that allows to set an extra settings for this music file to alternate its playing behaviour and/or sounding.
+These settings are different depending on the file format.
+
+You can&apos;t set these settings if given file format doesn&apos;t support them.</translation>
+    </message>
 </context>
 <context>
     <name>NpcEdit</name>
@@ -7629,6 +7695,10 @@ Reason: %1
     <message>
         <source>Needs floor</source>
         <translation>Needs floor</translation>
+    </message>
+    <message>
+        <source>World map extra settings</source>
+        <translation>World map extra settings</translation>
     </message>
 </context>
 <context>
@@ -9671,6 +9741,20 @@ Do you want to save your changes?</translation>
     <message>
         <source>Main hub level:</source>
         <translation>Main hub level:</translation>
+    </message>
+    <message>
+        <source>Open current intro level</source>
+        <translation>Open current intro level</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Open</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation>Error in the file %1:
+%2</translation>
     </message>
 </context>
 <context>

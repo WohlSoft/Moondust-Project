@@ -1530,6 +1530,10 @@ Proszę zapisz je przed zrobieniem czegokolwiek innego.</translation>
         <source>Please select a file from the list:</source>
         <translation>Proszę wybrać plik z listy:</translation>
     </message>
+    <message>
+        <source>Filter...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GreetingDialog</name>
@@ -2884,6 +2888,34 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     <message>
         <source>%1 coins</source>
         <translation>%1 moneta(y)</translation>
+    </message>
+    <message>
+        <source>Add new item into the list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected item from the list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play selected file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open...</source>
+        <translation type="unfinished">Otwórz...</translation>
+    </message>
+    <message>
+        <source>Open selected file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add new line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter a text line to add:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6532,6 +6564,36 @@ Please, choose the Moondust Maintainer application yourself!</source>
         <source>Please select music file to use as custom</source>
         <translation>Proszę wybrać plik muzyczny, który ma być użyty jako niestandardowy</translation>
     </message>
+    <message>
+        <source>Test SFX</source>
+        <comment>Preview selected sound file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music play/stop</source>
+        <comment>Preview selected music file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extra settings are not specified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extra settings are not supported for this music file format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music settings arguments:
+This is a special string that allows to set an extra settings for this music file to alternate its playing behaviour and/or sounding.
+These settings are different depending on the file format.
+
+You can&apos;t set these settings if given file format doesn&apos;t support them.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NpcEdit</name>
@@ -7587,6 +7649,10 @@ Forum link: wohlsoft.ru/forum</source>
 Reason: %1
 
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map extra settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9631,6 +9697,20 @@ Czy chcesz zapisać zmiany?</translation>
     <message>
         <source>Main hub level:</source>
         <translation>Główny poziom centrum:</translation>
+    </message>
+    <message>
+        <source>Open current intro level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished">Otwórz</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished">Błąd w pliku %1:
+%2</translation>
     </message>
 </context>
 <context>

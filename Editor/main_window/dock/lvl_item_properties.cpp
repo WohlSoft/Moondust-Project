@@ -938,6 +938,13 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
                                                 &JsonSettingsWidget::settingsChanged,
                                                 this,
                                                 callback);
+                    JsonSettingsWidget::connect(m_extraGlobalSettings.get(),
+                                                &JsonSettingsWidget::fileOpenRequested,
+                                                mw(),
+                                                [this](const QString &f)->void
+                                                {
+                                                    mw()->OpenFile(f);
+                                                });
                     spacerNeeded = spacerNeeded || m_extraGlobalSettings->spacerNeeded();
                 }
 

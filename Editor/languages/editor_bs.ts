@@ -1159,19 +1159,19 @@ File path: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="444"/>
+        <location filename="../common_features/crashhandler.cpp" line="470"/>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="445"/>
+        <location filename="../common_features/crashhandler.cpp" line="471"/>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="479"/>
+        <location filename="../common_features/crashhandler.cpp" line="505"/>
         <source>Copied!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1486,7 +1486,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="745"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="700"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="735"/>
         <source>Chiptune</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1527,96 +1527,96 @@ Please save them before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="698"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="733"/>
         <source>MIDI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="944"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="985"/>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="945"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="986"/>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="946"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="987"/>
         <source>Timidity (needed a bank)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="947"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="988"/>
         <source>Native MIDI (Not recommended, buggy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="948"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="989"/>
         <source>FluidSynth (needed an SF2-bank)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="949"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="990"/>
         <source>libEDMIDI (OPLL, SCC, PSG)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="954"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="962"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="970"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="986"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="995"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1003"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1011"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1027"/>
         <source>[Auto]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="955"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="963"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="996"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1004"/>
         <source>Sounding off delay based</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="956"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="964"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="997"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1005"/>
         <source>Same instrument</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="957"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="965"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="998"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1006"/>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="971"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="987"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1012"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1028"/>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="972"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1013"/>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="988"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1029"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="996"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1037"/>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="997"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1038"/>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>
@@ -1893,13 +1893,18 @@ Please save them before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="30"/>
-        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="49"/>
+        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="36"/>
+        <source>Filter...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="52"/>
+        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="87"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="33"/>
+        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="55"/>
         <source>Please select a file from the list:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3506,27 +3511,27 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="175"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="176"/>
         <source>[Empty]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="246"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="247"/>
         <source>NPC from List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="247"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="248"/>
         <source>Coins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="920"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="921"/>
         <source>Please, save file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="920"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="921"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3606,46 +3611,81 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>JsonSettingsWidget</name>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="965"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1203"/>
         <source>Browse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="974"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1212"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1081"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1085"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1087"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1089"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1091"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1093"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1095"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1097"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1319"/>
+        <source>Add new item into the list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/json_settings_widget.cpp" line="1324"/>
+        <source>Remove selected item from the list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/json_settings_widget.cpp" line="1335"/>
+        <source>Play selected file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/json_settings_widget.cpp" line="1344"/>
+        <source>Open...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/json_settings_widget.cpp" line="1345"/>
+        <source>Open selected file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/json_settings_widget.cpp" line="1406"/>
+        <source>Add new line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/json_settings_widget.cpp" line="1407"/>
+        <source>Please enter a text line to add:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/json_settings_widget.cpp" line="1514"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1518"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1520"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1522"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1524"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1526"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1528"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1530"/>
         <source>[empty]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1084"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1517"/>
         <source>%1 coins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1313"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1366"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1591"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1691"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1746"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1799"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2024"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2124"/>
         <source>W</source>
         <comment>Width, shortly</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1325"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1377"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1603"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1702"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1758"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1810"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2036"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2135"/>
         <source>H</source>
         <comment>Height, shortly</comment>
         <translation type="unfinished"></translation>
@@ -3670,7 +3710,6 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="153"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="577"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5206,16 +5245,16 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="368"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1339"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1346"/>
         <source>%1 coins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="369"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="630"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1340"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1763"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2127"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1347"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1770"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2134"/>
         <source>[empty]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5231,13 +5270,13 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="637"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2018"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2025"/>
         <source>[none]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="927"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="980"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="987"/>
         <source>Error in the file %1:
 %2</source>
         <translation type="unfinished"></translation>
@@ -5793,64 +5832,64 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="182"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="184"/>
         <source>Error in the file %1:
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="258"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="260"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="269"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="271"/>
         <source>[No image]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="262"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="263"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="273"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="274"/>
         <source>[Silence]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="513"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="653"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="524"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="664"/>
         <source>Please, save file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="513"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="524"/>
         <source>Please, save file first, if you want to manage custom background config files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="521"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="532"/>
         <source>Choose a background first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="522"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="533"/>
         <source>Please, choose the background image first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="549"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="560"/>
         <source>Name that will appear in the editor</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="553"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="564"/>
         <source>Backdrop fill color</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="558"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="569"/>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="653"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="664"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7750,7 +7789,7 @@ Please reload current file to apply result.</source>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="72"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="73"/>
         <source>[all]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8274,23 +8313,59 @@ Please, choose the Moondust Maintainer application yourself!</source>
 <context>
     <name>MusicFileList</name>
     <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="33"/>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="39"/>
         <source>Select SFX file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="34"/>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="40"/>
         <source>Please select SFX file to use</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="47"/>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="53"/>
         <source>Select Custom music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="48"/>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="54"/>
         <source>Please select music file to use as custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="82"/>
+        <source>Test SFX</source>
+        <comment>Preview selected sound file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="99"/>
+        <source>Music play/stop</source>
+        <comment>Preview selected music file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="105"/>
+        <source>Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="109"/>
+        <source>Extra settings are not specified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="110"/>
+        <source>Extra settings are not supported for this music file format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="116"/>
+        <source>Music settings arguments:
+This is a special string that allows to set an extra settings for this music file to alternate its playing behaviour and/or sounding.
+These settings are different depending on the file format.
+
+You can&apos;t set these settings if given file format doesn&apos;t support them.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8703,7 +8778,7 @@ Error description:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="210"/>
+        <location filename="../common_features/crashhandler.cpp" line="236"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Out of memory!
 
@@ -8711,7 +8786,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="216"/>
+        <location filename="../common_features/crashhandler.cpp" line="242"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Unhandled Exception
 
@@ -8721,52 +8796,52 @@ Forum link: wohlsoft.ru/forum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="228"/>
+        <location filename="../common_features/crashhandler.cpp" line="254"/>
         <source>Terminal was closed [SIGHUP]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="232"/>
+        <location filename="../common_features/crashhandler.cpp" line="258"/>
         <source>Quit command [SIGQUIT]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="236"/>
+        <location filename="../common_features/crashhandler.cpp" line="262"/>
         <source>Editor was abourted because alarm() time out! [SIGALRM]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="240"/>
+        <location filename="../common_features/crashhandler.cpp" line="266"/>
         <source>Editor was abourted because physical memory error! [SIGBUS]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="250"/>
+        <location filename="../common_features/crashhandler.cpp" line="276"/>
         <source>Wrong CPU Instruction [SIGILL]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="254"/>
+        <location filename="../common_features/crashhandler.cpp" line="280"/>
         <source>Floating-point exception [SIGFPE]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="258"/>
+        <location filename="../common_features/crashhandler.cpp" line="284"/>
         <source>Aborted! [SIGABRT]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="262"/>
+        <location filename="../common_features/crashhandler.cpp" line="288"/>
         <source>Signal Segmentation Violation [SIGSEGV]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="266"/>
+        <location filename="../common_features/crashhandler.cpp" line="292"/>
         <source>Interrupted! [SIGINT]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="273"/>
+        <location filename="../common_features/crashhandler.cpp" line="299"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: %1
 
@@ -8804,536 +8879,541 @@ Reason: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="179"/>
+        <location filename="../defines.h" line="180"/>
         <source>Invizible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="180"/>
+        <location filename="../defines.h" line="181"/>
         <source>Slippery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="181"/>
+        <location filename="../defines.h" line="182"/>
         <source>Z-Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="182"/>
+        <location filename="../defines.h" line="183"/>
         <source>Z-Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="183"/>
+        <location filename="../defines.h" line="184"/>
         <source>Friendly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="184"/>
+        <location filename="../defines.h" line="185"/>
         <source>Boss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="185"/>
+        <location filename="../defines.h" line="186"/>
         <source>Not Moveable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="186"/>
-        <location filename="../defines.h" line="242"/>
+        <location filename="../defines.h" line="187"/>
+        <location filename="../defines.h" line="243"/>
         <source>Message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="187"/>
+        <location filename="../defines.h" line="188"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="188"/>
+        <location filename="../defines.h" line="189"/>
         <source>Included NPC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="189"/>
+        <location filename="../defines.h" line="190"/>
         <source>Water Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="190"/>
+        <location filename="../defines.h" line="191"/>
         <source>Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="191"/>
+        <location filename="../defines.h" line="192"/>
         <source>No Vehicles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="192"/>
+        <location filename="../defines.h" line="193"/>
         <source>Two-way warp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="193"/>
+        <location filename="../defines.h" line="194"/>
         <source>Allow NPC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="194"/>
+        <location filename="../defines.h" line="195"/>
         <source>Allow NPC inter level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="195"/>
+        <location filename="../defines.h" line="196"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="196"/>
+        <location filename="../defines.h" line="197"/>
         <source>Need a bomb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="197"/>
+        <location filename="../defines.h" line="198"/>
         <source>Hide number of stars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="198"/>
+        <location filename="../defines.h" line="199"/>
         <source>Enable cannon exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="199"/>
+        <location filename="../defines.h" line="200"/>
         <source>Special state required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="200"/>
+        <location filename="../defines.h" line="201"/>
         <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="201"/>
+        <location filename="../defines.h" line="202"/>
         <source>Hide level entering scene</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="202"/>
+        <location filename="../defines.h" line="203"/>
         <source>Warp Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="203"/>
+        <location filename="../defines.h" line="204"/>
         <source>Warp Transition Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="204"/>
+        <location filename="../defines.h" line="205"/>
         <source>Need Stars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="205"/>
+        <location filename="../defines.h" line="206"/>
         <source>Need Stars message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="206"/>
+        <location filename="../defines.h" line="207"/>
         <source>Cannon exit projectile speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="207"/>
+        <location filename="../defines.h" line="208"/>
         <source>Entrance Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="208"/>
+        <location filename="../defines.h" line="209"/>
         <source>Exit Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="209"/>
+        <location filename="../defines.h" line="210"/>
         <source>Set Level Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="210"/>
+        <location filename="../defines.h" line="211"/>
         <source>Set Level Entrance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="211"/>
+        <location filename="../defines.h" line="212"/>
         <source>Level Warp To</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="212"/>
+        <location filename="../defines.h" line="213"/>
         <source>Activate Generator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="213"/>
+        <location filename="../defines.h" line="214"/>
         <source>Generator Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="214"/>
+        <location filename="../defines.h" line="215"/>
         <source>Generator Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="215"/>
+        <location filename="../defines.h" line="216"/>
         <source>Generator Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="216"/>
+        <location filename="../defines.h" line="217"/>
         <source>Attach Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="217"/>
+        <location filename="../defines.h" line="218"/>
         <source>Event Block Destroyed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="218"/>
+        <location filename="../defines.h" line="219"/>
         <source>Event Block Hited</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="219"/>
+        <location filename="../defines.h" line="220"/>
         <source>Event Layer Empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="220"/>
+        <location filename="../defines.h" line="221"/>
         <source>Event NPC Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="221"/>
+        <location filename="../defines.h" line="222"/>
         <source>Event NPC Die</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="222"/>
+        <location filename="../defines.h" line="223"/>
         <source>Event NPC Talk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="223"/>
+        <location filename="../defines.h" line="224"/>
         <source>Event Warp Enter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="224"/>
+        <location filename="../defines.h" line="225"/>
         <source>NPC Special Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="225"/>
+        <location filename="../defines.h" line="226"/>
         <source>Autostart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="226"/>
+        <location filename="../defines.h" line="227"/>
         <source>Layer Smoke Effect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="227"/>
+        <location filename="../defines.h" line="228"/>
         <source>Add Hide Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="228"/>
+        <location filename="../defines.h" line="229"/>
         <source>Remove Hide Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="229"/>
+        <location filename="../defines.h" line="230"/>
         <source>Add Show Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="230"/>
+        <location filename="../defines.h" line="231"/>
         <source>Remove Show Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="231"/>
+        <location filename="../defines.h" line="232"/>
         <source>Add Toggle Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="232"/>
+        <location filename="../defines.h" line="233"/>
         <source>Remove Toggle Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="233"/>
+        <location filename="../defines.h" line="234"/>
         <source>Moving Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="234"/>
+        <location filename="../defines.h" line="235"/>
         <source>Layer Speed Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="235"/>
+        <location filename="../defines.h" line="236"/>
         <source>Layer Speed Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="236"/>
+        <location filename="../defines.h" line="237"/>
         <source>Autoscroll Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="237"/>
+        <location filename="../defines.h" line="238"/>
         <source>Autoscroll Layer Speed Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="238"/>
+        <location filename="../defines.h" line="239"/>
         <source>Autoscroll Layer Speed Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="239"/>
+        <location filename="../defines.h" line="240"/>
         <source>Section Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="240"/>
+        <location filename="../defines.h" line="241"/>
         <source>Section Music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="241"/>
+        <location filename="../defines.h" line="242"/>
         <source>Section Background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="243"/>
+        <location filename="../defines.h" line="244"/>
         <source>Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="244"/>
+        <location filename="../defines.h" line="245"/>
         <source>End Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="245"/>
+        <location filename="../defines.h" line="246"/>
         <source>Up Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="246"/>
+        <location filename="../defines.h" line="247"/>
         <source>Down Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="247"/>
+        <location filename="../defines.h" line="248"/>
         <source>Left Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="248"/>
+        <location filename="../defines.h" line="249"/>
         <source>Right Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="249"/>
+        <location filename="../defines.h" line="250"/>
         <source>Run Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="250"/>
+        <location filename="../defines.h" line="251"/>
         <source>Alt Run Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="251"/>
+        <location filename="../defines.h" line="252"/>
         <source>Jump Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="252"/>
+        <location filename="../defines.h" line="253"/>
         <source>Alt Jump Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="253"/>
+        <location filename="../defines.h" line="254"/>
         <source>Drop Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="254"/>
+        <location filename="../defines.h" line="255"/>
         <source>Start Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="255"/>
+        <location filename="../defines.h" line="256"/>
         <source>Trigger Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="256"/>
+        <location filename="../defines.h" line="257"/>
         <source>Trigger Delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="257"/>
+        <location filename="../defines.h" line="258"/>
         <source>Is Warp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="258"/>
+        <location filename="../defines.h" line="259"/>
         <source>No Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="259"/>
+        <location filename="../defines.h" line="260"/>
         <source>Off Screen Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="260"/>
+        <location filename="../defines.h" line="261"/>
         <source>Underwater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="261"/>
+        <location filename="../defines.h" line="262"/>
         <source>Background Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="262"/>
+        <location filename="../defines.h" line="263"/>
         <source>Music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="263"/>
+        <location filename="../defines.h" line="264"/>
         <source>Custom Music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="264"/>
+        <location filename="../defines.h" line="265"/>
         <source>Level Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="265"/>
+        <location filename="../defines.h" line="266"/>
         <source>Section extra settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="266"/>
+        <location filename="../defines.h" line="267"/>
         <source>BGO Sorting Priority</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="267"/>
-        <location filename="../defines.h" line="269"/>
-        <location filename="../defines.h" line="294"/>
+        <location filename="../defines.h" line="268"/>
+        <location filename="../defines.h" line="270"/>
         <location filename="../defines.h" line="296"/>
+        <location filename="../defines.h" line="298"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="276"/>
+        <location filename="../defines.h" line="277"/>
         <source>Always Visible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="277"/>
+        <location filename="../defines.h" line="278"/>
         <source>Big Path Background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="278"/>
+        <location filename="../defines.h" line="279"/>
         <source>Character</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="279"/>
+        <location filename="../defines.h" line="280"/>
         <source>Door ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="280"/>
+        <location filename="../defines.h" line="281"/>
         <source>Game start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="281"/>
+        <location filename="../defines.h" line="282"/>
         <source>Goto X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="282"/>
+        <location filename="../defines.h" line="283"/>
         <source>Goto Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="283"/>
+        <location filename="../defines.h" line="284"/>
         <source>Hub styled world</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="284"/>
+        <location filename="../defines.h" line="285"/>
         <source>Intro Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="285"/>
+        <location filename="../defines.h" line="286"/>
         <source>Level file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="286"/>
+        <location filename="../defines.h" line="287"/>
         <source>Level title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="287"/>
-        <source>Path Background</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../defines.h" line="288"/>
-        <source>Exit at bottom</source>
+        <source>World map extra settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="289"/>
-        <source>Exit at left</source>
+        <source>Path Background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="290"/>
-        <source>Exit at right</source>
+        <source>Exit at bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="291"/>
-        <source>Exit at top</source>
+        <source>Exit at left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="292"/>
-        <source>Restart after fail</source>
+        <source>Exit at right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="293"/>
+        <source>Exit at top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="294"/>
+        <source>Restart after fail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="295"/>
         <source>Total stars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11848,7 +11928,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <location filename="../main_window/file/wld_export_image.cpp" line="130"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="477"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12091,79 +12170,95 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="63"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="134"/>
         <source>Count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="76"/>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="131"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="42"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="171"/>
         <source>The name of the level that will be loaded when the game first loads.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="79"/>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="215"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="45"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="332"/>
         <source>Intro level:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="98"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="178"/>
+        <source>Open current intro level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="181"/>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="229"/>
         <source>Disable characters:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="151"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="63"/>
         <source>Credits of this episode (SMBX allows only 5 lines):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="164"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="273"/>
         <source>Episode title:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="171"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="210"/>
         <source>Restart last level after fail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="178"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="286"/>
         <source>Hub-styled world (without world map)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="185"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="114"/>
         <source>Total stars:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.ui" line="202"/>
+        <location filename="../main_window/dock/wld_settings_box.ui" line="194"/>
         <source>Browse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="215"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="139"/>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="332"/>
         <source>Main hub level:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="559"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="690"/>
         <source>Counting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="564"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="695"/>
         <source>Calculating total star count in accessible levels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="565"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="696"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="569"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="700"/>
         <source>Counting stars...</source>
         <translation type="unfinished"></translation>
     </message>

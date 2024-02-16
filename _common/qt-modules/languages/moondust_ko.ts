@@ -265,7 +265,7 @@
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="745"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="700"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="735"/>
         <source>Chiptune</source>
         <translation>칩툰</translation>
     </message>
@@ -306,96 +306,96 @@
         <translation>팁 : 설정 결과를 미리 보려면 음악 재생을 활성화하십시오. (메인 창 도구 모음에서 노트 재생 / 중지 아이콘을 찾으십시오).</translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="698"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="733"/>
         <source>MIDI</source>
         <translation>엠아이디아이</translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="944"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="985"/>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
         <translation>libADLMIDI (OPL3 합성 에뮬레이션)</translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="945"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="986"/>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
         <translation>libOPNMIDI (YM2612 합성 에뮬레이션)</translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="946"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="987"/>
         <source>Timidity (needed a bank)</source>
         <translation>소심함 (은행 필요)</translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="947"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="988"/>
         <source>Native MIDI (Not recommended, buggy)</source>
         <translation>네이티브 MIDI (권장되지 않음, 버그가 있음)</translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="948"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="989"/>
         <source>FluidSynth (needed an SF2-bank)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="949"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="990"/>
         <source>libEDMIDI (OPLL, SCC, PSG)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="954"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="962"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="970"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="986"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="995"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1003"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1011"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1027"/>
         <source>[Auto]</source>
         <translation>[자동]</translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="955"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="963"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="996"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1004"/>
         <source>Sounding off delay based</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="956"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="964"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="997"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1005"/>
         <source>Same instrument</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="957"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="965"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="998"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1006"/>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="971"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="987"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1012"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1028"/>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation>일반적인</translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="972"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1013"/>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation>네이티브 OPL3</translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="988"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1029"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="996"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1037"/>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="997"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1038"/>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>
@@ -409,13 +409,18 @@
         <translation>파일 목록</translation>
     </message>
     <message>
-        <location filename="../file_list_browser/file_list_browser.ui" line="30"/>
-        <location filename="../file_list_browser/file_list_browser.ui" line="49"/>
+        <location filename="../file_list_browser/file_list_browser.ui" line="36"/>
+        <source>Filter...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../file_list_browser/file_list_browser.ui" line="52"/>
+        <location filename="../file_list_browser/file_list_browser.ui" line="87"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;이것은 현재 파일과 같은 폴더에있는 레벨 파일 목록입니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../file_list_browser/file_list_browser.ui" line="33"/>
+        <location filename="../file_list_browser/file_list_browser.ui" line="55"/>
         <source>Please select a file from the list:</source>
         <translation>목록에서 파일을 선택하십시오 :</translation>
     </message>
@@ -436,24 +441,60 @@
 <context>
     <name>MusicFileList</name>
     <message>
-        <location filename="../file_list_browser/musicfilelist.cpp" line="33"/>
+        <location filename="../file_list_browser/musicfilelist.cpp" line="39"/>
         <source>Select SFX file</source>
         <translation>SFX 파일 선택</translation>
     </message>
     <message>
-        <location filename="../file_list_browser/musicfilelist.cpp" line="34"/>
+        <location filename="../file_list_browser/musicfilelist.cpp" line="40"/>
         <source>Please select SFX file to use</source>
         <translation>사용할 SFX 파일을 선택하십시오</translation>
     </message>
     <message>
-        <location filename="../file_list_browser/musicfilelist.cpp" line="47"/>
+        <location filename="../file_list_browser/musicfilelist.cpp" line="53"/>
         <source>Select Custom music</source>
         <translation>맞춤 음악 선택</translation>
     </message>
     <message>
-        <location filename="../file_list_browser/musicfilelist.cpp" line="48"/>
+        <location filename="../file_list_browser/musicfilelist.cpp" line="54"/>
         <source>Please select music file to use as custom</source>
         <translation>사용자 정의로 사용할 음악 파일을 선택하십시오</translation>
+    </message>
+    <message>
+        <location filename="../file_list_browser/musicfilelist.cpp" line="82"/>
+        <source>Test SFX</source>
+        <comment>Preview selected sound file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../file_list_browser/musicfilelist.cpp" line="99"/>
+        <source>Music play/stop</source>
+        <comment>Preview selected music file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../file_list_browser/musicfilelist.cpp" line="105"/>
+        <source>Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../file_list_browser/musicfilelist.cpp" line="109"/>
+        <source>Extra settings are not specified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../file_list_browser/musicfilelist.cpp" line="110"/>
+        <source>Extra settings are not supported for this music file format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../file_list_browser/musicfilelist.cpp" line="116"/>
+        <source>Music settings arguments:
+This is a special string that allows to set an extra settings for this music file to alternate its playing behaviour and/or sounding.
+These settings are different depending on the file format.
+
+You can&apos;t set these settings if given file format doesn&apos;t support them.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

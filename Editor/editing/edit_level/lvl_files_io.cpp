@@ -574,10 +574,10 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, DataConfi
     DataSize += LvlData.npc.size();
     DataSize += LvlData.water.size();
     DataSize += LvlData.doors.size();*/
-    QProgressDialog progress(tr("Loading level data"), tr("Abort"), 0, DataSize, m_mw);
+    QProgressDialog progress(tr("Loading level data"), 0, 0, DataSize, m_mw);
     progress.setWindowTitle(tr("Loading level data"));
     progress.setWindowModality(Qt::WindowModal);
-    progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+    progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint | Qt::WindowCloseButtonHint);
     progress.setFixedSize(progress.size());
     progress.setGeometry(util::alignToScreenCenter(progress.size()));
     progress.setMinimumDuration(0);

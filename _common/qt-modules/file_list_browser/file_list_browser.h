@@ -6,6 +6,8 @@
 #include <QListWidgetItem>
 #include <QFuture>
 
+class FileListModel;
+
 namespace Ui {
 class FileListBrowser;
 }
@@ -24,26 +26,37 @@ public:
     void setIcon(const QIcon &icon);
     void startListBuilder();
 
-    QString currentFile();
+    void setExtraWidgetLayout(QLayout *layout);
+
+    virtual QString currentFile();
+    QString currentSelectedFile();
 
 signals:
-    void itemAdded(QString item);
+    void itemAdded(const QString &item);
+    void itemSelected(const QString &item);
     void digFinished();
 
 private slots:
-    void addItem(QString item);
+    void addItem(const QString &item);
     void finalizeDig();
 
-    void on_FileList_itemDoubleClicked(QListWidgetItem *item);
+    void fileListItem_doubleClicked(const QModelIndex &item);
 
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
+
+    void filterUpdated(const QString &filter);
+
+protected:
+    QString directoryPath() const;
 
 private:
     Ui::FileListBrowser *ui = nullptr;
 
     QFuture<void> fileWalker;
     QStringList m_filters;
+
+    FileListModel *m_listModel = nullptr;
 
     QString m_currentFile;
     QString m_parentDirectory;

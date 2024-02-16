@@ -36,7 +36,7 @@ QString ApplicationPath_x;
 QString AppPathManager::m_settingsPath;
 QString AppPathManager::m_userPath;
 
-#if defined(__ANDROID__) || defined(__APPLE__)
+#if defined(__ANDROID__) || defined(__APPLE__) || defined(__HAIKU__)
 #   define UserDirName "/PGE Project"
 #else
 #   define UserDirName "/.PGE_Project"

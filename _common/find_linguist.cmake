@@ -141,6 +141,10 @@ set(POSSIBLE_QT_PATHS
     "C:/Qt/5.11/mingw530_32/bin"
 )
 
+if(HAIKU)
+    list(APPEND POSSIBLE_QT_PATHS "/bin/")
+endif()
+
 find_program(_QT_LRELEASE_PROGRAM lrelease NO_DEFAULT_PATH PATHS ${POSSIBLE_QT_PATHS})
 if(_QT_LRELEASE_PROGRAM)
     message(STATUS "Found ${_QT_LRELEASE_PROGRAM}, locales will be compiled!")

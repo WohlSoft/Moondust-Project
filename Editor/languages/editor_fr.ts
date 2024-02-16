@@ -1530,6 +1530,10 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
         <source>Please select a file from the list:</source>
         <translation>Veuillez sélectionner un fichier dans la liste :</translation>
     </message>
+    <message>
+        <source>Filter...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GreetingDialog</name>
@@ -2884,6 +2888,34 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <message>
         <source>%1 coins</source>
         <translation>%1 pièce(s)</translation>
+    </message>
+    <message>
+        <source>Add new item into the list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected item from the list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play selected file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open...</source>
+        <translation type="unfinished">Ouvrir…</translation>
+    </message>
+    <message>
+        <source>Open selected file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add new line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter a text line to add:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6527,6 +6559,36 @@ Please, choose the Moondust Maintainer application yourself!</source>
         <source>Please select music file to use as custom</source>
         <translation>Veuillez sélectionner un fichier de musique personnalisé à utiliser</translation>
     </message>
+    <message>
+        <source>Test SFX</source>
+        <comment>Preview selected sound file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music play/stop</source>
+        <comment>Preview selected music file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extra settings are not specified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extra settings are not supported for this music file format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music settings arguments:
+This is a special string that allows to set an extra settings for this music file to alternate its playing behaviour and/or sounding.
+These settings are different depending on the file format.
+
+You can&apos;t set these settings if given file format doesn&apos;t support them.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NpcEdit</name>
@@ -7580,6 +7642,10 @@ Forum link: wohlsoft.ru/forum</source>
 Reason: %1
 
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map extra settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9623,6 +9689,20 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     <message>
         <source>Main hub level:</source>
         <translation>Niveau principal du hub :</translation>
+    </message>
+    <message>
+        <source>Open current intro level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished">Ouvrir</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished">Erreur dans le fichier %1 :
+%2</translation>
     </message>
 </context>
 <context>

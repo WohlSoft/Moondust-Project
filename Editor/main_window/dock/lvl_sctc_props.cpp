@@ -172,10 +172,12 @@ void LvlSectionProps::updateExtraSettingsWidget()
 
         QByteArray rawLayout = layoutFile.readAll();
         m_extraSettings.reset(new JsonSettingsWidget(ui->extraSettings));
+
         if(m_extraSettings.get())
         {
             m_extraSettings->setSearchDirectories(edit->LvlData.meta.path, edit->LvlData.meta.filename);
             m_extraSettings->setConfigPack(&mw()->configs);
+
             if(!m_extraSettings->loadLayout(section.custom_params.toUtf8(), rawLayout))
             {
                 LogWarning(m_extraSettings->errorString());
@@ -185,6 +187,7 @@ void LvlSectionProps::updateExtraSettingsWidget()
                 ui->extraSettings->setMinimumHeight(12);
                 ui->extraSettings->setStyleSheet("*{background-color: #FF0000;}");
             }
+
             auto *widget = m_extraSettings->getWidget();
             if(widget)
             {
@@ -194,9 +197,17 @@ void LvlSectionProps::updateExtraSettingsWidget()
                                             &JsonSettingsWidget::settingsChanged,
                                             this,
                                             &LvlSectionProps::onExtraSettingsChanged);
+                JsonSettingsWidget::connect(m_extraSettings.get(),
+                                            &JsonSettingsWidget::fileOpenRequested,
+                                            mw(),
+                                            [this](const QString &f)->void
+                                            {
+                                                mw()->OpenFile(f);
+                                            });
                 spacerNeeded = spacerNeeded || m_extraSettings->spacerNeeded();
             }
         }
+
         layoutFile.close();
         
         ui->extraSettings->setMinimumHeight(spacerNeeded ? 0 : 150);
@@ -654,16 +665,53 @@ void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
         return;
     }
 
-    MusicFileList musicList(dirPath, ui->LVLPropsMusicCustom->text());
-    if(musicList.exec() == QDialog::Accepted)
-    {
-        ui->LVLPropsMusicCustom->setText(musicList.currentFile());
-        ui->LVLPropsMusicCustom->setModified(true);
-        on_LVLPropsMusicCustom_editingFinished();
+    QString musicPath = ui->LVLPropsMusicCustom->text();
+    MusicFileList musicList(dirPath, musicPath);
+    musicList.setMusicPlayState(mw()->getPlayMusicAction()->isChecked());
 
-        // Call the music setup after picking it up
-        if(CustomMusicSetup::settingsNeeded(ui->LVLPropsMusicCustom->text()))
-            on_musicSetup_clicked();
+    QObject::connect(&musicList, &MusicFileList::musicFileChanged,
+                     [&musicPath](const QString &music)->void
+    {
+        musicPath = music;
+    });
+
+    QObject::connect(&musicList, &MusicFileList::updateSongPlay, [this, edit, &musicPath]()->void
+    {
+        if(mw()->getPlayMusicAction()->isChecked())
+            LvlMusPlay::previewCustomMusic(mw(), musicPath);
+    });
+
+    QObject::connect(&musicList, &MusicFileList::musicTempoChanged, [](double tempo)->void
+    {
+        LvlMusPlay::setTempo(tempo);
+    });
+
+    QObject::connect(&musicList, &MusicFileList::musicButtonClicked, [this, &musicPath](bool st)->void
+    {
+        mw()->getPlayMusicAction()->setChecked(st);
+        if(st)
+            LvlMusPlay::previewCustomMusic(mw(), musicPath);
+        else
+            LvlMusPlay::previewSilence();
+    });
+
+    int ret = musicList.exec();
+
+    if(ret == QDialog::Accepted)
+    {
+        musicPath = musicList.currentFile();
+
+        if(ui->LVLPropsMusicCustom->text() != musicPath)
+        {
+            ui->LVLPropsMusicCustom->setText(musicPath);
+            ui->LVLPropsMusicCustom->setModified(true);
+            on_LVLPropsMusicCustom_editingFinished();
+        }
+    }
+    else
+    {
+        // Restore current music state
+        LvlMusPlay::previewReset(mw());
     }
 }
 
@@ -709,7 +757,7 @@ void LvlSectionProps::on_musicSetup_clicked()
     QString musicPath = ui->LVLPropsMusicCustom->text();
     set.setMusicPath(musicPath);
     set.setDirectory(edit->LvlData.meta.path, edit->LvlData.meta.filename);
-    set.setMusicPlayState(mw()->ui->actionPlayMusic->isChecked());
+    set.setMusicPlayState(mw()->getPlayMusicAction()->isChecked());
 
     QObject::connect(&set, &CustomMusicSetup::musicSetupChanged, [&musicPath](const QString &music)->void
     {
@@ -718,10 +766,8 @@ void LvlSectionProps::on_musicSetup_clicked()
 
     QObject::connect(&set, &CustomMusicSetup::updateSongPlay, [this,edit, &musicPath]()->void
     {
-        LvlMusPlay::setMusic(mw(), LvlMusPlay::LevelMusic,
-                             edit->LvlData.sections[edit->LvlData.CurSection].music_id,
-                             musicPath);
-        mw()->setMusic();
+        if(mw()->getPlayMusicAction()->isChecked())
+            LvlMusPlay::previewCustomMusic(mw(), musicPath);
     });
 
     QObject::connect(&set, &CustomMusicSetup::updateSongTempo, [](double tempo)->void
@@ -729,9 +775,13 @@ void LvlSectionProps::on_musicSetup_clicked()
         LvlMusPlay::setTempo(tempo);
     });
 
-    QObject::connect(&set, &CustomMusicSetup::musicButtonClicked, [this](bool)->void
+    QObject::connect(&set, &CustomMusicSetup::musicButtonClicked, [this, &musicPath](bool st)->void
     {
-        mw()->ui->actionPlayMusic->trigger();
+        mw()->getPlayMusicAction()->setChecked(st);
+        if(st)
+            LvlMusPlay::previewCustomMusic(mw(), musicPath);
+        else
+            LvlMusPlay::previewSilence();
     });
 
     set.show();
@@ -751,6 +801,6 @@ void LvlSectionProps::on_musicSetup_clicked()
     else
     {
         // Restore current music state
-        loadMusic();
+        LvlMusPlay::previewReset(mw());
     }
 }

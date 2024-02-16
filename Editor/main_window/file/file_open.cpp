@@ -266,7 +266,7 @@ static void verifyCompatibilityWorld(MainWindow *mw,
     );
 }
 
-void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
+void MainWindow::OpenFile(const QString &FilePath, bool addToRecentList)
 {
     if(m_isFileReloading) return;
     m_isFileReloading = true;

@@ -474,10 +474,10 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, DataConfig
     int DataSize = 0;
     DataSize += 3;
     DataSize += 6;
-    QProgressDialog progress(tr("Loading World map data"), tr("Abort"), 0, DataSize, MainWinConnect::pMainWin);
+    QProgressDialog progress(tr("Loading World map data"), 0, 0, DataSize, MainWinConnect::pMainWin);
     progress.setWindowTitle(tr("Loading World map data"));
     progress.setWindowModality(Qt::WindowModal);
-    progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+    progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint | Qt::WindowCloseButtonHint);
     progress.setFixedSize(progress.size());
     progress.setGeometry(util::alignToScreenCenter(progress.size()));
     progress.setMinimumDuration(0);

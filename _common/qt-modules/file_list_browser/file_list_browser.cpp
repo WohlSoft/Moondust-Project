@@ -19,6 +19,7 @@
 #include <QDir>
 
 #include "file_list_browser.h"
+#include "file_list_model.h"
 #include <ui_file_list_browser.h>
 
 #include <QtConcurrent>
@@ -31,13 +32,36 @@ FileListBrowser::FileListBrowser(QString searchDirectory, QString currentFile, Q
     m_parentDirectory = searchDirectory;
     m_lastCurrentFile = currentFile;
 
+    if(!m_parentDirectory.endsWith('/'))
+        m_parentDirectory.append('/');
+
     int args = m_lastCurrentFile.indexOf('|');
     if(args >= 0) // Remove possible music arguments
         m_lastCurrentFile.remove(args, (m_lastCurrentFile.size() - args));
 
     ui->setupUi(this);
-    connect(this, &FileListBrowser::itemAdded, this, &FileListBrowser::addItem);
-    connect(this, &FileListBrowser::digFinished, this, &FileListBrowser::finalizeDig);
+    // Hide when there is no content
+    ui->extraWidget->setVisible(false);
+
+    m_listModel = new FileListModel(this);
+    ui->FileList->setModel(m_listModel);
+    m_listModel->setDirectory(m_parentDirectory);
+    QObject::connect(ui->FileList, &QListView::doubleClicked, this,
+                     &FileListBrowser::fileListItem_doubleClicked);
+
+    QObject::connect(ui->FileList->selectionModel(), &QItemSelectionModel::currentChanged,
+                     this, [this](const QModelIndex &selected, const QModelIndex &)->void
+    {
+        if(!selected.isValid())
+            return;
+
+        emit itemSelected(m_listModel->data(selected, Qt::DisplayRole).toString());
+    });
+
+    QObject::connect(this, &FileListBrowser::itemAdded, this, &FileListBrowser::addItem);
+    QObject::connect(this, &FileListBrowser::digFinished, this, &FileListBrowser::finalizeDig);
+
+    QObject::connect(ui->filterLine, &QLineEdit::textChanged, this, &FileListBrowser::filterUpdated);
 }
 
 FileListBrowser::~FileListBrowser()
@@ -73,9 +97,24 @@ void FileListBrowser::startListBuilder()
 #endif
 }
 
+void FileListBrowser::setExtraWidgetLayout(QLayout *layout)
+{
+    ui->extraWidget->setVisible(true);
+    ui->extraWidget->setLayout(layout);
+    updateGeometry();
+}
+
 QString FileListBrowser::currentFile()
 {
     return m_currentFile;
+}
+
+QString FileListBrowser::currentSelectedFile()
+{
+    for(const QModelIndex &it : ui->FileList->selectionModel()->selectedRows())
+        return m_listModel->data(it, Qt::DisplayRole).toString();
+
+    return QString();
 }
 
 void FileListBrowser::buildFileList()
@@ -97,35 +136,41 @@ void FileListBrowser::buildFileList()
     digFinished();
 }
 
-void FileListBrowser::addItem(QString item)
+void FileListBrowser::addItem(const QString &item)
 {
-    ui->FileList->addItem(item);
+    m_listModel->addEntry(item);
     if(m_lastCurrentFile == item)
     {
-        QList<QListWidgetItem *> list = ui->FileList->findItems(item, Qt::MatchFixedString);
-        if(!list.isEmpty())
+        QModelIndex it = m_listModel->index(m_listModel->rowCount(QModelIndex()) - 1);
+        if(it.isValid())
         {
-            list.first()->setSelected(true);
-            ui->FileList->scrollToItem(list.first());
+            ui->FileList->selectionModel()->select(it, QItemSelectionModel::Select);
+            ui->FileList->scrollTo(it);
         }
     }
 }
 
 void FileListBrowser::finalizeDig()
 {
-    ui->FileList->sortItems(Qt::AscendingOrder);
-    QList<QListWidgetItem *> list = ui->FileList->findItems(m_lastCurrentFile, Qt::MatchFixedString);
-    if(!list.isEmpty())
+    m_listModel->sortData();
+    int num = m_listModel->rowCount(QModelIndex());
+    for(int i = 0; i < num; ++i)
     {
-        list.first()->setSelected(true);
-        ui->FileList->scrollToItem(list.first());
+        QModelIndex it = m_listModel->index(i);
+        if(it.isValid() && m_listModel->data(it, Qt::DisplayRole).toString().compare(m_lastCurrentFile, Qt::CaseInsensitive) == 0)
+        {
+            ui->FileList->selectionModel()->select(it, QItemSelectionModel::Select);
+            ui->FileList->scrollTo(it);
+            break;
+        }
     }
+
     setCursor(Qt::ArrowCursor);
 }
 
-void FileListBrowser::on_FileList_itemDoubleClicked(QListWidgetItem *item)
+void FileListBrowser::fileListItem_doubleClicked(const QModelIndex &item)
 {
-    m_currentFile = item->text();
+    m_currentFile = m_listModel->data(item, Qt::DisplayRole).toString();
     if(fileWalker.isRunning())
         fileWalker.cancel();
     accept();
@@ -133,9 +178,13 @@ void FileListBrowser::on_FileList_itemDoubleClicked(QListWidgetItem *item)
 
 void FileListBrowser::on_buttonBox_accepted()
 {
-    foreach(QListWidgetItem *container, ui->FileList->selectedItems())
-        m_currentFile = container->text();
-    if(m_currentFile != "")
+    for(const QModelIndex &it : ui->FileList->selectionModel()->selectedRows())
+    {
+        m_currentFile = m_listModel->data(it, Qt::DisplayRole).toString();
+        break;
+    }
+
+    if(!m_currentFile.isEmpty())
     {
         if(fileWalker.isRunning())
             fileWalker.cancel();
@@ -148,4 +197,14 @@ void FileListBrowser::on_buttonBox_rejected()
     if(fileWalker.isRunning())
         fileWalker.cancel();
     reject();
+}
+
+void FileListBrowser::filterUpdated(const QString &filter)
+{
+    m_listModel->setFilter(filter);
+}
+
+QString FileListBrowser::directoryPath() const
+{
+    return m_parentDirectory;
 }

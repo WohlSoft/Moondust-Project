@@ -40,6 +40,7 @@ class PGE_MusPlayer : public QObject
 
 public:
     static void changeVolume(int vlm);
+    static void sendVolume();
     static int  currentVolume();
 
     static void openFile(QString musFile);
@@ -63,7 +64,7 @@ class PGE_SfxPlayer : public QObject
 {
     Q_OBJECT
 public:
-    static void playFile(QString sndFile);
+    static void playFile(const QString &sndFile);
     static void freeBuffer();
 
 private:

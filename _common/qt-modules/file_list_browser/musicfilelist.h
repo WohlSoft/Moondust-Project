@@ -30,8 +30,27 @@ public:
     explicit MusicFileList(QString searchDirectory, QString curFile = QString(), QWidget *parent = nullptr, bool sfxMode = false);
     ~MusicFileList();
 
+    void setMusicPlayState(bool checked);
+
+    bool hasMusicArguments() const;
+    QString musicArguments() const;
+
+    QString currentFile() override;
+
+signals:
+    void musicFileChanged(const QString &music);
+    void updateSongPlay();
+    void musicButtonClicked(bool checked);
+    void musicTempoChanged(double tempo);
+
+    void playSoundFile(const QString &sfx);
+
 private:
     bool m_sfxMode = false;
+    QString m_musicArguments;
+    QPushButton *m_previewButton = nullptr;
+    QPushButton *m_musicSetupButton = nullptr;
+    QLineEdit *m_musicArgumentsPreview = nullptr;
 };
 
 #endif // MUSICFILELIST_H

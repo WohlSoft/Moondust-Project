@@ -32,7 +32,6 @@ if(PGE_USE_LUAJIT)
         "-DLUAJIT_FORCE_UTF8_FOPEN=ON"
         ${ANDROID_CMAKE_FLAGS}
         ${APPLE_CMAKE_FLAGS}
-        ${LUAJIT_USE_CMAKE_FLAG}
     BUILD_BYPRODUCTS
         "${libLuaJit_Lib}"
     )

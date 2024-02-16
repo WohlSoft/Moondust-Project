@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QJsonDocument>
 
+
 class ColorPreview : public QWidget
 {
     Q_OBJECT
@@ -29,6 +30,7 @@ signals:
     void sizeChanged(QSize newSize);
 };
 
+
 class DataConfig;
 class JsonSettingsWidget : public QObject
 {
@@ -36,12 +38,12 @@ class JsonSettingsWidget : public QObject
 
     struct SetupStack
     {
-        static QJsonObject rectToArray(QVariant r);
-        static QJsonObject rectfToArray(QVariant r);
-        static QJsonObject sizeToArray(QVariant r);
-        static QJsonObject sizefToArray(QVariant r);
-        static QJsonObject pointToArray(QVariant r);
-        static QJsonObject pointfToArray(QVariant r);
+        static QJsonObject rectToArray(const QVariant& r);
+        static QJsonObject rectfToArray(const QVariant& r);
+        static QJsonObject sizeToArray(const QVariant& r);
+        static QJsonObject sizefToArray(const QVariant& r);
+        static QJsonObject pointToArray(const QVariant& r);
+        static QJsonObject pointfToArray(const QVariant& r);
 
         QStack<QString> m_setupTree;
         QJsonDocument m_setupCache;
@@ -54,7 +56,8 @@ class JsonSettingsWidget : public QObject
         QByteArray saveSetup();
 
         void clear();
-        void setValue(const QString &propertyId, QVariant value);
+        void setValue(const QString &propertyId, const QVariant &value);
+        void setValue(const QString &propertyId, const QJsonArray &value);
     };
 
 public:
@@ -89,6 +92,7 @@ public:
 
 signals:
     void settingsChanged();
+    void fileOpenRequested(const QString &file);
 
 private:
     QString     m_errorString;
@@ -102,6 +106,22 @@ private:
     DataConfig *m_configPack = nullptr;
 
     QVariant retrieve_property(const SetupStack &setupTree, QString prop, const QVariant &defaultValue);
+    QJsonArray retrieve_property(const SetupStack &setupTree, QString prop, const QJsonArray &defaultValue);
+
+    enum LineEditType
+    {
+        JSS_LineEdit_Text = 0,
+        JSS_LineEdit_Music,
+        JSS_LineEdit_SFX,
+        JSS_LineEdit_Level,
+        JSS_LineEdit_File
+    };
+
+    QString browseForFileValue(QWidget *target, LineEditType type,
+                               const QString &root, const QString& filePath,
+                               const QStringList &filters,
+                               const QString &dialogueTitle, const QString &dialogueDescription,
+                               bool* ok = nullptr);
 
     bool entryHasType(const QString &type);
     void loadLayoutEntries(SetupStack setupTree,
@@ -113,6 +133,12 @@ private:
     QWidget *loadLayoutDetail(SetupStack &stack,
                                                 const QByteArray &layoutJson,
                                                 QString &err);
+
+    QString m_langFull;
+    QString m_langShort;
+    void valTrInitLang();
+
+    QJsonValue valTr(const QJsonObject& v, const QString &key);
 
 };
 
