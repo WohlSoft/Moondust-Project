@@ -377,7 +377,7 @@
     </message>
     <message>
         <source>Extra settings are not supported for this music file format</source>
-        <translation>当前音乐文件不支持附加设置</translation>
+        <translation>当前音乐文件不支持附加参数</translation>
     </message>
     <message>
         <source>Music settings arguments:
