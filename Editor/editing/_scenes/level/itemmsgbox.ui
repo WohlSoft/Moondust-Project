@@ -6,53 +6,56 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>444</width>
-    <height>271</height>
+    <width>678</width>
+    <height>378</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Set message box</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../../_resources/editor.qrc">
+   <iconset resource="../../../_resources/toolbar/toolbar.qrc">
     <normaloff>:/toolbar/dock/coin.png</normaloff>:/toolbar/dock/coin.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="sizeConstraint">
-    <enum>QLayout::SetFixedSize</enum>
-   </property>
-   <item row="0" column="1">
+   <item row="0" column="0">
     <widget class="QLabel" name="NotesLabel">
      <property name="whatsThis">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>Enter the NPC's dialog message:
-(Max length per line is 27 characters)</string>
+      <string>Enter the NPC's dialogue message text:</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
+   <item row="0" column="1">
+    <widget class="QToolButton" name="previewShow">
+     <property name="text">
+      <string>Preview &gt;&gt;</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
     <widget class="QPlainTextEdit" name="msgTextBox">
-     <property name="minimumSize">
-      <size>
-       <width>420</width>
-       <height>162</height>
-      </size>
-     </property>
      <property name="whatsThis">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 18, 181);
-font: 11pt &quot;Press Start 2P&quot;;
-color: rgb(255, 255, 255);</string>
+      <string>This is a message, what will be displayed if player will do talk with this NPC or will be requested by the event.
+
+Note: All quotes and new-line characters will be removed.</string>
      </property>
      <property name="frameShape">
-      <enum>QFrame::Box</enum>
+      <enum>QFrame::WinPanel</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
+      <enum>QFrame::Sunken</enum>
      </property>
      <property name="lineWidth">
       <number>2</number>
@@ -69,12 +72,44 @@ color: rgb(255, 255, 255);</string>
      <property name="plainText">
       <string notr="true">XxXxXxXxXxXxXxXxXxXxXxXxXxYYYYYYYYYYYYYYYYYYYYYYYYYYZZZZZZZZZZZZZZZZZZZZZZZZZZ</string>
      </property>
-     <property name="maximumBlockCount">
-      <number>28</number>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QCheckBox" name="checkFriendly">
+     <property name="text">
+      <string>Friendly (Non-friendly NPCs can't be talked to)</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
+   <item row="0" column="2" rowspan="4">
+    <widget class="QFrame" name="previewArea">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="MsgBoxPreview" name="previewBox" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>144</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -84,17 +119,18 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QCheckBox" name="checkFriendly">
-     <property name="text">
-      <string>Friendly (Non-friendly NPCs can't be talked to)</string>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MsgBoxPreview</class>
+   <extends>QWidget</extends>
+   <header>msg_box_preview/msg_box_preview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
-  <include location="../../../_resources/editor.qrc"/>
+  <include location="../../../_resources/toolbar/toolbar.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -104,8 +140,8 @@ color: rgb(255, 255, 255);</string>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>266</x>
+     <y>350</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -120,12 +156,28 @@ color: rgb(255, 255, 255);</string>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>334</x>
+     <y>350</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
      <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>previewShow</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>previewArea</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>404</x>
+     <y>15</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>439</x>
+     <y>27</y>
     </hint>
    </hints>
   </connection>
