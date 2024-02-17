@@ -790,105 +790,202 @@ Overwritten worlds: %3
         <translation>에피소드 변환 도구</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="24"/>
         <source>This wizard will convert / repair level and episode files between different formats
 Supported formats:
 - PGE-X LVLX/WLDX
 - SMBX Version 1...64 LVL/WLD
 - SMBX-38A</source>
-        <translation>이 마법사는 다른 형식으로 레벨 및 에피소드 파일을 변환 / 복구합니다.
+        <translation type="vanished">이 마법사는 다른 형식으로 레벨 및 에피소드 파일을 변환 / 복구합니다.
 지원되는 형식 :
 -PGE-X LVLX / WLDX
 -SMBX 버전 1 ... 64 LVL / WLD
 -SMBX-38A</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="41"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="311"/>
         <source>Episode path:</source>
         <translation>에피소드 경로 :</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="48"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="291"/>
         <source>Path to an episode directory to process</source>
         <translation>처리 할 에피소드 디렉토리 경로</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="55"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="24"/>
+        <source>Make a backup (&quot;pge_maintainer_backup-*&quot; sub-folder will be created)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="54"/>
+        <source>Simple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="63"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="134"/>
+        <source>When converting legacy episodes made for the SMBX older than version 1.3,
+special setup for NPCs will be applied in order to keep their original behaviour.
+
+This option is only works if you convert episode for TheXTech.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="69"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="140"/>
+        <source>Apply Pre-1.3 NPC settings for TheXTech</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="82"/>
+        <source>Select the engine for which you want to convert the episode:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="106"/>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="153"/>
+        <source>Target format for levels:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="183"/>
+        <source>Same as levels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="238"/>
+        <source>Target format for worlds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="264"/>
+        <source>New config pack ID:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="284"/>
         <source>Browse...</source>
         <translation>검색...</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="62"/>
-        <source>Target format:</source>
-        <translation>대상 형식 :</translation>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="397"/>
+        <source>This wizard will convert / repair level and episode files between different formats.
+
+Important: There are only level and world map files gets being converted. Any including graphics, scripts, configs, music, etc. will not be touched at all.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="88"/>
+        <source>Target format:</source>
+        <translation type="vanished">대상 형식 :</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="212"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="225"/>
         <source>Version:</source>
         <translation>버전:</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="105"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="298"/>
         <source>Look for subdirectories</source>
         <translation>하위 디렉터리 찾기</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="112"/>
         <source>Make backup (&quot;_backup&quot; sub-folder will be created)</source>
-        <translation>백업 만들기 ( &quot;_backup&quot;하위 폴더가 생성됨)</translation>
+        <translation type="vanished">백업 만들기 ( &quot;_backup&quot;하위 폴더가 생성됨)</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="122"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="374"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="129"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="381"/>
         <source>Start</source>
         <translation>스타트</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="279"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="335"/>
+        <source>[Select an engine]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="678"/>
+        <source>&lt;Not an episode nor a set of levels&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="686"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="709"/>
+        <source>&lt;Many&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="701"/>
+        <source>World map(s) without an episode, format: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="724"/>
+        <source>Level(s) without an episode, format: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="881"/>
+        <source>Unknown episode</source>
+        <comment>Heuristicly detected episode format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="885"/>
+        <source>Guessed episode format: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="937"/>
         <source>Episode path error</source>
         <translation>에피소드 경로 오류</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="280"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="938"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
         <translation>에피소드 경로가 선언되지 않았습니다. 먼저 대상 에피소드 경로를 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="314"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="977"/>
         <source>Worker error</source>
         <translation>작업자 오류</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="315"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="978"/>
         <source>Can&apos;t initialize job because %1</source>
         <translation>% 1 때문에 작업을 초기화 할수 없습니다</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="993"/>
         <source>Open target episode path</source>
         <translation>대상 에피소드 경로 열기</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="347"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1013"/>
         <source>Work finished</source>
         <translation>작업 완료</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="347"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1013"/>
         <source>Episode has been converted!</source>
         <translation>에피소드가 변환되었습니다!</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="350"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1016"/>
         <source>Error occouped while work process</source>
         <translation>작업 프로세스 중 오류 발생</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="351"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1017"/>
         <source>Episode conversion aborted with error: %1</source>
         <translation>오류로 인해 에피소드 변환이 중단되었습니다 : % 1</translation>
     </message>
@@ -896,12 +993,12 @@ Supported formats:
 <context>
     <name>EpisodeConverterWorker</name>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="44"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="48"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
         <translation>경로 &quot;% 1&quot;을 (를) 확인할 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="52"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="56"/>
         <source>No files to convert</source>
         <translation>변환 할 파일이 없습니다</translation>
     </message>

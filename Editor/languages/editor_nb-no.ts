@@ -3626,66 +3626,66 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1324"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1326"/>
         <source>Remove selected item from the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1335"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1337"/>
         <source>Play selected file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1344"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1346"/>
         <source>Open...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1345"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1347"/>
         <source>Open selected file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1406"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1408"/>
         <source>Add new line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1407"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1409"/>
         <source>Please enter a text line to add:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1514"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1518"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1516"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1520"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1522"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1524"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1526"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1528"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1530"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1532"/>
         <source>[empty]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1517"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1519"/>
         <source>%1 coins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1746"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1799"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2024"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2124"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1748"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1801"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2026"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2126"/>
         <source>W</source>
         <comment>Width, shortly</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1758"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1810"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2036"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2135"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1760"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1812"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2038"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2137"/>
         <source>H</source>
         <comment>Height, shortly</comment>
         <translation type="unfinished"></translation>

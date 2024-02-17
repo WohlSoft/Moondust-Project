@@ -790,105 +790,215 @@ Overwritten worlds: %3
         <translation>Преобразователь эпизодов</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="24"/>
         <source>This wizard will convert / repair level and episode files between different formats
 Supported formats:
 - PGE-X LVLX/WLDX
 - SMBX Version 1...64 LVL/WLD
 - SMBX-38A</source>
-        <translation>Этот мастер поможет преобразовать/починить файлы уровней и эпизодов между разными форматами
+        <translation type="vanished">Этот мастер поможет преобразовать/починить файлы уровней и эпизодов между разными форматами
 Поддерживаемые форматы:
 - PGE-X LVLX/WLDX
 - SMBX версии 1...64 LVL/WLD
 - SMBX-38A</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="41"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="311"/>
         <source>Episode path:</source>
         <translation>Путь к эпизоду:</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="48"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="291"/>
         <source>Path to an episode directory to process</source>
         <translation>Путь к директории эпизода для обработки</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="55"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="24"/>
+        <source>Make a backup (&quot;pge_maintainer_backup-*&quot; sub-folder will be created)</source>
+        <translation>Сделать резервную копию (в подпапках &quot;pge_maintainer_backup-*&quot;)</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="54"/>
+        <source>Simple</source>
+        <translation>Просто</translation>
+    </message>
+    <message>
+        <source>[Choose an engine]</source>
+        <translation type="vanished">[Выберите движок]</translation>
+    </message>
+    <message>
+        <source>Moondust Engine</source>
+        <translation type="vanished">Движок Moondust</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="63"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="134"/>
+        <source>When converting legacy episodes made for the SMBX older than version 1.3,
+special setup for NPCs will be applied in order to keep their original behaviour.
+
+This option is only works if you convert episode for TheXTech.</source>
+        <translation>Если вы преобразуете старые эпизоды, созданные для SMBX версии старее, чем 1.3,
+то вам помогут особые настройки НИП, которые переведут их в режим оригинального поведения.
+
+Данная опция работает только тогда, когда эпизод преобразуется для TheXTech.</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="69"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="140"/>
+        <source>Apply Pre-1.3 NPC settings for TheXTech</source>
+        <translation>Применить настройки в режиме &quot;пред-1.3&quot; НИП для TheXTech</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="82"/>
+        <source>Select the engine for which you want to convert the episode:</source>
+        <translation>Выберите движок, для которого вы собираетесь преобразовать эпизод:</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="106"/>
+        <source>Advanced</source>
+        <translation>Продвинуто</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="153"/>
+        <source>Target format for levels:</source>
+        <translation>Целевой формат уровней:</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="183"/>
+        <source>Same as levels</source>
+        <translation>То же, что и уровни</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="238"/>
+        <source>Target format for worlds:</source>
+        <translation>Целевой формат карт мира:</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="264"/>
+        <source>New config pack ID:</source>
+        <translation>Новый ID конфиг-пакета:</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="284"/>
         <source>Browse...</source>
         <translation>Обзор...</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="62"/>
-        <source>Target format:</source>
-        <translation>Целевой формат:</translation>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="397"/>
+        <source>This wizard will convert / repair level and episode files between different formats.
+
+Important: There are only level and world map files gets being converted. Any including graphics, scripts, configs, music, etc. will not be touched at all.</source>
+        <translation>Данный мастер поможет преобразовать эпизод между разными форматами, либо попытаться исправить повреждения.
+
+Важно: Преобразуются только файлы уровней и карт мира. Всё прочее, включая графику, сценарии, настройки, музыку, и т.п. останется как есть не тронутым.</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="88"/>
+        <source>Target format:</source>
+        <translation type="vanished">Целевой формат:</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="212"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="225"/>
         <source>Version:</source>
         <translation>Версия:</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="105"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="298"/>
         <source>Look for subdirectories</source>
         <translation>Искать в подпапках</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="112"/>
         <source>Make backup (&quot;_backup&quot; sub-folder will be created)</source>
-        <translation>Сделать резервную копию (в подпапках &quot;_backup&quot;)</translation>
+        <translation type="vanished">Сделать резервную копию (в подпапках &quot;_backup&quot;)</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="122"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="374"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="129"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="381"/>
         <source>Start</source>
         <translation>Запустить</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="279"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="335"/>
+        <source>[Select an engine]</source>
+        <translation>[Выберите движок]</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="678"/>
+        <source>&lt;Not an episode nor a set of levels&gt;</source>
+        <translation>&lt;Не эпизод, и даже не набор уровней&gt;</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="686"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="709"/>
+        <source>&lt;Many&gt;</source>
+        <translation>&lt;Много&gt;</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="701"/>
+        <source>World map(s) without an episode, format: %1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="724"/>
+        <source>Level(s) without an episode, format: %1</source>
+        <translation>Уровень(вни) без эпизода, формат: %1</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="881"/>
+        <source>Unknown episode</source>
+        <comment>Heuristicly detected episode format</comment>
+        <translation>Неизвестный эпизод</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="885"/>
+        <source>Guessed episode format: %1</source>
+        <translation>Угаданный формат эпизода: %1</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="937"/>
         <source>Episode path error</source>
         <translation>Ошибка пути к эпизоду</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="280"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="938"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
         <translation>Путь к эпизоду не указан. Пожалуйста, выберите целевой эпизод.</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="314"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="977"/>
         <source>Worker error</source>
         <translation>Ошибка обработчика</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="315"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="978"/>
         <source>Can&apos;t initialize job because %1</source>
         <translation>Невозможно инициализировать задачу, потому что %1</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="993"/>
         <source>Open target episode path</source>
         <translation>Указать путь к целевому эпизоду</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="347"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1013"/>
         <source>Work finished</source>
         <translation>Работа выполнена</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="347"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1013"/>
         <source>Episode has been converted!</source>
         <translation>Эпизод преобразован!</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="350"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1016"/>
         <source>Error occouped while work process</source>
         <translation>Во время работы произошла ошибка</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="351"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1017"/>
         <source>Episode conversion aborted with error: %1</source>
         <translation>Преобразование эпизода было прервано с ошибкой: %1</translation>
     </message>
@@ -896,12 +1006,12 @@ Supported formats:
 <context>
     <name>EpisodeConverterWorker</name>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="44"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="48"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
         <translation>Невозможно найти путь &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="52"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="56"/>
         <source>No files to convert</source>
         <translation>Нету файлов для преобразования</translation>
     </message>

@@ -782,101 +782,186 @@ Overwritten worlds: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="24"/>
-        <source>This wizard will convert / repair level and episode files between different formats
-Supported formats:
-- PGE-X LVLX/WLDX
-- SMBX Version 1...64 LVL/WLD
-- SMBX-38A</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="41"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="311"/>
         <source>Episode path:</source>
         <translation>Caminho do episódio:</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="48"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="291"/>
         <source>Path to an episode directory to process</source>
         <translation type="unfinished">Caminho para uma diretoria de episódio para processar</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="55"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="24"/>
+        <source>Make a backup (&quot;pge_maintainer_backup-*&quot; sub-folder will be created)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="54"/>
+        <source>Simple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="63"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="134"/>
+        <source>When converting legacy episodes made for the SMBX older than version 1.3,
+special setup for NPCs will be applied in order to keep their original behaviour.
+
+This option is only works if you convert episode for TheXTech.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="69"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="140"/>
+        <source>Apply Pre-1.3 NPC settings for TheXTech</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="82"/>
+        <source>Select the engine for which you want to convert the episode:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="106"/>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="153"/>
+        <source>Target format for levels:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="183"/>
+        <source>Same as levels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="238"/>
+        <source>Target format for worlds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="264"/>
+        <source>New config pack ID:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="284"/>
         <source>Browse...</source>
         <translation>Navegar...</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="62"/>
-        <source>Target format:</source>
-        <translation>Formato de destino:</translation>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="397"/>
+        <source>This wizard will convert / repair level and episode files between different formats.
+
+Important: There are only level and world map files gets being converted. Any including graphics, scripts, configs, music, etc. will not be touched at all.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="88"/>
+        <source>Target format:</source>
+        <translation type="vanished">Formato de destino:</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="212"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="225"/>
         <source>Version:</source>
         <translation>Versão:</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="105"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="298"/>
         <source>Look for subdirectories</source>
         <translation>Procurar por subdiretorias</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="112"/>
-        <source>Make backup (&quot;_backup&quot; sub-folder will be created)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="122"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="374"/>
         <source>Close</source>
         <translation>Fechar</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="129"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="381"/>
         <source>Start</source>
         <translation>Iniciar</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="279"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="335"/>
+        <source>[Select an engine]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="678"/>
+        <source>&lt;Not an episode nor a set of levels&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="686"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="709"/>
+        <source>&lt;Many&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="701"/>
+        <source>World map(s) without an episode, format: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="724"/>
+        <source>Level(s) without an episode, format: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="881"/>
+        <source>Unknown episode</source>
+        <comment>Heuristicly detected episode format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="885"/>
+        <source>Guessed episode format: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="937"/>
         <source>Episode path error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="280"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="938"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="314"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="977"/>
         <source>Worker error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="315"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="978"/>
         <source>Can&apos;t initialize job because %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="993"/>
         <source>Open target episode path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="347"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1013"/>
         <source>Work finished</source>
         <translation>Tarefa terminada</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="347"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1013"/>
         <source>Episode has been converted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="350"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1016"/>
         <source>Error occouped while work process</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="351"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1017"/>
         <source>Episode conversion aborted with error: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -884,12 +969,12 @@ Supported formats:
 <context>
     <name>EpisodeConverterWorker</name>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="44"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="48"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="52"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="56"/>
         <source>No files to convert</source>
         <translation type="unfinished">Sem ficheiros para converter</translation>
     </message>
