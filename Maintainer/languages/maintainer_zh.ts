@@ -646,7 +646,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.ui" line="216"/>
         <source>Skip images with non-black-and-white masks</source>
-        <translation type="unfinished"></translation>
+        <translation>跳过带有非黑白影子文件的图片</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="156"/>
