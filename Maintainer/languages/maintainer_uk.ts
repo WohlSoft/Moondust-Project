@@ -231,39 +231,6 @@ Overwritten worlds: %3
     </message>
 </context>
 <context>
-    <name>BankFileList</name>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="35"/>
-        <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="36"/>
-        <source>Please select the WOPL instruments bank file to use</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="41"/>
-        <source>Select WOPN bank file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="42"/>
-        <source>Please select the WOPN instruments bank file to use</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="47"/>
-        <source>Select SoundFont bank file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="48"/>
-        <source>Please select the SoundFont bank file to add</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CaseFixer</name>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="14"/>
@@ -416,373 +383,6 @@ Overwritten worlds: %3
     </message>
 </context>
 <context>
-    <name>CustomMusicSetup</name>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="14"/>
-        <source>Music setup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="34"/>
-        <source>Play music</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="73"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="291"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="453"/>
-        <source>Extra settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="82"/>
-        <source>Bank:</source>
-        <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="92"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="303"/>
-        <source>Browse...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="106"/>
-        <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="116"/>
-        <source>Deep vibrato</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="132"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="323"/>
-        <source>Custom bank:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="139"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="310"/>
-        <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="152"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="347"/>
-        <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="168"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="337"/>
-        <source>When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</source>
-        <comment>Tool tip for the &quot;Automatic arpeggio&quot; checkbox</comment>
-        <extracomment>There is a term of the sound generator chip that has limited polyphony: each channel of chip is able to play only one parallel note. So, if one chip supports 6 channels, you can play 6 notes at the same time.</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="171"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="340"/>
-        <source>Automatic arpeggio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="178"/>
-        <source>Deep tremolo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="191"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="330"/>
-        <source>Chips number:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="198"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="363"/>
-        <source>Volume model:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="205"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="380"/>
-        <source>Channel allocation mode:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="212"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="387"/>
-        <source>Select one of the channel allocation algorithms:
-- [Auto]: The algorithm will be selected automatically depending on the bank or currently playing music format.
-- Sounding off delay based: The channel will be allocated regarding the remaining delay of releasing sound left to play (Shorted remaing delay will have the highest priority).
-- Same instrument: Any first released channel of the same instrument will be taken (or any if no channels of the same instrument played before)
-- Any first released: Any first released channel will be taken without bothering about properties.</source>
-        <comment>Tooltip for the &quot;Channel allocation mode&quot; combo box</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="226"/>
-        <source>Synthesizer type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="233"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="284"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="777"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="852"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="977"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="1029"/>
-        <source>Reset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="439"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="770"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="938"/>
-        <source>Gain:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="446"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="869"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="984"/>
-        <source>Tempo:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="462"/>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="469"/>
-        <source>General</source>
-        <comment>FluidSynth general options group</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="475"/>
-        <source>Max polyphony</source>
-        <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="518"/>
-        <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="528"/>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="548"/>
-        <source>Reverb</source>
-        <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="560"/>
-        <source>Room size</source>
-        <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="580"/>
-        <source>Damping</source>
-        <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="587"/>
-        <source>Width</source>
-        <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="620"/>
-        <source>Level</source>
-        <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="643"/>
-        <source>Chorus</source>
-        <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="655"/>
-        <source>Level</source>
-        <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="662"/>
-        <source>Speed</source>
-        <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="698"/>
-        <source>Depth (ms)</source>
-        <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="705"/>
-        <source>Voice count (N)</source>
-        <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="728"/>
-        <source>Type</source>
-        <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="745"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="735"/>
-        <source>Chiptune</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="812"/>
-        <source>Track number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="821"/>
-        <source>To begin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="835"/>
-        <source>Previous</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="842"/>
-        <source>Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="859"/>
-        <source>Disable the echo effect while playing files of SPC format</source>
-        <comment>Tooltip for the &quot;Disable SPC echo&quot; checkbox</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="862"/>
-        <source>Disable SPC echo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="1063"/>
-        <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="733"/>
-        <source>MIDI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="985"/>
-        <source>libADLMIDI (OPL3 Synth emulation)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="986"/>
-        <source>libOPNMIDI (YM2612 Synth emulation)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="987"/>
-        <source>Timidity (needed a bank)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="988"/>
-        <source>Native MIDI (Not recommended, buggy)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="989"/>
-        <source>FluidSynth (needed an SF2-bank)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="990"/>
-        <source>libEDMIDI (OPLL, SCC, PSG)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="995"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1003"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1011"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1027"/>
-        <source>[Auto]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="996"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1004"/>
-        <source>Sounding off delay based</source>
-        <comment>Channel allocation mode</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="997"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1005"/>
-        <source>Same instrument</source>
-        <comment>Channel allocation mode</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="998"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1006"/>
-        <source>Any free released</source>
-        <comment>Channel allocation mode</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1012"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1028"/>
-        <source>Generic</source>
-        <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1013"/>
-        <source>Native OPL3</source>
-        <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1029"/>
-        <source>Native OPN2</source>
-        <comment>Volume model for libOPNMIDI</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1037"/>
-        <source>Sine wave</source>
-        <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1038"/>
-        <source>Triangle wave</source>
-        <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>EpisodeConverter</name>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="14"/>
@@ -790,105 +390,202 @@ Overwritten worlds: %3
         <translation>Конвертор епізодів</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="24"/>
         <source>This wizard will convert / repair level and episode files between different formats
 Supported formats:
 - PGE-X LVLX/WLDX
 - SMBX Version 1...64 LVL/WLD
 - SMBX-38A</source>
-        <translation>Цей майстер допоможе конвертувати/виправити файли рівнів і епізодів між різними форматами
+        <translation type="vanished">Цей майстер допоможе конвертувати/виправити файли рівнів і епізодів між різними форматами
 Підтримані формати:
 - PGE-X LVLX/WLDX
 - SMBX версії 1...64 LVL/WLD
 - SMBX-38A</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="41"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="311"/>
         <source>Episode path:</source>
         <translation>Шлях до епізоду:</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="48"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="291"/>
         <source>Path to an episode directory to process</source>
         <translation>Шлях до епізоду для обробки</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="55"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="24"/>
+        <source>Make a backup (&quot;pge_maintainer_backup-*&quot; sub-folder will be created)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="54"/>
+        <source>Simple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="63"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="134"/>
+        <source>When converting legacy episodes made for the SMBX older than version 1.3,
+special setup for NPCs will be applied in order to keep their original behaviour.
+
+This option is only works if you convert episode for TheXTech.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="69"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="140"/>
+        <source>Apply Pre-1.3 NPC settings for TheXTech</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="82"/>
+        <source>Select the engine for which you want to convert the episode:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="106"/>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="153"/>
+        <source>Target format for levels:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="183"/>
+        <source>Same as levels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="238"/>
+        <source>Target format for worlds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="264"/>
+        <source>New config pack ID:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="284"/>
         <source>Browse...</source>
         <translation>Огляд...</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="62"/>
-        <source>Target format:</source>
-        <translation>Цільовий формат:</translation>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="397"/>
+        <source>This wizard will convert / repair level and episode files between different formats.
+
+Important: There are only level and world map files gets being converted. Any including graphics, scripts, configs, music, etc. will not be touched at all.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="88"/>
+        <source>Target format:</source>
+        <translation type="vanished">Цільовий формат:</translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="212"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="225"/>
         <source>Version:</source>
         <translation>Версія:</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="105"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="298"/>
         <source>Look for subdirectories</source>
         <translation>Шукати в підтеках</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="112"/>
         <source>Make backup (&quot;_backup&quot; sub-folder will be created)</source>
-        <translation>Створити резервну копію (у папці &quot;_backup&quot;)</translation>
+        <translation type="vanished">Створити резервну копію (у папці &quot;_backup&quot;)</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="122"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="374"/>
         <source>Close</source>
         <translation>Закрити</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="129"/>
+        <location filename="../EpisodeCvt/episode_converter.ui" line="381"/>
         <source>Start</source>
         <translation>Почати</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="279"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="335"/>
+        <source>[Select an engine]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="678"/>
+        <source>&lt;Not an episode nor a set of levels&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="686"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="709"/>
+        <source>&lt;Many&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="701"/>
+        <source>World map(s) without an episode, format: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="724"/>
+        <source>Level(s) without an episode, format: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="881"/>
+        <source>Unknown episode</source>
+        <comment>Heuristicly detected episode format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="885"/>
+        <source>Guessed episode format: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="937"/>
         <source>Episode path error</source>
         <translation>Помилка шляху епізоду</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="280"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="938"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
         <translation>Не вказаний шлях до епізоду. Будь ласка, виберіть цільовий епізод.</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="314"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="977"/>
         <source>Worker error</source>
         <translation>Помилка обробника</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="315"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="978"/>
         <source>Can&apos;t initialize job because %1</source>
         <translation>Неможливо ініціалізувати задачу, тому що %1</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="993"/>
         <source>Open target episode path</source>
         <translation>Вказати шлях до цільового епізоду</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="347"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1013"/>
         <source>Work finished</source>
         <translation>Робота виповнена</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="347"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1013"/>
         <source>Episode has been converted!</source>
         <translation>Епізод конвертовано!</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="350"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1016"/>
         <source>Error occouped while work process</source>
         <translation>Сталася помилка під час робочого процесу</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="351"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="1017"/>
         <source>Episode conversion aborted with error: %1</source>
         <translation>Конвертування епізоду перервано помилкою: %1</translation>
     </message>
@@ -896,38 +593,14 @@ Supported formats:
 <context>
     <name>EpisodeConverterWorker</name>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="44"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="48"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
         <translation>Неможливо знайти шлях &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="52"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="56"/>
         <source>No files to convert</source>
         <translation>Немає файлів для конвертації</translation>
-    </message>
-</context>
-<context>
-    <name>FileListBrowser</name>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="20"/>
-        <source>Files list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="36"/>
-        <source>Filter...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="52"/>
-        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="87"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="55"/>
-        <source>Please select a file from the list:</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1244,19 +917,6 @@ Supported formats:
     </message>
 </context>
 <context>
-    <name>LevelFileList</name>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/levelfilelist.cpp" line="26"/>
-        <source>Level files list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/levelfilelist.cpp" line="27"/>
-        <source>Please, select level file from list for use them:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MaintainerMain</name>
     <message>
         <location filename="../main_window.ui" line="14"/>
@@ -1359,65 +1019,6 @@ Supported formats:
         <location filename="../main_window.cpp" line="18"/>
         <source>This feature is under construction, it doesn&apos;t work properly yet. It may damage some of your stuff you&apos;ll try to process. Therefore please, make a full backup of episode that you would to process by this thing.</source>
         <translation>Ця функція знаходиться у стадії розробки, вона поки що не працює так, як задумано. Вона може щось пошкодити при спробі обробити ваші матеріали. Тому, будь ласка, створіть резервну копію епізоду, який ви бажаєте обробити за допомогою цієї функції.</translation>
-    </message>
-</context>
-<context>
-    <name>MusicFileList</name>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="39"/>
-        <source>Select SFX file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="40"/>
-        <source>Please select SFX file to use</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="53"/>
-        <source>Select Custom music</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="54"/>
-        <source>Please select music file to use as custom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="82"/>
-        <source>Test SFX</source>
-        <comment>Preview selected sound file</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="99"/>
-        <source>Music play/stop</source>
-        <comment>Preview selected music file</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="105"/>
-        <source>Settings...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="109"/>
-        <source>Extra settings are not specified</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="110"/>
-        <source>Extra settings are not supported for this music file format</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="116"/>
-        <source>Music settings arguments:
-This is a special string that allows to set an extra settings for this music file to alternate its playing behaviour and/or sounding.
-These settings are different depending on the file format.
-
-You can&apos;t set these settings if given file format doesn&apos;t support them.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1732,10 +1333,8 @@ You can&apos;t set these settings if given file format doesn&apos;t support them
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
-        <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
-        <translation>LTR</translation>
+        <translation type="vanished">LTR</translation>
     </message>
 </context>
 </TS>

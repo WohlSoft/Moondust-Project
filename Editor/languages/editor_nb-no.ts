@@ -679,39 +679,6 @@ Please set SoX path first</source>
     </message>
 </context>
 <context>
-    <name>BankFileList</name>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="35"/>
-        <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="36"/>
-        <source>Please select the WOPL instruments bank file to use</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="41"/>
-        <source>Select WOPN bank file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="42"/>
-        <source>Please select the WOPN instruments bank file to use</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="47"/>
-        <source>Select SoundFont bank file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="48"/>
-        <source>Please select the SoundFont bank file to add</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>BlocksPerSecondDialog</name>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="14"/>
@@ -1256,373 +1223,6 @@ Please save them before doing anything else.</source>
     </message>
 </context>
 <context>
-    <name>CustomMusicSetup</name>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="14"/>
-        <source>Music setup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="34"/>
-        <source>Play music</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="226"/>
-        <source>Synthesizer type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="439"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="770"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="938"/>
-        <source>Gain:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="233"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="284"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="777"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="852"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="977"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="1029"/>
-        <source>Reset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="446"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="869"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="984"/>
-        <source>Tempo:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="73"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="291"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="453"/>
-        <source>Extra settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="132"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="323"/>
-        <source>Custom bank:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="198"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="363"/>
-        <source>Volume model:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="116"/>
-        <source>Deep vibrato</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="82"/>
-        <source>Bank:</source>
-        <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="178"/>
-        <source>Deep tremolo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="92"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="303"/>
-        <source>Browse...</source>
-        <translation type="unfinished">Utforsk…</translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="106"/>
-        <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="139"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="310"/>
-        <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="152"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="347"/>
-        <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="168"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="337"/>
-        <source>When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</source>
-        <comment>Tool tip for the &quot;Automatic arpeggio&quot; checkbox</comment>
-        <extracomment>There is a term of the sound generator chip that has limited polyphony: each channel of chip is able to play only one parallel note. So, if one chip supports 6 channels, you can play 6 notes at the same time.</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="171"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="340"/>
-        <source>Automatic arpeggio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="191"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="330"/>
-        <source>Chips number:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="205"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="380"/>
-        <source>Channel allocation mode:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="212"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="387"/>
-        <source>Select one of the channel allocation algorithms:
-- [Auto]: The algorithm will be selected automatically depending on the bank or currently playing music format.
-- Sounding off delay based: The channel will be allocated regarding the remaining delay of releasing sound left to play (Shorted remaing delay will have the highest priority).
-- Same instrument: Any first released channel of the same instrument will be taken (or any if no channels of the same instrument played before)
-- Any first released: Any first released channel will be taken without bothering about properties.</source>
-        <comment>Tooltip for the &quot;Channel allocation mode&quot; combo box</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="462"/>
-        <source>Remove</source>
-        <translation type="unfinished">Fjern</translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="469"/>
-        <source>General</source>
-        <comment>FluidSynth general options group</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="475"/>
-        <source>Max polyphony</source>
-        <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="518"/>
-        <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="528"/>
-        <source>Add</source>
-        <translation type="unfinished">Legg til</translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="548"/>
-        <source>Reverb</source>
-        <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="560"/>
-        <source>Room size</source>
-        <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="580"/>
-        <source>Damping</source>
-        <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="587"/>
-        <source>Width</source>
-        <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="620"/>
-        <source>Level</source>
-        <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished">Nivå</translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="643"/>
-        <source>Chorus</source>
-        <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="655"/>
-        <source>Level</source>
-        <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished">Nivå</translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="662"/>
-        <source>Speed</source>
-        <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="698"/>
-        <source>Depth (ms)</source>
-        <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="705"/>
-        <source>Voice count (N)</source>
-        <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="728"/>
-        <source>Type</source>
-        <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="745"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="735"/>
-        <source>Chiptune</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="812"/>
-        <source>Track number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="821"/>
-        <source>To begin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="835"/>
-        <source>Previous</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="842"/>
-        <source>Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="859"/>
-        <source>Disable the echo effect while playing files of SPC format</source>
-        <comment>Tooltip for the &quot;Disable SPC echo&quot; checkbox</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="862"/>
-        <source>Disable SPC echo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="1063"/>
-        <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="733"/>
-        <source>MIDI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="985"/>
-        <source>libADLMIDI (OPL3 Synth emulation)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="986"/>
-        <source>libOPNMIDI (YM2612 Synth emulation)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="987"/>
-        <source>Timidity (needed a bank)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="988"/>
-        <source>Native MIDI (Not recommended, buggy)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="989"/>
-        <source>FluidSynth (needed an SF2-bank)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="990"/>
-        <source>libEDMIDI (OPLL, SCC, PSG)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="995"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1003"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1011"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1027"/>
-        <source>[Auto]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="996"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1004"/>
-        <source>Sounding off delay based</source>
-        <comment>Channel allocation mode</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="997"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1005"/>
-        <source>Same instrument</source>
-        <comment>Channel allocation mode</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="998"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1006"/>
-        <source>Any free released</source>
-        <comment>Channel allocation mode</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1012"/>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1028"/>
-        <source>Generic</source>
-        <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1013"/>
-        <source>Native OPL3</source>
-        <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1029"/>
-        <source>Native OPN2</source>
-        <comment>Volume model for libOPNMIDI</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1037"/>
-        <source>Sine wave</source>
-        <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="1038"/>
-        <source>Triangle wave</source>
-        <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DataConfig</name>
     <message>
         <location filename="../data_configs/data_configs.cpp" line="330"/>
@@ -1882,30 +1482,6 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="179"/>
         <source>Hide invisible blocks and meta-objects</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>FileListBrowser</name>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="20"/>
-        <source>Files list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="36"/>
-        <source>Filter...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="52"/>
-        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="87"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="55"/>
-        <source>Please select a file from the list:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3626,66 +3202,66 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1324"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1326"/>
         <source>Remove selected item from the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1335"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1337"/>
         <source>Play selected file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1344"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1346"/>
         <source>Open...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1345"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1347"/>
         <source>Open selected file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1406"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1408"/>
         <source>Add new line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1407"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1409"/>
         <source>Please enter a text line to add:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1514"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1518"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1516"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1520"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1522"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1524"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1526"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1528"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1530"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1532"/>
         <source>[empty]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1517"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1519"/>
         <source>%1 coins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1746"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1799"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2024"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2124"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1748"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1801"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2026"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2126"/>
         <source>W</source>
         <comment>Width, shortly</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1758"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1810"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2036"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2135"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1760"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1812"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2038"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2137"/>
         <source>H</source>
         <comment>Height, shortly</comment>
         <translation type="unfinished"></translation>
@@ -3878,19 +3454,6 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="154"/>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LevelFileList</name>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/levelfilelist.cpp" line="26"/>
-        <source>Level files list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/levelfilelist.cpp" line="27"/>
-        <source>Please, select level file from list for use them:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8311,65 +7874,6 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
 </context>
 <context>
-    <name>MusicFileList</name>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="39"/>
-        <source>Select SFX file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="40"/>
-        <source>Please select SFX file to use</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="53"/>
-        <source>Select Custom music</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="54"/>
-        <source>Please select music file to use as custom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="82"/>
-        <source>Test SFX</source>
-        <comment>Preview selected sound file</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="99"/>
-        <source>Music play/stop</source>
-        <comment>Preview selected music file</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="105"/>
-        <source>Settings...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="109"/>
-        <source>Extra settings are not specified</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="110"/>
-        <source>Extra settings are not supported for this music file format</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="116"/>
-        <source>Music settings arguments:
-This is a special string that allows to set an extra settings for this music file to alternate its playing behaviour and/or sounding.
-These settings are different depending on the file format.
-
-You can&apos;t set these settings if given file format doesn&apos;t support them.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>NpcEdit</name>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="95"/>
@@ -9399,8 +8903,6 @@ File: %1</source>
     </message>
     <message>
         <location filename="../main_window/translator.cpp" line="149"/>
-        <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
-        <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9550,99 +9052,6 @@ Forum link: wohlsoft.ru/forum</source>
 Reason: %1
 
 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="30"/>
-        <source>SMBX64 standard isn&apos;t allows to save %1 section
-The maximum number of sections is %2.
-All boundaries and settings of more than 21 sections will be lost.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="39"/>
-        <source>SMBX64 standard isn&apos;t allows to save %1 blocks
-The maximum number of blocks is %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="46"/>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
-The maximum number of Background Objects is %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="53"/>
-        <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
-The maximum number of NPC&apos;s is %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="60"/>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Warps
-The maximum number of Warps is %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="67"/>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
-The maximum number of Water Boxes is %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="74"/>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Layers
-The maximum number of Layers is %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="81"/>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Events
-The maximum number of Events is %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="88"/>
-        <source>A some issues are found on preparing to save SMBX64 Level file format:
-
-%1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="102"/>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
-The maximum number of Tiles is %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="109"/>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
-The maximum number of Sceneries is %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="116"/>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Paths
-The maximum number of Paths is %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="123"/>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Levels
-The maximum number of Levels is %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="131"/>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
-The maximum number of Music Boxes is %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="138"/>
-        <source>A some issues are found on preparing to save SMBX64 World map file format:
-
-%1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

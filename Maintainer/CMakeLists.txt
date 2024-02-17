@@ -194,6 +194,14 @@ if(QT_PTHREAD)
     target_link_libraries(PGE_Maintainer_QtLibs INTERFACE ${QT_PTHREAD})
 endif()
 
+string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
+if(${CMAKE_BUILD_TYPE_LOWER} STREQUAL "debug")
+    target_compile_definitions(pge_maintainer
+        PRIVATE
+        -DDEBUG_BUILD
+    )
+endif()
+
 
 set(PGE_MAINTAINER_LINK_LIBS)
 set(PGE_MAINTAINER_INSTALLS)

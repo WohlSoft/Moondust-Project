@@ -116,8 +116,10 @@ void MainWindow::setDefLang()
     m_currLang = GlobalSettings::locale;
     QLocale locale = QLocale(m_currLang);
     QLocale::setDefault(locale);
+    bool ok;
 
-    bool ok = m_translator.load(makeLangFilePath(m_langPath, m_currLang));
+
+    ok = m_translator.load(makeLangFilePath(m_langPath, m_currLang));
     LogDebug(QString("Translation: %1").arg((int)ok));
     if(ok)
         qApp->installTranslator(&m_translator);
@@ -134,17 +136,21 @@ void MainWindow::setDefLang()
     }
     qDebug() << "Editor Translation: " << ok;
 
-    ok = m_translatorQt.load(makeMoondustCommonFilePath(m_langPath, m_currLang));
-    LogDebug(QString("Common modules translation: %1").arg((int)ok));
-    if(ok)
-        qApp->installTranslator(&m_translatorCommon);
 
     ok = m_translatorQt.load(makeQtLangFilePath(m_langPath, m_currLang));
     LogDebug(QString("Qt Translation: %1").arg((int)ok));
     if(ok)
         qApp->installTranslator(&m_translatorQt);
-
     qDebug() << "Qt Translation: " << ok;
+
+
+    ok = m_translatorCommon.load(makeMoondustCommonFilePath(m_langPath, m_currLang));
+    LogDebug(QString("Common modules translation: %1").arg((int)ok));
+    if(ok)
+        qApp->installTranslator(&m_translatorCommon);
+    qDebug() << "Common modules Translation: " << ok;
+
+
 
     qApp->setLayoutDirection(QObject::tr("LTR") == "RTL" ? Qt::RightToLeft : Qt::LeftToRight);
 

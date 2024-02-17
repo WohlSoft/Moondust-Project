@@ -21,9 +21,16 @@ class EpisodeConverterWorker : public QObject
     QDir                m_episode;
     QString             m_errorString;
     QQueue<QString >    m_filesToConvert;
-    bool                m_doBackup;
-    int                 m_targetFormat;
-    int                 m_targetFormatVer;
+
+    bool                m_doBackup = true;
+    int                 m_targetFormat = 0;
+    int                 m_targetFormatVer = 64;
+    int                 m_targetFormatWld = 0;
+    int                 m_targetFormatVerWld = 64;
+    bool                m_applyTheXTechSetup = false;
+
+    QString             m_dstCpId;
+
     EpisodeBox          m_episodeBox;
     QAtomicInteger<bool>m_jobRunning;
 public:
@@ -34,7 +41,20 @@ public:
     ~EpisodeConverterWorker();
 
     void setBackup(bool enabled);
-    bool initJob(QString m_path, bool recursive, int targetFormat, int fmtVer);
+
+    struct JobSetup
+    {
+        QString path;
+        bool recursive;
+        int targetFormat;
+        int fmtVer;
+        int targetFormatWld;
+        int fmtVerWld;
+        QString cpId;
+        bool applyTheXTechSetup;
+    };
+
+    bool initJob(const JobSetup &setup);
     bool runJob();
 
     QString errorString();
@@ -47,11 +67,40 @@ class EpisodeConverter : public QDialog
 {
     Q_OBJECT
     friend class EpisodeConverterWorker;
+
+    struct EpisodeEnginePreset
+    {
+        QString engineName;
+        QString cpIdTag;
+        int comboBoxIdx;
+        int levelFormat;
+        int levelFormatVersion;
+        int worldFormat;
+        int worldFormatVersion;
+        bool showTheXTechOptions;
+    };
+
+    QVector<EpisodeEnginePreset> m_enginesList;
+    void buildEnginesList();
+
+    struct EpisodeStats
+    {
+        bool mixed = false;
+        bool allPGEX = false;
+        bool all38A = false;
+        bool allSMBX64 = false;
+        unsigned int max38Aver = 0;
+        unsigned int max64ver = 0;
+    } m_episodeStats;
+
 public:
     explicit EpisodeConverter(QWidget *parent = nullptr);
     ~EpisodeConverter();
 
 private slots:
+    void targetEngineSelected(int idx);
+    void detectEpisodeFormat();
+
     void on_closeBox_clicked();
     void on_DoMadJob_clicked();
     void on_browse_clicked();
