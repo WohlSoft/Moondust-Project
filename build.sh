@@ -398,7 +398,7 @@ do
             cd Editor
 
             find . \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
-            find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
+            # find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
             for lang in ${LANGS_LIST}; do
                 ${QT_PATH}/lupdate -no-obsolete @_lupdate_temp_list.tmp -ts languages/editor_$lang.ts -I .
             done
@@ -410,8 +410,8 @@ do
             cd Maintainer
 
             find . \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
-            find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
-            sed -i '/_common\/data_functions/d' _lupdate_temp_list.tmp
+            # find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
+            # sed -i '/_common\/data_functions/d' _lupdate_temp_list.tmp
             for lang in ${LANGS_LIST}; do
                 ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/maintainer_$lang.ts -I .
             done
@@ -423,8 +423,8 @@ do
             cd PlayableCalibrator
 
             find . \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
-            find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
-            sed -i '/_common\/data_functions/d' _lupdate_temp_list.tmp
+            # find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
+            # sed -i '/_common\/data_functions/d' _lupdate_temp_list.tmp
             for lang in ${LANGS_LIST}; do
                 ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/calibrator_$lang.ts -I .
             done
