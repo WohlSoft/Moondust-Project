@@ -7871,7 +7871,7 @@ Do you want to clone another section?</source>
         <translation>로드 된 파일이 없습니다!</translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="310"/>
+        <location filename="../main_window/translator.cpp" line="316"/>
         <source>Current Language changed to %1</source>
         <translation>현재 언어가 % 1로 변경되었습니다</translation>
     </message>
@@ -9169,7 +9169,7 @@ File: %1</source>
 파일을 저장하면</translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="149"/>
+        <location filename="../main_window/translator.cpp" line="155"/>
         <source>LTR</source>
         <translation>LTR</translation>
     </message>

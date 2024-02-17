@@ -3094,7 +3094,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="708"/>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pálya</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="848"/>
@@ -6003,7 +6003,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="180"/>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pálya</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="187"/>
@@ -7778,7 +7778,7 @@ Do you want to clone another section?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="310"/>
+        <location filename="../main_window/translator.cpp" line="316"/>
         <source>Current Language changed to %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9067,7 +9067,7 @@ File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="149"/>
+        <location filename="../main_window/translator.cpp" line="155"/>
         <source>LTR</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9917,7 +9917,7 @@ Arguments: %2</source>
     <message>
         <location filename="../tools/tilesets/tileset_editor.ui" line="209"/>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pálya</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tileset_editor.ui" line="217"/>
@@ -10467,7 +10467,7 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="37"/>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pálya</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="84"/>
@@ -11191,7 +11191,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="407"/>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pálya</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="413"/>
