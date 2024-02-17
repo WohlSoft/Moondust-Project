@@ -7454,7 +7454,7 @@ Het configuratiepakket was geladen, maar bevat fouten.</translation>
         <translation>Bestand openen</translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="310"/>
+        <location filename="../main_window/translator.cpp" line="316"/>
         <source>Current Language changed to %1</source>
         <translation>Huidige taal gewijzigd naar %1</translation>
     </message>
@@ -9144,7 +9144,7 @@ als u het bestand opslaat</translation>
         <translation>Debuggen</translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="149"/>
+        <location filename="../main_window/translator.cpp" line="155"/>
         <source>LTR</source>
         <translation>LTR</translation>
     </message>

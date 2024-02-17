@@ -7643,7 +7643,7 @@ Please save the file first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="310"/>
+        <location filename="../main_window/translator.cpp" line="316"/>
         <source>Current Language changed to %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8902,7 +8902,7 @@ File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="149"/>
+        <location filename="../main_window/translator.cpp" line="155"/>
         <source>LTR</source>
         <translation type="unfinished"></translation>
     </message>
