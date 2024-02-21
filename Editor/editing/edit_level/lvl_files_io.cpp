@@ -150,6 +150,7 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
     QString fileSMBX64  = "SMBX64 (1.3) Level file (*.lvl)";
     QString fileSMBXany = "SMBX0...64 Level file [choose version] (*.lvl)";
     QString fileSMBX38A = "SMBX-38a Level file (*.lvl)";
+    QString fileSMBX38Aany = "SMBX-38a Level file [choose version] (*.lvl)";
     QString filePGEX    = "Extended Level file (*.lvlx)";
     QString selectedFilter;
 
@@ -167,7 +168,10 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
         break;
 
     case LevelData::SMBX38A:
-        selectedFilter = fileSMBX38A;
+        if(LvlData.meta.RecentFormatVersion >= 69)
+            selectedFilter = fileSMBX38A;
+        else
+            selectedFilter = fileSMBX38Aany;
         break;
     }
 
@@ -175,6 +179,7 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
         fileSMBX64 + ";;" +
         fileSMBXany + ";;" +
         fileSMBX38A + ";;" +
+        fileSMBX38Aany + ";;" +
         filePGEX;
     bool ret;
 RetrySave:
@@ -193,37 +198,66 @@ RetrySave:
             unsigned int file_format = LvlData.meta.RecentFormatVersion;
             bool ok = true;
             file_format = static_cast<unsigned int>(
-                              QInputDialog::getInt(this, tr("SMBX file version"),
-                                                   tr("Which version do you want to save as? (from 0 to 64)\n"
-                                                           "List of known SMBX versions and format codes:\n%1\n"
-                                                           "(To allow level file work in specific SMBX version,\n"
-                                                           "version code must be less or equal specific code)"
-                                                     ).arg(" 1 - SMBX 1.0.0\n"
-                                                             " 2 - SMBX 1.0.2\n"
-                                                             "18 - SMBX 1.1.1\n"
-                                                             "20 - SMBX 1.1.2\n"
-                                                             "28 - SMBX 1.2.0 Beta 3\n"
-                                                             "51 - SMBX 1.2.1\n"
-                                                             "58 - SMBX 1.2.2\n"
-                                                             "59 - SMBX 1.2.2 (with some patch)\n"
-                                                             "64 - SMBX 1.3\n"),
-                                                   static_cast<int>(LvlData.meta.RecentFormatVersion),
-                                                   0, 64, 1, &ok)
-                          );
+                QInputDialog::getInt(this, tr("SMBX file version"),
+                    tr("Which version do you want to save as? (from 0 to 64)\n"
+                    "List of known SMBX versions and format codes:\n%1\n"
+                    "(To allow level file work in specific SMBX version,\n"
+                    "version code must be less or equal specific code)"
+                    ).arg(" 1 - SMBX 1.0.0\n"
+                    " 2 - SMBX 1.0.2\n"
+                    "18 - SMBX 1.1.1\n"
+                    "20 - SMBX 1.1.2\n"
+                    "28 - SMBX 1.2.0 Beta 3\n"
+                    "51 - SMBX 1.2.1\n"
+                    "58 - SMBX 1.2.2\n"
+                    "59 - SMBX 1.2.2 (with some patch)\n"
+                    "64 - SMBX 1.3\n"),
+                    static_cast<int>(LvlData.meta.RecentFormatVersion),
+                    0, 64, 1, &ok
+                )
+            );
 
             if(!ok)
                 return false;
 
             LvlData.meta.RecentFormatVersion = file_format;
         }
+        else if(selectedFilter == fileSMBX38Aany)
+        {
+            unsigned int file_format = LvlData.meta.RecentFormatVersion;
+            bool ok = true;
+            file_format = static_cast<unsigned int>(
+                QInputDialog::getInt(this, tr("SMBX-38A file version"),
+                    tr("Which version do you want to save as? (from 64 to 69)\n"
+                       "List of known SMBX-38A versions and format codes:\n%1\n"
+                       "(To allow level file work in specific SMBX-38A version,\n"
+                       "version code must be less or equal specific code)"
+                       ).arg("64 - SMBX-38A 1.4.0\n"
+                             "65 - SMBX-38A 1.4.1\n"
+                             "66 - SMBX-38A 1.4.2\n"
+                             "67 - SMBX-38A 1.4.3\n"
+                             "68 - SMBX-38A 1.4.4\n"
+                             "69 - SMBX-38A 1.4.5\n"),
+                    static_cast<int>(LvlData.meta.RecentFormatVersion),
+                    64, 69, 1, &ok
+                )
+            );
+
+            if(!ok)
+                return false;
+
+            LvlData.meta.RecentFormatVersion = file_format;
+        }
+        else if(selectedFilter == fileSMBX38A)
+            LvlData.meta.RecentFormatVersion = FileFormats::c_latest_version_smbx38a;
         else
-            LvlData.meta.RecentFormatVersion = 64;
+            LvlData.meta.RecentFormatVersion = FileFormats::c_latest_version_smbx64;
 
         if(selectedFilter == filePGEX)
             LvlData.meta.RecentFormat = LevelData::PGEX;
         else if((selectedFilter == fileSMBX64) || (selectedFilter == fileSMBXany))
             LvlData.meta.RecentFormat = LevelData::SMBX64;
-        else if((selectedFilter == fileSMBX38A))
+        else if((selectedFilter == fileSMBX38A || selectedFilter == fileSMBX38Aany))
         {
             QMessageBox::information(this, "====THIS FILE FORMAT IS EXPERIMENTAL====",
                                      "Saving into SMBX-38A Level file format is experimental!\n"
@@ -231,7 +265,8 @@ RetrySave:
             LvlData.meta.RecentFormat = LevelData::SMBX38A;
         }
 
-        if((selectedFilter == fileSMBXany) || (selectedFilter == fileSMBX64) || (selectedFilter == fileSMBX38A))
+        if((selectedFilter == fileSMBXany) || (selectedFilter == fileSMBX64) ||
+           (selectedFilter == fileSMBX38Aany) || (selectedFilter == fileSMBX38A))
         {
             if(fileName.endsWith(".lvlx", Qt::CaseInsensitive))
                 fileName.remove(fileName.size() - 1, 1);
@@ -248,19 +283,22 @@ RetrySave:
                 fileName.append(".lvlx");
         }
 
-        if((!fileName.endsWith(".lvl", Qt::CaseInsensitive)) && (!fileName.endsWith(".lvlx", Qt::CaseInsensitive)))
+        if((!fileName.endsWith(".lvl", Qt::CaseInsensitive)) &&
+           (!fileName.endsWith(".lvlx", Qt::CaseInsensitive)))
         {
-            QMessageBox::warning(this, tr("Extension is not set"),
-                                 tr("File Extension isn't defined, please enter file extension!"), QMessageBox::Ok);
+            QMessageBox::warning(this,
+                                 tr("Extension is not set"),
+                                 tr("File Extension isn't defined, please enter file extension!"),
+                                 QMessageBox::Ok);
             continue;
         }
 
         if(makeCustomFolder)
         {
             QFileInfo finfo(fileName);
-            finfo.absoluteDir().mkpath(finfo.absoluteDir().absolutePath() +
-                                       "/" + util::getBaseFilename(finfo.fileName())
-                                      );
+            QString newPath = finfo.absoluteDir().absolutePath() + "/" +
+                              util::getBaseFilename(finfo.fileName());
+            finfo.absoluteDir().mkpath(newPath);
         }
 
         isNotDone = false;
@@ -287,7 +325,7 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
     // Prepare data for saving
     prepareLevelFile(LvlData);
 
-    // ////////////////// Write Extended LVL file (LVLX)/////////////////////
+    // ============== Write Extended LVL file (LVLX) ==================
     if(LvlData.meta.RecentFormat == LevelData::PGEX)
     {
         if(!savePGEXLVL(fileName, false))
@@ -295,8 +333,7 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
 
         LvlData.meta.smbx64strict = false; //Disable strict mode
     }
-    // //////////////////////////////////////////////////////////////////////
-    // ////////////////////// Write SMBX64 LVL //////////////////////////////
+    // ======================= Write SMBX64 LVL =======================
     else if(LvlData.meta.RecentFormat == LevelData::SMBX64)
     {
         if(!saveSMBX64LVL(fileName, false, out_WarningIsAborted))
@@ -304,8 +341,7 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
 
         LvlData.meta.smbx64strict = true; //Enable SMBX64 standard strict mode
     }
-    // //////////////////////////////////////////////////////////////////////
-    // ////////////////////// Write SMBX-38A LVL //////////////////////////////
+    // ====================== Write SMBX-38A LVL ======================
     else if(LvlData.meta.RecentFormat == LevelData::SMBX38A)
     {
         if(!saveSMBX38aLVL(fileName, false))
@@ -314,7 +350,6 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
         LvlData.meta.smbx64strict = false; //Disable strict mode
     }
 
-    // //////////////////////////////////////////////////////////////////////
     QFileInfo finfo(fileName);
     GlobalSettings::savePath = finfo.path();
     LogDebug(QString("-------------------------------\n"
@@ -348,7 +383,9 @@ bool LevelEdit::savePGEXLVL(QString fileName, bool silent)
 {
     FileKeeper fileKeeper = FileKeeper(fileName);
 
-    if(!FileFormats::SaveLevelFile(LvlData, fileKeeper.tempPath(), FileFormats::LVL_PGEX))
+    if(!FileFormats::SaveLevelFile(LvlData,
+                                   fileKeeper.tempPath(),
+                                   FileFormats::LVL_PGEX))
     {
         if(!silent)
             QMessageBox::warning(this, tr("File save error"),
@@ -370,7 +407,10 @@ bool LevelEdit::saveSMBX38aLVL(QString fileName, bool silent)
 {
     FileKeeper fileKeeper = FileKeeper(fileName);
 
-    if(!FileFormats::SaveLevelFile(LvlData, fileKeeper.tempPath(), FileFormats::LVL_SMBX38A))
+    if(!FileFormats::SaveLevelFile(LvlData,
+                                   fileKeeper.tempPath(),
+                                   FileFormats::LVL_SMBX38A,
+                                   LvlData.meta.RecentFormatVersion))
     {
         if(!silent)
             QMessageBox::warning(this, tr("File save error"),
@@ -468,31 +508,33 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent, bool *out_WarningIs
         isSMBX64limit = true;
     }
 
-    if(isSMBX64limit)
+    if(isSMBX64limit && !silent)
     {
-        if(!silent)
+        QApplication::restoreOverrideCursor();
+
+        if(QMessageBox::question(this,
+                                 tr("The SMBX64 limit has been exceeded"),
+                                 tr("Do you want to save file anyway?\n"
+                                     "Exciting of SMBX64 limits may crash SMBX with 'Subscript out of range' error.\n"
+                                     "\n"
+                                     "Installed LunaLUA partially extends than limits."),
+                                 QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
         {
-            if(!silent)
-                QApplication::restoreOverrideCursor();
+            if(out_WarningIsAborted)
+                *out_WarningIsAborted = isSMBX64limit;
 
-            if(QMessageBox::question(this,
-                                     tr("The SMBX64 limit has been exceeded"),
-                                     tr("Do you want to save file anyway?\nExciting of SMBX64 limits may crash SMBX with 'Subscript out of range' error.\n\nInstalled LunaLUA partially extends than limits."),
-                                     QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
-            {
-                if(out_WarningIsAborted)
-                    *out_WarningIsAborted = isSMBX64limit;
-
-                return false;
-            }
-            else
-                isSMBX64limit = false;
-
-            QApplication::setOverrideCursor(Qt::WaitCursor);
+            return false;
         }
+        else
+            isSMBX64limit = false;
+
+        QApplication::setOverrideCursor(Qt::WaitCursor);
     }
 
-    if(!FileFormats::SaveLevelFile(LvlData, fileKeeper.tempPath(), FileFormats::LVL_SMBX64, LvlData.meta.RecentFormatVersion))
+    if(!FileFormats::SaveLevelFile(LvlData,
+                                   fileKeeper.tempPath(),
+                                   FileFormats::LVL_SMBX64,
+                                   LvlData.meta.RecentFormatVersion))
     {
         QApplication::restoreOverrideCursor();
 

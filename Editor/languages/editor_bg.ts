@@ -2754,6 +2754,18 @@ Do you want to save your changes?</source>
         <source>6/%1 Loading Doors...</source>
         <translation>6/%1 Зареждане на врати...</translation>
     </message>
+    <message>
+        <source>SMBX-38A file version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Which version do you want to save as? (from 64 to 69)
+List of known SMBX-38A versions and format codes:
+%1
+(To allow level file work in specific SMBX-38A version,
+version code must be less or equal specific code)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LevelItemBox</name>
@@ -8922,10 +8934,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished">Версия на SMBX файла</translation>
     </message>
     <message>
-        <source>Which version do you want to save as? (from 0 to 64)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>The SMBX64 limit has been exceeded</source>
         <translation type="unfinished">Ограничението за SMBX64 е надхвърлено</translation>
     </message>
@@ -8982,6 +8990,30 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>World title:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Which version do you want to save as? (from 0 to 64)
+List of known SMBX versions and format codes:
+%1
+(To allow level file work in specific SMBX version,
+version code must be less or equal specific code)</source>
+        <translation type="unfinished">Коя версия искате да запазите като? (от 0 до 64)
+Списък на известните версии на SMBX и кодове на форматите:
+%1
+(За да може файлът с ниво да работи в определена версия на SMBX,
+версията на файла трябва да е по-малка или равна на кода на тази версия на SMBX.)</translation>
+    </message>
+    <message>
+        <source>SMBX-38A file version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Which version do you want to save as? (from 64 to 69)
+List of known SMBX-38A versions and format codes:
+%1
+(To allow level file work in specific SMBX-38A version,
+version code must be less or equal specific code)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

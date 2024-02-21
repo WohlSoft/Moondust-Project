@@ -3311,7 +3311,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="121"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="669"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="711"/>
         <source>Level title: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3321,17 +3321,17 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="186"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="191"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="196"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="201"/>
         <source>SMBX file version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="197"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="202"/>
         <source>Which version do you want to save as? (from 0 to 64)
 List of known SMBX versions and format codes:
 %1
@@ -3340,40 +3340,54 @@ version code must be less or equal specific code)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="253"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="280"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="230"/>
+        <source>SMBX-38A file version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="231"/>
+        <source>Which version do you want to save as? (from 64 to 69)
+List of known SMBX-38A versions and format codes:
+%1
+(To allow level file work in specific SMBX-38A version,
+version code must be less or equal specific code)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="290"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="318"/>
         <source>Extension is not set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="254"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="281"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="291"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="319"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="354"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="376"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="500"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="391"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="416"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="542"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="355"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="377"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="501"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="392"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="417"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="543"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="464"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="479"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="504"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="516"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="480"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="517"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
 
@@ -3381,42 +3395,42 @@ Installed LunaLUA partially extends than limits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="530"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="572"/>
         <source>File read error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="531"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="573"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="577"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="578"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="619"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="620"/>
         <source>Loading level data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="622"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="664"/>
         <source>Incorrect custom configs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="623"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="665"/>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="665"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="707"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="667"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="709"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11381,65 +11395,60 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="128"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="118"/>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="129"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="119"/>
         <source>Saving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="132"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="122"/>
         <source>Episode Title: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="133"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="123"/>
         <source>Make custom folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="134"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="124"/>
         <source>Note: Custom folders are not supported for legacy SMBX Engine!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="195"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="191"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="222"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="261"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="290"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="328"/>
         <source>Extension is not set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="223"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="262"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="291"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="329"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="285"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="201"/>
         <source>SMBX file version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="286"/>
-        <source>Which version do you want to save as? (from 0 to 64)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="298"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="306"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="431"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="442"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="307"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="443"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
@@ -11447,60 +11456,85 @@ Installed LunaLUA partially extends than limits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="318"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="336"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="402"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="468"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="492"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="319"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="337"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="202"/>
+        <source>Which version do you want to save as? (from 0 to 64)
+List of known SMBX versions and format codes:
+%1
+(To allow level file work in specific SMBX version,
+version code must be less or equal specific code)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="230"/>
+        <source>SMBX-38A file version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="231"/>
+        <source>Which version do you want to save as? (from 64 to 69)
+List of known SMBX-38A versions and format codes:
+%1
+(To allow level file work in specific SMBX-38A version,
+version code must be less or equal specific code)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="403"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="469"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="493"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="436"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="574"/>
         <source>File read error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="437"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="575"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="477"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="478"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="615"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="616"/>
         <source>Loading World map data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="515"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="653"/>
         <source>Incorrect custom configs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="516"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="654"/>
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="536"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="674"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="538"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="676"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="540"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="678"/>
         <source>World title:</source>
         <translation type="unfinished"></translation>
     </message>

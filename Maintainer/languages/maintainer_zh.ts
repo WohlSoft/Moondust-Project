@@ -421,12 +421,12 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="24"/>
         <source>Make a backup (&quot;pge_maintainer_backup-*&quot; sub-folder will be created)</source>
-        <translation type="unfinished"></translation>
+        <translation>备份（将创建“pge_maintainer_backup-*”子文件夹）</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="54"/>
         <source>Simple</source>
-        <translation type="unfinished"></translation>
+        <translation>简单</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="63"/>
@@ -435,43 +435,45 @@ Supported formats:
 special setup for NPCs will be applied in order to keep their original behaviour.
 
 This option is only works if you convert episode for TheXTech.</source>
-        <translation type="unfinished"></translation>
+        <translation>当转换SMBX 1.3以前版本的地图时，启用特殊NPC设置以还原原始AI。
+
+此选项只对转换到TheXTech地图的情况下生效。</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="69"/>
         <location filename="../EpisodeCvt/episode_converter.ui" line="140"/>
         <source>Apply Pre-1.3 NPC settings for TheXTech</source>
-        <translation type="unfinished"></translation>
+        <translation>为TheXTech执行1.3以前版本的NPC设置</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="82"/>
         <source>Select the engine for which you want to convert the episode:</source>
-        <translation type="unfinished"></translation>
+        <translation>请选择转换地图后的目标引擎：</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="106"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>高级</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="153"/>
         <source>Target format for levels:</source>
-        <translation type="unfinished"></translation>
+        <translation>目标关卡格式：</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="183"/>
         <source>Same as levels</source>
-        <translation type="unfinished"></translation>
+        <translation>与关卡相同</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="238"/>
         <source>Target format for worlds:</source>
-        <translation type="unfinished"></translation>
+        <translation>目标大地图格式：</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="264"/>
         <source>New config pack ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>新配置包编号：</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="284"/>
@@ -483,7 +485,9 @@ This option is only works if you convert episode for TheXTech.</source>
         <source>This wizard will convert / repair level and episode files between different formats.
 
 Important: There are only level and world map files gets being converted. Any including graphics, scripts, configs, music, etc. will not be touched at all.</source>
-        <translation type="unfinished"></translation>
+        <translation>此向导将转换下的关卡和地图文件到不同引擎，或修复其相关文件。
+
+注意事项：此向导只转换大地图文件和关卡文件；关卡或大地图内的自定义素材、脚本、配置、音乐等不受影响。</translation>
     </message>
     <message>
         <source>Target format:</source>
@@ -517,39 +521,39 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="335"/>
         <source>[Select an engine]</source>
-        <translation type="unfinished"></translation>
+        <translation>[请选择地图]</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="678"/>
         <source>&lt;Not an episode nor a set of levels&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;lt;此文件夹不是地图，也不是关卡集&amp;gt;</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="686"/>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="709"/>
         <source>&lt;Many&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;lt;多文件&amp;gt;</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="701"/>
         <source>World map(s) without an episode, format: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>地图中的大地图文件，格式：%1</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="724"/>
         <source>Level(s) without an episode, format: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>地图中的关卡文件，格式：%1</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="881"/>
         <source>Unknown episode</source>
         <comment>Heuristicly detected episode format</comment>
-        <translation type="unfinished"></translation>
+        <translation>未知地图</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="885"/>
         <source>Guessed episode format: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>预测地图格式：%1</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="937"/>
