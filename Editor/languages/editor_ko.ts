@@ -3333,7 +3333,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="121"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="669"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="711"/>
         <source>Level title: </source>
         <translation>레벨 타이틀: </translation>
     </message>
@@ -3343,17 +3343,17 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation>커스텀 폴더 만들기</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="186"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="191"/>
         <source>Save As</source>
         <translation>~로 저장</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="196"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="201"/>
         <source>SMBX file version</source>
         <translation>SMBX 파일 버전</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="197"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="202"/>
         <source>Which version do you want to save as? (from 0 to 64)
 List of known SMBX versions and format codes:
 %1
@@ -3366,41 +3366,55 @@ version code must be less or equal specific code)</source>
 파일 버전은 해당 SMBX 버전 코드보다 작거나 같아야합니다.)</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="253"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="280"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="230"/>
+        <source>SMBX-38A file version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="231"/>
+        <source>Which version do you want to save as? (from 64 to 69)
+List of known SMBX-38A versions and format codes:
+%1
+(To allow level file work in specific SMBX-38A version,
+version code must be less or equal specific code)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="290"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="318"/>
         <source>Extension is not set</source>
         <translation>파일 확장자가 설정되지 않음</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="254"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="281"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="291"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="319"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
         <translation>파일 확장자가 설정되지 않았습니다, 유효한 확장자를 입력해주십시오!</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="354"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="376"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="500"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="391"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="416"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="542"/>
         <source>File save error</source>
         <translation>파일 저장 에러</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="355"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="377"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="501"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="392"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="417"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="543"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>파일을 저장할 수 없음 %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="464"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="479"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="504"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="516"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation>SMBX64 한도가 초과됨</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="480"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="517"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
 
@@ -3411,30 +3425,30 @@ SMBX64 한도를 초과하면 &apos;Subscript out of range&apos;오류와 함께
 LunaLUA를 설치하면 이러한 한도가 부분적으로 확장됩니다.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="530"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="572"/>
         <source>File read error</source>
         <translation>파일 읽기 에러</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="531"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="573"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>파일을 읽을 수 없음 %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="577"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="578"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="619"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="620"/>
         <source>Loading level data</source>
         <translation>레벨 데이터 불러오기</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="622"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="664"/>
         <source>Incorrect custom configs</source>
         <translation>옳지않은 커스텀 configs</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="623"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="665"/>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
@@ -3443,14 +3457,14 @@ LunaLUA를 설치하면 이러한 한도가 부분적으로 확장됩니다.</tr
 %1</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="665"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="707"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;% 1&apos;이 (가) 수정되었습니다.
 변경 사항을 저장 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="667"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="709"/>
         <source> not saved</source>
         <translation> 저장되지 않았습니다</translation>
     </message>
@@ -11528,65 +11542,60 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>제목 없음 % 1</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="128"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="118"/>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
         <translation>&apos;% 1&apos;의 에피소드 제목을 입력하세요!</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="129"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="119"/>
         <source>Saving</source>
         <translation>절약</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="132"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="122"/>
         <source>Episode Title: </source>
         <translation>세계 제목 : </translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="133"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="123"/>
         <source>Make custom folder</source>
         <translation>사용자 지정 폴더 만들기</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="134"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="124"/>
         <source>Note: Custom folders are not supported for legacy SMBX Engine!</source>
         <translation>참고 : 레거시 SMBX 엔진에서는 사용자 지정 폴더가 지원되지 않습니다!</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="195"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="191"/>
         <source>Save As</source>
         <translation>다른 이름으로 저장</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="222"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="261"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="290"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="328"/>
         <source>Extension is not set</source>
         <translation>확장이 설정되지 않았습니다</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="223"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="262"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="291"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="329"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
         <translation>파일 확장자가 정의되지 않았습니다. 파일 확장자를 입력하십시오!</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="285"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="201"/>
         <source>SMBX file version</source>
         <translation>SMBX 파일 버전</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="286"/>
-        <source>Which version do you want to save as? (from 0 to 64)</source>
-        <translation>어떤 버전으로 저장 하시겠습니까? (0에서 64까지)</translation>
-    </message>
-    <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="298"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="306"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="431"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="442"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation>SMBX64 제한이 초과되었습니다</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="307"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="443"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
@@ -11597,44 +11606,73 @@ SMBX64 제한을 초과하면 &apos;오버플로&apos;오류와 함께 SMBX가 �
 LunaLua를 설치하면 이러한 제한을 부분적으로 확장 할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="318"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="336"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="402"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="468"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="492"/>
         <source>File save error</source>
         <translation>파일 저장 오류</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="319"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="337"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="202"/>
+        <source>Which version do you want to save as? (from 0 to 64)
+List of known SMBX versions and format codes:
+%1
+(To allow level file work in specific SMBX version,
+version code must be less or equal specific code)</source>
+        <translation type="unfinished">어떤 버전으로 저장 하시겠습니까? (0부터 64)
+알려진 SMBX 버전 및 형식 코드 목록 :
+%1
+(레벨 파일이 특정 SMBX 버전에서 작동하도록하려면
+파일 버전은 해당 SMBX 버전 코드보다 작거나 같아야합니다.)</translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="230"/>
+        <source>SMBX-38A file version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="231"/>
+        <source>Which version do you want to save as? (from 64 to 69)
+List of known SMBX-38A versions and format codes:
+%1
+(To allow level file work in specific SMBX-38A version,
+version code must be less or equal specific code)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="403"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="469"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="493"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>% 1 파일을 저장할 수 없습니다 :
 % 2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="436"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="574"/>
         <source>File read error</source>
         <translation>파일 읽기 오류</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="437"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="575"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>% 1 파일을 읽을 수 없습니다 :
 % 2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="477"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="478"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="615"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="616"/>
         <source>Loading World map data</source>
         <translation>세계지도 데이터로드</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="515"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="653"/>
         <source>Incorrect custom configs</source>
         <translation>잘못된 사용자 지정 구성</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="516"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="654"/>
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
 
 %1</source>
@@ -11643,19 +11681,19 @@ LunaLua를 설치하면 이러한 제한을 부분적으로 확장 할 수 있�
 %1</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="536"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="674"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;% 1&apos;이 (가) 수정되었습니다.
 변경 사항을 저장 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="538"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="676"/>
         <source> not saved</source>
         <translation> 저장되지 않음</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="540"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="678"/>
         <source>World title:</source>
         <translation>세계 제목 :</translation>
     </message>

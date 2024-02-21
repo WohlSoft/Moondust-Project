@@ -2754,6 +2754,18 @@ Czy chcesz zapisać zmiany?</translation>
         <source>6/%1 Loading Doors...</source>
         <translation>6/%1 Ładowanie drzwi...</translation>
     </message>
+    <message>
+        <source>SMBX-38A file version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Which version do you want to save as? (from 64 to 69)
+List of known SMBX-38A versions and format codes:
+%1
+(To allow level file work in specific SMBX-38A version,
+version code must be less or equal specific code)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LevelItemBox</name>
@@ -9030,10 +9042,6 @@ Bloki muzyczne:		%5
         <translation>Wersja pliku SMBX</translation>
     </message>
     <message>
-        <source>Which version do you want to save as? (from 0 to 64)</source>
-        <translation>Którą wersję zapisać (0-64)</translation>
-    </message>
-    <message>
         <source>The SMBX64 limit has been exceeded</source>
         <translation>Limit SMBX64 został przekroczony</translation>
     </message>
@@ -9096,6 +9104,30 @@ Czy chcesz zapisać zmiany?</translation>
     <message>
         <source>World title:</source>
         <translation>Nazwa epizodu:</translation>
+    </message>
+    <message>
+        <source>Which version do you want to save as? (from 0 to 64)
+List of known SMBX versions and format codes:
+%1
+(To allow level file work in specific SMBX version,
+version code must be less or equal specific code)</source>
+        <translation type="unfinished">Którą wersję chcesz zapisać? (od 0 do 64)
+Lista znanych wersji SMBX i kodow formatu:
+%1
+(Aby poziom mógł działać w wybranej wersji SMBX,
+kod wersji musi być mniejszy lub równy podanemu kodowi)</translation>
+    </message>
+    <message>
+        <source>SMBX-38A file version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Which version do you want to save as? (from 64 to 69)
+List of known SMBX-38A versions and format codes:
+%1
+(To allow level file work in specific SMBX-38A version,
+version code must be less or equal specific code)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
