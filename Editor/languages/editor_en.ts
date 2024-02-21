@@ -2778,6 +2778,22 @@ Do you want to save your changes?</translation>
         <source>6/%1 Loading Doors...</source>
         <translation>6/%1 Loading Doors...</translation>
     </message>
+    <message>
+        <source>SMBX-38A file version</source>
+        <translation>SMBX-38A file version</translation>
+    </message>
+    <message>
+        <source>Which version do you want to save as? (from 64 to 69)
+List of known SMBX-38A versions and format codes:
+%1
+(To allow level file work in specific SMBX-38A version,
+version code must be less or equal specific code)</source>
+        <translation>Which version do you want to save as? (from 0 to 64)
+List of known SMBX-38A versions and format codes:
+%1
+(To allow the level file to work in a specific SMBX-38A version,
+the file version must be less than or equal to that SMBX-38A version code.)</translation>
+    </message>
 </context>
 <context>
     <name>LevelItemBox</name>
@@ -9038,10 +9054,6 @@ Music boxes:	%5
         <translation>SMBX file version</translation>
     </message>
     <message>
-        <source>Which version do you want to save as? (from 0 to 64)</source>
-        <translation>Which version do you want to save as? (from 0 to 64)</translation>
-    </message>
-    <message>
         <source>The SMBX64 limit has been exceeded</source>
         <translation>The SMBX64 limit has been exceded</translation>
     </message>
@@ -9132,6 +9144,34 @@ Installing LunaLua can partially extend these limits.</translation>
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; has been modified.
 Do you want to save your changes?</translation>
+    </message>
+    <message>
+        <source>Which version do you want to save as? (from 0 to 64)
+List of known SMBX versions and format codes:
+%1
+(To allow level file work in specific SMBX version,
+version code must be less or equal specific code)</source>
+        <translation>Which version do you want to save as? (from 0 to 64)
+List of known SMBX versions and format codes:
+%1
+(To allow the level file to work in a specific SMBX version,
+the file version must be less than or equal to that SMBX version code.)</translation>
+    </message>
+    <message>
+        <source>SMBX-38A file version</source>
+        <translation>SMBX-38A file version</translation>
+    </message>
+    <message>
+        <source>Which version do you want to save as? (from 64 to 69)
+List of known SMBX-38A versions and format codes:
+%1
+(To allow level file work in specific SMBX-38A version,
+version code must be less or equal specific code)</source>
+        <translation>Which version do you want to save as? (from 0 to 64)
+List of known SMBX-38A versions and format codes:
+%1
+(To allow the level file to work in a specific SMBX-38A version,
+the file version must be less than or equal to that SMBX-38A version code.)</translation>
     </message>
 </context>
 <context>

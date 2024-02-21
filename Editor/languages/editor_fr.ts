@@ -2754,6 +2754,18 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
         <source>6/%1 Loading Doors...</source>
         <translation>Chargement des portes… (6/%1)</translation>
     </message>
+    <message>
+        <source>SMBX-38A file version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Which version do you want to save as? (from 64 to 69)
+List of known SMBX-38A versions and format codes:
+%1
+(To allow level file work in specific SMBX-38A version,
+version code must be less or equal specific code)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LevelItemBox</name>
@@ -9038,10 +9050,6 @@ Boîtes à musique :	%5
         <translation>Version de fichier SMBX</translation>
     </message>
     <message>
-        <source>Which version do you want to save as? (from 0 to 64)</source>
-        <translation>Sous quelle version souhaitez-vous enregistrer ? (entre 0 et 64)</translation>
-    </message>
-    <message>
         <source>The SMBX64 limit has been exceeded</source>
         <translation>La limite SMBX64 a été dépassée</translation>
     </message>
@@ -9088,6 +9096,30 @@ L&apos;installation de LunaLUA étend partiellement ces limites.</translation>
 Do you want to save your changes?</source>
         <translation>« %1 » a été modifié.
 Souhaitez-vous enregistrer vos modifications ?</translation>
+    </message>
+    <message>
+        <source>Which version do you want to save as? (from 0 to 64)
+List of known SMBX versions and format codes:
+%1
+(To allow level file work in specific SMBX version,
+version code must be less or equal specific code)</source>
+        <translation type="unfinished">Sous quelle version souhaitez-vous enregistrer ? (entre 0 et 64)
+Liste des versions de SMBX connues et codes de format :
+%1
+(Pour autoriser le fichier de niveau à fonctionner dans une version spécifique de SMBX,
+la version du fichier doit être inférieure ou égale à ce code de version SMBX.)</translation>
+    </message>
+    <message>
+        <source>SMBX-38A file version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Which version do you want to save as? (from 64 to 69)
+List of known SMBX-38A versions and format codes:
+%1
+(To allow level file work in specific SMBX-38A version,
+version code must be less or equal specific code)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
