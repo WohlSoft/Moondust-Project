@@ -2788,7 +2788,10 @@ List of known SMBX-38A versions and format codes:
 %1
 (To allow level file work in specific SMBX-38A version,
 version code must be less or equal specific code)</source>
-        <translation type="unfinished"></translation>
+        <translation>你想保存为哪个版本？（范围：64-69）
+下列是已知的SMBX-38A版本和编码格式：
+%1
+（必须低于或等于指定版本号才能从对应版本的SMBX-38A中打开）</translation>
     </message>
 </context>
 <context>
@@ -9146,14 +9149,14 @@ List of known SMBX versions and format codes:
 %1
 (To allow level file work in specific SMBX version,
 version code must be less or equal specific code)</source>
-        <translation type="unfinished">你想保存哪个版本？（范围：0-64）
-下列是已知的 SMBX 版本和编码格式：
+        <translation>你想保存为哪个版本？（范围：0-64）
+下列是已知的SMBX版本和编码格式：
 %1
-（必须小于指定版本号才能从对应版本的 SMBX 中打开）</translation>
+（必须低于或等于指定版本号才能从对应版本的SMBX中打开）</translation>
     </message>
     <message>
         <source>SMBX-38A file version</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX-38A文件版本</translation>
     </message>
     <message>
         <source>Which version do you want to save as? (from 64 to 69)
@@ -9161,7 +9164,10 @@ List of known SMBX-38A versions and format codes:
 %1
 (To allow level file work in specific SMBX-38A version,
 version code must be less or equal specific code)</source>
-        <translation type="unfinished"></translation>
+        <translation>你想保存为哪个版本？（范围：64-69）
+下列是已知的SMBX-38A版本和编码格式：
+%1
+（必须低于或等于指定版本号才能从对应版本的SMBX-38A中打开）</translation>
     </message>
 </context>
 <context>
