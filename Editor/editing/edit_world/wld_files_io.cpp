@@ -100,26 +100,16 @@ bool WorldEdit::newFile(DataConfig &configs, EditingSettings options)
     return true;
 }
 
-namespace wld_file_io
-{
-    static bool isSMBX64limit = false;
-    static bool choiceVersionID = false;
-}
-
 bool WorldEdit::save(bool savOptionsDialog)
 {
     if(m_isUntitled)
         return saveAs(savOptionsDialog);
     else
-    {
-        wld_file_io::choiceVersionID = false;
         return saveFile(curFile);
-    }
 }
 
 bool WorldEdit::saveAs(bool savOptionsDialog)
 {
-    using namespace wld_file_io;
     bool makeCustomFolder = false;
 
     if(savOptionsDialog)
@@ -153,10 +143,13 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
     }
 
     bool isNotDone = true;
+    bool isSMBX64limit = false;
     QString fileName = (m_isUntitled) ? GlobalSettings::savePath + QString("/") +
                        (WldData.EpisodeTitle.isEmpty() ? curFile : util::filePath(WldData.EpisodeTitle)) : curFile;
     QString fileSMBX64 = "SMBX64 (1.3) World map file (*.wld)";
-    QString fileSMBXany = "SMBX0...64 Level file [choose version] (*.wld)";
+    QString fileSMBXany = "SMBX0...64 World map file [choose version] (*.wld)";
+    QString fileSMBX38A = "SMBX-38a world map file (*.wld)";
+    QString fileSMBX38Aany = "SMBX-38a world map file [choose version] (*.wld)";
     QString filePGEX = "Extended World map file (*.wldx)";
     QString selectedFilter;
 
@@ -175,19 +168,22 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
         break;
 
     case LevelData::SMBX38A:
-        // selectedFilter = fileSMBX38A;
-        selectedFilter = filePGEX;//TODO: Put 38A target once PGE-FL gets support for SMBX-38A
+        if(WldData.meta.RecentFormatVersion >= 69)
+            selectedFilter = fileSMBX38A;
+        else
+            selectedFilter = fileSMBX38Aany;
         break;
     }
 
     QString filter =
         fileSMBX64 + ";;" +
         fileSMBXany + ";;" +
+        fileSMBX38A + ";;" +
+        fileSMBX38Aany + ";;" +
         filePGEX;
     bool ret;
 RetrySave:
     isSMBX64limit = false;
-    choiceVersionID = false;
     isNotDone = true;
 
     while(isNotDone)
@@ -198,9 +194,79 @@ RetrySave:
             return false;
 
         if(selectedFilter == fileSMBXany)
-            choiceVersionID = true;
+        {
+            unsigned int file_format = WldData.meta.RecentFormatVersion;
+            bool ok = true;
+            file_format = static_cast<unsigned int>(
+                QInputDialog::getInt(this, tr("SMBX file version"),
+                    tr("Which version do you want to save as? (from 0 to 64)\n"
+                    "List of known SMBX versions and format codes:\n%1\n"
+                    "(To allow level file work in specific SMBX version,\n"
+                    "version code must be less or equal specific code)"
+                    ).arg(" 1 - SMBX 1.0.0\n"
+                    " 2 - SMBX 1.0.2\n"
+                    "18 - SMBX 1.1.1\n"
+                    "20 - SMBX 1.1.2\n"
+                    "28 - SMBX 1.2.0 Beta 3\n"
+                    "51 - SMBX 1.2.1\n"
+                    "58 - SMBX 1.2.2\n"
+                    "59 - SMBX 1.2.2 (with some patch)\n"
+                    "64 - SMBX 1.3\n"),
+                    static_cast<int>(WldData.meta.RecentFormatVersion),
+                    0, 64, 1, &ok
+                )
+            );
 
-        if((selectedFilter == fileSMBXany) || (selectedFilter == fileSMBX64))
+            if(!ok)
+                return false;
+
+            WldData.meta.RecentFormatVersion = file_format;
+        }
+        else if(selectedFilter == fileSMBX38Aany)
+        {
+            unsigned int file_format = WldData.meta.RecentFormatVersion;
+            bool ok = true;
+            file_format = static_cast<unsigned int>(
+            QInputDialog::getInt(this, tr("SMBX-38A file version"),
+                                 tr("Which version do you want to save as? (from 64 to 69)\n"
+                                    "List of known SMBX-38A versions and format codes:\n%1\n"
+                                    "(To allow level file work in specific SMBX-38A version,\n"
+                                    "version code must be less or equal specific code)"
+                                    ).arg("64 - SMBX-38A 1.4.0\n"
+                                          "65 - SMBX-38A 1.4.1\n"
+                                          "66 - SMBX-38A 1.4.2\n"
+                                          "67 - SMBX-38A 1.4.3\n"
+                                          "68 - SMBX-38A 1.4.4\n"
+                                          "69 - SMBX-38A 1.4.5\n"),
+                                 static_cast<int>(WldData.meta.RecentFormatVersion),
+                                 64, 69, 1, &ok
+                                 )
+            );
+
+            if(!ok)
+                return false;
+
+            WldData.meta.RecentFormatVersion = file_format;
+        }
+        else if(selectedFilter == fileSMBX38A)
+            WldData.meta.RecentFormatVersion = FileFormats::c_latest_version_smbx38a;
+        else
+            WldData.meta.RecentFormatVersion = FileFormats::c_latest_version_smbx64;
+
+        if(selectedFilter == filePGEX)
+            WldData.meta.RecentFormat = WorldData::PGEX;
+        else if((selectedFilter == fileSMBX64) || (selectedFilter == fileSMBXany))
+            WldData.meta.RecentFormat = WorldData::SMBX64;
+        else if((selectedFilter == fileSMBX38A || selectedFilter == fileSMBX38Aany))
+        {
+            QMessageBox::information(this, "====THIS FILE FORMAT IS EXPERIMENTAL====",
+                                     "Saving into SMBX-38A world map file format is experimental!\n"
+                                     "Some values are may be lost or distorted. Please also save same file into another file format until reload or close it!");
+            WldData.meta.RecentFormat = WorldData::SMBX38A;
+        }
+
+        if((selectedFilter == fileSMBXany) || (selectedFilter == fileSMBX64) ||
+           (selectedFilter == fileSMBX38Aany) || (selectedFilter == fileSMBX38A))
         {
             if(fileName.endsWith(".wldx", Qt::CaseInsensitive))
                 fileName.remove(fileName.size() - 1, 1);
@@ -217,19 +283,22 @@ RetrySave:
                 fileName.append(".wldx");
         }
 
-        if((!fileName.endsWith(".wld", Qt::CaseInsensitive)) && (!fileName.endsWith(".wldx", Qt::CaseInsensitive)))
+        if((!fileName.endsWith(".wld", Qt::CaseInsensitive)) &&
+           (!fileName.endsWith(".wldx", Qt::CaseInsensitive)))
         {
-            QMessageBox::warning(this, tr("Extension is not set"),
-                                 tr("File Extension isn't defined, please enter file extension!"), QMessageBox::Ok);
+            QMessageBox::warning(this,
+                                 tr("Extension is not set"),
+                                 tr("File Extension isn't defined, please enter file extension!"),
+                                 QMessageBox::Ok);
             continue;
         }
 
         if(makeCustomFolder)
         {
             QFileInfo finfo(fileName);
-            finfo.absoluteDir().mkpath(finfo.absoluteDir().absolutePath() +
-                                       "/" + util::getBaseFilename(finfo.fileName())
-                                      );
+            QString newPath = finfo.absoluteDir().absolutePath() + "/" +
+                              util::getBaseFilename(finfo.fileName());
+            finfo.absoluteDir().mkpath(newPath);
         }
 
         isNotDone = false;
@@ -252,10 +321,8 @@ RetrySave:
     */
 }
 
-bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
+bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent, bool *out_WarningIsAborted)
 {
-    using namespace wld_file_io;
-
     if((!fileName.endsWith(".wld", Qt::CaseInsensitive)) && (!fileName.endsWith(".wldx", Qt::CaseInsensitive)))
     {
         QMessageBox::warning(this, tr("Extension is not set"),
@@ -263,90 +330,46 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
         return false;
     }
 
-    WldData.meta.configPackId = getMainWindow()->configs.configPackId;
-
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    FileKeeper fileKeeper = FileKeeper(fileName);
-
+    WldData.meta.configPackId = getMainWindow()->configs.configPackId;
     FileFormats::WorldPrepare(WldData); // Sort all data arrays
 
-    // ////////////////////// Write SMBX64 WLD //////////////////////////////
-    if(fileName.endsWith(".wld", Qt::CaseInsensitive))
+    // ============== Write Extended WLD file (WLDX) ==================
+    if(WldData.meta.RecentFormat == LevelData::PGEX)
     {
-        //SMBX64 Standard check
-        isSMBX64limit = false;
-        int file_format = 64;
-
-        if(choiceVersionID)
-        {
-            QApplication::restoreOverrideCursor();
-            bool ok = true;
-            file_format = QInputDialog::getInt(this, tr("SMBX file version"),
-                                               tr("Which version do you want to save as? (from 0 to 64)"), 64, 0, 64, 1, &ok);
-
-            if(!ok) return false;
-
-            QApplication::setOverrideCursor(Qt::WaitCursor);
-        }
-
-        int ErrorCode = FileFormats::smbx64WorldCheckLimits(WldData);
-
-        if(ErrorCode != FileFormats::SMBX64_FINE)
-        {
-            QMessageBox::warning(this,
-                                 tr("The SMBX64 limit has been exceeded"),
-                                 smbx64ErrMsgs(WldData, ErrorCode),
-                                 QMessageBox::Ok);
-            isSMBX64limit = true;
-        }
-
-        if(isSMBX64limit)
-        {
-            if(QMessageBox::question(this, tr("The SMBX64 limit has been exceeded"),
-                                     tr("Do you want to save file anyway?\nExciting of SMBX64 limits may crash SMBX with 'overflow' error.\n\nInstalled LunaLUA partially extends than limits."), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
-            {
-                QApplication::restoreOverrideCursor();
-                return false;
-            }
-            else
-                isSMBX64limit = false;
-        }
-
-        if(!FileFormats::SaveWorldFile(WldData, fileKeeper.tempPath(), FileFormats::WLD_SMBX64, static_cast<unsigned int>(file_format)))
-        {
-            QMessageBox::warning(this, tr("File save error"),
-                                 tr("Cannot save file %1:\n%2.")
-                                 .arg(fileName)
-                                 .arg(WldData.meta.ERROR_info));
+        if(!savePGEXWLD(fileName, false))
             return false;
-        }
+
+        WldData.meta.smbx64strict = false; //Disable strict mode
+    }
+    // ======================= Write SMBX64 WLD =======================
+    else if(WldData.meta.RecentFormat == LevelData::SMBX64)
+    {
+        if(!saveSMBX64WLD(fileName, false, out_WarningIsAborted))
+            return false;
 
         WldData.meta.smbx64strict = true; //Enable SMBX64 standard strict mode
-        GlobalSettings::savePath = QFileInfo(fileName).path();
     }
-    // //////////////////////////////////////////////////////////////////////
-    // ////////////////// Write Extended WLD file (WLDX)/////////////////////
-    else if(fileName.endsWith(".wldx", Qt::CaseInsensitive))
+    // ====================== Write SMBX-38A WLD ======================
+    else if(WldData.meta.RecentFormat == LevelData::SMBX38A)
     {
-        WldData.meta.smbx64strict = false; //Disable strict mode
-
-        if(!FileFormats::SaveWorldFile(WldData, fileKeeper.tempPath(), FileFormats::WLD_PGEX))
-        {
-            QMessageBox::warning(this, tr("File save error"),
-                                 tr("Cannot save file %1:\n%2.")
-                                 .arg(fileName)
-                                 .arg(WldData.meta.ERROR_info));
+        if(!saveSMBX38aWLD(fileName, false))
             return false;
-        }
 
-        GlobalSettings::savePath = QFileInfo(fileName).path();
+        WldData.meta.smbx64strict = false; //Disable strict mode
     }
 
-    // Swap old file with new
-    fileKeeper.restore();
-
-    // //////////////////////////////////////////////////////////////////////
+    QFileInfo finfo(fileName);
+    GlobalSettings::savePath = finfo.path();
+    LogDebug(QString("-------------------------------\n"
+                     "Saving file name: %1").arg(fileName));
+    LogDebug(QString("-------------------------------\n"
+                     "Saving path: %1").arg(finfo.path()));
+    LogDebug(QString("-------------------------------\n"
+                     "Saving filename computed: %1").arg(finfo.fileName()));
+    WldData.meta.path = finfo.path();
+    WldData.meta.filename = util::getBaseFilename(finfo.fileName());
     QApplication::restoreOverrideCursor();
     setCurrentFile(fileName);
     WldData.meta.modified = false;
@@ -360,6 +383,121 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
         // Delete the autosave file as real file was been saved
         clearAutoSave();
     }
+
+    //Refresh Strict SMBX64 flag
+    emit m_mw->setSMBX64Strict(WldData.meta.smbx64strict);
+
+    return true;
+}
+
+bool WorldEdit::savePGEXWLD(QString fileName, bool silent)
+{
+    FileKeeper fileKeeper = FileKeeper(fileName);
+
+    WldData.meta.smbx64strict = false; // Disable strict mode
+
+    if(!FileFormats::SaveWorldFile(WldData, fileKeeper.tempPath(), FileFormats::WLD_PGEX))
+    {
+        if(!silent)
+            QMessageBox::warning(this, tr("File save error"),
+                                 tr("Cannot save file %1:\n%2.")
+                                     .arg(fileName)
+                                     .arg(WldData.meta.ERROR_info));
+        return false;
+    }
+
+    // Swap old file with new
+    fileKeeper.restore();
+
+    return true;
+}
+
+bool WorldEdit::saveSMBX64WLD(QString fileName, bool silent, bool *out_WarningIsAborted)
+{
+    FileKeeper fileKeeper = FileKeeper(fileName);
+
+    //SMBX64 Standard check
+    bool isSMBX64limit = false;
+
+    if(out_WarningIsAborted)
+        *out_WarningIsAborted = false;
+
+    int ErrorCode = FileFormats::smbx64WorldCheckLimits(WldData);
+
+    if(ErrorCode != FileFormats::SMBX64_FINE)
+    {
+        if(!silent)
+            QMessageBox::warning(this,
+                                 tr("The SMBX64 limit has been exceeded"),
+                                 smbx64ErrMsgs(WldData, ErrorCode),
+                                 QMessageBox::Ok);
+        isSMBX64limit = true;
+    }
+
+    if(isSMBX64limit && !silent)
+    {
+        QApplication::restoreOverrideCursor();
+
+        if(QMessageBox::question(this,
+                                  tr("The SMBX64 limit has been exceeded"),
+                                  tr("Do you want to save file anyway?\n"
+                                     "Exciting of SMBX64 limits may crash SMBX with 'overflow' error.\n"
+                                     "\n"
+                                     "Installed LunaLUA partially extends than limits."),
+                                  QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+        {
+            if(out_WarningIsAborted)
+                *out_WarningIsAborted = isSMBX64limit;
+
+            return false;
+        }
+        else
+            isSMBX64limit = false;
+
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+    }
+
+    if(!FileFormats::SaveWorldFile(WldData,
+                                   fileKeeper.tempPath(),
+                                   FileFormats::WLD_SMBX64,
+                                   WldData.meta.RecentFormatVersion))
+    {
+        QApplication::restoreOverrideCursor();
+
+        if(!silent)
+            QMessageBox::warning(this, tr("File save error"),
+                                 tr("Cannot save file %1:\n%2.")
+                                     .arg(fileName)
+                                     .arg(WldData.meta.ERROR_info));
+        return false;
+    }
+
+    // Swap old file with new
+    fileKeeper.restore();
+
+    QApplication::restoreOverrideCursor();
+    return true;
+}
+
+bool WorldEdit::saveSMBX38aWLD(QString fileName, bool silent)
+{
+    FileKeeper fileKeeper = FileKeeper(fileName);
+
+    if(!FileFormats::SaveWorldFile(WldData,
+                                   fileKeeper.tempPath(),
+                                   FileFormats::WLD_SMBX38A,
+                                   WldData.meta.RecentFormatVersion))
+    {
+        if(!silent)
+            QMessageBox::warning(this, tr("File save error"),
+                                 tr("Cannot save file %1:\n%2.")
+                                     .arg(fileName)
+                                     .arg(WldData.meta.ERROR_info));
+        return false;
+    }
+
+    // Swap old file with new
+    fileKeeper.restore();
 
     return true;
 }

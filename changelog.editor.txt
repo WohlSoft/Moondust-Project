@@ -48,6 +48,7 @@ beta2
 - Added the list filter into the file select dialogue
 - Added the sound and music preview for the music/sound file select dialogue
 - Added an ability to open an intro level from the world map directly
+- World maps saving into the SMBX-38A format now works
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings
