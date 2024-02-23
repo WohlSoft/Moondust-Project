@@ -139,8 +139,12 @@ void ItemMsgBox::updateDialogueSize(bool showPreview)
     QRect self = this->geometry();
     QRect selfL = ui->dialogueLayout->geometry();
 
+    QString buttonText = tr("Preview", "The text on the switch button");
+
     if(showPreview)
     {
+        ui->previewShow->setText(QString("%1 <<").arg(buttonText));
+
         ui->previewArea->setVisible(showPreview);
         qApp->processEvents(QEventLoop::ExcludeUserInputEvents|QEventLoop::ExcludeSocketNotifiers);
         QSize area = ui->previewArea->size();
@@ -151,6 +155,8 @@ void ItemMsgBox::updateDialogueSize(bool showPreview)
     }
     else
     {
+        ui->previewShow->setText(QString("%1 >>").arg(buttonText));
+
         QSize area = ui->previewArea->size();
         ui->previewArea->setVisible(showPreview);
         this->update();

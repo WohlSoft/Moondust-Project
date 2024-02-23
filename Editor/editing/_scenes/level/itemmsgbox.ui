@@ -34,9 +34,7 @@
    <item row="5" column="0" colspan="2">
     <widget class="QPlainTextEdit" name="msgTextBox">
      <property name="whatsThis">
-      <string>This is a message, what will be displayed if player will do talk with this NPC or will be requested by the event.
-
-Note: All quotes and new-line characters will be removed.</string>
+      <string>This is a text of the message that will be shown when the player tries to talk to the NPC, or when an event with a non-empty message text is triggered.</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::WinPanel</enum>
@@ -223,7 +221,7 @@ depending on which playable character is used.</string>
       <string>Show/Hide the message box preview area</string>
      </property>
      <property name="text">
-      <string>Preview &gt;&gt;</string>
+      <string notr="true">Preview [text in the code]</string>
      </property>
      <property name="checkable">
       <bool>true</bool>
