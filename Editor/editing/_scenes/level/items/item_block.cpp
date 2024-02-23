@@ -329,7 +329,7 @@ typeEventAgain:
             if(ok)
             {
                 ItemMsgBox msgBox(Opened_By::BLOCK, "", false,
-                                  tr("Please enter the message which will be shown.\n(Max line length is 27 characters)"),
+                                  tr("Please enter the message text that which will be shown:"),
                                   tr("Hit message text"), m_scene->m_subWindow);
 
                 util::DialogToCenter(&msgBox, true);

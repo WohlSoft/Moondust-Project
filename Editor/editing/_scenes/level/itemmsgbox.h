@@ -45,9 +45,14 @@ public:
 
 private slots:
     void on_buttonBox_accepted();
+    void updateDialogueSize(bool showPreview);
+    void updateEngineDesc();
 
 private:
     Ui::ItemMsgBox *ui;
+
+    void loadSetup();
+    void saveSetup();
 };
 
 #endif // ITEMMSGBOX_H

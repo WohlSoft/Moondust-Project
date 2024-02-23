@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>678</width>
-    <height>378</height>
+    <width>600</width>
+    <height>446</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -23,28 +23,15 @@
    <iconset resource="../../../_resources/toolbar/toolbar.qrc">
     <normaloff>:/toolbar/dock/coin.png</normaloff>:/toolbar/dock/coin.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="NotesLabel">
-     <property name="whatsThis">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
+  <layout class="QGridLayout" name="dialogueLayout">
+   <item row="4" column="0" colspan="2">
+    <widget class="QCheckBox" name="checkFriendly">
      <property name="text">
-      <string>Enter the NPC's dialogue message text:</string>
+      <string>Friendly (Non-friendly NPCs can't be talked to)</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QToolButton" name="previewShow">
-     <property name="text">
-      <string>Preview &gt;&gt;</string>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="2">
+   <item row="5" column="0" colspan="2">
     <widget class="QPlainTextEdit" name="msgTextBox">
      <property name="whatsThis">
       <string>This is a message, what will be displayed if player will do talk with this NPC or will be requested by the event.
@@ -67,22 +54,21 @@ Note: All quotes and new-line characters will be removed.</string>
       <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
      <property name="undoRedoEnabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="plainText">
       <string notr="true">XxXxXxXxXxXxXxXxXxXxXxXxXxYYYYYYYYYYYYYYYYYYYYYYYYYYZZZZZZZZZZZZZZZZZZZZZZZZZZ</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QCheckBox" name="checkFriendly">
-     <property name="text">
-      <string>Friendly (Non-friendly NPCs can't be talked to)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2" rowspan="4">
+   <item row="0" column="2" rowspan="6">
     <widget class="QFrame" name="previewArea">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -96,20 +82,155 @@ Note: All quotes and new-line characters will be removed.</string>
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
+      <item row="1" column="0">
+       <widget class="QFrame" name="previewFrameBox">
+        <property name="frameShape">
+         <enum>QFrame::WinPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Sunken</enum>
+        </property>
+        <property name="lineWidth">
+         <number>3</number>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="MsgBoxPreview" name="previewBox" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>144</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
       <item row="0" column="0">
-       <widget class="MsgBoxPreview" name="previewBox" native="true">
+       <widget class="QGroupBox" name="groupBox">
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>144</height>
+          <height>63</height>
          </size>
         </property>
+        <property name="title">
+         <string>Preview settings</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,0">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Font size:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QSpinBox" name="previewFont">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string>Defines the size of the font in this preview.
+
+This field does NOT affects the result shown in the game itself,
+it's only used for the preview convenience in this dialogue.</string>
+           </property>
+           <property name="maximum">
+            <number>10000</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QGroupBox" name="previewMacrosGroup">
+        <property name="toolTip">
+         <string>Preprocessor is the sepecial feature of TheXTech engine since the version 1.3.6.1 which allows
+you to make the message box being different depending on various factors, for example,
+depending on which playable character is used.</string>
+        </property>
+        <property name="title">
+         <string>Preprocessor</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="1">
+          <widget class="QSpinBox" name="previewMacroPlayer">
+           <property name="maximum">
+            <number>255</number>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="previewMacroPlayerLabel">
+           <property name="text">
+            <string>Player number:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="previewMacroStateLabel">
+           <property name="text">
+            <string>State number</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="previewMacroState">
+           <property name="maximum">
+            <number>255</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
-   <item row="4" column="0" colspan="2">
+   <item row="0" column="1">
+    <widget class="QToolButton" name="previewShow">
+     <property name="toolTip">
+      <string>Show/Hide the message box preview area</string>
+     </property>
+     <property name="text">
+      <string>Preview &gt;&gt;</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -117,6 +238,108 @@ Note: All quotes and new-line characters will be removed.</string>
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="NotesLabel">
+     <property name="whatsThis">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>Enter the NPC's dialogue message text:</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::PlainText</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QFrame" name="frame">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>37</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Target engine:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="previewEngine">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>This field allows you to preview the message box like it shown in different engines
+that has different behaviour of the message box displaying:
+
+- The SMBX 1.3 / X2 doesn't support line break characters at all. Characters of line break
+gets printed as spaces. Additionally, SMBX 1.3 does NOT support non-ASCII characters
+that gets printed as spaces. Too long words never gets broken and they gets printed
+out of the dialogue box area.
+
+- The Moondust / TheXTech has a full support for line breaks as well as unicode
+characters. Too long words gets broken and they will never go out of the dialogue
+box area.</string>
+        </property>
+        <item>
+         <property name="text">
+          <string notr="true">SMBX 1.3 / X2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">Moondust / TheXTech</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QLabel" name="engineDesc">
+        <property name="text">
+         <string notr="true">&amp;lt;explanations in the code, not here!&amp;gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::RichText</enum>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
@@ -162,22 +385,6 @@ Note: All quotes and new-line characters will be removed.</string>
     <hint type="destinationlabel">
      <x>286</x>
      <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>previewShow</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>previewArea</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>404</x>
-     <y>15</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>439</x>
-     <y>27</y>
     </hint>
    </hints>
   </connection>
