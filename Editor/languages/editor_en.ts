@@ -1660,12 +1660,6 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation>Please enter the name of event:</translation>
     </message>
     <message>
-        <source>Please enter the message which will be shown.
-(Max line length is 27 characters)</source>
-        <translation>Please enter the message which will be shown.
-(Max line length is 27 characters)</translation>
-    </message>
-    <message>
         <source>Hit message text</source>
         <translation>Hit message text</translation>
     </message>
@@ -1716,6 +1710,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Array-ID: %1</source>
         <translation>Array-ID: %1</translation>
+    </message>
+    <message>
+        <source>Please enter the message text that which will be shown:</source>
+        <translation>Please enter the message text that which will be shown:</translation>
     </message>
 </context>
 <context>
@@ -1964,14 +1962,131 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the message which will be displayed if the player talks with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>Enter the NPC&apos;s dialog message:
-(Max length per line is 27 characters)</source>
-        <translation>Enter the NPC&apos;s dialog message:
-(Max length per line is 27 characters)</translation>
-    </message>
-    <message>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
         <translation>Friendly (Non-friendly NPCs can&apos;t be talked to)</translation>
+    </message>
+    <message>
+        <source>Preview settings</source>
+        <translation>Preview settings</translation>
+    </message>
+    <message>
+        <source>Font size:</source>
+        <translation>Font size:</translation>
+    </message>
+    <message>
+        <source>Defines the size of the font in this preview.
+
+This field does NOT affects the result shown in the game itself,
+it&apos;s only used for the preview convenience in this dialogue.</source>
+        <translation>Defines the size of the font in this preview.
+
+This field does NOT affects the result shown in the game itself,
+it&apos;s only used for the preview convenience in this dialogue.</translation>
+    </message>
+    <message>
+        <source>Preprocessor is the sepecial feature of TheXTech engine since the version 1.3.6.1 which allows
+you to make the message box being different depending on various factors, for example,
+depending on which playable character is used.</source>
+        <translation>Preprocessor is the sepecial feature of TheXTech engine since the version 1.3.6.1 which allows
+you to make the message box being different depending on various factors, for example,
+depending on which playable character is used.</translation>
+    </message>
+    <message>
+        <source>Preprocessor</source>
+        <translation>Preprocessor</translation>
+    </message>
+    <message>
+        <source>Player number:</source>
+        <translation>Player number:</translation>
+    </message>
+    <message>
+        <source>State number</source>
+        <translation>State number</translation>
+    </message>
+    <message>
+        <source>Show/Hide the message box preview area</source>
+        <translation>Show/Hide the message box preview area</translation>
+    </message>
+    <message>
+        <source>Enter the NPC&apos;s dialogue message text:</source>
+        <translation>Enter the NPC&apos;s dialogue message text:</translation>
+    </message>
+    <message>
+        <source>Target engine:</source>
+        <translation>Target engine:</translation>
+    </message>
+    <message>
+        <source>This field allows you to preview the message box like it shown in different engines
+that has different behaviour of the message box displaying:
+
+- The SMBX 1.3 / X2 doesn&apos;t support line break characters at all. Characters of line break
+gets printed as spaces. Additionally, SMBX 1.3 does NOT support non-ASCII characters
+that gets printed as spaces. Too long words never gets broken and they gets printed
+out of the dialogue box area.
+
+- The Moondust / TheXTech has a full support for line breaks as well as unicode
+characters. Too long words gets broken and they will never go out of the dialogue
+box area.</source>
+        <translation>This field allows you to preview the message box like it shown in different engines
+that has different behaviour of the message box displaying:
+
+- The SMBX 1.3 / X2 doesn&apos;t support line break characters at all. Characters of line break
+gets printed as spaces. Additionally, SMBX 1.3 does NOT support non-ASCII characters
+that gets printed as spaces. Too long words never gets broken and they gets printed
+out of the dialogue box area.
+
+- The Moondust / TheXTech has a full support for line breaks as well as unicode
+characters. Too long words gets broken and they will never go out of the dialogue
+box area.</translation>
+    </message>
+    <message>
+        <source>The basic message box of &lt;b&gt;SMBX 1.3 / X2&lt;/b&gt; has the next restrictions:
+&lt;ul&gt;
+  &lt;li&gt;New line &lt;b&gt;CAN NOT be done via the &quot;Return&quot;/&quot;Enter&quot; key&lt;/b&gt;&lt;br/&gt;
+(you should use spaces as a workaround).&lt;li&gt;
+  &lt;li&gt;Line breaks happen automatically after &lt;b&gt;27 characters&lt;/b&gt;.&lt;/li&gt;
+  &lt;li&gt;Very long words doesn&apos;t breaks and gets printed out of screen.&lt;br/&gt;
+So, please break these words to avoid this.&lt;/li&gt;
+  &lt;li&gt;You can&apos;t use any Unicode characters: &lt;b&gt;ASCII only&lt;/b&gt; works.&lt;/li&gt;
+&lt;/ul&gt;</source>
+        <comment>Message box behaviour explanation</comment>
+        <translation>The basic message box of &lt;b&gt;SMBX 1.3 / X2&lt;/b&gt; has the next restrictions:
+&lt;ul&gt;
+  &lt;li&gt;New line &lt;b&gt;CAN NOT be done via the &quot;Return&quot;/&quot;Enter&quot; key&lt;/b&gt;&lt;br/&gt;
+(you should use spaces as a workaround).&lt;li&gt;
+  &lt;li&gt;Line breaks happen automatically after &lt;b&gt;27 characters&lt;/b&gt;.&lt;/li&gt;
+  &lt;li&gt;Very long words doesn&apos;t breaks and gets printed out of screen.&lt;br/&gt;
+So, please break these words to avoid this.&lt;/li&gt;
+  &lt;li&gt;You can&apos;t use any Unicode characters: &lt;b&gt;ASCII only&lt;/b&gt; works.&lt;/li&gt;
+&lt;/ul&gt;</translation>
+    </message>
+    <message>
+        <source>The message box of &lt;b&gt;Moondust / TheXTech&lt;/b&gt; has the next restrictions:
+&lt;ul&gt;
+  &lt;li&gt;New line &lt;b&gt;CAN be done by &quot;Return&quot;/&quot;Enter&quot; key&lt;/b&gt; easily.&lt;/li&gt;
+  &lt;li&gt;Line breaks also happen automatically after &lt;b&gt;27 characters&lt;/b&gt;.&lt;/li&gt;
+  &lt;li&gt;Very long words gets broken forcibly.&lt;/li&gt;
+  &lt;li&gt;You can use &lt;b&gt;any Unicode&lt;/b&gt; characters.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Preprocessor&apos;s macros&lt;/b&gt; can be used.&lt;/li&gt;
+&lt;/ul&gt;</source>
+        <comment>Message box behaviour explanation</comment>
+        <translation>The message box of &lt;b&gt;Moondust / TheXTech&lt;/b&gt; has the next restrictions:
+&lt;ul&gt;
+  &lt;li&gt;New line &lt;b&gt;CAN be done by &quot;Return&quot;/&quot;Enter&quot; key&lt;/b&gt; easily.&lt;/li&gt;
+  &lt;li&gt;Line breaks also happen automatically after &lt;b&gt;27 characters&lt;/b&gt;.&lt;/li&gt;
+  &lt;li&gt;Very long words gets broken forcibly.&lt;/li&gt;
+  &lt;li&gt;You can use &lt;b&gt;any Unicode&lt;/b&gt; characters.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Preprocessor&apos;s macros&lt;/b&gt; can be used.&lt;/li&gt;
+&lt;/ul&gt;</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <comment>The text on the switch button</comment>
+        <translation>Preview</translation>
+    </message>
+    <message>
+        <source>This is a text of the message that will be shown when the player tries to talk to the NPC, or when an event with a non-empty message text is triggered.</source>
+        <translation>This is a text of the message that will be shown when the player tries to talk to the NPC, or when an event with a non-empty message text is triggered.</translation>
     </message>
 </context>
 <context>
@@ -3545,12 +3660,6 @@ Do you want to continue?</translation>
         <translation>Please switch current section to %1 to capture data for this event</translation>
     </message>
     <message>
-        <source>Please, enter message
-(Max line length is 27 characters)</source>
-        <translation>Please enter message
-(Max line length is 27 characters)</translation>
-    </message>
-    <message>
         <source>Autoscroll section (Legacy)</source>
         <translation>Autoscroll section (Legacy)</translation>
     </message>
@@ -3585,6 +3694,10 @@ Do you want to continue?</translation>
     <message>
         <source>Disabled by the strict SMBX64 mode</source>
         <translation>Disabled by the strict SMBX64 mode</translation>
+    </message>
+    <message>
+        <source>Please, enter the message box text:</source>
+        <translation>Please, enter the message box text:</translation>
     </message>
 </context>
 <context>

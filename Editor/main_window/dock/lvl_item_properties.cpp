@@ -1992,7 +1992,7 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
         }
     }
 
-    ItemMsgBox *msgBox = new ItemMsgBox(Opened_By::NPC, message, friendly, "", "", this);
+    ItemMsgBox *msgBox = new ItemMsgBox(Opened_By::NPC, message, friendly, QString(), QString(), this);
     util::DialogToCenter(msgBox, true);
 
     if(msgBox->exec() == QDialog::Accepted)

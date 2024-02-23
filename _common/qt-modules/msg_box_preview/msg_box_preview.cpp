@@ -37,6 +37,7 @@ QString MsgBoxPreview::runPreProcessor()
     const std::string cond_else = "#else";
 
     std::regex reg_op_player = std::regex("^player\\((.*)\\)$");
+    std::regex reg_op_state = std::regex("^state\\((.*)\\)$");
 
     struct State
     {
@@ -76,6 +77,23 @@ QString MsgBoxPreview::runPreProcessor()
                 for(auto &i : nums)
                 {
                     if(std::atoi(i.c_str()) == m_macro.player)
+                    {
+                        st.cond_true = true;
+                        st.skip_to_endif = true;
+                        break;
+                    }
+                }
+            }
+            else if(std::regex_search(cond, m_op_player, reg_op_state)) // check whaever state
+            {
+                st.open = true;
+                std::string players = m_op_player[1].str();
+                std::vector<std::string> nums;
+                s_splitString(nums, players, ',');
+
+                for(auto &i : nums)
+                {
+                    if(std::atoi(i.c_str()) == m_macro.state)
                     {
                         st.cond_true = true;
                         st.skip_to_endif = true;
@@ -151,6 +169,7 @@ void MsgBoxPreview::setFontSize(int size)
     QFontMetrics meter(m_font);
     m_letter_w = int(double(meter.maxWidth()) * 1.1);
     m_letter_h = int(double(meter.height()) * 1.5);
+    updateGeometry();
     update();
 }
 
@@ -201,19 +220,22 @@ void MsgBoxPreview::paintEvent(QPaintEvent *e)
     if(m_shownLines.isEmpty())
         return; // Don't draw anything when field is empty
 
-    int boxY = 10;
+    const int boxYtop = 10;
+    int boxY = boxYtop;
     int boxX = 10;
-    int paddingL = m_letter_w / 2;
-    int paddingR = m_letter_w / 2;
-    int paddingT = m_letter_h / 4;
-    int paddingB = m_letter_h / 4;
-    int boxW = paddingL + (27 * m_letter_w) + paddingR;
+    const int paddingL = m_letter_w / 2;
+    const int paddingR = m_letter_w / 2;
+    const int paddingT = m_letter_h / 4;
+    const int paddingB = m_letter_h / 4;
+    const int boxW = paddingL + (27 * m_letter_w) + paddingR;
+    int boxH = 0;
 
     boxX = (rect().width() / 2) - (boxW / 2);
 
     p.fillRect(boxX, boxY, boxW, paddingT, Qt::darkBlue);
 
     boxY += paddingT;
+    boxH += paddingT  + paddingB - 2;
 
     p.setFont(m_font);
     p.setBrush(Qt::white);
@@ -229,9 +251,13 @@ void MsgBoxPreview::paintEvent(QPaintEvent *e)
             printLine(p, boxX + paddingL, boxY, tempText);
 
         boxY += m_letter_h;
+        boxH += m_letter_h;
     }
 
     p.fillRect(boxX, boxY, boxW, paddingB, Qt::darkBlue);
+    p.setPen(QPen(Qt::white, 2));
+    p.setBrush(Qt::transparent);
+    p.drawRect(boxX, boxYtop, boxW, boxH);
 }
 
 void MsgBoxPreview::updateLines()
@@ -244,6 +270,21 @@ void MsgBoxPreview::updateLines()
         return;
 
     QString SuperText = m_macroEnable ? runPreProcessor() : m_currentText;
+
+    if(doVanilla)
+    {
+        // Simulate vanilla behaviour: print all non-ASCII characters as spaces
+        std::string text = SuperText.toStdString();
+
+        for(char &c : text)
+        {
+            if(c < 0 || c == '\r' || c == '\n' || c == '\t')
+                c = ' ';
+        }
+
+        SuperText = QString::fromStdString(text);
+    }
+
 
     do
     {
@@ -292,9 +333,12 @@ void MsgBoxPreview::updateLines()
             B = A;
 
         auto lin = SuperText.mid(0, size_t(B));
+
         if(lin.endsWith('\n'))
             lin.remove(lin.size()-1, 1);
+
         m_shownLines.append(lin);
+
         SuperText.remove(0, size_t(B));
     } while(!SuperText.isEmpty());
 }

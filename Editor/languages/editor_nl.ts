@@ -2044,35 +2044,28 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="248"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="452"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="455"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation>Gelieve aan te geven hoe ver buiten de speelgrens (in pixels) voorwerpen verwijderd moeten worden.</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="331"/>
-        <source>Please enter the message which will be shown.
-(Max line length is 27 characters)</source>
-        <translation>Gelieve een bericht in te vullen dat getoond wordt.
-(Maximum 27 tekens per regel)</translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="362"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="365"/>
         <source>Event created</source>
         <translation>Event aangemaakt</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="363"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="366"/>
         <source>Message event created!</source>
         <translation>Bericht event aangemaakt!</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="369"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="372"/>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
         <translation>Sorry, de positie van het &apos;Botsing&apos; event is al in gebruik door dit event: &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="247"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="451"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="454"/>
         <source>Margin of section</source>
         <translation>Sectiemarge</translation>
     </message>
@@ -2088,11 +2081,16 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="332"/>
+        <source>Please enter the message text that which will be shown:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="333"/>
         <source>Hit message text</source>
         <translation>Botsing-geactiveerd bericht</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="368"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="371"/>
         <source>&apos;Hit&apos; event slot is used</source>
         <translation>&apos;Botsing&apos; event slot is in gebruik</translation>
     </message>
@@ -2395,27 +2393,127 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
 <context>
     <name>ItemMsgBox</name>
     <message>
-        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="14"/>
+        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="20"/>
         <source>Set message box</source>
         <translation>Tekstvakje toevoegen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="27"/>
-        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="44"/>
+        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="37"/>
+        <source>This is a text of the message that will be shown when the player tries to talk to the NPC, or when an event with a non-empty message text is triggered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="138"/>
+        <source>Preview settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="144"/>
+        <source>Font size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="157"/>
+        <source>Defines the size of the font in this preview.
+
+This field does NOT affects the result shown in the game itself,
+it&apos;s only used for the preview convenience in this dialogue.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="173"/>
+        <source>Preprocessor is the sepecial feature of TheXTech engine since the version 1.3.6.1 which allows
+you to make the message box being different depending on various factors, for example,
+depending on which playable character is used.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="178"/>
+        <source>Preprocessor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="194"/>
+        <source>Player number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="201"/>
+        <source>State number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="221"/>
+        <source>Show/Hide the message box preview area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="244"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dit is het bericht dat getoond zal worden als je met de NPC praat.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Merk op:&lt;/span&gt; Al de aanhalingstekens en nieuwe lijncharacters zullen verwijderd worden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="30"/>
-        <source>Enter the NPC&apos;s dialog message:
-(Max length per line is 27 characters)</source>
-        <translation>Typ hier de dialoogtekst:
-(27 tekens per lijn)</translation>
+        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="247"/>
+        <source>Enter the NPC&apos;s dialogue message text:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="90"/>
+        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="290"/>
+        <source>Target engine:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="303"/>
+        <source>This field allows you to preview the message box like it shown in different engines
+that has different behaviour of the message box displaying:
+
+- The SMBX 1.3 / X2 doesn&apos;t support line break characters at all. Characters of line break
+gets printed as spaces. Additionally, SMBX 1.3 does NOT support non-ASCII characters
+that gets printed as spaces. Too long words never gets broken and they gets printed
+out of the dialogue box area.
+
+- The Moondust / TheXTech has a full support for line breaks as well as unicode
+characters. Too long words gets broken and they will never go out of the dialogue
+box area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/itemmsgbox.ui" line="30"/>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
         <translation>Vriendelijk (Vijandige NPCs kunnen niet worden aangesproken)</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="142"/>
+        <source>Preview</source>
+        <comment>The text on the switch button</comment>
+        <translation type="unfinished">Voorbeeld</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="177"/>
+        <source>The basic message box of &lt;b&gt;SMBX 1.3 / X2&lt;/b&gt; has the next restrictions:
+&lt;ul&gt;
+  &lt;li&gt;New line &lt;b&gt;CAN NOT be done via the &quot;Return&quot;/&quot;Enter&quot; key&lt;/b&gt;&lt;br/&gt;
+(you should use spaces as a workaround).&lt;li&gt;
+  &lt;li&gt;Line breaks happen automatically after &lt;b&gt;27 characters&lt;/b&gt;.&lt;/li&gt;
+  &lt;li&gt;Very long words doesn&apos;t breaks and gets printed out of screen.&lt;br/&gt;
+So, please break these words to avoid this.&lt;/li&gt;
+  &lt;li&gt;You can&apos;t use any Unicode characters: &lt;b&gt;ASCII only&lt;/b&gt; works.&lt;/li&gt;
+&lt;/ul&gt;</source>
+        <comment>Message box behaviour explanation</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="191"/>
+        <source>The message box of &lt;b&gt;Moondust / TheXTech&lt;/b&gt; has the next restrictions:
+&lt;ul&gt;
+  &lt;li&gt;New line &lt;b&gt;CAN be done by &quot;Return&quot;/&quot;Enter&quot; key&lt;/b&gt; easily.&lt;/li&gt;
+  &lt;li&gt;Line breaks also happen automatically after &lt;b&gt;27 characters&lt;/b&gt;.&lt;/li&gt;
+  &lt;li&gt;Very long words gets broken forcibly.&lt;/li&gt;
+  &lt;li&gt;You can use &lt;b&gt;any Unicode&lt;/b&gt; characters.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Preprocessor&apos;s macros&lt;/b&gt; can be used.&lt;/li&gt;
+&lt;/ul&gt;</source>
+        <comment>Message box behaviour explanation</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2659,13 +2757,13 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="256"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="490"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="491"/>
         <source>Margin of section</source>
         <translation>Sectiemarge</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="257"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="491"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="492"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation>Gelieve aan te geven hoe ver buiten de speelgrens (in pixels) voorwerpen verwijderd moeten worden.</translation>
     </message>
@@ -4504,10 +4602,8 @@ Wilt u toch doorgaan?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="2248"/>
-        <source>Please, enter message
-(Max line length is 27 characters)</source>
-        <translation>Geef een bericht op
-(Max. lengte per regel is 27 tekens)</translation>
+        <source>Please, enter the message box text:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -403,8 +403,9 @@ cancelTransform:
     {
         LevelData selData;
 
-        ItemMsgBox msgBox(Opened_By::NPC, m_data.msg, m_data.friendly, "", "", m_scene->m_mw);
+        ItemMsgBox msgBox(Opened_By::NPC, m_data.msg, m_data.friendly, QString(), QString(), m_scene->m_mw);
         util::DialogToCenter(&msgBox, true);
+
         if(msgBox.exec() == QDialog::Accepted)
         {
             //apply to all selected items.
