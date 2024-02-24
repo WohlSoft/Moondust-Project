@@ -37,6 +37,7 @@ include(../_common/translator-qt/translator.cmake)
 include(../_common/qt-modules/compat/pge_qt_compat.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/qt-modules/msg_box_preview/msg_box_preview.cmake)
+include(../_common/qt-modules/syntax_highlight/syntax_highlight.cmake)
 
 if(PGE_USE_QT5)
     pge_cxx_standard(14)
@@ -94,6 +95,7 @@ set(PGE_TRANSLATOR_SRCS)
 list(APPEND PGE_TRANSLATOR_SRCS
     ${PGETRANSLATOR_SRCS}
     ${MSG_BOX_PREVIEW_SRC}
+    ${SYNTAX_HIGHLIGHT_SRC}
     main.cpp
     textdata/textdata.h
     textdata/text_types.h

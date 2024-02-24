@@ -29,6 +29,8 @@ namespace Ui {
 class TranslateField;
 }
 
+class SimpleHighlighter;
+
 class TranslateField : public QFrame
 {
     Q_OBJECT
@@ -40,6 +42,8 @@ class TranslateField : public QFrame
     int m_type = -1;
     int m_key = -1;
     TrLine *m_tr = nullptr;
+
+    SimpleHighlighter *m_highLighter = nullptr;
 
 public:
     explicit TranslateField(TranslateProject *project, QWidget *parent = nullptr);

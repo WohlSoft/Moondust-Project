@@ -22,6 +22,8 @@
 #include "translate_field.h"
 #include "ui_translate_field.h"
 
+#include "syntax_msgbox_macros.h"
+
 
 TranslateField::TranslateField(TranslateProject *project, QWidget *parent) :
     QFrame(parent)
@@ -59,6 +61,8 @@ TranslateField::TranslateField(TranslateProject *project, QWidget *parent) :
             m_tr->unfinished = !b;
     });
 
+    m_highLighter = s_makeMsgBoxMacrosHighlighter(ui->translationText->document());
+
     ui->translationText->installEventFilter(this);
     ui->note->installEventFilter(this);
 
@@ -69,6 +73,7 @@ TranslateField::TranslateField(TranslateProject *project, QWidget *parent) :
 
 TranslateField::~TranslateField()
 {
+    delete m_highLighter;
     delete ui;
 }
 
