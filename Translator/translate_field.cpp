@@ -73,7 +73,7 @@ TranslateField::TranslateField(TranslateProject *project, QWidget *parent) :
 
 TranslateField::~TranslateField()
 {
-    delete m_highLighter;
+    m_highLighter->deleteLater();
     delete ui;
 }
 
