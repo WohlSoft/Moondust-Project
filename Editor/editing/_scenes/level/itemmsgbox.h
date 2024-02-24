@@ -29,6 +29,8 @@ namespace Ui
 
 enum Opened_By { NPC, EVENT, BLOCK };
 
+class SimpleHighlighter;
+
 class ItemMsgBox : public QDialog
 {
     Q_OBJECT
@@ -50,6 +52,10 @@ private slots:
 
 private:
     Ui::ItemMsgBox *ui;
+    SimpleHighlighter *m_highLighter = nullptr;
+
+    void initSyntaxHighlight();
+    void removeSyntaxHighlight();
 
     void loadSetup();
     void saveSetup();
