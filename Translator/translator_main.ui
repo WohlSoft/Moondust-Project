@@ -94,7 +94,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPlainTextEdit" name="sourceLineRO">
+                <widget class="GrowingTextEdit" name="sourceLineRO">
                  <property name="readOnly">
                   <bool>true</bool>
                  </property>
@@ -535,6 +535,11 @@ The new algorithm is only supported by TheXTech and Moondust Engine.</string>
    <extends>QWidget</extends>
    <header>msg_box_preview.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GrowingTextEdit</class>
+   <extends>QPlainTextEdit</extends>
+   <header>common_features/growing_text_edit.h</header>
   </customwidget>
  </customwidgets>
  <resources>

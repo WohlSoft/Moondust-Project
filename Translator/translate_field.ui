@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>495</width>
-    <height>202</height>
+    <width>503</width>
+    <height>195</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,7 +28,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QPlainTextEdit" name="translationText"/>
+    <widget class="GrowingTextEdit" name="translationText">
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="commentOfTranslatorLabel">
@@ -49,6 +56,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GrowingTextEdit</class>
+   <extends>QPlainTextEdit</extends>
+   <header>common_features/growing_text_edit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

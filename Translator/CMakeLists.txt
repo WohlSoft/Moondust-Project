@@ -112,6 +112,7 @@ list(APPEND PGE_TRANSLATOR_SRCS
     dialogue_item.h dialogue_item.cpp
     common_features/app_path.h common_features/app_path.cpp
     common_features/logger.h common_features/logger_sets.h common_features/logger.cpp
+    common_features/growing_text_edit.h common_features/growing_text_edit.cpp
     ${UTF8MAIN_SRCS}
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
