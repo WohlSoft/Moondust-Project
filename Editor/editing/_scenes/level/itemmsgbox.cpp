@@ -22,6 +22,8 @@
 #include <QStyle>
 #include <QSettings>
 
+#include "syntax_highlight/syntax_msgbox_macros.h"
+
 #include "itemmsgbox.h"
 #include <ui_itemmsgbox.h>
 
@@ -120,6 +122,7 @@ ItemMsgBox::ItemMsgBox(Opened_By openedBy, QString text, bool isFriendly, QStrin
 ItemMsgBox::~ItemMsgBox()
 {
     saveSetup();
+    removeSyntaxHighlight();
     delete ui;
 }
 
@@ -184,6 +187,7 @@ void ItemMsgBox::updateEngineDesc()
                "  <li>You can't use any Unicode characters: <b>ASCII only</b> works.</li>\n"
                "</ul>", "Message box behaviour explanation")
         );
+        removeSyntaxHighlight();
         break;
 
     case 1: // Moondust / TheXTech
@@ -197,8 +201,25 @@ void ItemMsgBox::updateEngineDesc()
                "  <li><b>Preprocessor's macros</b> can be used.</li>\n"
                "</ul>", "Message box behaviour explanation")
             );
+        initSyntaxHighlight();
         break;
     }
+}
+
+void ItemMsgBox::initSyntaxHighlight()
+{
+    if(m_highLighter)
+        delete m_highLighter;
+
+    m_highLighter = s_makeMsgBoxMacrosHighlighter(ui->msgTextBox->document());
+}
+
+void ItemMsgBox::removeSyntaxHighlight()
+{
+    if(m_highLighter)
+        delete m_highLighter;
+
+    m_highLighter = nullptr;
 }
 
 void ItemMsgBox::loadSetup()
