@@ -23,8 +23,10 @@
 
 #include <common_features/graphics_funcs.h>
 #include <common_features/items.h>
+#include <pge_qt_compat.h>
 
 #include "tileset.h"
+
 
 tileset::tileset(DataConfig *conf, int type, QWidget *parent, int baseSize, int rows, int cols, QGraphicsScene *scene) :
     QWidget(parent)
@@ -125,10 +127,10 @@ void tileset::dragLeaveEvent(QDragLeaveEvent *event)
 void tileset::dragMoveEvent(QDragMoveEvent *event)
 {
     if(event->mimeData()->hasFormat(getMimeType())
-       && findPiece(targetSquare(event->pos())) == -1)
+       && findPiece(targetSquare(event->Q_EventPos())) == -1)
     {
 
-        highlightedRect = targetSquare(event->pos());
+        highlightedRect = targetSquare(event->Q_EventPos());
         event->setDropAction(Qt::MoveAction);
         event->accept();
     }
@@ -144,12 +146,12 @@ void tileset::dragMoveEvent(QDragMoveEvent *event)
 void tileset::dropEvent(QDropEvent *event)
 {
     if(event->mimeData()->hasFormat(getMimeType())
-       && findPiece(targetSquare(event->pos())) == -1)
+       && findPiece(targetSquare(event->Q_EventPos())) == -1)
     {
 
         QByteArray pieceData = event->mimeData()->data(getMimeType());
         QDataStream stream(&pieceData, QIODevice::ReadOnly);
-        QRect square = targetSquare(event->pos());
+        QRect square = targetSquare(event->Q_EventPos());
         int objID;
         stream >> objID;
 
