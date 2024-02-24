@@ -248,6 +248,11 @@ target_link_libraries(pge_translator
     ${PGE_TRANSLATOR_LINK_LIBS}
 )
 
+if(ENABLE_ADDRESS_SANITIZER)
+    target_compile_options(pge_translator PRIVATE -fsanitize=address)
+    target_link_options(pge_translator PRIVATE -fsanitize=address)
+endif()
+
 pge_set_nopie(pge_translator)
 
 install(TARGETS ${PGE_TRANSLATOR_INSTALLS}

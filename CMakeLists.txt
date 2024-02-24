@@ -36,6 +36,7 @@ else()
 endif()
 
 option(PGE_STATIC_SDLMIXER "Prefer static assembly of SDL Mixer X and libraries" ${PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT})
+option(ENABLE_ADDRESS_SANITIZER "Enable the Address Sanitizer GCC feature" OFF)
 
 if(PGE_STATIC_SDLMIXER)
     set(PGE_SHARED_SDLMIXER OFF)
