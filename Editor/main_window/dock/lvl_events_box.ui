@@ -83,8 +83,8 @@
         <string notr="true"/>
        </property>
        <property name="icon">
-        <iconset resource="../../_resources/editor.qrc">
-         <normaloff>:/images/copy_16x16.png</normaloff>:/images/copy_16x16.png</iconset>
+        <iconset resource="../../_resources/dock/dock.qrc">
+         <normaloff>:/dock/copy_16x16.png</normaloff>:/dock/copy_16x16.png</iconset>
        </property>
        <property name="shortcut">
         <string notr="true"/>
@@ -183,7 +183,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>-300</y>
+       <y>0</y>
        <width>269</width>
        <height>2316</height>
       </rect>
@@ -1588,7 +1588,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../_resources/editor.qrc"/>
+  <include location="../../_resources/dock/dock.qrc"/>
  </resources>
  <connections>
   <connection>

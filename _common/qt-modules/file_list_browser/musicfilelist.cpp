@@ -200,7 +200,7 @@ MusicFileList::MusicFileList(QString searchDirectory, QString curFile, QWidget *
     }
 
     previewLayout->addWidget(m_previewButton, 0, 0);
-    previewLayout->setMargin(0);
+    previewLayout->setContentsMargins(0, 0, 0, 0);
     previewLayout->setColumnStretch(0, 0);
     previewLayout->setColumnStretch(1, 10000);
 

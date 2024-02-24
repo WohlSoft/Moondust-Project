@@ -14,8 +14,8 @@
    <string>Crash</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../_resources/editor.qrc">
-    <normaloff>:/toolbar/dock/bookmarks.png</normaloff>:/toolbar/dock/bookmarks.png</iconset>
+   <iconset resource="../_resources/toolbar/toolbar.qrc">
+    <normaloff>:/toolbar/dock/bug.png</normaloff>:/toolbar/dock/bug.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout" columnstretch="0,1000,0" columnminimumwidth="160,0,0">
    <item row="1" column="0" colspan="3">
@@ -149,6 +149,7 @@
  </tabstops>
  <resources>
   <include location="../_resources/editor.qrc"/>
+  <include location="../_resources/toolbar/toolbar.qrc"/>
  </resources>
  <connections/>
 </ui>

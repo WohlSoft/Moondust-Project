@@ -249,24 +249,24 @@ void JsonSettingsWidget::SetupStack::setValue(const QString &propertyId, const Q
         o = o[t].toObject();
     }
 
-    switch(value.type())
+    switch(value.Q_QVariantType())
     {
-    case QVariant::Rect:
+    case Q_QVariantTypeEnum::Rect:
         o[top] = rectToArray(value);
         break;
-    case QVariant::RectF:
+    case Q_QVariantTypeEnum::RectF:
         o[top] = rectfToArray(value);
         break;
-    case QVariant::Point:
+    case Q_QVariantTypeEnum::Point:
         o[top] = pointToArray(value);
         break;
-    case QVariant::PointF:
+    case Q_QVariantTypeEnum::PointF:
         o[top] = pointfToArray(value);
         break;
-    case QVariant::Size:
+    case Q_QVariantTypeEnum::Size:
         o[top] = sizeToArray(value);
         break;
-    case QVariant::SizeF:
+    case Q_QVariantTypeEnum::SizeF:
         o[top] = sizefToArray(value);
         break;
     default:
@@ -514,39 +514,39 @@ QVariant JsonSettingsWidget::retrieve_property(const JsonSettingsWidget::SetupSt
         return defaultValue;
     }
 
-    switch(defaultValue.type())
+    switch(defaultValue.Q_QVariantType())
     {
-    case QVariant::Size:
+    case Q_QVariantTypeEnum::Size:
     {
         QJsonObject sz = o[prop].toObject();
         out = QSize(sz["w"].toInt(), sz["h"].toInt());
         break;
     }
-    case QVariant::SizeF:
+    case Q_QVariantTypeEnum::SizeF:
     {
         QJsonObject sz = o[prop].toObject();
         out = QSizeF(sz["w"].toDouble(), sz["h"].toDouble());
         break;
     }
-    case QVariant::Point:
+    case Q_QVariantTypeEnum::Point:
     {
         QJsonObject sz = o[prop].toObject();
         out = QPoint(sz["x"].toInt(), sz["y"].toInt());
         break;
     }
-    case QVariant::PointF:
+    case Q_QVariantTypeEnum::PointF:
     {
         QJsonObject sz = o[prop].toObject();
         out = QPointF(sz["x"].toDouble(), sz["y"].toDouble());
         break;
     }
-    case QVariant::Rect:
+    case Q_QVariantTypeEnum::Rect:
     {
         QJsonObject sz = o[prop].toObject();
         out = QRect(sz["x"].toInt(), sz["y"].toInt(), sz["w"].toInt(), sz["h"].toInt());
         break;
     }
-    case QVariant::RectF:
+    case Q_QVariantTypeEnum::RectF:
     {
         QJsonObject sz = o[prop].toObject();
         out = QRectF(sz["x"].toDouble(), sz["y"].toDouble(), sz["w"].toDouble(), sz["h"].toDouble());
@@ -642,13 +642,13 @@ static QColor colorFromHexValue(QString color)
 
     if(color.size() >= 6)
     {
-        newRgba.setRed(color.midRef(0, 2).toInt(nullptr, 16));
-        newRgba.setGreen(color.midRef(2, 2).toInt(nullptr, 16));
-        newRgba.setBlue(color.midRef(4, 2).toInt(nullptr, 16));
+        newRgba.setRed(Q_QStringRef(color, 0, 2).toInt(nullptr, 16));
+        newRgba.setGreen(Q_QStringRef(color, 2, 2).toInt(nullptr, 16));
+        newRgba.setBlue(Q_QStringRef(color, 4, 2).toInt(nullptr, 16));
     }
 
     if(color.size() == 8)
-        newRgba.setAlpha(color.midRef(6, 2).toInt(nullptr, 16));
+        newRgba.setAlpha(Q_QStringRef(color, 6, 2).toInt(nullptr, 16));
     else
         newRgba.setAlpha(255);
 

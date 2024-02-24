@@ -26,7 +26,7 @@
    <enum>Qt::NoFocus</enum>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../_resources/editor.qrc">
+   <iconset resource="../../_resources/toolbar/toolbar.qrc">
     <normaloff>:/toolbar/dock/doors.png</normaloff>:/toolbar/dock/doors.png</iconset>
   </property>
   <property name="styleSheet">
@@ -55,7 +55,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>-199</y>
+      <y>0</y>
       <width>325</width>
       <height>947</height>
      </rect>
@@ -403,8 +403,8 @@ Every warp point pair requires a warp entry.</string>
            <string notr="true">Duplicate</string>
           </property>
           <property name="icon">
-           <iconset resource="../../_resources/editor.qrc">
-            <normaloff>:/images/copy_16x16.png</normaloff>:/images/copy_16x16.png</iconset>
+           <iconset resource="../../_resources/dock/dock.qrc">
+            <normaloff>:/dock/copy_16x16.png</normaloff>:/dock/copy_16x16.png</iconset>
           </property>
          </widget>
         </item>
@@ -1135,7 +1135,8 @@ If this flag is enabled, you can only place a warp exit.</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../_resources/editor.qrc"/>
+  <include location="../../_resources/dock/dock.qrc"/>
+  <include location="../../_resources/toolbar/toolbar.qrc"/>
  </resources>
  <connections>
   <connection>

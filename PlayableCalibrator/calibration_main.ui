@@ -39,7 +39,7 @@
         <height>34</height>
        </size>
       </property>
-      <layout class="QGridLayout" name="gridLayout_4" columnstretch="10000,0,0,0,0,0,0,0,0,0">
+      <layout class="QGridLayout" name="gridLayout_4" columnstretch="10000,0,0,0,0">
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -120,7 +120,7 @@
           <string>Reset scroll</string>
          </property>
          <property name="icon">
-          <iconset resource="../Editor/_resources/editor.qrc">
+          <iconset resource="_resources/images.qrc">
            <normaloff>:/images/reset_pos.png</normaloff>:/images/reset_pos.png</iconset>
          </property>
          <property name="popupMode">
@@ -184,7 +184,7 @@
       <string>Save config</string>
      </property>
      <property name="icon">
-      <iconset resource="../Editor/_resources/editor.qrc">
+      <iconset resource="_resources/images.qrc">
        <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
      </property>
      <addaction name="actionSaveSameDir"/>
@@ -375,8 +375,8 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <property name="features">
-    <set>QDockWidget::AllDockWidgetFeatures</set>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
     <string>Settings</string>
@@ -685,6 +685,9 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="dockScrolling">
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
    <property name="windowTitle">
     <string>Scrolling</string>
    </property>
@@ -785,7 +788,7 @@ Right button - move grab offset if visible.</string>
         <string>Reset scroll</string>
        </property>
        <property name="icon">
-        <iconset resource="../Editor/_resources/editor.qrc">
+        <iconset resource="_resources/images.qrc">
          <normaloff>:/images/reset_pos.png</normaloff>:/images/reset_pos.png</iconset>
        </property>
       </widget>
@@ -824,7 +827,7 @@ Right button - Move the right-bottom crop edges.</string>
   </widget>
   <action name="actionOpen">
    <property name="icon">
-    <iconset resource="../Editor/_resources/editor.qrc">
+    <iconset resource="_resources/images.qrc">
      <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
    </property>
    <property name="text">
@@ -847,7 +850,7 @@ Right button - Move the right-bottom crop edges.</string>
   </action>
   <action name="actionCopy_settings">
    <property name="icon">
-    <iconset resource="../Editor/_resources/editor.qrc">
+    <iconset resource="_resources/images.qrc">
      <normaloff>:/images/edit_copy.png</normaloff>:/images/edit_copy.png</iconset>
    </property>
    <property name="text">
@@ -929,7 +932,7 @@ Right button - Move the right-bottom crop edges.</string>
   </action>
   <action name="actionSaveMenu">
    <property name="icon">
-    <iconset resource="../Editor/_resources/editor.qrc">
+    <iconset resource="_resources/images.qrc">
      <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
    </property>
    <property name="text">
@@ -941,7 +944,7 @@ Right button - Move the right-bottom crop edges.</string>
   </action>
   <action name="actionResetScroll">
    <property name="icon">
-    <iconset resource="../Editor/_resources/editor.qrc">
+    <iconset resource="_resources/images.qrc">
      <normaloff>:/images/reset_pos.png</normaloff>:/images/reset_pos.png</iconset>
    </property>
    <property name="text">
@@ -1032,9 +1035,6 @@ Right button - Move the right-bottom crop edges.</string>
   <tabstop>mountRiding</tabstop>
  </tabstops>
  <resources>
-  <include location="../Editor/_resources/editor.qrc"/>
-  <include location="_resources/images.qrc"/>
-  <include location="../Editor/_resources/editor.qrc"/>
   <include location="_resources/images.qrc"/>
  </resources>
  <connections/>

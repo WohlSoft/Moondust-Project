@@ -2,6 +2,7 @@
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/level/items/item_playerpoint.h>
 #include "itemsearcher.h"
+#include <pge_qt_compat.h>
 
 
 HistoryElementReplacePlayerPoint::HistoryElementReplacePlayerPoint(PlayerPoint plr, QVariant oldPos, QObject *parent) :
@@ -70,7 +71,7 @@ void HistoryElementReplacePlayerPoint::historyRemovePlayerPoint(const PlayerPoin
 
     if(!m_oldPos.isNull())
     {
-        if(m_oldPos.type() == QVariant::List)
+        if(m_oldPos.Q_QVariantType() == Q_QVariantTypeEnum::List)
         {
             QList<QVariant> mData = m_oldPos.toList();
             if(mData.size() == 5)
