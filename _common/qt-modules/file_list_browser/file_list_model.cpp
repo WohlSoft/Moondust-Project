@@ -16,8 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <pge_qt_compat.h>
 #include <QFileIconProvider>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QRegExp>
+#else
+#include <QRegularExpression>
+#endif
 
 #include "file_list_model.h"
 
@@ -143,8 +148,13 @@ bool FileListModel::filterMatch(const QString &file) const
 
     if(m_filter.contains('*'))
     {
-        QRegExp cond(m_filter, Qt::CaseInsensitive, QRegExp::Wildcard);
-        return cond.exactMatch(file);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        Q_QRegExp cond(m_filter, Qt::CaseInsensitive, QRegExp::Wildcard);
+#else
+        Q_QRegExp cond = QRegularExpression::fromWildcard(m_filter, Qt::CaseInsensitive);
+#endif
+
+        return cond.Q_QRegExpMatch(file);
     }
 
     return file.contains(m_filter, Qt::CaseInsensitive);

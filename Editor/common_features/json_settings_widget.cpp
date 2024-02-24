@@ -642,13 +642,13 @@ static QColor colorFromHexValue(QString color)
 
     if(color.size() >= 6)
     {
-        newRgba.setRed(color.midRef(0, 2).toInt(nullptr, 16));
-        newRgba.setGreen(color.midRef(2, 2).toInt(nullptr, 16));
-        newRgba.setBlue(color.midRef(4, 2).toInt(nullptr, 16));
+        newRgba.setRed(color.mid(0, 2).toInt(nullptr, 16));
+        newRgba.setGreen(color.mid(2, 2).toInt(nullptr, 16));
+        newRgba.setBlue(color.mid(4, 2).toInt(nullptr, 16));
     }
 
     if(color.size() == 8)
-        newRgba.setAlpha(color.midRef(6, 2).toInt(nullptr, 16));
+        newRgba.setAlpha(color.mid(6, 2).toInt(nullptr, 16));
     else
         newRgba.setAlpha(255);
 
