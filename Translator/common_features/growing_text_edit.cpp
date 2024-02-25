@@ -48,5 +48,10 @@ void GrowingTextEdit::sizeChanged(const QSizeF &newSize)
     int docHeight = newSize.toSize().height();
 
     if(m_heightMin < docHeight && docHeight < m_heightMax)
-        setMinimumHeight((docHeight * m.height()) + 10);
+    {
+        int newH = ((docHeight + 1) * m.height()) + 10;
+        setMinimumHeight(newH);
+        resize(size().width(), newH);
+        updateGeometry();
+    }
 }
