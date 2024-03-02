@@ -66,7 +66,7 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
     ui->dialoguesList->setModel(m_dialoguesListModel);
     ui->dialoguesList->setColumnWidth(0, 24);
 
-    m_langsListModel = new LangsListModel(&m_project, ui->languagesTable);
+    m_langsListModel = new LangsListModel(&m_project, &m_setup, ui->languagesTable);
     ui->languagesTable->setModel(m_langsListModel);
     ui->languagesTable->setColumnWidth(0, 24);
     ui->languagesTable->setColumnWidth(1, 35);
@@ -74,6 +74,9 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
     ui->languagesTable->setColumnWidth(3, 35);
     CheckBoxDelegate *langSelectVis = new CheckBoxDelegate(ui->languagesTable);
     ui->languagesTable->setItemDelegateForColumn(LangsListModel::C_VISIBLE, langSelectVis);
+
+    QObject::connect(m_langsListModel, &LangsListModel::visibilityChanged,
+                     this, &TranslatorMain::updateTranslateFields);
 
     m_highLighter = s_makeMsgBoxMacrosHighlighter(ui->sourceLineRO->document());
 
@@ -134,110 +137,12 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
             m_dialoguesListModel->clear();
     });
 
-    QObject::connect(ui->fileStrings->selectionModel(),
-                     &QItemSelectionModel::selectionChanged,
-    this,
-    [this](const QItemSelection &selected, const QItemSelection &)->void
-    {
-        auto ar = selected.indexes();
-        if(ar.isEmpty() || !ar.first().isValid())
-        {
-            resetTranslationFields();
-            return;
-        }
+    QObject::connect(ui->fileStrings->selectionModel(), &QItemSelectionModel::selectionChanged,
+                     this,
+                     static_cast<void (TranslatorMain::*)(const QItemSelection &, const QItemSelection &)>(&TranslatorMain::syncTranslationFieldsContent));
 
-        auto &index = ar.first();
-        updateTranslationFields(index.sibling(index.row(), FilesStringsModel::C_TITLE));
-    });
-
-    QObject::connect(ui->dialoguesList->selectionModel(),
-                     &QItemSelectionModel::selectionChanged,
-    this,
-    [this](const QItemSelection &selected, const QItemSelection &)->void
-    {
-        auto ar = selected.indexes();
-        if(ar.isEmpty() || !ar.first().isValid())
-        {
-            m_dialogueItems.clear();
-            return;
-        }
-
-        auto &index = ar.first();
-
-        int key = index.sibling(index.row(), DialoguesListModel::C_INDEX).data(Qt::DisplayRole).toInt();
-        auto &l = m_dialoguesListModel->level();
-        auto lk = m_dialoguesListModel->levelKey();
-
-        m_dialogueItems.clear();
-
-        for(TranslationData_DialogueNode &d : l.dialogues[key].messages)
-        {
-            if(d.item_index == -1)
-                continue; // skip invalid items
-
-            if(d.type == TranslationData_DialogueNode::T_END)
-                break;
-
-            switch(d.type)
-            {
-            case TranslationData_DialogueNode::T_NPC_TALK:
-            {
-                QSharedPointer<DialogueItem> dd(new DialogueItem(&m_project,
-                                                                 m_recentLang,
-                                                                 lk,
-                                                                 DialogueItem::T_NPC,
-                                                                 d.item_index,
-                                                                 ui->dialoguePreview));
-                ui->dialoguePreviewLayout->insertWidget(ui->dialoguePreviewLayout->count() - 1, dd.data());
-                QObject::connect(dd.data(),
-                                 &DialogueItem::clicked,
-                                 this,
-                [this, d, lk]()->void
-                {
-                    auto &l = m_project["metadata"].levels[lk];
-                    auto &it = l.npc[d.item_index];
-                    updateTranslationFields(TextTypes::S_LEVEL,
-                                            lk,
-                                            TextTypes::LDT_NPC,
-                                            d.item_index,
-                                            it.talk.text,
-                                            it.talk.note);
-                });
-                m_dialogueItems.push_back(std::move(dd));
-                break;
-            }
-
-            case TranslationData_DialogueNode::T_EVENT_MSG:
-            {
-                QSharedPointer<DialogueItem> dd(new DialogueItem(&m_project,
-                                                                 m_recentLang,
-                                                                 lk,
-                                                                 DialogueItem::T_EVENT,
-                                                                 d.item_index,
-                                                                 ui->dialoguePreview));
-                ui->dialoguePreviewLayout->insertWidget(ui->dialoguePreviewLayout->count() - 1, dd.data());
-                QObject::connect(dd.data(),
-                                 &DialogueItem::clicked,
-                                 this,
-                [this, d, lk]()->void
-                {
-                    auto &l = m_project["metadata"].levels[lk];
-                    auto &it = l.events[d.item_index];
-                    updateTranslationFields(TextTypes::S_LEVEL,
-                                            lk,
-                                            TextTypes::LDT_EVENT,
-                                            d.item_index,
-                                            it.message.text,
-                                            it.message.note);
-                });
-                m_dialogueItems.push_back(std::move(dd));
-                break;
-            }
-            default:
-                break;
-            }
-        }
-    });
+    QObject::connect(ui->dialoguesList->selectionModel(), &QItemSelectionModel::selectionChanged,
+                     this, &TranslatorMain::syncDialoguesList);
 
     QObject::connect(ui->legacyLineBreak,
                      static_cast<void(QCheckBox::*)(bool)>(&QCheckBox::clicked),
@@ -580,6 +485,111 @@ void TranslatorMain::resetTranslationFields()
         k->clearItem();
 }
 
+void TranslatorMain::syncTranslationFieldsContent()
+{
+    syncTranslationFieldsContent(ui->fileStrings->selectionModel()->selection(),
+                                 ui->fileStrings->selectionModel()->selection());
+}
+
+void TranslatorMain::syncTranslationFieldsContent(const QItemSelection &selected, const QItemSelection &)
+{
+    auto ar = selected.indexes();
+    if(ar.isEmpty() || !ar.first().isValid())
+    {
+        resetTranslationFields();
+        return;
+    }
+
+    auto &index = ar.first();
+    updateTranslationFields(index.sibling(index.row(), FilesStringsModel::C_TITLE));
+}
+
+void TranslatorMain::syncDialoguesList(const QItemSelection &selected, const QItemSelection &)
+{
+    auto ar = selected.indexes();
+    if(ar.isEmpty() || !ar.first().isValid())
+    {
+        m_dialogueItems.clear();
+        return;
+    }
+
+    auto &index = ar.first();
+
+    int key = index.sibling(index.row(), DialoguesListModel::C_INDEX).data(Qt::DisplayRole).toInt();
+    auto &l = m_dialoguesListModel->level();
+    auto lk = m_dialoguesListModel->levelKey();
+
+    m_dialogueItems.clear();
+
+    for(TranslationData_DialogueNode &d : l.dialogues[key].messages)
+    {
+        if(d.item_index == -1)
+            continue; // skip invalid items
+
+        if(d.type == TranslationData_DialogueNode::T_END)
+            break;
+
+        switch(d.type)
+        {
+        case TranslationData_DialogueNode::T_NPC_TALK:
+        {
+            QSharedPointer<DialogueItem> dd(new DialogueItem(&m_project,
+                                                             m_recentLang,
+                                                             lk,
+                                                             DialogueItem::T_NPC,
+                                                             d.item_index,
+                                                             ui->dialoguePreview));
+            ui->dialoguePreviewLayout->insertWidget(ui->dialoguePreviewLayout->count() - 1, dd.data());
+            QObject::connect(dd.data(),
+                             &DialogueItem::clicked,
+                             this,
+                             [this, d, lk]()->void
+                             {
+                                 auto &l = m_project["metadata"].levels[lk];
+                                 auto &it = l.npc[d.item_index];
+                                 updateTranslationFields(TextTypes::S_LEVEL,
+                                                         lk,
+                                                         TextTypes::LDT_NPC,
+                                                         d.item_index,
+                                                         it.talk.text,
+                                                         it.talk.note);
+                             });
+            m_dialogueItems.push_back(std::move(dd));
+            break;
+        }
+
+        case TranslationData_DialogueNode::T_EVENT_MSG:
+        {
+            QSharedPointer<DialogueItem> dd(new DialogueItem(&m_project,
+                                                             m_recentLang,
+                                                             lk,
+                                                             DialogueItem::T_EVENT,
+                                                             d.item_index,
+                                                             ui->dialoguePreview));
+            ui->dialoguePreviewLayout->insertWidget(ui->dialoguePreviewLayout->count() - 1, dd.data());
+            QObject::connect(dd.data(),
+                             &DialogueItem::clicked,
+                             this,
+                             [this, d, lk]()->void
+                             {
+                                 auto &l = m_project["metadata"].levels[lk];
+                                 auto &it = l.events[d.item_index];
+                                 updateTranslationFields(TextTypes::S_LEVEL,
+                                                         lk,
+                                                         TextTypes::LDT_EVENT,
+                                                         d.item_index,
+                                                         it.message.text,
+                                                         it.message.note);
+                             });
+            m_dialogueItems.push_back(std::move(dd));
+            break;
+        }
+        default:
+            break;
+        }
+    }
+}
+
 void TranslatorMain::updateTranslationFields(const QModelIndex &s)
 {
     QString text = s.data(Qt::DisplayRole).toString();
@@ -671,6 +681,9 @@ void TranslatorMain::updateTranslateFields()
         if(k.key() == "metadata")
             continue; // Ignore origin translation
 
+        if(!m_langsListModel->langIsVisible(k.key()))
+            continue;
+
         QSharedPointer<TranslateField> f(new TranslateField(&m_project, ui->translationGroup));
         f->setLang(k.key());
         QObject::connect(f.data(), &TranslateField::textChanged,
@@ -694,6 +707,8 @@ void TranslatorMain::updateTranslateFields()
         ui->translationLayout->insertWidget(ui->translationLayout->count() - 1, f.data());
         m_translateFields.insert(k.key(), std::move(f));
     }
+
+    syncTranslationFieldsContent();
 }
 
 void TranslatorMain::on_actionQuit_triggered()
@@ -748,14 +763,13 @@ void TranslatorMain::on_languagesAdd_clicked()
         TextDataProcessor t;
         t.createTranslation(m_project, newLang);
 
-        m_recentLang = "metadata";
-        ui->previewZone->clearText();
-        m_dialogueItems.clear();
-        m_dialoguesListModel->clear();
-        m_filesStringsModel->clear();
-        m_filesListModel->rebuildView(m_recentPath);
+        // m_recentLang = "metadata";
+        // ui->previewZone->clearText();
+        // m_dialogueItems.clear();
+        // m_dialoguesListModel->clear();
+        // m_filesStringsModel->clear();
+        // m_filesListModel->rebuildView(m_recentPath);
         m_langsListModel->refreshData();
         updateTranslateFields();
     }
 }
-

@@ -24,6 +24,7 @@
 #include <QMap>
 #include <QSettings>
 #include <QSharedPointer>
+#include <QItemSelection>
 
 #include "textdata/textdata.h"
 
@@ -98,6 +99,11 @@ private:
     void openProject(const QString &d, bool singleLevel = false);
 
     void resetTranslationFields();
+    void syncTranslationFieldsContent();
+    void syncTranslationFieldsContent(const QItemSelection &selected, const QItemSelection &);
+
+    void syncDialoguesList(const QItemSelection &selected, const QItemSelection &);
+
     void updateTranslationFields(const QModelIndex &s);
     void updateTranslationFields(int group,
                                  const QString &root,

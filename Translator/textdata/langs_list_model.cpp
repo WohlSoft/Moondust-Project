@@ -20,15 +20,34 @@
 #include <QColor>
 #include <QPalette>
 #include <QLocale>
+#include <QSettings>
 #include <QApplication>
 
 #include "langs_list_model.h"
 
-LangsListModel::LangsListModel(TranslateProject *project, QObject *parent)
+void LangsListModel::rebuildMap()
+{
+    m_viewByLang.clear();
+
+    for(int i = 0; i < m_view.size(); ++i)
+        m_viewByLang[m_view[i].code] = i;
+}
+
+LangsListModel::LangsListModel(TranslateProject *project, QSettings *setup, QObject *parent)
     : QAbstractTableModel(parent)
     , m_project(project)
+    , m_setup(setup)
 {
     Q_ASSERT(m_project);
+    Q_ASSERT(m_setup);
+}
+
+bool LangsListModel::langIsVisible(const QString &langCode)
+{
+    if(m_viewByLang.contains(langCode))
+        return m_view[m_viewByLang[langCode]].vis;
+
+    return false;
 }
 
 static QString getStdLangName(const QString &fname)
@@ -44,6 +63,9 @@ void LangsListModel::refreshData()
     beginResetModel();
 
     m_view.clear();
+    m_viewByLang.clear();
+
+    m_setup->beginGroup("LangVisibility");
 
     for(auto it = m_project->begin(); it != m_project->end(); ++it)
     {
@@ -53,7 +75,7 @@ void LangsListModel::refreshData()
         auto &et = it.value();
 
         LangsView e;
-        e.vis = false; // TODO: Preserve favourite languages and show them always with no matter which project is
+        e.vis = m_setup->value(it.key(), false).toBool();
         e.strings = et.t_strings;
         e.translated = et.t_translated;
         e.code = it.key();
@@ -66,8 +88,11 @@ void LangsListModel::refreshData()
         if(!e.lang_name.isEmpty())
             e.lang_name[0] = e.lang_name[0].toUpper();
 
+        m_viewByLang[e.code] = (int)m_view.size();
         m_view.push_back(e);
     }
+
+    m_setup->endGroup();
 
     endResetModel();
 }
@@ -76,6 +101,7 @@ void LangsListModel::clear()
 {
     beginResetModel();
     m_view.clear();
+    m_viewByLang.clear();
     endResetModel();
 }
 
@@ -210,6 +236,8 @@ void LangsListModel::sort(int column, Qt::SortOrder order)
         emit dataChanged(QModelIndex(), QModelIndex());
         break;
     }
+
+    rebuildMap();
 }
 
 int LangsListModel::rowCount(const QModelIndex &parent) const
@@ -290,6 +318,11 @@ bool LangsListModel::setData(const QModelIndex &index, const QVariant &value, in
         case C_VISIBLE:
             it.vis = (value.toInt() == Qt::Checked);
             emit dataChanged(index, index, {role});
+            emit visibilityChanged();
+            m_setup->beginGroup("LangVisibility");
+            m_setup->setValue(it.code, it.vis);
+            m_setup->endArray();
+            m_setup->sync();
             break;
 
         default:

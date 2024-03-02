@@ -21,13 +21,17 @@
 #define LANGSLISTMODEL_H
 
 #include <QAbstractTableModel>
+#include <QHash>
 #include "textdata.h"
+
+class QSettings;
 
 class LangsListModel : public QAbstractTableModel
 {
     Q_OBJECT
 
     TranslateProject *m_project = nullptr;
+    QSettings *m_setup = nullptr;
 
     struct LangsView
     {
@@ -40,9 +44,15 @@ class LangsListModel : public QAbstractTableModel
 
     typedef QVector<LangsView> LangsViewList;
     LangsViewList m_view;
+    QHash<QString, int> m_viewByLang;
+
+    void rebuildMap();
+
+signals:
+    void visibilityChanged();
 
 public:
-    explicit LangsListModel(TranslateProject *project, QObject *parent = nullptr);
+    explicit LangsListModel(TranslateProject *project, QSettings *setup, QObject *parent = nullptr);
 
     enum Columns
     {
@@ -54,6 +64,8 @@ public:
 
         P_COLUMNS_COUNT
     };
+
+    bool langIsVisible(const QString &langCode);
 
     void refreshData();
     void clear();
