@@ -33,6 +33,7 @@ class TranslateField;
 class DialoguesListModel;
 class DialogueItem;
 class LangsListModel;
+class SimpleHighlighter;
 
 namespace Ui {
 class TranslatorMain;
@@ -79,6 +80,7 @@ private:
 
     // Misc. data
     QSettings m_setup;
+    SimpleHighlighter *m_highLighter = nullptr;
     QString m_recentPath;
     QVector<QString> m_recentProjects;
     QString m_currentPath;

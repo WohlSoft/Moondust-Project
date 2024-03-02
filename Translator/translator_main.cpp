@@ -41,6 +41,7 @@
 #include "translate_field.h"
 #include "dialogue_item.h"
 #include "about/about.h"
+#include "syntax_msgbox_macros.h"
 
 #include "translator_main.h"
 #include "ui_translator_main.h"
@@ -73,6 +74,8 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
     ui->languagesTable->setColumnWidth(3, 35);
     CheckBoxDelegate *langSelectVis = new CheckBoxDelegate(ui->languagesTable);
     ui->languagesTable->setItemDelegateForColumn(LangsListModel::C_VISIBLE, langSelectVis);
+
+    m_highLighter = s_makeMsgBoxMacrosHighlighter(ui->sourceLineRO->document());
 
     ui->sourceLineRO->installEventFilter(this);
     ui->sourceLineNote->installEventFilter(this);
@@ -250,6 +253,7 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
 
 
     // Synchronize values before use
+    ui->previewZone->setEnableMacros(ui->preProcessorTest->isChecked());
     ui->previewZone->setMacroPlayerNum(ui->macroPlayerNum->value());
     ui->previewZone->setMacroPlayerState(ui->macroStateNum->value());
 
@@ -274,6 +278,7 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
 
 TranslatorMain::~TranslatorMain()
 {
+    m_highLighter->deleteLater();
     delete ui;
 }
 
