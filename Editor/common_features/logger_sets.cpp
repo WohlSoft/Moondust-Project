@@ -143,11 +143,13 @@ void LogWriter::LoadLogSettings()
     }
 
     logSettings.beginGroup("logging");
+    {
         DebugLogFile = logSettings.value("log-path", defLogDir.absolutePath() + "/" + logFileName).toString();
         if(!QFileInfo(DebugLogFile).absoluteDir().exists())
             DebugLogFile = defLogDir.absolutePath()+"/" + logFileName;
         DebugLogFile = QFileInfo(DebugLogFile).absoluteDir().absolutePath() + "/" + logFileName;
         logLevel = PGE_LogLevel(logSettings.value("log-level", int(PGE_LogLevel::Warning)).toInt());
+    }
     logSettings.endGroup();
 
     qDebug() << QString("LogLevel %1, log file %2")
@@ -245,8 +247,9 @@ void LogWriter::logMessageHandler(QtMsgType type,
         return;
 #endif
 
-    QByteArray lMessage = msg.toLocal8Bit();
+    QByteArray lMessage = msg.toUtf8();
     QString txt;
+
     switch (type)
     {
         case QtDebugMsg:
