@@ -1713,7 +1713,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Please enter the message text that which will be shown:</source>
-        <translation type="unfinished"></translation>
+        <translation>请输入对话信息：</translation>
     </message>
 </context>
 <context>
@@ -1968,48 +1968,51 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Preview settings</source>
-        <translation type="unfinished"></translation>
+        <translation>预览设置</translation>
     </message>
     <message>
         <source>Font size:</source>
-        <translation type="unfinished"></translation>
+        <translation>字体大小</translation>
     </message>
     <message>
         <source>Defines the size of the font in this preview.
 
 This field does NOT affects the result shown in the game itself,
 it&apos;s only used for the preview convenience in this dialogue.</source>
-        <translation type="unfinished"></translation>
+        <translation>设置此预览的字体大小。
+
+该设置仅用于显示此对话，不影响游戏中的文字信息。</translation>
     </message>
     <message>
         <source>Preprocessor is the sepecial feature of TheXTech engine since the version 1.3.6.1 which allows
 you to make the message box being different depending on various factors, for example,
 depending on which playable character is used.</source>
-        <translation type="unfinished"></translation>
+        <translation>预处理信息字段是TheXTech1.3.6.1及更高版本的特性，它可以根据相关的条件
+来确定不同的信息，例如选用那个角色游玩时显示的不同信息。</translation>
     </message>
     <message>
         <source>Preprocessor</source>
-        <translation type="unfinished"></translation>
+        <translation>预处理信息字段</translation>
     </message>
     <message>
         <source>Player number:</source>
-        <translation type="unfinished"></translation>
+        <translation>人物编号：</translation>
     </message>
     <message>
         <source>State number</source>
-        <translation type="unfinished"></translation>
+        <translation>状态</translation>
     </message>
     <message>
         <source>Show/Hide the message box preview area</source>
-        <translation type="unfinished"></translation>
+        <translation>在预览区显示/隐藏信息框</translation>
     </message>
     <message>
         <source>Enter the NPC&apos;s dialogue message text:</source>
-        <translation type="unfinished"></translation>
+        <translation>请输入NPC的对话信息：</translation>
     </message>
     <message>
         <source>Target engine:</source>
-        <translation type="unfinished"></translation>
+        <translation>目标引擎：</translation>
     </message>
     <message>
         <source>This field allows you to preview the message box like it shown in different engines
@@ -2023,7 +2026,13 @@ out of the dialogue box area.
 - The Moondust / TheXTech has a full support for line breaks as well as unicode
 characters. Too long words gets broken and they will never go out of the dialogue
 box area.</source>
-        <translation type="unfinished"></translation>
+        <translation>此处用于预览各个引擎中显示的信息效果：
+
+- SMBX1.3和X2不支持非ASCII字符，换行符以空格表示。
+如果在一行内有过多的字符，它不会自动换行，且会超出对话框区域。
+
+- 月尘和TheXTech引擎支持换行符和Unicode字符。
+如果在一行内有过多的字符，它将自动换行而不会超出对话框区域。</translation>
     </message>
     <message>
         <source>The basic message box of &lt;b&gt;SMBX 1.3 / X2&lt;/b&gt; has the next restrictions:
@@ -2036,7 +2045,14 @@ So, please break these words to avoid this.&lt;/li&gt;
   &lt;li&gt;You can&apos;t use any Unicode characters: &lt;b&gt;ASCII only&lt;/b&gt; works.&lt;/li&gt;
 &lt;/ul&gt;</source>
         <comment>Message box behaviour explanation</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;SMBX1.3和X2&lt;/b&gt;的文字信息存在下列限制：
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;无法通过“回车键”&lt;/b&gt;换行（您需要使用空格）。&lt;br&gt;&lt;/li&gt;&lt;li&gt;
+  &lt;/li&gt;&lt;li&gt;一行超过&lt;b&gt;27个字符&lt;/b&gt;将自动换行。&lt;/li&gt;
+  &lt;li&gt;过长的单词它不会自动换行，且会超出画面区域。&lt;br&gt;
+请分隔单词以避免超出画面区域。&lt;/li&gt;
+  &lt;li&gt;不得包含Unicode字符：&lt;b&gt;只能使用ASCII字符&lt;/b&gt;。&lt;/li&gt;
+&lt;/ul&gt;</translation>
     </message>
     <message>
         <source>The message box of &lt;b&gt;Moondust / TheXTech&lt;/b&gt; has the next restrictions:
@@ -2048,16 +2064,23 @@ So, please break these words to avoid this.&lt;/li&gt;
   &lt;li&gt;&lt;b&gt;Preprocessor&apos;s macros&lt;/b&gt; can be used.&lt;/li&gt;
 &lt;/ul&gt;</source>
         <comment>Message box behaviour explanation</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;月尘或TheXTech&lt;/b&gt;的文字信息存在下列增强特性：
+&lt;ul&gt;
+  &lt;li&gt;可以通过“回车键”换行。&lt;/li&gt;
+  &lt;li&gt;一行超过&lt;b&gt;27个字符&lt;/b&gt;将自动换行。&lt;/li&gt;
+  &lt;li&gt;过长的单词也将会自动换行&lt;/li&gt;
+  &lt;li&gt;可以使用&lt;b&gt;任意Unicode&lt;/b&gt;字符。&lt;/li&gt;
+  &lt;li&gt;支持&lt;b&gt;预处理信息字段&lt;/b&gt;。&lt;/li&gt;
+&lt;/ul&gt;</translation>
     </message>
     <message>
         <source>Preview</source>
         <comment>The text on the switch button</comment>
-        <translation type="unfinished">预览</translation>
+        <translation>预览</translation>
     </message>
     <message>
         <source>This is a text of the message that will be shown when the player tries to talk to the NPC, or when an event with a non-empty message text is triggered.</source>
-        <translation type="unfinished"></translation>
+        <translation>当玩家和NPC对话时，或触发包含文字信息的事件时，显示的文字信息。</translation>
     </message>
 </context>
 <context>
@@ -2865,7 +2888,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>SMBX-38A file version</source>
-        <translation type="unfinished">SMBX-38A文件版本</translation>
+        <translation>SMBX-38A文件版本</translation>
     </message>
     <message>
         <source>Which version do you want to save as? (from 64 to 69)
@@ -3664,7 +3687,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Please, enter the message box text:</source>
-        <translation type="unfinished"></translation>
+        <translation>请输入对话信息：</translation>
     </message>
 </context>
 <context>
