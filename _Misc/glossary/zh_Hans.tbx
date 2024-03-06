@@ -12,7 +12,7 @@
         <body>
             <termEntry>
                 <langSet xml:lang="en"><tig><term>Level</term></tig></langSet>
-                <langSet xml:lang="zh_Hans"><tig><term>关卡，级别</term></tig></langSet>
+                <langSet xml:lang="zh_Hans"><tig><term>关卡</term></tig></langSet>
             </termEntry>
             <termEntry>
                 <langSet xml:lang="en"><tig><term>Not Implemented</term></tig></langSet>
@@ -21,6 +21,10 @@
             <termEntry id="arpegio">
                 <langSet xml:lang="en"><tig><term>Arpeggio</term></tig></langSet>
                 <langSet xml:lang="zh_Hans"><tig><term>琶音</term></tig></langSet>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>Moondust</term></tig></langSet>
+                <langSet xml:lang="zh_Hans"><tig><term>月尘</term></tig></langSet>
             </termEntry>
         </body>
     </text>
