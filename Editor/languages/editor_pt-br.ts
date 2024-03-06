@@ -220,11 +220,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Warps and Doors</source>
-        <translation>Transportes &amp; Portas</translation>
+        <translation>Teleportes e Portas</translation>
     </message>
     <message>
         <source>Warp type:</source>
-        <translation>Tipo de Warp</translation>
+        <translation>Tipo de Teleporte:</translation>
     </message>
     <message>
         <source>0 - Instant</source>
@@ -288,7 +288,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Logging</source>
-        <translation>Logging</translation>
+        <translation>Registrando</translation>
     </message>
     <message>
         <source>Log level</source>
@@ -391,7 +391,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation type="unfinished">Contando estrelas...</translation>
+        <translation>Contando estrelas…</translation>
     </message>
 </context>
 <context>
@@ -414,7 +414,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Resample to</source>
-        <translation>Mudar taxa de bits</translation>
+        <translation>Reamostrar para</translation>
     </message>
     <message>
         <source>Start</source>
@@ -422,25 +422,27 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>SoX error</source>
-        <translation>Erro do SoX</translation>
+        <translation>Erro no SoX</translation>
     </message>
     <message>
         <source>SoX executable path is not defined.
 Please set SoX path first</source>
-        <translation>Localização do binário do SoX não definida. Por favor, defina a localização primeiro</translation>
+        <translation>Local do executável do SoX não definido.
+Por favor, defina o local primeiro</translation>
     </message>
     <message>
         <source>SoX executable path is invalid.
 Please set SoX path first</source>
-        <translation>Localização do binário do SoX não válida. Por favor, defina a localização primeiro</translation>
+        <translation>Local do executável do SoX é inválido.
+Por favor, defina o local primeiro</translation>
     </message>
     <message>
         <source>Nothing to do.</source>
-        <translation>Nada a fazer</translation>
+        <translation>Nada a fazer.</translation>
     </message>
     <message>
         <source>No files to convert</source>
-        <translation>Nenhum arquivo a ser convertido</translation>
+        <translation>Sem arquivos para converter</translation>
     </message>
     <message>
         <source>Stop</source>
@@ -457,7 +459,8 @@ Please set SoX path first</source>
     <message>
         <source>SoX returned a non-zero exit code: %1
 %2</source>
-        <translation>SoX retornou um código diferente de zero: %1 %2</translation>
+        <translation>SoX retornou um código diferente de zero: %1
+%2</translation>
     </message>
     <message>
         <source>Operation complete</source>
@@ -466,7 +469,8 @@ Please set SoX path first</source>
     <message>
         <source>All files successfully converted!
 %1</source>
-        <translation>Todos os arquivos convertidos com sucesso! %1</translation>
+        <translation>Todos os arquivos convertidos com sucesso!
+%1</translation>
     </message>
     <message>
         <source>No tasks defined. Nothing to do.</source>
@@ -482,7 +486,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>What do you want?</source>
-        <translation>O que você gostaria de fazer?</translation>
+        <translation>O que você gostaria?</translation>
     </message>
     <message>
         <source>Convert music of current level section</source>
@@ -494,12 +498,13 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Convert specified files</source>
-        <translation>Converter os arquivos a seguir</translation>
+        <translation>Converter arquivos especificados</translation>
     </message>
     <message>
         <source>Convert into new format
 (select a tab to choose target format)</source>
-        <translation>Converter em outro formato (abra a guia desejada para escolher o novo formato)</translation>
+        <translation>Converter para novo formato
+(abra a guia desejada para escolher o formato)</translation>
     </message>
     <message>
         <source>Don&apos;t change format</source>
@@ -519,11 +524,11 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Files will be converted into FLAC</source>
-        <translation>Arquivos serão convertidos para a Flac</translation>
+        <translation>Arquivos serão convertidos em FLAC</translation>
     </message>
     <message>
         <source>Files will be converted into OGG</source>
-        <translation>Arquivos serão convertidos para OGG</translation>
+        <translation>Arquivos serão convertidos em OGG</translation>
     </message>
     <message>
         <source>Set quality</source>
@@ -601,7 +606,7 @@ Também pode dar um duplo clique em um item para ter o mesmo efeito.</translatio
     </message>
     <message>
         <source>Go To...</source>
-        <translation type="unfinished">Ir para...</translation>
+        <translation>Ir para…</translation>
     </message>
     <message>
         <source>Rename Bookmark</source>
@@ -945,7 +950,7 @@ Por favor salve eles antes de fazer qualquer coisa.</translation>
     </message>
     <message>
         <source>Counter name:</source>
-        <translation>Nome do contador</translation>
+        <translation>Nome do contador:</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1070,7 +1075,7 @@ Por favor salve eles antes de fazer qualquer coisa.</translation>
     </message>
     <message>
         <source>Clear All Logs</source>
-        <translation>Clear All Logs</translation>
+        <translation>Limpar Registros</translation>
     </message>
     <message>
         <source>Clear %1 Log</source>
@@ -1413,7 +1418,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>ItemBGO</name>
     <message>
         <source>Layer: </source>
-        <translation>Camada:</translation>
+        <translation>Camada: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -1465,7 +1470,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation>Copiar preferências </translation>
+        <translation>Copiar preferências</translation>
     </message>
     <message>
         <source>BGO-ID: %1</source>
@@ -1521,7 +1526,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation>Por favor, escolha o quão longe itens fora das margens da seção serão removidos (em pixels)</translation>
+        <translation>Por favor, escolha o quão longe itens fora das bordas da seção serão removidos (em pixels).</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
@@ -1540,7 +1545,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>ItemBlock</name>
     <message>
         <source>Layer: </source>
-        <translation>Camada:</translation>
+        <translation>Camada: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -1612,7 +1617,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished">Por favor, escolha o quão longe intens fora das margens da seção serão removidos (em pixels)</translation>
+        <translation>Por favor, escolha o quão longe itens fora das bordas da seção serão removidos (em pixels).</translation>
     </message>
     <message>
         <source>Event name</source>
@@ -1740,7 +1745,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Layer: </source>
-        <translation>Camada:</translation>
+        <translation>Camada: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -1855,7 +1860,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Always Visible</source>
-        <translation>Sempre visível</translation>
+        <translation>Sempre Visível</translation>
     </message>
     <message>
         <source>Copy preferences</source>
@@ -1922,7 +1927,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esta é a mensagem, o que irá ser exibido ao jogador falar com o NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nota:&lt;/span&gt; Todas as aspas e parágrafos serão removidos.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Essa é a mensagem que será mostrada ao jogador quando falar com esse NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nota:&lt;/span&gt;  Todas as aspas e parágrafos serão removidos.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
@@ -2026,7 +2031,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     <name>ItemMusic</name>
     <message>
         <source>&lt;Silence&gt;</source>
-        <translation>&lt;Silêncio&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Play this</source>
@@ -2089,7 +2094,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     <name>ItemNPC</name>
     <message>
         <source>Layer: </source>
-        <translation>Camada:</translation>
+        <translation>Camada: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -2209,7 +2214,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished">Por favor, escolha o quão longe intens fora das margens da seção serão removidos (em pixels)</translation>
+        <translation>Por favor, escolha o quão longe itens fora das bordas da seção serão removidos (em pixels).</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
@@ -2283,7 +2288,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     <name>ItemPhysEnv</name>
     <message>
         <source>Layer: </source>
-        <translation type="unfinished">Camada:</translation>
+        <translation>Camada: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -2703,7 +2708,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Level title: </source>
-        <translation>Título do nível:</translation>
+        <translation>Nome do nível: </translation>
     </message>
     <message>
         <source>Make custom folder</source>
@@ -3616,7 +3621,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Place &amp; Overwrite</source>
-        <translation type="unfinished">Colocar &amp; Substituir</translation>
+        <translation>Colocar e Substituir</translation>
     </message>
     <message>
         <source>Move</source>
@@ -3667,7 +3672,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Destroyed: </source>
-        <translation>Destruído:</translation>
+        <translation>Destruído: </translation>
     </message>
     <message>
         <source>Don&apos;t reset event to &apos;none&apos;</source>
@@ -4084,7 +4089,7 @@ Zonas de ambientes físicos:	%6
     </message>
     <message>
         <source>Ev. Hited</source>
-        <translation type="unfinished">Evento &apos;Bater&apos;</translation>
+        <translation>Ev.&apos;Bater&apos;:</translation>
     </message>
     <message>
         <source>Ev. Layer Empty:</source>
@@ -4168,9 +4173,7 @@ Zonas de ambientes físicos:	%6
     </message>
     <message>
         <source>Case Sensitive?</source>
-        <translation>Diferenciar maiús-
-culas de minúscu-
-las?</translation>
+        <translation>Dif. mai/min?</translation>
     </message>
     <message>
         <source>Next Block</source>
