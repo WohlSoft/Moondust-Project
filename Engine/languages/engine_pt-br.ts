@@ -5,43 +5,43 @@
     <name></name>
     <message id="CRASH_UNHEXC_TITLE">
         <source>Unhandled exception!</source>
-        <translation type="unfinished"></translation>
+        <translation>Exceção não-tratada!</translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
         <source>Engine has crashed because accepted unhandled exception!</source>
-        <translation type="unfinished"></translation>
+        <translation>A Engine travou por uma exceção não -tratada (unhandled exception)!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
         <source>Out of memory!</source>
-        <translation>Sem memória!</translation>
+        <translation>Uso de memória excedido!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation type="unfinished"></translation>
+        <translation>A Engine travou por falta de memória! Tente fechar outros aplicativos e reiniciar o jogo.</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
         <source>Time out!</source>
-        <translation>Expirou!</translation>
+        <translation>Tempo esgotado!</translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
         <source>Engine has abourted because alarm() time out!</source>
-        <translation type="unfinished"></translation>
+        <translation>A Engine parou porque o tempo do alarm() esgotou!</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
         <source>Physical memory address error!</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro de endereço na memória física!</translation>
     </message>
     <message id="CRASH_BUS_MSG">
         <source>Engine has crashed because a physical memory address error</source>
-        <translation type="unfinished"></translation>
+        <translation>A Engine travou porque ocorreu um erro de endereço na memória física</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
         <source>Wrong CPU Instruction!</source>
-        <translation type="unfinished"></translation>
+        <translation>Instrução de CPU Errada!</translation>
     </message>
     <message id="CRASH_ILL_MSG">
         <source>Engine has crashed because a wrong CPU instruction</source>
-        <translation type="unfinished"></translation>
+        <translation>A Engine travou por uma instrução de CPU errada</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
         <source>Wrong arithmetical operation</source>
@@ -49,29 +49,31 @@
     </message>
     <message id="CRASH_FPE_MSG">
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
-        <translation type="unfinished"></translation>
+        <translation>A Engine travou por uma operação aritmética errada!</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
         <source>Aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Abortado</translation>
     </message>
     <message id="CRASH_ABORT_TITLE.">
         <source>Engine has been aborted because critical error was occouped.</source>
-        <translation type="unfinished"></translation>
+        <translation>A Engine abortou porque ocorreu um erro critico.</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
         <source>Segmentation fault</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha de segmentação</translation>
     </message>
     <message id="CRASH_SIGSEGV_MSG.">
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
-        <translation type="unfinished"></translation>
+        <translation>A Engine travou or uma falha de segmentação.
+Depure usando o modo de depuração embutido
+do aplicativo e repita suas ações para mais detalhes.</translation>
     </message>
     <message id="CRASH_INT_TITLE">
         <source>Interrupt</source>
-        <translation>Interromper</translation>
+        <translation>Interrompido</translation>
     </message>
     <message id="CRASH_INT_MSG">
         <source>Engine has been interrupted</source>
@@ -79,28 +81,29 @@ and retry your recent actions to get more detailed information.</source>
     </message>
     <message id="CONFIG_SELECT">
         <source>Choose a game:</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolha o jogo:</translation>
     </message>
     <message id="RENDERER_NO_OPENGL_ERROR">
         <source>Unable to find OpenGL support!
 Software renderer will be started.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível achar suporte a OpenGL!
+Renderização por software será usada.</translation>
     </message>
     <message id="NO_RENDERER_ERROR">
         <source>Renderer is not selected!</source>
-        <translation type="unfinished"></translation>
+        <translation>Renderizador não selecionado!</translation>
     </message>
     <message id="WINDOW_CREATE_ERROR">
         <source>Unable to create window!</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível criar janela!</translation>
     </message>
     <message id="WINDOW_ICON_INIT_ERROR">
         <source>Unable to setup window icon!</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível definir ícone da janela!</translation>
     </message>
     <message id="RENDERER_CONTEXT_INIT_ERROR">
         <source>Unable to initialize renderer context!</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível inicializar o render!</translation>
     </message>
     <message id="MSGBOX_INFO">
         <source>Information</source>
@@ -120,36 +123,41 @@ Software renderer will be started.</source>
     </message>
     <message id="SDL_INIT_ERROR">
         <source>Unable to init SDL!</source>
-        <translation>Não é possível iniciar SDL!</translation>
+        <translation>Não foi possível iniciar o SDL!</translation>
     </message>
     <message id="CONFIG_SELECT_TEST">
         <source>Choose a game to test:</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolha um jogo para testar:</translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
         <source>No opened files</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenhum arquivo aberto</translation>
     </message>
     <message id="ERROR_FAIL_START_WLD">
         <source>ERROR:
 Fail to start world map
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ERRO:
+Falha ao iniciar o mundo
+
+%1</translation>
     </message>
     <message id="WLD_ERROR_LVLCLOSED">
         <source>World map was closed with error.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Um erro fechou o mundo.
+%1</translation>
     </message>
     <message id="MSG_START_LEVEL">
         <source>Start level
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar nível
+%1</translation>
     </message>
     <message id="MSG_WLDTEST_EXIT_CODE">
         <source>Type an exit code (signed integer)</source>
-        <translation type="unfinished"></translation>
+        <translation>Digite um código de saída (inteiro)</translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
         <source>Warp exit
@@ -158,25 +166,32 @@ Exit into:
 %1
 
 Entrance point: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Saída por Teleporte
+
+Sai em:
+%1
+
+Ponto de entrada #: %2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
         <source>Level was closed with error.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nível fechou com um erro.
+%1</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
         <source>Invalid playable character ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de personagem invalido</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
         <source>Invalid playable character state ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de estado do personagem invalido</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro fatal: Não foi possível achar a seção inicial.
+O ponto inicial do jogador (ou entrada por teleporte) foi colocado muito longe da(s) seção(ões)?</translation>
     </message>
     <message id="LVL_MENU_PAUSE_TTL">
         <source>Pause</source>
@@ -244,15 +259,15 @@ Did you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="MAINMENU_1_PLAYER_GAME">
         <source>1 Player Game</source>
-        <translation>Jogo de 1 Jogador</translation>
+        <translation>Jogo Solo</translation>
     </message>
     <message id="MAINMENU_2_PLAYER_GAME">
         <source>2 Player Game</source>
-        <translation>Jogo de 2 Jogadores</translation>
+        <translation>Jogo Cooperativo</translation>
     </message>
     <message id="MAINMENU_PLAY_SINGLE_LEVEL">
         <source>Play level</source>
-        <translation>Nível de jogo</translation>
+        <translation>Jogar nível</translation>
     </message>
     <message id="MAINMENU_OPTIONS">
         <source>Options</source>
@@ -264,7 +279,7 @@ Did you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="MAINMENU_OPTIONS_TEST_SCRS">
         <source>Test of screens</source>
-        <translation>Teste de ecrãs</translation>
+        <translation>Teste de telas</translation>
     </message>
     <message id="MAINMENU_OPTIONS_TEST_MSGS">
         <source>Test of message boxes</source>
@@ -272,11 +287,11 @@ Did you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="MAINMENU_OPTIONS_CONTROLLS">
         <source>Player controlling</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogador controlando</translation>
     </message>
     <message id="MAINMENU_OPTIONS_VIDEO">
         <source>Video settings</source>
-        <translation>Definições de vídeo</translation>
+        <translation>Configurações de vídeo</translation>
     </message>
     <message id="MAINMENU_OPTIONS_MUS_VOL">
         <source>Music volume</source>
@@ -288,7 +303,7 @@ Did you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="MAINMENU_OPTIONS_FULLSCR">
         <source>Full Screen mode</source>
-        <translation>Modo de Ecrã Completo</translation>
+        <translation>Modo tela cheia</translation>
     </message>
     <message id="TESTSCR_CREDITS">
         <source>Credits</source>
@@ -296,11 +311,11 @@ Did you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="TESTSCR_LOADING_SCREEN">
         <source>Loading screen</source>
-        <translation>Ecrã de carregamento</translation>
+        <translation>Tela de carregamento</translation>
     </message>
     <message id="TESTSCR_GAMEOVER">
         <source>Game over screen</source>
-        <translation>Ecrã de fim de jogo</translation>
+        <translation>Tela de fim de jogo</translation>
     </message>
     <message id="TEST_MSGBOX">
         <source>Message box</source>
@@ -316,7 +331,7 @@ Did you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="TEST_QUESTION_BOX">
         <source>Question box</source>
-        <translation>Caixa de questão</translation>
+        <translation>Caixa de pergunta</translation>
     </message>
     <message id="VIDEO_SHOW_DEBUG">
         <source>Show debug info</source>
@@ -324,27 +339,27 @@ Did you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="VIDEO_ENABLE_FRSKIP">
         <source>Enable frame-skip</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar pulo de frames</translation>
     </message>
     <message id="VIDEO_ENABLE_VSYNC">
         <source>Enable V-Sync</source>
-        <translation>Ativar V-Sync</translation>
+        <translation>Ativar V-sync</translation>
     </message>
     <message id="VIDEO_FRAME_TIME">
         <source>Frame time (ms.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tempo do frame (ms.)</translation>
     </message>
     <message id="CONTROLLS_SETUP_PLAYER1">
         <source>Player 1 controls</source>
-        <translation>Controlos do Jogador 1</translation>
+        <translation>Controles do Jogador 1</translation>
     </message>
     <message id="CONTROLLS_SETUP_PLAYER2">
         <source>Player 2 controls</source>
-        <translation>Controlos do Jogador 2</translation>
+        <translation>Controles do Jogador 2</translation>
     </message>
     <message id="PLAYER_CONTROLS_SETUP_KEYBOARD">
         <source>Keyboard</source>
-        <translation>Tecaldo</translation>
+        <translation>Teclado</translation>
     </message>
     <message id="PLAYER_CONTROLS_SETUP_JOYSTICK">
         <source>Joystick: %1</source>
@@ -360,7 +375,7 @@ Did you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="MSG_EPISODES_NOT_FOUND">
         <source>&lt;episodes not found&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;episódios não encontrados&gt;</translation>
     </message>
     <message id="MSG_LEVELS_NOT_FOUND">
         <source>&lt;levels not found&gt;</source>
@@ -368,7 +383,7 @@ Did you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
         <source>Config packs not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Pacote de configuração não encontrado</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TEXT">
         <source>Can&apos;t start game, because available
