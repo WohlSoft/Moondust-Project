@@ -2047,9 +2047,9 @@ So, please break these words to avoid this.&lt;/li&gt;
         <comment>Message box behaviour explanation</comment>
         <translation>&lt;b&gt;SMBX1.3和X2&lt;/b&gt;的文字信息存在下列限制：
 &lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;无法通过“回车键”&lt;/b&gt;换行（您需要使用空格）。&lt;br&gt;&lt;/li&gt;&lt;li&gt;
-  &lt;/li&gt;&lt;li&gt;一行超过&lt;b&gt;27个字符&lt;/b&gt;将自动换行。&lt;/li&gt;
-  &lt;li&gt;过长的单词它不会自动换行，且会超出画面区域。&lt;br&gt;
+  &lt;li&gt;&lt;b&gt;无法通过“回车键”&lt;/b&gt;换行（您需要使用空格）。&lt;br&gt;&lt;/li&gt;
+  &lt;li&gt;一行超过&lt;b&gt;27个字符&lt;/b&gt;将自动换行。&lt;/li&gt;
+  &lt;li&gt;一行内存在过长的单词时，不会自动换行，且会超出画面区域。&lt;br&gt;
 请分隔单词以避免超出画面区域。&lt;/li&gt;
   &lt;li&gt;不得包含Unicode字符：&lt;b&gt;只能使用ASCII字符&lt;/b&gt;。&lt;/li&gt;
 &lt;/ul&gt;</translation>
@@ -2064,11 +2064,11 @@ So, please break these words to avoid this.&lt;/li&gt;
   &lt;li&gt;&lt;b&gt;Preprocessor&apos;s macros&lt;/b&gt; can be used.&lt;/li&gt;
 &lt;/ul&gt;</source>
         <comment>Message box behaviour explanation</comment>
-        <translation>&lt;b&gt;月尘或TheXTech&lt;/b&gt;的文字信息存在下列增强特性：
+        <translation>&lt;b&gt;月尘或TheXTech引擎&lt;/b&gt;的文字信息拥有下列增强特性：
 &lt;ul&gt;
   &lt;li&gt;可以通过“回车键”换行。&lt;/li&gt;
   &lt;li&gt;一行超过&lt;b&gt;27个字符&lt;/b&gt;将自动换行。&lt;/li&gt;
-  &lt;li&gt;过长的单词也将会自动换行&lt;/li&gt;
+  &lt;li&gt;一行内存在过长的单词时，也将会自动换行。&lt;/li&gt;
   &lt;li&gt;可以使用&lt;b&gt;任意Unicode&lt;/b&gt;字符。&lt;/li&gt;
   &lt;li&gt;支持&lt;b&gt;预处理信息字段&lt;/b&gt;。&lt;/li&gt;
 &lt;/ul&gt;</translation>
@@ -3656,7 +3656,7 @@ Do you want to continue?</source>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation>旧版的强制卷轴场景设置，用于老旧的 SMBX64 关卡文件，或从旧版格式转换为现代格式。请在面向 SMBX64 或更早的引擎制作的关卡文件使用这些设置。这些设置同样适用于现代引擎（例如 TheXTech、月尘引擎等）。如果您的关卡中使用现代强制卷轴模式，旧版的强制卷轴场景设置将被忽略。如果您保存为 SMBX-38A 格式，则这些设置将会丢失。可在“场景设置”中找到“强制卷轴场景”。</translation>
+        <translation>旧版的强制卷轴场景设置，用于老旧的 SMBX64 关卡文件，或从旧格式转换为新格式的关卡文件。请在面向 SMBX64 或更早的引擎制作的关卡文件使用这些设置。这些设置同样适用于现代引擎（例如 TheXTech、月尘引擎等）。如果您的关卡中使用了新版强制卷轴，旧版强制卷轴场景设置将被忽略；如果您保存为 SMBX-38A 格式，则这些设置将会丢失。您可以通过“场景设置”标签中查找“更改强制卷轴速度”来设置新版强制卷轴。</translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
