@@ -41,6 +41,10 @@
                 <langSet xml:lang="hu"><tig><term>NJK</term></tig></langSet>
                 <descrip>A rövidítés tartalmának fordítása. / Translation of the content of the abbreviation.</descrip>
             </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>Moondust</term></tig></langSet>
+                <langSet xml:lang="hu"><tig><term></term></tig></langSet>
+            </termEntry>
         </body>
     </text>
 </martif>

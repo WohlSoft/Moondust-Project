@@ -14,6 +14,10 @@
                 <langSet xml:lang="en"><tig><term>Level</term></tig></langSet>
                 <langSet xml:lang="bg"><tig><term>Ниво</term></tig></langSet>
             </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>Moondust</term></tig></langSet>
+                <langSet xml:lang="bg"><tig><term></term></tig></langSet>
+            </termEntry>
         </body>
     </text>
 </martif>
