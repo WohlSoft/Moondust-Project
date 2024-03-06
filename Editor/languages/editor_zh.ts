@@ -1987,7 +1987,7 @@ it&apos;s only used for the preview convenience in this dialogue.</source>
         <source>Preprocessor is the sepecial feature of TheXTech engine since the version 1.3.6.1 which allows
 you to make the message box being different depending on various factors, for example,
 depending on which playable character is used.</source>
-        <translation>预处理信息字段是TheXTech1.3.6.1及更高版本的特性，它可以根据相关的条件
+        <translation>预处理信息字段是TheXTech1.3.6.1及更高版本的功能，它可以根据相关的条件
 来确定不同的信息，例如选用那个角色游玩时显示的不同信息。</translation>
     </message>
     <message>
@@ -2047,7 +2047,7 @@ So, please break these words to avoid this.&lt;/li&gt;
         <comment>Message box behaviour explanation</comment>
         <translation>&lt;b&gt;SMBX1.3和X2&lt;/b&gt;的文字信息存在下列限制：
 &lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;无法通过“回车键”&lt;/b&gt;换行（您需要使用空格）。&lt;br&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;无法通过“回车键”&lt;/b&gt;换行（您需要使用空格）。&lt;/li&gt;
   &lt;li&gt;一行超过&lt;b&gt;27个字符&lt;/b&gt;将自动换行。&lt;/li&gt;
   &lt;li&gt;一行内存在过长的单词时，不会自动换行，且会超出画面区域。&lt;br&gt;
 请分隔单词以避免超出画面区域。&lt;/li&gt;
@@ -2064,7 +2064,7 @@ So, please break these words to avoid this.&lt;/li&gt;
   &lt;li&gt;&lt;b&gt;Preprocessor&apos;s macros&lt;/b&gt; can be used.&lt;/li&gt;
 &lt;/ul&gt;</source>
         <comment>Message box behaviour explanation</comment>
-        <translation>&lt;b&gt;月尘或TheXTech引擎&lt;/b&gt;的文字信息拥有下列增强特性：
+        <translation>&lt;b&gt;月尘或TheXTech引擎&lt;/b&gt;的文字信息拥有下列增强功能：
 &lt;ul&gt;
   &lt;li&gt;可以通过“回车键”换行。&lt;/li&gt;
   &lt;li&gt;一行超过&lt;b&gt;27个字符&lt;/b&gt;将自动换行。&lt;/li&gt;
@@ -3091,7 +3091,7 @@ Otherwise, it will be very limited.</source>
     </message>
     <message>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation>如果你的显卡不支持 OpenGL 渲染或 LunaLua 异常终止，可禁用 OpenGL 渲染，将改用 GDI 渲染，但会大量削弱特性。</translation>
+        <translation>如果你的显卡不支持 OpenGL 渲染，或 LunaLua 异常终止，可禁用 OpenGL 渲染，将使用 GDI 渲染，但会严重削弱运行效果。</translation>
     </message>
     <message>
         <source>Keep running in background</source>
