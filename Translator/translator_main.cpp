@@ -129,10 +129,10 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
         auto &index = ar.first();
         QString key = index.data(FilesListModel::R_KEY).toString();
         int type = index.data(FilesListModel::R_TYPE).toInt();
-        m_filesStringsModel->setData("metadata", type, key);
+        m_filesStringsModel->setData(m_recentLang, type, key);
 
         if(type == FilesListModel::T_LEVEL)
-            m_dialoguesListModel->setData("metadata", key);
+            m_dialoguesListModel->setData(m_recentLang, key);
         else
             m_dialoguesListModel->clear();
     });
@@ -211,9 +211,9 @@ bool TranslatorMain::eventFilter(QObject *object, QEvent *event)
         if(object == ui->sourceLineRO || object == ui->sourceLineNote)
         {
             m_recentLang = "metadata";
+            syncDialoguesListLang();
+            syncStringsListStatus();
             ui->previewZone->setText(ui->sourceLineRO->toPlainText());
-            for(auto &d : m_dialogueItems)
-                d->setLang(m_recentLang);
         }
     }
 
@@ -504,6 +504,17 @@ void TranslatorMain::syncTranslationFieldsContent(const QItemSelection &selected
     updateTranslationFields(index.sibling(index.row(), FilesStringsModel::C_TITLE));
 }
 
+void TranslatorMain::syncDialoguesListLang()
+{
+    for(auto &d : m_dialogueItems)
+        d->setLang(m_recentLang);
+}
+
+void TranslatorMain::syncStringsListStatus()
+{
+    m_filesStringsModel->updateStatus(m_recentLang);
+}
+
 void TranslatorMain::syncDialoguesList(const QItemSelection &selected, const QItemSelection &)
 {
     auto ar = selected.indexes();
@@ -698,11 +709,15 @@ void TranslatorMain::updateTranslateFields()
                          [this](const QString &lang)->void
         {
             if(m_recentLang != lang)
+            {
                 m_recentLang = lang;
-
-            for(auto &d : m_dialogueItems)
-                d->setLang(lang);
+                syncDialoguesListLang();
+                syncStringsListStatus();
+            }
         });
+
+        QObject::connect(f.data(), &TranslateField::trStateUpdated,
+                         this, &TranslatorMain::syncStringsListStatus);
 
         ui->translationLayout->insertWidget(ui->translationLayout->count() - 1, f.data());
         m_translateFields.insert(k.key(), std::move(f));

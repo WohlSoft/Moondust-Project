@@ -37,10 +37,17 @@ TranslateField::TranslateField(TranslateProject *project, QWidget *parent) :
                      this,
                      [this]()->void
     {
+        const QString &l = ui->translationText->toPlainText();
         if(m_tr)
-            m_tr->text = ui->translationText->toPlainText();
-        emit textChanged(ui->translationText->toPlainText());
+            m_tr->text = l;
+        emit textChanged(l);
         emit itemActivated(m_lang);
+
+        if(m_prevEmpty != l.isEmpty())
+        {
+            m_prevEmpty = l.isEmpty();
+            emit trStateUpdated();
+        }
     });
 
     QObject::connect(ui->note,
@@ -59,6 +66,7 @@ TranslateField::TranslateField(TranslateProject *project, QWidget *parent) :
     {
         if(m_tr)
             m_tr->unfinished = !b;
+        emit trStateUpdated();
     });
 
     m_highLighter = s_makeMsgBoxMacrosHighlighter(ui->translationText->document());
@@ -107,6 +115,7 @@ void TranslateField::setText(const QString &text, const QString &note, bool fini
 {
     ui->translationText->blockSignals(true);
     ui->translationText->setPlainText(text);
+    m_prevEmpty = text.isEmpty();
     ui->translationText->blockSignals(false);
     ui->translationText->setEnabled(true);
     ui->note->blockSignals(true);

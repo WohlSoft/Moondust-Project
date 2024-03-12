@@ -952,10 +952,10 @@ void TextDataProcessor::recountStats(TranslateProject &proj, TranslationData &tr
 
 }
 
-bool TextDataProcessor::saveJSONs(const QString &directory, TranslateProject &proj)
+bool TextDataProcessor::saveJSONs(const QString &directory, const TranslateProject &proj)
 {
     bool ret = true;
-    auto &origin = proj["metadata"];
+    const auto &origin = proj["metadata"];
     bool useTrId = origin.useTrId;
 
     for(auto it = proj.begin(); it != proj.end(); ++it)

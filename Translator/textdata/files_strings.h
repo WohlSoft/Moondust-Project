@@ -31,10 +31,12 @@ class FilesStringsModel : public QAbstractTableModel
     Q_OBJECT
 
     TranslateProject *m_project = nullptr;
-    TranslationData *m_language = nullptr;
-    TranslationData_Level *m_level = nullptr;
-    TranslationData_World *m_world = nullptr;
-    TranslationData_Script *m_script = nullptr;
+    const TranslationData *m_language = nullptr;
+    const TranslationData_Level *m_level = nullptr;
+    const TranslationData_World *m_world = nullptr;
+    const TranslationData_Script *m_script = nullptr;
+    int m_recentSection = -1;
+    QString m_recentKey;
 
     struct TrView
     {
@@ -50,6 +52,8 @@ class FilesStringsModel : public QAbstractTableModel
 
     typedef QVector<TrView> TrViewList;
     TrViewList m_view;
+
+    static int stateFromTrLine(const TrLine &line);
 
 public:
     explicit FilesStringsModel(TranslateProject *project, QObject *parent = nullptr);
@@ -75,6 +79,8 @@ public:
 
     void setData(const QString &lang, int s, const QString &key);
     void clear();
+
+    void updateStatus(const QString &lang);
 
     // Header:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;

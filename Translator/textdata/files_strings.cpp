@@ -23,6 +23,18 @@
 
 #include "files_strings.h"
 
+int FilesStringsModel::stateFromTrLine(const TrLine &line)
+{
+    if(line.text.isEmpty())
+        return TextTypes::ST_BLANK;
+    else if(line.unfinished && !line.text.isEmpty())
+        return TextTypes::ST_UNFINISHED;
+    else if(line.vanished && !line.text.isEmpty())
+        return TextTypes::ST_VANISHED;
+    else
+        return TextTypes::ST_FINISHED;
+}
+
 FilesStringsModel::FilesStringsModel(TranslateProject *project, QObject *parent)
     : QAbstractTableModel(parent)
     , m_project(project)
@@ -35,29 +47,37 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
     m_level = nullptr;
     m_world = nullptr;
     m_script = nullptr;
+    m_recentSection = -1;
+    m_recentKey.clear();
     m_view.clear();
+
+    TranslationData &origin = (*m_project)["metadata"];
+    TranslationData &cur = (*m_project)[lang];
+    const TranslationData_Level *cur_level = nullptr;
+    const TranslationData_World *cur_world = nullptr;
+    const TranslationData_Script *cur_script = nullptr;
 
     switch(s)
     {
     case TextTypes::S_WORLD:
-        m_world = &(*m_project)[lang].worlds[key];
-        for(auto w = m_world->level_titles.begin() ; w != m_world->level_titles.end(); ++w)
+        m_recentSection = s;
+        m_recentKey = key;
+        m_world = &origin.worlds[key];
+        cur_world = cur.worlds.contains(key) ? &cur.worlds[key] : &origin.worlds[key];
+
+        for(auto w = m_world->level_titles.cbegin() ; w != m_world->level_titles.cend(); ++w)
         {
             TrView e;
+            const auto &cur_item = cur_world->level_titles.contains(w.key()) ?
+                                       cur_world->level_titles[w.key()] :
+                                       w.value();
             e.source = s;
             e.type = TextTypes::WDT_LEVEL;
             e.title = w->title.text;
             e.tr_note = w->title.note;
             e.root = key;
             e.key = w.key();
-            if(e.title.isEmpty())
-                e.state = TextTypes::ST_BLANK;
-            else if(w->title.unfinished && !e.title.isEmpty())
-                e.state = TextTypes::ST_UNFINISHED;
-            else if(w->title.vanished && !e.title.isEmpty())
-                e.state = TextTypes::ST_VANISHED;
-            else
-                e.state = TextTypes::ST_FINISHED;
+            e.state = stateFromTrLine(cur_item.title);
             e.note = w->filename;
             m_view.push_back(e);
         }
@@ -71,12 +91,7 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             e.tr_note = m_world->title.note;
             e.root = key;
             e.key = 0;
-            if(e.title.isEmpty())
-                e.state = TextTypes::ST_BLANK;
-            else if(m_world->title.unfinished && !e.title.isEmpty())
-                e.state = TextTypes::ST_UNFINISHED;
-            else
-                e.state = TextTypes::ST_FINISHED;
+            e.state = stateFromTrLine(cur_world->title);
             e.note = tr("Episode title");
             m_view.push_back(e);
         }
@@ -90,12 +105,7 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             e.tr_note = m_world->credits.note;
             e.root = key;
             e.key = 0;
-            if(e.title.isEmpty())
-                e.state = TextTypes::ST_BLANK;
-            else if(m_world->credits.unfinished && !e.title.isEmpty())
-                e.state = TextTypes::ST_UNFINISHED;
-            else
-                e.state = TextTypes::ST_FINISHED;
+            e.state = stateFromTrLine(cur_world->credits);
             e.note = tr("Episode credits");
             m_view.push_back(e);
         }
@@ -109,24 +119,25 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
         break;
 
     case TextTypes::S_LEVEL:
-        m_level = &(*m_project)[lang].levels[key];
-        for(auto w = m_level->events.begin() ; w != m_level->events.end(); ++w)
+        m_recentSection = s;
+        m_recentKey = key;
+        m_level = &origin.levels[key];
+        cur_level = cur.levels.contains(key) ? &cur.levels[key] : &origin.levels[key];
+
+        for(auto w = m_level->events.cbegin() ; w != m_level->events.cend(); ++w)
         {
             TrView e;
+            const auto &cur_item = cur_level->events.contains(w.key()) ?
+                                       cur_level->events[w.key()] :
+                                       w.value();
+
             e.source = s;
             e.type = TextTypes::LDT_EVENT;
             e.title = w->message.text;
             e.tr_note = w->message.note;
             e.root = key;
             e.key = w.key();
-            if(e.title.isEmpty())
-                e.state = TextTypes::ST_BLANK;
-            else if(w->message.unfinished && !e.title.isEmpty())
-                e.state = TextTypes::ST_UNFINISHED;
-            else if(w->message.vanished && !e.title.isEmpty())
-                e.state = TextTypes::ST_VANISHED;
-            else
-                e.state = TextTypes::ST_FINISHED;
+            e.state = stateFromTrLine(cur_item.message);
             e.note = QString::number(w->event_index);
             e.note = QString("Event-%1").arg(w->event_index);
             m_view.push_back(e);
@@ -135,20 +146,17 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
         for(auto w = m_level->npc.begin() ; w != m_level->npc.end(); ++w)
         {
             TrView e;
+            const auto &cur_item = cur_level->npc.contains(w.key()) ?
+                                       cur_level->npc[w.key()] :
+                                       w.value();
+
             e.source = s;
             e.type = TextTypes::LDT_NPC;
             e.title = w->talk.text;
             e.root = key;
             e.tr_note = w->talk.note;
             e.key = w.key();
-            if(e.title.isEmpty())
-                e.state = TextTypes::ST_BLANK;
-            else if(w->talk.unfinished && !e.title.isEmpty())
-                e.state = TextTypes::ST_UNFINISHED;
-            else if(w->talk.vanished && !e.title.isEmpty())
-                e.state = TextTypes::ST_VANISHED;
-            else
-                e.state = TextTypes::ST_FINISHED;
+            e.state = stateFromTrLine(cur_item.talk);
             e.note = QString("NPC-%1 [idx=%2]").arg(w->npc_id).arg(w->npc_index);
             m_view.push_back(e);
         }
@@ -162,12 +170,7 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
             e.tr_note = m_level->title.note;
             e.root = key;
             e.key = 0;
-            if(e.title.isEmpty())
-                e.state = TextTypes::ST_BLANK;
-            else if(m_level->title.unfinished && !e.title.isEmpty())
-                e.state = TextTypes::ST_UNFINISHED;
-            else
-                e.state = TextTypes::ST_FINISHED;
+            e.state = stateFromTrLine(cur_level->title);
             e.note = tr("Level title");
             m_view.push_back(e);
         }
@@ -181,24 +184,25 @@ void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
         break;
 
     case TextTypes::S_SCRIPT:
-        m_script = &(*m_project)[lang].scripts[key];
-        for(auto w = m_script->lines.begin() ; w != m_script->lines.end(); ++w)
+        m_recentSection = s;
+        m_recentKey = key;
+        m_script = &origin.scripts[key];
+        cur_script = cur.scripts.contains(key) ? &cur.scripts[key] : &origin.scripts[key];
+
+        for(auto w = m_script->lines.cbegin() ; w != m_script->lines.cend(); ++w)
         {
             TrView e;
+            const auto &cur_item = cur_script->lines.contains(w.key()) ?
+                                       cur_script->lines[w.key()] :
+                                       w.value();
+
             e.source = s;
             e.type = TextTypes::SDT_LINE;
             e.title = w->translation.text;
             e.tr_note = w->translation.note;
             e.root = key;
             e.key = w.key();
-            if(e.title.isEmpty())
-                e.state = TextTypes::ST_BLANK;
-            else if(w->translation.unfinished && !e.title.isEmpty())
-                e.state = TextTypes::ST_UNFINISHED;
-            else if(w->translation.vanished && !e.title.isEmpty())
-                e.state = TextTypes::ST_VANISHED;
-            else
-                e.state = TextTypes::ST_FINISHED;
+            e.state = stateFromTrLine(cur_item.translation);
             e.note = e.note = QString("Line %1").arg(w->line);
             m_view.push_back(e);
         }
@@ -223,6 +227,103 @@ void FilesStringsModel::clear()
     m_script = nullptr;
     m_view.clear();
     endResetModel();
+}
+
+void FilesStringsModel::updateStatus(const QString &lang)
+{
+    if(m_recentSection < 0 || m_view.isEmpty())
+        return;
+
+    const QString &key = m_recentKey;
+    TranslationData &origin = (*m_project)["metadata"];
+    TranslationData &cur = (*m_project)[lang];
+    const TranslationData_Level *cur_level = nullptr;
+    const TranslationData_World *cur_world = nullptr;
+    const TranslationData_Script *cur_script = nullptr;
+    int i;
+
+    switch(m_recentSection)
+    {
+    case TextTypes::S_WORLD:
+        cur_world = cur.worlds.contains(key) ? &cur.worlds[key] : &origin.worlds[key];
+        i = 0;
+
+        for(auto it = m_view.begin(); it != m_view.end(); ++it, ++i)
+        {
+            TrView &o = *it;
+            switch(o.type)
+            {
+            case TextTypes::WDT_LEVEL:
+                if(!cur_world->level_titles.contains(o.key))
+                    continue;
+                o.state = stateFromTrLine(cur_world->level_titles[o.key].title);
+                emit dataChanged(index(i, C_STATE), index(i, C_STATE));
+                break;
+
+            case TextTypes::WDT_TITLE:
+                o.state = stateFromTrLine(cur_world->title);
+                emit dataChanged(index(i, C_STATE), index(i, C_STATE));
+                break;
+
+            case TextTypes::WDT_CREDITS:
+                o.state = stateFromTrLine(cur_world->credits);
+                emit dataChanged(index(i, C_STATE), index(i, C_STATE));
+                break;
+            }
+        }
+        break;
+
+    case TextTypes::S_LEVEL:
+        cur_level = cur.levels.contains(key) ? &cur.levels[key] : &origin.levels[key];
+        i = 0;
+
+        for(auto it = m_view.begin(); it != m_view.end(); ++it, ++i)
+        {
+            TrView &o = *it;
+            switch(o.type)
+            {
+            case TextTypes::LDT_EVENT:
+                if(!cur_level->events.contains(o.key))
+                    continue;
+                o.state = stateFromTrLine(cur_level->events[o.key].message);
+                emit dataChanged(index(i, C_STATE), index(i, C_STATE));
+                break;
+
+            case TextTypes::LDT_NPC:
+                if(!cur_level->npc.contains(o.key))
+                    continue;
+                o.state = stateFromTrLine(cur_level->npc[o.key].talk);
+                emit dataChanged(index(i, C_STATE), index(i, C_STATE));
+                break;
+
+            case TextTypes::LDT_TITLE:
+                o.state = stateFromTrLine(cur_level->title);
+                emit dataChanged(index(i, C_STATE), index(i, C_STATE));
+                break;
+            }
+        }
+        break;
+
+    case TextTypes::S_SCRIPT:
+        cur_script = cur.scripts.contains(key) ? &cur.scripts[key] : &origin.scripts[key];
+        i = 0;
+
+        for(auto it = m_view.begin(); it != m_view.end(); ++it, ++i)
+        {
+            TrView &o = *it;
+            switch(o.type)
+            {
+            case TextTypes::SDT_LINE:
+                if(!cur_script->lines.contains(o.key))
+                    continue;
+                o.state = stateFromTrLine(cur_script->lines[o.key].translation);
+                emit dataChanged(index(i, C_STATE), index(i, C_STATE));
+                break;
+            }
+        }
+
+        break;
+    }
 }
 
 QVariant FilesStringsModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -251,7 +352,7 @@ QVariant FilesStringsModel::headerData(int section, Qt::Orientation orientation,
         case C_TYPE:
             return tr("Type");
 //        case C_STATE:
-//            return tr("Satate");
+//            return tr("State");
         case C_TITLE:
             return tr("Title");
         case C_NOTE:

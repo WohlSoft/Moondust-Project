@@ -42,6 +42,7 @@ class TranslateField : public QFrame
     int m_type = -1;
     int m_key = -1;
     TrLine *m_tr = nullptr;
+    bool m_prevEmpty = false;
 
     SimpleHighlighter *m_highLighter = nullptr;
 
@@ -63,6 +64,7 @@ public:
 signals:
     void textChanged(const QString &newText);
     void itemActivated(const QString &lang);
+    void trStateUpdated(); // Call when between empty <> !empty, or when "finished" checked/unchecked
 
 protected:
     void changeEvent(QEvent *e);

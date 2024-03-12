@@ -40,7 +40,7 @@ private:
     void importWorld(TranslationData &origin, const QString &path, const QString &shortPath);
     void importScript(TranslationData &origin, const QString &path, const QString &shortPath);
     void recountStats(TranslateProject &proj, TranslationData &tr, bool isOrigin);
-    bool saveJSONs(const QString &directory, TranslateProject &proj);
+    bool saveJSONs(const QString &directory, const TranslateProject &proj);
     void updateTranslation(TranslateProject &proj, const QString &trName);
     void loadTranslation(TranslateProject &proj, const QString &trName, const QString &filePath);
 };

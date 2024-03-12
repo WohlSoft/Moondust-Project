@@ -101,6 +101,8 @@ private:
     void resetTranslationFields();
     void syncTranslationFieldsContent();
     void syncTranslationFieldsContent(const QItemSelection &selected, const QItemSelection &);
+    void syncDialoguesListLang();
+    void syncStringsListStatus();
 
     void syncDialoguesList(const QItemSelection &selected, const QItemSelection &);
 
