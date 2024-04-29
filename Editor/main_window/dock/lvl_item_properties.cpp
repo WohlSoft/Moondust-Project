@@ -2106,14 +2106,16 @@ void LvlItemProperties::on_PROPS_NPCSpecialSpin_Auto_toggled(bool checked)
 void LvlItemProperties::processNpcContainerButton(QPushButton *btn)
 {
     int npcID = 0;
+    bool isLevelWindow = mw()->activeChildWindow() == MainWindow::WND_Level;
+    LevelEdit *edit = mw()->activeLvlEditWin();
 
     if(m_currentNpcArrayId < 0)
     {
         npcID = int(LvlPlacingItems::npcSet.contents);
     }
-    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
+    else if(isLevelWindow)
     {
-        QList<QGraphicsItem *> items1 = mw()->activeLvlEditWin()->scene->selectedItems();
+        QList<QGraphicsItem *> items1 = edit->scene->selectedItems();
         for(QGraphicsItem *targetItem : items1)
         {
             if((targetItem->data(ITEM_TYPE).toString() == "NPC") && ((targetItem->data(ITEM_ARRAY_ID).toInt() == m_currentNpcArrayId)))
@@ -2126,6 +2128,7 @@ void LvlItemProperties::processNpcContainerButton(QPushButton *btn)
 
     ItemSelectDialog *npcList = new ItemSelectDialog(&mw()->configs, ItemSelectDialog::TAB_NPC, 0, 0, 0, npcID, 0, 0, 0, 0, 0, this);
     util::DialogToCenter(npcList, true);
+
     if(npcList->exec() == QDialog::Accepted)
     {
         int selected_npc = npcList->npcID;
@@ -2150,13 +2153,14 @@ void LvlItemProperties::processNpcContainerButton(QPushButton *btn)
                 g_intEngine.sendPlacingNPC(LvlPlacingItems::npcSet);
             }
         }
-        else if(mw()->activeChildWindow() == MainWindow::WND_Level)
+        else if(isLevelWindow)
         {
+            Q_ASSERT(edit);
             LevelData selData;
             LevelNPC npc;
-            LevelEdit *edit = mw()->activeLvlEditWin();
             QList<QGraphicsItem *> items = edit->scene->selectedItems();
             edit->LvlData.meta.modified = true;
+
             for(auto *item : items)
             {
                 if((item->data(ITEM_TYPE).toString() == "NPC")/*&&((item->data(ITEM_ARRAY_ID).toInt()==blockPtr))*/)
@@ -2170,17 +2174,20 @@ void LvlItemProperties::processNpcContainerButton(QPushButton *btn)
                     npc = npcI->m_data;
                 }
             }
+
             edit->scene->m_history->addChangeSettings(selData,
                     ((ui->PROPS_NPCContaiter == btn) ?
                      HistorySettings::SETTING_CHANGENPC :
                      HistorySettings::SETTING_SPECIAL_DATA),
                     QVariant(selected_npc));
-            m_internalLock = true;
+
+            m_internalLock = true;            
             if(items.size() > 0)
                 refreshFirstNpcSpecialOption(npc);
             m_internalLock = false;
         }
     }
+
     delete npcList;
 }
 
