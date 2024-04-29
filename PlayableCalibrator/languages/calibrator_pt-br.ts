@@ -6,24 +6,24 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="20"/>
         <source>Animation editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor de animações</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="163"/>
         <location filename="../animator/animation_edit.ui" line="183"/>
         <location filename="../animator/animation_edit.ui" line="238"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="65"/>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Pré-visualizar</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="170"/>
         <source>Animation name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome da animmação</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="252"/>
@@ -34,14 +34,14 @@
         <location filename="../animator/animation_edit.ui" line="111"/>
         <location filename="../animator/animation_edit.ui" line="134"/>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Definir</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="206"/>
         <location filename="../animator/animation_edit.ui" line="222"/>
         <location filename="../animator/animation_edit.ui" line="272"/>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Apagar</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="190"/>
@@ -71,22 +71,22 @@
     <message>
         <location filename="../animator/animation_edit.cpp" line="358"/>
         <source>Empty animation name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome da animação vazio</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="359"/>
         <source>Animation name is empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>O nome da animação esta vazio!</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="369"/>
         <source>Animation exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Animação existente</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="370"/>
         <source>Animation with &apos;%1&apos; name already exist!</source>
-        <translation type="unfinished"></translation>
+        <translation>Uma animação com o nome&apos;%1&apos; já existe!</translation>
     </message>
 </context>
 <context>
@@ -94,37 +94,37 @@
     <message>
         <location filename="../animator/animator.ui" line="14"/>
         <source>Animator</source>
-        <translation type="unfinished"></translation>
+        <translation>Animador</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="24"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Direção</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="33"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Esquerda</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="43"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Direita</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="160"/>
         <source>Edit animations</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar animações</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="125"/>
         <source>Frame speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Velocidade do Frame:</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="141"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Animação</translation>
     </message>
 </context>
 <context>
@@ -132,22 +132,22 @@
     <message>
         <location filename="../calibration_main.ui" line="437"/>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Altura</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="500"/>
         <source>Offset relative to player&apos;s back (don&apos;t forget to set left or right direction to define source side)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Deslocamento relativo a costa do jogador (escolha Esquerda ou Direita para o lado da origem)</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="414"/>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Largura</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="424"/>
         <source>Width of player&apos;s collision box (hitbox)</source>
-        <translation type="unfinished"></translation>
+        <translation>Largura da caixa de colisão do jogador (hitbox)</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="516"/>

@@ -2419,7 +2419,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Right</source>
-        <translation>Esquerda</translation>
+        <translation>Direita</translation>
     </message>
     <message>
         <source>Remove</source>

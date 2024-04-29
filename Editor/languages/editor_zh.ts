@@ -4539,7 +4539,7 @@ to enter this warp</source>
     <message>
         <source>If this setting is enabled, even if this warp leads to another level, the
 number of existing and collected stars in the level will not be shown.</source>
-        <translation>启用此设置后，将不显示已收集
+        <translation>勾选此项后，将不显示已收集
 的星星数量和总星星数量。</translation>
     </message>
     <message>
@@ -4667,8 +4667,8 @@ Measured in pixels per 1/65 seconds.</source>
     <message>
         <source>Target coordinates of player on the world map
 when you exit from a level through this warp.</source>
-        <translation>玩家在大地图上的目标坐标
-当您通过此扭曲从关卡退出时。</translation>
+        <translation>通过传送点离开关卡时
+玩家所在的大地图位置。</translation>
     </message>
     <message>
         <source>Y:</source>
@@ -4690,7 +4690,7 @@ when you exit from a level through this warp.</source>
         <source>Entering this warp ends the current level
 If this flag is enabled, you can only place a warp entrance.</source>
         <translation>进入此传送点时过关。
-如果开启此选项，您只能放置入口点。</translation>
+如果勾选此选项，您只能放置入口点。</translation>
     </message>
     <message>
         <source>To other level</source>
@@ -4703,7 +4703,7 @@ If this flag is enabled, you can only place a warp exit.</source>
         <translatorcomment>翻译的不怎么样……</translatorcomment>
         <translation>防止进入此传送点时使用此出口点。
 用于传送到另一关卡。
-如果开启此选项，您只能放置出口点。</translation>
+如果勾选此选项，您只能放置出口点。</translation>
     </message>
     <message>
         <source>From other level</source>
