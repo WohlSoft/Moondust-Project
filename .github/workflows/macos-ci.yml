@@ -19,7 +19,7 @@ jobs:
         config:
         - {
             name: "x86_64",
-            os: macos-latest-large,
+            os: macos-13,
             extra_path: "/Users/StaticQt/5.14.2/bin",
             build_type: "Release",
             upload_directory: "www/macosx/",
