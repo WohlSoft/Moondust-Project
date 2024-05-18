@@ -184,7 +184,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Autoscroll section</source>
-        <translation>强制卷轴场景</translation>
+        <translation>场景强制卷轴</translation>
     </message>
     <message>
         <source>Layer visibility</source>
@@ -680,7 +680,7 @@ File path: %3</source>
     </message>
     <message>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with this version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
-        <translation>此集成配置包的 API 版本低于 42，无法兼容当前版本的月尘开发工具包。从 API 42 版本起，集成配置包必须使用独立配置文件，而非覆盖 main.ini。</translation>
+        <translation>该集成配置包的 API 版本低于 42，无法兼容当前版本的月尘开发工具包。从 API 42 版本起，集成配置包必须使用独立配置文件，而不是覆盖 main.ini。</translation>
     </message>
     <message>
         <source>Legacy configuration package</source>
@@ -701,14 +701,13 @@ You can obtain the compatible Devkit by downloading the SMBX2 Beta5 or newer:&lt
 &lt;br&gt;
 &lt;br&gt;
 The Official Moondust Devkit has a support of the SMBX2 Beta4 and older only. However, you still can run any other configuration package and run the level tests using an SMBX2 engine from the outside.</source>
-        <translation>您使用的配置包是为SMBX2定制的。您需要使用修改版月尘工具包才能使用此配置包，与官方版本不兼容。
-若要使用此配置包，请使用一个由SMBX2开发人员管理的修改版编辑器加载它。
+        <translation>该配置包为 SMBX2 专用配置包，无法在官方版本的月尘工具包内使用。
+若要使用该配置包，请使用由SMBX2开发团队管理的修改版编辑器并加载它。&lt;br&gt;
 &lt;br&gt;
-&lt;br&gt;
-您可以在下方下载SMBX2 Beta 5及更高版本：&lt;br&gt;
+您可以在下方下载 SMBX2 Beta 5 及更高版本：&lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
-月尘官方工具包仅支持SMBX2 Beta 4及之前的版本。当然您也可以加载其他配置包，并通过外部工具进行SMBX2引擎的关卡测试。</translation>
+月尘工具包官方版本仅支持 SMBX2 Beta 4 及之前的版本。当然您也可以加载其他配置包，然后使用 SMBX2 引擎进行关卡测试。</translation>
     </message>
     <message>
         <source>Outdated</source>
@@ -755,7 +754,7 @@ You can download the compatible configuration package at here:&lt;br&gt;
 &lt;br&gt;
 Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
         <translation>您的配置包版本过旧，且不是兼容配置包。&lt;br&gt;
-此配置包的API版本低于最低需求，因此无法在当前版本使用。&lt;br&gt;
+该配置包的 API 版本低于最低需求，因此无法在当前版本下使用。&lt;br&gt;
 &lt;br&gt;
 请在下方下载一个兼容配置包：&lt;br&gt;
 &lt;br&gt;
@@ -3479,7 +3478,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Autoscroll section</source>
-        <translation>强制卷轴场景</translation>
+        <translation>场景强制卷轴</translation>
     </message>
     <message>
         <source>Section</source>
@@ -3651,12 +3650,12 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Autoscroll section (Legacy)</source>
-        <translation>强制卷轴场景（旧）</translation>
+        <translation>场景强制卷轴（旧）</translation>
     </message>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation>旧版的强制卷轴场景设置，用于老旧的 SMBX64 关卡文件，或从旧格式转换为新格式的关卡文件。请在面向 SMBX64 或更早的引擎制作的关卡文件使用这些设置。这些设置同样适用于现代引擎（例如 TheXTech、月尘引擎等）。如果您的关卡中使用了新版强制卷轴，旧版强制卷轴场景设置将被忽略；如果您保存为 SMBX-38A 格式，则这些设置将会丢失。您可以通过“场景设置”标签中查找“更改强制卷轴速度”来设置新版强制卷轴。</translation>
+        <translation>旧版场景强制卷轴设置，用于旧版 SMBX64 关卡文件，或从旧格式转换为新格式的关卡文件。请在面向 SMBX64 或更早的引擎制作的关卡文件使用该设置。该设置同样适用于现代引擎（例如 TheXTech、月尘引擎等）。另外，在 SMBX64 或更早的引擎下，该设置仅对场景 0 生效。如果您的关卡使用了新版强制卷轴设置，该设置将被忽略；如果您保存为 SMBX-38A 格式，该设置将会丢失。您可以通过“场景设置”标签中查找“更改强制卷轴速度”来设置新版强制卷轴。</translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
@@ -5818,7 +5817,7 @@ File not exist.</source>
     </message>
     <message>
         <source>Configuration is loaded with errors</source>
-        <translation>配置包有错误</translation>
+        <translation>配置包存在错误</translation>
     </message>
     <message>
         <source>Cannot create NPC config file:
@@ -5854,13 +5853,13 @@ The configuration pack was loaded, but contains errors.</source>
         <source>Editor cannot open files:
 Configuration package is loaded with errors.</source>
         <translation>无法打开部分文件：
-配置包已加载，但该配置包有错误。</translation>
+配置包已加载，但该配置包存在错误。</translation>
     </message>
     <message>
         <source>Cannot open file:
 The configuration pack was loaded, but contains errors.</source>
         <translation>无法打开文件：
-配置包已加载，但该配置包有错误。</translation>
+配置包已加载，但该配置包存在错误。</translation>
     </message>
     <message>
         <source>Can&apos;t open the file: %1</source>
@@ -6227,8 +6226,8 @@ Please save the file first.</source>
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
-        <translation>配置包已更换！
-您需要重新启动应用才能使用新配置包。要继续吗？</translation>
+        <translation>配置包更换完成！
+您需要重新启动程序才能使用新配置包。要继续吗？</translation>
     </message>
     <message>
         <source>Music change points</source>
@@ -6889,7 +6888,7 @@ Error description:
     </message>
     <message>
         <source>Autoscroll Layer</source>
-        <translation>强制卷轴场景</translation>
+        <translation>场景强制卷轴</translation>
     </message>
     <message>
         <source>Autoscroll Layer Speed Horizontal</source>
@@ -8125,9 +8124,9 @@ If you wish to create level/world specific tilesets with using of custom graphic
 
 您可以使用本工具创建图块集。图块集文件将保存在以下文件夹：
 %1
-可以作为此配置包的全局图块集使用。
+可以作为该配置包的全局图块集使用。
 
-如果您要创建的是包含自定义素材的关卡或大地图图块集，请打开图块集工具箱，然后找到“自定义”标签中的“新增图块集”。</translation>
+如果您要创建的是包含自定义素材的关卡或大地图图块集，请打开图块集工具箱，然后从“自定义”标签中查找“新增图块集”按钮。</translation>
     </message>
     <message>
         <source>Remove tileset</source>
@@ -8672,11 +8671,11 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Configuration package has errors</source>
-        <translation>配置包有错误</translation>
+        <translation>配置包存在错误</translation>
     </message>
     <message>
         <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
-        <translation>无法加载大地图 &quot;%1&quot;，因为配置包有错误。</translation>
+        <translation>无法加载大地图 &quot;%1&quot;，因为该配置包存在错误。</translation>
     </message>
 </context>
 <context>
