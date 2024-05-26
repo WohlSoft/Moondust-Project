@@ -1986,7 +1986,7 @@ it&apos;s only used for the preview convenience in this dialogue.</source>
         <source>Preprocessor is the sepecial feature of TheXTech engine since the version 1.3.6.1 which allows
 you to make the message box being different depending on various factors, for example,
 depending on which playable character is used.</source>
-        <translation>预处理信息字段是TheXTech1.3.6.1及更高版本的功能，它可以根据相关的条件
+        <translation>预处理信息字段是 TheXTech 1.3.6.1 及更高版本的功能，它可以根据相关的条件
 来确定不同的信息，例如选用那个角色游玩时显示的不同信息。</translation>
     </message>
     <message>
@@ -6271,11 +6271,11 @@ See %2 for more information.</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation>该关卡文件使用无法识别的配置包创建。这是因为该关卡使用的是另一个引擎而非 %1，因此可能造成部分砖块、NPC、脚本或其他对象不兼容，且您可能会遇到未如预期的结果或错误。
+        <translation>当前关卡文件是使用其他配置包制作的。这是因为该关卡使用的是另一个引擎而非 %1，因此可能造成部分砖块、NPC、脚本或其他对象不兼容，且您可能会遇到未如预期的结果或错误。
 
 文件名：%2
-关卡配置包编号：%3
-预期配置包编号：%4</translation>
+当前关卡配置包标识：%3
+当前程序配置包标识：%4</translation>
     </message>
     <message>
         <source>World map is incompatible</source>
@@ -6287,11 +6287,11 @@ Expected config pack ID: %4</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation>该大地图文件使用无法识别的配置包创建。这是因为该大地图使用的是另一个引擎而非 %1，因此可能造成部分地形、关卡对象、脚本或其他对象不兼容，且您可能会遇到未如预期的结果或错误。
+        <translation>当前大地图文件是使用其他配置包制作的。这是因为该大地图使用的是另一个引擎而非 %1，因此可能造成部分地形、关卡对象、脚本或其他对象不兼容，且您可能会遇到未如预期的结果或错误。
 
 文件名：%2
-关卡配置包编号：%3
-预期配置包编号：%4</translation>
+当前关卡配置包标识：%3
+当前程序配置包标识：%4</translation>
     </message>
     <message>
         <source>Running the 32-bit Editor a 64-bit processor</source>
@@ -7761,7 +7761,7 @@ Reason: %1
     </message>
     <message>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
-        <translation>允许实时编辑：在关卡中捕捉对象、放置新元素、在编辑器中选择和擦除。不支持执行已保存的关卡。</translation>
+        <translation>允许实时编辑：在关卡中捕捉对象、放置新元素、在编辑器中选择和擦除。如果是测试已保存的关卡，则该选项不生效。</translation>
     </message>
     <message>
         <source>Enable max FPS</source>
@@ -7801,7 +7801,7 @@ Reason: %1
     </message>
     <message>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
-        <translation>由于未找到 &quot;%1&quot;，因此无法启动 TheXTech。TheXTech 目录可能设置错误，请检查 TheXTech 目录。</translation>
+        <translation>由于未找到 &quot;%1&quot;，因此无法启动 TheXTech。TheXTech 所在文件夹可能设置错误，请检查 TheXTech 所在文件夹设置。</translation>
     </message>
     <message>
         <source>TheXtech start failed</source>
@@ -7910,17 +7910,17 @@ Arguments: %2</source>
     <message>
         <source>Save slot 1</source>
         <comment>Save slot sub-menu item.</comment>
-        <translation>存档1</translation>
+        <translation>存档 1</translation>
     </message>
     <message>
         <source>Save slot 2</source>
         <comment>Save slot sub-menu item.</comment>
-        <translation>存档2</translation>
+        <translation>存档 2</translation>
     </message>
     <message>
         <source>Save slot 3</source>
         <comment>Save slot sub-menu item.</comment>
-        <translation>存档3</translation>
+        <translation>存档 3</translation>
     </message>
     <message>
         <source>Modern OpenGL</source>
