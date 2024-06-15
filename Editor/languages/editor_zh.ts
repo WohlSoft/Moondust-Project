@@ -6430,11 +6430,11 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>offset y</source>
-        <translation>Y 偏差</translation>
+        <translation>纵向偏移</translation>
     </message>
     <message>
         <source>offset x</source>
-        <translation>X 偏差</translation>
+        <translation>横向偏移</translation>
     </message>
     <message>
         <source>Frame style</source>
@@ -6510,11 +6510,11 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>Grid offset X</source>
-        <translation>网格偏差 X</translation>
+        <translation>网格横向偏移</translation>
     </message>
     <message>
         <source>Grid offset Y</source>
-        <translation>网格偏差 Y</translation>
+        <translation>网格纵向偏移</translation>
     </message>
     <message>
         <source>Middle of cell by center</source>
