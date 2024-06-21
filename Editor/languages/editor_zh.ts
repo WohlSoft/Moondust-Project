@@ -680,12 +680,12 @@ File path: %3</source>
     </message>
     <message>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with this version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
-        <translation>该集成配置包的 API 版本低于 42，无法兼容当前版本的月尘开发工具包。从 API 42 版本起，集成配置包必须使用独立配置文件，而不是覆盖 main.ini。</translation>
+        <translation>该集成配置包的 API 版本低于 42，无法在当前版本的月尘开发工具包下使用。从 API 42 版本起，集成配置包必须使用独立配置文件，而不是覆盖 main.ini。</translation>
     </message>
     <message>
         <source>Legacy configuration package</source>
         <comment>Warning message box title</comment>
-        <translation>配置包版本过旧</translation>
+        <translation>旧版本配置包</translation>
     </message>
     <message>
         <source>Incompatible configuration package</source>
@@ -702,7 +702,7 @@ You can obtain the compatible Devkit by downloading the SMBX2 Beta5 or newer:&lt
 &lt;br&gt;
 The Official Moondust Devkit has a support of the SMBX2 Beta4 and older only. However, you still can run any other configuration package and run the level tests using an SMBX2 engine from the outside.</source>
         <translation>该配置包为 SMBX2 专用配置包，无法在官方版本的月尘工具包内使用。
-若要使用该配置包，请使用由SMBX2开发团队管理的修改版编辑器并加载它。&lt;br&gt;
+若要使用该配置包，请使用由 SMBX2 开发团队管理的修改版编辑器并加载它。&lt;br&gt;
 &lt;br&gt;
 您可以在下方下载 SMBX2 Beta 5 及更高版本：&lt;br&gt;
 %1&lt;br&gt;
@@ -737,7 +737,7 @@ Please download and install latest version of a configuration package:&lt;br&gt;
 &lt;br&gt;
 Download: %1&lt;br&gt;
 Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
-        <translation>您的配置包版本过旧。&lt;br&gt;
+        <translation>您的配置包是旧版本配置包。&lt;br&gt;
 编辑器即将启动，但您可能会遇到对象或设置的相关问题。&lt;br&gt;
 &lt;br&gt;
 请下载并安装最新版本的配置包：&lt;br&gt;
@@ -753,7 +753,7 @@ You can download the compatible configuration package at here:&lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
 Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
-        <translation>您的配置包版本过旧，且不是兼容配置包。&lt;br&gt;
+        <translation>您的配置包是不兼容的旧版本配置包。&lt;br&gt;
 该配置包的 API 版本低于最低需求，因此无法在当前版本下使用。&lt;br&gt;
 &lt;br&gt;
 请在下方下载一个兼容配置包：&lt;br&gt;
@@ -5058,7 +5058,7 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>LunaLUA scripts</source>
-        <translation>LunaLua 脚本</translation>
+        <translation>LunaLua 脚本（SMBX2）</translation>
     </message>
     <message>
         <source>Configuration</source>

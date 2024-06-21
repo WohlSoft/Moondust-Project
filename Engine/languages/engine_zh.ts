@@ -31,13 +31,13 @@
     <message id="ERR_CONFIG_DIR_MISSING_TTL">
         <location filename="../data_configs/config_manager.cpp" line="117"/>
         <source>Config pack directory error</source>
-        <translation>配置包目录错误</translation>
+        <translation>配置包文件夹错误</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING">
         <location filename="../data_configs/config_manager.cpp" line="119"/>
         <source>Config directory is not found at:
 %1</source>
-        <translation>未找到配置目录：
+        <translation>未找到配置文件夹：
 %1</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_TTL">
@@ -53,19 +53,19 @@
     <message id="ERR_CONFIG_ERROR_DATADIR_TTL">
         <location filename="../data_configs/config_manager.cpp" line="152"/>
         <source>Missing config pack data directory</source>
-        <translation>未找到配置包数据路径</translation>
+        <translation>未找到配置包数据文件夹</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_MSG">
         <location filename="../data_configs/config_manager.cpp" line="154"/>
         <source>Config pack data path not exists:
 %1</source>
-        <translation>配置包数据路径不存在：
+        <translation>配置包数据文件夹不存在：
 %1</translation>
     </message>
     <message id="WARNING_LEGACY_CONFIG_PACK_TTL">
         <location filename="../data_configs/config_manager.cpp" line="187"/>
         <source>Legacy configuration package</source>
-        <translation>配置包过旧</translation>
+        <translation>旧版本配置包</translation>
     </message>
     <message id="WARNING_LEGACY_CONFIG_PACK">
         <location filename="../data_configs/config_manager.cpp" line="194"/>
@@ -78,15 +78,15 @@ Download: %1
 
 Note: most of config packs are updates togeter with PGE,
 therefore you can use same link to get updated version.</source>
-        <translation>您的配置包版本过旧。
-编辑器即将启动，但您会在游戏中遇到问题。
+        <translation>您的配置包是旧版本配置包。
+游戏即将启动，但您可能会在游戏中遇到问题。
 
 请下载并安装最新版本的配置包：
 
 下载： %1
 
 注：部分配置包和月尘引擎同步更新，
-确保可以在同一链接里下载到新版本。</translation>
+因此您可以通过相同链接下载更新版本。</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
         <location filename="../data_configs/config_manager.cpp" line="247"/>
@@ -106,7 +106,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_UNHEXC_MSG">
         <location filename="../common_features/crash_handler.cpp" line="374"/>
         <source>Engine has crashed because accepted unhandled exception!</source>
-        <translation>发生未处理异常，因此引擎已停止运行！</translation>
+        <translation>发生未处理异常，引擎已停止运行！</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="386"/>
@@ -116,7 +116,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <location filename="../common_features/crash_handler.cpp" line="388"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation>由于内存不足，因此引擎已停止运行！请关闭其他程序后重新启动游戏。</translation>
+        <translation>由于内存不足，引擎已停止运行！请关闭其他程序后重新启动游戏。</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="424"/>
@@ -126,7 +126,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_TIMEOUT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="426"/>
         <source>Engine has abourted because alarm() time out!</source>
-        <translation>由于 alarm() 超时，因此引擎已停止运行！</translation>
+        <translation>由于 alarm() 超时，引擎已停止运行！</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="471"/>
@@ -136,7 +136,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_BUS_MSG">
         <location filename="../common_features/crash_handler.cpp" line="473"/>
         <source>Engine has crashed because a physical memory address error</source>
-        <translation>由于物理内存地址错误，因此引擎已停止运行</translation>
+        <translation>由于物理内存地址错误，引擎已停止运行</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="490"/>
@@ -146,7 +146,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_ILL_MSG">
         <location filename="../common_features/crash_handler.cpp" line="492"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
-        <translation>由于 CPU 指令错误，因此引擎已停止运行</translation>
+        <translation>由于 CPU 指令错误，引擎已停止运行</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="547"/>
@@ -156,7 +156,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_FPE_MSG">
         <location filename="../common_features/crash_handler.cpp" line="549"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
-        <translation>由于算法错误，因此引擎已停止运行！</translation>
+        <translation>由于算法错误，引擎已停止运行！</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="561"/>
@@ -166,7 +166,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_ABORT_TITLE.">
         <location filename="../common_features/crash_handler.cpp" line="563"/>
         <source>Engine has been aborted because critical error was occouped.</source>
-        <translation>由于致命错误，因此引擎已停止运行。</translation>
+        <translation>由于致命错误，引擎已停止运行。</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="608"/>
@@ -178,7 +178,7 @@ therefore you can use same link to get updated version.</source>
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
-        <translation>由于段落错误，因此引擎已停止运行。
+        <translation>由于段落错误，引擎已停止运行。
 请使用内置调试器进行调试并对最近的操作
 进行重试以获得更多的详细信息。</translation>
     </message>
@@ -361,7 +361,7 @@ Did you placed player start point (or entrance warp point) too far off of the se
     <message id="TESTSCR_CREDITS">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="396"/>
         <source>Credits</source>
-        <translation>作者</translation>
+        <translation>制作团队</translation>
     </message>
     <message id="TESTSCR_LOADING_SCREEN">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="398"/>
@@ -495,13 +495,13 @@ Fail to start world map
     <message id="WARNING_INCOMPATIBLE_WORLDMAP">
         <location filename="../main.cpp" line="333"/>
         <source>This world map is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
-        <translation>不兼容的大地图：您可能会遇到未如预期的结果或错误，详情查看日志文件。</translation>
+        <translation>不兼容的大地图：您可能会遇到未如预期的结果或错误。请查看日志文件了解详情。</translation>
     </message>
     <message id="WLD_ERROR_LVLCLOSED">
         <location filename="../main.cpp" line="352"/>
         <source>World map was closed with error.
 %1</source>
-        <translation>由于大地图有错误，因此大地图已关闭。
+        <translation>由于大地图存在错误，因此大地图已关闭。
 %1</translation>
     </message>
     <message id="MSG_START_LEVEL">
@@ -519,7 +519,7 @@ Fail to start world map
     <message id="WARNING_INCOMPATIBLE_LEVEL">
         <location filename="../main.cpp" line="510"/>
         <source>This level is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
-        <translation>不兼容的关卡：您可能会遇到未如预期的结果或错误，详情查看日志文件。</translation>
+        <translation>不兼容的关卡：您可能会遇到未如预期的结果或错误。请查看日志文件了解详情。</translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
         <location filename="../main.cpp" line="580"/>
@@ -534,31 +534,31 @@ Entrance point: %2</source>
 出口点：
 %1
 
-入口点 #：%2</translation>
+入口点：%2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
         <location filename="../main.cpp" line="649"/>
         <source>Level was closed with error.
 %1</source>
-        <translation>由于关卡有错误，因此关卡已关闭。
+        <translation>由于关卡存在错误，因此关卡已关闭。
 %1</translation>
     </message>
     <message id="VSYNC_ERROR_INFO">
         <location filename="../graphics/vsync_validator.cpp" line="77"/>
         <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
-        <translation>检测到帧率过高，为防止出现意外问题，垂直同步已关闭，请在你的显卡上开启垂直同步。</translation>
+        <translation>检测到帧率过高，为防止出现意外问题，垂直同步已关闭。请在你的显卡上开启垂直同步。</translation>
     </message>
     <message id="RENDERER_NO_OPENGL_ERROR">
         <location filename="../graphics/window.cpp" line="167"/>
         <source>Unable to find OpenGL support!
 Software renderer will be started.</source>
         <translation>您的显卡不支持 OpenGL！
-将使用软件渲染。</translation>
+图形渲染方式将使用软件渲染。</translation>
     </message>
     <message id="NO_RENDERER_ERROR">
         <location filename="../graphics/window.cpp" line="189"/>
         <source>Renderer is not selected!</source>
-        <translation>未选择渲染环境！</translation>
+        <translation>未选择图形渲染类型！</translation>
     </message>
     <message id="WINDOW_CREATE_ERROR">
         <location filename="../graphics/window.cpp" line="221"/>
@@ -576,7 +576,7 @@ Software renderer will be started.</source>
     <message id="RENDERER_CONTEXT_INIT_ERROR">
         <location filename="../graphics/window.cpp" line="296"/>
         <source>Unable to initialize renderer context!</source>
-        <translation>渲染环境初始化失败！</translation>
+        <translation>图形渲染初始化失败！</translation>
     </message>
 </context>
 </TS>
