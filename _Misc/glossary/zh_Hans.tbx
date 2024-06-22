@@ -25,6 +25,7 @@
             <termEntry>
                 <langSet xml:lang="en"><tig><term>Moondust</term></tig></langSet>
                 <langSet xml:lang="zh_Hans"><tig><term>月尘</term></tig></langSet>
+                <note from="translator">“月尘”是Moondust的中文译名。</note>
             </termEntry>
         </body>
     </text>
