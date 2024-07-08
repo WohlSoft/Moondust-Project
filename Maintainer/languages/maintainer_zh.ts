@@ -6,7 +6,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation>转换音频 (SoX)</translation>
+        <translation>通过 SoX 转换音频</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="301"/>
@@ -311,7 +311,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="279"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
-        <translation>未指定地图目录，请先选择地图目录。</translation>
+        <translation>未指定地图文件夹，请先选择地图文件夹。</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="316"/>
@@ -349,7 +349,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="77"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
-        <translation>未找到目录“%1”</translation>
+        <translation>未找到文件夹“%1”</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="81"/>
@@ -411,12 +411,12 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="311"/>
         <source>Episode path:</source>
-        <translation>地图目录：</translation>
+        <translation>地图文件夹：</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="291"/>
         <source>Path to an episode directory to process</source>
-        <translation>选择地图目录进行处理</translation>
+        <translation>选择地图文件夹进行处理</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="24"/>
@@ -502,7 +502,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="298"/>
         <source>Look for subdirectories</source>
-        <translation>搜索子目录</translation>
+        <translation>搜索子文件夹</translation>
     </message>
     <message>
         <source>Make backup (&quot;_backup&quot; sub-folder will be created)</source>
@@ -558,12 +558,12 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="937"/>
         <source>Episode path error</source>
-        <translation>地图目录错误</translation>
+        <translation>地图文件夹错误</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="938"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
-        <translation>未指定地图目录，请先选择地图目录。</translation>
+        <translation>未指定地图文件夹，请先选择地图文件夹。</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="977"/>
@@ -578,7 +578,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="993"/>
         <source>Open target episode path</source>
-        <translation>打开目标地图目录</translation>
+        <translation>打开目标地图文件夹</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="1013"/>
@@ -606,7 +606,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="48"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
-        <translation>未找到目录“%1”</translation>
+        <translation>未找到文件夹“%1”</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="56"/>
@@ -655,27 +655,27 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.ui" line="156"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation>输入目录（例如地图根目录和关卡自定义目录）：</translation>
+        <translation>源文件夹（例如地图根文件夹和关卡自定义文件夹）：</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="178"/>
         <source>Process all content of subdirectories</source>
-        <translation>同时处理子目录中的所有文件</translation>
+        <translation>同时处理子文件夹中的所有文件</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="202"/>
         <source>Path to an input directory with a source data</source>
-        <translation>包含源数据的输入目录</translation>
+        <translation>包含源数据的输入文件夹</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="209"/>
         <source>Path to a configuration package directory to use</source>
-        <translation>要使用的配置包目录</translation>
+        <translation>要使用的配置包文件夹</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="142"/>
         <source>Configuration package path (needed to find missing mask files):</source>
-        <translation>配置包目录（需要搜索丢失的影子文件）：</translation>
+        <translation>配置包文件夹（需要搜索丢失的影子文件）：</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="168"/>
@@ -724,37 +724,37 @@ Important: There are only level and world map files gets being converted. Any in
         <location filename="../Graphics/gifs2png.cpp" line="131"/>
         <location filename="../Graphics/gifs2png.cpp" line="140"/>
         <source>Incorrect input</source>
-        <translation>输入目录错误</translation>
+        <translation>源文件夹错误</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="113"/>
         <source>Given config pack directory doesn&apos;t exist.</source>
-        <translation>指定的配置包目录不存在。</translation>
+        <translation>指定的配置包文件夹不存在。</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="121"/>
         <source>Given config pack directory path is not a config pack.</source>
-        <translation>指定的目录不是配置包。</translation>
+        <translation>指定的文件夹不是配置包。</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="132"/>
         <source>You should give an input directory to start the conversion.</source>
-        <translation>输入目录不能为空。</translation>
+        <translation>源文件夹不能为空。</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="141"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation>指定的输入目录不存在。</translation>
+        <translation>指定的源文件夹不存在。</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="165"/>
         <source>Select a config pack directory</source>
-        <translation>选择配置包目录</translation>
+        <translation>选择配置包文件夹</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="184"/>
         <source>Select an input directory</source>
-        <translation>选择输入目录</translation>
+        <translation>选择源文件夹</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="207"/>
@@ -812,7 +812,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.ui" line="64"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation>输入目录（例如地图根目录和关卡自定义目录）：</translation>
+        <translation>源文件夹（例如地图根文件夹和关卡自定义文件夹）：</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="71"/>
@@ -827,7 +827,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.ui" line="85"/>
         <source>Path to an input directory with a source data</source>
-        <translation>包含源数据的输入目录</translation>
+        <translation>包含源文件的文件夹</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="98"/>
@@ -837,7 +837,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.ui" line="105"/>
         <source>Process all content of subdirectories</source>
-        <translation>同时处理子目录中的所有文件</translation>
+        <translation>同时处理子文件夹中的所有文件</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="119"/>
@@ -879,22 +879,22 @@ Important: There are only level and world map files gets being converted. Any in
         <location filename="../Graphics/lazyfix.cpp" line="102"/>
         <location filename="../Graphics/lazyfix.cpp" line="111"/>
         <source>Incorrect input</source>
-        <translation>输入目录错误</translation>
+        <translation>源文件夹错误</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="103"/>
         <source>You should give an input directory to start the processing.</source>
-        <translation>输入目录为空，请选择输入目录开始处理。</translation>
+        <translation>源文件夹为空，请重新选择源文件夹开始处理。</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="112"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation>指定的输入目录不存在。</translation>
+        <translation>指定的源文件夹不存在。</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="133"/>
         <source>Select an input directory</source>
-        <translation>选择输入目录</translation>
+        <translation>选择源文件夹</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="155"/>
@@ -994,7 +994,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../main_window.ui" line="156"/>
         <source>Adjust graphics into a given palette</source>
-        <translation>使用所选的调色板重新为素材着色</translation>
+        <translation>使用所选的调色板为素材重新着色</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="169"/>
@@ -1004,7 +1004,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../main_window.ui" line="172"/>
         <source>Fix case sensitive paths compatibility</source>
-        <translation>修复目录中大小写兼容性</translation>
+        <translation>修复文件夹中大小写兼容性</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="182"/>
@@ -1057,7 +1057,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/png2gifs.ui" line="142"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation>输入目录（例如地图根目录和关卡自定义目录）：</translation>
+        <translation>源文件夹（例如地图根文件夹和关卡自定义文件夹）：</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="149"/>
@@ -1072,7 +1072,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/png2gifs.ui" line="163"/>
         <source>Path to an input directory with a source data</source>
-        <translation>包含源数据的输入目录</translation>
+        <translation>包含源文件的文件夹</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="176"/>
@@ -1082,7 +1082,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/png2gifs.ui" line="183"/>
         <source>Process all content of subdirectories</source>
-        <translation>同时处理子目录中的所有文件</translation>
+        <translation>同时处理子文件夹中的所有文件</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="98"/>
@@ -1124,22 +1124,22 @@ Important: There are only level and world map files gets being converted. Any in
         <location filename="../Graphics/png2gifs.cpp" line="102"/>
         <location filename="../Graphics/png2gifs.cpp" line="111"/>
         <source>Incorrect input</source>
-        <translation>输入目录错误</translation>
+        <translation>源文件夹错误</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="103"/>
         <source>You should give an input directory to start the conversion.</source>
-        <translation>输入目录不能为空。</translation>
+        <translation>源文件夹不能为空。</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="112"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation>指定的输入目录不存在。</translation>
+        <translation>指定的源文件夹不存在。</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="133"/>
         <source>Select an input directory</source>
-        <translation>选择输入目录</translation>
+        <translation>选择源文件夹</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="155"/>
@@ -1188,7 +1188,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/palette_filter.ui" line="34"/>
         <source>This wizard will help you to automatically adjust given graphics with a specific palette by replacing colors into most closed to any color that is available on the specified palette.</source>
-        <translation>此向导将帮助您使用指定的调色板颜色来替换素材中的颜色。</translation>
+        <translation>此向导将帮助您使用指定的调色板颜色来替换素材中最接近的颜色。</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="47"/>
@@ -1218,7 +1218,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/palette_filter.ui" line="148"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation>输入目录（例如地图根目录和关卡自定义目录）：</translation>
+        <translation>源文件夹（例如地图根文件夹和关卡自定义文件夹）：</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="155"/>
@@ -1234,7 +1234,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/palette_filter.ui" line="169"/>
         <source>Path to an input directory with a source data</source>
-        <translation>包含源数据的输入目录</translation>
+        <translation>包含源文件的文件夹</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="182"/>
@@ -1244,7 +1244,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/palette_filter.ui" line="189"/>
         <source>Process all content of subdirectories</source>
-        <translation>同时处理子目录中的所有文件</translation>
+        <translation>同时处理子文件夹中的所有文件</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="203"/>
@@ -1264,7 +1264,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/palette_filter.ui" line="233"/>
         <source>This is the picture that should contain all colors of the palette you want to enforce to all images you want to process. This would be a grid of colors or just a hand-made picture with manually drawn colors of the palette. All processed images will be adjusted to have the same colors as this image has.</source>
-        <translation>这是图片中所有要替换的颜色，所有处理后的图像将替换为与本图像相同的颜色。</translation>
+        <translation>这是图片中所有要替换的颜色。它可以是以网格排列的调色盘，也可以是您的手绘调色盘。所有处理后的图像将替换为与本图像相同的颜色。</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="65"/>
@@ -1282,7 +1282,7 @@ Important: There are only level and world map files gets being converted. Any in
         <location filename="../Graphics/palette_filter.cpp" line="123"/>
         <location filename="../Graphics/palette_filter.cpp" line="132"/>
         <source>Incorrect input</source>
-        <translation>输入目录错误</translation>
+        <translation>源文件夹错误</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="87"/>
@@ -1293,17 +1293,17 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="124"/>
         <source>You should give an input directory to start the processing.</source>
-        <translation>输入目录为空，请选择输入目录开始处理。</translation>
+        <translation>源文件夹为空，请重新选择源文件夹开始处理。</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="133"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation>指定的输入目录不存在。</translation>
+        <translation>指定的源文件夹不存在。</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="156"/>
         <source>Select an input directory</source>
-        <translation>选择输入目录</translation>
+        <translation>选择源文件夹</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="178"/>

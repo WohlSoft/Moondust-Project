@@ -104,7 +104,7 @@
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation>当选中对象时，将不自动显示属性。</translation>
+        <translation>当选中对象时，将不再显示属性窗口。</translation>
     </message>
     <message>
         <source>Don&apos;t show properties box when placing items</source>
@@ -398,7 +398,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <name>AudioCvt_Sox_gui</name>
     <message>
         <source>Convert Audio (SoX)</source>
-        <translation>转换音频 (SoX)</translation>
+        <translation>通过 SoX 转换音频</translation>
     </message>
     <message>
         <source>SoX executable path:</source>
@@ -2050,7 +2050,7 @@ So, please break these words to avoid this.&lt;/li&gt;
   &lt;li&gt;一行超过&lt;b&gt;27个字符&lt;/b&gt;将自动换行。&lt;/li&gt;
   &lt;li&gt;一行内存在过长的单词时，不会自动换行，且会超出画面区域。&lt;br&gt;
 请分隔单词以避免超出画面区域。&lt;/li&gt;
-  &lt;li&gt;不得包含Unicode字符：&lt;b&gt;只能使用ASCII字符&lt;/b&gt;。&lt;/li&gt;
+  &lt;li&gt;不得包含Unicode字符：&lt;b&gt;只能输入ASCII字符（即英文字符）&lt;/b&gt;。&lt;/li&gt;
 &lt;/ul&gt;</translation>
     </message>
     <message>
@@ -2068,7 +2068,7 @@ So, please break these words to avoid this.&lt;/li&gt;
   &lt;li&gt;可以通过“回车键”换行。&lt;/li&gt;
   &lt;li&gt;一行超过&lt;b&gt;27个字符&lt;/b&gt;将自动换行。&lt;/li&gt;
   &lt;li&gt;一行内存在过长的单词时，也将会自动换行。&lt;/li&gt;
-  &lt;li&gt;可以使用&lt;b&gt;任意Unicode&lt;/b&gt;字符。&lt;/li&gt;
+  &lt;li&gt;可以使用&lt;b&gt;任意Unicode&lt;/b&gt;字符。这就是说，您可以输入中文了。&lt;/li&gt;
   &lt;li&gt;支持&lt;b&gt;预处理信息字段&lt;/b&gt;。&lt;/li&gt;
 &lt;/ul&gt;</translation>
     </message>
@@ -3102,7 +3102,7 @@ Otherwise, it will be very limited.</source>
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
         <translation>允许启动引擎后直接测试关卡。
-需要很高的配置，否则下次执行可能将会死机。
+需要很高的配置，否则下次执行时可能会造成死机。
 对于低端电脑推荐禁用此项。</translation>
     </message>
     <message>
@@ -3116,7 +3116,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     </message>
     <message>
         <source>Launch LunaTester as a normal game.</source>
-        <translation>使用 LunaTester 执行普通游戏。</translation>
+        <translation>使用 LunaTester 运行普通游戏。</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
@@ -3222,7 +3222,7 @@ Do you want to continue the process?</source>
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
-        <translation>- LunaTester 文件夹（或 SMBX2 根文件夹）设置错误，请检查 LunaTester 目录是否正确。
+        <translation>- LunaTester 文件夹（或 SMBX2 根文件夹）设置错误，请检查 LunaTester 文件夹是否正确。
 - 可能由于杀毒软件误报而被移除，请检查您的杀毒软件中隔离区是否有对应文件。
 - SMBX2 安装方式错误，导致文件丢失，请重新安装 SMBX2 以修复您的问题。</translation>
     </message>
@@ -3238,8 +3238,8 @@ Do you want to continue the process?</source>
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
         <translation>&quot;%1&quot; 未找到！
-您找到的是 SMBX 1.3！
-因此无法执行关卡测试。需要 LunaLua 的支持。</translation>
+您的引擎是 SMBX 1.3！
+因此无法执行关卡测试。需要 LunaLua（SMBX2）的支持。</translation>
     </message>
     <message>
         <source>Test saved level/world</source>
@@ -3618,7 +3618,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Autostart event</source>
-        <translation>进入关卡时启动该事件</translation>
+        <translation>进入关卡时自动运行该事件</translation>
     </message>
     <message>
         <source>Create copy of event</source>
@@ -3655,7 +3655,7 @@ Do you want to continue?</source>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation>旧版场景强制卷轴设置，用于旧版 SMBX64 关卡文件，或从旧格式转换为新格式的关卡文件。请在面向 SMBX64 或更早的引擎制作的关卡文件使用该设置。该设置同样适用于现代引擎（例如 TheXTech、月尘引擎等）。另外，在 SMBX64 或更早的引擎下，该设置仅对场景 0 生效。如果您的关卡使用了新版强制卷轴设置，该设置将被忽略；如果您保存为 SMBX-38A 格式，该设置将会丢失。您可以通过“场景设置”标签中查找“更改强制卷轴速度”来设置新版强制卷轴。</translation>
+        <translation>旧版场景强制卷轴设置，用于旧版 SMBX64 关卡文件，或从旧格式转换为新格式的关卡文件。请在面向 SMBX64 或更早的引擎制作的关卡文件使用该设置。该设置同样适用于现代引擎（例如 TheXTech、月尘引擎等）。另外，在 SMBX64 或更早的引擎下，该设置仅对“Level - Start”事件及场景 0 生效。如果您的关卡使用了新版强制卷轴设置，该设置将被忽略；如果您保存为 SMBX-38A 格式，该设置将会丢失。您可以通过“场景设置”标签中查找“更改强制卷轴速度”来设置新版强制卷轴。</translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
@@ -7451,7 +7451,7 @@ Reason: %1
     </message>
     <message>
         <source>Impossible to launch a level because of an invalid file.</source>
-        <translation>由于文件不支持，关卡启动失败。</translation>
+        <translation>无法游玩关卡，因为文件发生错误。</translation>
     </message>
     <message>
         <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
@@ -7467,7 +7467,7 @@ Reason: %1
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid file.</source>
-        <translation>由于文件错误，因此地图启动失败。</translation>
+        <translation>无法游玩地图，因为文件发生错误。</translation>
     </message>
     <message>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
@@ -8785,7 +8785,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</source>
-        <translation>指定自定义 Wine 安装文件夹（包含“Bin”、“Lib”、“Share”三个子目录和一个工作中的 Wine 工具链）。</translation>
+        <translation>指定自定义 Wine 安装文件夹（包含“Bin”、“Lib”、“Share”三个子文件夹和一个工作中的 Wine 工具链）。</translation>
     </message>
 </context>
 <context>
