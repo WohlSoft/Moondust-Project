@@ -94,7 +94,8 @@ bool EpisodeBox_level::open(QString filePath)
     PGE_FileFormats_misc::TextFileInput file;
     if(file.open(fPath))
     {
-        PGESTRING firstLine = file.read(8);
+        PGESTRING firstLine;
+        file.read(firstLine, 8);
         file.close();
         if(firstLine.startsWith("SMBXFile"))
         {
