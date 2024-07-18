@@ -486,11 +486,11 @@ sin embargo puede usar el mismo enlace para la versión actualizada.</translatio
     </message>
     <message id="WARNING_INCOMPATIBLE_WORLDMAP">
         <source>This world map is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este mapa del mundo es incompatible: Es posible que obtengas resultados de juego inesperados o errores. Consulta el registro para obtener más información.</translation>
     </message>
     <message id="WARNING_INCOMPATIBLE_LEVEL">
         <source>This level is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este nivel es incompatible: Puedes obtener resultados de juego inesperados o errores. Consulta el registro para obtener más detalles.</translation>
     </message>
 </context>
 </TS>

@@ -104,7 +104,7 @@
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation>当选中对象时，将不自动显示属性。</translation>
+        <translation>当选中对象时，将不再显示属性窗口。</translation>
     </message>
     <message>
         <source>Don&apos;t show properties box when placing items</source>
@@ -184,7 +184,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Autoscroll section</source>
-        <translation>强制卷轴场景</translation>
+        <translation>场景强制卷轴</translation>
     </message>
     <message>
         <source>Layer visibility</source>
@@ -398,7 +398,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <name>AudioCvt_Sox_gui</name>
     <message>
         <source>Convert Audio (SoX)</source>
-        <translation>转换音频 (SoX)</translation>
+        <translation>通过 SoX 转换音频</translation>
     </message>
     <message>
         <source>SoX executable path:</source>
@@ -680,12 +680,12 @@ File path: %3</source>
     </message>
     <message>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with this version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
-        <translation>此集成配置包的 API 版本低于 42，无法兼容当前版本的月尘开发工具包。从 API 42 版本起，集成配置包必须使用独立配置文件，而非覆盖 main.ini。</translation>
+        <translation>该集成配置包的 API 版本低于 42，无法在当前版本的月尘开发工具包下使用。从 API 42 版本起，集成配置包必须使用独立配置文件，而不是覆盖 main.ini。</translation>
     </message>
     <message>
         <source>Legacy configuration package</source>
         <comment>Warning message box title</comment>
-        <translation>配置包版本过旧</translation>
+        <translation>旧版本配置包</translation>
     </message>
     <message>
         <source>Incompatible configuration package</source>
@@ -701,14 +701,13 @@ You can obtain the compatible Devkit by downloading the SMBX2 Beta5 or newer:&lt
 &lt;br&gt;
 &lt;br&gt;
 The Official Moondust Devkit has a support of the SMBX2 Beta4 and older only. However, you still can run any other configuration package and run the level tests using an SMBX2 engine from the outside.</source>
-        <translation>您使用的配置包是为SMBX2定制的。您需要使用修改版月尘工具包才能使用此配置包，与官方版本不兼容。
-若要使用此配置包，请使用一个由SMBX2开发人员管理的修改版编辑器加载它。
+        <translation>该配置包为 SMBX2 专用配置包，无法在官方版本的月尘工具包内使用。
+若要使用该配置包，请使用由 SMBX2 开发团队管理的修改版编辑器并加载它。&lt;br&gt;
 &lt;br&gt;
-&lt;br&gt;
-您可以在下方下载SMBX2 Beta 5及更高版本：&lt;br&gt;
+您可以在下方下载 SMBX2 Beta 5 及更高版本：&lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
-月尘官方工具包仅支持SMBX2 Beta 4及之前的版本。当然您也可以加载其他配置包，并通过外部工具进行SMBX2引擎的关卡测试。</translation>
+月尘工具包官方版本仅支持 SMBX2 Beta 4 及之前的版本。当然您也可以加载其他配置包，然后使用 SMBX2 引擎进行关卡测试。</translation>
     </message>
     <message>
         <source>Outdated</source>
@@ -738,7 +737,7 @@ Please download and install latest version of a configuration package:&lt;br&gt;
 &lt;br&gt;
 Download: %1&lt;br&gt;
 Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
-        <translation>您的配置包版本过旧。&lt;br&gt;
+        <translation>您的配置包是旧版本配置包。&lt;br&gt;
 编辑器即将启动，但您可能会遇到对象或设置的相关问题。&lt;br&gt;
 &lt;br&gt;
 请下载并安装最新版本的配置包：&lt;br&gt;
@@ -754,8 +753,8 @@ You can download the compatible configuration package at here:&lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
 Note: most of config packs gets being updates with Moondust Project togeter. Therefore, you can use the same link to download the updated version.</source>
-        <translation>您的配置包版本过旧，且不是兼容配置包。&lt;br&gt;
-此配置包的API版本低于最低需求，因此无法在当前版本使用。&lt;br&gt;
+        <translation>您的配置包是不兼容的旧版本配置包。&lt;br&gt;
+该配置包的 API 版本低于最低需求，因此无法在当前版本下使用。&lt;br&gt;
 &lt;br&gt;
 请在下方下载一个兼容配置包：&lt;br&gt;
 &lt;br&gt;
@@ -1987,7 +1986,7 @@ it&apos;s only used for the preview convenience in this dialogue.</source>
         <source>Preprocessor is the sepecial feature of TheXTech engine since the version 1.3.6.1 which allows
 you to make the message box being different depending on various factors, for example,
 depending on which playable character is used.</source>
-        <translation>预处理信息字段是TheXTech1.3.6.1及更高版本的功能，它可以根据相关的条件
+        <translation>预处理信息字段是 TheXTech 1.3.6.1 及更高版本的功能，它可以根据相关的条件
 来确定不同的信息，例如选用那个角色游玩时显示的不同信息。</translation>
     </message>
     <message>
@@ -2051,7 +2050,7 @@ So, please break these words to avoid this.&lt;/li&gt;
   &lt;li&gt;一行超过&lt;b&gt;27个字符&lt;/b&gt;将自动换行。&lt;/li&gt;
   &lt;li&gt;一行内存在过长的单词时，不会自动换行，且会超出画面区域。&lt;br&gt;
 请分隔单词以避免超出画面区域。&lt;/li&gt;
-  &lt;li&gt;不得包含Unicode字符：&lt;b&gt;只能使用ASCII字符&lt;/b&gt;。&lt;/li&gt;
+  &lt;li&gt;不得包含Unicode字符：&lt;b&gt;只能输入ASCII字符（即英文字符）&lt;/b&gt;。&lt;/li&gt;
 &lt;/ul&gt;</translation>
     </message>
     <message>
@@ -2069,7 +2068,7 @@ So, please break these words to avoid this.&lt;/li&gt;
   &lt;li&gt;可以通过“回车键”换行。&lt;/li&gt;
   &lt;li&gt;一行超过&lt;b&gt;27个字符&lt;/b&gt;将自动换行。&lt;/li&gt;
   &lt;li&gt;一行内存在过长的单词时，也将会自动换行。&lt;/li&gt;
-  &lt;li&gt;可以使用&lt;b&gt;任意Unicode&lt;/b&gt;字符。&lt;/li&gt;
+  &lt;li&gt;可以使用&lt;b&gt;任意Unicode&lt;/b&gt;字符。这就是说，您可以输入中文了。&lt;/li&gt;
   &lt;li&gt;支持&lt;b&gt;预处理信息字段&lt;/b&gt;。&lt;/li&gt;
 &lt;/ul&gt;</translation>
     </message>
@@ -3103,7 +3102,7 @@ Otherwise, it will be very limited.</source>
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
         <translation>允许启动引擎后直接测试关卡。
-需要很高的配置，否则下次执行可能将会死机。
+需要很高的配置，否则下次执行时可能会造成死机。
 对于低端电脑推荐禁用此项。</translation>
     </message>
     <message>
@@ -3117,7 +3116,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     </message>
     <message>
         <source>Launch LunaTester as a normal game.</source>
-        <translation>使用 LunaTester 执行普通游戏。</translation>
+        <translation>使用 LunaTester 运行普通游戏。</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
@@ -3223,7 +3222,7 @@ Do you want to continue the process?</source>
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
-        <translation>- LunaTester 文件夹（或 SMBX2 根文件夹）设置错误，请检查 LunaTester 目录是否正确。
+        <translation>- LunaTester 文件夹（或 SMBX2 根文件夹）设置错误，请检查 LunaTester 文件夹是否正确。
 - 可能由于杀毒软件误报而被移除，请检查您的杀毒软件中隔离区是否有对应文件。
 - SMBX2 安装方式错误，导致文件丢失，请重新安装 SMBX2 以修复您的问题。</translation>
     </message>
@@ -3239,8 +3238,8 @@ Do you want to continue the process?</source>
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
         <translation>&quot;%1&quot; 未找到！
-您找到的是 SMBX 1.3！
-因此无法执行关卡测试。需要 LunaLua 的支持。</translation>
+您的引擎是 SMBX 1.3！
+因此无法执行关卡测试。需要 LunaLua（SMBX2）的支持。</translation>
     </message>
     <message>
         <source>Test saved level/world</source>
@@ -3479,7 +3478,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Autoscroll section</source>
-        <translation>强制卷轴场景</translation>
+        <translation>场景强制卷轴</translation>
     </message>
     <message>
         <source>Section</source>
@@ -3619,7 +3618,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Autostart event</source>
-        <translation>进入关卡时启动该事件</translation>
+        <translation>进入关卡时自动运行该事件</translation>
     </message>
     <message>
         <source>Create copy of event</source>
@@ -3651,12 +3650,12 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Autoscroll section (Legacy)</source>
-        <translation>强制卷轴场景（旧）</translation>
+        <translation>场景强制卷轴（旧）</translation>
     </message>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation>旧版的强制卷轴场景设置，用于老旧的 SMBX64 关卡文件，或从旧格式转换为新格式的关卡文件。请在面向 SMBX64 或更早的引擎制作的关卡文件使用这些设置。这些设置同样适用于现代引擎（例如 TheXTech、月尘引擎等）。如果您的关卡中使用了新版强制卷轴，旧版强制卷轴场景设置将被忽略；如果您保存为 SMBX-38A 格式，则这些设置将会丢失。您可以通过“场景设置”标签中查找“更改强制卷轴速度”来设置新版强制卷轴。</translation>
+        <translation>旧版场景强制卷轴设置，用于旧版 SMBX64 关卡文件，或从旧格式转换为新格式的关卡文件。请在面向 SMBX64 或更早的引擎制作的关卡文件使用该设置。该设置同样适用于现代引擎（例如 TheXTech、月尘引擎等）。另外，在 SMBX64 或更早的引擎下，该设置仅对“Level - Start”事件及场景 0 生效。如果您的关卡使用了新版强制卷轴设置，该设置将被忽略；如果您保存为 SMBX-38A 格式，该设置将会丢失。您可以通过“场景设置”标签中查找“更改强制卷轴速度”来设置新版强制卷轴。</translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
@@ -5059,7 +5058,7 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>LunaLUA scripts</source>
-        <translation>LunaLua 脚本</translation>
+        <translation>LunaLua 脚本（SMBX2）</translation>
     </message>
     <message>
         <source>Configuration</source>
@@ -5818,7 +5817,7 @@ File not exist.</source>
     </message>
     <message>
         <source>Configuration is loaded with errors</source>
-        <translation>配置包有错误</translation>
+        <translation>配置包存在错误</translation>
     </message>
     <message>
         <source>Cannot create NPC config file:
@@ -5854,13 +5853,13 @@ The configuration pack was loaded, but contains errors.</source>
         <source>Editor cannot open files:
 Configuration package is loaded with errors.</source>
         <translation>无法打开部分文件：
-配置包已加载，但该配置包有错误。</translation>
+配置包已加载，但该配置包存在错误。</translation>
     </message>
     <message>
         <source>Cannot open file:
 The configuration pack was loaded, but contains errors.</source>
         <translation>无法打开文件：
-配置包已加载，但该配置包有错误。</translation>
+配置包已加载，但该配置包存在错误。</translation>
     </message>
     <message>
         <source>Can&apos;t open the file: %1</source>
@@ -6227,8 +6226,8 @@ Please save the file first.</source>
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
-        <translation>配置包已更换！
-您需要重新启动应用才能使用新配置包。要继续吗？</translation>
+        <translation>配置包更换完成！
+您需要重新启动程序才能使用新配置包。要继续吗？</translation>
     </message>
     <message>
         <source>Music change points</source>
@@ -6272,11 +6271,11 @@ See %2 for more information.</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation>该关卡文件使用无法识别的配置包创建。这是因为该关卡使用的是另一个引擎而非 %1，因此可能造成部分砖块、NPC、脚本或其他对象不兼容，且您可能会遇到未如预期的结果或错误。
+        <translation>当前关卡文件是使用其他配置包制作的。这是因为该关卡使用的是另一个引擎而非 %1，因此可能造成部分砖块、NPC、脚本或其他对象不兼容，且您可能会遇到未如预期的结果或错误。
 
 文件名：%2
-关卡配置包编号：%3
-预期配置包编号：%4</translation>
+当前关卡配置包标识：%3
+当前程序配置包标识：%4</translation>
     </message>
     <message>
         <source>World map is incompatible</source>
@@ -6288,11 +6287,11 @@ Expected config pack ID: %4</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation>该大地图文件使用无法识别的配置包创建。这是因为该大地图使用的是另一个引擎而非 %1，因此可能造成部分地形、关卡对象、脚本或其他对象不兼容，且您可能会遇到未如预期的结果或错误。
+        <translation>当前大地图文件是使用其他配置包制作的。这是因为该大地图使用的是另一个引擎而非 %1，因此可能造成部分地形、关卡对象、脚本或其他对象不兼容，且您可能会遇到未如预期的结果或错误。
 
 文件名：%2
-关卡配置包编号：%3
-预期配置包编号：%4</translation>
+当前关卡配置包标识：%3
+当前程序配置包标识：%4</translation>
     </message>
     <message>
         <source>Running the 32-bit Editor a 64-bit processor</source>
@@ -6431,11 +6430,11 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>offset y</source>
-        <translation>Y 偏差</translation>
+        <translation>纵向偏移</translation>
     </message>
     <message>
         <source>offset x</source>
-        <translation>X 偏差</translation>
+        <translation>横向偏移</translation>
     </message>
     <message>
         <source>Frame style</source>
@@ -6511,11 +6510,11 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>Grid offset X</source>
-        <translation>网格偏差 X</translation>
+        <translation>网格横向偏移</translation>
     </message>
     <message>
         <source>Grid offset Y</source>
-        <translation>网格偏差 Y</translation>
+        <translation>网格纵向偏移</translation>
     </message>
     <message>
         <source>Middle of cell by center</source>
@@ -6889,7 +6888,7 @@ Error description:
     </message>
     <message>
         <source>Autoscroll Layer</source>
-        <translation>强制卷轴场景</translation>
+        <translation>场景强制卷轴</translation>
     </message>
     <message>
         <source>Autoscroll Layer Speed Horizontal</source>
@@ -7452,7 +7451,7 @@ Reason: %1
     </message>
     <message>
         <source>Impossible to launch a level because of an invalid file.</source>
-        <translation>由于文件不支持，关卡启动失败。</translation>
+        <translation>无法游玩关卡，因为文件发生错误。</translation>
     </message>
     <message>
         <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
@@ -7468,7 +7467,7 @@ Reason: %1
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid file.</source>
-        <translation>由于文件错误，因此地图启动失败。</translation>
+        <translation>无法游玩地图，因为文件发生错误。</translation>
     </message>
     <message>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
@@ -7762,7 +7761,7 @@ Reason: %1
     </message>
     <message>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
-        <translation>允许实时编辑：在关卡中捕捉对象、放置新元素、在编辑器中选择和擦除。不支持执行已保存的关卡。</translation>
+        <translation>允许实时编辑：在关卡中捕捉对象、放置新元素、在编辑器中选择和擦除。如果是测试已保存的关卡，则该选项不生效。</translation>
     </message>
     <message>
         <source>Enable max FPS</source>
@@ -7802,7 +7801,7 @@ Reason: %1
     </message>
     <message>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
-        <translation>由于未找到 &quot;%1&quot;，因此无法启动 TheXTech。TheXTech 目录可能设置错误，请检查 TheXTech 目录。</translation>
+        <translation>由于未找到 &quot;%1&quot;，因此无法启动 TheXTech。TheXTech 所在文件夹可能设置错误，请检查 TheXTech 所在文件夹设置。</translation>
     </message>
     <message>
         <source>TheXtech start failed</source>
@@ -7911,17 +7910,17 @@ Arguments: %2</source>
     <message>
         <source>Save slot 1</source>
         <comment>Save slot sub-menu item.</comment>
-        <translation>存档1</translation>
+        <translation>存档 1</translation>
     </message>
     <message>
         <source>Save slot 2</source>
         <comment>Save slot sub-menu item.</comment>
-        <translation>存档2</translation>
+        <translation>存档 2</translation>
     </message>
     <message>
         <source>Save slot 3</source>
         <comment>Save slot sub-menu item.</comment>
-        <translation>存档3</translation>
+        <translation>存档 3</translation>
     </message>
     <message>
         <source>Modern OpenGL</source>
@@ -8125,9 +8124,9 @@ If you wish to create level/world specific tilesets with using of custom graphic
 
 您可以使用本工具创建图块集。图块集文件将保存在以下文件夹：
 %1
-可以作为此配置包的全局图块集使用。
+可以作为该配置包的全局图块集使用。
 
-如果您要创建的是包含自定义素材的关卡或大地图图块集，请打开图块集工具箱，然后找到“自定义”标签中的“新增图块集”。</translation>
+如果您要创建的是包含自定义素材的关卡或大地图图块集，请打开图块集工具箱，然后从“自定义”标签中查找“新增图块集”按钮。</translation>
     </message>
     <message>
         <source>Remove tileset</source>
@@ -8672,11 +8671,11 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Configuration package has errors</source>
-        <translation>配置包有错误</translation>
+        <translation>配置包存在错误</translation>
     </message>
     <message>
         <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
-        <translation>无法加载大地图 &quot;%1&quot;，因为配置包有错误。</translation>
+        <translation>无法加载大地图 &quot;%1&quot;，因为该配置包存在错误。</translation>
     </message>
 </context>
 <context>
@@ -8786,7 +8785,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</source>
-        <translation>指定自定义 Wine 安装文件夹（包含“Bin”、“Lib”、“Share”三个子目录和一个工作中的 Wine 工具链）。</translation>
+        <translation>指定自定义 Wine 安装文件夹（包含“Bin”、“Lib”、“Share”三个子文件夹和一个工作中的 Wine 工具链）。</translation>
     </message>
 </context>
 <context>
