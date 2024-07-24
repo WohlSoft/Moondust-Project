@@ -304,7 +304,8 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
     }
 
     auto delta = event->angleDelta();
-    int deltaX = delta.x() != 0 ? delta.x() : delta.y();
+    int deltaX = delta.x();
+    int deltaY = delta.y();
 
     if(event->modifiers() & Qt::ControlModifier)
     {
@@ -318,7 +319,7 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
             emit zoomValueChanged(qRound(zoomValue * 100));
             emit zoomValueChanged(QString::number(qRound(zoomValue * 100)));
         }
-        else
+        else if(deltaX < 0)
         {
             if(zoomValue * scaleFactor <= scaleMin) return;
             // Zooming out
@@ -332,12 +333,20 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
         return;
     }
 
+    auto *hBar = horizontalScrollBar();
+    auto *vBar = verticalScrollBar();
+
     if(event->modifiers() & Qt::AltModifier)
     {
         if(deltaX > 0)
-            horizontalScrollBar()->setValue(horizontalScrollBar()->value() - modS_h);
-        else
-            horizontalScrollBar()->setValue(horizontalScrollBar()->value() + modS_h);
+            vBar->setValue(vBar->value() - modS_h);
+        else if(deltaX < 0)
+            vBar->setValue(vBar->value() + modS_h);
+
+        if(deltaY > 0)
+            hBar->setValue(hBar->value() - modS_h);
+        else if(deltaY < 0)
+            hBar->setValue(hBar->value() + modS_h);
 
         //event->accept();
         replayLastMouseEvent();
@@ -350,9 +359,14 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
     else
     {
         if(deltaX > 0)
-            verticalScrollBar()->setValue(verticalScrollBar()->value() - modS);
-        else
-            verticalScrollBar()->setValue(verticalScrollBar()->value() + modS);
+            hBar->setValue(hBar->value() - modS);
+        else if(deltaX < 0)
+            hBar->setValue(hBar->value() + modS);
+
+        if(deltaY > 0)
+            vBar->setValue(vBar->value() - modS);
+        else if(deltaY < 0)
+            vBar->setValue(vBar->value() + modS);
 
         //event->accept();
         replayLastMouseEvent();
