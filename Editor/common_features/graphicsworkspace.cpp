@@ -297,7 +297,7 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
     if(rtl)
         modS_h *= -1;
 
-    if(event->modifiers() & Qt::ShiftModifier)
+    if((event->modifiers() & Qt::ShiftModifier) != 0)
     {
         modS *= 2;
         modS_h *= 2;
@@ -307,10 +307,10 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
     int deltaX = delta.x();
     int deltaY = delta.y();
 
-    if(event->modifiers() & Qt::ControlModifier)
+    if((event->modifiers() & Qt::ControlModifier) != 0)
     {
         // Scale the view / do the zoom
-        if(deltaX > 0)
+        if(deltaY > 0)
         {
             if(zoomValue * scaleFactor >= scaleMax) return;
             // Zoom in
@@ -319,7 +319,7 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
             emit zoomValueChanged(qRound(zoomValue * 100));
             emit zoomValueChanged(QString::number(qRound(zoomValue * 100)));
         }
-        else if(deltaX < 0)
+        else if(deltaY < 0)
         {
             if(zoomValue * scaleFactor <= scaleMin) return;
             // Zooming out
@@ -336,49 +336,31 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
     auto *hBar = horizontalScrollBar();
     auto *vBar = verticalScrollBar();
 
-    if(event->modifiers() & Qt::AltModifier)
+    if((event->modifiers() & Qt::AltModifier) != 0)
     {
-        if(deltaX > 0)
-            vBar->setValue(vBar->value() - modS_h);
-        else if(deltaX < 0)
-            vBar->setValue(vBar->value() + modS_h);
-
-        if(deltaY > 0)
-            hBar->setValue(hBar->value() - modS_h);
-        else if(deltaY < 0)
-            hBar->setValue(hBar->value() + modS_h);
-
-        //event->accept();
-        replayLastMouseEvent();
-
-        if(scene())
-            scene()->update();
-
-        return;
-    }
-    else
-    {
-        if(deltaX > 0)
-            hBar->setValue(hBar->value() - modS);
-        else if(deltaX < 0)
-            hBar->setValue(hBar->value() + modS);
-
-        if(deltaY > 0)
-            vBar->setValue(vBar->value() - modS);
-        else if(deltaY < 0)
-            vBar->setValue(vBar->value() + modS);
-
-        //event->accept();
-        replayLastMouseEvent();
-
-        if(scene())
-            scene()->update();
-
-        return;
+        // Ensure values aren't already swapped
+        if(delta.x() == 0 && delta.y() != 0)
+        {
+            deltaY = delta.x();
+            deltaX = delta.y();
+        }
     }
 
-    //replayLastMouseEvent(); //DEAD CODE
-    //QGraphicsView::wheelEvent(event);
+    if(deltaX > 0)
+        hBar->setValue(hBar->value() - modS);
+    else if(deltaX < 0)
+        hBar->setValue(hBar->value() + modS);
+
+    if(deltaY > 0)
+        vBar->setValue(vBar->value() - modS);
+    else if(deltaY < 0)
+        vBar->setValue(vBar->value() + modS);
+
+    //event->accept();
+    replayLastMouseEvent();
+
+    if(scene())
+        scene()->update();
 }
 
 
