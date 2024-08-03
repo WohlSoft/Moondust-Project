@@ -11,7 +11,7 @@ class TrackMuter;
 class QCheckBox;
 class FlowLayout;
 
-typedef struct _Mix_Music Mix_Music;
+typedef struct Mix_Music Mix_Music;
 
 class TrackMuter : public QDialog
 {
