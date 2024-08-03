@@ -21,7 +21,7 @@
     <message id="CRASH_OUT_OF_MEM_MSG">
         <location filename="../common_features/crash_handler.cpp" line="388"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation type="unfinished"></translation>
+        <translation>A Engine travou por falta de memória! Tente fechar outras aplicações e reinicie o jogo.</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="424"/>
@@ -31,37 +31,37 @@
     <message id="CRASH_TIMEOUT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="426"/>
         <source>Engine has abourted because alarm() time out!</source>
-        <translation type="unfinished"></translation>
+        <translation>A Engine parou porque o tempo do alarm() esgotou!</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="471"/>
         <source>Physical memory address error!</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro de endereço na memória física!</translation>
     </message>
     <message id="CRASH_BUS_MSG">
         <location filename="../common_features/crash_handler.cpp" line="473"/>
         <source>Engine has crashed because a physical memory address error</source>
-        <translation type="unfinished"></translation>
+        <translation>A Engine travou porque ocorreu um erro de endereço na memória física</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="490"/>
         <source>Wrong CPU Instruction!</source>
-        <translation type="unfinished"></translation>
+        <translation>Instrução de CPU Errada!</translation>
     </message>
     <message id="CRASH_ILL_MSG">
         <location filename="../common_features/crash_handler.cpp" line="492"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
-        <translation type="unfinished"></translation>
+        <translation>A Engine travou por uma instrução de CPU errada</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="547"/>
         <source>Wrong arithmetical operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Operação aritmética errada</translation>
     </message>
     <message id="CRASH_FPE_MSG">
         <location filename="../common_features/crash_handler.cpp" line="549"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
-        <translation type="unfinished"></translation>
+        <translation>A Engine travou por uma operação aritmética errada!</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="561"/>
@@ -71,19 +71,21 @@
     <message id="CRASH_ABORT_TITLE.">
         <location filename="../common_features/crash_handler.cpp" line="563"/>
         <source>Engine has been aborted because critical error was occouped.</source>
-        <translation type="unfinished"></translation>
+        <translation>A Engine abortou porque ocorreu um erro critico.</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="608"/>
         <source>Segmentation fault</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha de segmentação</translation>
     </message>
     <message id="CRASH_SIGSEGV_MSG.">
         <location filename="../common_features/crash_handler.cpp" line="612"/>
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
-        <translation type="unfinished"></translation>
+        <translation>A Engine travou or uma falha de segmentação.
+Depure usando o modo de depuração embutido
+da aplicação e repita as suas ações para mais pormenores.</translation>
     </message>
     <message id="CRASH_INT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="621"/>
@@ -180,13 +182,13 @@ encontrados pacotes de configurações disponíveis!</translation>
     <message id="CONFIG_SELECT_TEST">
         <location filename="../main.cpp" line="803"/>
         <source>Choose a game to test:</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolha um jogo para testar:</translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
         <location filename="../main.cpp" line="295"/>
         <location filename="../main.cpp" line="480"/>
         <source>No opened files</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenhum ficheiro aberto</translation>
     </message>
     <message id="ERROR_FAIL_START_WLD">
         <location filename="../main.cpp" line="316"/>
@@ -194,7 +196,10 @@ encontrados pacotes de configurações disponíveis!</translation>
 Fail to start world map
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ERRO:
+Falha ao iniciar o mundo
+
+%1</translation>
     </message>
     <message id="WARNING_INCOMPATIBLE_WORLDMAP">
         <location filename="../main.cpp" line="333"/>
@@ -205,18 +210,20 @@ Fail to start world map
         <location filename="../main.cpp" line="352"/>
         <source>World map was closed with error.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Um erro fechou o mundo.
+%1</translation>
     </message>
     <message id="MSG_START_LEVEL">
         <location filename="../main.cpp" line="370"/>
         <source>Start level
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar nível
+%1</translation>
     </message>
     <message id="MSG_WLDTEST_EXIT_CODE">
         <location filename="../main.cpp" line="372"/>
         <source>Type an exit code (signed integer)</source>
-        <translation type="unfinished"></translation>
+        <translation>Digite um código de saída (inteiro)</translation>
     </message>
     <message id="WARNING_INCOMPATIBLE_LEVEL">
         <location filename="../main.cpp" line="510"/>
@@ -231,25 +238,31 @@ Exit into:
 %1
 
 Entrance point: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Saída por Teleporte
+
+Sai em:
+%1
+
+Ponto de entrada #: %2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
         <location filename="../main.cpp" line="649"/>
         <source>Level was closed with error.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nível fechou com um erro.
+%1</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
         <location filename="../scenes/scene_world.cpp" line="557"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
         <source>Invalid playable character ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de personagem invalido</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
         <location filename="../scenes/scene_world.cpp" line="566"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="318"/>
         <source>Invalid playable character state ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de estado do personagem invalido</translation>
     </message>
     <message id="WLD_MENU_PAUSE_TTL">
         <location filename="../scenes/scene_world.cpp" line="618"/>
@@ -336,7 +349,7 @@ Entrance point: %2</source>
     <message id="MAINMENU_OPTIONS_CONTROLLS">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="378"/>
         <source>Player controlling</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogador controlando</translation>
     </message>
     <message id="MAINMENU_OPTIONS_VIDEO">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="380"/>
@@ -371,7 +384,7 @@ Entrance point: %2</source>
     <message id="TESTSCR_GAMEOVER">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="400"/>
         <source>Game over screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ecrã de fim de jogo</translation>
     </message>
     <message id="TEST_MSGBOX">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="406"/>
@@ -386,7 +399,7 @@ Entrance point: %2</source>
     <message id="TEST_TEXTINPUTBOX">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="410"/>
         <source>Text Input box</source>
-        <translation type="unfinished"></translation>
+        <translation>Caixa de entrada de texto</translation>
     </message>
     <message id="TEST_QUESTION_BOX">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="412"/>
@@ -401,17 +414,17 @@ Entrance point: %2</source>
     <message id="VIDEO_ENABLE_FRSKIP">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="420"/>
         <source>Enable frame-skip</source>
-        <translation type="unfinished"></translation>
+        <translation>Ativar pulo de frames</translation>
     </message>
     <message id="VIDEO_ENABLE_VSYNC">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="422"/>
         <source>Enable V-Sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Ativar V-sync</translation>
     </message>
     <message id="VIDEO_FRAME_TIME">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="434"/>
         <source>Frame time (ms.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tempo do frame (ms.)</translation>
     </message>
     <message id="CONTROLLS_SETUP_PLAYER1">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="452"/>
@@ -436,7 +449,7 @@ Entrance point: %2</source>
     <message id="PLAYER_CONTROLS_SETUP_INPUT_TYPE">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="515"/>
         <source>Input:</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrada:</translation>
     </message>
     <message id="MSG_PLEASEWAIT">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="545"/>
@@ -447,18 +460,19 @@ Entrance point: %2</source>
     <message id="MSG_EPISODES_NOT_FOUND">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="677"/>
         <source>&lt;episodes not found&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;episódios não encontrados&gt;</translation>
     </message>
     <message id="MSG_LEVELS_NOT_FOUND">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="730"/>
         <source>&lt;levels not found&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;níveis não encontrados&gt;</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
         <location filename="../scenes/level/lvl_scene_init.cpp" line="447"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro fatal: Não foi possível achar a secção inicial.
+O ponto inicial do jogador (ou entrada por teleporte) foi posto muito longe da(s) secção(ões)?</translation>
     </message>
     <message id="LVL_MENU_PAUSE_TTL">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="31"/>
@@ -504,30 +518,31 @@ Did you placed player start point (or entrance warp point) too far off of the se
         <location filename="../graphics/window.cpp" line="167"/>
         <source>Unable to find OpenGL support!
 Software renderer will be started.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível achar suporte a OpenGL!
+Renderização por software será usada.</translation>
     </message>
     <message id="NO_RENDERER_ERROR">
         <location filename="../graphics/window.cpp" line="189"/>
         <source>Renderer is not selected!</source>
-        <translation type="unfinished"></translation>
+        <translation>Renderizador não selecionado!</translation>
     </message>
     <message id="WINDOW_CREATE_ERROR">
         <location filename="../graphics/window.cpp" line="221"/>
         <location filename="../graphics/window.cpp" line="229"/>
         <source>Unable to create window!</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível criar janela!</translation>
     </message>
     <message id="WINDOW_ICON_INIT_ERROR">
         <location filename="../graphics/window.cpp" line="251"/>
         <location filename="../graphics/window.cpp" line="258"/>
         <location filename="../graphics/window.cpp" line="283"/>
         <source>Unable to setup window icon!</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível definir ícone da janela!</translation>
     </message>
     <message id="RENDERER_CONTEXT_INIT_ERROR">
         <location filename="../graphics/window.cpp" line="296"/>
         <source>Unable to initialize renderer context!</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível inicializar o render!</translation>
     </message>
     <message id="VSYNC_ERROR_INFO">
         <location filename="../graphics/vsync_validator.cpp" line="77"/>

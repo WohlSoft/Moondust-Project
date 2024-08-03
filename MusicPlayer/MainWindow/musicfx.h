@@ -7,7 +7,7 @@ namespace Ui {
 class MusicFX;
 }
 
-typedef struct _Mix_Music Mix_Music;
+typedef struct Mix_Music Mix_Music;
 
 class MusicFX : public QDialog
 {

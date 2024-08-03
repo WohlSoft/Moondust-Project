@@ -702,7 +702,7 @@ You can obtain the compatible Devkit by downloading the SMBX2 Beta5 or newer:&lt
 &lt;br&gt;
 The Official Moondust Devkit has a support of the SMBX2 Beta4 and older only. However, you still can run any other configuration package and run the level tests using an SMBX2 engine from the outside.</source>
         <translation>该配置包为 SMBX2 专用配置包，无法在官方版本的月尘工具包内使用。
-若要使用该配置包，请使用由 SMBX2 开发团队管理的修改版编辑器并加载它。&lt;br&gt;
+您需要使用由 SMBX2 开发团队管理的修改版编辑器才能加载该配置包。&lt;br&gt;
 &lt;br&gt;
 您可以在下方下载 SMBX2 Beta 5 及更高版本：&lt;br&gt;
 %1&lt;br&gt;
@@ -1147,7 +1147,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>参数：{引擎指令} 当执行时发送指令或信息到月尘引擎</translation>
+        <translation>参数：{引擎指令} 当运行时发送指令或信息到月尘引擎</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
@@ -2808,7 +2808,7 @@ Installed LunaLUA partially extends than limits.</source>
         <translation>你想保存为此格式吗？
 超出 SMBX64 上限可能会使 SMBX 发生错误“下标越界”。
 
-安装 LunaLua 可增加部分对象的上限。</translation>
+安装 LunaLua（现为 SMBX2 的核心引擎），可增加部分对象的上限。</translation>
     </message>
     <message>
         <source>File save error</source>
@@ -3073,7 +3073,7 @@ version code must be less or equal specific code)</source>
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
         <translation>在 SMBX 引擎测试关卡，
-需要 LunaLua 的支持。</translation>
+需要 LunaLua（现为 SMBX2 的核心引擎）的支持。</translation>
     </message>
     <message>
         <source>Reset checkpoints</source>
@@ -3102,7 +3102,7 @@ Otherwise, it will be very limited.</source>
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
         <translation>允许启动引擎后直接测试关卡。
-需要很高的配置，否则下次执行时可能会造成死机。
+需要很高的配置，否则下次运行时可能会造成死机。
 对于低端电脑推荐禁用此项。</translation>
     </message>
     <message>
@@ -3158,7 +3158,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     </message>
     <message>
         <source>LunaLUA tester is not started!</source>
-        <translation>未启动 LunaLua 测试器！</translation>
+        <translation>LunaLua 测试器未启动！</translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
@@ -3166,7 +3166,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation>发送关卡到 LunaLua 失败！</translation>
+        <translation>发送关卡到 LunaLua-SMBX 失败！</translation>
     </message>
     <message>
         <source>LunaTester error</source>
@@ -3238,8 +3238,8 @@ Do you want to continue the process?</source>
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
         <translation>&quot;%1&quot; 未找到！
-您的引擎是 SMBX 1.3！
-因此无法执行关卡测试。需要 LunaLua（SMBX2）的支持。</translation>
+您的引擎是原版 SMBX 1.3！
+因此无法通过 LunaTester 进行关卡测试。需要 LunaLua（SMBX2）的支持。</translation>
     </message>
     <message>
         <source>Test saved level/world</source>
@@ -3305,7 +3305,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Incompatible LunaLua</source>
-        <translation>存在不兼容的 LunaLua</translation>
+        <translation>存在不兼容的 LunaLua 脚本系统</translation>
     </message>
     <message>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
@@ -5480,7 +5480,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Run configure tool...</source>
-        <translation>执行配置工具……</translation>
+        <translation>运行配置工具……</translation>
     </message>
     <message>
         <source>Open local script</source>
@@ -5703,7 +5703,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Launch game engine application.</source>
-        <translation>执行游戏引擎。</translation>
+        <translation>运行游戏引擎。</translation>
     </message>
     <message>
         <source>Open folder of current file</source>
@@ -5919,7 +5919,7 @@ The configuration pack was loaded, but contains errors.</source>
     </message>
     <message>
         <source>Engine already runned</source>
-        <translation>引擎已经执行</translation>
+        <translation>引擎已经运行</translation>
     </message>
     <message>
         <source>Engine is already testing another level.
@@ -7363,7 +7363,7 @@ Reason: %1
     </message>
     <message>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
-        <translation>允许实时编辑：在关卡中捕捉对象、放置新元素、在编辑器中选择和擦除。不支持执行已保存的关卡。</translation>
+        <translation>允许实时编辑：在关卡中捕捉对象、放置新元素、在编辑器中选择和擦除。对已保存的关卡文件来说，该选项不生效。</translation>
     </message>
     <message>
         <source>Don&apos;t auto-suspend game</source>
@@ -9196,7 +9196,7 @@ Installed LunaLUA partially extends than limits.</source>
         <translation>你想保存为此格式吗？
 超出 SMBX64 上限可能会使 SMBX 发生错误“溢出”。
 
-安装 LunaLua 可增加部分对象的上限。</translation>
+安装 LunaLua（现为 SMBX2 的核心引擎），可增加部分对象的上限。</translation>
     </message>
     <message>
         <source>File save error</source>
