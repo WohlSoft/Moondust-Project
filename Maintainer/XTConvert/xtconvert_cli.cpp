@@ -3,7 +3,7 @@
 int main(int argc, char** argv)
 {
     XTConvert::Spec s;
-    // c.m_spec.target_3ds = true;
+    s.target_platform = XTConvert::TargetPlatform::T3X;
 
     s.input_dir = argv[1];
     s.destination = argv[2];
