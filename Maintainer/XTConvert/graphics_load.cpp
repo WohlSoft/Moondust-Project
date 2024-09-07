@@ -50,12 +50,10 @@ FIBITMAP* GraphicsLoad::loadImage(const QString& path)
     return img_rgba;
 }
 
-FIBITMAP* GraphicsLoad::loadPNGAsMask(const QString& path)
+void GraphicsLoad::PNGToMask(FIBITMAP* mask)
 {
-    FIBITMAP* mask = loadImage(path);
-
     if(!mask)
-        return nullptr;
+        return;
 
     // convert alpha channel to luminance
     unsigned int img_w  = FreeImage_GetWidth(mask);
@@ -80,8 +78,6 @@ FIBITMAP* GraphicsLoad::loadPNGAsMask(const QString& path)
             pixel[3] = 0xFF;
         }
     }
-
-    return mask;
 }
 
 static constexpr RGBQUAD s_bitblitBG = {0, 0, 0, 0xFF};

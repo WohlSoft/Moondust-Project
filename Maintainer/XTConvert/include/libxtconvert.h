@@ -5,10 +5,19 @@
 namespace XTConvert
 {
 
+enum class TargetPlatform
+{
+    Desktop,
+    TPL,
+    T3X,
+    DSG,
+};
+
 struct Spec
 {
-    bool target_big_endian = false;
-    bool target_3ds = false;
+    TargetPlatform target_platform = TargetPlatform::Desktop;
+
+    bool preserve_bitmask_appearance = true;
 
     QString input_dir;
     QString graphics_dir;

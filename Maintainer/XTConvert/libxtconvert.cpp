@@ -9,12 +9,16 @@
 
 #include <fcntl.h>
 
+#include <FreeImageLite.h>
+
 #include "archive.h"
 #include "archive_entry.h"
 
 #include "lz4_pack.h"
 #include "libromfs3ds.h"
 #include "libtex3ds.h"
+
+#include "graphics_load.h"
 
 #include "libxtconvert.h"
 
@@ -23,8 +27,52 @@ namespace XTConvert
 
 class Converter
 {
+    struct DirInfo
+    {
+        QDir dir;
+
+        QSet<QString> textures_1x;
+
+        std::unique_ptr<QFile> own_graphics_list; // open file to the directory's own graphics list (if any)
+        QFile* graphics_list = nullptr; // pointer to the correct graphics list to write to (if any)
+
+        enum MakeSizeFiles_t
+        {
+            SIZEFILES_NONE = 0,
+            SIZEFILES_PREVIEW_EPISODE,
+            SIZEFILES_PREVIEW_ASSETS,
+            SIZEFILES_ALL,
+        };
+
+        MakeSizeFiles_t make_size_files = SIZEFILES_NONE;
+        bool make_mask_gifs = false;
+        bool copy_mask_gifs = false;
+    };
+
+    DirInfo m_cur_dir;
+
+    void sync_cur_dir(const QString& in_file)
+    {
+        QFileInfo fi(in_file);
+        QDir parent = fi.dir();
+
+        if(parent.path() == m_cur_dir.dir.path())
+            return;
+
+        m_cur_dir = DirInfo();
+        m_cur_dir.dir = std::move(parent);
+
+        QStringList path_parts = QDir::toNativeSeparators(m_cur_dir.dir.path()).toLower().split(QDir::separator());
+
+        // TODO: check for 1x textures
+
+        m_cur_dir.make_size_files = DirInfo::SIZEFILES_ALL;
+    }
+
 public:
     QDir m_input_dir;
+    QDir m_assets_dir;
+
     QTemporaryDir m_temp_dir_owner;
     QDir m_temp_dir;
 
@@ -32,10 +80,169 @@ public:
 
     QString m_error;
 
+    bool convert_image(const QString& filename, const QString& in_path, const QString& out_path)
+    {
+        FIBITMAP* image = GraphicsLoad::loadImage(in_path);
+        if(!image)
+            return false;
+
+        FIBITMAP* mask = nullptr;
+        QString mask_path;
+        if(filename.endsWith(".gif"))
+        {
+            // find the mask!!
+            QString filename_stem = filename.chopped(4);
+            auto found = m_cur_dir.dir.entryInfoList({filename_stem + "m.gif"});
+            if(!found.isEmpty())
+            {
+                mask_path = found[0].absoluteFilePath();
+                mask = GraphicsLoad::loadImage(mask_path);
+            }
+
+            if(!mask)
+                mask_path.clear();
+
+            // keep trying to find mask, in fallback dir and in appropriate graphics dir
+            for(int i = 0; i < 2; i++)
+            {
+                if(mask)
+                    break;
+
+                QString dir_piece = (i == 0) ? "fallback" : filename.split('-')[0];
+                auto s = QDir::separator();
+                QString dir_to_check = m_assets_dir.path() + s + "graphics" + s + dir_piece + s;
+
+                // look for mask GIF
+                mask = GraphicsLoad::loadImage(dir_to_check + filename_stem + "m.gif");
+
+                if(mask)
+                    break;
+
+                // look for PNG
+                mask = GraphicsLoad::loadImage(dir_to_check + filename_stem + ".png");
+
+                // convert PNG to mask
+                if(mask)
+                    GraphicsLoad::PNGToMask(mask);
+            }
+
+            // Okay, finding a mask failed. Imagine that image is fully opaque in that case, and ignore the mask logic.
+        }
+
+        TargetPlatform output_format = m_spec.target_platform;
+
+        // find out whether mask is actually needed
+        if(m_spec.preserve_bitmask_appearance && GraphicsLoad::validateBitmaskRequired(image, mask))
+            output_format = TargetPlatform::Desktop;
+        else if(mask)
+            GraphicsLoad::mergeWithMask(image, mask);
+
+        // either way we can free the mask bitmap now
+        if(mask)
+        {
+            FreeImage_Unload(mask);
+            mask = nullptr;
+        }
+
+        QString used_out_path = out_path;
+
+        // scale the image as needed
+        int orig_w = FreeImage_GetWidth(image);
+        int orig_h = FreeImage_GetHeight(image);
+
+        // 2x downscale by default
+        if(!m_cur_dir.textures_1x.contains(filename))
+        {
+            FIBITMAP* scaled = GraphicsLoad::fast2xScaleDown(image);
+            FreeImage_Unload(image);
+            if(!scaled)
+                return false;
+
+            image = scaled;
+        }
+
+        // save the image!
+        bool save_success = false;
+        if(output_format == TargetPlatform::Desktop)
+        {
+            qInfo() << "mask required for" << in_path;
+            save_success = QFile::copy(in_path, out_path);
+
+            if(save_success && !mask_path.isEmpty())
+                save_success = QFile::copy(mask_path, out_path.chopped(4) + "m.gif");
+        }
+        else if(output_format == TargetPlatform::T3X)
+        {
+            used_out_path = out_path.chopped(4) + ".t3x";
+
+            FreeImage_FlipVertical(image);
+
+            Tex3DS::Params params;
+            params.compression_format = Tex3DS::COMPRESSION_LZ11;
+
+            // image parts
+            save_success = true;
+            for(int i = 0; i < 3; i++)
+            {
+                int start_y = i * 1024;
+                int h = FreeImage_GetHeight(image) - start_y;
+                if(h <= 0)
+                    break;
+                if(h > 1024)
+                    h = 1024;
+
+                int w = FreeImage_GetWidth(image);
+                if(w > 1024)
+                    w = 1024;
+
+                int stride = FreeImage_GetPitch(image);
+
+                params.input_img = Tex3DS::Image(w, h);
+
+                if(w * 4 == stride)
+                    memcpy(params.input_img.pixels.data(), FreeImage_GetBits(image) + stride * 1024 * i, params.input_img.pixels.size() * sizeof(Tex3DS::RGBA));
+                else
+                {
+                    for(int row = 0; row < h; row++)
+                        memcpy(params.input_img.pixels.data() + params.input_img.stride * row, FreeImage_GetBits(image) + stride * (1024 * i + row), params.input_img.w * sizeof(Tex3DS::RGBA));
+                }
+
+                params.output_path = used_out_path.toUtf8();
+                if(i > 0)
+                    params.output_path.push_back('0' + i);
+
+                save_success &= Tex3DS::Process(params);
+            }
+        }
+
+        // cleanup the image
+        FreeImage_Unload(image);
+
+        // finish up by constructing the size information and writing it as needed
+        QString size_text = QString("%1\n%2\n").arg(orig_w, 4).arg(orig_h, 4);
+
+        // write to graphics list NOW, write to actual size file after deciding output format
+        if(m_cur_dir.make_size_files && save_success && output_format != TargetPlatform::Desktop)
+        {
+            QFile file(used_out_path + ".size");
+            if(!file.open(QIODevice::WriteOnly))
+                save_success = false;
+
+            file.write(size_text.toUtf8());
+            file.close();
+        }
+
+        return save_success;
+    }
+
     bool convert_file(const QString& filename, const QString& in_path, const QString& out_path)
     {
+        sync_cur_dir(in_path);
+
         if(filename.endsWith("m.gif"))
             return true;
+        else if(m_spec.target_platform != TargetPlatform::Desktop && (filename.endsWith(".png") || filename.endsWith(".gif")))
+            return convert_image(filename, in_path, out_path);
         else
         {
             qInfo() << "copying" << out_path;
@@ -188,7 +395,7 @@ cleanup:
             FILE* inf = fopen(iso_path.toUtf8().data(), "rb");
             FILE* outf = fopen(m_spec.destination.toUtf8().data(), "wb");
 
-            success = LZ4Pack::compress(outf, inf, 4096, m_spec.target_big_endian);
+            success = LZ4Pack::compress(outf, inf, 4096, m_spec.target_platform == TargetPlatform::TPL);
 
             if(inf)
                 fclose(inf);
@@ -215,7 +422,7 @@ cleanup:
 
     bool create_package()
     {
-        if(m_spec.target_3ds)
+        if(m_spec.target_platform == TargetPlatform::T3X)
             return create_package_romfs3ds();
         else
             return create_package_iso_lz4();
@@ -223,6 +430,8 @@ cleanup:
 
     bool process()
     {
+        GraphicsLoad::initFreeImage();
+
         m_input_dir.setPath(m_spec.input_dir);
 
         if(!build_temp_dir())
