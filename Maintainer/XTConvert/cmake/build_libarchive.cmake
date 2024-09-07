@@ -38,7 +38,7 @@ function(add_libarchive_target)
     get_target_property(LZ4_INCLUDE_DIR lz4_static INTERFACE_INCLUDE_DIRECTORIES)
     set(LZ4_LIBRARY "$<TARGET_FILE:lz4_static>")
 
-    add_subdirectory(XTConvert/3rdparty/libarchive EXCLUDE_FROM_ALL)
+    add_subdirectory(3rdparty/libarchive EXCLUDE_FROM_ALL)
 
     add_dependencies(archive_static lz4_static)
 endfunction()
