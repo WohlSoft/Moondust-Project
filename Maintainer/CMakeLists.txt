@@ -137,7 +137,6 @@ list(APPEND PGE_MAINTAINER_SRCS
     Graphics/lazyfix.cpp
     Graphics/palette_filter.cpp
     XTConvert/xt_convert.cpp
-    XTConvert/xt_convert_int.cpp
     ${UTF8MAIN_SRCS}
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
@@ -289,11 +288,10 @@ if(APPLE)
 endif()
 
 # libraries for XTConvert
-add_subdirectory(XTConvert/3rdparty/mbediso EXCLUDE_FROM_ALL)
-add_subdirectory(XTConvert/3rdparty/libimagequant EXCLUDE_FROM_ALL)
-include(XTConvert/cmake/build_libarchive.cmake)
-list(APPEND PGE_MAINTAINER_LINK_LIBS archive_static lz4_pack_static imagequant_a)
-add_dependencies(pge_maintainer archive_static lz4_pack_static imagequant_a)
+add_subdirectory(XTConvert)
+
+list(APPEND PGE_MAINTAINER_LINK_LIBS libxtconvert)
+add_dependencies(pge_maintainer libxtconvert)
 
 target_link_libraries(pge_maintainer
     ${PGE_MAINTAINER_LINK_LIBS}
