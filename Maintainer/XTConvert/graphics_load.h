@@ -18,7 +18,7 @@ public:
 
     static FIBITMAP* loadImage(const QString& path);
 
-    static FIBITMAP* loadPNGAsMask(const QString& path);
+    static void PNGToMask(FIBITMAP* mask);
 
     static void mergeWithMask(FIBITMAP *image, FIBITMAP *mask);
 
