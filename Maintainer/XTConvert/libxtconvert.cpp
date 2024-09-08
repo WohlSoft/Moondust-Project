@@ -5,6 +5,7 @@
 #include <QTemporaryDir>
 #include <QTemporaryFile>
 #include <QDirIterator>
+#include <QSettings>
 #include <QProcess>
 
 #include <fcntl.h>
@@ -47,6 +48,7 @@ class Converter
         MakeSizeFiles_t make_size_files = SIZEFILES_NONE;
         bool make_mask_gifs = false;
         bool copy_mask_gifs = false;
+        bool convert_font_inis = false;
     };
 
     DirInfo m_cur_dir;
@@ -64,7 +66,31 @@ class Converter
 
         QStringList path_parts = QDir::toNativeSeparators(m_cur_dir.dir.path()).toLower().split(QDir::separator());
 
-        // TODO: check for 1x textures
+        // check for 1x textures: fonts
+        if(path_parts[path_parts.size() - 1] == "fonts")
+        {
+            for(QFileInfo f : m_cur_dir.dir.entryInfoList({"*.ini"}))
+            {
+                qInfo() << "Scanning" << f.absoluteFilePath();
+                QSettings ini(f.absoluteFilePath(), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+                ini.setIniCodec("UTF-8");
+#endif
+
+                ini.beginGroup("font-map");
+                int texture_scale = ini.value("texture-scale", 1).toInt();
+                QString texture_filename = ini.value("texture", "").toString().toLower();
+
+                qInfo() << "scale" << texture_scale << "fn" << texture_filename;
+
+                if(texture_scale != 1 && !texture_filename.isEmpty())
+                    m_cur_dir.textures_1x.insert(texture_filename);
+            }
+
+            // trigger font INI conversion
+            if(m_spec.target_platform != TargetPlatform::Desktop)
+                m_cur_dir.convert_font_inis = true;
+        }
 
         m_cur_dir.make_size_files = DirInfo::SIZEFILES_ALL;
     }
@@ -146,9 +172,12 @@ public:
 
         QString used_out_path = out_path;
 
+
         // scale the image as needed
-        int orig_w = FreeImage_GetWidth(image);
-        int orig_h = FreeImage_GetHeight(image);
+
+        // save these if it becomes necessary
+        // int orig_w = FreeImage_GetWidth(image);
+        // int orig_h = FreeImage_GetHeight(image);
 
         // 2x downscale by default
         if(!m_cur_dir.textures_1x.contains(filename))
@@ -160,6 +189,9 @@ public:
 
             image = scaled;
         }
+
+        int image_h = FreeImage_GetHeight(image);
+        int image_w = FreeImage_GetWidth(image);
 
         // save the image!
         bool save_success = false;
@@ -185,13 +217,13 @@ public:
             for(int i = 0; i < 3; i++)
             {
                 int start_y = i * 1024;
-                int h = FreeImage_GetHeight(image) - start_y;
+                int h = image_h - start_y;
                 if(h <= 0)
                     break;
                 if(h > 1024)
                     h = 1024;
 
-                int w = FreeImage_GetWidth(image);
+                int w = image_w;
                 if(w > 1024)
                     w = 1024;
 
@@ -219,7 +251,7 @@ public:
         FreeImage_Unload(image);
 
         // finish up by constructing the size information and writing it as needed
-        QString size_text = QString("%1\n%2\n").arg(orig_w, 4).arg(orig_h, 4);
+        QString size_text = QString("%1\n%2\n").arg(image_w * 2, 4).arg(image_h * 2, 4);
 
         // write to graphics list NOW, write to actual size file after deciding output format
         if(m_cur_dir.make_size_files && save_success && output_format != TargetPlatform::Desktop)
@@ -235,6 +267,42 @@ public:
         return save_success;
     }
 
+    bool convert_font_ini(const QString&, const QString& in_path, const QString& out_path)
+    {
+        if(!QFile::copy(in_path, out_path))
+            return false;
+
+        QSettings ini(out_path, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        ini.setIniCodec("UTF-8");
+#endif
+
+        ini.beginGroup("font-map");
+        QString texture_filename = ini.value("texture", "").toString();
+
+        if(!texture_filename.isEmpty() && (texture_filename.toLower().endsWith(".png") || texture_filename.toLower().endsWith(".gif")))
+        {
+            texture_filename.chop(4);
+            if(m_spec.target_platform == TargetPlatform::T3X)
+                texture_filename += ".t3x";
+            else if(m_spec.target_platform == TargetPlatform::TPL)
+                texture_filename += ".tpl";
+            else if(m_spec.target_platform == TargetPlatform::DSG)
+                texture_filename += ".dsg";
+
+            ini.setValue("texture", texture_filename);
+        }
+
+        ini.endGroup();
+
+        ini.sync();
+
+        if(ini.status() != QSettings::NoError)
+            return false;
+
+        return true;
+    }
+
     bool convert_file(const QString& filename, const QString& in_path, const QString& out_path)
     {
         sync_cur_dir(in_path);
@@ -243,6 +311,8 @@ public:
             return true;
         else if(m_spec.target_platform != TargetPlatform::Desktop && (filename.endsWith(".png") || filename.endsWith(".gif")))
             return convert_image(filename, in_path, out_path);
+        else if(filename.endsWith(".ini") && m_cur_dir.convert_font_inis)
+            return convert_font_ini(filename, in_path, out_path);
         else
         {
             qInfo() << "copying" << out_path;
