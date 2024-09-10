@@ -50,7 +50,7 @@ FIBITMAP* GraphicsLoad::loadImage(const QString& path)
     return img_rgba;
 }
 
-void GraphicsLoad::PNGToMask(FIBITMAP* mask)
+void GraphicsLoad::RGBAToMask(FIBITMAP* mask)
 {
     if(!mask)
         return;
@@ -66,9 +66,6 @@ void GraphicsLoad::PNGToMask(FIBITMAP* mask)
     {
         for(unsigned int x = 0; (x < img_w); x++)
         {
-            RGBQUAD pix;
-            FreeImage_GetPixelColor(mask, x, y, &pix);
-
             uint8_t* pixel = &pixel_data[dest_px_stride * y + 4 * x];
 
             uint8_t grey = 0xFF - pixel[3];
