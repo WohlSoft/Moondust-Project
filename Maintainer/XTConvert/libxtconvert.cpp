@@ -149,7 +149,7 @@ public:
 
                 // convert PNG to mask
                 if(mask)
-                    GraphicsLoad::PNGToMask(mask);
+                    GraphicsLoad::RGBAToMask(mask);
             }
 
             // Okay, finding a mask failed. Imagine that image is fully opaque in that case, and ignore the mask logic.
