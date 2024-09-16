@@ -20,6 +20,7 @@
 #include "libtex3ds.h"
 
 #include "graphics_load.h"
+#include "texconv.h"
 
 #include "libxtconvert.h"
 
@@ -173,6 +174,9 @@ public:
         QString used_out_path = out_path;
 
 
+        // FIXME: save mask fallback here if we are in the global graphics dir
+
+
         // scale the image as needed
 
         // save these if it becomes necessary
@@ -195,6 +199,7 @@ public:
 
         // save the image!
         bool save_success = false;
+        QString size_text;
         if(output_format == TargetPlatform::Desktop)
         {
             qInfo() << "mask required for" << in_path;
@@ -205,6 +210,8 @@ public:
         }
         else if(output_format == TargetPlatform::T3X)
         {
+            // break these into their own functions
+
             used_out_path = out_path.chopped(4) + ".t3x";
 
             FreeImage_FlipVertical(image);
@@ -239,22 +246,127 @@ public:
                         memcpy(params.input_img.pixels.data() + params.input_img.stride * row, FreeImage_GetBits(image) + stride * (1024 * i + row), params.input_img.w * sizeof(Tex3DS::RGBA));
                 }
 
+                // FIXME: check if possible to do 5551 here, or possibly just do 5551 by force (maybe unless there's intermediate opacity?)
+
                 params.output_path = used_out_path.toUtf8();
                 if(i > 0)
                     params.output_path.push_back('0' + i);
 
                 save_success &= Tex3DS::Process(params);
             }
+
+            size_text = QString("%1\n%2\n").arg(image_w * 2, 4).arg(image_h * 2, 4);
+        }
+        else if(output_format == TargetPlatform::TPL)
+        {
+        }
+        else if(output_format == TargetPlatform::DSG)
+        {
+            used_out_path = out_path.chopped(4) + ".dsg";
+
+            int flags = 0;
+
+            // FIXME: move this out of the DSG-specific code
+            if(filename.startsWith("mario-") || filename.startsWith("luigi-") || filename.startsWith("peach-") || filename.startsWith("toad-") || filename.startsWith("link-"))
+            {
+                if(shrink_player_texture(&image, filename.startsWith("link-")))
+                {
+                    image_w = FreeImage_GetWidth(image);
+                    image_h = FreeImage_GetHeight(image);
+                }
+            }
+
+            // downscale image further, and threshold alpha, here.
+            int container_w = next_power_of_2(image_w);
+            int container_h = next_power_of_2(image_h);
+
+            while((container_w * container_h) > 65536)
+            {
+                // log a warning here
+                flags++;
+                container_w /= 2;
+                container_h /= 2;
+            }
+
+            if(flags)
+            {
+                FIBITMAP* scaled = FreeImage_Rescale(image, image_w / (1 << flags), image_h / (1 << flags), FILTER_BILINEAR);
+
+                FreeImage_Unload(image);
+
+                if(!scaled)
+                    return false;
+
+                image = scaled;
+            }
+
+            // palettize texture
+            int input_w = FreeImage_GetWidth(image);
+            int input_h = FreeImage_GetHeight(image);
+            PaletteTex p(FreeImage_GetBits(image), input_w, input_h);
+            if(!p.convert(PaletteTex::HALF, 0))
+            {
+                FreeImage_Unload(image);
+                return false;
+            }
+
+            // save the image here
+            QByteArray dsg_data;
+            dsg_data.resize(32 + container_w * container_h / 2);
+
+            // save palette
+            for(int i = 0; i < 16; ++i)
+            {
+                liq_color c = p.palette()[i];
+                uint8_t* dest = reinterpret_cast<unsigned char*>(&dsg_data[i * 2]);
+
+                write_uint16_le(dest, color_to_rgb5a1(c));
+            }
+
+            bool fully_opaque = (p.palette()[0].a == 255);
+            if(fully_opaque)
+                flags |= 16;
+
+            // save image indexes
+            const uint8_t* src = p.indexes();
+            uint8_t* out_base = reinterpret_cast<unsigned char*>(&dsg_data[32]);
+            int out_stride = container_w / 2;
+            for(int row = 0; row < input_h; row++)
+            {
+                uint8_t* dest = out_base + (input_h - 1 - row) * out_stride;
+
+                int col;
+                for(col = 0; col < input_w - 1; col += 2)
+                {
+                    *(dest++) = (src[0] << 0) | (src[1] << 4);
+                    src += 2;
+                }
+
+                if(col < input_w)
+                {
+                    *(dest++) = (src[0] << 4);
+                    src += 1;
+                }
+            }
+
+            QFile file(used_out_path);
+            if(!file.open(QIODevice::WriteOnly))
+                save_success = false;
+            else
+            {
+                file.write(dsg_data);
+                file.close();
+                save_success = true;
+
+                size_text = QString("%1\n%2\n%3\n").arg(image_w * 2, 4).arg(image_h * 2, 4).arg(flags);
+            }
         }
 
         // cleanup the image
         FreeImage_Unload(image);
 
-        // finish up by constructing the size information and writing it as needed
-        QString size_text = QString("%1\n%2\n").arg(image_w * 2, 4).arg(image_h * 2, 4);
-
-        // write to graphics list NOW, write to actual size file after deciding output format
-        if(m_cur_dir.make_size_files && save_success && output_format != TargetPlatform::Desktop)
+        // write to size file if needed
+        if(m_cur_dir.make_size_files && save_success && !size_text.isEmpty())
         {
             QFile file(used_out_path + ".size");
             if(!file.open(QIODevice::WriteOnly))
@@ -263,6 +375,8 @@ public:
             file.write(size_text.toUtf8());
             file.close();
         }
+
+        // FIXME: write to graphics list NOW
 
         return save_success;
     }
