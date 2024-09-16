@@ -280,12 +280,12 @@ public:
             int container_w = next_power_of_2(image_w);
             int container_h = next_power_of_2(image_h);
 
-            while((container_w * container_h) > 65536)
+            while((container_w * container_h) / 2 > 131072)
             {
                 // log a warning here
                 flags++;
-                container_w /= 2;
-                container_h /= 2;
+                container_w = next_power_of_2(image_w / (1 << flags));
+                container_h = next_power_of_2(image_h / (1 << flags));
             }
 
             if(flags)
