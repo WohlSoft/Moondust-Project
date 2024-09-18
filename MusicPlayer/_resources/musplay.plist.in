@@ -8,6 +8,7 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>wav</string>
+                <string>aiff</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>file_musplay.icns</string>
@@ -67,6 +68,9 @@
 				<string>midi</string>
 				<string>kar</string>
 				<string>rmi</string>
+				<string>cmf</string>
+				<string>xmi</string>
+				<string>mus</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>file_musplay.icns</string>
@@ -136,11 +140,27 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>imf</string>
+				<string>wlf</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>file_musplay.icns</string>
 			<key>CFBundleTypeName</key>
 			<string>Id software Music Format (raw AdLib commands sequence)</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>ptcop</string>
+				<string>pttune</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>file_musplay.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>PXTone music file</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
