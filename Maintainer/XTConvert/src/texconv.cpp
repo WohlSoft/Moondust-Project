@@ -33,52 +33,57 @@ static bool s_blit(FIBITMAP* dest, FIBITMAP* src, int sx, int sy, int dx, int dy
 
 bool shrink_player_texture(FIBITMAP** image, bool char5)
 {
-    const int orig_frame_w = 100;
-    const int orig_frame_h = 100;
-    const int orig_cols = 10;
-    const int orig_rows = 10;
+    const int source_frame_w = 50;
+    const int source_frame_h = 50;
+    const int source_cols = 10;
+    const int source_rows = 10;
 
-    const int new_cols = 0;
-// def do_sheet(fn, frames, out, w, h, cols, rows, make_flippable=False):
-//     ow = 100
-//     oh = 100
-//     ocols = 10
-//     orows = 10
+    const int dest_frame_w = (char5) ? 32 : 24;
+    const int dest_frame_h = 32;
+    const int dest_cols = (char5) ? 4 : 10;
+    const int dest_rows_per_dir = 4;
+    const int dest_rows = dest_rows_per_dir * 2;
 
-//     cmd = f'convert -size {w*cols}x{h*rows*2} xc:none -compose Replace -gravity NorthWest -define trim:edges=east '
+    FIBITMAP* source_image = *image;
 
-//     for df, sf in enumerate(frames):
-//         for dir in [-1, 1]:
-//             o_coord = dir * sf + 49
-//             sx = ow * (o_coord // orows)
-//             sy = oh * (o_coord % orows)
+    if(FreeImage_GetWidth(source_image) != source_frame_w * source_cols || FreeImage_GetHeight(source_image) != source_frame_h * source_rows)
+        return false;
 
-//             dx = w * (df // rows)
-//             dy = h * (df % rows)
+    FIBITMAP* dest_image = FreeImage_AllocateT(FIT_BITMAP, dest_frame_w * dest_cols, dest_frame_h * dest_rows, 32);
 
-//             flip = False
+    if(!dest_image)
+        return false;
 
-//             dw = w
+    int copy_frame_count = (char5) ? 16 : 38;
 
-//             if dir == -1:
-//                 dx = (cols - 1) * w - dx
-//                 dy += rows * h
+    for(int dest_frame = 0; dest_frame < copy_frame_count; dest_frame++)
+    {
+        int source_frame = (dest_frame < 33) ? dest_frame : dest_frame + 7;
 
-//                 if make_flippable:
-//                     flip = (sf == 0)
+        if(char5)
+            source_frame += 1;
 
-//                     if not flip:
-//                         trim = check_trim(fn, sx, sy, w, h)
-//                         print(f'lo-{sf} = {trim}')
-//                         dx += trim
-//                         dw -= trim
+        for(int dir = -1; dir <= 1; dir += 2)
+        {
+            int source_frame_res = dir * source_frame + 49;
+            int source_x = source_frame_w * (source_frame_res / source_rows);
+            int source_y = source_frame_h * (source_frame_res % source_rows);
 
-//                     if sf == 25 or sf == 26:
-//                         flip = True
-//                 elif sf == 0:
-//                     continue
+            int dest_x = dest_frame_w * (dest_frame / dest_rows_per_dir);
+            int dest_y = dest_frame_h * (dest_frame % dest_rows_per_dir);
 
-//             cmd += blit(fn, sx, sy, dx, dy, dw, h, flip)
+            if(dir == -1)
+            {
+                dest_x = (dest_cols - 1) * dest_frame_w - dest_x;
+                dest_y += dest_rows_per_dir * dest_frame_h;
+            }
+
+            s_blit(dest_image, source_image, source_x, source_y, dest_x, dest_y, dest_frame_w, dest_frame_h);
+        }
+    }
+
+    FreeImage_Unload(source_image);
+    *image = dest_image;
 
     return true;
 }
