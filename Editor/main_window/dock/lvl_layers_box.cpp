@@ -870,6 +870,14 @@ void LvlLayersBox::on_RemoveLayer_clicked()
     if(answer == QMessageBox::Yes) removeCurrentLayer(true);
 }
 
+static QString boldIfNonZero(const QString &label, int number)
+{
+    if(number > 0)
+        return QString("<li><b>%1</b>: %2</li>\n").arg(label).arg(number);
+    else
+        return QString("<li>%1: %2</li>\n").arg(label).arg(number);
+}
+
 void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 {
     if(ui->LvlLayerList->selectedItems().isEmpty())
@@ -881,7 +889,7 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 
     QPoint globPos = ui->LvlLayerList->mapToGlobal(pos);
 
-    LogDebug(QString("Main Menu's context menu called! %1 %2 -> %3 %4")
+    LogDebug(QString("Layer's context menu called! %1 %2 -> %3 %4")
              .arg(pos.x()).arg(pos.y())
              .arg(globPos.x()).arg(globPos.y()));
 
@@ -894,6 +902,9 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
     QAction *selectAll = layer_menu.addAction(tr("Select all items"));
     if(layerItem->checkState() != Qt::Checked)
         selectAll->setEnabled(false);
+
+    layer_menu.addSeparator();
+    QAction *showStats = layer_menu.addAction(tr("Show layer statistics..."));
 
     QAction *removeLayer = nullptr;
     QAction *removeLayerOnly = nullptr;
@@ -909,6 +920,156 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 
     if(selected == rename)
         ui->LvlLayerList->editItem(layerItem);
+    else if(selected == showStats)
+    {
+        LevelEdit *lvlEdit = mw()->activeLvlEditWin();
+        Q_ASSERT(lvlEdit);
+        Q_ASSERT(lvlEdit->scene);
+        Q_ASSERT(lvlEdit->scene->m_data);
+        const LevelData *d = lvlEdit->scene->m_data;
+
+        int statsTotalMembers = 0;
+        int statsBlocks = 0;
+        int statsBGOs = 0;
+        int statsNPCs = 0;
+        int statsWarps = 0;
+        int statsPEZs = 0;
+        int statsAttached = 0;
+        int statsEventsRefs = 0;
+
+        QSet<QString> referredByEvents;
+
+        for(auto &o : d->blocks)
+        {
+            if(layerName.compare(o.layer, Qt::CaseInsensitive) == 0)
+            {
+                statsTotalMembers++;
+                statsBlocks++;
+            }
+        }
+
+        for(auto &o : d->bgo)
+        {
+            if(layerName.compare(o.layer, Qt::CaseInsensitive) == 0)
+            {
+                statsTotalMembers++;
+                statsBGOs++;
+            }
+        }
+
+        for(auto &o : d->npc)
+        {
+            if(layerName.compare(o.layer, Qt::CaseInsensitive) == 0)
+            {
+                statsTotalMembers++;
+                statsNPCs++;
+            }
+
+            if(layerName.compare(o.attach_layer, Qt::CaseInsensitive) == 0)
+                statsAttached++;
+        }
+
+        for(auto &o : d->doors)
+        {
+            if(layerName.compare(o.layer, Qt::CaseInsensitive) == 0)
+            {
+                statsTotalMembers++;
+                statsWarps++;
+            }
+        }
+
+        for(auto &o : d->physez)
+        {
+            if(layerName.compare(o.layer, Qt::CaseInsensitive) == 0)
+            {
+                statsTotalMembers++;
+                statsPEZs++;
+            }
+        }
+
+        for(auto &e : d->events)
+        {
+            for(auto &o : e.layers_hide)
+            {
+                if(layerName.compare(o, Qt::CaseInsensitive) == 0)
+                {
+                    statsEventsRefs++;
+                    referredByEvents.insert(e.name);
+                }
+            }
+
+            for(auto &o : e.layers_show)
+            {
+                if(layerName.compare(o, Qt::CaseInsensitive) == 0)
+                {
+                    statsEventsRefs++;
+                    referredByEvents.insert(e.name);
+                }
+            }
+
+            for(auto &o : e.layers_toggle)
+            {
+                if(layerName.compare(o, Qt::CaseInsensitive) == 0)
+                {
+                    statsEventsRefs++;
+                    referredByEvents.insert(e.name);
+                }
+            }
+        }
+
+        bool used = statsTotalMembers > 0 || statsAttached > 0 || statsEventsRefs > 0;
+        QString stats;
+
+        if(used)
+        {
+            stats = "<h2>" + tr("Layer \"%1\" statistics").arg(layerName) + ":</h2>\n";
+            stats += "<ul>";
+            stats += boldIfNonZero(tr("Total members", "Layer statistics field"), statsTotalMembers);
+            stats += boldIfNonZero(tr("Blocks", "Layer statistics field"), statsTotalMembers);
+            stats += boldIfNonZero(tr("Background objects", "Layer statistics field"), statsBGOs);
+            stats += boldIfNonZero(tr("NPC", "Layer statistics field"), statsNPCs);
+            stats += boldIfNonZero(tr("Warps", "Layer statistics field"), statsWarps);
+            stats += boldIfNonZero(tr("Physical environments", "Layer statistics field"), statsPEZs);
+            stats += "</ul>";
+
+            stats += "<h2>" + tr("Usage") + ":</h2>\n";
+            stats += "<ul>";
+            stats += boldIfNonZero(tr("Attaches to NPCs", "Layer statistics field"), statsAttached);
+            stats += boldIfNonZero(tr("Referred in events", "Layer statistics field"), statsEventsRefs);
+            stats += "</ul>";
+        }
+        else
+            stats = tr("<h2>Layer \"%1\" statistics:</h2>\n"
+                       "<center>&lt;This is an unused layer with no members&gt;</center>\n").arg(layerName);
+
+        if(!referredByEvents.isEmpty())
+        {
+            stats += "<h2>" + tr("Referred in events") + ":</h2>\n";
+            stats += "<ul>\n";
+            for(auto &e : referredByEvents)
+                stats += QString("<li>%1</li>\n").arg(e);
+            stats += "</ul>\n";
+        }
+
+
+        QMessageBox s(this);
+        QPushButton removeButton;
+        removeButton.setText(tr("Remove this layer"));
+        s.setText(stats);
+        s.setTextFormat(Qt::RichText);
+        s.setWindowTitle(tr("Layer statistics"));
+        s.addButton(QMessageBox::Close);
+        if(!used)
+        {
+            s.addButton(&removeButton, QMessageBox::ActionRole);
+            QObject::connect(&removeButton, static_cast<void (QPushButton::*)(bool)>(&QPushButton::clicked),
+                             [this](bool)->void
+                             {
+                                 removeCurrentLayer(false);
+                             });
+        }
+        s.exec();
+    }
     else if(selected == selectAll)
     {
         LevelEdit *lvlEdit = mw()->activeLvlEditWin();
