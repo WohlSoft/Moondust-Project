@@ -92,6 +92,12 @@ jobs:
 
     - uses: WohlSoft/branch-name@v0.1
 
+    - name: Pull submodules
+      shell: bash
+      run: |
+        git submodule init
+        git submodule update
+
     - name: Check if a pull request
       id: event-check
       shell: bash
