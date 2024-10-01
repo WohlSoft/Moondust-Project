@@ -3701,92 +3701,94 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Rename event</source>
-        <translation type="unfinished"></translation>
+        <translation>Переименовать событие</translation>
     </message>
     <message>
         <source>Remove event</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить событие</translation>
     </message>
     <message>
         <source>Show event statistics...</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать статистику события...</translation>
     </message>
     <message>
         <source>Event &quot;%1&quot; statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Статистика события &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Total triggers</source>
         <comment>Event statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Всего триггеров</translation>
     </message>
     <message>
         <source>Block triggers</source>
         <comment>Event statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Триггеры блоков</translation>
     </message>
     <message>
         <source>NPC triggers</source>
         <comment>Event statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Триггеры НИП</translation>
     </message>
     <message>
         <source>Warp triggers</source>
         <comment>Event statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Триггеры проходов</translation>
     </message>
     <message>
         <source>Physical environment triggers</source>
         <comment>Event statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Триггеры физических сред</translation>
     </message>
     <message>
         <source>Other events triggers</source>
         <comment>Event statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Триггеры других событий</translation>
     </message>
     <message>
         <source>Autostart type</source>
         <comment>Event statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тип автозапуска</translation>
     </message>
     <message>
         <source>Level start</source>
         <comment>Event autostart type</comment>
-        <translation type="unfinished"></translation>
+        <translation>На запуске уровня</translation>
     </message>
     <message>
         <source>Match all conditions</source>
         <comment>Event autostart type</comment>
-        <translation type="unfinished"></translation>
+        <translation>Совпадение всех условий</translation>
     </message>
     <message>
         <source>Call and match</source>
         <comment>Event autostart type</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вызов и совпадение</translation>
     </message>
     <message>
         <source>[Unknown]</source>
         <comment>Event autostart type</comment>
-        <translation type="unfinished"></translation>
+        <translation>[Неизвестно]</translation>
     </message>
     <message>
         <source>&lt;h2&gt;Event &quot;%1&quot; statistics:&lt;/h2&gt;
 &lt;center&gt;&amp;lt;This is an unused event&amp;gt;&lt;/center&gt;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h2&gt;Статистика события &quot;%1&quot;:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;Это - неиспользуемое событие&amp;gt;&lt;/center&gt;
+</translation>
     </message>
     <message>
         <source>Triggered by other events</source>
-        <translation type="unfinished"></translation>
+        <translation>Запущено другими событиями</translation>
     </message>
     <message>
         <source>Remove this event</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить это событие</translation>
     </message>
     <message>
         <source>Event statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Статистика события</translation>
     </message>
 </context>
 <context>
@@ -4161,73 +4163,75 @@ All elements of this layer will be removed too!</source>
     </message>
     <message>
         <source>Show layer statistics...</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать статистику слоя...</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Статистика слоя &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Total members</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Всего членов</translation>
     </message>
     <message>
         <source>Blocks</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished">Блоки</translation>
+        <translation>Блоки</translation>
     </message>
     <message>
         <source>Background objects</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Фоновые объекты</translation>
     </message>
     <message>
         <source>NPC</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished">НИП</translation>
+        <translation>НИП</translation>
     </message>
     <message>
         <source>Warps</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Проходы</translation>
     </message>
     <message>
         <source>Physical environments</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Физические среды</translation>
     </message>
     <message>
         <source>Usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Использование</translation>
     </message>
     <message>
         <source>Attaches to NPCs</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Присоединено к НИП</translation>
     </message>
     <message>
         <source>Referred in events</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Упомянуто в событиях</translation>
     </message>
     <message>
         <source>&lt;h2&gt;Layer &quot;%1&quot; statistics:&lt;/h2&gt;
 &lt;center&gt;&amp;lt;This is an unused layer with no members&amp;gt;&lt;/center&gt;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h2&gt;Статистика слоя &quot;%1&quot;:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;Данный слой не используемый и пустой&amp;gt;&lt;/center&gt;
+</translation>
     </message>
     <message>
         <source>Referred in events</source>
-        <translation type="unfinished"></translation>
+        <translation>Упомянуто в событиях</translation>
     </message>
     <message>
         <source>Remove this layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить этот слой</translation>
     </message>
     <message>
         <source>Layer statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Статистика слоя</translation>
     </message>
 </context>
 <context>
