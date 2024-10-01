@@ -89,7 +89,7 @@ jobs:
 
     - uses: WohlSoft/checkout@v0.1
 
-    - uses: TheXTech/branch-name@v0.1
+    - uses: WohlSoft/branch-name@v0.1
 
     - name: Check if a pull request
       id: event-check
