@@ -122,8 +122,22 @@ bool FilesListModel::addChild(TrView &it, bool isOrphan)
         }
     }
 
-    if(!found && !isOrphan) // Add later, when required branch will be added soon
-        m_viewOrphans.push_back(it);
+    if(!found)
+    {
+        if(isOrphan)
+        {
+            if(it.type == T_LEVEL)
+            {
+                TrView e;
+                e.type = T_DIR;
+                e.key = it.dir;
+                addToView(e, m_path);
+                return true;
+            }
+        }
+        else // Add later, when required branch will be added soon
+            m_viewOrphans.push_back(it);
+    }
 
     return found;
 }
