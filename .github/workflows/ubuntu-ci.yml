@@ -10,6 +10,10 @@ on:
     branches:
       - master
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: "${{ matrix.config.name }} | ${{ matrix.config.build_type }}"
@@ -83,12 +87,9 @@ jobs:
         g++-8 --version
         cmake --version
 
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 3
-        submodules: recursive
+    - uses: WohlSoft/checkout@v0.1
 
-    - uses: Wohlstand/branch-name@v1.0.1-wohl
+    - uses: TheXTech/branch-name@v0.1
 
     - name: Check if a pull request
       id: event-check
