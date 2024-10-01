@@ -156,7 +156,7 @@ void TextDataProcessor::toI18N(const QString &directory)
     QDirIterator dit(directory,
                      {"translation_*.json"},
                      QDir::Files,
-                     QDirIterator::NoIteratorFlags);
+                     QDirIterator::FollowSymlinks);
 
     while(dit.hasNext())
     {
@@ -177,7 +177,7 @@ bool TextDataProcessor::loadProject(const QString &directory, TranslateProject &
     QDirIterator dit(directory + "/i18n",
                      {"translation_*.json"},
                      QDir::Files,
-                     QDirIterator::NoIteratorFlags);
+                     QDirIterator::FollowSymlinks);
     bool hasTranslations = false;
 
     QString meta_file = directory + "/i18n/translation_metadata.json";
@@ -228,7 +228,7 @@ bool TextDataProcessor::loadProjectLevel(const QString &file, TranslateProject &
     QDirIterator dit(directory + "/i18n",
                      {"translation_*.json"},
                      QDir::Files,
-                     QDirIterator::NoIteratorFlags);
+                     QDirIterator::FollowSymlinks);
 
     bool hasTranslations = false;
 
@@ -277,7 +277,7 @@ bool TextDataProcessor::scanEpisode(const QString &directory, TranslateProject &
                          "lunadll.txt", "lunaworld.txt"
                      },
                      QDir::Files,
-                     QDirIterator::Subdirectories);
+                     QDirIterator::Subdirectories|QDirIterator::FollowSymlinks);
 
     // Fill the original language
     auto &origin = proj["metadata"];

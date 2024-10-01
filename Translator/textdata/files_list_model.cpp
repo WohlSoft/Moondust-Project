@@ -34,26 +34,14 @@ void FilesListModel::rebuildView(const QString &path)
     beginResetModel();
 
     m_view.clear();
+    m_viewOrphans.clear();
 
     for(auto w = origin.worlds.begin() ; w != origin.worlds.end(); ++w)
     {
         TrView e;
         e.type = T_WORLD;
         e.key = w.key();
-        e.parent = -1;
-        e.p = nullptr;
-        QFileInfo i(path + "/" + e.key);
-        e.title = i.fileName();
-        e.dir = i.completeBaseName();
-        e.path = i.path();
-        e.path.remove(m_path);
-        if(e.path.startsWith('/'))
-            e.path.remove(0, 1);
-
-        if(!e.path.isEmpty())
-            addChild(e);
-        else
-            m_view.push_back(e);
+        addToView(e, path);
     }
 
     for(auto l = origin.levels.begin() ; l != origin.levels.end(); ++l)
@@ -61,20 +49,7 @@ void FilesListModel::rebuildView(const QString &path)
         TrView e;
         e.type = T_LEVEL;
         e.key = l.key();
-        e.parent = -1;
-        e.p = nullptr;
-        QFileInfo i(path + "/" + e.key);
-        e.title = i.fileName();
-        e.dir = i.completeBaseName();
-        e.path = i.path();
-        e.path.remove(m_path);
-        if(e.path.startsWith('/'))
-            e.path.remove(0, 1);
-
-        if(!e.path.isEmpty())
-            addChild(e);
-        else
-            m_view.push_back(e);
+        addToView(e, path);
     }
 
     for(auto s = origin.scripts.begin() ; s != origin.scripts.end(); ++s)
@@ -82,20 +57,7 @@ void FilesListModel::rebuildView(const QString &path)
         TrView e;
         e.type = T_SCRIPT;
         e.key = s.key();
-        e.parent = -1;
-        e.p = nullptr;
-        QFileInfo i(path + "/" + e.key);
-        e.title = i.fileName();
-        e.dir = i.completeBaseName();
-        e.path = i.path();
-        e.path.remove(m_path);
-        if(e.path.startsWith('/'))
-            e.path.remove(0, 1);
-
-        if(!e.path.isEmpty())
-            addChild(e);
-        else
-            m_view.push_back(e);
+        addToView(e, path);
     }
 
     for(auto &s : origin.directories)
@@ -103,21 +65,16 @@ void FilesListModel::rebuildView(const QString &path)
         TrView e;
         e.type = T_DIR;
         e.key = s;
-        e.parent = -1;
-        e.p = nullptr;
-        QFileInfo i(path + "/" + e.key);
-        e.title = i.fileName();
-        e.dir = i.completeBaseName();
-        e.path = i.path();
-        e.path.remove(m_path);
-        if(e.path.startsWith('/'))
-            e.path.remove(0, 1);
-
-        if(!e.path.isEmpty())
-            addChild(e);
-        else
-            m_view.push_back(e);
+        addToView(e, path);
     }
+
+    // Bring orphan objects to their parents
+    for(auto &s : m_viewOrphans)
+    {
+        Q_ASSERT(addChild(s, true));
+        // true orphan objects are invalid
+    }
+    m_viewOrphans.clear();
 
     std::sort(m_view.begin(), m_view.end(),
               [](const TrView&o1, const TrView&o2)->bool
@@ -133,16 +90,42 @@ void FilesListModel::rebuildView(const QString &path)
     endResetModel();
 }
 
-void FilesListModel::addChild(TrView &it)
+void FilesListModel::addToView(TrView &e, const QString &path)
 {
+    e.parent = -1;
+    e.p = nullptr;
+    QFileInfo i(path + "/" + e.key);
+    e.title = i.fileName();
+    e.dir = i.completeBaseName();
+    e.path = i.path();
+    e.path.remove(m_path);
+    if(e.path.startsWith('/'))
+        e.path.remove(0, 1);
+
+    if(!e.path.isEmpty())
+        addChild(e);
+    else
+        m_view.push_back(e);
+}
+
+bool FilesListModel::addChild(TrView &it, bool isOrphan)
+{
+    bool found = false;
+
     for(auto &i : m_view)
     {
-        if(i.dir == it.path)
+        if(it.path.compare(i.dir, Qt::CaseInsensitive) == 0)
         {
             i.children.push_back(it);
+            found = true;
             break;
         }
     }
+
+    if(!found && !isOrphan) // Add later, when required branch will be added soon
+        m_viewOrphans.push_back(it);
+
+    return found;
 }
 
 void FilesListModel::buildRelationsRekurs(FilesListModel::TrView &it, TrViewList *parent, int parentIndex)

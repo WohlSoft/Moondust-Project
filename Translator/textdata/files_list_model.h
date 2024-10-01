@@ -46,12 +46,14 @@ class FilesListModel : public QAbstractItemModel
 
     typedef QVector<TrView> TrViewList;
     TrViewList m_view;
+    TrViewList m_viewOrphans;
     QString m_path;
     QString m_title;
     QIcon m_rootIcon;
 
     static void buildRelationsRekurs(TrView &it, TrViewList *parent, int parentIndex);
-    void addChild(TrView &it);
+    void addToView(TrView &it, const QString &path);
+    bool addChild(TrView &it, bool isOrphan = false);
     void buildRelations();
 
 public:
