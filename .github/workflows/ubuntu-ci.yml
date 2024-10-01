@@ -105,10 +105,8 @@ jobs:
 
     - name: Download Qt
       if: matrix.config.qt_download
-      uses: carlosperate/download-file-action@v2
-      with:
-        file-url: "${{ matrix.config.qt_download }}"
-        file-name: qt.tar.bz2
+      shell: bash
+      run: wget -d -nv -t 5 -O qt.tar.bz2 "${{ matrix.config.qt_download }}"
 
     - name: Extract Qt
       if: matrix.config.qt_install_dir
@@ -121,10 +119,8 @@ jobs:
 
     - name: Download libreadline6
       if: matrix.config.readline6_download
-      uses: carlosperate/download-file-action@v2
-      with:
-        file-url: "${{ matrix.config.readline6_download }}"
-        file-name: libreadline6.deb
+      shell: bash
+      run: wget -d -nv -t 5 -O libreadline6.deb "${{ matrix.config.readline6_download }}"
 
     - name: Install LFTP
       if: matrix.config.readline6_download
@@ -135,10 +131,8 @@ jobs:
 
     - name: Download LFTP
       if: matrix.config.lftp_download
-      uses: carlosperate/download-file-action@v2
-      with:
-        file-url: "${{ matrix.config.lftp_download }}"
-        file-name: lftp.deb
+      shell: bash
+      run: wget -d -nv -t 5 -O lftp.deb "${{ matrix.config.lftp_download }}"
 
     - name: Install LFTP
       if: matrix.config.lftp_download
