@@ -1682,7 +1682,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>HistoryElementReplacePlayerPoint</name>
     <message>
-        <location filename="../editing/_components/history/historyelementreplaceplayerpoint.cpp" line="18"/>
+        <location filename="../editing/_components/history/historyelementreplaceplayerpoint.cpp" line="19"/>
         <source>Place Player Point</source>
         <translation>플레이어 포인트 배치</translation>
     </message>
@@ -2482,13 +2482,13 @@ box area.</source>
         <translation>우호적 (우호적이지 않은 NPC와 대화 할 수 없음)</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="142"/>
+        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="145"/>
         <source>Preview</source>
         <comment>The text on the switch button</comment>
         <translation type="unfinished">시사</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="177"/>
+        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="180"/>
         <source>The basic message box of &lt;b&gt;SMBX 1.3 / X2&lt;/b&gt; has the next restrictions:
 &lt;ul&gt;
   &lt;li&gt;New line &lt;b&gt;CAN NOT be done via the &quot;Return&quot;/&quot;Enter&quot; key&lt;/b&gt;&lt;br/&gt;
@@ -2502,7 +2502,7 @@ So, please break these words to avoid this.&lt;/li&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="191"/>
+        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="195"/>
         <source>The message box of &lt;b&gt;Moondust / TheXTech&lt;/b&gt; has the next restrictions:
 &lt;ul&gt;
   &lt;li&gt;New line &lt;b&gt;CAN be done by &quot;Return&quot;/&quot;Enter&quot; key&lt;/b&gt; easily.&lt;/li&gt;
@@ -3307,81 +3307,81 @@ So, please break these words to avoid this.&lt;/li&gt;
 <context>
     <name>JsonSettingsWidget</name>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1203"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1221"/>
         <source>Browse</source>
         <translation>탐색</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1212"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1230"/>
         <source>Play</source>
         <translation>플레이</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1319"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1337"/>
         <source>Add new item into the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1326"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1344"/>
         <source>Remove selected item from the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1337"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1355"/>
         <source>Play selected file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1346"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1364"/>
         <source>Open...</source>
         <translation type="unfinished">열기...</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1347"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1365"/>
         <source>Open selected file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1408"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1426"/>
         <source>Add new line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1409"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1427"/>
         <source>Please enter a text line to add:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1516"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1520"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1522"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1524"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1526"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1528"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1530"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1532"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1534"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1538"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1540"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1542"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1544"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1546"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1548"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1550"/>
         <source>[empty]</source>
         <translation>[공백]</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1519"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1537"/>
         <source>%1 coins</source>
         <translation>%1코인</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1748"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1801"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2026"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2126"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1766"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1819"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2044"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2144"/>
         <source>W</source>
         <comment>Width, shortly</comment>
         <translation>W</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1760"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1812"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2038"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2137"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1778"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1830"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2056"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2155"/>
         <source>H</source>
         <comment>Height, shortly</comment>
         <translation>H</translation>
@@ -3676,132 +3676,132 @@ Do you want to save your changes?</source>
         <translation>레벨 속성</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="75"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="72"/>
         <source>General</source>
         <translation>일반</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="96"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="93"/>
         <source>No settings available</source>
         <translation>사용 가능한 설정이 없음</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="130"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="127"/>
         <source>Physics</source>
         <translation>물리</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="137"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="134"/>
         <source>Default</source>
         <translation>기본</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="145"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="142"/>
         <source>Physics type:</source>
         <translation>물리 유형:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="158"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="155"/>
         <source>Disable player controls</source>
         <translation>플레이어 컨트롤 비활성화</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="164"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="161"/>
         <source>Drop</source>
         <translation>드롭</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="171"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="168"/>
         <source>Jump</source>
         <translation>점프</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="178"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="175"/>
         <source>Left</source>
         <translation>왼쪽</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="185"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="182"/>
         <source>Alt-Jump</source>
         <translation>Alt-점프</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="192"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="189"/>
         <source>Right</source>
         <translation>오른쪽</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="199"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="196"/>
         <source>Start</source>
         <translation>시작</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="206"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="203"/>
         <source>Alt-Run</source>
         <translation>Alt-달리기</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="213"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="210"/>
         <source>Run</source>
         <translation>달리기</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="220"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="217"/>
         <source>Up</source>
         <translation>위</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="227"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="224"/>
         <source>Down</source>
         <translation>아래</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="240"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="237"/>
         <source>Timer</source>
         <translation>타이머</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="246"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="243"/>
         <source>Enable</source>
         <translation>활성화</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="253"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="250"/>
         <source> sec.</source>
         <translation> 초.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="264"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="261"/>
         <source>Kill all players</source>
         <translation>모든 플레이어 킬</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="269"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="266"/>
         <source>Trigger event</source>
         <translation>트리거 이벤트</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="277"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="274"/>
         <source>Time limit:</source>
         <translation>시간 제한:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="284"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="281"/>
         <source>Timer type:</source>
         <translation>타이머 동작:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="291"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="288"/>
         <source>Event:</source>
         <translation>이벤트:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="308"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="305"/>
         <source>Title</source>
         <translation>제목</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="314"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="311"/>
         <source>Level name:</source>
         <translation>레벨 이름:</translation>
     </message>
@@ -4269,76 +4269,76 @@ Do you want to continue?</source>
         <translation>클래식 이벤트</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="61"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="64"/>
         <source>Events list</source>
         <translation>이벤트 목록</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="80"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="83"/>
         <source>Create copy of event</source>
         <translation>이벤트 복사본 생성</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="135"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="138"/>
         <source>Autostart event</source>
         <translation>자동시작 이벤트</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="210"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="216"/>
         <source>Layer visibly</source>
         <translation>레이어 가시성</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="235"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="241"/>
         <source>Disable smoke effects</source>
         <translation>스모크 전환 비활성화</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="260"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="266"/>
         <source>Hide</source>
         <translation>숨김</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="324"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="330"/>
         <source>Show</source>
         <translation>보여주기</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="336"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="342"/>
         <source>Toggle</source>
         <translation>토글</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="501"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="507"/>
         <source>Layers movement</source>
         <translation>레이어 이동</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="529"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="731"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1144"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="535"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="737"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1150"/>
         <source>Horisontal speed:</source>
         <translation>수평 속도 :</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="555"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="561"/>
         <source>Set moving layer</source>
         <translation>움직이는 레이어 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="594"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="717"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1177"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="600"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="723"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1183"/>
         <source>Vertical speed:</source>
         <translation>수직 속도:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="607"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="620"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="672"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="724"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1170"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1203"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="613"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="626"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="678"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="730"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1176"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1209"/>
         <source>bps</source>
         <translation>bps</translation>
     </message>
@@ -4348,223 +4348,223 @@ Do you want to continue?</source>
         <translation>자동 스크롤 섹션</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="637"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="643"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="580"/>
         <source>Autoscroll section (Legacy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="665"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="671"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="372"/>
         <source>Section</source>
         <translation>섹션</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="754"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="760"/>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="777"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="783"/>
         <source>Section settings</source>
         <translation>섹션 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="804"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="810"/>
         <source>Current section:</source>
         <translation>섹션 설정 변경:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="821"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="827"/>
         <source>Set size and position</source>
         <translation>크기 및 위치 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="863"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="866"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="869"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="872"/>
         <source>Top</source>
         <translation>위</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="879"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="882"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="885"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="888"/>
         <source>Bottom</source>
         <translation>아래</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="895"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="898"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1447"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="901"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="904"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1453"/>
         <source>Left</source>
         <translation>왼쪽</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="911"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="914"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1461"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="917"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="920"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1467"/>
         <source>Right</source>
         <translation>오른쪽</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="927"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="933"/>
         <source>Capture...</source>
         <translation>캡처...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="952"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="988"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1059"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="958"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="994"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1065"/>
         <source>Don&apos;t change</source>
         <translation>변경하지 않음</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="959"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="995"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1066"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="965"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1001"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1072"/>
         <source>Reset to default</source>
         <translation>기본값으로 재설정</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="966"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="972"/>
         <source>Define new:</source>
         <translation>새로 정의:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="979"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="985"/>
         <source>Set music</source>
         <translation>음악 변경</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1002"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1008"/>
         <source>Replace music to:</source>
         <translation>다음으로 음악 변경:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1050"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1056"/>
         <source>Set background</source>
         <translation>배경 변경</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1073"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1079"/>
         <source>Replace background to:</source>
         <translation>다음으로 배경 변경:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1093"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1099"/>
         <source>Change the autoscroll speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1102"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1108"/>
         <source>Type:</source>
         <comment>Autoscroll type</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1110"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1116"/>
         <source>Simple</source>
         <comment>Simple autoscrolling</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1115"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1121"/>
         <source>Advanced</source>
         <comment>Advanced autoscrolling (draw custom path)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1231"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1237"/>
         <source>Not implemented yet, sorry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1257"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1263"/>
         <source>Common</source>
         <translation>공통</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1290"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1296"/>
         <source>Display message:</source>
         <translation>메시지 출력:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1309"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1315"/>
         <source>Play sound:</source>
         <translation>플레이 사운드:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1321"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1327"/>
         <source>Do end game:</source>
         <translation>게임 종료 트리거:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1338"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1344"/>
         <source>Nothing</source>
         <translation>No</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1343"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1349"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
         <translation>게임 종료:&quot;최종 보스 제거&quot;</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1381"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1387"/>
         <source>Test</source>
         <translation>테스트</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1398"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1404"/>
         <source>Player Control hold keys</source>
         <translation>자동-고정 플레이어 컨트롤</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1426"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1432"/>
         <source>Up</source>
         <translation>위</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1433"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1439"/>
         <source>Run</source>
         <translation>달리기</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1440"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1446"/>
         <source>Down</source>
         <translation>아래</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1454"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1460"/>
         <source>Jump</source>
         <translation>점프</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1468"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1474"/>
         <source>Alt-jump</source>
         <translation>Alt-점프</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1475"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1481"/>
         <source>Alt-run</source>
         <translation>Alt-달리기</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1482"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1488"/>
         <source>Start</source>
         <translation>시작</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1489"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1495"/>
         <source>Drop</source>
         <translation>드롭</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1506"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1512"/>
         <source>Trigger event</source>
         <translation>트리거 이벤트</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1531"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1537"/>
         <source>Delay</source>
         <translation>지연</translation>
     </message>
@@ -4575,7 +4575,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="386"/>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="2258"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2458"/>
         <source>[none]</source>
         <translation>[없음]</translation>
     </message>
@@ -4595,17 +4595,125 @@ Do you want to continue?</source>
         <translation>복사된 이벤트%1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1922"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1244"/>
+        <source>Rename event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1246"/>
+        <source>Remove event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1249"/>
+        <source>Show event statistics...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1345"/>
+        <source>Event &quot;%1&quot; statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1347"/>
+        <source>Total triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1348"/>
+        <source>Block triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1349"/>
+        <source>NPC triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1350"/>
+        <source>Warp triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1351"/>
+        <source>Physical environment triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1352"/>
+        <source>Other events triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1356"/>
+        <source>Autostart type</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1361"/>
+        <source>Level start</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1364"/>
+        <source>Match all conditions</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1367"/>
+        <source>Call and match</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1370"/>
+        <source>[Unknown]</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1379"/>
+        <source>&lt;h2&gt;Event &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused event&amp;gt;&lt;/center&gt;
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1384"/>
+        <source>Triggered by other events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1393"/>
+        <source>Remove this event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1396"/>
+        <source>Event statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2122"/>
         <source>Get section size</source>
         <translation>섹션 사이즈 가져오기</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1923"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2123"/>
         <source>Please, set current section to %1 for capture data for this event</source>
         <translation>이 이벤트에 대한 데이터를 캡처하려면 현재 섹션을 % 1 (으)로 전환하십시오</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="2248"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2448"/>
         <source>Please, enter the message box text:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4978,7 +5086,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="630"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1347"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1770"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2134"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2137"/>
         <source>[empty]</source>
         <translation>[공백]</translation>
     </message>
@@ -5046,8 +5154,8 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="867"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="943"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="951"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1104"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1112"/>
         <source>Remove layer</source>
         <translation>레이어 제거</translation>
     </message>
@@ -5059,34 +5167,119 @@ All objects on this layer will be moved to the &apos;Default&apos; layer.</sourc
 이 레이어의 모든 개체는 &apos;기본&apos;레이어로 이동합니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="892"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="900"/>
         <source>Rename layer</source>
         <translation>레이어 이름 변경</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="894"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="902"/>
         <source>Select all items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="904"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="907"/>
+        <source>Show layer statistics...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="915"/>
         <source>Remove layer with items</source>
         <translation>레이어 및 항목 제거</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="905"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="916"/>
         <source>Remove Layer and keep items</source>
         <translation>레이어 제거 및 항목 유지</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="944"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1025"/>
+        <source>Layer &quot;%1&quot; statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1027"/>
+        <source>Total members</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1028"/>
+        <source>Blocks</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished">블록</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1029"/>
+        <source>Background objects</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1030"/>
+        <source>NPC</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1031"/>
+        <source>Warps</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1032"/>
+        <source>Physical environments</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1035"/>
+        <source>Usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1037"/>
+        <source>Attaches to NPCs</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1038"/>
+        <source>Referred in events</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1042"/>
+        <source>&lt;h2&gt;Layer &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused layer with no members&amp;gt;&lt;/center&gt;
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1047"/>
+        <source>Referred in events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1057"/>
+        <source>Remove this layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1060"/>
+        <source>Layer statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1105"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
         <translation>이 레이어를 제거 하시겠습니까?
 이 레이어의 모든 개체는 &apos;기본&apos;레이어로 이동합니다!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="952"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1113"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
         <translation>이 레이어를 제거 하시겠습니까?
@@ -12027,7 +12220,7 @@ Do you want to save your changes?</source>
 <context>
     <name>tileset</name>
     <message>
-        <location filename="../tools/tilesets/tileset.cpp" line="98"/>
+        <location filename="../tools/tilesets/tileset.cpp" line="100"/>
         <source>Drag &amp; Drop items into this box!
 Right-click to remove!</source>
         <translation>이 상자에 항목을 끌어다 놓습니다.

@@ -81,6 +81,8 @@ private slots:
     void on_LVLEvents_duplicate_clicked();
     void on_LVLEvent_AutoStart_clicked(bool checked);
 
+    void on_LVLEvents_List_customContextMenuRequested(const QPoint &pos);
+
     void on_LVLEvent_disableSmokeEffect_clicked(bool checked);
 
     void eventLayerVisiblySyncList();
