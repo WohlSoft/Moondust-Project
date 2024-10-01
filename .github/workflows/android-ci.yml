@@ -8,6 +8,10 @@ on:
       - devel
       - versus-ci-android
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 defaults:
   run:
     working-directory: Engine/android-project
