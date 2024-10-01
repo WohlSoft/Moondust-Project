@@ -1683,7 +1683,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
 <context>
     <name>HistoryElementReplacePlayerPoint</name>
     <message>
-        <location filename="../editing/_components/history/historyelementreplaceplayerpoint.cpp" line="18"/>
+        <location filename="../editing/_components/history/historyelementreplaceplayerpoint.cpp" line="19"/>
         <source>Place Player Point</source>
         <translation>Zet Speler Positie</translation>
     </message>
@@ -2483,13 +2483,13 @@ box area.</source>
         <translation>Vriendelijk (Vijandige NPCs kunnen niet worden aangesproken)</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="142"/>
+        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="145"/>
         <source>Preview</source>
         <comment>The text on the switch button</comment>
         <translation type="unfinished">Voorbeeld</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="177"/>
+        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="180"/>
         <source>The basic message box of &lt;b&gt;SMBX 1.3 / X2&lt;/b&gt; has the next restrictions:
 &lt;ul&gt;
   &lt;li&gt;New line &lt;b&gt;CAN NOT be done via the &quot;Return&quot;/&quot;Enter&quot; key&lt;/b&gt;&lt;br/&gt;
@@ -2503,7 +2503,7 @@ So, please break these words to avoid this.&lt;/li&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="191"/>
+        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="195"/>
         <source>The message box of &lt;b&gt;Moondust / TheXTech&lt;/b&gt; has the next restrictions:
 &lt;ul&gt;
   &lt;li&gt;New line &lt;b&gt;CAN be done by &quot;Return&quot;/&quot;Enter&quot; key&lt;/b&gt; easily.&lt;/li&gt;
@@ -3308,81 +3308,81 @@ So, please break these words to avoid this.&lt;/li&gt;
 <context>
     <name>JsonSettingsWidget</name>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1203"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1221"/>
         <source>Browse</source>
         <translation>Bladeren</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1212"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1230"/>
         <source>Play</source>
         <translation>Spelen</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1319"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1337"/>
         <source>Add new item into the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1326"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1344"/>
         <source>Remove selected item from the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1337"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1355"/>
         <source>Play selected file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1346"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1364"/>
         <source>Open...</source>
         <translation type="unfinished">Openen...</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1347"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1365"/>
         <source>Open selected file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1408"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1426"/>
         <source>Add new line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1409"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1427"/>
         <source>Please enter a text line to add:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1516"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1520"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1522"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1524"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1526"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1528"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1530"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1532"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1534"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1538"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1540"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1542"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1544"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1546"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1548"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1550"/>
         <source>[empty]</source>
         <translation>[leeg]</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1519"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1537"/>
         <source>%1 coins</source>
         <translation type="unfinished">%1 munt(en)</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1748"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1801"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2026"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2126"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1766"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1819"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2044"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2144"/>
         <source>W</source>
         <comment>Width, shortly</comment>
         <translation>b</translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1760"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1812"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2038"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2137"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1778"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1830"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2056"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2155"/>
         <source>H</source>
         <comment>Height, shortly</comment>
         <translation>h</translation>
@@ -3676,132 +3676,132 @@ Wilt u uw wijzigingen opslaan?</translation>
         <translation>Niveau Instellingen</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="75"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="72"/>
         <source>General</source>
         <translation>Algemeen</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="96"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="93"/>
         <source>No settings available</source>
         <translation>Geen instellingen beschikbaar</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="158"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="155"/>
         <source>Disable player controls</source>
         <translation>Spelerbesturing uitschakelen</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="164"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="161"/>
         <source>Drop</source>
         <translation>Droppen</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="171"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="168"/>
         <source>Jump</source>
         <translation>Springen</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="178"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="175"/>
         <source>Left</source>
         <translation>Links</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="185"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="182"/>
         <source>Alt-Jump</source>
         <translation>Alt-springen</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="192"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="189"/>
         <source>Right</source>
         <translation>Rechts</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="199"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="196"/>
         <source>Start</source>
         <translation>Starten</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="206"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="203"/>
         <source>Alt-Run</source>
         <translation>Alt-Lopen</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="213"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="210"/>
         <source>Run</source>
         <translation>Lopen</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="220"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="217"/>
         <source>Up</source>
         <translation>Boven</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="227"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="224"/>
         <source>Down</source>
         <translation>Onder</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="308"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="305"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="130"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="127"/>
         <source>Physics</source>
         <translation>Fysica</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="137"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="134"/>
         <source>Default</source>
         <translation>Standaard</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="145"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="142"/>
         <source>Physics type:</source>
         <translation>Omgevingsfysica:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="240"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="237"/>
         <source>Timer</source>
         <translation>Timer</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="277"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="274"/>
         <source>Time limit:</source>
         <translation>Tijdslimiet:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="284"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="281"/>
         <source>Timer type:</source>
         <translation>Timer actie:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="291"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="288"/>
         <source>Event:</source>
         <translation>Event:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="246"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="243"/>
         <source>Enable</source>
         <translation>Inschakelen</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="314"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="311"/>
         <source>Level name:</source>
         <translation>Niveau naam:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="253"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="250"/>
         <source> sec.</source>
         <translation> sec.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="264"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="261"/>
         <source>Kill all players</source>
         <translation>Alle spelers doden</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="269"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="266"/>
         <source>Trigger event</source>
         <translation>Event activeren</translation>
     </message>
@@ -4265,66 +4265,66 @@ Wilt u toch doorgaan?</translation>
         <translation>Klassieke events</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="61"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="64"/>
         <source>Events list</source>
         <translation>Event lijst</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="210"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="216"/>
         <source>Layer visibly</source>
         <translation>Laag visibiliteit</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="235"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="241"/>
         <source>Disable smoke effects</source>
         <translation>Rook-overgangseffect uitschakelen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="324"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="330"/>
         <source>Show</source>
         <translation>Tonen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="336"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="342"/>
         <source>Toggle</source>
         <translation>Omschakelen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="260"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="266"/>
         <source>Hide</source>
         <translation>Verbergen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="501"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="507"/>
         <source>Layers movement</source>
         <translation>Laag beweging</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="529"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="731"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1144"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="535"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="737"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1150"/>
         <source>Horisontal speed:</source>
         <translation>Horizontale snelheid:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="607"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="620"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="672"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="724"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1170"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1203"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="613"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="626"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="678"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="730"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1176"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1209"/>
         <source>bps</source>
         <translation>bps</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="594"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="717"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1177"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="600"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="723"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1183"/>
         <source>Vertical speed:</source>
         <translation>Vertikale snelheid:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="555"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="561"/>
         <source>Set moving layer</source>
         <translation>Kies bewegende laag</translation>
     </message>
@@ -4334,233 +4334,233 @@ Wilt u toch doorgaan?</translation>
         <translation>Autoscroll sectie</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="665"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="671"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="372"/>
         <source>Section</source>
         <translation>Sectie</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="777"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="783"/>
         <source>Section settings</source>
         <translation>Sectie instellingen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="804"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="810"/>
         <source>Current section:</source>
         <translation>Sectie instellingen wijzigen:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="821"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="827"/>
         <source>Set size and position</source>
         <translation>Grootte en positie instellen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="952"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="988"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1059"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="958"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="994"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1065"/>
         <source>Don&apos;t change</source>
         <translation>Niet veranderen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="927"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="933"/>
         <source>Capture...</source>
         <translation>Leg vast...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="959"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="995"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1066"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="965"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1001"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1072"/>
         <source>Reset to default</source>
         <translation>Terug naar standaardinstellingen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="895"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="898"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1447"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="901"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="904"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1453"/>
         <source>Left</source>
         <translation>Links</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="863"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="866"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="869"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="872"/>
         <source>Top</source>
         <translation>Boven</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="966"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="972"/>
         <source>Define new:</source>
         <translation>Nieuwe definiëren:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="879"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="882"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="885"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="888"/>
         <source>Bottom</source>
         <translation>Beneden</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="637"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="643"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="580"/>
         <source>Autoscroll section (Legacy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="754"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="760"/>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="911"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="914"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1461"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="917"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="920"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1467"/>
         <source>Right</source>
         <translation>Rechts</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="979"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="985"/>
         <source>Set music</source>
         <translation>Muziek veranderen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1002"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1008"/>
         <source>Replace music to:</source>
         <translation>Muziek veranderen naar:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1050"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1056"/>
         <source>Set background</source>
         <translation>Achtergrond veranderen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1073"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1079"/>
         <source>Replace background to:</source>
         <translation>Achtergrond veranderen naar:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1093"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1099"/>
         <source>Change the autoscroll speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1102"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1108"/>
         <source>Type:</source>
         <comment>Autoscroll type</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1110"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1116"/>
         <source>Simple</source>
         <comment>Simple autoscrolling</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1115"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1121"/>
         <source>Advanced</source>
         <comment>Advanced autoscrolling (draw custom path)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1231"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1237"/>
         <source>Not implemented yet, sorry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1257"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1263"/>
         <source>Common</source>
         <translation>Algemeen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1321"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1327"/>
         <source>Do end game:</source>
         <translation>Activeer einde van het spel:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1309"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1315"/>
         <source>Play sound:</source>
         <translation>Geluid afspelen:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1381"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1387"/>
         <source>Test</source>
         <translation>Test</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1290"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1296"/>
         <source>Display message:</source>
         <translation>Bericht om weer te geven:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1338"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1344"/>
         <source>Nothing</source>
         <translation>Geen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1343"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1349"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
         <translation>Einde spel: &quot;EIndbaas verslagen&quot;</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1398"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1404"/>
         <source>Player Control hold keys</source>
         <translation>Spelbesturing overnemen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1433"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1439"/>
         <source>Run</source>
         <translation>Lopen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1440"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1446"/>
         <source>Down</source>
         <translation>Onder</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1426"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1432"/>
         <source>Up</source>
         <translation>Boven</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1489"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1495"/>
         <source>Drop</source>
         <translation>Droppen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1475"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1481"/>
         <source>Alt-run</source>
         <translation>Alt-lopen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1482"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1488"/>
         <source>Start</source>
         <translation>Starten</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1454"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1460"/>
         <source>Jump</source>
         <translation>Springen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1468"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1474"/>
         <source>Alt-jump</source>
         <translation>Alt-springen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1506"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1512"/>
         <source>Trigger event</source>
         <translation>Event activeren</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1531"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1537"/>
         <source>Delay</source>
         <translation>Vertraging</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="135"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="138"/>
         <source>Autostart event</source>
         <translation>Event automatisch starten</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="80"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="83"/>
         <source>Create copy of event</source>
         <translation>Maak een kopie van de event</translation>
     </message>
@@ -4571,7 +4571,7 @@ Wilt u toch doorgaan?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="386"/>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="2258"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2458"/>
         <source>[none]</source>
         <translation>[geen]</translation>
     </message>
@@ -4591,17 +4591,125 @@ Wilt u toch doorgaan?</translation>
         <translation>Event gekopiëerd %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1922"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1244"/>
+        <source>Rename event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1246"/>
+        <source>Remove event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1249"/>
+        <source>Show event statistics...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1345"/>
+        <source>Event &quot;%1&quot; statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1347"/>
+        <source>Total triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1348"/>
+        <source>Block triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1349"/>
+        <source>NPC triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1350"/>
+        <source>Warp triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1351"/>
+        <source>Physical environment triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1352"/>
+        <source>Other events triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1356"/>
+        <source>Autostart type</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1361"/>
+        <source>Level start</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1364"/>
+        <source>Match all conditions</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1367"/>
+        <source>Call and match</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1370"/>
+        <source>[Unknown]</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1379"/>
+        <source>&lt;h2&gt;Event &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused event&amp;gt;&lt;/center&gt;
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1384"/>
+        <source>Triggered by other events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1393"/>
+        <source>Remove this event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1396"/>
+        <source>Event statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2122"/>
         <source>Get section size</source>
         <translation>Sectie grootte ophalen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1923"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2123"/>
         <source>Please, set current section to %1 for capture data for this event</source>
         <translation>U moet zich op sectie %1 bevinden om data te kunnen opnemen voor dit event</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="2248"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2448"/>
         <source>Please, enter the message box text:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4974,7 +5082,7 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="630"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1347"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1770"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2134"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2137"/>
         <source>[empty]</source>
         <translation>[leeg]</translation>
     </message>
@@ -5042,8 +5150,8 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="867"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="943"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="951"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1104"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1112"/>
         <source>Remove layer</source>
         <translation>Laag verwijderen</translation>
     </message>
@@ -5055,36 +5163,121 @@ All objects on this layer will be moved to the &apos;Default&apos; layer.</sourc
 Alle voorwerpen in de laag zullen naar de basislaag verplaatst worden.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="894"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="902"/>
         <source>Select all items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="905"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="907"/>
+        <source>Show layer statistics...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="916"/>
         <source>Remove Layer and keep items</source>
         <translation>Laag verwijderen en voorwerpen behouden</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="944"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1025"/>
+        <source>Layer &quot;%1&quot; statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1027"/>
+        <source>Total members</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1028"/>
+        <source>Blocks</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished">Blokken</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1029"/>
+        <source>Background objects</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1030"/>
+        <source>NPC</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished">NPC</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1031"/>
+        <source>Warps</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1032"/>
+        <source>Physical environments</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1035"/>
+        <source>Usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1037"/>
+        <source>Attaches to NPCs</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1038"/>
+        <source>Referred in events</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1042"/>
+        <source>&lt;h2&gt;Layer &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused layer with no members&amp;gt;&lt;/center&gt;
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1047"/>
+        <source>Referred in events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1057"/>
+        <source>Remove this layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1060"/>
+        <source>Layer statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1105"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
         <translation>Bent u zeker dat u deze laag wilt verwijderen?
 Alle voorwerpen in de laag zullen naar de basislaag verplaatst worden!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="952"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1113"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
         <translation>Bent u zeker dat u deze laag wilt verwijderen?
 Alle voorwerpen zullen verdwijnen!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="892"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="900"/>
         <source>Rename layer</source>
         <translation>Laag hernoemen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="904"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="915"/>
         <source>Remove layer with items</source>
         <translation>Laag samen met voorwerpen verwijderen</translation>
     </message>
@@ -12011,7 +12204,7 @@ Wilt u uw wijzigingen opslaan?</translation>
 <context>
     <name>tileset</name>
     <message>
-        <location filename="../tools/tilesets/tileset.cpp" line="98"/>
+        <location filename="../tools/tilesets/tileset.cpp" line="100"/>
         <source>Drag &amp; Drop items into this box!
 Right-click to remove!</source>
         <translation>Sleep voorwerpen in dit vakje.

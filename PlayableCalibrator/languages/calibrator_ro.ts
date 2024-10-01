@@ -187,8 +187,8 @@
     </message>
     <message>
         <location filename="../calibration_main.ui" line="120"/>
-        <location filename="../calibration_main.ui" line="785"/>
-        <location filename="../calibration_main.ui" line="948"/>
+        <location filename="../calibration_main.ui" line="788"/>
+        <location filename="../calibration_main.ui" line="951"/>
         <source>Reset scroll</source>
         <translation>Reiniţializează orientarea</translation>
     </message>
@@ -229,7 +229,7 @@
     </message>
     <message>
         <location filename="../calibration_main.ui" line="229"/>
-        <location filename="../calibration_main.ui" line="958"/>
+        <location filename="../calibration_main.ui" line="961"/>
         <source>Language</source>
         <translation>Limbă</translation>
     </message>
@@ -415,22 +415,22 @@
         <translation>Montură</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="689"/>
+        <location filename="../calibration_main.ui" line="692"/>
         <source>Scrolling</source>
         <translation>Orientare</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="712"/>
+        <location filename="../calibration_main.ui" line="715"/>
         <source>Scroll right</source>
         <translation>Orientează spre dreapta</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="723"/>
+        <location filename="../calibration_main.ui" line="726"/>
         <source>Scroll up</source>
         <translation>Orientează în sus</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="734"/>
+        <location filename="../calibration_main.ui" line="737"/>
         <source>Tip: Mouse is supported!
 
 Left button - move hitbox
@@ -451,27 +451,27 @@ Rotiţa - Micşorează faţă/spate
 Butonul din dreapta - schimbă offsetul dacă vizibil</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="752"/>
+        <location filename="../calibration_main.ui" line="755"/>
         <source>Zoom out</source>
         <translation>Micşorează în spate</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="763"/>
+        <location filename="../calibration_main.ui" line="766"/>
         <source>Zoom in</source>
         <translation>Micşorează în faţă</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="774"/>
+        <location filename="../calibration_main.ui" line="777"/>
         <source>Scroll left</source>
         <translation>Orienteză spre stânga</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="796"/>
+        <location filename="../calibration_main.ui" line="799"/>
         <source>Scroll down</source>
         <translation>Orientează jos</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="807"/>
+        <location filename="../calibration_main.ui" line="810"/>
         <source>Tip: Mouse is supported!
 
 Left button: Move frame or use actions
@@ -492,102 +492,102 @@ Rotiţă - Micşorează faţă/spate
 Butonul din dreapta - Orientează colţurile din dreapta-jos</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="831"/>
+        <location filename="../calibration_main.ui" line="834"/>
         <source>Open sprite</source>
         <translation>Deschide sprite</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="839"/>
+        <location filename="../calibration_main.ui" line="842"/>
         <source>Quit</source>
         <translation>Ieşire</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="854"/>
+        <location filename="../calibration_main.ui" line="857"/>
         <source>Copy</source>
         <translation>Copiază</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="857"/>
+        <location filename="../calibration_main.ui" line="860"/>
         <source>Copy calibration settings of the current frame</source>
         <translation>Copiază setările calibratorului pentru imaginea curentă</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="869"/>
+        <location filename="../calibration_main.ui" line="872"/>
         <source>Paste</source>
         <translation>Lipeşte</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="872"/>
+        <location filename="../calibration_main.ui" line="875"/>
         <source>Past calibration settings from the clipboard</source>
         <translation>Lipeşte setările calibratorului din clipboard</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="880"/>
+        <location filename="../calibration_main.ui" line="883"/>
         <source>Apply to all</source>
         <translation>Aplică tuturor</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="885"/>
+        <location filename="../calibration_main.ui" line="888"/>
         <source>About</source>
         <translation>Despre</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="893"/>
+        <location filename="../calibration_main.ui" line="896"/>
         <source>Open the Wiki page...</source>
         <translation>Deschide pagina Wiki...</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="898"/>
+        <location filename="../calibration_main.ui" line="901"/>
         <source>Save in the same folder with image file</source>
         <translation>Salvează în acelaşi director cu imaginea</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="906"/>
+        <location filename="../calibration_main.ui" line="909"/>
         <source>Save into custom place...</source>
         <translation>Salvează într-un loc diferit…</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="914"/>
+        <location filename="../calibration_main.ui" line="917"/>
         <source>Import data from SMBX-38A level...</source>
         <translation>Importează date din nivel SMBX-38A...</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="919"/>
+        <location filename="../calibration_main.ui" line="922"/>
         <source>Export data into SMBX-38A level...</source>
         <translation>Exportează date în nivel SMBX-38A...</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="924"/>
+        <location filename="../calibration_main.ui" line="927"/>
         <source>Export a map of hitboxes as image...</source>
         <translation>Exportează spaţiile de coliziune ca imagine…</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="927"/>
+        <location filename="../calibration_main.ui" line="930"/>
         <source>Useful for tests or sprites creation from the scratch</source>
         <translation>Folositor pentru testări sau pentru a crea sprite-uri din scratch</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="936"/>
+        <location filename="../calibration_main.ui" line="939"/>
         <source>Save</source>
         <translation>Salvează</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="953"/>
+        <location filename="../calibration_main.ui" line="956"/>
         <source>Open the srite directory...</source>
         <translation>Deschide directorul cu sprite…</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="981"/>
+        <location filename="../calibration_main.ui" line="984"/>
         <source>Animator</source>
         <translation>Animator</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="990"/>
+        <location filename="../calibration_main.ui" line="993"/>
         <source>Sprite editor</source>
         <translation>Editor sprite</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="995"/>
+        <location filename="../calibration_main.ui" line="998"/>
         <source>Extrenal GFX editor...</source>
         <translation>Editor grafic extern…</translation>
     </message>
