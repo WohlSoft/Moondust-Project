@@ -3737,7 +3737,7 @@ Do you want to continue?</source>
     <message>
         <source>Autostart type</source>
         <comment>Event statistics field</comment>
-        <translation>自动运行事件类型</translation>
+        <translation>自动运行事件条件</translation>
     </message>
     <message>
         <source>Level start</source>
@@ -3777,7 +3777,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Event statistics</source>
-        <translation>事件统计</translation>
+        <translation>事件信息</translation>
     </message>
 </context>
 <context>
