@@ -955,14 +955,14 @@ void TextDataProcessor::recountStats(TranslateProject &proj, TranslationData &tr
 bool TextDataProcessor::saveJSONs(const QString &directory, const TranslateProject &proj)
 {
     bool ret = true;
-    const auto &origin = proj["metadata"];
+    const auto &origin = proj[TRANSLATE_METADATA];
     bool useTrId = origin.useTrId;
 
     for(auto it = proj.begin(); it != proj.end(); ++it)
     {
         QJsonObject o;
 
-        bool isOrigin = (it.key() == "metadata");
+        bool isOrigin = (it.key() == TRANSLATE_METADATA);
 
         if(isOrigin)
             o["use-tr-id"] = it->useTrId;

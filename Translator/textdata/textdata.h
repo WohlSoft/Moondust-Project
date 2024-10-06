@@ -154,6 +154,8 @@ struct TranslationData
     QMap<QString, int> trId_map_script_lines;
 };
 
+#define TRANSLATE_METADATA "metadata"
+
 typedef QMap<QString, TranslationData> TranslateProject;
 
 #endif // TEXTDATA_H

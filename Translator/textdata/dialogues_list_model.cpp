@@ -20,6 +20,7 @@
 #include <QColor>
 #include <QPalette>
 #include <QApplication>
+#include <QtDebug>
 
 #include "dialogues_list_model.h"
 
@@ -32,10 +33,13 @@ DialoguesListModel::DialoguesListModel(TranslateProject *project, QObject *paren
 void DialoguesListModel::setData(const QString &lang, const QString &level)
 {
     beginResetModel();
+    m_recentLang = lang;
     m_levelKey = level;
-    m_level = &(*m_project)[lang].levels[level];
+    m_level = &(*m_project)[TRANSLATE_METADATA].levels[level];
     m_dialogues = &m_level->dialogues;
     m_view.clear();
+
+    qDebug() << "Dialogues view: adding" << m_dialogues->size() << "dialogue(s) to the list...";
 
     for(int i = 0; i < m_dialogues->size(); ++i)
     {

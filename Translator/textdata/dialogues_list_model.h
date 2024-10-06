@@ -31,6 +31,7 @@ class DialoguesListModel : public QAbstractTableModel
     TranslateProject *m_project = nullptr;
     TranslationData_Level *m_level = nullptr;
     QString m_levelKey;
+    QString m_recentLang;
     QVector<TranslationData_Dialogue> *m_dialogues = nullptr;
 
     struct TrView
