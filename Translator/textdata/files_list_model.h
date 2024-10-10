@@ -33,15 +33,15 @@ class FilesListModel : public QAbstractItemModel
     TranslateProject *m_project = nullptr;
     struct TrView
     {
-        int type;
+        int type = -1;
         QString key;
         QString title;
         QString dir;
         QString path;
         QVector<TrView> children;
         QVector<TrView> *p;
-        int parent;
-        int row;
+        int parent = -1;
+        int row = -1;
     };
 
     typedef QVector<TrView> TrViewList;

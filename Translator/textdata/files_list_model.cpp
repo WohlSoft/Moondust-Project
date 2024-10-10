@@ -21,7 +21,26 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QFileIconProvider>
+#include <QtDebug>
 #include "files_list_model.h"
+
+
+static QString t2str(int t)
+{
+    switch(t)
+    {
+    case FilesListModel::T_WORLD:
+        return "World";
+    case FilesListModel::T_LEVEL:
+        return "Level";
+    case FilesListModel::T_SCRIPT:
+        return "Script";
+    case FilesListModel::T_DIR:
+        return "Directory";
+    default:
+        return "Unknown";
+    }
+}
 
 
 void FilesListModel::rebuildView(const QString &path)
@@ -30,6 +49,8 @@ void FilesListModel::rebuildView(const QString &path)
     m_path = path;
     QFileInfo p(path);
     m_title = p.completeBaseName();
+
+    qDebug() << "FilesListModel rebuild: Begin";
 
     beginResetModel();
 
@@ -69,12 +90,18 @@ void FilesListModel::rebuildView(const QString &path)
     }
 
     // Bring orphan objects to their parents
-    for(auto &s : m_viewOrphans)
+    if(!m_viewOrphans.isEmpty())
     {
-        Q_ASSERT(addChild(s, true));
-        // true orphan objects are invalid
+        qDebug() << "Found" << m_viewOrphans.size() << "orphans... (Checking view objects, quantity" << m_view.size() << ")";
+        for(auto &s : m_viewOrphans)
+        {
+            qDebug() << "Checking orphan for " << t2str(s.type) << s.title << "that supposed to be in path" << s.path;
+            bool ret = addChild(s, true);
+            Q_ASSERT(ret);
+            // true orphan objects are invalid
+        }
+        m_viewOrphans.clear();
     }
-    m_viewOrphans.clear();
 
     std::sort(m_view.begin(), m_view.end(),
               [](const TrView&o1, const TrView&o2)->bool
@@ -88,6 +115,8 @@ void FilesListModel::rebuildView(const QString &path)
     buildRelations();
 
     endResetModel();
+
+    qDebug() << "FilesListModel rebuild: End";
 }
 
 void FilesListModel::addToView(TrView &e, const QString &path)
@@ -116,6 +145,8 @@ bool FilesListModel::addChild(TrView &it, bool isOrphan)
     {
         if(it.path.compare(i.dir, Qt::CaseInsensitive) == 0)
         {
+            if(isOrphan)
+                qDebug() << "Found child for orphan" << t2str(it.type) << it.title << "at the " << t2str(i.type) << i.title << "in dir" << i.dir;
             i.children.push_back(it);
             found = true;
             break;
@@ -124,19 +155,29 @@ bool FilesListModel::addChild(TrView &it, bool isOrphan)
 
     if(!found)
     {
+        qDebug() << "Object" << t2str(it.type) << it.title << "is orphan, as no parent was found";
+
         if(isOrphan)
         {
             if(it.type == T_LEVEL)
             {
+                qDebug() << "Adding orphan" << t2str(it.type) << it.title << "as a directory...";
                 TrView e;
                 e.type = T_DIR;
                 e.key = it.dir;
                 addToView(e, m_path);
                 return true;
             }
+            else
+            {
+                qDebug() << "Orphan" << t2str(it.type) << it.title << "has missing parent, supposed to be in path" << it.path;
+            }
         }
         else // Add later, when required branch will be added soon
+        {
+            qDebug() << "Found orphan" << t2str(it.type) << it.title << "that supposed to be child of not yet in list" << it.path;
             m_viewOrphans.push_back(it);
+        }
     }
 
     return found;
@@ -211,6 +252,8 @@ QModelIndex FilesListModel::parent(const QModelIndex &index) const
 
     if(parentItem == nullptr)
         return QModelIndex();
+
+    Q_ASSERT(parentItem->row >= 0);
 
     return createIndex(parentItem->row, 0, (void*)parentItem);
 }
