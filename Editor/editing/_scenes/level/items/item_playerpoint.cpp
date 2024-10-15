@@ -117,8 +117,9 @@ void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         {
             if(SelItem->data(ITEM_TYPE).toString() == "playerPoint")
             {
-                //selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
-                dynamic_cast<ItemPlayerPoint *>(SelItem)->changeDirection(-1);
+                ItemPlayerPoint *p = qgraphicsitem_cast<ItemPlayerPoint*>(SelItem);
+                Q_ASSERT(p);
+                p->changeDirection(-1);
             }
         }
         //scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(-1));
@@ -130,8 +131,9 @@ void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         {
             if(SelItem->data(ITEM_TYPE).toString() == "playerPoint")
             {
-                //selData.npc.push_back(((ItemPlayerPoint *) SelItem)->npcData);
-                dynamic_cast<ItemPlayerPoint *>(SelItem)->changeDirection(1);
+                ItemPlayerPoint *p = qgraphicsitem_cast<ItemPlayerPoint*>(SelItem);
+                Q_ASSERT(p);
+                p->changeDirection(1);
             }
         }
         //scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(1));

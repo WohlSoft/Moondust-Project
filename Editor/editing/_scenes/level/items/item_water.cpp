@@ -234,15 +234,19 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                     {
                         if(selItem->data(ITEM_TYPE).toString() == "Water")
                         {
-                            ItemPhysEnv *pe = dynamic_cast<ItemPhysEnv *>(selItem);
+                            ItemPhysEnv *pe = qgraphicsitem_cast<ItemPhysEnv *>(selItem);
+                            Q_ASSERT(pe);
                             modData.physez.push_back(pe->m_data);
                             pe->setType(i);
                             m_scene->invalidate(pe->boundingRect());
                         }
                     }
+
                     m_scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_WATERTYPE, QVariant(true));
+
                     if(!m_scene->m_opts.animationEnabled)
                         m_scene->update();
+
                     found = true;
                     break;
                 }
@@ -329,6 +333,7 @@ void ItemPhysEnv::arrayApply()
         m_scene->m_data->physez[(int)m_data.meta.index] = m_data; //apply current bgoData
     }
     else
+    {
         for(int i = 0; i < m_scene->m_data->physez.size(); i++)
         {
             //after find it into array
@@ -339,6 +344,7 @@ void ItemPhysEnv::arrayApply()
                 break;
             }
         }
+    }
 
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
@@ -364,6 +370,7 @@ void ItemPhysEnv::removeFromArray()
         m_scene->m_data->physez.removeAt((int)m_data.meta.index);
     }
     else
+    {
         for(int i = 0; i < m_scene->m_data->physez.size(); i++)
         {
             if(m_scene->m_data->physez[i].meta.array_id == m_data.meta.array_id)
@@ -372,6 +379,7 @@ void ItemPhysEnv::removeFromArray()
                 break;
             }
         }
+    }
 
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
@@ -442,6 +450,7 @@ void ItemPhysEnv::updateColor()
         m_color = QColor(Qt::darkYellow);
         break;
     }
+
     m_pen.setColor(m_color);
     m_pen.setWidth(m_penWidth);
     m_pen.setStyle(Qt::SolidLine);

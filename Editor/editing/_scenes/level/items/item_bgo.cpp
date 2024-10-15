@@ -195,7 +195,9 @@ void ItemBGO::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         {
             if(SelItem->data(ITEM_TYPE).toString() == "BGO")
             {
-                if(((ItemBGO *) SelItem)->m_data.id == oldID)
+                ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
+                Q_ASSERT(b);
+                if(b->m_data.id == oldID)
                     selectedList.push_back(SelItem);
             }
         }
@@ -215,8 +217,10 @@ cancelRemoveSSS:
         {
             if(SelItem->data(ITEM_TYPE).toString() == "BGO")
             {
-                selData.bgo.push_back(((ItemBGO *)SelItem)->m_data);
-                ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background2, ((ItemBGO *) SelItem)->m_data.z_offset);
+                ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
+                Q_ASSERT(b);
+                selData.bgo.push_back(b->m_data);
+                b->setZMode(LevelBGO::Background2, b->m_data.z_offset);
             }
         }
         m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Background2));
@@ -228,8 +232,10 @@ cancelRemoveSSS:
         {
             if(SelItem->data(ITEM_TYPE).toString() == "BGO")
             {
-                selData.bgo.push_back(((ItemBGO *)SelItem)->m_data);
-                ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background1, ((ItemBGO *) SelItem)->m_data.z_offset);
+                ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
+                Q_ASSERT(b);
+                selData.bgo.push_back(b->m_data);
+                b->setZMode(LevelBGO::Background1, b->m_data.z_offset);
             }
         }
         m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Background1));
@@ -241,8 +247,10 @@ cancelRemoveSSS:
         {
             if(SelItem->data(ITEM_TYPE).toString() == "BGO")
             {
-                selData.bgo.push_back(((ItemBGO *)SelItem)->m_data);
-                ((ItemBGO *) SelItem)->setZMode(LevelBGO::ZDefault, ((ItemBGO *) SelItem)->m_data.z_offset);
+                ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
+                Q_ASSERT(b);
+                selData.bgo.push_back(b->m_data);
+                b->setZMode(LevelBGO::ZDefault, b->m_data.z_offset);
             }
         }
         m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::ZDefault));
@@ -254,8 +262,10 @@ cancelRemoveSSS:
         {
             if(SelItem->data(ITEM_TYPE).toString() == "BGO")
             {
-                selData.bgo.push_back(((ItemBGO *)SelItem)->m_data);
-                ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground1, ((ItemBGO *) SelItem)->m_data.z_offset);
+                ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
+                Q_ASSERT(b);
+                selData.bgo.push_back(b->m_data);
+                b->setZMode(LevelBGO::Foreground1, b->m_data.z_offset);
             }
         }
         m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Foreground1));
@@ -267,8 +277,10 @@ cancelRemoveSSS:
         {
             if(SelItem->data(ITEM_TYPE).toString() == "BGO")
             {
-                selData.bgo.push_back(((ItemBGO *)SelItem)->m_data);
-                ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground2, ((ItemBGO *) SelItem)->m_data.z_offset);
+                ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
+                Q_ASSERT(b);
+                selData.bgo.push_back(b->m_data);
+                b->setZMode(LevelBGO::Foreground2, b->m_data.z_offset);
             }
         }
         m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Foreground2));
@@ -287,8 +299,10 @@ cancelRemoveSSS:
             {
                 if(SelItem->data(ITEM_TYPE).toString() == "BGO")
                 {
-                    selData.bgo.push_back(((ItemBGO *)SelItem)->m_data);
-                    ((ItemBGO *) SelItem)->setZMode(((ItemBGO *) SelItem)->m_data.z_mode, newzOffset);
+                    ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
+                    Q_ASSERT(b);
+                    selData.bgo.push_back(b->m_data);
+                    b->setZMode(b->m_data.z_mode, newzOffset);
                 }
             }
             m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_Z_OFFSET, QVariant(newzOffset));
@@ -351,8 +365,9 @@ cancelRemoveSSS:
                 {
                     if(SelItem->data(ITEM_TYPE).toString() == "BGO")
                     {
-                        ItemBGO *item = (ItemBGO *)SelItem;
-                        if((!sameID) || (item->m_data.id == oldID))
+                        ItemBGO *item = qgraphicsitem_cast<ItemBGO *>(SelItem);
+                        Q_ASSERT(item);
+                        if(!sameID || item->m_data.id == oldID)
                         {
                             oldData.bgo.push_back(item->m_data);
                             item->transformTo(transformTO);
@@ -368,8 +383,9 @@ cancelRemoveSSS:
                 {
                     if(SelItem->data(ITEM_TYPE).toString() == "BGO")
                     {
-                        ItemBGO *item = (ItemBGO *)SelItem;
-                        if((!sameID) || (item->m_data.id == oldID))
+                        ItemBGO *item = qgraphicsitem_cast<ItemBGO *>(SelItem);
+                        Q_ASSERT(item);
+                        if(!sameID || item->m_data.id == oldID)
                         {
                             oldData.bgo.push_back(item->m_data);
                             LevelBlock block;
@@ -451,9 +467,11 @@ cancelTransform:
             {
                 if(SelItem->data(ITEM_TYPE).toString() == "BGO")
                 {
-                    selData.bgo.push_back(((ItemBGO *)SelItem)->m_data);
-                    ((ItemBGO *) SelItem)->m_data.meta.custom_params = ch;
-                    ((ItemBGO *) SelItem)->arrayApply();
+                    ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
+                    Q_ASSERT(b);
+                    selData.bgo.push_back(b->m_data);
+                    b->m_data.meta.custom_params = ch;
+                    b->arrayApply();
                 }
             }
             m_scene->m_history->addChangeSettings(selData, new BgoHistory_UserData(), ch);
