@@ -32,7 +32,7 @@ class ItemNPC : public LvlBaseItem
 public:
     ItemNPC(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
     ItemNPC(bool noScene = false, QGraphicsItem *parent = nullptr);
-    ~ItemNPC();
+    virtual ~ItemNPC();
 
     void setMainPixmap(const QPixmap &pixmap);
     void setNpcData(LevelNPC inD, obj_npc *mergedSet = nullptr, long *animator_id = nullptr, bool isTransform = false);
