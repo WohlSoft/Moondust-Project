@@ -31,7 +31,7 @@ class ItemPoint : public WldBaseItem
 public:
     ItemPoint(QGraphicsItem *parent = nullptr);
     ItemPoint(WldScene *scenePoint, QGraphicsItem *parent = nullptr);
-    ~ItemPoint();
+    virtual ~ItemPoint();
 
     QRectF  boundingRect() const;
     void    paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

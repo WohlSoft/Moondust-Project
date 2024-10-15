@@ -32,7 +32,7 @@ class ItemTile : public WldBaseItem
 public:
     ItemTile(QGraphicsItem *parent = nullptr);
     ItemTile(WldScene *parentScene, QGraphicsItem *parent = nullptr);
-    ~ItemTile();
+    virtual ~ItemTile();
 
     void setTileData(WorldTerrainTile inD, obj_w_tile *mergedSet = nullptr, long *animator_id = nullptr);
 

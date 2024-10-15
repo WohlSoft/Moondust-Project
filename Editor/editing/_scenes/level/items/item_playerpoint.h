@@ -32,7 +32,7 @@ class ItemPlayerPoint : public LvlBaseItem
 public:
     explicit ItemPlayerPoint(QGraphicsItem *parent = nullptr);
     explicit ItemPlayerPoint(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
-    ~ItemPlayerPoint();
+    virtual ~ItemPlayerPoint();
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);

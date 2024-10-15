@@ -32,7 +32,7 @@ class ItemPath : public WldBaseItem
 public:
     ItemPath(QGraphicsItem *parent = nullptr);
     ItemPath(WldScene *parentScene, QGraphicsItem *parent = nullptr);
-    ~ItemPath();
+    virtual ~ItemPath();
 
     void setPathData(WorldPathTile inD, obj_w_path *mergedSet = nullptr, long *animator_id = nullptr);
 
