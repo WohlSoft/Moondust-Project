@@ -3690,92 +3690,94 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Rename event</source>
-        <translation type="unfinished"></translation>
+        <translation>重命名事件</translation>
     </message>
     <message>
         <source>Remove event</source>
-        <translation type="unfinished"></translation>
+        <translation>删除事件</translation>
     </message>
     <message>
         <source>Show event statistics...</source>
-        <translation type="unfinished"></translation>
+        <translation>显示事件信息……</translation>
     </message>
     <message>
         <source>Event &quot;%1&quot; statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>事件“%1”信息</translation>
     </message>
     <message>
         <source>Total triggers</source>
         <comment>Event statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>总触发事件数</translation>
     </message>
     <message>
         <source>Block triggers</source>
         <comment>Event statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>砖块触发事件数</translation>
     </message>
     <message>
         <source>NPC triggers</source>
         <comment>Event statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>NPC触发事件数</translation>
     </message>
     <message>
         <source>Warp triggers</source>
         <comment>Event statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>传送点触发事件数</translation>
     </message>
     <message>
         <source>Physical environment triggers</source>
         <comment>Event statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>物理区域触发事件数</translation>
     </message>
     <message>
         <source>Other events triggers</source>
         <comment>Event statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>其他方式触发事件数</translation>
     </message>
     <message>
         <source>Autostart type</source>
         <comment>Event statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>自动运行事件条件</translation>
     </message>
     <message>
         <source>Level start</source>
         <comment>Event autostart type</comment>
-        <translation type="unfinished"></translation>
+        <translation>进入关卡时</translation>
     </message>
     <message>
         <source>Match all conditions</source>
         <comment>Event autostart type</comment>
-        <translation type="unfinished"></translation>
+        <translation>满足所有条件</translation>
     </message>
     <message>
         <source>Call and match</source>
         <comment>Event autostart type</comment>
-        <translation type="unfinished"></translation>
+        <translation>匹配指定条件</translation>
     </message>
     <message>
         <source>[Unknown]</source>
         <comment>Event autostart type</comment>
-        <translation type="unfinished"></translation>
+        <translation>[未知类型]</translation>
     </message>
     <message>
         <source>&lt;h2&gt;Event &quot;%1&quot; statistics:&lt;/h2&gt;
 &lt;center&gt;&amp;lt;This is an unused event&amp;gt;&lt;/center&gt;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h2&gt;事件“%1”信息：&lt;/h2&gt;
+&lt;center&gt;&amp;lt;该事件为未使用的事件&amp;gt;&lt;/center&gt;
+</translation>
     </message>
     <message>
         <source>Triggered by other events</source>
-        <translation type="unfinished"></translation>
+        <translation>触发于其他事件的事件</translation>
     </message>
     <message>
         <source>Remove this event</source>
-        <translation type="unfinished"></translation>
+        <translation>删除事件</translation>
     </message>
     <message>
         <source>Event statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>事件信息</translation>
     </message>
 </context>
 <context>
@@ -4150,73 +4152,75 @@ All elements of this layer will be removed too!</source>
     </message>
     <message>
         <source>Show layer statistics...</source>
-        <translation type="unfinished"></translation>
+        <translation>显示图层信息……</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>图层“%1”信息</translation>
     </message>
     <message>
         <source>Total members</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>图层总对象数</translation>
     </message>
     <message>
         <source>Blocks</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished">砖块</translation>
+        <translation>砖块</translation>
     </message>
     <message>
         <source>Background objects</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>背景对象</translation>
     </message>
     <message>
         <source>NPC</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished">NPC</translation>
+        <translation>NPC</translation>
     </message>
     <message>
         <source>Warps</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>传送点</translation>
     </message>
     <message>
         <source>Physical environments</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>物理区域</translation>
     </message>
     <message>
         <source>Usage</source>
-        <translation type="unfinished"></translation>
+        <translation>图层用途</translation>
     </message>
     <message>
         <source>Attaches to NPCs</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>图层跟随NPC个数</translation>
     </message>
     <message>
         <source>Referred in events</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>图层关联到事件数</translation>
     </message>
     <message>
         <source>&lt;h2&gt;Layer &quot;%1&quot; statistics:&lt;/h2&gt;
 &lt;center&gt;&amp;lt;This is an unused layer with no members&amp;gt;&lt;/center&gt;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h2&gt;图层“%1”信息：&lt;/h2&gt;
+&lt;center&gt;&amp;lt;该图层为未使用的图层，图层内无任何对象&amp;gt;&lt;/center&gt;
+</translation>
     </message>
     <message>
         <source>Referred in events</source>
-        <translation type="unfinished"></translation>
+        <translation>关联到事件</translation>
     </message>
     <message>
         <source>Remove this layer</source>
-        <translation type="unfinished"></translation>
+        <translation>删除图层</translation>
     </message>
     <message>
         <source>Layer statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>图层信息</translation>
     </message>
 </context>
 <context>
@@ -4649,7 +4653,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
         <translation>取决于传送的种类：
-0 - 瞬移：玩家将会瞬移且移动速度为 0.
+0 - 瞬移：玩家将会瞬移且移动速度为 0（在SMBX/TheXTech引擎下，无法传送到另一关卡）。
 1 - 水管：各个方向的水管的入口和出口。
 2 - 门：玩家可按上键进入。
 3 - 传送门（仅限月尘和 TheXTech 引擎）：玩家将会瞬移，但移动速度不变。</translation>
@@ -6458,7 +6462,7 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
-        <translation>您正在使用 64 位操作系统中使用 32 位的版本的编辑器，此版本的编辑器专为老旧的电脑和 Windows XP 系统兼容打造，我们强烈推荐使用 64 位版本的编辑器以获得最佳兼容性和内存扩展，32 位应用中内存限制为 2GB。</translation>
+        <translation>您正在使用 64 位操作系统中使用 32 位的版本的编辑器，此版本的编辑器专为旧电脑和 Windows XP 系统兼容打造，我们强烈推荐使用 64 位版本的编辑器以获得最佳兼容性和内存扩展。另外，32 位应用程序的内存限制为 2GB。</translation>
     </message>
     <message>
         <source>Editor, version %1</source>
