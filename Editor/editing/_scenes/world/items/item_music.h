@@ -32,7 +32,7 @@ class ItemMusic : public WldBaseItem
 public:
     ItemMusic(QGraphicsItem *parent = nullptr);
     ItemMusic(WldScene *parentScene, QGraphicsItem *parent = nullptr);
-    ~ItemMusic();
+    virtual ~ItemMusic();
 
     void setMusicData(WorldMusicBox inD);
     void transformTo(int musicID, QString musicFile);

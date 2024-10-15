@@ -32,7 +32,7 @@ class ItemDoor : public LvlBaseItem
 public:
     ItemDoor(QGraphicsItem *parent = nullptr);
     ItemDoor(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
-    ~ItemDoor();
+    virtual ~ItemDoor();
 
     void setDoorData(LevelDoor inD, int doorDir, bool init = false);
     void setScenePoint(LvlScene *theScene);

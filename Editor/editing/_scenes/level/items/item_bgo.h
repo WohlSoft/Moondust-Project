@@ -32,7 +32,7 @@ class ItemBGO : public LvlBaseItem
 public:
     ItemBGO(QGraphicsItem *parent = nullptr);
     ItemBGO(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
-    ~ItemBGO();
+    virtual ~ItemBGO();
 
     void setBGOData(LevelBGO inD, obj_bgo *mergedSet = nullptr, long *animator_id = nullptr);
 

@@ -32,7 +32,7 @@ class ItemScene : public WldBaseItem
 public:
     ItemScene(QGraphicsItem *parent = nullptr);
     ItemScene(WldScene *parentScene, QGraphicsItem *parent = nullptr);
-    ~ItemScene();
+    virtual ~ItemScene();
 
     void setSceneData(WorldScenery inD, obj_w_scenery *mergedSet = nullptr, long *animator_id = nullptr);
 

@@ -32,7 +32,7 @@ class ItemPhysEnv : public LvlBaseItem
 public:
     ItemPhysEnv(QGraphicsItem *parent = nullptr);
     ItemPhysEnv(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
-    ~ItemPhysEnv();
+    virtual ~ItemPhysEnv();
 
     void setSize(QSize sz);
     void setRectSize(QRect rect);

@@ -32,7 +32,7 @@ class ItemBlock : public LvlBaseItem
 public:
     ItemBlock(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
     ItemBlock(QGraphicsItem *parent = nullptr);
-    ~ItemBlock();
+    virtual ~ItemBlock();
 
     void setMainPixmap(/*const QPixmap &pixmap*/);
     void setBlockData(LevelBlock inD, obj_block *mergedSet = nullptr, long *animator = nullptr);
