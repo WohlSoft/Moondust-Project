@@ -272,7 +272,7 @@ void ItemNPC::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 if(SelItem->data(ITEM_TYPE).toString() == "NPC")
                 {
                     ItemNPC *sItem = qgraphicsitem_cast<ItemNPC *>(SelItem);
-                    Q_ASSERT(n);
+                    Q_ASSERT(sItem);
 
                     if((!sameID) || (sItem->m_data.id == oldID))
                     {
