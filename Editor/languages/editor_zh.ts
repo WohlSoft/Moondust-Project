@@ -4652,7 +4652,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
-        <translation>取决于传送的种类：
+        <translation>选择传送点类型：
 0 - 瞬移：玩家将会瞬移且移动速度为 0（在SMBX/TheXTech引擎下，无法传送到另一关卡）。
 1 - 水管：各个方向的水管的入口和出口。
 2 - 门：玩家可按上键进入。
@@ -4877,7 +4877,7 @@ If this flag is enabled, you can only place a warp exit.</source>
     </message>
     <message>
         <source>If this field is not empty, player will travel from the current level to the specified one.</source>
-        <translation>若此栏不为空时，玩家则从当前关卡传送到指定关卡。</translation>
+        <translation>若此字段不为空，且传送类型不为瞬移时，玩家将从当前关卡传送到指定关卡。</translation>
     </message>
     <message>
         <source>Level file:</source>
