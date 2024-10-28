@@ -10,13 +10,6 @@ struct FIBITMAP;
 namespace XTConvert
 {
 
-enum TPLConversion
-{
-    RGBA8_TO_RGB5A3,
-    CI8_TO_CI4,
-    CI8_TO_CI8,
-};
-
 static inline int next_power_of_2(int val)
 {
     int power = 8;
@@ -27,7 +20,6 @@ static inline int next_power_of_2(int val)
 
 void write_uint16_le(uint8_t* dest, uint16_t src);
 uint16_t color_to_rgb5a1(liq_color color);
-bool swizzle_tpl(std::vector<uint8_t>& out, const uint8_t* in, int in_width, int in_height, TPLConversion format);
 
 bool shrink_player_texture(FIBITMAP** image, bool char5);
 
