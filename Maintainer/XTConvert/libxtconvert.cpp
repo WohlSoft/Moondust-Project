@@ -21,6 +21,7 @@
 
 #include "graphics_load.h"
 #include "texconv.h"
+#include "export_tpl.h"
 
 #include "libxtconvert.h"
 
@@ -259,6 +260,58 @@ public:
         }
         else if(output_format == TargetPlatform::TPL)
         {
+            used_out_path = out_path.chopped(4) + ".tpl";
+
+            FreeImage_FlipVertical(image);
+
+            // palettize texture
+            int input_w = FreeImage_GetWidth(image);
+            int input_h_full = FreeImage_GetHeight(image);
+            int stride = FreeImage_GetPitch(image);
+
+            save_success = false;
+
+            for(int i = 0; i < 3; i++)
+            {
+                int start_y = i * 1024;
+                int input_h = input_h_full - start_y;
+                if(input_h <= 0)
+                    break;
+                if(input_h > 1024)
+                    input_h = 1024;
+
+                PaletteTex p(FreeImage_GetBits(image) + stride * start_y, input_w, input_h);
+
+                PaletteTex::PaletteSize used_size = PaletteTex::HALF;
+                if(!p.convert(used_size, 90))
+                {
+                    used_size = PaletteTex::BYTE;
+
+                    if(!p.convert(used_size, 0))
+                        break;
+                }
+
+                QByteArray tpl_data;
+                tpl_data.resize(ExportTPL::data_size(used_size, input_w, input_h));
+                ExportTPL::fill_data(reinterpret_cast<uint8_t*>(&tpl_data[0]), used_size, input_w, input_h, p.palette(), p.indexes());
+
+                auto tpl_path = used_out_path;
+                if(i > 0)
+                    tpl_path += char('0' + i);
+
+                QFile file(tpl_path);
+                if(!file.open(QIODevice::WriteOnly))
+                    break;
+                else
+                {
+                    file.write(tpl_data);
+                    file.close();
+                    save_success = true;
+                }
+            }
+
+            if(save_success)
+                size_text = QString("%1\n%2\n").arg(image_w * 2, 4).arg(image_h * 2, 4);
         }
         else if(output_format == TargetPlatform::DSG)
         {
