@@ -5,6 +5,7 @@ add_subdirectory(3rdparty/mbediso EXCLUDE_FROM_ALL)
 add_subdirectory(3rdparty/3dstools EXCLUDE_FROM_ALL)
 add_subdirectory(3rdparty/tex3ds EXCLUDE_FROM_ALL)
 add_subdirectory(3rdparty/libimagequant EXCLUDE_FROM_ALL)
+add_subdirectory(3rdparty/spc2it EXCLUDE_FROM_ALL)
 include(cmake/build_libarchive.cmake)
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
@@ -18,7 +19,7 @@ add_library(libxtconvert
 add_dependencies(libxtconvert archive_static lz4_pack_static libromfs3ds libtex3ds FreeImage_Local libpng_Local)
 
 target_link_libraries(libxtconvert PRIVATE Qt6::Core)
-target_link_libraries(libxtconvert PUBLIC archive_static lz4_pack_static libromfs3ds libtex3ds PGE_FreeImage imagequant_a)
+target_link_libraries(libxtconvert PUBLIC archive_static lz4_pack_static libromfs3ds libtex3ds PGE_FreeImage imagequant_a libspc2it)
 
 target_include_directories(libxtconvert PUBLIC include)
 target_include_directories(libxtconvert PRIVATE src)

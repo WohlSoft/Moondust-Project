@@ -18,6 +18,7 @@
 #include "lz4_pack.h"
 #include "libromfs3ds.h"
 #include "libtex3ds.h"
+#include "spc2it.h"
 
 #include "graphics_load.h"
 #include "texconv.h"
@@ -480,6 +481,11 @@ public:
             return convert_image(filename, in_path, out_path);
         else if(filename.endsWith(".ini") && m_cur_dir.convert_font_inis)
             return convert_font_ini(filename, in_path, out_path);
+        else if(filename.endsWith(".spc") && m_spec.target_platform == TargetPlatform::T3X)
+        {
+            qInfo() << "spc2it" << out_path;
+            return spc2it_convert(in_path.toUtf8().data(), out_path.toUtf8().data()) == 0;
+        }
         else
         {
             qInfo() << "copying" << out_path;
