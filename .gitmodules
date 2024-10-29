@@ -60,9 +60,6 @@
 [submodule "XTConvert/libarchive"]
 	path = Maintainer/XTConvert/3rdparty/libarchive
 	url = https://github.com/WohlSoft/xtconvert-libarchive.git
-[submodule "XTConvert/gamecube-tools"]
-	path = Maintainer/XTConvert/3rdparty/gamecube-tools
-	url = https://github.com/WohlSoft/xtconvert-gamecube-tools.git
 [submodule "XTConvert/mbediso"]
 	path = Maintainer/XTConvert/3rdparty/mbediso
 	url = https://github.com/ds-sloth/mbediso.git
