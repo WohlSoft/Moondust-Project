@@ -22,4 +22,6 @@ public:
     static FIBITMAP *fast2xScaleDown(FIBITMAP *image);
 
     static bool validateBitmaskRequired(FIBITMAP *image, FIBITMAP *mask);
+
+    static bool validateForDepthTest(FIBITMAP *image);
 };

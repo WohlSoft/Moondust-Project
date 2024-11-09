@@ -1,5 +1,6 @@
 #include <QString>
 #include <QFile>
+#include <QDebug>
 
 #include <FreeImageLite.h>
 
@@ -239,4 +240,33 @@ bool GraphicsLoad::validateBitmaskRequired(FIBITMAP *image, FIBITMAP *mask)
     }
 
     return false;
+}
+
+bool GraphicsLoad::validateForDepthTest(FIBITMAP *image)
+{
+    if(!image)
+        return false;
+
+    auto w = static_cast<uint32_t>(FreeImage_GetWidth(image));
+    auto h = static_cast<uint32_t>(FreeImage_GetHeight(image));
+    auto pitch = static_cast<uint32_t>(FreeImage_GetPitch(image));
+    BYTE *img_bits  = FreeImage_GetBits(image);
+
+    for(uint32_t y = 0; y < h; ++y)
+    {
+        for(uint32_t x = 0; x < w; ++x)
+        {
+            BYTE *alpha = img_bits + (y * pitch) + (x * 4) + 3;
+
+            // vanilla game used 5 bits per channel, so we set the alpha test as >= 0x08
+            if(*alpha < 0x08 || *alpha >= 0xf8)
+                continue;
+
+            // qInfo() << "alpha " << *alpha << " at " << x << ", " << y;
+
+            return false;
+        }
+    }
+
+    return true;
 }
