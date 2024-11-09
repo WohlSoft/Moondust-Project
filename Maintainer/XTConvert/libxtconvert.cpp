@@ -154,7 +154,8 @@ class Converter
         {
             for(QFileInfo f : m_cur_dir.dir.entryInfoList({"*.ini"}))
             {
-                qInfo() << "Scanning" << f.absoluteFilePath();
+                // qInfo() << "Scanning" << f.absoluteFilePath();
+
                 QSettings ini(f.absoluteFilePath(), QSettings::IniFormat);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
                 ini.setIniCodec("UTF-8");
@@ -164,7 +165,7 @@ class Converter
                 int texture_scale = ini.value("texture-scale", 1).toInt();
                 QString texture_filename = ini.value("texture", "").toString().toLower();
 
-                qInfo() << "scale" << texture_scale << "fn" << texture_filename;
+                // qInfo() << "scale" << texture_scale << "fn" << texture_filename;
 
                 if(texture_scale != 1 && !texture_filename.isEmpty())
                     m_cur_dir.textures_1x.insert(texture_filename);
