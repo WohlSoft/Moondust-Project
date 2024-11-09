@@ -12,6 +12,8 @@
 
 #include <FreeImageLite.h>
 
+#include <SDL2/SDL_mixer_ext.h>
+
 #include "archive.h"
 #include "archive_entry.h"
 
@@ -23,11 +25,77 @@
 #include "graphics_load.h"
 #include "texconv.h"
 #include "export_tpl.h"
+#include "export_wav.h"
 
 #include "libxtconvert.h"
 
 namespace XTConvert
 {
+
+struct MixerX_Sentinel
+{
+    bool valid = false;
+
+    MixerX_Sentinel(const Spec& spec)
+    {
+        {
+            int freq;
+            Uint16 fmt;
+            int chn;
+
+            if(Mix_QuerySpec(&freq, &fmt, &chn))
+                return;
+        }
+
+        if(Mix_Init(MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MID) < 0)
+            return;
+
+        SDL_AudioSpec as;
+
+        as.channels = 2;
+        as.format = AUDIO_S16LSB;
+        as.freq = 44100;
+        as.silence = 0;
+        as.samples = 8192;
+        as.size = as.samples * 4;
+        as.callback = nullptr;
+        as.userdata = nullptr;
+
+        if(spec.target_platform == TargetPlatform::TPL)
+            as.freq = 32000;
+        else if(spec.target_platform == TargetPlatform::DSG)
+            as.freq = 24000;
+
+        Mix_InitMixer(&as, SDL_FALSE);
+
+        {
+            int freq;
+            Uint16 fmt;
+            int chn;
+
+            if(!Mix_QuerySpec(&freq, &fmt, &chn) || freq != as.freq || chn != as.channels || fmt != as.format)
+            {
+                Mix_FreeMixer();
+                Mix_Quit();
+
+                return;
+            }
+        }
+
+        valid = true;
+    }
+
+    ~MixerX_Sentinel()
+    {
+        if(valid)
+        {
+            Mix_FreeMixer();
+            Mix_Quit();
+        }
+
+        valid = true;
+    }
+};
 
 class Converter
 {
@@ -220,6 +288,7 @@ public:
 
             Tex3DS::Params params;
             params.compression_format = Tex3DS::COMPRESSION_LZ11;
+            params.process_format = Tex3DS::RGBA8888;
 
             // image parts
             save_success = true;
@@ -471,6 +540,33 @@ public:
         return true;
     }
 
+    bool convert_sfx(const QString&, const QString& in_path, const QString& out_path)
+    {
+        qInfo() << "ogg2wav" << out_path;
+
+        Mix_Chunk* ch = Mix_LoadWAV(in_path.toUtf8().data());
+        if(!ch)
+            return false;
+
+        qInfo() << "length" << ch->alen;
+
+        QByteArray wav_data;
+
+        ExportWAV::export_wav(wav_data, ch);
+
+        Mix_FreeChunk(ch);
+
+        QFile file(out_path);
+        if(!file.open(QIODevice::WriteOnly))
+            return false;
+        else
+        {
+            file.write(wav_data);
+            file.close();
+            return true;
+        }
+    }
+
     bool convert_file(const QString& filename, const QString& in_path, const QString& out_path)
     {
         sync_cur_dir(in_path);
@@ -481,6 +577,8 @@ public:
             return convert_image(filename, in_path, out_path);
         else if(filename.endsWith(".ini") && m_cur_dir.convert_font_inis)
             return convert_font_ini(filename, in_path, out_path);
+        else if(filename.endsWith(".ogg") && in_path.contains("/sound/"))
+            return convert_sfx(filename, in_path, out_path);
         else if(filename.endsWith(".spc") && m_spec.target_platform == TargetPlatform::T3X)
         {
             qInfo() << "spc2it" << out_path;
@@ -673,7 +771,14 @@ cleanup:
 
     bool process()
     {
-        GraphicsLoad::initFreeImage();
+        GraphicsLoad::FreeImage_Sentinel fs;
+        MixerX_Sentinel ms(m_spec);
+
+        if(!ms.valid)
+        {
+            qInfo() << "Error: MixerX could not be (re)initialized";
+            return false;
+        }
 
         m_input_dir.setPath(m_spec.input_dir);
 

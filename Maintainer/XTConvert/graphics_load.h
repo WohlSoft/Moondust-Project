@@ -6,15 +6,12 @@ struct FIBITMAP;
 class GraphicsLoad
 {
 public:
-    /*!
-     * \brief Initializes FreeImage
-     */
-    static void  initFreeImage();
-
-    /*!
-     * \brief DeInitializes FreeImage
-     */
-    static void  closeFreeImage();
+    // ensures that FreeImage is inited while alive
+    struct FreeImage_Sentinel
+    {
+        FreeImage_Sentinel();
+        ~FreeImage_Sentinel();
+    };
 
     static FIBITMAP* loadImage(const QString& path);
 
