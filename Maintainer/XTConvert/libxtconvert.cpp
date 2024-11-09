@@ -105,8 +105,8 @@ class Converter
 
         QSet<QString> textures_1x;
 
-        std::unique_ptr<QFile> own_graphics_list; // open file to the directory's own graphics list (if any)
-        QFile* graphics_list = nullptr; // pointer to the correct graphics list to write to (if any)
+        std::unique_ptr<QFile> graphics_list; // open file to the directory's own graphics list (if any)
+        bool graphics_list_empty = true;
 
         enum MakeSizeFiles_t
         {
@@ -122,7 +122,14 @@ class Converter
         bool convert_font_inis = false;
     };
 
+    QDir m_input_dir;
+    QDir m_assets_dir;
+
+    QTemporaryDir m_temp_dir_owner;
+    QDir m_temp_dir;
+
     DirInfo m_cur_dir;
+    QFile m_main_graphics_list;
 
     void sync_cur_dir(const QString& in_file)
     {
@@ -132,6 +139,11 @@ class Converter
         if(parent.path() == m_cur_dir.dir.path())
             return;
 
+        // remove old graphics list if empty
+        if(m_cur_dir.graphics_list_empty && m_cur_dir.graphics_list)
+            m_cur_dir.graphics_list->remove();
+
+        // reset m_cur_dir
         m_cur_dir = DirInfo();
         m_cur_dir.dir = std::move(parent);
 
@@ -163,16 +175,31 @@ class Converter
                 m_cur_dir.convert_font_inis = true;
         }
 
-        m_cur_dir.make_size_files = DirInfo::SIZEFILES_ALL;
+        // prepare size file policy and graphics list
+        if(m_spec.target_platform == TargetPlatform::Desktop)
+            m_cur_dir.make_size_files = DirInfo::SIZEFILES_NONE;
+        else if(m_cur_dir.dir.path().contains("/graphics/"))
+            m_cur_dir.make_size_files = DirInfo::SIZEFILES_PREVIEW_ASSETS;
+        else
+        {
+            // find path of temp dir
+            auto s = QDir::separator();
+            QString rel_path = m_input_dir.relativeFilePath(m_cur_dir.dir.path());
+            QString graphics_list_path = m_temp_dir.filePath(rel_path) + s + "graphics.list";
+
+            m_cur_dir.graphics_list.reset(new QFile(graphics_list_path));
+
+            if(m_cur_dir.graphics_list->open(QIODevice::WriteOnly | QIODevice::Append))
+            {
+                m_cur_dir.make_size_files = DirInfo::SIZEFILES_PREVIEW_EPISODE;
+                m_cur_dir.graphics_list_empty = (m_cur_dir.graphics_list->pos() == 0);
+            }
+            else
+                m_cur_dir.make_size_files = DirInfo::SIZEFILES_ALL;
+        }
     }
 
 public:
-    QDir m_input_dir;
-    QDir m_assets_dir;
-
-    QTemporaryDir m_temp_dir_owner;
-    QDir m_temp_dir;
-
     Spec m_spec;
 
     QString m_error;
@@ -495,8 +522,107 @@ public:
         // cleanup the image
         FreeImage_Unload(image);
 
-        // write to size file if needed
-        if(m_cur_dir.make_size_files && save_success && !size_text.isEmpty())
+        // check if graphics list present
+        QFile* write_graphics_list = nullptr;
+
+        if(m_cur_dir.graphics_list.get())
+            write_graphics_list = m_cur_dir.graphics_list.get();
+        else if(m_main_graphics_list.isOpen())
+            write_graphics_list = &m_main_graphics_list;
+
+        // write graphics list
+        if(write_graphics_list)
+        {
+            QString basename = filename.section(".", 0, 0);
+            QString type = basename.section("-", 0, 0);
+            QString index = basename.section("-", 1);
+
+            bool index_valid = false;
+            index.toUInt(&index_valid);
+
+            static const std::array<const char*, 17> valid_types = {
+                "background", "background2", "block", "effect", "level",
+                "link", "luigi", "mario", "npc", "path",
+                "peach", "player", "scene", "tile", "toad",
+                "yoshib", "yoshit"
+            };
+
+            bool type_valid = false;
+            for(const char* valid_type : valid_types)
+            {
+                if(type == valid_type)
+                {
+                    // only allow valid subdirectories for main graphics list
+                    if(write_graphics_list == &m_main_graphics_list)
+                    {
+                        // special case: yoshib and yoshit stored in yoshi
+                        if(valid_type == valid_types[15] || valid_type == valid_types[16])
+                        {
+                            if(!m_cur_dir.dir.path().endsWith("yoshi"))
+                                break;
+                        }
+                        else if(!m_cur_dir.dir.path().endsWith(valid_type))
+                            break;
+                    }
+
+                    type_valid = true;
+                    break;
+                }
+            }
+
+            if(index_valid && type_valid)
+            {
+                // make path relative to graphics list
+                QFileInfo fi(write_graphics_list->fileName());
+                QDir graphics_list_parent = fi.dir();
+                QString relative_out_path = graphics_list_parent.relativeFilePath(used_out_path);
+
+                write_graphics_list->write(type.toUtf8());
+                write_graphics_list->write(" ");
+                write_graphics_list->write(index.toUtf8());
+                write_graphics_list->write("\n");
+                write_graphics_list->write(relative_out_path.toUtf8());
+                write_graphics_list->write("\n");
+                write_graphics_list->write(size_text.toUtf8());
+                write_graphics_list->write("\n");
+
+                if(write_graphics_list == m_cur_dir.graphics_list.get())
+                    m_cur_dir.graphics_list_empty = false;
+            }
+            else
+                write_graphics_list = nullptr;
+        }
+
+        // check if size file needed
+        bool make_size_file = false;
+
+        if(m_cur_dir.make_size_files == DirInfo::SIZEFILES_ALL)
+            make_size_file = true;
+        else if(m_cur_dir.make_size_files != DirInfo::SIZEFILES_NONE && !write_graphics_list)
+        {
+            // always write if filename doesn't follow graphics.list format
+            make_size_file = true;
+        }
+        else if(m_cur_dir.make_size_files == DirInfo::SIZEFILES_PREVIEW_ASSETS)
+        {
+            // UI and background sprites
+            make_size_file = in_path.contains("/ui/")
+                || filename.contains("/background2/");
+        }
+        else if(m_cur_dir.make_size_files == DirInfo::SIZEFILES_PREVIEW_EPISODE)
+        {
+            // player and mount sprites
+            make_size_file = filename.contains("mario")
+                || filename.contains("luigi")
+                || filename.contains("peach")
+                || filename.contains("toad")
+                || filename.contains("link")
+                || filename.contains("yoshi")
+                || filename.contains("mount");
+        }
+
+        // write to size file
+        if(make_size_file && save_success && !size_text.isEmpty())
         {
             QFile file(used_out_path + ".size");
             if(!file.open(QIODevice::WriteOnly))
@@ -505,8 +631,6 @@ public:
             file.write(size_text.toUtf8());
             file.close();
         }
-
-        // FIXME: write to graphics list NOW
 
         return save_success;
     }
@@ -632,6 +756,14 @@ public:
                     return false;
                 }
 
+                if(rel_path == "graphics")
+                {
+                    qInfo() << "Initializing primary graphics.list file";
+
+                    m_main_graphics_list.setFileName(temp_path + QDir::separator() + "graphics.list");
+                    m_main_graphics_list.open(QIODevice::WriteOnly);
+                }
+
                 continue;
             }
 
@@ -642,6 +774,8 @@ public:
                 return false;
             }
         }
+
+        m_main_graphics_list.close();
 
         return true;
     }
