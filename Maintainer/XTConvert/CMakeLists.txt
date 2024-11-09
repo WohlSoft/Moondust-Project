@@ -14,12 +14,19 @@ add_library(libxtconvert
     graphics_load.cpp
     src/texconv.cpp
     src/export_tpl.cpp
+    src/export_wav.cpp
 )
 
-add_dependencies(libxtconvert archive_static lz4_pack_static libromfs3ds libtex3ds FreeImage_Local libpng_Local)
+add_dependencies(libxtconvert archive_static lz4_pack_static libromfs3ds libtex3ds FreeImage_Local libpng_Local SDLMixerX_Local SDL2_Local)
 
 target_link_libraries(libxtconvert PRIVATE Qt6::Core)
 target_link_libraries(libxtconvert PUBLIC archive_static lz4_pack_static libromfs3ds libtex3ds PGE_FreeImage imagequant_a libspc2it)
+
+if(PGE_STATIC_SDLMIXER)
+    target_link_libraries(libxtconvert PUBLIC PGE_SDLMixerX_static PGE_SDL2_static)
+else()
+    target_link_libraries(libxtconvert PUBLIC PGE_SDLMixerX PGE_SDL2)
+endif()
 
 target_include_directories(libxtconvert PUBLIC include)
 target_include_directories(libxtconvert PRIVATE src)

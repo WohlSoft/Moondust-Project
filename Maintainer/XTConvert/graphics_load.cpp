@@ -5,12 +5,12 @@
 
 #include "graphics_load.h"
 
-void GraphicsLoad::initFreeImage()
+GraphicsLoad::FreeImage_Sentinel::FreeImage_Sentinel()
 {
     FreeImage_Initialise();
 }
 
-void GraphicsLoad::closeFreeImage()
+GraphicsLoad::FreeImage_Sentinel::~FreeImage_Sentinel()
 {
     FreeImage_DeInitialise();
 }
