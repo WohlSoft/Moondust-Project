@@ -288,7 +288,14 @@ public:
 
             Tex3DS::Params params;
             params.compression_format = Tex3DS::COMPRESSION_LZ11;
-            params.process_format = Tex3DS::RGBA8888;
+            params.process_format = Tex3DS::RGBA5551;
+
+            // check for transparency
+            if(!GraphicsLoad::validateForDepthTest(image))
+            {
+                qInfo() << "Using RGBA8888 for " << in_path;
+                params.process_format = Tex3DS::RGBA8888;
+            }
 
             // image parts
             save_success = true;
