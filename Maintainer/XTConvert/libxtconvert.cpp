@@ -32,6 +32,34 @@
 namespace XTConvert
 {
 
+static bool validate_image_filename(const QString& filename, QString& type, QString& index)
+{
+    QString basename = filename.section(".", 0, 0);
+    type = basename.section("-", 0, 0);
+    index = basename.section("-", 1);
+
+    bool index_valid = false;
+    index.toUInt(&index_valid);
+
+    if(!index_valid)
+        return false;
+
+    static const std::array<const char*, 17> valid_types = {
+        "background", "background2", "block", "effect", "level",
+        "link", "luigi", "mario", "npc", "path",
+        "peach", "player", "scene", "tile", "toad",
+        "yoshib", "yoshit"
+    };
+
+    for(const char* valid_type : valid_types)
+    {
+        if(type == valid_type)
+            return true;
+    }
+
+    return false;
+}
+
 struct MixerX_Sentinel
 {
     bool valid = false;
@@ -117,8 +145,7 @@ class Converter
         };
 
         MakeSizeFiles_t make_size_files = SIZEFILES_NONE;
-        bool make_mask_gifs = false;
-        bool copy_mask_gifs = false;
+        bool make_fallback_masks = false;
         bool convert_font_inis = false;
     };
 
@@ -147,6 +174,7 @@ class Converter
         m_cur_dir = DirInfo();
         m_cur_dir.dir = std::move(parent);
 
+        QString rel_path = m_input_dir.relativeFilePath(m_cur_dir.dir.path());
         QStringList path_parts = QDir::toNativeSeparators(m_cur_dir.dir.path()).toLower().split(QDir::separator());
 
         // check for 1x textures: fonts
@@ -179,13 +207,15 @@ class Converter
         // prepare size file policy and graphics list
         if(m_spec.target_platform == TargetPlatform::Desktop)
             m_cur_dir.make_size_files = DirInfo::SIZEFILES_NONE;
-        else if(m_cur_dir.dir.path().contains("/graphics/"))
+        else if(m_spec.use_assets_dir.isEmpty() && rel_path.startsWith("graphics/"))
+        {
             m_cur_dir.make_size_files = DirInfo::SIZEFILES_PREVIEW_ASSETS;
+            m_cur_dir.make_fallback_masks = (m_spec.target_platform != TargetPlatform::TPL);
+        }
         else
         {
-            // find path of temp dir
+            // find path of temp dir's graphics list
             auto s = QDir::separator();
-            QString rel_path = m_input_dir.relativeFilePath(m_cur_dir.dir.path());
             QString graphics_list_path = m_temp_dir.filePath(rel_path) + s + "graphics.list";
 
             m_cur_dir.graphics_list.reset(new QFile(graphics_list_path));
@@ -271,8 +301,56 @@ public:
 
         QString used_out_path = out_path;
 
+        // save mask fallback here if we are in the global graphics dir
+        if(m_cur_dir.make_fallback_masks && output_format != TargetPlatform::Desktop)
+        {
+            QString type, index;
 
-        // FIXME: save mask fallback here if we are in the global graphics dir
+            FIBITMAP* fallback_mask = nullptr;
+
+
+            // make sure that the texture is valid and should have transparency
+            if(validate_image_filename(filename, type, index) && type != "background2" && type != "tile")
+                fallback_mask = FreeImage_Clone(image);
+
+            // convert to 8-bit paletted mask
+            if(fallback_mask)
+            {
+                GraphicsLoad::RGBAToMask(fallback_mask);
+
+                // should not fail (there are only 256 shades of gray)
+                FIBITMAP* fallback_mask_2 = FreeImage_ColorQuantizeEx(fallback_mask, FIQ_LFPQUANT, 2);
+                if(fallback_mask_2)
+                {
+                    FreeImage_Unload(fallback_mask_2);
+                    fallback_mask_2 = FreeImage_Threshold(fallback_mask, 127);
+                }
+                else
+                    fallback_mask_2 = FreeImage_ConvertTo8Bits(fallback_mask);
+
+                FreeImage_Unload(fallback_mask);
+
+                fallback_mask = fallback_mask_2;
+            }
+
+            if(fallback_mask)
+            {
+                QString fallback_mask_path = m_temp_dir.filePath("graphics/fallback/");
+
+                // make fallback folder if it isn't present
+                if(!QFileInfo::exists(fallback_mask_path))
+                    m_temp_dir.mkdir(fallback_mask_path);
+
+                // append filename
+                fallback_mask_path += filename.chopped(4) + "m.gif";
+
+                // don't clobber a version copied from the original fallback folder
+                if(!QFileInfo::exists(fallback_mask_path))
+                    FreeImage_Save(FIF_GIF, fallback_mask, fallback_mask_path.toUtf8());
+
+                FreeImage_Unload(fallback_mask);
+            }
+        }
 
 
         // scale the image as needed
@@ -534,44 +612,24 @@ public:
         // write graphics list
         if(write_graphics_list)
         {
-            QString basename = filename.section(".", 0, 0);
-            QString type = basename.section("-", 0, 0);
-            QString index = basename.section("-", 1);
+            QString type, index;
 
-            bool index_valid = false;
-            index.toUInt(&index_valid);
+            bool valid = validate_image_filename(filename, type, index);
 
-            static const std::array<const char*, 17> valid_types = {
-                "background", "background2", "block", "effect", "level",
-                "link", "luigi", "mario", "npc", "path",
-                "peach", "player", "scene", "tile", "toad",
-                "yoshib", "yoshit"
-            };
-
-            bool type_valid = false;
-            for(const char* valid_type : valid_types)
+            // only allow valid subdirectories for main graphics list
+            if(valid && write_graphics_list == &m_main_graphics_list)
             {
-                if(type == valid_type)
+                // special case: yoshib and yoshit stored in yoshi
+                if(type.startsWith('y'))
                 {
-                    // only allow valid subdirectories for main graphics list
-                    if(write_graphics_list == &m_main_graphics_list)
-                    {
-                        // special case: yoshib and yoshit stored in yoshi
-                        if(valid_type == valid_types[15] || valid_type == valid_types[16])
-                        {
-                            if(!m_cur_dir.dir.path().endsWith("yoshi"))
-                                break;
-                        }
-                        else if(!m_cur_dir.dir.path().endsWith(valid_type))
-                            break;
-                    }
-
-                    type_valid = true;
-                    break;
+                    if(!m_cur_dir.dir.path().endsWith("yoshi"))
+                        valid = false;
                 }
+                else if(!m_cur_dir.dir.path().endsWith(type))
+                    valid = false;
             }
 
-            if(index_valid && type_valid)
+            if(valid)
             {
                 // make path relative to graphics list
                 QFileInfo fi(write_graphics_list->fileName());
@@ -703,9 +761,19 @@ public:
     {
         sync_cur_dir(in_path);
 
-        if(filename.endsWith("m.gif"))
+        if(filename.endsWith("m.gif") && in_path.contains("/graphics/fallback/"))
+        {
+            // want to clobber auto-generated masks
+            if(QFile::exists(out_path))
+                QFile::remove(out_path);
+
+            return QFile::copy(in_path, out_path);
+        }
+        else if(filename.endsWith("m.gif"))
             return true;
-        else if(m_spec.target_platform != TargetPlatform::Desktop && (filename.endsWith(".png") || filename.endsWith(".gif")))
+        else if(filename.endsWith(".xcf") || filename.endsWith(".odt") || filename.endsWith(".pdf"))
+            return true;
+        else if(m_spec.target_platform != TargetPlatform::Desktop && (filename.endsWith(".png") || filename.endsWith(".gif")) && !in_path.contains("/graphics/fallback/"))
             return convert_image(filename, in_path, out_path);
         else if(filename.endsWith(".ini") && m_cur_dir.convert_font_inis)
             return convert_font_ini(filename, in_path, out_path);
@@ -750,7 +818,7 @@ public:
             if(it.fileInfo().isDir())
             {
                 qInfo() << "making" << temp_path;
-                if(!m_temp_dir.mkdir(temp_path))
+                if(!m_temp_dir.exists(temp_path) && !m_temp_dir.mkdir(temp_path))
                 {
                     m_error = "Failed to create directory ";
                     m_error += temp_path;
@@ -923,6 +991,11 @@ cleanup:
         }
 
         m_input_dir.setPath(m_spec.input_dir);
+
+        if(!m_spec.use_assets_dir.isEmpty())
+            m_assets_dir.setPath(m_spec.use_assets_dir);
+        else
+            m_assets_dir.setPath(m_spec.input_dir);
 
         if(!build_temp_dir())
             return false;
