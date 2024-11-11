@@ -20,7 +20,7 @@ struct Spec
     bool preserve_bitmask_appearance = true;
 
     QString input_dir;
-    QString graphics_dir;
+    QString use_assets_dir;
     QString destination;
 };
 
