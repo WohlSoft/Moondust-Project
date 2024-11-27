@@ -13,11 +13,24 @@ enum class TargetPlatform
     DSG,
 };
 
+enum class PackageType
+{
+    Episode,
+    AssetPack,
+};
+
+enum class ConvertGIFs
+{
+    Safe,
+    None, // ban this for now
+    All,
+};
+
 struct Spec
 {
     TargetPlatform target_platform = TargetPlatform::Desktop;
-
-    bool preserve_bitmask_appearance = true;
+    PackageType package_type = PackageType::AssetPack;
+    ConvertGIFs convert_gifs = ConvertGIFs::Safe;
 
     QString input_dir;
     QString use_assets_dir;
