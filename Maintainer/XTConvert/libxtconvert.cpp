@@ -607,7 +607,7 @@ public:
         // check if graphics list present
         QFile* write_graphics_list = nullptr;
 
-        if(m_cur_dir.graphics_list.get())
+        if(m_cur_dir.graphics_list)
             write_graphics_list = m_cur_dir.graphics_list.get();
         else if(m_main_graphics_list.isOpen())
             write_graphics_list = &m_main_graphics_list;
@@ -861,6 +861,9 @@ public:
 
         m_main_graphics_list.close();
 
+        if(m_cur_dir.graphics_list)
+            m_cur_dir.graphics_list->close();
+
         if(m_spec.package_type == PackageType::Episode)
             update_meta_episode();
         else
@@ -1011,6 +1014,12 @@ cleanup:
         {
             qInfo() << "Error: MixerX could not be (re)initialized";
             return false;
+        }
+
+        if(m_spec.target_platform == TargetPlatform::DSG && m_spec.convert_gifs != ConvertGIFs::All)
+        {
+            qInfo() << "Note: converting all GIFs to DSG";
+            m_spec.convert_gifs = ConvertGIFs::All;
         }
 
         m_input_dir.setPath(m_spec.input_dir);
