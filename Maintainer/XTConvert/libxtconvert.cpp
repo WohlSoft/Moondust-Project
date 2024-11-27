@@ -207,7 +207,7 @@ class Converter
         // prepare size file policy and graphics list
         if(m_spec.target_platform == TargetPlatform::Desktop)
             m_cur_dir.make_size_files = DirInfo::SIZEFILES_NONE;
-        else if(m_spec.use_assets_dir.isEmpty() && rel_path.startsWith("graphics/"))
+        else if(m_spec.package_type == PackageType::AssetPack && rel_path.startsWith("graphics/"))
         {
             m_cur_dir.make_size_files = DirInfo::SIZEFILES_PREVIEW_ASSETS;
             m_cur_dir.make_fallback_masks = (m_spec.target_platform != TargetPlatform::TPL);
@@ -282,12 +282,13 @@ public:
             }
 
             // Okay, finding a mask failed. Imagine that image is fully opaque in that case, and ignore the mask logic.
+            // qInfo() << "Failed to find mask for GIF " << in_path;
         }
 
         TargetPlatform output_format = m_spec.target_platform;
 
         // find out whether mask is actually needed
-        if(m_spec.preserve_bitmask_appearance && GraphicsLoad::validateBitmaskRequired(image, mask))
+        if(m_spec.convert_gifs != ConvertGIFs::All && GraphicsLoad::validateBitmaskRequired(image, mask))
             output_format = TargetPlatform::Desktop;
         else if(mask)
             GraphicsLoad::mergeWithMask(image, mask);
@@ -383,6 +384,8 @@ public:
 
             if(save_success && !mask_path.isEmpty())
                 save_success = QFile::copy(mask_path, out_path.chopped(4) + "m.gif");
+
+            // set the size text here...!
         }
         else if(output_format == TargetPlatform::T3X)
         {
@@ -784,6 +787,18 @@ public:
             qInfo() << "spc2it" << out_path;
             return spc2it_convert(in_path.toUtf8().data(), out_path.toUtf8().data()) == 0;
         }
+        else if(m_spec.package_type == PackageType::Episode && (filename.endsWith(".wld") || filename.endsWith(".wldx")))
+        {
+            // load the episode information, or complain if there are multiple WLD(X) files
+            qInfo() << "copying" << out_path;
+            return QFile::copy(in_path, out_path);
+        }
+        else if(m_spec.package_type == PackageType::Episode && filename.startsWith("translation_") && filename.endsWith(".json"))
+        {
+            // load the translated episode name
+            qInfo() << "copying" << out_path;
+            return QFile::copy(in_path, out_path);
+        }
         else
         {
             qInfo() << "copying" << out_path;
@@ -846,12 +861,20 @@ public:
 
         m_main_graphics_list.close();
 
+        if(m_spec.package_type == PackageType::Episode)
+            update_meta_episode();
+        else
+            update_meta_asset_pack();
+
         return true;
     }
 
-    bool build_graphics_lists()
+    void update_meta_episode()
     {
-        return true;
+    }
+
+    void update_meta_asset_pack()
+    {
     }
 
     bool build_soundbank()
@@ -992,7 +1015,7 @@ cleanup:
 
         m_input_dir.setPath(m_spec.input_dir);
 
-        if(!m_spec.use_assets_dir.isEmpty())
+        if(m_spec.package_type == PackageType::Episode)
             m_assets_dir.setPath(m_spec.use_assets_dir);
         else
             m_assets_dir.setPath(m_spec.input_dir);
