@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>489</width>
-    <height>306</height>
+    <height>384</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="contextMenuPolicy">
-   <enum>Qt::CustomContextMenu</enum>
+   <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
   </property>
   <property name="acceptDrops">
    <bool>true</bool>
@@ -103,211 +103,24 @@ QLabel
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <property name="sizeConstraint">
-     <enum>QLayout::SetMinimumSize</enum>
+     <enum>QLayout::SizeConstraint::SetMinimumSize</enum>
     </property>
-    <item row="8" column="0">
-     <widget class="QFrame" name="tempoFrame">
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
+    <item row="3" column="0">
+     <widget class="LabelMarquee" name="musAlbum">
+      <property name="styleSheet">
+       <string notr="true">border-width: 1px;
+border-style: solid;
+border-color: rgba(0, 0, 0, 0);
+border-bottom-color: rgb(0, 120, 0);
+</string>
       </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
+      <property name="text">
+       <string/>
       </property>
-      <property name="lineWidth">
-       <number>0</number>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item row="0" column="1">
-        <widget class="QSlider" name="tempo">
-         <property name="toolTip">
-          <string>Tempo</string>
-         </property>
-         <property name="minimum">
-          <number>-100</number>
-         </property>
-         <property name="maximum">
-          <number>100</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="tickPosition">
-          <enum>QSlider::TicksAbove</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="tempoLabel">
-         <property name="text">
-          <string>Tempo (-/+):</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
      </widget>
-    </item>
-    <item row="7" column="0">
-     <widget class="QFrame" name="frame_3">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QCheckBox" name="recordWav">
-         <property name="text">
-          <string>Record WAV</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>148</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QFrame" name="gme_setup">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_3">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <property name="horizontalSpacing">
-           <number>6</number>
-          </property>
-          <property name="verticalSpacing">
-           <number>0</number>
-          </property>
-          <item row="0" column="1">
-           <widget class="QPushButton" name="trackPrev">
-            <property name="text">
-             <string notr="true">&lt;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QPushButton" name="trackNext">
-            <property name="text">
-             <string notr="true">&gt;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QSpinBox" name="trackID">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="maximum">
-             <number>9999999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Track number:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="4">
-           <widget class="QCheckBox" name="disableSpcEcho">
-            <property name="toolTip">
-             <string>Disable built-in SPC echo</string>
-            </property>
-            <property name="text">
-             <string notr="true"/>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="11" column="0">
-     <layout class="QHBoxLayout" name="GeneralVolumeFrame">
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="toolTip">
-         <string>Change the SFX volume (affecting all playing SFX at one time, doesn't affects a music)</string>
-        </property>
-        <property name="text">
-         <string>SFX volume:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QSlider" name="volumeGeneral">
-        <property name="toolTip">
-         <string>Change the general volume (affecting all playing music and SFX at one time)</string>
-        </property>
-        <property name="maximum">
-         <number>128</number>
-        </property>
-        <property name="pageStep">
-         <number>1</number>
-        </property>
-        <property name="value">
-         <number>128</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </item>
     <item row="2" column="0">
      <widget class="LabelMarquee" name="musArtist">
@@ -338,76 +151,6 @@ border-bottom-color: rgb(0, 120, 0);
       </property>
      </widget>
     </item>
-    <item row="9" column="0">
-     <widget class="QFrame" name="speedFrame">
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-      <property name="lineWidth">
-       <number>0</number>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_4">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="speedLabel">
-         <property name="text">
-          <string>Speed (-/+):</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QSlider" name="speed">
-         <property name="toolTip">
-          <string>Tempo</string>
-         </property>
-         <property name="minimum">
-          <number>-100</number>
-         </property>
-         <property name="maximum">
-          <number>100</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="tickPosition">
-          <enum>QSlider::TicksAbove</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="LabelMarquee" name="musTitle">
-      <property name="styleSheet">
-       <string notr="true">border-width: 1px;
-border-style: solid;
-border-color: rgba(0, 0, 0, 0);
-border-bottom-color: rgb(0, 120, 0);
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
     <item row="4" column="0">
      <widget class="LabelMarquee" name="musCopyright">
       <property name="styleSheet">
@@ -434,14 +177,14 @@ border-bottom-color: rgb(0, 120, 0);
        </size>
       </property>
       <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+       <enum>QFrame::Shape::StyledPanel</enum>
       </property>
       <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
+       <enum>QFrame::Shadow::Raised</enum>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
+        <enum>QLayout::SizeConstraint::SetMinimumSize</enum>
        </property>
        <item>
         <widget class="QPushButton" name="open">
@@ -517,7 +260,7 @@ border-bottom-color: rgb(0, 120, 0);
           <number>128</number>
          </property>
          <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+          <enum>Qt::Orientation::Horizontal</enum>
          </property>
         </widget>
        </item>
@@ -531,7 +274,7 @@ border-bottom-color: rgb(0, 120, 0);
        <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+          <enum>Qt::Orientation::Horizontal</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -571,8 +314,159 @@ border-bottom-color: rgb(0, 120, 0);
       </layout>
      </widget>
     </item>
-    <item row="3" column="0">
-     <widget class="LabelMarquee" name="musAlbum">
+    <item row="7" column="0">
+     <widget class="QFrame" name="frame_3">
+      <property name="frameShape">
+       <enum>QFrame::Shape::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QCheckBox" name="recordWav">
+         <property name="text">
+          <string>Record WAV</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>148</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QFrame" name="gme_setup">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <property name="horizontalSpacing">
+           <number>6</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="trackPrev">
+            <property name="text">
+             <string notr="true">&lt;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QPushButton" name="trackNext">
+            <property name="text">
+             <string notr="true">&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QSpinBox" name="trackID">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="maximum">
+             <number>9999999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Track number:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QCheckBox" name="disableSpcEcho">
+            <property name="toolTip">
+             <string>Disable built-in SPC echo</string>
+            </property>
+            <property name="text">
+             <string notr="true"/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="12" column="0">
+     <layout class="QHBoxLayout" name="GeneralVolumeFrame">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="toolTip">
+         <string>Change the SFX volume (affecting all playing SFX at one time, doesn't affects a music)</string>
+        </property>
+        <property name="text">
+         <string>SFX volume:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="volumeGeneral">
+        <property name="toolTip">
+         <string>Change the general volume (affecting all playing music and SFX at one time)</string>
+        </property>
+        <property name="maximum">
+         <number>128</number>
+        </property>
+        <property name="pageStep">
+         <number>1</number>
+        </property>
+        <property name="value">
+         <number>128</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <widget class="LabelMarquee" name="musTitle">
       <property name="styleSheet">
        <string notr="true">border-width: 1px;
 border-style: solid;
@@ -588,6 +482,59 @@ border-bottom-color: rgb(0, 120, 0);
       </property>
      </widget>
     </item>
+    <item row="9" column="0">
+     <widget class="QFrame" name="tempoFrame">
+      <property name="frameShape">
+       <enum>QFrame::Shape::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item row="0" column="1">
+        <widget class="QSlider" name="tempo">
+         <property name="toolTip">
+          <string>Tempo</string>
+         </property>
+         <property name="minimum">
+          <number>-100</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TickPosition::TicksAbove</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="tempoLabel">
+         <property name="text">
+          <string>Tempo (-/+):</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="5" column="0">
      <widget class="QSlider" name="musicPosition">
       <property name="styleSheet">
@@ -600,7 +547,7 @@ border-bottom-color: rgb(0, 120, 0);
        <number>0</number>
       </property>
       <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+       <enum>Qt::Orientation::Horizontal</enum>
       </property>
       <property name="invertedAppearance">
        <bool>false</bool>
@@ -609,17 +556,17 @@ border-bottom-color: rgb(0, 120, 0);
        <bool>false</bool>
       </property>
       <property name="tickPosition">
-       <enum>QSlider::TicksAbove</enum>
+       <enum>QSlider::TickPosition::TicksAbove</enum>
       </property>
      </widget>
     </item>
-    <item row="10" column="0">
+    <item row="11" column="0">
      <widget class="QFrame" name="pitchFrame">
       <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
+       <enum>QFrame::Shape::NoFrame</enum>
       </property>
       <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
+       <enum>QFrame::Shadow::Plain</enum>
       </property>
       <property name="lineWidth">
        <number>0</number>
@@ -656,10 +603,116 @@ border-bottom-color: rgb(0, 120, 0);
           <number>100</number>
          </property>
          <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+          <enum>Qt::Orientation::Horizontal</enum>
          </property>
          <property name="tickPosition">
-          <enum>QSlider::TicksAbove</enum>
+          <enum>QSlider::TickPosition::TicksAbove</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="10" column="0">
+     <widget class="QFrame" name="speedFrame">
+      <property name="frameShape">
+       <enum>QFrame::Shape::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="speedLabel">
+         <property name="text">
+          <string>Speed (-/+):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSlider" name="speed">
+         <property name="toolTip">
+          <string>Tempo</string>
+         </property>
+         <property name="minimum">
+          <number>-100</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TickPosition::TicksAbove</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="8" column="0">
+     <widget class="QFrame" name="gainFrame">
+      <property name="frameShape">
+       <enum>QFrame::Shape::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="gainLabel">
+         <property name="text">
+          <string>Gain (-/+):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSlider" name="gain">
+         <property name="toolTip">
+          <string>Tempo</string>
+         </property>
+         <property name="minimum">
+          <number>0</number>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TickPosition::TicksAbove</enum>
          </property>
         </widget>
        </item>
@@ -721,6 +774,7 @@ border-bottom-color: rgb(0, 120, 0);
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionHelpGitHubMixerX"/>
     <addaction name="actionHelpGitHub"/>
     <addaction name="actionHelpLicense"/>
     <addaction name="separator"/>
@@ -757,7 +811,7 @@ border-bottom-color: rgb(0, 120, 0);
   </action>
   <action name="actionHelpGitHub">
    <property name="text">
-    <string>Visit Github page...</string>
+    <string>Visit Github page of Moondust Project...</string>
    </property>
   </action>
   <action name="actionSfxTesting">
@@ -862,6 +916,11 @@ border-bottom-color: rgb(0, 120, 0);
   <action name="actionMultiSFXTesting">
    <property name="text">
     <string>Multi-SFX testing</string>
+   </property>
+  </action>
+  <action name="actionHelpGitHubMixerX">
+   <property name="text">
+    <string>Visit GitHub page of MixerX...</string>
    </property>
   </action>
  </widget>

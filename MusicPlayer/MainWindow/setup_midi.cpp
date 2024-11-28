@@ -168,6 +168,22 @@ QString SetupMidi::getRawMidiArgs()
     return ui->midiRawArgs->text();
 }
 
+void SetupMidi::setGain(int gain)
+{
+    m_gainFactor = gain;
+    updateAutoArgs();
+}
+
+void SetupMidi::setGainDefault(int gain)
+{
+    m_gainDefault = gain;
+}
+
+int SetupMidi::getGainDefault()
+{
+    return m_gainDefault;
+}
+
 void SetupMidi::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
@@ -689,6 +705,8 @@ void SetupMidi::updateAutoArgs()
             args += QString("j%1;").arg(tristateToInt(ui->adl_autoArpeggio->checkState()));
         if(ui->adl_use_custom->checkState() == Qt::Checked && !ui->adl_bank->text().isEmpty())
             args += QString("x=%1;").arg(ui->adl_bank->text());
+        if(m_gainFactor != m_gainDefault)
+            args += QString("g=%1;").arg(float(m_gainFactor) * 0.01f);
         break;
     case 1:
         break;
@@ -705,12 +723,18 @@ void SetupMidi::updateAutoArgs()
             args += QString("o%1;").arg(ui->opnChanAlloc->currentIndex() - 1);
         if(ui->opn_use_custom->checkState() == Qt::Checked && !ui->opn_bank->text().isEmpty())
             args += QString("x=%1;").arg(ui->opn_bank->text());
+        if(m_gainFactor != m_gainDefault)
+            args += QString("g=%1;").arg(float(m_gainFactor) * 0.01f);
         break;
     case 4:
         if(!ui->fluidSynthSF2Paths->text().isEmpty())
             args += QString("x=%1;").arg(ui->fluidSynthSF2Paths->text());
+        if(m_gainFactor != m_gainDefault)
+            args += QString("g=%1;").arg(float(m_gainFactor) * 0.01f);
         break;
     case 5:
+        if(m_gainFactor != m_gainDefault)
+            args += QString("g=%1;").arg(float(m_gainFactor) * 0.01f);
         break;
     }
     ui->autoArguments->setText(args);

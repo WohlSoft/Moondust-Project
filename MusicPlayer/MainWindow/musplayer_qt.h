@@ -80,6 +80,7 @@ private slots:
     void on_trackNext_clicked();
     void on_disableSpcEcho_clicked(bool checked);
 
+    void on_gain_valueChanged(int tempo);
     void on_tempo_valueChanged(int tempo);
     void on_speed_valueChanged(int speed);
     void on_pitch_valueChanged(int pitch);
@@ -100,6 +101,7 @@ private slots:
     void on_actionHelpLicense_triggered();
     void on_actionHelpAbout_triggered();
     void on_actionHelpGitHub_triggered();
+    void on_actionHelpGitHubMixerX_triggered();
     void on_actionMidiSetup_triggered();
     void on_actionSfxTesting_triggered();
     void on_actionMultiMusicTesting_triggered();
