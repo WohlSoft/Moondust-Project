@@ -176,6 +176,11 @@ MusicFileList::MusicFileList(QString searchDirectory, QString curFile, QWidget *
                 emit musicTempoChanged(tempo);
             });
 
+            QObject::connect(&set, &CustomMusicSetup::updateSongGain, this, [this](double gain)->void
+            {
+                emit musicGainChanged(gain);
+            });
+
             QObject::connect(&set, &CustomMusicSetup::musicButtonClicked, this, [this, &musicPath](bool st)->void
             {
                 m_previewButton->setChecked(st);

@@ -190,6 +190,11 @@ void LvlMusPlay::setTempo(double tempo)
     PGE_MusPlayer::setTempo(tempo);
 }
 
+void LvlMusPlay::setGain(double gain)
+{
+    PGE_MusPlayer::setGain(gain);
+}
+
 // TODO: Refactor this
 void LvlMusPlay::updateMusic(MainWindow *mw)
 {

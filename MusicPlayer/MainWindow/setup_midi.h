@@ -23,6 +23,11 @@ public:
 
     QString getRawMidiArgs();
 
+    void setGain(int gain);
+    void setGainDefault(int gain);
+
+    int getGainDefault();
+
 protected:
     void changeEvent(QEvent *e);
     void dropEvent(QDropEvent* e);
@@ -80,6 +85,8 @@ private:
     void restartForOpn();
     void restartForTimidity();
     void restartForFluidSynth();
+    int m_gainFactor = 100;
+    int m_gainDefault = 100;
     bool m_setupLock = false;
     int  m_numChipsAdlPrev = 0;
     int  m_numChipsOpnPrev = 0;

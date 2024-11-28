@@ -814,6 +814,11 @@ QString JsonSettingsWidget::browseForFileValue(QWidget* target, LineEditType typ
             LvlMusPlay::setTempo(tempo);
         });
 
+        QObject::connect(&muz, &MusicFileList::musicGainChanged, [](double gain)->void
+        {
+            LvlMusPlay::setGain(gain);
+        });
+
         QObject::connect(&muz, &MusicFileList::playSoundFile, [this, &audioPath](const QString &file)->void
         {
             PGE_SfxPlayer::playFile(file);

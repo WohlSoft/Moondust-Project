@@ -169,6 +169,11 @@ void WorldMusicBoxItemBox::MusicList_itemClicked(const QModelIndex &item)
                 LvlMusPlay::setTempo(tempo);
             });
 
+            QObject::connect(&musicList, &MusicFileList::musicGainChanged, [](double gain)->void
+            {
+                LvlMusPlay::setGain(gain);
+            });
+
             QObject::connect(&musicList, &MusicFileList::musicButtonClicked, [this, &customMusicFile](bool st)->void
             {
                 mw()->getPlayMusicAction()->setChecked(st);

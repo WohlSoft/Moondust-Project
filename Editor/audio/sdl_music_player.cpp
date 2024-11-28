@@ -168,6 +168,12 @@ void PGE_MusPlayer::setTempo(double tempo)
         Mix_SetMusicTempo(play_mus, tempo);
 }
 
+void PGE_MusPlayer::setGain(double gain)
+{
+    if(play_mus)
+        Mix_SetMusicGain(play_mus, gain);
+}
+
 
 // //////////////////////// Sound Player //////////////////////////////////////
 

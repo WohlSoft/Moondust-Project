@@ -943,6 +943,12 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
             LvlMusPlay::setTempo(tempo);
         });
 
+        QObject::connect(&musicList, &MusicFileList::musicGainChanged, [](double gain)->void
+        {
+            LvlMusPlay::setGain(gain);
+        });
+
+
         QObject::connect(&musicList, &MusicFileList::musicButtonClicked, [this, &testMusicFile](bool st)->void
         {
             MainWinConnect::pMainWin->getPlayMusicAction()->setChecked(st);
