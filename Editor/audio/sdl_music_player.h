@@ -49,6 +49,7 @@ public:
     static void play();
 
     static void setTempo(double tempo);
+    static void setGain(double gain);
 
 public slots:
     void setVolume(int volume);

@@ -99,6 +99,7 @@ signals:
     void musicSetupChanged(const QString &music);
     void updateSongPlay();
     void updateSongTempo(double tempo);
+    void updateSongGain(double tempo);
     void musicButtonClicked(bool checked);
 
 protected:

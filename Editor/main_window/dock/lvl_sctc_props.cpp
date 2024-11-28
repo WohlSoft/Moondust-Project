@@ -686,6 +686,12 @@ void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
         LvlMusPlay::setTempo(tempo);
     });
 
+    QObject::connect(&musicList, &MusicFileList::musicGainChanged, [](double gain)->void
+    {
+        LvlMusPlay::setGain(gain);
+    });
+
+
     QObject::connect(&musicList, &MusicFileList::musicButtonClicked, [this, &musicPath](bool st)->void
     {
         mw()->getPlayMusicAction()->setChecked(st);
@@ -773,6 +779,11 @@ void LvlSectionProps::on_musicSetup_clicked()
     QObject::connect(&set, &CustomMusicSetup::updateSongTempo, [](double tempo)->void
     {
         LvlMusPlay::setTempo(tempo);
+    });
+
+    QObject::connect(&set, &CustomMusicSetup::updateSongGain, [](double gain)->void
+    {
+        LvlMusPlay::setGain(gain);
     });
 
     QObject::connect(&set, &CustomMusicSetup::musicButtonClicked, [this, &musicPath](bool st)->void

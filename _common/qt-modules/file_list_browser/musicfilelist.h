@@ -42,6 +42,7 @@ signals:
     void updateSongPlay();
     void musicButtonClicked(bool checked);
     void musicTempoChanged(double tempo);
+    void musicGainChanged(double gain);
 
     void playSoundFile(const QString &sfx);
 
