@@ -361,7 +361,7 @@ public:
         // int orig_h = FreeImage_GetHeight(image);
 
         // 2x downscale by default
-        if(!m_cur_dir.textures_1x.contains(filename))
+        if(output_format != TargetPlatform::Desktop && !m_cur_dir.textures_1x.contains(filename))
         {
             FIBITMAP* scaled = GraphicsLoad::fast2xScaleDown(image);
             FreeImage_Unload(image);
@@ -386,6 +386,7 @@ public:
                 save_success = QFile::copy(mask_path, out_path.chopped(4) + "m.gif");
 
             // set the size text here...!
+            size_text = QString("%1\n%2\n").arg(image_w, 4).arg(image_h, 4);
         }
         else if(output_format == TargetPlatform::T3X)
         {
@@ -613,7 +614,7 @@ public:
             write_graphics_list = &m_main_graphics_list;
 
         // write graphics list
-        if(write_graphics_list)
+        if(write_graphics_list && save_success && !size_text.isEmpty())
         {
             QString type, index;
 
@@ -682,6 +683,9 @@ public:
                 || filename.contains("yoshi")
                 || filename.contains("mount");
         }
+
+        if(output_format == TargetPlatform::Desktop)
+            make_size_file = false;
 
         // write to size file
         if(make_size_file && save_success && !size_text.isEmpty())
