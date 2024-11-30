@@ -235,15 +235,45 @@ public:
 
     QString m_error;
 
+    bool save_mask(FIBITMAP* mask, const QString& mask_path)
+    {
+        // convert to 8-bit paletted mask
+        FIBITMAP* mask_2 = FreeImage_ColorQuantizeEx(mask, FIQ_LFPQUANT, 2);
+        if(mask_2)
+        {
+            // the above call actually makes an 8-bit image, and we want a 1-bit image if possible
+            FreeImage_Unload(mask_2);
+
+            // use black and white
+            mask_2 = FreeImage_Threshold(mask, 127);
+        }
+        else
+            mask_2 = FreeImage_ConvertTo8Bits(mask);
+
+        if(mask_2)
+        {
+            FreeImage_Save(FIF_GIF, mask_2, mask_path.toUtf8());
+            return true;
+        }
+
+        return false;
+    }
+
     bool convert_image(const QString& filename, const QString& in_path, const QString& out_path)
     {
         FIBITMAP* image = GraphicsLoad::loadImage(in_path);
         if(!image)
-            return false;
+        {
+            qInfo() << "Warning: invalid graphics file at [" << in_path << "], skipping...";
+            return true;
+        }
+
+        QString filename_type, filename_index;
+        bool standard_filename_format = validate_image_filename(filename, filename_type, filename_index);
 
         FIBITMAP* mask = nullptr;
         QString mask_path;
-        if(filename.endsWith(".gif"))
+        if(filename.endsWith(".gif") && filename_type != "background2" && filename_type != "tile")
         {
             // find the mask!!
             QString filename_stem = filename.chopped(4);
@@ -254,26 +284,32 @@ public:
                 mask = GraphicsLoad::loadImage(mask_path);
             }
 
-            if(!mask)
-                mask_path.clear();
-
             // keep trying to find mask, in fallback dir and in appropriate graphics dir
-            for(int i = 0; i < 2; i++)
+            for(int i = 0; i < 3; i++)
             {
                 if(mask)
                     break;
 
-                QString dir_piece = (i == 0) ? "fallback" : filename.split('-')[0];
                 auto s = QDir::separator();
-                QString dir_to_check = m_assets_dir.path() + s + "graphics" + s + dir_piece + s;
+
+                QString dir_to_check;
+
+                if(i == 0)
+                    dir_to_check = m_cur_dir.dir.path() + s + ".." + s;
+                else if(i == 1)
+                    dir_to_check = m_assets_dir.path() + s + "graphics" + s + "fallback" + s;
+                else
+                    dir_to_check = m_assets_dir.path() + s + "graphics" + s + filename.split('-')[0] + s;
 
                 // look for mask GIF
-                mask = GraphicsLoad::loadImage(dir_to_check + filename_stem + "m.gif");
+                mask_path = dir_to_check + filename_stem + "m.gif";
+                mask = GraphicsLoad::loadImage(mask_path);
 
                 if(mask)
                     break;
 
                 // look for PNG
+                mask_path.clear();
                 mask = GraphicsLoad::loadImage(dir_to_check + filename_stem + ".png");
 
                 // convert PNG to mask
@@ -282,6 +318,8 @@ public:
             }
 
             // Okay, finding a mask failed. Imagine that image is fully opaque in that case, and ignore the mask logic.
+            if(!mask)
+                mask_path.clear();
             // qInfo() << "Failed to find mask for GIF " << in_path;
         }
 
@@ -291,11 +329,9 @@ public:
         if(m_spec.convert_gifs != ConvertGIFs::All && GraphicsLoad::validateBitmaskRequired(image, mask))
             output_format = TargetPlatform::Desktop;
         else if(mask)
-            GraphicsLoad::mergeWithMask(image, mask);
-
-        // either way we can free the mask bitmap now
-        if(mask)
         {
+            // merge with mask and free
+            GraphicsLoad::mergeWithMask(image, mask);
             FreeImage_Unload(mask);
             mask = nullptr;
         }
@@ -305,37 +341,16 @@ public:
         // save mask fallback here if we are in the global graphics dir
         if(m_cur_dir.make_fallback_masks && output_format != TargetPlatform::Desktop)
         {
-            QString type, index;
-
             FIBITMAP* fallback_mask = nullptr;
 
-
             // make sure that the texture is valid and should have transparency
-            if(validate_image_filename(filename, type, index) && type != "background2" && type != "tile")
+            if(standard_filename_format && filename_type != "background2" && filename_type != "tile")
                 fallback_mask = FreeImage_Clone(image);
 
-            // convert to 8-bit paletted mask
             if(fallback_mask)
             {
                 GraphicsLoad::RGBAToMask(fallback_mask);
 
-                // should not fail (there are only 256 shades of gray)
-                FIBITMAP* fallback_mask_2 = FreeImage_ColorQuantizeEx(fallback_mask, FIQ_LFPQUANT, 2);
-                if(fallback_mask_2)
-                {
-                    FreeImage_Unload(fallback_mask_2);
-                    fallback_mask_2 = FreeImage_Threshold(fallback_mask, 127);
-                }
-                else
-                    fallback_mask_2 = FreeImage_ConvertTo8Bits(fallback_mask);
-
-                FreeImage_Unload(fallback_mask);
-
-                fallback_mask = fallback_mask_2;
-            }
-
-            if(fallback_mask)
-            {
                 QString fallback_mask_path = m_temp_dir.filePath("graphics/fallback/");
 
                 // make fallback folder if it isn't present
@@ -347,7 +362,7 @@ public:
 
                 // don't clobber a version copied from the original fallback folder
                 if(!QFileInfo::exists(fallback_mask_path))
-                    FreeImage_Save(FIF_GIF, fallback_mask, fallback_mask_path.toUtf8());
+                    save_mask(fallback_mask, fallback_mask_path);
 
                 FreeImage_Unload(fallback_mask);
             }
@@ -366,7 +381,10 @@ public:
             FIBITMAP* scaled = GraphicsLoad::fast2xScaleDown(image);
             FreeImage_Unload(image);
             if(!scaled)
+            {
+                qInfo() << "Scaling failed at [" << in_path << "], aborting...";
                 return false;
+            }
 
             image = scaled;
         }
@@ -382,8 +400,17 @@ public:
             qInfo() << "mask required for" << in_path;
             save_success = QFile::copy(in_path, out_path);
 
-            if(save_success && !mask_path.isEmpty())
-                save_success = QFile::copy(mask_path, out_path.chopped(4) + "m.gif");
+            if(save_success && mask)
+            {
+                QString mask_out_path = out_path.chopped(4) + "m.gif";
+
+                if(!mask_path.isEmpty())
+                    save_success = QFile::copy(mask_path, mask_out_path);
+                else
+                    save_success = save_mask(mask, mask_out_path);
+
+                FreeImage_Unload(mask);
+            }
 
             // set the size text here...!
             size_text = QString("%1\n%2\n").arg(image_w, 4).arg(image_h, 4);
@@ -535,7 +562,10 @@ public:
                 FreeImage_Unload(image);
 
                 if(!scaled)
+                {
+                    qInfo() << "Scaling failed at [" << in_path << "], aborting...";
                     return false;
+                }
 
                 image = scaled;
             }
@@ -547,6 +577,7 @@ public:
             if(!p.convert(PaletteTex::HALF, 0))
             {
                 FreeImage_Unload(image);
+                qInfo() << "Palettizing failed at [" << in_path << "], aborting...";
                 return false;
             }
 
@@ -616,20 +647,18 @@ public:
         // write graphics list
         if(write_graphics_list && save_success && !size_text.isEmpty())
         {
-            QString type, index;
-
-            bool valid = validate_image_filename(filename, type, index);
+            bool valid = standard_filename_format;
 
             // only allow valid subdirectories for main graphics list
             if(valid && write_graphics_list == &m_main_graphics_list)
             {
                 // special case: yoshib and yoshit stored in yoshi
-                if(type.startsWith('y'))
+                if(filename_type.startsWith('y'))
                 {
                     if(!m_cur_dir.dir.path().endsWith("yoshi"))
                         valid = false;
                 }
-                else if(!m_cur_dir.dir.path().endsWith(type))
+                else if(!m_cur_dir.dir.path().endsWith(filename_type))
                     valid = false;
             }
 
@@ -640,9 +669,9 @@ public:
                 QDir graphics_list_parent = fi.dir();
                 QString relative_out_path = graphics_list_parent.relativeFilePath(used_out_path);
 
-                write_graphics_list->write(type.toUtf8());
+                write_graphics_list->write(filename_type.toUtf8());
                 write_graphics_list->write(" ");
-                write_graphics_list->write(index.toUtf8());
+                write_graphics_list->write(filename_index.toUtf8());
                 write_graphics_list->write("\n");
                 write_graphics_list->write(relative_out_path.toUtf8());
                 write_graphics_list->write("\n");
@@ -669,17 +698,17 @@ public:
         else if(m_cur_dir.make_size_files == DirInfo::SIZEFILES_PREVIEW_ASSETS)
         {
             // UI and background sprites
-            make_size_file = in_path.contains("/ui/")
-                || filename.contains("/background2/");
+            make_size_file = in_path.contains("/graphics/ui/")
+                || in_path.contains("/graphics/background2/");
         }
         else if(m_cur_dir.make_size_files == DirInfo::SIZEFILES_PREVIEW_EPISODE)
         {
             // player and mount sprites
-            make_size_file = filename.contains("mario")
-                || filename.contains("luigi")
-                || filename.contains("peach")
-                || filename.contains("toad")
-                || filename.contains("link")
+            make_size_file = filename_type == "mario"
+                || filename_type == "luigi"
+                || filename_type == "peach"
+                || filename_type == "toad"
+                || filename_type == "link"
                 || filename.contains("yoshi")
                 || filename.contains("mount");
         }
@@ -697,6 +726,9 @@ public:
             file.write(size_text.toUtf8());
             file.close();
         }
+
+        if(!save_success)
+            qInfo() << "Saving failed at [" << in_path << "], aborting...";
 
         return save_success;
     }
