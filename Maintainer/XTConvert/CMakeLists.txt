@@ -14,7 +14,7 @@ add_library(libxtconvert
     graphics_load.cpp
     src/texconv.cpp
     src/export_tpl.cpp
-    src/export_wav.cpp
+    src/export_audio.cpp
 )
 
 add_dependencies(libxtconvert archive_static lz4_pack_static libromfs3ds libtex3ds FreeImage_Local libpng_Local SDLMixerX_Local SDL2_Local)
