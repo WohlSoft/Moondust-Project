@@ -25,7 +25,7 @@
 #include "graphics_load.h"
 #include "texconv.h"
 #include "export_tpl.h"
-#include "export_wav.h"
+#include "export_audio.h"
 
 #include "libxtconvert.h"
 
@@ -89,10 +89,10 @@ struct MixerX_Sentinel
         as.callback = nullptr;
         as.userdata = nullptr;
 
-        if(spec.target_platform == TargetPlatform::TPL)
+        if(spec.target_platform == TargetPlatform::TPL || spec.target_platform == TargetPlatform::DSG)
             as.freq = 32000;
-        else if(spec.target_platform == TargetPlatform::DSG)
-            as.freq = 24000;
+        // else if(spec.target_platform == TargetPlatform::DSG)
+        //     as.freq = 24000;
 
         Mix_InitMixer(&as, SDL_FALSE);
 
@@ -745,7 +745,7 @@ public:
 
         QByteArray wav_data;
 
-        ExportWAV::export_wav(wav_data, ch);
+        ExportAudio::export_wav(wav_data, ch);
 
         Mix_FreeChunk(ch);
 
@@ -755,6 +755,31 @@ public:
         else
         {
             file.write(wav_data);
+            file.close();
+            return true;
+        }
+    }
+
+    bool convert_music_16m(const QString&, const QString& in_path, const QString& out_path)
+    {
+        qInfo() << "mus2qoa" << out_path;
+
+        Mix_Chunk* ch = Mix_LoadWAV(in_path.toUtf8().data());
+        if(!ch)
+            return false;
+
+        QByteArray qoa_data;
+
+        ExportAudio::export_qoa(qoa_data, ch);
+
+        Mix_FreeChunk(ch);
+
+        QFile file(out_path + ".qoa");
+        if(!file.open(QIODevice::WriteOnly))
+            return false;
+        else
+        {
+            file.write(qoa_data);
             file.close();
             return true;
         }
@@ -780,8 +805,10 @@ public:
             return convert_image(filename, in_path, out_path);
         else if(filename.endsWith(".ini") && m_cur_dir.convert_font_inis)
             return convert_font_ini(filename, in_path, out_path);
-        else if(filename.endsWith(".ogg") && in_path.contains("/sound/"))
+        else if(m_spec.target_platform != TargetPlatform::Desktop && filename.endsWith(".ogg") && in_path.contains("/sound/"))
             return convert_sfx(filename, in_path, out_path);
+        else if(m_spec.target_platform == TargetPlatform::DSG && (filename.endsWith(".mp3") || filename.endsWith(".ogg")))
+            return convert_music_16m(filename, in_path, out_path);
         else if(filename.endsWith(".spc") && m_spec.target_platform == TargetPlatform::T3X)
         {
             qInfo() << "spc2it" << out_path;
