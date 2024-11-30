@@ -165,17 +165,27 @@ FIBITMAP *GraphicsLoad::fast2xScaleDown(FIBITMAP *image)
     const uint32_t *src_pixels  = reinterpret_cast<uint32_t*>(FreeImage_GetBits(image));
     auto src_pitch_px = static_cast<uint32_t>(FreeImage_GetPitch(image)) / 4;
 
-    FIBITMAP *dest = FreeImage_Allocate(src_w / 2, src_h / 2, 32);
+    // FIXME: round up instead of down
+    auto dest_w = src_w / 2;
+    auto dest_h = src_h / 2;
+
+    if(dest_w == 0)
+        dest_w = 1;
+
+    if(dest_h == 0)
+        dest_h = 1;
+
+    FIBITMAP *dest = FreeImage_Allocate(dest_w, dest_h, 32);
 
     if(!dest)
         return nullptr;
 
-    uint32_t *dest_pixels  = reinterpret_cast<uint32_t*>(FreeImage_GetBits(dest));
+    uint32_t *dest_pixels = reinterpret_cast<uint32_t*>(FreeImage_GetBits(dest));
     auto dest_pitch_px = static_cast<uint32_t>(FreeImage_GetPitch(dest)) / 4;
 
-    for(uint32_t src_y = 0, dest_y = 0; dest_y < src_h / 2; src_y += 2, dest_y += 1)
+    for(uint32_t src_y = 0, dest_y = 0; dest_y < dest_h; src_y += 2, dest_y += 1)
     {
-        for(uint32_t src_x = 0, dest_x = 0; dest_x < src_w / 2; src_x += 2, dest_x += 1)
+        for(uint32_t src_x = 0, dest_x = 0; dest_x < dest_w; src_x += 2, dest_x += 1)
         {
             dest_pixels[dest_y * dest_pitch_px + dest_x] = src_pixels[src_y * src_pitch_px + src_x];
         }
