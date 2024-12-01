@@ -477,48 +477,79 @@ public:
             FreeImage_FlipVertical(image);
 
             // palettize texture
-            int input_w = FreeImage_GetWidth(image);
+            int input_w_full = FreeImage_GetWidth(image);
             int input_h_full = FreeImage_GetHeight(image);
-            int stride = FreeImage_GetPitch(image);
 
-            save_success = false;
+            // do PaletteTex conversion on the whole thing
+            PaletteTex p(FreeImage_GetBits(image), input_w_full, input_h_full);
 
-            for(int i = 0; i < 3; i++)
+            save_success = true;
+
+            PaletteTex::PaletteSize used_size = PaletteTex::HALF;
+            if(!p.convert(used_size, 90))
             {
-                int start_y = i * 1024;
-                int input_h = input_h_full - start_y;
-                if(input_h <= 0)
-                    break;
-                if(input_h > 1024)
-                    input_h = 1024;
+                used_size = PaletteTex::BYTE;
 
-                PaletteTex p(FreeImage_GetBits(image) + stride * start_y, input_w, input_h);
+                if(!p.convert(used_size, 0))
+                    save_success = false;
+            }
 
-                PaletteTex::PaletteSize used_size = PaletteTex::HALF;
-                if(!p.convert(used_size, 90))
+            if(save_success)
+            {
+                // decide whether to do horizontal mode here
+                bool horiz_mode = (input_w_full > 1024 && input_h_full <= 1024);
+
+                save_success = false;
+
+                for(int i = 0; i < 3; i++)
                 {
-                    used_size = PaletteTex::BYTE;
+                    // resolve correct portion of image to save
+                    int start_x = 0;
+                    int start_y = 0;
 
-                    if(!p.convert(used_size, 0))
+                    int input_w = input_w_full;
+                    int input_h = input_h_full;
+
+                    if(horiz_mode)
+                    {
+                        start_x = i * 1024;
+                        input_w = input_w_full - start_x;
+                        if(input_w <= 0)
+                            break;
+                    }
+                    else
+                    {
+                        start_y = i * 1024;
+                        input_h = input_h_full - start_y;
+                        if(input_h <= 0)
+                            break;
+                    }
+
+                    if(input_w > 1024)
+                        input_w = 1024;
+                    if(input_h > 1024)
+                        input_h = 1024;
+
+                    // fill TPL data
+                    auto input_data = p.indexes() + input_w_full * start_y + start_x;
+
+                    QByteArray tpl_data;
+                    tpl_data.resize(ExportTPL::data_size(used_size, input_w, input_h));
+                    ExportTPL::fill_data(reinterpret_cast<uint8_t*>(&tpl_data[0]), used_size, input_w, input_h, p.palette(), input_data, input_w_full);
+
+                    auto tpl_path = used_out_path;
+                    if(i > 0)
+                        tpl_path += char('0' + i);
+
+                    QFile file(tpl_path);
+                    if(!file.open(QIODevice::WriteOnly))
                         break;
-                }
-
-                QByteArray tpl_data;
-                tpl_data.resize(ExportTPL::data_size(used_size, input_w, input_h));
-                ExportTPL::fill_data(reinterpret_cast<uint8_t*>(&tpl_data[0]), used_size, input_w, input_h, p.palette(), p.indexes());
-
-                auto tpl_path = used_out_path;
-                if(i > 0)
-                    tpl_path += char('0' + i);
-
-                QFile file(tpl_path);
-                if(!file.open(QIODevice::WriteOnly))
-                    break;
-                else
-                {
-                    file.write(tpl_data);
-                    file.close();
-                    save_success = true;
+                    else
+                    {
+                        file.write(tpl_data);
+                        file.close();
+                        save_success = true;
+                    }
                 }
             }
 
