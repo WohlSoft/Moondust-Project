@@ -887,7 +887,7 @@ public:
 
         if(rel_path.contains(QDir::separator()))
         {
-            qInfo() << "Episode file must be in top-level directory, not subdirectory:", in_path;
+            qInfo() << "Episode file must be in top-level directory, not subdirectory:" << in_path;
             return false;
         }
 
