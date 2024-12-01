@@ -7,7 +7,7 @@ add_subdirectory(3rdparty/tex3ds EXCLUDE_FROM_ALL)
 add_subdirectory(3rdparty/libimagequant EXCLUDE_FROM_ALL)
 add_subdirectory(3rdparty/spc2it EXCLUDE_FROM_ALL)
 include(cmake/build_libarchive.cmake)
-find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt5 REQUIRED COMPONENTS Core)
 
 add_library(libxtconvert
     libxtconvert.cpp
@@ -17,10 +17,10 @@ add_library(libxtconvert
     src/export_audio.cpp
 )
 
-add_dependencies(libxtconvert archive_static lz4_pack_static libromfs3ds libtex3ds FreeImage_Local libpng_Local SDLMixerX_Local SDL2_Local)
+add_dependencies(libxtconvert archive_static lz4_pack_static libromfs3ds libtex3ds FreeImage_Local PGE_FileFormatsQt libpng_Local SDLMixerX_Local SDL2_Local)
 
-target_link_libraries(libxtconvert PRIVATE Qt6::Core)
-target_link_libraries(libxtconvert PUBLIC archive_static lz4_pack_static libromfs3ds libtex3ds PGE_FreeImage imagequant_a libspc2it)
+target_link_libraries(libxtconvert PRIVATE Qt5::Core)
+target_link_libraries(libxtconvert PUBLIC archive_static lz4_pack_static libromfs3ds libtex3ds PGE_FreeImage imagequant_a libspc2it PGE_FileFormatsQt)
 
 if(PGE_STATIC_SDLMIXER)
     target_link_libraries(libxtconvert PUBLIC PGE_SDLMixerX_static PGE_SDL2_static)
@@ -34,5 +34,5 @@ target_include_directories(libxtconvert PRIVATE src)
 project(xtconvert CXX)
 
 add_executable(xtconvert_cli xtconvert_cli.cpp)
-target_link_libraries(xtconvert_cli PRIVATE Qt6::Core)
+target_link_libraries(xtconvert_cli PRIVATE Qt5::Core)
 target_link_libraries(xtconvert_cli PUBLIC libxtconvert)
