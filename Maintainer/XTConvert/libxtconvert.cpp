@@ -461,8 +461,6 @@ public:
                         memcpy(params.input_img.pixels.data() + params.input_img.stride * row, FreeImage_GetBits(image) + stride * (1024 * i + row), params.input_img.w * sizeof(Tex3DS::RGBA));
                 }
 
-                // FIXME: check if possible to do 5551 here, or possibly just do 5551 by force (maybe unless there's intermediate opacity?)
-
                 params.output_path = used_out_path.toUtf8();
                 if(i > 0)
                     params.output_path.push_back('0' + i);
@@ -928,19 +926,110 @@ public:
             m_cur_dir.graphics_list->close();
 
         if(m_spec.package_type == PackageType::Episode)
-            update_meta_episode();
+            return update_meta_episode();
         else
-            update_meta_asset_pack();
+            return update_meta_asset_pack();
+    }
 
+    bool update_meta_episode()
+    {
         return true;
     }
 
-    void update_meta_episode()
+    const char* platform_name() const
     {
+        switch(m_spec.target_platform)
+        {
+        case TargetPlatform::Desktop:
+            return "main";
+        case TargetPlatform::TPL:
+            return "wii";
+        case TargetPlatform::T3X:
+            return "3ds";
+        case TargetPlatform::DSG:
+            return "dsi";
+        default:
+            return "unknown";
+        }
     }
 
-    void update_meta_asset_pack()
+    bool update_meta_asset_pack()
     {
+        // load several values from gameinfo
+        QSettings gameinfo(m_temp_dir.filePath("gameinfo.ini"), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        gameinfo.setIniCodec("UTF-8");
+#endif
+
+        gameinfo.beginGroup("game");
+        QString pack_id = gameinfo.value("id", "").toString();
+        QString version = gameinfo.value("version", "").toString();
+        bool show_id = gameinfo.value("show-id", false).toBool();
+        gameinfo.endGroup();
+
+        gameinfo.beginGroup("android");
+        QString gfx_logo = gameinfo.value("logo", "").toString();
+        QString gfx_background = gameinfo.value("background", "").toString();
+        int gfx_background_frames = gameinfo.value("background-frames", 0).toInt();
+        int gfx_background_delay = gameinfo.value("background-delay", 0).toInt();
+        gameinfo.endGroup();
+
+        // validate:
+        if(pack_id.isEmpty())
+        {
+            qInfo() << "Failed: gameinfo.ini does not have a pack id";
+            return false;
+        }
+
+
+        // save info to _meta.ini
+        QSettings meta(m_temp_dir.filePath("_meta.ini"), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        meta.setIniCodec("UTF-8");
+#endif
+
+        // contents
+        meta.beginGroup("content");
+
+        meta.setValue("engine", "TheXTech");
+        meta.setValue("platform", platform_name());
+        meta.setValue("pack-id", pack_id);
+
+        if(!version.isEmpty())
+            meta.setValue("version", version);
+
+        meta.endGroup();
+
+        // properties
+        meta.beginGroup("properties");
+
+        if(show_id)
+            meta.setValue("show-id", show_id);
+
+        if(!gfx_logo.isEmpty())
+            meta.setValue("logo", gfx_logo);
+
+        if(!gfx_background.isEmpty())
+            meta.setValue("background", gfx_background);
+
+        if(gfx_background_frames)
+            meta.setValue("background-frames", gfx_background_frames);
+
+        if(gfx_background_delay)
+            meta.setValue("background-delay", gfx_background_delay);
+
+        meta.endGroup();
+
+        // finish and save
+        meta.sync();
+
+        if(meta.status() != QSettings::NoError)
+        {
+            qInfo() << "Failed: could not update _meta.ini";
+            return false;
+        }
+
+        return true;
     }
 
     bool build_soundbank()
