@@ -956,10 +956,18 @@ public:
         if(m_cur_dir.graphics_list)
             m_cur_dir.graphics_list->close();
 
+        // do post-processing steps
+        bool post_process_success = true;
+
         if(m_spec.package_type == PackageType::Episode)
-            return update_meta_episode();
+            post_process_success &= update_meta_episode();
         else
-            return update_meta_asset_pack();
+            post_process_success &= update_meta_asset_pack();
+
+        if(m_spec.target_platform == TargetPlatform::DSG && m_spec.package_type == PackageType::AssetPack)
+            post_process_success &= build_soundbank();
+
+        return post_process_success;
     }
 
     bool update_meta_episode()
