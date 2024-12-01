@@ -1,3 +1,6 @@
+#include <map>
+#include <array>
+
 #include <QDebug>
 
 #include <QString>
@@ -13,6 +16,7 @@
 #include <FreeImageLite.h>
 
 #include <SDL2/SDL_mixer_ext.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include "archive.h"
 #include "archive_entry.h"
@@ -461,7 +465,7 @@ public:
                         memcpy(params.input_img.pixels.data() + params.input_img.stride * row, FreeImage_GetBits(image) + stride * (1024 * i + row), params.input_img.w * sizeof(Tex3DS::RGBA));
                 }
 
-                params.output_path = used_out_path.toUtf8();
+                params.output_path = (const char*)used_out_path.toUtf8();
                 if(i > 0)
                     params.output_path.push_back('0' + i);
 
@@ -535,7 +539,7 @@ public:
 
                     QByteArray tpl_data;
                     tpl_data.resize(ExportTPL::data_size(used_size, input_w, input_h));
-                    ExportTPL::fill_data(reinterpret_cast<uint8_t*>(&tpl_data[0]), used_size, input_w, input_h, p.palette(), input_data, input_w_full);
+                    ExportTPL::fill_data(reinterpret_cast<uint8_t*>(tpl_data.data()), used_size, input_w, input_h, p.palette(), input_data, input_w_full);
 
                     auto tpl_path = used_out_path;
                     if(i > 0)
@@ -618,7 +622,7 @@ public:
             for(int i = 0; i < 16; ++i)
             {
                 liq_color c = p.palette()[i];
-                uint8_t* dest = reinterpret_cast<unsigned char*>(&dsg_data[i * 2]);
+                uint8_t* dest = reinterpret_cast<unsigned char*>(&dsg_data.data()[i * 2]);
 
                 write_uint16_le(dest, color_to_rgb5a1(c));
             }
@@ -629,7 +633,7 @@ public:
 
             // save image indexes
             const uint8_t* src = p.indexes();
-            uint8_t* out_base = reinterpret_cast<unsigned char*>(&dsg_data[32]);
+            uint8_t* out_base = reinterpret_cast<unsigned char*>(&dsg_data.data()[32]);
             int out_stride = container_w / 2;
             for(int row = 0; row < input_h; row++)
             {
@@ -1081,7 +1085,7 @@ public:
         if(m_spec.destination.size() == 0)
             return false;
 
-        QTemporaryFile temp_iso = QTemporaryFile();
+        QTemporaryFile temp_iso;
         if(!temp_iso.open())
             return false;
 
