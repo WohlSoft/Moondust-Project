@@ -153,6 +153,15 @@ class Converter
         bool convert_font_inis = false;
     };
 
+    struct EpisodeInfo
+    {
+        QString path;
+        QString title;
+        std::map<QString, QString> title_translations;
+        bool playstyle_classic = false;
+        QString char_block;
+    };
+
     QDir m_input_dir;
     QDir m_assets_dir;
 
@@ -161,6 +170,8 @@ class Converter
 
     DirInfo m_cur_dir;
     QFile m_main_graphics_list;
+
+    EpisodeInfo m_episode_info;
 
     void sync_cur_dir(const QString& in_file)
     {
@@ -854,6 +865,82 @@ public:
         }
     }
 
+    bool scan_episode(const QString& in_path)
+    {
+        QString rel_path = m_input_dir.relativeFilePath(in_path);
+
+        if(!m_episode_info.path.isEmpty())
+        {
+            qInfo() << "Input directory includes multiple episodes: [" << m_episode_info.path << "] and [" << rel_path << "]";
+            return false;
+        }
+
+        if(rel_path.contains(QDir::separator()))
+        {
+            qInfo() << "Episode file must be in top-level directory, not subdirectory:", in_path;
+            return false;
+        }
+
+        m_episode_info.path = rel_path;
+
+        WorldData head;
+
+        if(!FileFormats::OpenWorldFileHeader(in_path, head))
+        {
+            qInfo() << "Episode [" << rel_path << "] could not be opened.";
+            return false;
+        }
+
+        bool is_wldx = (head.meta.RecentFormat == WorldData::PGEX);
+        bool is_wld38a = (head.meta.RecentFormat == WorldData::SMBX38A);
+        if(is_wldx && head.meta.configPackId == "SMBX2")
+        {
+            qInfo() << "Episode [" << rel_path << "] targets SMBX2. Cannot proceed.";
+            return false;
+        }
+
+        if(is_wld38a)
+        {
+            qInfo() << "Episode [" << rel_path << "] targets SMBX-38A. Cannot proceed.";
+            return false;
+        }
+
+        // set episode title
+        m_episode_info.title = head.EpisodeTitle;
+
+        if(m_episode_info.title.isEmpty())
+            m_episode_info.title = rel_path;
+
+        // set playstyle
+        if(is_wldx)
+            m_episode_info.playstyle_classic = false;
+        else
+            m_episode_info.playstyle_classic = true;
+
+        // set character block
+        m_episode_info.char_block = "00000";
+
+        if(head.nocharacter1)
+            m_episode_info.char_block[0] = '1';
+
+        if(head.nocharacter2)
+            m_episode_info.char_block[1] = '1';
+
+        if(head.nocharacter3)
+            m_episode_info.char_block[2] = '1';
+
+        if(head.nocharacter4)
+            m_episode_info.char_block[3] = '1';
+
+        if(head.nocharacter5)
+            m_episode_info.char_block[4] = '1';
+
+        return true;
+    }
+
+    void scan_episode_translation(const QString& in_path)
+    {}
+
     bool convert_file(const QString& filename, const QString& in_path, const QString& out_path)
     {
         sync_cur_dir(in_path);
@@ -886,12 +973,15 @@ public:
         else if(m_spec.package_type == PackageType::Episode && (filename.endsWith(".wld") || filename.endsWith(".wldx")))
         {
             // load the episode information, or complain if there are multiple WLD(X) files
-            qInfo() << "copying" << out_path;
+            if(!scan_episode(in_path))
+                return false;
+
             return QFile::copy(in_path, out_path);
         }
         else if(m_spec.package_type == PackageType::Episode && filename.startsWith("translation_") && filename.endsWith(".json"))
         {
             // load the translated episode name
+            scan_episode_translation(in_path);
             qInfo() << "copying" << out_path;
             return QFile::copy(in_path, out_path);
         }
@@ -976,6 +1066,67 @@ public:
 
     bool update_meta_episode()
     {
+        if(m_episode_info.path.isEmpty())
+        {
+            qInfo() << "No episode found";
+            return false;
+        }
+
+        // load ID from asset pack's gameinfo
+        QSettings gameinfo(m_assets_dir.filePath("gameinfo.ini"), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        gameinfo.setIniCodec("UTF-8");
+#endif
+
+        gameinfo.beginGroup("game");
+        QString pack_id = gameinfo.value("id", "").toString();
+        gameinfo.endGroup();
+
+
+        // save info to _meta.ini
+        QSettings meta(m_temp_dir.filePath("_meta.ini"), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        meta.setIniCodec("UTF-8");
+#endif
+
+        // contents
+        meta.beginGroup("content");
+
+        meta.setValue("engine", "TheXTech");
+        meta.setValue("platform", platform_name());
+        meta.setValue("type", "episode");
+        meta.setValue("filename", m_episode_info.path);
+
+        if(!pack_id.isEmpty())
+            meta.setValue("pack-id", pack_id);
+
+        meta.endGroup();
+
+        // properties
+        meta.beginGroup("properties");
+
+        meta.setValue("title", m_episode_info.title);
+        meta.setValue("is-classic", m_episode_info.playstyle_classic);
+        meta.setValue("char-block", m_episode_info.char_block);
+
+        for(const auto& i : m_episode_info.title_translations)
+        {
+            QString key = "title-";
+            key += i.first;
+            meta.setValue(key, i.second);
+        }
+
+        meta.endGroup();
+
+        // finish and save
+        meta.sync();
+
+        if(meta.status() != QSettings::NoError)
+        {
+            qInfo() << "Failed: could not update _meta.ini";
+            return false;
+        }
+
         return true;
     }
 
@@ -1036,6 +1187,7 @@ public:
 
         meta.setValue("engine", "TheXTech");
         meta.setValue("platform", platform_name());
+        meta.setValue("type", "asset-pack");
         meta.setValue("pack-id", pack_id);
 
         if(!version.isEmpty())
@@ -1223,6 +1375,8 @@ cleanup:
             m_assets_dir.setPath(m_spec.use_assets_dir);
         else
             m_assets_dir.setPath(m_spec.input_dir);
+
+        m_episode_info = EpisodeInfo();
 
         if(!build_temp_dir())
             return false;
