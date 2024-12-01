@@ -30,6 +30,7 @@
 #include "texconv.h"
 #include "export_tpl.h"
 #include "export_audio.h"
+#include "has_no_mask.h"
 
 #include "libxtconvert.h"
 
@@ -286,9 +287,20 @@ public:
         QString filename_type, filename_index;
         bool standard_filename_format = validate_image_filename(filename, filename_type, filename_index);
 
+        // decide whether to look for mask
+        bool may_have_mask = standard_filename_format;
+        if(filename_type == "background2")
+            may_have_mask = false;
+        else if(filename_type == "tile")
+            may_have_mask = false;
+        if(filename_type == "block" && check_BlockHasNoMask(filename_index.toUInt()))
+            may_have_mask = false;
+        if(filename_type == "background" && check_BackgroundHasNoMask(filename_index.toUInt()))
+            may_have_mask = false;
+
         FIBITMAP* mask = nullptr;
         QString mask_path;
-        if(filename.endsWith(".gif") && filename_type != "background2" && filename_type != "tile")
+        if(filename.endsWith(".gif") && may_have_mask)
         {
             // find the mask!!
             QString filename_stem = filename.chopped(4);
@@ -354,13 +366,9 @@ public:
         QString used_out_path = out_path;
 
         // save mask fallback here if we are in the global graphics dir
-        if(m_cur_dir.make_fallback_masks && output_format != TargetPlatform::Desktop)
+        if(m_cur_dir.make_fallback_masks && output_format != TargetPlatform::Desktop && may_have_mask)
         {
-            FIBITMAP* fallback_mask = nullptr;
-
-            // make sure that the texture is valid and should have transparency
-            if(standard_filename_format && filename_type != "background2" && filename_type != "tile")
-                fallback_mask = FreeImage_Clone(image);
+            FIBITMAP* fallback_mask = FreeImage_Clone(image);
 
             if(fallback_mask)
             {
@@ -1356,6 +1364,8 @@ cleanup:
     {
         GraphicsLoad::FreeImage_Sentinel fs;
         MixerX_Sentinel ms(m_spec);
+
+        init_mask_arrays();
 
         if(!ms.valid)
         {

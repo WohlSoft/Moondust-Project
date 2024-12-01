@@ -15,6 +15,7 @@ add_library(libxtconvert
     src/texconv.cpp
     src/export_tpl.cpp
     src/export_audio.cpp
+    src/has_no_mask.cpp
 )
 
 add_dependencies(libxtconvert archive_static lz4_pack_static libromfs3ds libtex3ds FreeImage_Local PGE_FileFormatsQt libpng_Local SDLMixerX_Local SDL2_Local)
