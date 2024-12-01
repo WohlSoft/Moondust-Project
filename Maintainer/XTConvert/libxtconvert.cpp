@@ -18,6 +18,8 @@
 #include <SDL2/SDL_mixer_ext.h>
 #include <PGE_File_Formats/file_formats.h>
 
+#include <json.hpp>
+
 #include "archive.h"
 #include "archive_entry.h"
 
@@ -947,7 +949,38 @@ public:
     }
 
     void scan_episode_translation(const QString& in_path)
-    {}
+    {
+        QString lang_name = in_path.split('_').last().split('.').first().toLower();
+        if(lang_name == "metadata")
+            return;
+
+        QFile file(in_path);
+        if(!file.open(QIODevice::ReadOnly))
+            return;
+
+        QByteArray got = file.readAll();
+        QString translated_title;
+
+        try
+        {
+            const nlohmann::json translation_data = nlohmann::json::parse(got.constData());
+            translated_title = QString::fromStdString(translation_data.value(" episode_title", ""));
+        }
+        catch(const std::exception& e)
+        {
+            qInfo() << "Error when parsing" << in_path << e.what();
+            return;
+        }
+
+        if(translated_title.isEmpty())
+        {
+            qInfo() << "Translation file" << in_path << "missing episode title";
+            return;
+        }
+
+        qInfo() << "Episode title in language" << lang_name << "is" << translated_title;
+        m_episode_info.title_translations[lang_name] = translated_title;
+    }
 
     bool convert_file(const QString& filename, const QString& in_path, const QString& out_path)
     {
