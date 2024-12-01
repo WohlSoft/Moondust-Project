@@ -49,7 +49,7 @@ size_t data_size(PaletteTex::PaletteSize index_size, int input_w, int input_h)
     return file_hdr + img_data + pal_data;
 }
 
-void fill_data(uint8_t* out, PaletteTex::PaletteSize index_size, int input_w, int input_h, const liq_color* palette, const uint8_t* indexes)
+void fill_data(uint8_t* out, PaletteTex::PaletteSize index_size, int input_w, int input_h, const liq_color* palette, const uint8_t* indexes, int input_w_full)
 {
     size_t indexes_per_byte = (index_size == PaletteTex::HALF) ? 2 : 1;
 
@@ -143,7 +143,7 @@ void fill_data(uint8_t* out, PaletteTex::PaletteSize index_size, int input_w, in
                         continue;
                     }
 
-                    const uint8_t* src = indexes + (start_y + dy) * input_w + start_x;
+                    const uint8_t* src = indexes + (start_y + dy) * input_w_full + start_x;
 
                     if(index_size == PaletteTex::HALF)
                     {
