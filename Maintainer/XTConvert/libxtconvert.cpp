@@ -225,7 +225,7 @@ class Converter
         // prepare size file policy and graphics list
         if(m_spec.target_platform == TargetPlatform::Desktop)
             m_cur_dir.make_size_files = DirInfo::SIZEFILES_NONE;
-        else if(m_spec.package_type == PackageType::AssetPack && rel_path.startsWith("graphics/"))
+        else if(m_spec.package_type == PackageType::AssetPack && (rel_path == "graphics" || rel_path.startsWith("graphics/")))
         {
             m_cur_dir.make_size_files = DirInfo::SIZEFILES_PREVIEW_ASSETS;
             m_cur_dir.make_fallback_masks = (m_spec.target_platform != TargetPlatform::TPL);
@@ -767,7 +767,7 @@ public:
                 || filename.contains("mount");
         }
 
-        if(output_format == TargetPlatform::Desktop)
+        if(m_spec.target_platform == TargetPlatform::Desktop)
             make_size_file = false;
 
         // write to size file
@@ -1047,6 +1047,27 @@ public:
 
         m_input_dir.setFilter(QDir::NoDotAndDotDot | QDir::AllEntries);
 
+        if(m_spec.package_type == PackageType::AssetPack)
+        {
+            if(!m_temp_dir.exists("graphics") && !m_temp_dir.mkdir("graphics"))
+            {
+                m_error = "Failed to create graphics directory";
+                return false;
+            }
+
+            qInfo() << "Initializing primary graphics.list file";
+
+            m_main_graphics_list.setFileName(m_temp_dir.filePath(QString("graphics") + QDir::separator() + "graphics.list"));
+            m_main_graphics_list.open(QIODevice::WriteOnly);
+
+            if(!m_main_graphics_list.isOpen())
+            {
+                m_error = "Failed to create main graphics.list";
+                return false;
+            }
+        }
+
+        // iterate over all directories
         QDirIterator it(m_input_dir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
 
         while(it.hasNext())
@@ -1067,14 +1088,6 @@ public:
                     return false;
                 }
 
-                if(rel_path == "graphics")
-                {
-                    qInfo() << "Initializing primary graphics.list file";
-
-                    m_main_graphics_list.setFileName(temp_path + QDir::separator() + "graphics.list");
-                    m_main_graphics_list.open(QIODevice::WriteOnly);
-                }
-
                 continue;
             }
 
@@ -1089,7 +1102,12 @@ public:
         m_main_graphics_list.close();
 
         if(m_cur_dir.graphics_list)
+        {
             m_cur_dir.graphics_list->close();
+
+            if(m_cur_dir.graphics_list_empty)
+                m_cur_dir.graphics_list->remove();
+        }
 
         // do post-processing steps
         bool post_process_success = true;
