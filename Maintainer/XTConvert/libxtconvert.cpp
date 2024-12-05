@@ -646,9 +646,24 @@ public:
                 return false;
             }
 
+            bool fully_opaque = (p.palette()[0].a == 255);
+            if(fully_opaque)
+                flags |= 16;
+
+            int pixels_per_byte = 2;
+
+            bool multi_trans = (p.palette()[1].a < 224) && (p.palette_used() > 1);
+            bool rgb32_a3 = multi_trans && (container_w * container_h) <= 131072;
+            if(rgb32_a3)
+            {
+                qInfo() << "rgb32_a3 for" << filename;
+                flags |= 32;
+                pixels_per_byte = 1;
+            }
+
             // save the image here
             QByteArray dsg_data;
-            dsg_data.resize(32 + container_w * container_h / 2);
+            dsg_data.resize(32 + container_w * container_h / pixels_per_byte);
 
             // save palette
             for(int i = 0; i < 16; ++i)
@@ -659,29 +674,36 @@ public:
                 write_uint16_le(dest, color_to_rgb5a1(c));
             }
 
-            bool fully_opaque = (p.palette()[0].a == 255);
-            if(fully_opaque)
-                flags |= 16;
-
             // save image indexes
             const uint8_t* src = p.indexes();
             uint8_t* out_base = reinterpret_cast<unsigned char*>(&dsg_data.data()[32]);
-            int out_stride = container_w / 2;
+            int out_stride = container_w / pixels_per_byte;
             for(int row = 0; row < input_h; row++)
             {
                 uint8_t* dest = out_base + (input_h - 1 - row) * out_stride;
 
-                int col;
-                for(col = 0; col < input_w - 1; col += 2)
+                if(!rgb32_a3)
                 {
-                    *(dest++) = (src[0] << 0) | (src[1] << 4);
-                    src += 2;
-                }
+                    int col;
+                    for(col = 0; col < input_w - 1; col += 2)
+                    {
+                        *(dest++) = (src[0] << 0) | (src[1] << 4);
+                        src += 2;
+                    }
 
-                if(col < input_w)
+                    if(col < input_w)
+                    {
+                        *(dest++) = (src[0] << 4);
+                        src += 1;
+                    }
+                }
+                else
                 {
-                    *(dest++) = (src[0] << 4);
-                    src += 1;
+                    for(int col = 0; col < input_w; col++)
+                    {
+                        int idx = *(src++);
+                        *(dest++) = idx | ((p.palette()[idx].a >> 5) << 5);
+                    }
                 }
             }
 
