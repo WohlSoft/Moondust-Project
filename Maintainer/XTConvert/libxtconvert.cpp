@@ -39,7 +39,7 @@
 namespace XTConvert
 {
 
-static bool validate_image_filename(const QString& filename, QString& type, QString& index)
+static bool validate_image_filename(const QString& filename, QString& type, QString& index, QString& dir)
 {
     QString basename = filename.section(".", 0, 0);
     type = basename.section("-", 0, 0);
@@ -57,6 +57,14 @@ static bool validate_image_filename(const QString& filename, QString& type, QStr
         "peach", "player", "scene", "tile", "toad",
         "yoshib", "yoshit"
     };
+
+    dir = type;
+
+    // FIXME: need to handle case where index is larger than would be looked for. This is invalid (and GIFs care about that). This will show up in Mario Classic
+
+    // special case: yoshib and yoshit stored in yoshi
+    if(type.startsWith('y'))
+        dir = "yoshi";
 
     for(const char* valid_type : valid_types)
     {
@@ -286,8 +294,8 @@ public:
             return true;
         }
 
-        QString filename_type, filename_index;
-        bool standard_filename_format = validate_image_filename(filename, filename_type, filename_index);
+        QString filename_type, filename_index, filename_dir;
+        bool standard_filename_format = validate_image_filename(filename, filename_type, filename_index, filename_dir);
 
         // decide whether to look for mask
         bool may_have_mask = standard_filename_format;
@@ -328,7 +336,7 @@ public:
                 else if(i == 1)
                     dir_to_check = m_assets_dir.path() + s + "graphics" + s + "fallback" + s;
                 else
-                    dir_to_check = m_assets_dir.path() + s + "graphics" + s + filename.split('-')[0] + s;
+                    dir_to_check = m_assets_dir.path() + s + "graphics" + s + filename_dir + s;
 
                 // look for mask GIF
                 mask_path = dir_to_check + filename_stem + "m.gif";
@@ -348,8 +356,11 @@ public:
 
             // Okay, finding a mask failed. Imagine that image is fully opaque in that case, and ignore the mask logic.
             if(!mask)
-                mask_path.clear();
-            // qInfo() << "Failed to find mask for GIF " << in_path;
+            {
+                qInfo() << "Failed to find mask for GIF " << in_path;
+                FreeImage_Unload(image);
+                return false;
+            }
         }
 
         TargetPlatform output_format = m_spec.target_platform;
@@ -706,13 +717,7 @@ public:
             // only allow valid subdirectories for main graphics list
             if(valid && write_graphics_list == &m_main_graphics_list)
             {
-                // special case: yoshib and yoshit stored in yoshi
-                if(filename_type.startsWith('y'))
-                {
-                    if(!m_cur_dir.dir.path().endsWith("yoshi"))
-                        valid = false;
-                }
-                else if(!m_cur_dir.dir.path().endsWith(filename_type))
+                if(!m_cur_dir.dir.path().endsWith(filename_dir))
                     valid = false;
             }
 
