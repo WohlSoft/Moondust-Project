@@ -163,6 +163,8 @@ bool PaletteTex::convert(PaletteSize size, int min_quality)
     if(palette->count > m_palette.size())
         return false;
 
+    m_palette_used = palette->count;
+
     for(size_t i = 0; i < palette->count; i++)
         m_palette[i] = palette->entries[i];
 
