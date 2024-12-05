@@ -30,6 +30,8 @@ private:
     liq_image* m_image = nullptr;
     liq_result* m_result = nullptr;
 
+    int m_palette_used = 0;
+
     std::vector<liq_color> m_palette;
     std::vector<uint8_t> m_indexes;
 
@@ -59,6 +61,11 @@ public:
             return nullptr;
 
         return m_indexes.data();
+    }
+
+    int palette_used() const
+    {
+        return m_palette_used;
     }
 };
 
