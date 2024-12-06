@@ -8,6 +8,7 @@
 #include <QTemporaryDir>
 #include <QTemporaryFile>
 #include <QDirIterator>
+#include <QDateTime>
 #include <QSettings>
 #include <QProcess>
 
@@ -1377,6 +1378,7 @@ public:
                 archive_entry_set_pathname(entry, rel_path.toUtf8().data());
                 archive_entry_set_size(entry, got.size());
                 archive_entry_set_filetype(entry, AE_IFREG);
+                archive_entry_set_mtime(entry, file.fileTime(QFileDevice::FileModificationTime).toSecsSinceEpoch(), 0);
 
                 r = archive_write_header(package, entry);
                 if(r < ARCHIVE_OK)
