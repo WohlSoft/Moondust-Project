@@ -236,7 +236,7 @@ class Converter
         else if(m_spec.package_type == PackageType::AssetPack && (rel_path == "graphics" || rel_path.startsWith("graphics/")))
         {
             m_cur_dir.make_size_files = DirInfo::SIZEFILES_PREVIEW_ASSETS;
-            m_cur_dir.make_fallback_masks = (m_spec.target_platform != TargetPlatform::TPL);
+            m_cur_dir.make_fallback_masks = (m_spec.target_platform != TargetPlatform::DSG);
         }
         else
         {
@@ -331,10 +331,13 @@ public:
 
                 QString dir_to_check;
 
+                // episode custom graphics
                 if(i == 0)
                     dir_to_check = m_cur_dir.dir.path() + s + ".." + s;
+                // fallback graphics
                 else if(i == 1)
                     dir_to_check = m_assets_dir.path() + s + "graphics" + s + "fallback" + s;
+                // normal graphics
                 else
                     dir_to_check = m_assets_dir.path() + s + "graphics" + s + filename_dir + s;
 
