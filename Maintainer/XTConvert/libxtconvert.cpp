@@ -33,6 +33,7 @@
 #include "export_tpl.h"
 #include "export_audio.h"
 #include "has_no_mask.h"
+#include "extract_archive.h"
 
 #include "libxtconvert.h"
 
@@ -172,6 +173,9 @@ class Converter
         bool playstyle_classic = false;
         QString char_block;
     };
+
+    QTemporaryDir m_temp_input_dir_owner;
+    QTemporaryDir m_temp_assets_dir_owner;
 
     QDir m_input_dir;
     QDir m_assets_dir;
@@ -1463,9 +1467,38 @@ cleanup:
         m_input_dir.setPath(m_spec.input_dir);
 
         if(m_spec.package_type == PackageType::Episode)
-            m_assets_dir.setPath(m_spec.use_assets_dir);
+        {
+            QFileInfo fi(m_spec.use_assets_dir);
+
+            if(fi.isDir())
+                m_assets_dir.setPath(m_spec.use_assets_dir);
+            else
+            {
+                if(!m_temp_assets_dir_owner.isValid())
+                {
+                    m_error = "Failed to create temporary directory for base assets";
+                    return false;
+                }
+
+                m_assets_dir.setPath(m_temp_assets_dir_owner.path());
+
+                if(fi.isFile())
+                {
+                    if(!extract_archive_file(m_assets_dir.path().toUtf8().data(), m_spec.use_assets_dir.toUtf8().data()))
+                    {
+                        m_error = "Could not extract base assets";
+                        return false;
+                    }
+                }
+                else
+                {
+                    m_error = "No base assets specified";
+                    return false;
+                }
+            }
+        }
         else
-            m_assets_dir.setPath(m_spec.input_dir);
+            m_assets_dir.setPath(m_input_dir.path());
 
         m_episode_info = EpisodeInfo();
 
