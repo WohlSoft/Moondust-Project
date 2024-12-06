@@ -1518,7 +1518,14 @@ bool Convert(const Spec& spec)
 {
     Converter c;
     c.m_spec = spec;
-    return c.process();
+
+    if(!c.process())
+    {
+        qInfo() << "Error" << c.m_error;
+        return false;
+    }
+
+    return true;
 }
 
 } // namespace XTConvert
