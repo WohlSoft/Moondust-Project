@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file compress-algo="none">default-fallback-masks.7z</file>
+    </qresource>
+</RCC>
