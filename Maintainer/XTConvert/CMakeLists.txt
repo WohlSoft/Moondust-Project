@@ -9,6 +9,8 @@ add_subdirectory(3rdparty/spc2it EXCLUDE_FROM_ALL)
 include(cmake/build_libarchive.cmake)
 find_package(Qt5 REQUIRED COMPONENTS Core)
 
+qt5_add_resources(LIBXTCONVERT_RES "${CMAKE_CURRENT_SOURCE_DIR}/_resources/libxtconvert.qrc")
+
 add_library(libxtconvert
     libxtconvert.cpp
     graphics_load.cpp
@@ -17,6 +19,7 @@ add_library(libxtconvert
     src/export_audio.cpp
     src/has_no_mask.cpp
     src/extract_archive.cpp
+    ${LIBXTCONVERT_RES}
 )
 
 add_dependencies(libxtconvert archive_static lz4_pack_static libromfs3ds libtex3ds FreeImage_Local PGE_FileFormatsQt libpng_Local SDLMixerX_Local SDL2_Local)
