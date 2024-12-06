@@ -1343,6 +1343,37 @@ public:
         return true;
     }
 
+    static bool find_assets_root(QDir& assets_dir)
+    {
+        QDirIterator it(assets_dir.path(), QStringList() << "gameinfo.ini", QDir::NoFilter, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
+
+        bool found_root = false;
+
+        while(it.hasNext())
+        {
+            it.next();
+            if(!it.fileInfo().isFile())
+                continue;
+
+            if(found_root)
+            {
+                qInfo() << "Multiple gameinfo.ini entries";
+                return false;
+            }
+
+            assets_dir = it.fileInfo().dir();
+            found_root = true;
+        }
+
+        if(!found_root)
+        {
+            qInfo() << "Could not find gameinfo.ini";
+            return false;
+        }
+
+        return true;
+    }
+
     bool create_package_iso_lz4()
     {
         if(m_spec.destination.size() == 0)
@@ -1509,7 +1540,7 @@ cleanup:
                         return false;
                     }
                 }
-                else
+                else if(m_spec.use_assets_dir.isEmpty())
                 {
                     QByteArray default_masks = s_get_default_masks();
                     if(default_masks.size() == 0)
@@ -1524,6 +1555,17 @@ cleanup:
                         return false;
                     }
                 }
+                else
+                {
+                    m_error = "Cannot find base assets file/directory " + m_spec.use_assets_dir;
+                    return false;
+                }
+            }
+
+            if(!find_assets_root(m_assets_dir))
+            {
+                m_error = "Invalid base assets provided (must contain exactly one gameinfo.ini file)";
+                return false;
             }
         }
         else
