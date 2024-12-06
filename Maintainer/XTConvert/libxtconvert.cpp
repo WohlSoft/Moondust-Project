@@ -38,6 +38,23 @@
 
 #include "libxtconvert.h"
 
+static QByteArray s_get_default_masks()
+{
+    QByteArray ret;
+
+    Q_INIT_RESOURCE(libxtconvert);
+
+    {
+        QFile file(":/default-fallback-masks.7z");
+        if(file.open(QIODevice::ReadOnly))
+            ret = file.readAll();
+    }
+
+    Q_CLEANUP_RESOURCE(libxtconvert);
+
+    return ret;
+}
+
 namespace XTConvert
 {
 
@@ -1494,8 +1511,18 @@ cleanup:
                 }
                 else
                 {
-                    m_error = "No base assets specified";
-                    return false;
+                    QByteArray default_masks = s_get_default_masks();
+                    if(default_masks.size() == 0)
+                    {
+                        m_error = "Failed to load embedded default masks";
+                        return false;
+                    }
+
+                    if(!extract_archive_data(m_assets_dir.path().toUtf8().data(), (const uint8_t*)default_masks.data(), default_masks.size()))
+                    {
+                        m_error = "Could not extract embedded default masks";
+                        return false;
+                    }
                 }
             }
         }
