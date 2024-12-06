@@ -261,11 +261,11 @@ public:
 
     QString m_error;
 
-    bool save_mask(FIBITMAP* mask, const QString& mask_path)
+    bool save_mask(FIBITMAP* mask, const QString& mask_path, bool force_bw)
     {
         // convert to 8-bit paletted mask
         FIBITMAP* mask_2 = FreeImage_ColorQuantizeEx(mask, FIQ_LFPQUANT, 2);
-        if(mask_2)
+        if(mask_2 || force_bw)
         {
             // the above call actually makes an 8-bit image, and we want a 1-bit image if possible
             FreeImage_Unload(mask_2);
@@ -401,7 +401,7 @@ public:
 
                 // don't clobber a version copied from the original fallback folder
                 if(!QFileInfo::exists(fallback_mask_path))
-                    save_mask(fallback_mask, fallback_mask_path);
+                    save_mask(fallback_mask, fallback_mask_path, filename.endsWith(".png"));
 
                 FreeImage_Unload(fallback_mask);
             }
@@ -446,7 +446,7 @@ public:
                 if(!mask_path.isEmpty())
                     save_success = QFile::copy(mask_path, mask_out_path);
                 else
-                    save_success = save_mask(mask, mask_out_path);
+                    save_success = save_mask(mask, mask_out_path, false);
 
                 FreeImage_Unload(mask);
             }
