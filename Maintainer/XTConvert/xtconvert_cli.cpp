@@ -3,13 +3,13 @@
 int main(int argc, char** argv)
 {
     XTConvert::Spec s;
-    s.target_platform = XTConvert::TargetPlatform::DSG;
+    s.target_platform = XTConvert::TargetPlatform::TPL;
 
     s.package_type = XTConvert::PackageType::Episode;
 
     s.input_dir = argv[1];
-    s.use_assets_dir = argv[2];
-    s.destination = argv[3];
+    // s.use_assets_dir = argv[2];
+    s.destination = argv[2];
 
     return !XTConvert::Convert(s);
 }
