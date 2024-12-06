@@ -1374,6 +1374,37 @@ public:
         return true;
     }
 
+    static bool find_episode_root(QDir& episode_dir)
+    {
+        QDirIterator it(episode_dir.path(), QStringList{"*.wld", "*.wldx"}, QDir::NoFilter, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
+
+        bool found_root = false;
+
+        while(it.hasNext())
+        {
+            it.next();
+            if(!it.fileInfo().isFile())
+                continue;
+
+            if(found_root)
+            {
+                qInfo() << "Multiple WLD/WLDX files";
+                return false;
+            }
+
+            episode_dir = it.fileInfo().dir();
+            found_root = true;
+        }
+
+        if(!found_root)
+        {
+            qInfo() << "Could not find WLD/WLDX file";
+            return false;
+        }
+
+        return true;
+    }
+
     bool create_package_iso_lz4()
     {
         if(m_spec.destination.size() == 0)
@@ -1514,7 +1545,46 @@ cleanup:
             m_spec.convert_gifs = ConvertGIFs::All;
         }
 
-        m_input_dir.setPath(m_spec.input_dir);
+        {
+            QFileInfo fi(m_spec.input_dir);
+
+            if(fi.isDir())
+                m_input_dir.setPath(m_spec.input_dir);
+            else
+            {
+                if(!m_temp_input_dir_owner.isValid())
+                {
+                    m_error = "Failed to create temporary directory for input archive";
+                    return false;
+                }
+
+                m_input_dir.setPath(m_temp_input_dir_owner.path());
+
+                if(!fi.isFile())
+                {
+                    m_error = "Cannot find input file/directory " + m_spec.input_dir;
+                    return false;
+                }
+
+                if(!extract_archive_file(m_input_dir.path().toUtf8().data(), m_spec.input_dir.toUtf8().data()))
+                {
+                    m_error = "Could not extract input file";
+                    return false;
+                }
+            }
+
+            if(m_spec.package_type == PackageType::AssetPack && !find_assets_root(m_input_dir))
+            {
+                m_error = "Invalid input provided (must contain exactly one gameinfo.ini file)";
+                return false;
+            }
+
+            if(m_spec.package_type == PackageType::Episode && !find_episode_root(m_input_dir))
+            {
+                m_error = "Invalid input provided (must contain exactly one .wld/.wldx file)";
+                return false;
+            }
+        }
 
         if(m_spec.package_type == PackageType::Episode)
         {
