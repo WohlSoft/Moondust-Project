@@ -1486,7 +1486,7 @@ public:
 
     bool create_package_iso_lz4()
     {
-        if(m_spec.destination.size() == 0)
+        if(m_spec.destination.empty())
             return false;
 
         QTemporaryFile temp_iso;
@@ -1570,7 +1570,7 @@ cleanup:
         if(success)
         {
             FILE* inf = fopen(iso_path.toUtf8().data(), "rb");
-            FILE* outf = fopen(m_spec.destination.toUtf8().data(), "wb");
+            FILE* outf = fopen(m_spec.destination.c_str(), "wb");
 
             success = LZ4Pack::compress(outf, inf, 4096, m_spec.target_platform == TargetPlatform::TPL);
 
@@ -1591,7 +1591,7 @@ cleanup:
         if(m_spec.destination.size() == 0)
             return false;
 
-        if(LibRomFS3DS::MkRomfs(m_spec.destination.toUtf8().data(), m_temp_dir.path().toUtf8().data()) != 0)
+        if(LibRomFS3DS::MkRomfs(m_spec.destination.c_str(), m_temp_dir.path().toUtf8().data()) != 0)
             return false;
 
         return true;
@@ -1625,10 +1625,11 @@ cleanup:
         }
 
         {
-            QFileInfo fi(m_spec.input_dir);
+            QString input_path = QString::fromStdString(m_spec.input_path);
+            QFileInfo fi(input_path);
 
             if(fi.isDir())
-                m_input_dir.setPath(m_spec.input_dir);
+                m_input_dir.setPath(input_path);
             else
             {
                 if(!m_temp_input_dir_owner.isValid())
@@ -1641,11 +1642,11 @@ cleanup:
 
                 if(!fi.isFile())
                 {
-                    m_error = "Cannot find input file/directory " + m_spec.input_dir;
+                    m_error = "Cannot find input file/directory " + input_path;
                     return false;
                 }
 
-                if(!extract_archive_file(m_input_dir.path().toUtf8().data(), m_spec.input_dir.toUtf8().data()))
+                if(!extract_archive_file(m_input_dir.path().toUtf8().data(), input_path.toUtf8().data()))
                 {
                     m_error = "Could not extract input file";
                     return false;
@@ -1667,10 +1668,11 @@ cleanup:
 
         if(m_spec.package_type == PackageType::Episode)
         {
-            QFileInfo fi(m_spec.use_assets_dir);
+            QString base_assets_path = QString::fromStdString(m_spec.base_assets_path);
+            QFileInfo fi(base_assets_path);
 
             if(fi.isDir())
-                m_assets_dir.setPath(m_spec.use_assets_dir);
+                m_assets_dir.setPath(base_assets_path);
             else
             {
                 if(!m_temp_assets_dir_owner.isValid())
@@ -1683,13 +1685,13 @@ cleanup:
 
                 if(fi.isFile())
                 {
-                    if(!extract_archive_file(m_assets_dir.path().toUtf8().data(), m_spec.use_assets_dir.toUtf8().data()))
+                    if(!extract_archive_file(m_assets_dir.path().toUtf8().data(), base_assets_path.toUtf8().data()))
                     {
                         m_error = "Could not extract base assets";
                         return false;
                     }
                 }
-                else if(m_spec.use_assets_dir.isEmpty())
+                else if(base_assets_path.isEmpty())
                 {
                     QByteArray default_masks = s_get_default_masks();
                     if(default_masks.size() == 0)
@@ -1706,7 +1708,7 @@ cleanup:
                 }
                 else
                 {
-                    m_error = "Cannot find base assets file/directory " + m_spec.use_assets_dir;
+                    m_error = "Cannot find base assets file/directory " + base_assets_path;
                     return false;
                 }
             }

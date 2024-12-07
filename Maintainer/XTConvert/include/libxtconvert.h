@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QString>
+#include <string>
 
 namespace XTConvert
 {
@@ -33,9 +33,9 @@ struct Spec
     ConvertGIFs convert_gifs = ConvertGIFs::Safe;
     bool force_iso_3ds = false;
 
-    QString input_dir;
-    QString use_assets_dir;
-    QString destination;
+    std::string input_path;
+    std::string base_assets_path;
+    std::string destination;
 };
 
 bool Convert(const Spec& spec);
