@@ -287,25 +287,71 @@ public:
 
     QString m_error;
 
+    bool save_gif(FIBITMAP* image, const QString& out_path)
+    {
+        FIBITMAP* image_2 = FreeImage_ColorQuantizeEx(image, FIQ_LFPQUANT);
+
+        if(image_2)
+        {
+            bool success = FreeImage_Save(FIF_GIF, image_2, out_path.toUtf8());
+            FreeImage_Unload(image_2);
+            return success;
+        }
+
+        return false;
+    }
+
     bool save_mask(FIBITMAP* mask, const QString& mask_path, bool force_bw)
     {
-        // convert to 8-bit paletted mask
+        // check for B/W support
+        // first, try converting to 8-bit paletted mask with 2 colors
         FIBITMAP* mask_2 = FreeImage_ColorQuantizeEx(mask, FIQ_LFPQUANT, 2);
-        if(mask_2 || force_bw)
-        {
-            // the above call actually makes an 8-bit image, and we want a 1-bit image if possible
-            FreeImage_Unload(mask_2);
+        bool is_bw = (mask_2 != nullptr);
 
-            // use black and white
+        // check if the obtained mask really is black and white
+        for(int i = 0; i < 2; i++)
+        {
+            if(!mask_2 || !is_bw)
+                break;
+
+            RGBQUAD color = FreeImage_GetPalette(mask_2)[i];
+            if(color.rgbRed <  0x10 && color.rgbGreen <  0x10 && color.rgbBlue <  0x10)
+                continue;
+
+            if(color.rgbRed >= 0xf0 && color.rgbGreen >= 0xf0 && color.rgbBlue >= 0xf0)
+                continue;
+
+            is_bw = false;
+        }
+
+        // free temporary mask
+        if(mask_2)
+        {
+            FreeImage_Unload(mask_2);
+            mask_2 = nullptr;
+        }
+
+        // if black and white, make mask by thresholding (we want a 1-bit image)
+        if(is_bw || force_bw)
+        {
             mask_2 = FreeImage_Threshold(mask, 127);
         }
+        // otherwise, first try making a 256-color image, then grayscale
         else
-            mask_2 = FreeImage_ConvertTo8Bits(mask);
+        {
+            // try to make a 256-color image
+            mask_2 = FreeImage_ColorQuantizeEx(mask, FIQ_LFPQUANT);
+
+            // fallback to grayscale
+            if(!mask_2)
+                mask_2 = FreeImage_ConvertTo8Bits(mask);
+        }
 
         if(mask_2)
         {
-            FreeImage_Save(FIF_GIF, mask_2, mask_path.toUtf8());
-            return true;
+            bool success = FreeImage_Save(FIF_GIF, mask_2, mask_path.toUtf8());
+            FreeImage_Unload(mask_2);
+            return success;
         }
 
         return false;
@@ -440,8 +486,8 @@ public:
         // scale the image as needed
 
         // save these if it becomes necessary
-        // int orig_w = FreeImage_GetWidth(image);
-        // int orig_h = FreeImage_GetHeight(image);
+        int orig_w = FreeImage_GetWidth(image);
+        int orig_h = FreeImage_GetHeight(image);
 
         // 2x downscale by default
         if(output_format != TargetPlatform::Desktop && !m_cur_dir.textures_1x.contains(filename))
@@ -466,13 +512,17 @@ public:
         if(output_format == TargetPlatform::Desktop)
         {
             qInfo() << "mask required for" << in_path;
-            save_success = QFile::copy(in_path, out_path);
+
+            if(image_w == orig_w)
+                save_success = QFile::copy(in_path, out_path);
+            else
+                save_success = save_gif(image, out_path);
 
             if(save_success && mask)
             {
                 QString mask_out_path = out_path.chopped(4) + "m.gif";
 
-                if(!mask_path.isEmpty())
+                if(!mask_path.isEmpty() && image_w == orig_w)
                     save_success = QFile::copy(mask_path, mask_out_path);
                 else
                     save_success = save_mask(mask, mask_out_path, false);
@@ -481,7 +531,7 @@ public:
             }
 
             // set the size text here...!
-            size_text = QString("%1\n%2\n").arg(image_w, 4).arg(image_h, 4);
+            size_text = QString("%1\n%2\n").arg(orig_w, 4).arg(orig_h, 4);
         }
         else if(output_format == TargetPlatform::T3X)
         {
