@@ -1085,6 +1085,12 @@ public:
             qInfo() << "copying" << out_path;
             return QFile::copy(in_path, out_path);
         }
+        else if(filename.endsWith(".xcf") || filename.endsWith(".db") || filename == ".DS_Store" || filename.endsWith(".psg") || filename.endsWith(".ps"))
+        {
+            // banned filenames
+            qInfo() << "skipping" << in_path;
+            return true;
+        }
         else
         {
             qInfo() << "copying" << out_path;
