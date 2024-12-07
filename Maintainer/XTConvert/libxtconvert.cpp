@@ -1037,7 +1037,7 @@ public:
             return;
         }
 
-        qInfo() << "Episode title in language" << lang_name << "is" << translated_title;
+        // qInfo() << "Episode title in language" << lang_name << "is" << translated_title;
         m_episode_info.title_translations[lang_name] = translated_title;
     }
 
@@ -1082,10 +1082,11 @@ public:
         {
             // load the translated episode name
             scan_episode_translation(in_path);
-            qInfo() << "copying" << out_path;
             return QFile::copy(in_path, out_path);
         }
-        else if(filename.endsWith(".xcf") || filename.endsWith(".db") || filename == ".DS_Store" || filename.endsWith(".psg") || filename.endsWith(".ps"))
+        else if(filename.endsWith(".xcf") || filename.endsWith(".db") || filename == ".DS_Store"
+            || filename.endsWith(".psg") || filename.endsWith(".ps") || filename == "progress.json"
+            || filename.endsWith("tst") || filename.endsWith(".tileset.ini"))
         {
             // banned filenames
             qInfo() << "skipping" << in_path;
@@ -1093,7 +1094,9 @@ public:
         }
         else
         {
-            qInfo() << "copying" << out_path;
+            if(!filename.endsWith(".txt") && !filename.endsWith(".lvl") && !filename.endsWith(".lvlx"))
+                qInfo() << "copying" << out_path;
+
             return QFile::copy(in_path, out_path);
         }
     }
@@ -1145,7 +1148,7 @@ public:
 
             if(it.fileInfo().isDir())
             {
-                qInfo() << "making" << temp_path;
+                // qInfo() << "making" << temp_path;
                 if(!m_temp_dir.exists(temp_path) && !m_temp_dir.mkdir(temp_path))
                 {
                     m_error = "Failed to create directory ";
