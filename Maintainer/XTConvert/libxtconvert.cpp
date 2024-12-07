@@ -1,5 +1,6 @@
 #include <map>
 #include <array>
+#include <utility>
 
 #include <QDebug>
 
@@ -58,24 +59,24 @@ static QByteArray s_get_default_masks()
 namespace XTConvert
 {
 
-static bool validate_image_filename(const QString& filename, QString& type, QString& index, QString& dir)
+static bool validate_image_filename(const QString& filename, QString& type, QString& index, QString& dir, bool& exceeds_max_GIF)
 {
     QString basename = filename.section(".", 0, 0);
     type = basename.section("-", 0, 0);
     index = basename.section("-", 1);
 
     bool index_valid = false;
-    index.toUInt(&index_valid);
+    unsigned int index_value = index.toUInt(&index_valid);
 
     if(!index_valid)
         return false;
 
-    static const std::array<const char*, 17> valid_types = {
-        "background", "background2", "block", "effect", "level",
-        "link", "luigi", "mario", "npc", "path",
-        "peach", "player", "scene", "tile", "toad",
-        "yoshib", "yoshit"
-    };
+    static const std::array<std::pair<const char*, unsigned int>, 17> valid_types = {{
+        {"background", 200}, {"background2", 100}, {"block", 700}, {"effect", 200}, {"level", 100},
+        {"link", 7}, {"luigi", 7}, {"mario", 7}, {"npc", 302}, {"path", 100},
+        {"peach", 7}, {"player", 5}, {"scene", 100}, {"tile", 400}, {"toad", 7},
+        {"yoshib", 10}, {"yoshit", 10}
+    }};
 
     dir = type;
 
@@ -85,10 +86,13 @@ static bool validate_image_filename(const QString& filename, QString& type, QStr
     if(type.startsWith('y'))
         dir = "yoshi";
 
-    for(const char* valid_type : valid_types)
+    for(const auto& valid_type : valid_types)
     {
-        if(type == valid_type)
+        if(type == valid_type.first)
+        {
+            exceeds_max_GIF = (index_value > valid_type.second);
             return true;
+        }
     }
 
     return false;
@@ -317,7 +321,8 @@ public:
         }
 
         QString filename_type, filename_index, filename_dir;
-        bool standard_filename_format = validate_image_filename(filename, filename_type, filename_index, filename_dir);
+        bool exceeds_max_GIF = false;
+        bool standard_filename_format = validate_image_filename(filename, filename_type, filename_index, filename_dir, exceeds_max_GIF);
 
         // decide whether to look for mask
         bool may_have_mask = standard_filename_format;
@@ -328,6 +333,8 @@ public:
         if(filename_type == "block" && check_BlockHasNoMask(filename_index.toUInt()))
             may_have_mask = false;
         if(filename_type == "background" && check_BackgroundHasNoMask(filename_index.toUInt()))
+            may_have_mask = false;
+        if(exceeds_max_GIF)
             may_have_mask = false;
 
         FIBITMAP* mask = nullptr;
