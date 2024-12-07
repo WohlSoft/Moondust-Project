@@ -490,7 +490,7 @@ public:
         int orig_h = FreeImage_GetHeight(image);
 
         // 2x downscale by default
-        if(output_format != TargetPlatform::Desktop && !m_cur_dir.textures_1x.contains(filename))
+        if(m_spec.target_platform != TargetPlatform::Desktop && !m_cur_dir.textures_1x.contains(filename))
         {
             FIBITMAP* scaled = GraphicsLoad::fast2xScaleDown(image);
             FreeImage_Unload(image);
@@ -501,6 +501,19 @@ public:
             }
 
             image = scaled;
+
+            if(mask)
+            {
+                FIBITMAP* scaled_mask = GraphicsLoad::fast2xScaleDown(mask);
+                FreeImage_Unload(mask);
+                if(!scaled_mask)
+                {
+                    qInfo() << "Scaling failed at [" << in_path << "], aborting...";
+                    return false;
+                }
+
+                mask = scaled_mask;
+            }
         }
 
         int image_h = FreeImage_GetHeight(image);
