@@ -1,15 +1,82 @@
 #include "libxtconvert.h"
+#include <tclap/CmdLine.h>
 
 int main(int argc, char** argv)
 {
     XTConvert::Spec s;
-    s.target_platform = XTConvert::TargetPlatform::TPL;
 
-    s.package_type = XTConvert::PackageType::Episode;
+    try
+    {
+        // Define the command line object.
+        TCLAP::CmdLine  cmd("xtconvert\n"
+                            "Copyright (c) 2024 ds-sloth\n"
+                            "This program is distributed under the GNU GPLv3+ license\n", ' ', "v1.0");
 
-    s.input_dir = argv[1];
-    // s.use_assets_dir = argv[2];
-    s.destination = argv[2];
+        TCLAP::UnlabeledValueArg<std::string> inputPath("input-path",
+                "Path to input archive or directory",
+                true,
+                "Input file path (7z, zip, and directories supported)",
+                "/path/to/input.7z or /path/to/input/directory");
+
+        TCLAP::UnlabeledValueArg<std::string> outputPath("output-path",
+                "Path to output archive",
+                true,
+                "Output path",
+                "/path/to/output.xta/.xte/.romfs");
+
+        TCLAP::ValueArg<std::string> baseAssetsPath("b", "base-assets",
+            "Specify a non-default asset pack archive or directory for base GIF masks (useful for episodes targeting non-SMBX games)",
+            false, "",
+            "base assets path");
+
+        TCLAP::SwitchArg switchAssetPack("a", "asset-pack", "Convert an asset pack (instead of an episode)", false);
+
+        TCLAP::SwitchArg switch3DS("3", "3ds", "Convert to 3DS-compatible format (t3x + spc2it)", false);
+        TCLAP::SwitchArg switchWii("w", "wii", "Convert to Wii-compatible format (tpl)", false);
+        TCLAP::SwitchArg switchDSi("d", "dsi", "Convert to DSi-compatible format (dsg + qoa + maxmod)", false);
+
+        switchDSi.hideFromHelp();
+
+        TCLAP::OneOf target_platform;
+        target_platform.add(switch3DS).add(switchWii).add(switchDSi);
+
+        TCLAP::SwitchArg switch3DSForceISO("", "force-3ds-iso", "Only applies on 3DS: force creating an ISO+LZ4 archive", false);
+
+        cmd.add(target_platform);
+        cmd.add(&switchAssetPack);
+        cmd.add(&baseAssetsPath);
+        cmd.add(&switch3DSForceISO);
+        cmd.add(&inputPath);
+        cmd.add(&outputPath);
+
+        cmd.parse(argc, argv);
+
+        if(switch3DS.getValue())
+            s.target_platform = XTConvert::TargetPlatform::T3X;
+
+        if(switchWii.getValue())
+            s.target_platform = XTConvert::TargetPlatform::TPL;
+
+        if(switchDSi.getValue())
+            s.target_platform = XTConvert::TargetPlatform::DSG;
+
+        if(switch3DSForceISO.getValue())
+            s.force_iso_3ds = true;
+
+        if(switchAssetPack.getValue())
+            s.package_type = XTConvert::PackageType::AssetPack;
+        else
+            s.package_type = XTConvert::PackageType::Episode;
+
+        s.input_path = inputPath.getValue();
+        s.destination = outputPath.getValue();
+        s.base_assets_path = baseAssetsPath.getValue();
+    }
+    catch(TCLAP::ArgException &e)   // catch any exceptions
+    {
+        std::cerr << "Error: " << e.error() << " for arg " << e.argId() << std::endl;
+        return 2;
+    }
 
     return !XTConvert::Convert(s);
 }

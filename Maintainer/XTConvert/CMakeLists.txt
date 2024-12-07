@@ -38,6 +38,13 @@ target_include_directories(libxtconvert PRIVATE src)
 
 project(xtconvert CXX)
 
+include(../../_common/tclap/tclap.cmake)
+
+include_directories(
+    ${DEPENDENCIES_INSTALL_DIR}/include
+)
+
 add_executable(xtconvert_cli xtconvert_cli.cpp)
+set_target_properties(xtconvert_cli PROPERTIES OUTPUT_NAME "xtconvert")
 target_link_libraries(xtconvert_cli PRIVATE Qt5::Core)
 target_link_libraries(xtconvert_cli PUBLIC libxtconvert)
