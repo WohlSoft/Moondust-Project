@@ -232,6 +232,10 @@ inline const std::string ArgGroup::getName() const {
     std::string sep = "{";  // TODO: this should change for
                             // non-exclusive arg groups
     for (const_iterator it = begin(); it != end(); ++it) {
+        if(!(*it)->visibleInHelp()) {
+            continue;
+        }
+
         name += sep + (*it)->getName();
         sep = " | ";
     }
