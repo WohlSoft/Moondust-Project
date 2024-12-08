@@ -40,12 +40,12 @@ int main(int argc, char** argv)
         TCLAP::OneOf target_platform;
         target_platform.add(switch3DS).add(switchWii).add(switchDSi);
 
-        TCLAP::SwitchArg switch3DSForceISO("", "force-3ds-iso", "Only applies on 3DS: force creating an ISO+LZ4 archive", false);
+        TCLAP::SwitchArg switch3DSUseRomFS("", "use-romfs-3ds", "Only applies on 3DS: create a ROMFS archive instead of ISO+LZ4", false);
 
         cmd.add(target_platform);
         cmd.add(&switchAssetPack);
         cmd.add(&baseAssetsPath);
-        cmd.add(&switch3DSForceISO);
+        cmd.add(&switch3DSUseRomFS);
         cmd.add(&inputPath);
         cmd.add(&outputPath);
 
@@ -60,8 +60,8 @@ int main(int argc, char** argv)
         if(switchDSi.getValue())
             s.target_platform = XTConvert::TargetPlatform::DSG;
 
-        if(switch3DSForceISO.getValue())
-            s.force_iso_3ds = true;
+        if(switch3DSUseRomFS.getValue())
+            s.use_romfs_3ds = true;
 
         if(switchAssetPack.getValue())
             s.package_type = XTConvert::PackageType::AssetPack;
