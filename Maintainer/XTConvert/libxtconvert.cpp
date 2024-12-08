@@ -1149,7 +1149,8 @@ public:
         }
         else if(filename.endsWith(".xcf") || filename.endsWith(".db") || filename == ".DS_Store"
             || filename.endsWith(".psg") || filename.endsWith(".ps") || filename == "progress.json"
-            || filename.endsWith("tst") || filename.endsWith(".tileset.ini"))
+            || filename.endsWith("tst") || filename.endsWith(".tileset.ini") || filename.endsWith(".sav")
+            || filename.endsWith(".savx"))
         {
             // banned filenames
             qInfo() << "skipping" << in_path;
@@ -1157,8 +1158,11 @@ public:
         }
         else
         {
-            if(!filename.endsWith(".txt") && !filename.endsWith(".lvl") && !filename.endsWith(".lvlx"))
+            if(!filename.endsWith(".txt") && !filename.endsWith(".lvl") && !filename.endsWith(".lvlx")
+                && !filename.endsWith(".ogg") && !filename.endsWith(".mp3") && !filename.endsWith(".spc"))
+            {
                 qInfo() << "copying" << out_path;
+            }
 
             return QFile::copy(in_path, out_path);
         }
