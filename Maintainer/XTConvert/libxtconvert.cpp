@@ -1603,7 +1603,7 @@ cleanup:
 
     bool create_package()
     {
-        if(m_spec.target_platform == TargetPlatform::T3X && !m_spec.force_iso_3ds)
+        if(m_spec.target_platform == TargetPlatform::T3X && m_spec.use_romfs_3ds)
             return create_package_romfs3ds();
         else
             return create_package_iso_lz4();
