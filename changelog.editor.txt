@@ -52,6 +52,7 @@ beta2
 - Reworked the message box edit dialogue: Added the accurate preview for different target engines
 - Added layer and event statistics that can be opened by layer's or event's context menu
 - Fixed random crashes when removing objects from the scene
+- Resolved the problem of abnormal duplicates of layers and events entries appear in the GUI lists
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

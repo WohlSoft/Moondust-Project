@@ -115,7 +115,10 @@ void LvlLayersBox::setLayersBox()
 
     if(WinType == MainWindow::WND_Level)
     {
-        foreach(LevelLayer layer, edit->LvlData.layers)
+#ifdef DEBUG_BUILD
+        qDebug() << "Filling the layers list widget by items";
+#endif
+
         for(LevelLayer &layer : edit->LvlData.layers)
         {
             item = new QListWidgetItem();
@@ -131,6 +134,9 @@ void LvlLayersBox::setLayersBox()
             item->setCheckState((layer.hidden) ? Qt::Unchecked : Qt::Checked);
             item->setData(Qt::UserRole, QString::number(layer.meta.array_id));
             ui->LvlLayerList->addItem(item);
+#ifdef DEBUG_BUILD
+            qDebug() << "Added layer item" << layer.name << "into the widget...";
+#endif
         }
     }
 }
