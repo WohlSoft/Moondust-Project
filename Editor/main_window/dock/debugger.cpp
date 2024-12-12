@@ -465,7 +465,9 @@ void DebuggerBox::on_DEBUG_CustomCountersList_itemClicked(QListWidgetItem *item)
     Q_UNUSED(item);
     int itemID = item->data(Qt::UserRole).toInt();
     on_DEBUG_RefreshCoutners_clicked();
-    foreach(QListWidgetItem *x, ui->DEBUG_CustomCountersList->findItems("*", Qt::MatchWildcard))
+
+    auto items = util::items(ui->DEBUG_CustomCountersList);
+    for(QListWidgetItem *x : items)
     {
         if(x->data(Qt::UserRole).toInt() == itemID)
         {

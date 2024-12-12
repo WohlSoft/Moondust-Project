@@ -732,10 +732,9 @@ void LvlEventsBox::eventLayerVisiblySyncList()
             item = new QListWidgetItem;
             item->setText(layer);
             item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-            QList<QListWidgetItem *> items =
-                ui->LVLEvents_layerList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
 
-            foreach(QListWidgetItem *item, items)
+            QList<QListWidgetItem *> items = util::items(ui->LVLEvents_layerList);
+            for(QListWidgetItem *item : items)
             {
                 if(item->text() == layer)
                 {
@@ -753,10 +752,9 @@ void LvlEventsBox::eventLayerVisiblySyncList()
             item = new QListWidgetItem;
             item->setText(layer);
             item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-            QList<QListWidgetItem *> items =
-                ui->LVLEvents_layerList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
 
-            foreach(QListWidgetItem *item, items)
+            QList<QListWidgetItem *> items = util::items(ui->LVLEvents_layerList);
+            for(QListWidgetItem *item : items)
             {
                 if(item->text() == layer)
                 {
@@ -774,10 +772,9 @@ void LvlEventsBox::eventLayerVisiblySyncList()
             item = new QListWidgetItem;
             item->setText(layer);
             item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-            QList<QListWidgetItem *> items =
-                ui->LVLEvents_layerList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
 
-            foreach(QListWidgetItem *item, items)
+            QList<QListWidgetItem *> items = util::items(ui->LVLEvents_layerList);
+            for(QListWidgetItem *item : items)
             {
                 if(item->text() == layer)
                 {
