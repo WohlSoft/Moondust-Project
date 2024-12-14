@@ -1518,6 +1518,7 @@ public:
         archive_write_set_format_option(package, "iso9660", "pad", nullptr);
         archive_write_set_format_option(package, "iso9660", "iso-level", "1");
         archive_write_set_format_option(package, "iso9660", "limit-depth", nullptr);
+        archive_write_set_format_option(package, "iso9660", "joliet", "long");
         archive_write_open_filename(package, iso_path.toUtf8().data());
 
         {
