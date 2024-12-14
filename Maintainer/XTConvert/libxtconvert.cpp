@@ -127,10 +127,10 @@ struct MixerX_Sentinel
         as.callback = nullptr;
         as.userdata = nullptr;
 
-        if(spec.target_platform == TargetPlatform::TPL || spec.target_platform == TargetPlatform::DSG)
+        if(spec.target_platform == TargetPlatform::TPL)
             as.freq = 32000;
-        // else if(spec.target_platform == TargetPlatform::DSG)
-        //     as.freq = 24000;
+        else if(spec.target_platform == TargetPlatform::DSG)
+            as.freq = 16384;
 
         Mix_InitMixer(&as, SDL_FALSE);
 
@@ -1126,7 +1126,7 @@ public:
             return convert_font_ini(filename, in_path, out_path);
         else if(m_spec.target_platform != TargetPlatform::Desktop && filename.endsWith(".ogg") && in_path.contains("/sound/"))
             return convert_sfx(filename, in_path, out_path);
-        else if(m_spec.target_platform == TargetPlatform::DSG && (filename.endsWith(".mp3") || filename.endsWith(".ogg")))
+        else if(m_spec.target_platform == TargetPlatform::DSG && (filename.endsWith(".mp3") || filename.endsWith(".ogg") || filename.endsWith(".wav")))
             return convert_music_16m(filename, in_path, out_path);
         else if(filename.endsWith(".spc") && m_spec.target_platform == TargetPlatform::T3X)
         {
