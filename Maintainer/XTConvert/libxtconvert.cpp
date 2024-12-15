@@ -1150,7 +1150,7 @@ public:
         else if(filename.endsWith(".xcf") || filename.endsWith(".db") || filename == ".DS_Store"
             || filename.endsWith(".psg") || filename.endsWith(".ps") || filename == "progress.json"
             || filename.endsWith("tst") || filename.endsWith(".tileset.ini") || filename.endsWith(".sav")
-            || filename.endsWith(".savx"))
+            || filename.endsWith(".savx") || filename.endsWith(".pdn"))
         {
             // banned filenames
             qInfo() << "skipping" << in_path;
