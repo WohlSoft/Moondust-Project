@@ -366,6 +366,8 @@ public:
             return true;
         }
 
+        QString filename_stem = filename.chopped(4);
+
         QString filename_type, filename_index, filename_dir;
         bool exceeds_max_GIF = false;
         bool standard_filename_format = validate_image_filename(filename, filename_type, filename_index, filename_dir, exceeds_max_GIF);
@@ -383,12 +385,18 @@ public:
         if(exceeds_max_GIF)
             may_have_mask = false;
 
+        if(filename.endsWith(".png") && standard_filename_format && !m_cur_dir.dir.entryInfoList({filename_stem + ".gif"}).isEmpty())
+        {
+            FreeImage_Unload(image);
+            qInfo() << "Skipping PNG with associated GIF for SMBX 1.3 compatibility" << in_path;
+            return true;
+        }
+
         FIBITMAP* mask = nullptr;
         QString mask_path;
         if(filename.endsWith(".gif") && may_have_mask)
         {
             // find the mask!!
-            QString filename_stem = filename.chopped(4);
             auto found = m_cur_dir.dir.entryInfoList({filename_stem + "m.gif"});
             if(!found.isEmpty())
             {
