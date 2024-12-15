@@ -1137,8 +1137,13 @@ public:
             return convert_font_ini(filename, in_path, out_path);
         else if(m_spec.target_platform != TargetPlatform::Desktop && filename.endsWith(".ogg") && in_path.contains("/sound/"))
             return convert_sfx(filename, in_path, out_path);
-        else if(m_spec.target_platform == TargetPlatform::DSG && (filename.endsWith(".mp3") || filename.endsWith(".ogg") || filename.endsWith(".wav")))
+        else if(m_spec.target_platform == TargetPlatform::DSG
+            && (filename.endsWith(".mp3") || filename.endsWith(".ogg") || filename.endsWith(".wav")
+                || filename.endsWith(".vgz") || filename.endsWith(".mid") || filename.endsWith(".nsf")
+                || filename.endsWith(".hes") || filename.endsWith(".pttune") || filename.endsWith(".ptcop")))
+        {
             return convert_music_16m(filename, in_path, out_path);
+        }
         else if(filename.endsWith(".spc") && m_spec.target_platform == TargetPlatform::T3X)
         {
             qInfo() << "spc2it" << out_path;
@@ -1161,7 +1166,10 @@ public:
         else if(filename.endsWith(".xcf") || filename.endsWith(".db") || filename == ".DS_Store"
             || filename.endsWith(".psg") || filename.endsWith(".ps") || filename == "progress.json"
             || filename.endsWith("tst") || filename.endsWith(".tileset.ini") || filename.endsWith(".sav")
-            || filename.endsWith(".savx") || filename.endsWith(".pdn"))
+            || filename.endsWith(".savx") || filename.endsWith(".pdn") || filename.endsWith(".jpg")
+            || filename.endsWith(".jpeg") || filename.endsWith(".ico") || filename.endsWith(".icns")
+            || filename.endsWith(".rar") || filename.endsWith(".bmp") || filename.endsWith(".pal")
+            || filename.endsWith("lunadll.dll"))
         {
             // banned filenames
             qInfo() << "skipping" << in_path;
