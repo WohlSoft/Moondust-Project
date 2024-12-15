@@ -707,7 +707,7 @@ public:
             int container_w = next_power_of_2(image_w);
             int container_h = next_power_of_2(image_h);
 
-            while((container_w * container_h) / 2 > 131072)
+            while((container_w * container_h) / 2 > 131072 || container_w > 1024 || container_h > 1024)
             {
                 // log a warning here
                 flags++;
