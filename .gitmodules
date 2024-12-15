@@ -66,3 +66,6 @@
 [submodule "XTConvert/spc2it"]
 	path = Maintainer/XTConvert/3rdparty/spc2it
 	url = https://github.com/ds-sloth/spc2it.git
+[submodule "XTConvert/mmutil"]
+	path = Maintainer/XTConvert/3rdparty/mmutil
+	url = https://github.com/ds-sloth/mmutil.git
