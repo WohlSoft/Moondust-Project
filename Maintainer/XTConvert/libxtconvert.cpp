@@ -955,13 +955,13 @@ public:
 
     bool convert_sfx(const QString&, const QString& in_path, const QString& out_path)
     {
-        qInfo() << "ogg2wav" << out_path;
+        // qInfo() << "ogg2wav" << out_path;
 
         Mix_Chunk* ch = Mix_LoadWAV(in_path.toUtf8().data());
         if(!ch)
             return false;
 
-        qInfo() << "length" << ch->alen;
+        // qInfo() << "length" << ch->alen;
 
         QByteArray wav_data;
 
@@ -982,7 +982,7 @@ public:
 
     bool convert_music_16m(const QString&, const QString& in_path, const QString& out_path)
     {
-        qInfo() << "mus2qoa" << out_path;
+        // qInfo() << "mus2qoa" << out_path;
 
         Mix_Chunk* ch = Mix_LoadWAV(in_path.toUtf8().data());
         if(!ch)
@@ -1128,6 +1128,9 @@ public:
             return true;
         else if(filename.endsWith(".xcf") || filename.endsWith(".odt") || filename.endsWith(".pdf"))
             return true;
+        // defer these until the end
+        else if(m_spec.package_type == PackageType::AssetPack && m_spec.target_platform == TargetPlatform::DSG && (in_path.contains("/sound/") || in_path.contains("/music/")))
+            return true;
         else if(m_spec.target_platform != TargetPlatform::Desktop && (filename.endsWith(".png") || filename.endsWith(".gif")) && !in_path.contains("/graphics/fallback/"))
             return convert_image(filename, in_path, out_path);
         else if(filename.endsWith(".ini") && m_cur_dir.convert_font_inis)
@@ -1164,6 +1167,9 @@ public:
             qInfo() << "skipping" << in_path;
             return true;
         }
+        // skip TTFs on DSG
+        else if(m_spec.target_platform == TargetPlatform::DSG && (filename.endsWith(".ttf") || filename.endsWith(".otf")))
+            return true;
         else
         {
             if(!filename.endsWith(".txt") && !filename.endsWith(".lvl") && !filename.endsWith(".lvlx")
@@ -1431,6 +1437,214 @@ public:
 
     bool build_soundbank()
     {
+        // do something about "discovered SPC files", and eventually "discovered music / sound"
+        std::map<QString, QString> music_filenames;
+        std::map<QString, QString> sound_filenames;
+
+        QSettings music_ini(m_temp_dir.filePath("music.ini"), QSettings::IniFormat);
+        QSettings sound_ini(m_temp_dir.filePath("sounds.ini"), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        music_ini.setIniCodec("UTF-8");
+        sound_ini.setIniCodec("UTF-8");
+#endif
+
+        for(int i = 0; i < 2; i++)
+        {
+            auto& filenames = (i) ? music_filenames : sound_filenames;
+            auto& ini = (i) ? music_ini : sound_ini;
+
+            for(const QString& group : ini.childGroups())
+            {
+                ini.beginGroup(group);
+                QString filename = ini.value("file", "").toString();
+                ini.endGroup();
+
+                filenames[group] = filename;
+            }
+        }
+
+        for(auto& mus : music_filenames)
+        {
+            QString real_fn = mus.second;
+            QString mus_args = "";
+
+            if(mus.second.contains('|'))
+            {
+                real_fn = mus.second.section('|', 0, -2);
+                mus_args = mus.second.section('|', -1, -1);
+            }
+
+            QString use_fn_in = m_input_dir.filePath("music" + (QDir::separator() + real_fn));
+            QString use_fn_out = m_temp_dir.filePath("music" + (QDir::separator() + real_fn));
+
+            if(QFile::exists(use_fn_in + ".spc"))
+            {
+                use_fn_in += ".spc";
+                use_fn_out += ".spc";
+            }
+
+            if(QFile::exists(use_fn_in + ".it"))
+            {
+                use_fn_in += ".it";
+                use_fn_out += ".it";
+            }
+
+            bool success = false;
+
+            if(!QFileInfo(use_fn_in).isFile())
+            {
+                // just skip it
+                use_fn_out = "";
+            }
+            else if(use_fn_in.endsWith(".spc"))
+            {
+                use_fn_out += ".it";
+                success = (spc2it_convert(use_fn_in.toUtf8().data(), use_fn_out.toUtf8().data()) == 0);
+            }
+            else if(use_fn_in.endsWith(".it") || use_fn_in.endsWith(".mod") || use_fn_in.endsWith(".s3m") || use_fn_in.endsWith(".xm"))
+                success = QFile::copy(use_fn_in, use_fn_out);
+            else
+            {
+                // currently can't use mus_args
+                success = convert_music_16m(use_fn_in, use_fn_in, use_fn_out);
+                use_fn_out += ".qoa";
+            }
+
+            mus.second = use_fn_out;
+
+            if(!success)
+            {
+                // warn the user
+            }
+        }
+
+        for(auto& snd : sound_filenames)
+        {
+            QString use_fn_in = m_input_dir.filePath("sound" + (QDir::separator() + snd.second));
+            QString use_fn_out = m_temp_dir.filePath("sound" + (QDir::separator() + snd.second));
+
+            use_fn_out += ".wav";
+
+            bool success = convert_sfx(use_fn_in, use_fn_in, use_fn_out);
+
+            snd.second = use_fn_out;
+
+            if(!success)
+            {
+                // warn the user
+            }
+        }
+
+        QString soundbank_ini_path = m_temp_dir.filePath("soundbank.ini");
+
+        QStringList mmutil_args = {"-d", "-o" + m_temp_dir.filePath("soundbank.bin"), "-c" + soundbank_ini_path};
+        for(const auto& mus : music_filenames)
+        {
+            if(mus.second.endsWith(".qoa") || !QFileInfo(mus.second).isFile())
+                continue;
+
+            mmutil_args.append(mus.second);
+        }
+
+        for(const auto& snd : sound_filenames)
+        {
+            if(!QFileInfo(snd.second).isFile())
+                continue;
+
+            mmutil_args.append(snd.second);
+        }
+
+        QProcess::execute("mmutil", mmutil_args);
+
+        // use the resulting soundbank to update sound and music inis!
+        {
+            QFile soundbank_ini_file(soundbank_ini_path);
+            soundbank_ini_file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+            QTextStream soundbank_ini(&soundbank_ini_file);
+            soundbank_ini.setCodec("UTF-8");
+
+            bool in_samples = false;
+            std::map<QString, int> resolved_modules;
+            std::map<QString, int> resolved_samples;
+            while(!soundbank_ini.atEnd())
+            {
+                QString line = soundbank_ini.readLine();
+
+                if(line.startsWith('[') && line == "[samples]")
+                    in_samples = true;
+
+                if(!line.contains(" = "))
+                    continue;
+
+                QString path = line.section(" = ", 0, -2);
+                int resolved = line.section(" = ", -1, -1).toInt();
+
+                auto& dest = (in_samples) ? resolved_samples : resolved_modules;
+
+                dest[path] = resolved;
+            }
+
+            for(const auto& mus : music_filenames)
+            {
+                if(mus.second.endsWith(".qoa"))
+                {
+                    music_ini.beginGroup(mus.first);
+                    music_ini.setValue("file-qoa", mus.second.section(QDir::separator(), -1, -1));
+                    music_ini.endGroup();
+                    continue;
+                }
+
+                auto found = resolved_modules.find(mus.second);
+
+                if(found == resolved_modules.end())
+                    continue;
+
+                int mod_index = found->second;
+
+                music_ini.beginGroup(mus.first);
+                music_ini.setValue("resolved-mod", mod_index);
+                music_ini.endGroup();
+            }
+
+            for(const auto& snd : sound_filenames)
+            {
+                auto found = resolved_samples.find(snd.second);
+
+                if(found == resolved_samples.end())
+                    continue;
+
+                int sample_index = found->second;
+
+                sound_ini.beginGroup(snd.first);
+                sound_ini.setValue("resolved-sfx", sample_index);
+                sound_ini.endGroup();
+            }
+        }
+
+        // save inis
+        music_ini.sync();
+        sound_ini.sync();
+
+        // clean up inputs to maxmod
+        for(const auto& mus : music_filenames)
+        {
+            if(mus.second.endsWith(".qoa") || !QFileInfo(mus.second).isFile())
+                continue;
+
+            QFile::remove(mus.second);
+        }
+
+        for(const auto& snd : sound_filenames)
+        {
+            if(!QFileInfo(snd.second).isFile())
+                continue;
+
+            QFile::remove(snd.second);
+        }
+
+        QFile::remove(soundbank_ini_path);
+
         return true;
     }
 
