@@ -1666,7 +1666,7 @@ public:
 
         QFile::remove(soundbank_ini_path);
 
-        return true;
+        return mmutil_success;
     }
 
     static bool find_assets_root(QDir& assets_dir)
