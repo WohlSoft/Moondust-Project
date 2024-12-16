@@ -1,8 +1,6 @@
 /*
- * XTConvert, a free tool for packaging asset packs and episodes for TheXTech game engine.
- *
- * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * XTConvert, a tool to package asset packs and episodes for TheXTech game engine.
+ * Copyright (c) 2024 ds-sloth
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
