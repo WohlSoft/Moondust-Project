@@ -1332,7 +1332,7 @@ public:
         meta.setValue("type", "episode");
         meta.setValue("filename", m_episode_info.path);
 
-        if(!pack_id.isEmpty())
+        if(!pack_id.isEmpty() && meta.value("pack-id", "").toString().isEmpty())
             meta.setValue("pack-id", pack_id);
 
         meta.endGroup();
