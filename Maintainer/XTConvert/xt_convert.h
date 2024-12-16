@@ -8,17 +8,17 @@
 #include <QFuture>
 
 namespace Ui {
-class XTConvert;
+class XTConvertUI;
 }
 
-class XTConvert : public QDialog
+class XTConvertUI : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit XTConvert(QWidget *parent = 0);
-    ~XTConvert();
-    void setEnableControls();
+    explicit XTConvertUI(QWidget *parent = 0);
+    ~XTConvertUI();
+    void updateControls();
     void start();
     void stop(bool do_abort=false);
 
@@ -27,52 +27,26 @@ signals:
     void gotMax(int max);
 
 private slots:
-    void consoleMessage();
-    void nextStep_x(int retStatus, int exitStatus);
-    void nextStep(int retStatus, QProcess::ExitStatus exitStatus);
     void on_start_clicked();
-    void on_browse_asset_pack_clicked();
-    void on_browse_episode_clicked();
+    void on_browse_content_clicked();
+    void on_browse_output_clicked();
 
 protected:
     void closeEvent( QCloseEvent * e );
 
 private:
-    QFuture<void> fetcher;
+    QFuture<void> process_thread;
 
-    bool inWork;
-    int madeJob;
-    QProcess converter;
-    QQueue<QString > filesToConvert;
-    QString current_musFileOld;
-    QString current_musFileNew;
-    Ui::XTConvert *ui;
-    bool isBackUp;
+    QString m_recent_content_path;
+    QString m_recent_output_path;
 
-    enum CVTJOBS{
-        CVT_LVL=0,
-        CVT_EPS,
-        CVT_CUSTOM
-    };
+    bool m_target_asset_pack = false;
 
-    CVTJOBS job;
-
-    QString     curSectionMusic;
-    QString     lastOutput;
-    QStringList curLevelMusic;
-
-    EpisodeBox        episodeBox;
-    EpisodeBox_level  episodeBoxLvl;
-    EpisodeBox_world  episodeBoxWld;
+    bool m_in_progress = false;
+    Ui::XTConvertUI *ui;
 
     //statistics
-    void resetStat();
-    long stat_converted_files;
-    long stat_overwritten_levels;
-    long stat_overwritten_worlds;
-    long stat_failed_files;
-    long stat_failed_levels;
-    QStringList fails;
+    QStringList logs;
 };
 
 #endif // xt_convert_H
