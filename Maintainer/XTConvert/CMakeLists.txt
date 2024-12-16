@@ -36,6 +36,7 @@ endif()
 
 target_include_directories(libxtconvert PUBLIC include)
 target_include_directories(libxtconvert PRIVATE src)
+set_target_properties(libxtconvert PROPERTIES OUTPUT_NAME "xtconvert")
 
 project(xtconvert CXX)
 
