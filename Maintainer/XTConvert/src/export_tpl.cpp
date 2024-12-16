@@ -61,7 +61,8 @@ void fill_data(uint8_t* out, PaletteTex::PaletteSize index_size, int input_w, in
 
     size_t file_hdr   = 0x60;
     size_t img_data   = img_height * img_width / indexes_per_byte;
-    size_t pal_data   = (index_size == PaletteTex::HALF) ? 0x20 : 0x200;
+    // currently unused
+    // size_t pal_data   = (index_size == PaletteTex::HALF) ? 0x20 : 0x200;
 
     // calculations for headers
     size_t pal_dat_off = file_hdr + img_data;
