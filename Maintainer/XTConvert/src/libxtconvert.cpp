@@ -1158,8 +1158,9 @@ public:
             return convert_sfx(filename, in_path, out_path);
         else if(m_spec.target_platform == TargetPlatform::DSG
             && (filename.endsWith(".mp3") || filename.endsWith(".ogg") || filename.endsWith(".wav")
-                || filename.endsWith(".vgz") || filename.endsWith(".mid") || filename.endsWith(".nsf")
-                || filename.endsWith(".hes") || filename.endsWith(".pttune") || filename.endsWith(".ptcop")))
+                || filename.endsWith(".vgm") || filename.endsWith(".vgz") || filename.endsWith(".mid")
+                || filename.endsWith(".nsf") || filename.endsWith(".hes")
+                || filename.endsWith(".pttune") || filename.endsWith(".ptcop")))
         {
             return convert_music_16m(filename, in_path, out_path);
         }
@@ -1187,8 +1188,9 @@ public:
             || filename.endsWith("tst") || filename.endsWith(".tileset.ini") || filename.endsWith(".sav")
             || filename.endsWith(".savx") || filename.endsWith(".pdn") || filename.endsWith(".jpg")
             || filename.endsWith(".jpeg") || filename.endsWith(".ico") || filename.endsWith(".icns")
-            || filename.endsWith(".rar") || filename.endsWith(".bmp") || filename.endsWith(".pal")
-            || filename.endsWith("lunadll.dll"))
+            || filename.endsWith(".bmp") || filename.endsWith(".pal") || filename.endsWith("lunadll.dll")
+            || filename.endsWith(".rar") || filename.endsWith(".zip") || filename.endsWith(".7z")
+            || filename.endsWith(".xte") || filename.endsWith(".xta"))
         {
             // banned filenames
             qInfo() << "skipping" << in_path;
@@ -1200,7 +1202,13 @@ public:
         else
         {
             if(!filename.endsWith(".txt") && !filename.endsWith(".lvl") && !filename.endsWith(".lvlx")
-                && !filename.endsWith(".ogg") && !filename.endsWith(".mp3") && !filename.endsWith(".spc"))
+                && !filename.endsWith(".wld") && !filename.endsWith(".wldx")
+                && !filename.endsWith(".ogg") && !filename.endsWith(".mp3") && !filename.endsWith(".spc")
+                && !(filename.startsWith("translation_") && filename.endsWith(".json"))
+                && !(filename.startsWith("assets_") && filename.endsWith(".json"))
+                && !(filename.startsWith("thextech_") && filename.endsWith(".json"))
+                && filename != "sounds.ini" && filename != "music.ini"
+                && filename != "editor.ini" && filename != "gameinfo.ini")
             {
                 qInfo() << "copying" << out_path;
             }
