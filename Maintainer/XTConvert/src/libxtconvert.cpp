@@ -1266,11 +1266,25 @@ public:
             }
         }
 
+        // check count of files
+        size_t file_count = 0;
+        QDirIterator count_it(m_input_dir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
+        while(count_it.hasNext())
+        {
+            file_count++;
+            count_it.next();
+        }
+
+        qInfo() << file_count << "files to check";
+
         // iterate over all directories
+        size_t files_done = 0;
         QDirIterator it(m_input_dir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
 
         while(it.hasNext())
         {
+            files_done++;
+
             QString abs_path = it.next();
             QString rel_path = m_input_dir.relativeFilePath(abs_path);
             QString temp_path = m_temp_dir.filePath(rel_path);
