@@ -49,6 +49,7 @@ int main(int argc, char** argv)
 
         TCLAP::SwitchArg switchAssetPack("a", "asset-pack", "Convert an asset pack (instead of an episode)", false);
 
+        TCLAP::SwitchArg switchMain("m", "main", "Convert to mainline format (png)", false);
         TCLAP::SwitchArg switch3DS("3", "3ds", "Convert to 3DS-compatible format (t3x + spc2it)", false);
         TCLAP::SwitchArg switchWii("w", "wii", "Convert to Wii-compatible format (tpl)", false);
         TCLAP::SwitchArg switchDSi("d", "dsi", "Convert to DSi-compatible format (dsg + qoa + maxmod)", false);
@@ -56,7 +57,7 @@ int main(int argc, char** argv)
         switchDSi.hideFromHelp();
 
         TCLAP::OneOf target_platform;
-        target_platform.add(switch3DS).add(switchWii).add(switchDSi);
+        target_platform.add(switchMain).add(switch3DS).add(switchWii).add(switchDSi);
 
         TCLAP::SwitchArg switch3DSUseRomFS("", "use-romfs-3ds", "Only applies on 3DS: create a ROMFS archive instead of ISO+LZ4", false);
 
@@ -68,6 +69,9 @@ int main(int argc, char** argv)
         cmd.add(&outputPath);
 
         cmd.parse(argc, argv);
+
+        if(switchMain.getValue())
+            s.target_platform = XTConvert::TargetPlatform::Desktop;
 
         if(switch3DS.getValue())
             s.target_platform = XTConvert::TargetPlatform::T3X;
