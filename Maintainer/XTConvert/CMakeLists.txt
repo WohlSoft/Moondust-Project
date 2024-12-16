@@ -13,8 +13,8 @@ find_package(Qt5 REQUIRED COMPONENTS Core)
 qt5_add_resources(LIBXTCONVERT_RES "${CMAKE_CURRENT_SOURCE_DIR}/_resources/libxtconvert.qrc")
 
 add_library(libxtconvert
-    libxtconvert.cpp
-    graphics_load.cpp
+    src/libxtconvert.cpp
+    src/graphics_load.cpp
     src/texconv.cpp
     src/export_tpl.cpp
     src/export_audio.cpp
@@ -38,7 +38,8 @@ target_include_directories(libxtconvert PUBLIC include)
 target_include_directories(libxtconvert PRIVATE src)
 set_target_properties(libxtconvert PROPERTIES OUTPUT_NAME "xtconvert")
 
-project(xtconvert CXX)
+# XTConvert cli
+project(xtconvert_cli CXX)
 
 include(../../_common/tclap/tclap.cmake)
 
@@ -46,7 +47,7 @@ include_directories(
     ${DEPENDENCIES_INSTALL_DIR}/include
 )
 
-add_executable(xtconvert_cli xtconvert_cli.cpp)
+add_executable(xtconvert_cli src/xtconvert_cli.cpp)
 set_target_properties(xtconvert_cli PROPERTIES OUTPUT_NAME "xtconvert")
 target_link_libraries(xtconvert_cli PRIVATE Qt5::Core)
 target_link_libraries(xtconvert_cli PUBLIC libxtconvert)
