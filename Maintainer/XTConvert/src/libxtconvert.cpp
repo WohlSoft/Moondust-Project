@@ -1219,6 +1219,21 @@ public:
             return false;
         }
 
+        // check that this isn't already converted for a non-desktop platform
+        {
+            QSettings meta(m_input_dir.filePath("_meta.ini"), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+            meta.setIniCodec("UTF-8");
+#endif
+
+            QString prev_target = meta.value("platform", "main").toString();
+            if(prev_target != "main")
+            {
+                m_error = "Provided content is already converted for use on [" + prev_target + "]";
+                return false;
+            }
+        }
+
         m_temp_dir.setPath(m_temp_dir_owner.path());
 
         m_input_dir.setFilter(QDir::NoDotAndDotDot | QDir::AllEntries);
