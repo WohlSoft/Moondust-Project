@@ -133,7 +133,7 @@ void MaintainerMain::on_pathcase_fixer_clicked()
 
 void MaintainerMain::on_xt_convert_clicked()
 {
-    XTConvert xt_convert(nullptr);
+    XTConvertUI xt_convert(nullptr);
     xt_convert.setWindowFlags(g_dialogFlags);
     xt_convert.setWindowModality(Qt::NonModal);
     this->hide();
