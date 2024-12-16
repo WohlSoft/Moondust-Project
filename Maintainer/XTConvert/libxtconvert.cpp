@@ -29,6 +29,7 @@
 #include "libromfs3ds.h"
 #include "libtex3ds.h"
 #include "spc2it.h"
+#include "mmutil.h"
 
 #include "graphics_load.h"
 #include "texconv.h"
@@ -1545,13 +1546,14 @@ public:
 
         QString soundbank_ini_path = m_temp_dir.filePath("soundbank.ini");
 
-        QStringList mmutil_args = {"-d", "-o" + m_temp_dir.filePath("soundbank.bin"), "-c" + soundbank_ini_path};
+        std::vector<QByteArray> mmutil_args_str;
+
         for(const auto& mus : music_filenames)
         {
             if(mus.second.endsWith(".qoa") || !QFileInfo(mus.second).isFile())
                 continue;
 
-            mmutil_args.append(mus.second);
+            mmutil_args_str.push_back(mus.second.toUtf8());
         }
 
         for(const auto& snd : sound_filenames)
@@ -1559,10 +1561,21 @@ public:
             if(!QFileInfo(snd.second).isFile())
                 continue;
 
-            mmutil_args.append(snd.second);
+            mmutil_args_str.push_back(snd.second.toUtf8());
         }
 
-        QProcess::execute("mmutil", mmutil_args);
+        std::vector<char*> mmutil_args;
+        for(auto& arg : mmutil_args_str)
+            mmutil_args.push_back(reinterpret_cast<char*>(arg.data()));
+
+        int mmutil_ret = MMUTIL_Create(mmutil_args.data(), mmutil_args.size(),
+            m_temp_dir.filePath("soundbank.bin").toUtf8().data(),
+            nullptr,
+            m_temp_dir.filePath("soundbank.ini").toUtf8().data(),
+            false,
+            0, 0);
+
+        bool mmutil_success = (mmutil_ret == 0);
 
         // use the resulting soundbank to update sound and music inis!
         {
