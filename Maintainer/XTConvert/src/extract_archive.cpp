@@ -138,6 +138,7 @@ static bool extract_archive(const char* dest_dir, const char* data, size_t size)
     archive_read_support_filter_gzip(a);
     archive_read_support_format_tar(a);
     archive_read_support_format_zip(a);
+    archive_read_support_format_rar(a);
     archive_read_support_format_7zip(a);
     archive_read_support_format_iso9660(a);
 
