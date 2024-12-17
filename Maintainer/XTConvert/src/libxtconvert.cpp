@@ -1190,7 +1190,8 @@ public:
             || filename.endsWith("tst") || filename.endsWith(".tileset.ini") || filename.endsWith(".sav")
             || filename.endsWith(".savx") || filename.endsWith(".pdn") || filename.endsWith(".jpg")
             || filename.endsWith(".jpeg") || filename.endsWith(".ico") || filename.endsWith(".icns")
-            || filename.endsWith(".bmp") || filename.endsWith(".pal") || filename.endsWith("lunadll.dll")
+            || filename.endsWith(".bmp") || filename.endsWith(".pal")
+            || filename.endsWith(".dll") || filename.endsWith(".exe")
             || filename.endsWith(".rar") || filename.endsWith(".zip") || filename.endsWith(".7z")
             || filename.endsWith(".xte") || filename.endsWith(".xta"))
         {
@@ -1209,8 +1210,7 @@ public:
                 && !(filename.startsWith("translation_") && filename.endsWith(".json"))
                 && !(filename.startsWith("assets_") && filename.endsWith(".json"))
                 && !(filename.startsWith("thextech_") && filename.endsWith(".json"))
-                && filename != "sounds.ini" && filename != "music.ini"
-                && filename != "editor.ini" && filename != "gameinfo.ini")
+                && !filename.endsWith(".ini"))
             {
                 qInfo() << "copying" << out_path;
             }
