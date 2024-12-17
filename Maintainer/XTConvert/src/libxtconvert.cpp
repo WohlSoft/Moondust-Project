@@ -768,18 +768,20 @@ public:
                 return false;
             }
 
-            bool fully_opaque = (p.palette()[0].a == 255);
+            bool fully_opaque = (p.palette()[0].a >= 224);
             if(fully_opaque)
                 flags |= 16;
 
             int pixels_per_byte = 2;
 
-            bool multi_trans = (p.palette()[1].a < 224) && (p.palette_used() > 1);
-            bool rgb32_a3 = multi_trans && (container_w * container_h) <= 131072;
+            bool semi_trans = (p.palette()[0].a >= 32) && (p.palette()[0].a < 224);
+            bool multi_trans = (p.palette_used() > 1) && (p.palette()[1].a < 224);
+            bool rgb32_a3 = (semi_trans || multi_trans) && (container_w * container_h) <= 131072;
             if(rgb32_a3)
             {
                 qInfo() << "rgb32_a3 for" << filename;
                 flags |= 32;
+                flags |= 16; // use pixel alpha values, not palette entry 1 color key
                 pixels_per_byte = 1;
             }
 
