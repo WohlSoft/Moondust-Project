@@ -133,16 +133,17 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Gravity Field"), m_data.env_type == LevelPhysEnv::ENV_GRAVITATIONAL_FIELD)
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER)
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER)
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC/Player Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC)
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC/Player Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_NPC)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC/Player Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_ANY)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC/Player Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ANY)
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Mouse click Event"), m_data.env_type == LevelPhysEnv::ENV_CLICK_EVENT)
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Collision script"), m_data.env_type == LevelPhysEnv::ENV_COLLISION_SCRIPT)
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Mouse click Script"), m_data.env_type == LevelPhysEnv::ENV_CLICK_SCRIPT)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Collision script function"), m_data.env_type == LevelPhysEnv::ENV_COLLISION_SCRIPT)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Mouse click Script function"), m_data.env_type == LevelPhysEnv::ENV_CLICK_SCRIPT)
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Collision Event"), m_data.env_type == LevelPhysEnv::ENV_COLLISION_EVENT)
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Air chamber"), m_data.env_type == LevelPhysEnv::ENV_AIR)
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC1)
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_NPC1)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_NPC)
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC Hurting Field"), m_data.env_type == LevelPhysEnv::ENV_NPC_HURTING_FIELD)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Sub-Area"), m_data.env_type == LevelPhysEnv::ENV_SUBAREA)
 
 #undef CONTEXT_MENU_ITEM_CHK
 
@@ -422,10 +423,10 @@ void ItemPhysEnv::updateColor()
     case LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER:
         m_color = QColor(Qt::red);
         break;
-    case LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC:
+    case LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_ANY:
         m_color = QColor(Qt::darkMagenta);
         break;
-    case LevelPhysEnv::ENV_TOUCH_EVENT_NPC:
+    case LevelPhysEnv::ENV_TOUCH_EVENT_ANY:
         m_color = QColor(Qt::magenta);
         break;
     case LevelPhysEnv::ENV_CLICK_EVENT:
@@ -440,14 +441,17 @@ void ItemPhysEnv::updateColor()
     case LevelPhysEnv::ENV_COLLISION_SCRIPT:
         m_color = QColor(Qt::darkCyan);
         break;
-    case LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC1:
+    case LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC:
         m_color = QColor(Qt::darkGray);
         break;
-    case LevelPhysEnv::ENV_TOUCH_EVENT_NPC1:
+    case LevelPhysEnv::ENV_TOUCH_EVENT_NPC:
         m_color = QColor(Qt::gray);
         break;
     case LevelPhysEnv::ENV_NPC_HURTING_FIELD:
         m_color = QColor(Qt::darkYellow);
+        break;
+    case LevelPhysEnv::ENV_SUBAREA:
+        m_color = QColor(Qt::darkBlue);
         break;
     }
 
