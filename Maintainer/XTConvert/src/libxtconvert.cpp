@@ -411,6 +411,13 @@ public:
             return true;
         }
 
+        if(filename.endsWith(".gif") && !standard_filename_format && !m_cur_dir.dir.entryInfoList({filename_stem + ".png"}).isEmpty())
+        {
+            FreeImage_Unload(image);
+            qInfo() << "Skipping GIF with associated PNG for TheXTech compatibility" << in_path;
+            return true;
+        }
+
         FIBITMAP* mask = nullptr;
         QString mask_path;
         if(filename.endsWith(".gif") && may_have_mask)
