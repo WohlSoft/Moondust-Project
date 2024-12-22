@@ -1152,9 +1152,7 @@ public:
 
             return QFile::copy(in_path, out_path);
         }
-        else if(filename.endsWith("m.gif"))
-            return true;
-        else if(filename.endsWith(".xcf") || filename.endsWith(".odt") || filename.endsWith(".pdf"))
+        else if(m_spec.target_platform != TargetPlatform::Desktop && filename.endsWith("m.gif"))
             return true;
         // defer these until the end
         else if(m_spec.package_type == PackageType::AssetPack && m_spec.target_platform == TargetPlatform::DSG && (in_path.contains("/sound/") || in_path.contains("/music/")))
@@ -1200,7 +1198,8 @@ public:
             || filename.endsWith(".bmp") || filename.endsWith(".pal")
             || filename.endsWith(".dll") || filename.endsWith(".exe")
             || filename.endsWith(".rar") || filename.endsWith(".zip") || filename.endsWith(".7z")
-            || filename.endsWith(".xte") || filename.endsWith(".xta"))
+            || filename.endsWith(".xte") || filename.endsWith(".xta")
+            || filename.endsWith(".odt") || filename.endsWith(".pdf"))
         {
             // banned filenames
             qInfo() << "skipping" << in_path;
