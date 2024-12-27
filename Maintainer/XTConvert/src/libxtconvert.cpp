@@ -1252,6 +1252,21 @@ public:
 
         m_temp_dir.setPath(m_temp_dir_owner.path());
 
+        bool asset_pack_for_non3ds = (m_spec.package_type == PackageType::AssetPack && m_spec.target_platform != TargetPlatform::T3X);
+
+        if(m_spec.legacy_archives && (m_spec.package_type == PackageType::Episode || asset_pack_for_non3ds))
+        {
+            QString subfolder_name = QFileInfo(QString::fromStdString(m_spec.destination)).baseName();
+            if(subfolder_name.isEmpty())
+            {
+                m_error = "Empty destination path";
+                return false;
+            }
+
+            m_temp_dir.mkdir(subfolder_name);
+            m_temp_dir.setPath(m_temp_dir.filePath(subfolder_name));
+        }
+
         m_input_dir.setFilter(QDir::NoDotAndDotDot | QDir::AllEntries);
 
         if(m_spec.package_type == PackageType::AssetPack)
@@ -1794,40 +1809,35 @@ public:
         return true;
     }
 
-    bool create_package_iso_lz4()
+    bool create_archive(const QString& dest_path, bool type_is_iso)
     {
-        if(m_spec.destination.empty())
-            return false;
-
-        QTemporaryFile temp_iso;
-        if(!temp_iso.open())
-            return false;
-
-        QString iso_path = temp_iso.fileName();
-        temp_iso.close();
-
-        if(iso_path.isEmpty())
-            return false;
-
-        bool success = false;
-        int r;
-
         struct archive* package = nullptr;
         struct archive_entry* entry = nullptr;
+        bool success = false;
 
         package = archive_write_new();
         if(!package)
             goto cleanup;
 
-        archive_write_set_format_iso9660(package);
-        archive_write_set_format_option(package, "iso9660", "rockridge", nullptr);
-        archive_write_set_format_option(package, "iso9660", "pad", nullptr);
-        archive_write_set_format_option(package, "iso9660", "iso-level", "1");
-        archive_write_set_format_option(package, "iso9660", "limit-depth", nullptr);
-        archive_write_set_format_option(package, "iso9660", "joliet", "long");
-        archive_write_open_filename(package, iso_path.toUtf8().data());
+        if(type_is_iso)
+        {
+            archive_write_set_format_iso9660(package);
+            archive_write_set_format_option(package, "iso9660", "rockridge", nullptr);
+            archive_write_set_format_option(package, "iso9660", "pad", nullptr);
+            archive_write_set_format_option(package, "iso9660", "iso-level", "1");
+            archive_write_set_format_option(package, "iso9660", "limit-depth", nullptr);
+            archive_write_set_format_option(package, "iso9660", "joliet", "long");
+        }
+        else
+        {
+            archive_write_set_format_7zip(package);
+        }
+
+        if(archive_write_open_filename(package, dest_path.toUtf8().data()) != ARCHIVE_OK)
+            goto cleanup;
 
         {
+            m_temp_dir.setPath(m_temp_dir_owner.path());
             m_temp_dir.setFilter(QDir::NoDotAndDotDot | QDir::Files);
 
             QDirIterator it(m_temp_dir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
@@ -1849,8 +1859,8 @@ public:
                 archive_entry_set_filetype(entry, AE_IFREG);
                 archive_entry_set_mtime(entry, file.fileTime(QFileDevice::FileModificationTime).toSecsSinceEpoch(), 0);
 
-                r = archive_write_header(package, entry);
-                if(r < ARCHIVE_OK)
+                int r = archive_write_header(package, entry);
+                if(r != ARCHIVE_OK)
                 {
                     // think about whether to do anything here
                 }
@@ -1858,7 +1868,7 @@ public:
                 if(r == ARCHIVE_FATAL)
                     goto cleanup;
 
-                if(r > ARCHIVE_FAILED)
+                if(r != ARCHIVE_FAILED)
                     archive_write_data(package, got.data(), got.size());
 
                 archive_entry_free(entry);
@@ -1877,6 +1887,26 @@ cleanup:
             archive_write_close(package);
             archive_write_free(package);
         }
+
+        return success;
+    }
+
+    bool create_package_iso_lz4()
+    {
+        if(m_spec.destination.empty())
+            return false;
+
+        QTemporaryFile temp_iso;
+        if(!temp_iso.open())
+            return false;
+
+        QString iso_path = temp_iso.fileName();
+        temp_iso.close();
+
+        if(iso_path.isEmpty())
+            return false;
+
+        bool success = create_archive(iso_path, true);
 
         if(success)
         {
@@ -1902,7 +1932,7 @@ cleanup:
         if(m_spec.destination.size() == 0)
             return false;
 
-        if(LibRomFS3DS::MkRomfs(m_spec.destination.c_str(), m_temp_dir.path().toUtf8().data()) != 0)
+        if(LibRomFS3DS::MkRomfs(m_spec.destination.c_str(), m_temp_dir_owner.path().toUtf8().data()) != 0)
             return false;
 
         return true;
@@ -1910,8 +1940,13 @@ cleanup:
 
     bool create_package()
     {
-        if(m_spec.target_platform == TargetPlatform::T3X && m_spec.use_romfs_3ds)
-            return create_package_romfs3ds();
+        if(m_spec.legacy_archives)
+        {
+            if(m_spec.target_platform == TargetPlatform::T3X)
+                return create_package_romfs3ds();
+            else
+                return create_archive(QString::fromStdString(m_spec.destination), false);
+        }
         else
             return create_package_iso_lz4();
     }

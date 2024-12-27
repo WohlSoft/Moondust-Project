@@ -59,12 +59,12 @@ int main(int argc, char** argv)
         TCLAP::OneOf target_platform;
         target_platform.add(switchMain).add(switch3DS).add(switchWii).add(switchDSi);
 
-        TCLAP::SwitchArg switch3DSUseRomFS("", "use-romfs-3ds", "Only applies on 3DS: create a ROMFS archive instead of ISO+LZ4", false);
+        TCLAP::SwitchArg switchLegacyArchives("l", "legacy-archives", "For TheXTech v1.3.7: create a 7z archive (or romfs for 3DS) instead of ISO+LZ4", false);
 
         cmd.add(target_platform);
         cmd.add(&switchAssetPack);
         cmd.add(&baseAssetsPath);
-        cmd.add(&switch3DSUseRomFS);
+        cmd.add(&switchLegacyArchives);
         cmd.add(&inputPath);
         cmd.add(&outputPath);
 
@@ -82,8 +82,8 @@ int main(int argc, char** argv)
         if(switchDSi.getValue())
             s.target_platform = XTConvert::TargetPlatform::DSG;
 
-        if(switch3DSUseRomFS.getValue())
-            s.use_romfs_3ds = true;
+        if(switchLegacyArchives.getValue())
+            s.legacy_archives = true;
 
         if(switchAssetPack.getValue())
             s.package_type = XTConvert::PackageType::AssetPack;
