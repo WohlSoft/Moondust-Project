@@ -40,7 +40,7 @@ enum class PackageType
 enum class ConvertGIFs
 {
     Safe,
-    None, // ban this for now
+    // None, // ban this for now
     All,
 };
 
@@ -49,7 +49,7 @@ struct Spec
     TargetPlatform target_platform = TargetPlatform::Desktop;
     PackageType package_type = PackageType::AssetPack;
     ConvertGIFs convert_gifs = ConvertGIFs::Safe;
-    bool use_romfs_3ds = false;
+    bool legacy_archives = false;
 
     std::string input_path;
     std::string base_assets_path;
