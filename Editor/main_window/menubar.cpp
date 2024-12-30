@@ -139,13 +139,15 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
 
         setCurrentLevelSection(0, 1);
 
-        dock_LvlWarpProps->init();
         dock_LvlLayers->setLayersBox();
         dock_LvlEvents->setEventsBox();
 
         //Sync lists in properties windows
-        EventListsSync();
         LayerListsSync();
+        EventListsSync();
+
+        dock_LvlWarpProps->init();
+
         dock_BookmarksBox->updateBookmarkBoxByData();
 
         dock_LvlSectionProps->initDefaults();
