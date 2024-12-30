@@ -2460,15 +2460,15 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Collision script function</source>
-        <translation type="unfinished"></translation>
+        <translation>Функция сценария при коллизии</translation>
     </message>
     <message>
         <source>Mouse click Script function</source>
-        <translation type="unfinished"></translation>
+        <translation>Функция сценария на нажатие кнопки мыши</translation>
     </message>
     <message>
         <source>Sub-Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Скрытая область</translation>
     </message>
 </context>
 <context>
@@ -5051,11 +5051,11 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>On-Exit event:</source>
-        <translation type="unfinished"></translation>
+        <translation>Событие на выход:</translation>
     </message>
     <message>
         <source>Trigger event when he player exists this warp from other side</source>
-        <translation type="unfinished"></translation>
+        <translation>Запустить событие, когда игрок выйдет из этого прохода с другой стороны</translation>
     </message>
 </context>
 <context>
@@ -7527,7 +7527,7 @@ Reason: %1
     </message>
     <message>
         <source>Event Warp Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Событие на выход через проход</translation>
     </message>
 </context>
 <context>
