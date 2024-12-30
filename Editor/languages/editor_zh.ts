@@ -2402,14 +2402,6 @@ So, please break these words to avoid this.&lt;/li&gt;
         <translation>NPC 和玩家触发事件（循环）</translation>
     </message>
     <message>
-        <source>Collision script</source>
-        <translation>判定触发脚本</translation>
-    </message>
-    <message>
-        <source>Mouse click Script</source>
-        <translation>鼠标点击触发脚本</translation>
-    </message>
-    <message>
         <source>Collision Event</source>
         <translation>判定触发事件</translation>
     </message>
@@ -2456,6 +2448,18 @@ So, please break these words to avoid this.&lt;/li&gt;
     <message>
         <source>Array-ID: %1</source>
         <translation>对象索引：%1</translation>
+    </message>
+    <message>
+        <source>Collision script function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mouse click Script function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sub-Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5028,6 +5032,14 @@ show the current playable character(s) and number of lives.</source>
 在旧版 SMBX 1.3 引擎中，加载关卡时的界面将
 显示当前人物和剩余生命数。</translation>
     </message>
+    <message>
+        <source>On-Exit event:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trigger event when he player exists this warp from other side</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -7492,6 +7504,10 @@ Reason: %1
     <message>
         <source>World map extra settings</source>
         <translation>大地图附加设置</translation>
+    </message>
+    <message>
+        <source>Event Warp Exit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

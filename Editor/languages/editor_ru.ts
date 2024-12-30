@@ -2411,14 +2411,6 @@ So, please break these words to avoid this.&lt;/li&gt;
         <translation>Событие касания НИП или игрока (Циклически)</translation>
     </message>
     <message>
-        <source>Collision script</source>
-        <translation>Скрипт коллизии</translation>
-    </message>
-    <message>
-        <source>Mouse click Script</source>
-        <translation>Скрипт нажатия кнопки мыши</translation>
-    </message>
-    <message>
         <source>Collision Event</source>
         <translation>Событие коллизии</translation>
     </message>
@@ -2465,6 +2457,18 @@ So, please break these words to avoid this.&lt;/li&gt;
     <message>
         <source>Array-ID: %1</source>
         <translation>ID в массиве: %1</translation>
+    </message>
+    <message>
+        <source>Collision script function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mouse click Script function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sub-Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5045,6 +5049,14 @@ show the current playable character(s) and number of lives.</source>
         <source>Do you really want to apply this setting to all objects?</source>
         <translation>Вы действительно хотите применить эту настройку ко всем объектам?</translation>
     </message>
+    <message>
+        <source>On-Exit event:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trigger event when he player exists this warp from other side</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -7512,6 +7524,10 @@ Reason: %1
     <message>
         <source>World map extra settings</source>
         <translation>Доп.настройки карты мира</translation>
+    </message>
+    <message>
+        <source>Event Warp Exit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -2345,14 +2345,6 @@ So, please break these words to avoid this.&lt;/li&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Collision script</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mouse click Script</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Collision Event</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2398,6 +2390,18 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collision script function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mouse click Script function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sub-Area</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4915,6 +4919,14 @@ In the Legacy Engine level loading screen, it would otherwise
 show the current playable character(s) and number of lives.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>On-Exit event:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trigger event when he player exists this warp from other side</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -7342,6 +7354,10 @@ Reason: %1
     </message>
     <message>
         <source>World map extra settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Event Warp Exit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
