@@ -123,6 +123,7 @@ public:
         SETTING_EV_DEATH,           //extraData: String [new event]
         SETTING_EV_TALK,            //extraData: String [new event]
         SETTING_EV_WARP_ENTER,      //extraData: String [new event]
+        SETTING_EV_WARP_EXIT,       //extraData: String [new event]
         SETTING_SPECIAL_DATA,       //extraData: int [new type]
         SETTING_EV_AUTOSTART,       //extraData: bool [Activated?]
         SETTING_EV_SMOKE,           //extraData: bool [Activated?]
@@ -222,6 +223,7 @@ public:
         case SETTING_EV_DEATH: return QObject::tr("Event NPC Die");
         case SETTING_EV_TALK: return QObject::tr("Event NPC Talk");
         case SETTING_EV_WARP_ENTER: return QObject::tr("Event Warp Enter");
+        case SETTING_EV_WARP_EXIT: return QObject::tr("Event Warp Exit");
         case SETTING_SPECIAL_DATA: return QObject::tr("NPC Special Data");
         case SETTING_EV_AUTOSTART: return QObject::tr("Autostart");
         case SETTING_EV_SMOKE: return QObject::tr("Layer Smoke Effect");

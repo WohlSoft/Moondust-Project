@@ -128,6 +128,10 @@ void HistoryElementSettingsWarp::undo()
         doorp->event_enter = extraData.toList()[0].toString();
     }
     else
+    if(subtype == HistorySettings::SETTING_EV_WARP_EXIT){
+        doorp->event_exit = extraData.toList()[0].toString();
+    }
+    else
     if(subtype == HistorySettings::SETTING_LEVELEXIT){
         doorp->lvl_o = !extraData.toList()[0].toBool();
         if(!doorp->lvl_o && !doorp->isSetOut && extraData.toList().size() >= 3){
@@ -262,6 +266,10 @@ void HistoryElementSettingsWarp::redo()
     else
     if(subtype == HistorySettings::SETTING_EV_WARP_ENTER){
         doorp->event_enter = extraData.toList()[1].toString();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_EV_WARP_EXIT){
+        doorp->event_exit = extraData.toList()[1].toString();
     }
     else
     if(subtype == HistorySettings::SETTING_LEVELEXIT){

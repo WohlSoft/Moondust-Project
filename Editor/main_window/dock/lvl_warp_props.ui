@@ -988,10 +988,7 @@ number of existing and collected stars in the level will not be shown.</string>
           <property name="frameShadow">
            <enum>QFrame::Plain</enum>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0,80">
-           <property name="spacing">
-            <number>0</number>
-           </property>
+          <layout class="QGridLayout" name="gridLayout_8" columnstretch="0,10000">
            <property name="leftMargin">
             <number>0</number>
            </property>
@@ -1004,20 +1001,37 @@ number of existing and collected stars in the level will not be shown.</string>
            <property name="bottomMargin">
             <number>0</number>
            </property>
-           <item>
+           <item row="0" column="0">
             <widget class="QLabel" name="WarpEnterEvent_label">
              <property name="text">
               <string>On-Enter event:</string>
              </property>
             </widget>
            </item>
-           <item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="WarpExitEvent_label">
+             <property name="text">
+              <string>On-Exit event:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
             <widget class="QComboBox" name="WarpEnterEvent">
              <property name="contextMenuPolicy">
               <enum>Qt::CustomContextMenu</enum>
              </property>
              <property name="toolTip">
               <string>Trigger event when he player enters this warp</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="WarpExitEvent">
+             <property name="contextMenuPolicy">
+              <enum>Qt::CustomContextMenu</enum>
+             </property>
+             <property name="toolTip">
+              <string>Trigger event when he player exists this warp from other side</string>
              </property>
             </widget>
            </item>
