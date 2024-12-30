@@ -2357,14 +2357,6 @@ So, please break these words to avoid this.&lt;/li&gt;
         <translation>Подія дотику НІП/Гравця (циклічно)</translation>
     </message>
     <message>
-        <source>Collision script</source>
-        <translation>Скрипт колізії</translation>
-    </message>
-    <message>
-        <source>Mouse click Script</source>
-        <translation>Скрипт натискання кнопки миші</translation>
-    </message>
-    <message>
         <source>Collision Event</source>
         <translation>Подія колізії</translation>
     </message>
@@ -2411,6 +2403,18 @@ So, please break these words to avoid this.&lt;/li&gt;
     <message>
         <source>Array-ID: %1</source>
         <translation>ID масиву: %1</translation>
+    </message>
+    <message>
+        <source>Collision script function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mouse click Script function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sub-Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4977,6 +4981,14 @@ Please, select necessary world map in a list:</source>
         <source>Do you really want to apply this setting to all objects?</source>
         <translation>Ви справді бажаєте застосувати це налаштування до всіх об&apos;єктів?</translation>
     </message>
+    <message>
+        <source>On-Exit event:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trigger event when he player exists this warp from other side</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -7440,6 +7452,10 @@ File: %1</source>
     </message>
     <message>
         <source>World map extra settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Event Warp Exit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

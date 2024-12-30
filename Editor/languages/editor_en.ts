@@ -2409,14 +2409,6 @@ So, please break these words to avoid this.&lt;/li&gt;
         <translation>NPC/Player Touch Event (Every frame)</translation>
     </message>
     <message>
-        <source>Collision script</source>
-        <translation>Collision script</translation>
-    </message>
-    <message>
-        <source>Mouse click Script</source>
-        <translation>Mouse click Script</translation>
-    </message>
-    <message>
         <source>Collision Event</source>
         <translation>Collision Event</translation>
     </message>
@@ -2463,6 +2455,18 @@ So, please break these words to avoid this.&lt;/li&gt;
     <message>
         <source>Array-ID: %1</source>
         <translation>Array-ID: %1</translation>
+    </message>
+    <message>
+        <source>Collision script function</source>
+        <translation>Collision script function</translation>
+    </message>
+    <message>
+        <source>Mouse click Script function</source>
+        <translation>Mouse click Script function</translation>
+    </message>
+    <message>
+        <source>Sub-Area</source>
+        <translation>Sub-Area</translation>
     </message>
 </context>
 <context>
@@ -5039,6 +5043,14 @@ show the current playable character(s) and number of lives.</translation>
         <source>Do you really want to apply this setting to all objects?</source>
         <translation>Do you really want to apply this setting to all objects?</translation>
     </message>
+    <message>
+        <source>On-Exit event:</source>
+        <translation>On-Exit event:</translation>
+    </message>
+    <message>
+        <source>Trigger event when he player exists this warp from other side</source>
+        <translation>Trigger event when he player exists this warp from other side</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -7503,6 +7515,10 @@ Reason: %1
     <message>
         <source>World map extra settings</source>
         <translation>World map extra settings</translation>
+    </message>
+    <message>
+        <source>Event Warp Exit</source>
+        <translation>Event Warp Exit</translation>
     </message>
 </context>
 <context>
