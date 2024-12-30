@@ -28,6 +28,7 @@ private:
 public:
     QComboBox *cbox_layer();
     QComboBox *cbox_event_enter();
+    QComboBox *cbox_event_exit();
 
     void setSettingsLock(bool locked);
 
@@ -48,6 +49,7 @@ private slots:
     void on_warpsList_currentIndexChanged(int index); //Door list
     void on_WarpLayer_currentIndexChanged(const QString &arg1); //Door's layers list
     void on_WarpEnterEvent_currentIndexChanged(const QString &arg1);
+    void on_WarpExitEvent_currentIndexChanged(const QString &arg1);
     void addWarpEntry();
     void removeWarpEntry();
     void duplicateWarpEntry();

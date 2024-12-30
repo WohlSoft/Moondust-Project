@@ -196,6 +196,7 @@ void MainWindow::EventListsSync()
     QComboBox *_sb_npc_el = dock_LvlSearchBox->cbox_event_npc_empty_layer();
     QComboBox *_eb_trigger = dock_LvlEvents->cbox_event_trigger();
     QComboBox *_w_ent = dock_LvlWarpProps->cbox_event_enter();
+    QComboBox *_w_ex = dock_LvlWarpProps->cbox_event_exit();
     QString curDestroyedBlock  = _sb_block_d->currentText();
     QString curHitedBlock      = _sb_block_h->currentText();
     QString curLayerEmptyBlock = _sb_block_l->currentText();
@@ -204,6 +205,7 @@ void MainWindow::EventListsSync()
     QString curTalkNpc = _sb_npc_t->currentText();
     QString curEmptyLayerNpc = _sb_npc_el->currentText();
     QString curEnterEventWarp = _w_ent->currentText();
+    QString curExitEventWarp = _w_ex->currentText();
     int WinType = activeChildWindow();
     _ip_block_d->clear();
     _ip_block_h->clear();
@@ -221,6 +223,7 @@ void MainWindow::EventListsSync()
     _sb_npc_t->clear();
     _sb_npc_el->clear();
     _w_ent->clear();
+    _w_ex->clear();
     QString noEvent = tr("[None]");
     _ip_block_d->addItem(noEvent);
     _ip_block_h->addItem(noEvent);
@@ -235,6 +238,7 @@ void MainWindow::EventListsSync()
     _sb_npc_t->addItem(noEvent);
     _sb_npc_el->addItem(noEvent);
     _w_ent->addItem(noEvent);
+    _w_ex->addItem(noEvent);
 
     if(WinType == MainWindow::WND_Level)
     {
@@ -256,6 +260,7 @@ void MainWindow::EventListsSync()
             _sb_npc_t->addItem(event.name);
             _sb_npc_el->addItem(event.name);
             _w_ent->addItem(event.name);
+            _w_ex->addItem(event.name);
         }
     }
 
@@ -267,6 +272,7 @@ void MainWindow::EventListsSync()
     _sb_npc_t->setCurrentText(curTalkNpc);
     _sb_npc_el->setCurrentText(curEmptyLayerNpc);
     _w_ent->setCurrentText(curEnterEventWarp);
+    _w_ex->setCurrentText(curExitEventWarp);
     dock_LvlEvents->m_internalLock = false;
     dock_LvlWarpProps->setSettingsLock(false);
 
