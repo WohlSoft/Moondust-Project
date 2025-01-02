@@ -2451,15 +2451,15 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Collision script function</source>
-        <translation type="unfinished"></translation>
+        <translation>判定触发脚本区域</translation>
     </message>
     <message>
         <source>Mouse click Script function</source>
-        <translation type="unfinished"></translation>
+        <translation>鼠标点击触发脚本区域</translation>
     </message>
     <message>
         <source>Sub-Area</source>
-        <translation type="unfinished"></translation>
+        <translation>子区域</translation>
     </message>
 </context>
 <context>
@@ -4722,7 +4722,7 @@ number of existing and collected stars in the level will not be shown.</source>
     </message>
     <message>
         <source>On-Enter event:</source>
-        <translation>进入事件：</translation>
+        <translation>传送点入口事件：</translation>
     </message>
     <message>
         <source>Trigger event when he player enters this warp</source>
@@ -5034,11 +5034,11 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>On-Exit event:</source>
-        <translation type="unfinished"></translation>
+        <translation>传送点出口事件：</translation>
     </message>
     <message>
         <source>Trigger event when he player exists this warp from other side</source>
-        <translation type="unfinished"></translation>
+        <translation>当玩家从传送点出来时，触发事件</translation>
     </message>
 </context>
 <context>
@@ -7507,7 +7507,7 @@ Reason: %1
     </message>
     <message>
         <source>Event Warp Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>传送点出口事件</translation>
     </message>
 </context>
 <context>
