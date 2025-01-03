@@ -1294,6 +1294,8 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
         }
     }
 
+    m_interface.setMultipartMode(m_caps.features.contains("ipc-lvlx-multipart"));
+
     edit->prepareLevelFile(data);
     m_interface.setTestLvlBuffer(data);
 
