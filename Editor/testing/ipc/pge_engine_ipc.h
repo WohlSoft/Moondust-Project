@@ -106,6 +106,8 @@ public:
      */
     void sendNumStars(int numStars);
 
+    void setMultipartMode(bool mp);
+
 private:
     /**
      * @brief Read all input data before last delimeter character
@@ -166,6 +168,8 @@ signals:
     void engineCloseProperties();
 
     void signalSendLevelBuffer();
+    void signalSendLevelBufferFull();
+    void signalSendLevelBufferNext();
     void signalEngineClosed();
 
 private:
@@ -186,6 +190,13 @@ private:
      * @brief When engine is ready, submit a level data from a cache
      */
     void sendLevelBuffer();
+    void sendLevelBufferFull();
+
+    /**
+     * @brief When engine is ready, submit a level data from a cache as multipart
+     */
+    void sendLevelBufferMultipart();
+    void sendLevelBufferMultipartNext();
 
     void showMainWindow();
 
@@ -198,6 +209,12 @@ private:
 
     //! Cached level data buffer
     LevelData m_levelTestBuffer;
+
+    bool    m_levelTestAllowMultipart = false;
+    QString m_levelTestBufferRaw;
+    int     m_levelTestBufferRawOffset = 0;
+    bool    m_levelTestBufferRawAtEnd = false;
+
     //! Main window instance pointer
     QWidget *m_mainWindow = nullptr;
     //! Engine server QProcess instance
