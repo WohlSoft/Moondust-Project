@@ -1785,7 +1785,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copiar preferências</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
@@ -1832,7 +1832,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Right</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Direita</translation>
     </message>
     <message>
         <source>Down</source>
@@ -1864,7 +1864,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copiar preferências</translation>
     </message>
     <message>
         <source>Level-ID: %1</source>
@@ -2039,7 +2039,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copiar preferências</translation>
     </message>
     <message>
         <source>World-Music-ID: %1</source>
@@ -2166,7 +2166,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copiar preferências</translation>
     </message>
     <message>
         <source>NPC-ID: %1</source>
@@ -2233,7 +2233,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     <name>ItemPath</name>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copiar preferências</translation>
     </message>
     <message>
         <source>Path-ID: %1</source>
@@ -2347,14 +2347,6 @@ So, please break these words to avoid this.&lt;/li&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Collision script</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mouse click Script</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Collision Event</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2368,7 +2360,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copiar preferências</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
@@ -2402,6 +2394,18 @@ So, please break these words to avoid this.&lt;/li&gt;
         <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Collision script function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mouse click Script function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sub-Area</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemPlayerPoint</name>
@@ -2430,7 +2434,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     <name>ItemScene</name>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copiar preferências</translation>
     </message>
     <message>
         <source>Scenery-ID: %1</source>
@@ -2564,7 +2568,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     <name>ItemTile</name>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copiar preferências</translation>
     </message>
     <message>
         <source>Tile-ID: %1</source>
@@ -3608,6 +3612,95 @@ Do you want to continue?</source>
         <source>Please, enter the message box text:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rename event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show event statistics...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Event &quot;%1&quot; statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPC triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warp triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical environment triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other events triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autostart type</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level start</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Match all conditions</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Call and match</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[Unknown]</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Event &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused event&amp;gt;&lt;/center&gt;
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triggered by other events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove this event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Event statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlHistoryManager</name>
@@ -3877,7 +3970,7 @@ Esta opção usa um bug na renderização de objetos decorativos em SMBX. Para i
     <message>
         <source>Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Direita</translation>
     </message>
     <message>
         <source>Up</source>
@@ -3973,6 +4066,76 @@ All elements of this layer will be removed too!</source>
     </message>
     <message>
         <source>Select all items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show layer statistics...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer &quot;%1&quot; statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total members</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished">Blocos</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPC</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished">NPC</translation>
+    </message>
+    <message>
+        <source>Warps</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical environments</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attaches to NPCs</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Referred in events</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Layer &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused layer with no members&amp;gt;&lt;/center&gt;
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Referred in events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove this layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer statistics</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4759,6 +4922,14 @@ Escolha qual da lista quer utilizar:</translation>
         <source>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On-Exit event:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trigger event when he player exists this warp from other side</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7185,6 +7356,10 @@ Reason: %1
     </message>
     <message>
         <source>World map extra settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Event Warp Exit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

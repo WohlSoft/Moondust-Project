@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ class ItemPlayerPoint : public LvlBaseItem
 public:
     explicit ItemPlayerPoint(QGraphicsItem *parent = nullptr);
     explicit ItemPlayerPoint(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
-    ~ItemPlayerPoint();
+    virtual ~ItemPlayerPoint();
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);

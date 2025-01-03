@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -174,6 +174,11 @@ MusicFileList::MusicFileList(QString searchDirectory, QString curFile, QWidget *
             QObject::connect(&set, &CustomMusicSetup::updateSongTempo, this, [this](double tempo)->void
             {
                 emit musicTempoChanged(tempo);
+            });
+
+            QObject::connect(&set, &CustomMusicSetup::updateSongGain, this, [this](double gain)->void
+            {
+                emit musicGainChanged(gain);
             });
 
             QObject::connect(&set, &CustomMusicSetup::musicButtonClicked, this, [this, &musicPath](bool st)->void

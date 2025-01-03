@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ class ItemLevel : public WldBaseItem
 public:
     ItemLevel(QGraphicsItem *parent = nullptr);
     ItemLevel(WldScene *parentScene, QGraphicsItem *parent = nullptr);
-    ~ItemLevel();
+    virtual ~ItemLevel();
 
     void setLevelData(WorldLevelTile inD, obj_w_level *mergedSet = nullptr,
                       long *animator_id = nullptr, long *path_id = nullptr,

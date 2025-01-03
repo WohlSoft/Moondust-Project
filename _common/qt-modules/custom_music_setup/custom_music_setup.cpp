@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1052,10 +1052,10 @@ void CustomMusicSetup::on_midiSynth_currentIndexChanged(int)
 void CustomMusicSetup::on_midiGain_valueChanged(int)
 {}
 
-void CustomMusicSetup::on_midiGainAbs_valueChanged(double)
+void CustomMusicSetup::on_midiGainAbs_valueChanged(double arg1)
 {
     buildSettings();
-    emit updateSongPlay();
+    emit updateSongGain(arg1);
 }
 
 void CustomMusicSetup::on_midiGainReset_clicked()
@@ -1076,7 +1076,7 @@ void CustomMusicSetup::on_midiGainReset_clicked()
     if(!signalsBlocked())
         buildSettings();
 
-    emit updateSongPlay();
+    emit updateSongGain(ui->midiGainAbs->value());
 }
 
 void CustomMusicSetup::on_midiTempo_valueChanged(int)
@@ -1239,10 +1239,10 @@ void CustomMusicSetup::on_gmeGoToFirst_clicked()
 void CustomMusicSetup::on_gmeGain_valueChanged(int)
 {}
 
-void CustomMusicSetup::on_gmeGainAbs_valueChanged(double)
+void CustomMusicSetup::on_gmeGainAbs_valueChanged(double arg1)
 {
     buildSettings();
-    emit updateSongPlay();
+    emit updateSongGain(arg1);
 }
 
 void CustomMusicSetup::on_gmeGainReset_clicked()
@@ -1251,7 +1251,7 @@ void CustomMusicSetup::on_gmeGainReset_clicked()
     ui->gmeGainAbs->setValue(1.0);
     if(!signalsBlocked())
         buildSettings();
-    emit updateSongPlay();
+    emit updateSongGain(ui->gmeGainAbs->value());
 }
 
 void CustomMusicSetup::on_gmeTempo_valueChanged(int)
@@ -1281,10 +1281,10 @@ void CustomMusicSetup::on_gmeDisableSpcEcho_clicked(bool)
 void CustomMusicSetup::on_pxtoneGain_valueChanged(int)
 {}
 
-void CustomMusicSetup::on_pxtoneGainAbs_valueChanged(double)
+void CustomMusicSetup::on_pxtoneGainAbs_valueChanged(double arg1)
 {
     buildSettings();
-    emit updateSongPlay();
+    emit updateSongGain(arg1);
 }
 
 void CustomMusicSetup::on_pxtoneGainReset_clicked()
@@ -1293,7 +1293,7 @@ void CustomMusicSetup::on_pxtoneGainReset_clicked()
     ui->pxtoneGainAbs->setValue(1.0);
     if(!signalsBlocked())
         buildSettings();
-    emit updateSongPlay();
+    emit updateSongGain(ui->pxtoneGainAbs->value());
 }
 
 void CustomMusicSetup::on_pxtoneTempo_valueChanged(int)

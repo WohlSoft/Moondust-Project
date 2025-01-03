@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,6 +49,7 @@ public:
     static void setMusic(MainWindow *mw, MusicType mt, unsigned long id, QString cmus);
     static void setNoMusic();
     static void setTempo(double tempo);
+    static void setGain(double gain);
     static void updateMusic(MainWindow *mw);
     static void updatePlayerState(MainWindow *mw, bool playing = true, bool force = false);
     static void stopMusic(MainWindow *mw);

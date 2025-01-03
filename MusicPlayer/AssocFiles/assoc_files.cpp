@@ -49,6 +49,8 @@ AssocFiles::AssocFiles(QWidget *parent) :
     formats << tentry{"spc",  "SPC - Super NES/Famicom Music", tr("Super NES/Famicom Music", "File Type Name")};
     formats << tentry{"vgm",  "VGM - Video Game Music", tr("Video Game Music", "File Type Name")};
     formats << tentry{"vgz",  "VGZ - Video Game Music (GZ Compressed)", tr("Video Game Music (GZ-compressed)", "File Type Name")};
+    formats << tentry{"imf",  "IMF - Imago Orpheus/Id Music File", tr("Imago Orpheus/Id Music File", "File Type Name")};
+    formats << tentry{"wlf",  "WLF - Id Music File (Wolfenstein)", tr("Id Music File (Wolfenstein)", "File Type Name")};
 
     formats << tentry{"669",  "669 - Composer 669, Unis 669", tr("Composer 669, Unis 669", "File Type Name")};
     formats << tentry{"amf",  "AMF - ASYLUM Music Format V1.0/DSMI Advanced Module Format", tr("ASYLUM Music Format", "File Type Name")};
@@ -58,7 +60,6 @@ AssocFiles::AssocFiles(QWidget *parent) :
     formats << tentry{"gdm",  "GDM - General DigiMusic", tr("General DigiMusic File", "File Type Name")};
     formats << tentry{"it",   "IT - Impulse Tracker", tr("Impulse Tracker File", "File Type Name")};
     formats << tentry{"mptm", "MPTM - Open ModPlug Tracker", tr("Open ModPlug Tracker Music", "File Type Name")};
-    formats << tentry{"imf",  "IMF - Imago Orpheus/Id Music File", tr("Imago Orpheus/Id Music File", "File Type Name")};
     formats << tentry{"mod",  "MOD - 15 and 31 instruments", tr("Module Music file", "File Type Name")};
     formats << tentry{"med",  "MED - OctaMED", tr("OctaMED Music File", "File Type Name")};
     formats << tentry{"mtm",  "MTM - MultiTracker Module editor", tr("MultiTracker Module File", "File Type Name")};
@@ -109,6 +110,8 @@ void AssocFiles::on_reset_clicked()
     defaultFormats["spc"] = true;
     defaultFormats["vgm"] = true;
     defaultFormats["vgz"] = true;
+    defaultFormats["imf"] = true;
+    defaultFormats["wlf"] = true;
 
     defaultFormats["669"] = true;
     defaultFormats["amf"] = true;
@@ -118,7 +121,6 @@ void AssocFiles::on_reset_clicked()
     defaultFormats["gdm"] = true;
     defaultFormats["it"]  = true;
     defaultFormats["mptm"]= true;
-    defaultFormats["imf"] = true;
     defaultFormats["mod"] = true;
     defaultFormats["med"] = true;
     defaultFormats["mtm"] = true;

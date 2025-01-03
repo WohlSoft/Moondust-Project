@@ -177,8 +177,8 @@
     </message>
     <message>
         <location filename="../calibration_main.ui" line="120"/>
-        <location filename="../calibration_main.ui" line="785"/>
-        <location filename="../calibration_main.ui" line="948"/>
+        <location filename="../calibration_main.ui" line="788"/>
+        <location filename="../calibration_main.ui" line="951"/>
         <source>Reset scroll</source>
         <translation type="unfinished"></translation>
     </message>
@@ -219,7 +219,7 @@
     </message>
     <message>
         <location filename="../calibration_main.ui" line="229"/>
-        <location filename="../calibration_main.ui" line="958"/>
+        <location filename="../calibration_main.ui" line="961"/>
         <source>Language</source>
         <translation>Nyelv</translation>
     </message>
@@ -405,22 +405,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="689"/>
+        <location filename="../calibration_main.ui" line="692"/>
         <source>Scrolling</source>
         <translation>Görgetés</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="712"/>
+        <location filename="../calibration_main.ui" line="715"/>
         <source>Scroll right</source>
         <translation>Görgetés jobbra</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="723"/>
+        <location filename="../calibration_main.ui" line="726"/>
         <source>Scroll up</source>
         <translation>Görgetés fel</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="734"/>
+        <location filename="../calibration_main.ui" line="737"/>
         <source>Tip: Mouse is supported!
 
 Left button - move hitbox
@@ -441,27 +441,27 @@ Görgő - Zoomolás ki-be
 Jobb gomb - eltolási küszöbérték mozgatása ha állandó.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="752"/>
+        <location filename="../calibration_main.ui" line="755"/>
         <source>Zoom out</source>
         <translation>Kicsinyítés</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="763"/>
+        <location filename="../calibration_main.ui" line="766"/>
         <source>Zoom in</source>
         <translation>Nagyítás</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="774"/>
+        <location filename="../calibration_main.ui" line="777"/>
         <source>Scroll left</source>
         <translation>Görgetés balra</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="796"/>
+        <location filename="../calibration_main.ui" line="799"/>
         <source>Scroll down</source>
         <translation>Görgetés le</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="807"/>
+        <location filename="../calibration_main.ui" line="810"/>
         <source>Tip: Mouse is supported!
 
 Left button: Move frame or use actions
@@ -482,102 +482,102 @@ Görgő - Zoomolás ki-be
 Jobb gomb - mozgasd a jobb alsó satkat a levágáshoz.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="831"/>
+        <location filename="../calibration_main.ui" line="834"/>
         <source>Open sprite</source>
         <translation>Szereplő megnyitása</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="839"/>
+        <location filename="../calibration_main.ui" line="842"/>
         <source>Quit</source>
         <translation>Kilépés</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="854"/>
+        <location filename="../calibration_main.ui" line="857"/>
         <source>Copy</source>
         <translation>Másolás</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="857"/>
+        <location filename="../calibration_main.ui" line="860"/>
         <source>Copy calibration settings of the current frame</source>
         <translation>A jelenlegi képkocka kalibrációs beállításainak másolása</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="869"/>
+        <location filename="../calibration_main.ui" line="872"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="872"/>
+        <location filename="../calibration_main.ui" line="875"/>
         <source>Past calibration settings from the clipboard</source>
         <translation>Kalibrációs beállítások betöltése a vágólaptól</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="880"/>
+        <location filename="../calibration_main.ui" line="883"/>
         <source>Apply to all</source>
         <translation>Alkalmazás mindre</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="885"/>
+        <location filename="../calibration_main.ui" line="888"/>
         <source>About</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="893"/>
+        <location filename="../calibration_main.ui" line="896"/>
         <source>Open the Wiki page...</source>
         <translation>Wiki-oldal megnyitása...</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="898"/>
+        <location filename="../calibration_main.ui" line="901"/>
         <source>Save in the same folder with image file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="906"/>
+        <location filename="../calibration_main.ui" line="909"/>
         <source>Save into custom place...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="914"/>
+        <location filename="../calibration_main.ui" line="917"/>
         <source>Import data from SMBX-38A level...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="919"/>
+        <location filename="../calibration_main.ui" line="922"/>
         <source>Export data into SMBX-38A level...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="924"/>
+        <location filename="../calibration_main.ui" line="927"/>
         <source>Export a map of hitboxes as image...</source>
         <translation>Befoglaló dobozok térképének exportálása képként…</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="927"/>
+        <location filename="../calibration_main.ui" line="930"/>
         <source>Useful for tests or sprites creation from the scratch</source>
         <translation>Hasznos tesztek vagy szereplők az alapoktól való felépítéséhez</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="936"/>
+        <location filename="../calibration_main.ui" line="939"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="953"/>
+        <location filename="../calibration_main.ui" line="956"/>
         <source>Open the srite directory...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="981"/>
+        <location filename="../calibration_main.ui" line="984"/>
         <source>Animator</source>
         <translation type="unfinished">Animátor</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="990"/>
+        <location filename="../calibration_main.ui" line="993"/>
         <source>Sprite editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="995"/>
+        <location filename="../calibration_main.ui" line="998"/>
         <source>Extrenal GFX editor...</source>
         <translation type="unfinished"></translation>
     </message>

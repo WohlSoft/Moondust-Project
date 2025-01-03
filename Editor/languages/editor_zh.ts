@@ -2402,14 +2402,6 @@ So, please break these words to avoid this.&lt;/li&gt;
         <translation>NPC 和玩家触发事件（循环）</translation>
     </message>
     <message>
-        <source>Collision script</source>
-        <translation>判定触发脚本</translation>
-    </message>
-    <message>
-        <source>Mouse click Script</source>
-        <translation>鼠标点击触发脚本</translation>
-    </message>
-    <message>
         <source>Collision Event</source>
         <translation>判定触发事件</translation>
     </message>
@@ -2456,6 +2448,18 @@ So, please break these words to avoid this.&lt;/li&gt;
     <message>
         <source>Array-ID: %1</source>
         <translation>对象索引：%1</translation>
+    </message>
+    <message>
+        <source>Collision script function</source>
+        <translation>判定触发脚本区域</translation>
+    </message>
+    <message>
+        <source>Mouse click Script function</source>
+        <translation>鼠标点击触发脚本区域</translation>
+    </message>
+    <message>
+        <source>Sub-Area</source>
+        <translation>子区域</translation>
     </message>
 </context>
 <context>
@@ -3688,6 +3692,97 @@ Do you want to continue?</source>
         <source>Please, enter the message box text:</source>
         <translation>请输入对话信息：</translation>
     </message>
+    <message>
+        <source>Rename event</source>
+        <translation>重命名事件</translation>
+    </message>
+    <message>
+        <source>Remove event</source>
+        <translation>删除事件</translation>
+    </message>
+    <message>
+        <source>Show event statistics...</source>
+        <translation>显示事件信息……</translation>
+    </message>
+    <message>
+        <source>Event &quot;%1&quot; statistics</source>
+        <translation>事件“%1”信息</translation>
+    </message>
+    <message>
+        <source>Total triggers</source>
+        <comment>Event statistics field</comment>
+        <translation>总触发事件数</translation>
+    </message>
+    <message>
+        <source>Block triggers</source>
+        <comment>Event statistics field</comment>
+        <translation>砖块触发事件数</translation>
+    </message>
+    <message>
+        <source>NPC triggers</source>
+        <comment>Event statistics field</comment>
+        <translation>NPC触发事件数</translation>
+    </message>
+    <message>
+        <source>Warp triggers</source>
+        <comment>Event statistics field</comment>
+        <translation>传送点触发事件数</translation>
+    </message>
+    <message>
+        <source>Physical environment triggers</source>
+        <comment>Event statistics field</comment>
+        <translation>物理区域触发事件数</translation>
+    </message>
+    <message>
+        <source>Other events triggers</source>
+        <comment>Event statistics field</comment>
+        <translation>其他方式触发事件数</translation>
+    </message>
+    <message>
+        <source>Autostart type</source>
+        <comment>Event statistics field</comment>
+        <translation>自动运行事件条件</translation>
+    </message>
+    <message>
+        <source>Level start</source>
+        <comment>Event autostart type</comment>
+        <translation>进入关卡时</translation>
+    </message>
+    <message>
+        <source>Match all conditions</source>
+        <comment>Event autostart type</comment>
+        <translation>满足所有条件</translation>
+    </message>
+    <message>
+        <source>Call and match</source>
+        <comment>Event autostart type</comment>
+        <translation>匹配指定条件</translation>
+    </message>
+    <message>
+        <source>[Unknown]</source>
+        <comment>Event autostart type</comment>
+        <translation>[未知类型]</translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Event &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused event&amp;gt;&lt;/center&gt;
+</source>
+        <translation>&lt;h2&gt;事件“%1”信息：&lt;/h2&gt;
+&lt;center&gt;&amp;lt;该事件为未使用的事件&amp;gt;&lt;/center&gt;
+</translation>
+    </message>
+    <message>
+        <source>Triggered by other events</source>
+        <translation>触发于其他事件的事件</translation>
+    </message>
+    <message>
+        <source>Remove this event</source>
+        <translation>删除事件</translation>
+    </message>
+    <message>
+        <source>Event statistics</source>
+        <translation>事件信息</translation>
+    </message>
 </context>
 <context>
     <name>LvlHistoryManager</name>
@@ -4058,6 +4153,78 @@ All elements of this layer will be removed too!</source>
     <message>
         <source>Select all items</source>
         <translation>选中该图层的所有对象</translation>
+    </message>
+    <message>
+        <source>Show layer statistics...</source>
+        <translation>显示图层信息……</translation>
+    </message>
+    <message>
+        <source>Layer &quot;%1&quot; statistics</source>
+        <translation>图层“%1”信息</translation>
+    </message>
+    <message>
+        <source>Total members</source>
+        <comment>Layer statistics field</comment>
+        <translation>图层总对象数</translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <comment>Layer statistics field</comment>
+        <translation>砖块</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <comment>Layer statistics field</comment>
+        <translation>背景对象</translation>
+    </message>
+    <message>
+        <source>NPC</source>
+        <comment>Layer statistics field</comment>
+        <translation>NPC</translation>
+    </message>
+    <message>
+        <source>Warps</source>
+        <comment>Layer statistics field</comment>
+        <translation>传送点</translation>
+    </message>
+    <message>
+        <source>Physical environments</source>
+        <comment>Layer statistics field</comment>
+        <translation>物理区域</translation>
+    </message>
+    <message>
+        <source>Usage</source>
+        <translation>图层用途</translation>
+    </message>
+    <message>
+        <source>Attaches to NPCs</source>
+        <comment>Layer statistics field</comment>
+        <translation>图层跟随NPC个数</translation>
+    </message>
+    <message>
+        <source>Referred in events</source>
+        <comment>Layer statistics field</comment>
+        <translation>图层关联到事件数</translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Layer &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused layer with no members&amp;gt;&lt;/center&gt;
+</source>
+        <translation>&lt;h2&gt;图层“%1”信息：&lt;/h2&gt;
+&lt;center&gt;&amp;lt;该图层为未使用的图层，图层内无任何对象&amp;gt;&lt;/center&gt;
+</translation>
+    </message>
+    <message>
+        <source>Referred in events</source>
+        <translation>关联到事件</translation>
+    </message>
+    <message>
+        <source>Remove this layer</source>
+        <translation>删除图层</translation>
+    </message>
+    <message>
+        <source>Layer statistics</source>
+        <translation>图层信息</translation>
     </message>
 </context>
 <context>
@@ -4489,8 +4656,8 @@ Please, reconvert your images to valid format and try to reload this level.</sou
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
-        <translation>取决于传送的种类：
-0 - 瞬移：玩家将会瞬移且移动速度为 0.
+        <translation>选择传送点类型：
+0 - 瞬移：玩家将会瞬移且移动速度为 0（在SMBX/TheXTech引擎下，无法传送到另一关卡）。
 1 - 水管：各个方向的水管的入口和出口。
 2 - 门：玩家可按上键进入。
 3 - 传送门（仅限月尘和 TheXTech 引擎）：玩家将会瞬移，但移动速度不变。</translation>
@@ -4555,7 +4722,7 @@ number of existing and collected stars in the level will not be shown.</source>
     </message>
     <message>
         <source>On-Enter event:</source>
-        <translation>进入事件：</translation>
+        <translation>传送点入口事件：</translation>
     </message>
     <message>
         <source>Trigger event when he player enters this warp</source>
@@ -4714,7 +4881,7 @@ If this flag is enabled, you can only place a warp exit.</source>
     </message>
     <message>
         <source>If this field is not empty, player will travel from the current level to the specified one.</source>
-        <translation>若此栏不为空时，玩家则从当前关卡传送到指定关卡。</translation>
+        <translation>若此字段不为空，且传送类型不为瞬移时，玩家将从当前关卡传送到指定关卡。</translation>
     </message>
     <message>
         <source>Level file:</source>
@@ -4864,6 +5031,14 @@ show the current playable character(s) and number of lives.</source>
         <translation>显示黑屏而非加载关卡时的界面。
 在旧版 SMBX 1.3 引擎中，加载关卡时的界面将
 显示当前人物和剩余生命数。</translation>
+    </message>
+    <message>
+        <source>On-Exit event:</source>
+        <translation>传送点出口事件：</translation>
+    </message>
+    <message>
+        <source>Trigger event when he player exists this warp from other side</source>
+        <translation>当玩家从传送点出来时，触发事件</translation>
     </message>
 </context>
 <context>
@@ -6299,7 +6474,7 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
-        <translation>您正在使用 64 位操作系统中使用 32 位的版本的编辑器，此版本的编辑器专为老旧的电脑和 Windows XP 系统兼容打造，我们强烈推荐使用 64 位版本的编辑器以获得最佳兼容性和内存扩展，32 位应用中内存限制为 2GB。</translation>
+        <translation>您正在使用 64 位操作系统中使用 32 位的版本的编辑器，此版本的编辑器专为旧电脑和 Windows XP 系统兼容打造，我们强烈推荐使用 64 位版本的编辑器以获得最佳兼容性和内存扩展。另外，32 位应用程序的内存限制为 2GB。</translation>
     </message>
     <message>
         <source>Editor, version %1</source>
@@ -7329,6 +7504,10 @@ Reason: %1
     <message>
         <source>World map extra settings</source>
         <translation>大地图附加设置</translation>
+    </message>
+    <message>
+        <source>Event Warp Exit</source>
+        <translation>传送点出口事件</translation>
     </message>
 </context>
 <context>

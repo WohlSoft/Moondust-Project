@@ -1172,7 +1172,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="129"/>
-        <location filename="../tools/debugger/custom_counter_gui.cpp" line="254"/>
+        <location filename="../tools/debugger/custom_counter_gui.cpp" line="256"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1217,7 +1217,7 @@ Please save them before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/debugger/custom_counter_gui.cpp" line="253"/>
+        <location filename="../tools/debugger/custom_counter_gui.cpp" line="255"/>
         <source>Change item...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1278,12 +1278,12 @@ Please save them before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/debugger.cpp" line="488"/>
+        <location filename="../main_window/dock/debugger.cpp" line="490"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/debugger.cpp" line="489"/>
+        <location filename="../main_window/dock/debugger.cpp" line="491"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1662,7 +1662,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>HistoryElementReplacePlayerPoint</name>
     <message>
-        <location filename="../editing/_components/history/historyelementreplaceplayerpoint.cpp" line="18"/>
+        <location filename="../editing/_components/history/historyelementreplaceplayerpoint.cpp" line="19"/>
         <source>Place Player Point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1859,32 +1859,32 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="182"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="333"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="347"/>
         <source>Margin of section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="183"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="334"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="348"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="279"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="291"/>
         <source>Z-Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="280"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="292"/>
         <source>Please enter the Z-value offset:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="404"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="409"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="418"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="429"/>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="440"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="420"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="425"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="434"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="445"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="456"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2023,53 +2023,53 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="247"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="454"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="462"/>
         <source>Margin of section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="248"/>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="455"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="463"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="323"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="325"/>
         <source>Event name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="324"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="326"/>
         <source>Please enter the name of event:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="332"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="334"/>
         <source>Please enter the message text that which will be shown:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="333"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="335"/>
         <source>Hit message text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="365"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="367"/>
         <source>Event created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="366"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="368"/>
         <source>Message event created!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="371"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="373"/>
         <source>&apos;Hit&apos; event slot is used</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="372"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="374"/>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2462,13 +2462,13 @@ box area.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="142"/>
+        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="145"/>
         <source>Preview</source>
         <comment>The text on the switch button</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="177"/>
+        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="180"/>
         <source>The basic message box of &lt;b&gt;SMBX 1.3 / X2&lt;/b&gt; has the next restrictions:
 &lt;ul&gt;
   &lt;li&gt;New line &lt;b&gt;CAN NOT be done via the &quot;Return&quot;/&quot;Enter&quot; key&lt;/b&gt;&lt;br/&gt;
@@ -2482,7 +2482,7 @@ So, please break these words to avoid this.&lt;/li&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="191"/>
+        <location filename="../editing/_scenes/level/itemmsgbox.cpp" line="195"/>
         <source>The message box of &lt;b&gt;Moondust / TheXTech&lt;/b&gt; has the next restrictions:
 &lt;ul&gt;
   &lt;li&gt;New line &lt;b&gt;CAN be done by &quot;Return&quot;/&quot;Enter&quot; key&lt;/b&gt; easily.&lt;/li&gt;
@@ -2736,22 +2736,22 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="256"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="491"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="514"/>
         <source>Margin of section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="257"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="492"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="515"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="320"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="325"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="334"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="345"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="356"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="327"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="332"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="341"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="352"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="363"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2897,12 +2897,12 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="139"/>
-        <source>Collision script</source>
+        <source>Collision script function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="140"/>
-        <source>Mouse click Script</source>
+        <source>Mouse click Script function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2931,49 +2931,54 @@ So, please break these words to avoid this.&lt;/li&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="151"/>
-        <source>Copy preferences</source>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="146"/>
+        <source>Sub-Area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="152"/>
-        <source>Array-ID: %1</source>
+        <source>Copy preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="153"/>
-        <source>Position: X, Y, Width, Height</source>
+        <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="154"/>
+        <source>Position: X, Y, Width, Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="155"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="157"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="158"/>
         <source>Resize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="161"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="162"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="162"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="163"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="164"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="165"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="181"/>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="192"/>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="203"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="182"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="193"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="204"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3287,81 +3292,81 @@ So, please break these words to avoid this.&lt;/li&gt;
 <context>
     <name>JsonSettingsWidget</name>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1203"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1226"/>
         <source>Browse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1212"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1235"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1319"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1342"/>
         <source>Add new item into the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1326"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1349"/>
         <source>Remove selected item from the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1337"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1360"/>
         <source>Play selected file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1346"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1369"/>
         <source>Open...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1347"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1370"/>
         <source>Open selected file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1408"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1431"/>
         <source>Add new line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1409"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1432"/>
         <source>Please enter a text line to add:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1516"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1520"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1522"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1524"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1526"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1528"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1530"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1532"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1539"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1543"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1545"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1547"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1549"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1551"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1553"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1555"/>
         <source>[empty]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1519"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1542"/>
         <source>%1 coins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1748"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1801"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2026"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2126"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1771"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1824"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2049"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2149"/>
         <source>W</source>
         <comment>Width, shortly</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1760"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1812"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2038"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="2137"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1783"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1835"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2061"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="2160"/>
         <source>H</source>
         <comment>Height, shortly</comment>
         <translation type="unfinished"></translation>
@@ -3644,132 +3649,132 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="75"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="72"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="96"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="93"/>
         <source>No settings available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="130"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="127"/>
         <source>Physics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="137"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="134"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="145"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="142"/>
         <source>Physics type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="158"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="155"/>
         <source>Disable player controls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="164"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="161"/>
         <source>Drop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="171"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="168"/>
         <source>Jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="178"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="175"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="185"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="182"/>
         <source>Alt-Jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="192"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="189"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="199"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="196"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="206"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="203"/>
         <source>Alt-Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="213"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="210"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="220"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="217"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="227"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="224"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="240"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="237"/>
         <source>Timer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="246"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="243"/>
         <source>Enable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="253"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="250"/>
         <source> sec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="264"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="261"/>
         <source>Kill all players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="269"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="266"/>
         <source>Trigger event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="277"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="274"/>
         <source>Time limit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="284"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="281"/>
         <source>Timer type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="291"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="288"/>
         <source>Event:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="308"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="305"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="314"/>
+        <location filename="../editing/edit_level/levelprops.ui" line="311"/>
         <source>Level name:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4222,343 +4227,451 @@ Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="61"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="64"/>
         <source>Events list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="80"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="83"/>
         <source>Create copy of event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="135"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="138"/>
         <source>Autostart event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="210"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="216"/>
         <source>Layer visibly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="235"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="241"/>
         <source>Disable smoke effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="260"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="266"/>
         <source>Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="324"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="330"/>
         <source>Show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="336"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="342"/>
         <source>Toggle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="501"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="507"/>
         <source>Layers movement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="529"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="731"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1144"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="535"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="737"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1150"/>
         <source>Horisontal speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="555"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="561"/>
         <source>Set moving layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="594"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="717"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1177"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="600"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="723"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1183"/>
         <source>Vertical speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="607"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="620"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="672"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="724"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1170"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1203"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="613"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="626"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="678"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="730"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1176"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1209"/>
         <source>bps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="637"/>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="580"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="643"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="586"/>
         <source>Autoscroll section (Legacy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="665"/>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="372"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="671"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="378"/>
         <source>Section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="754"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="760"/>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="777"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="783"/>
         <source>Section settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="804"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="810"/>
         <source>Current section:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="821"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="827"/>
         <source>Set size and position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="863"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="866"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="869"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="872"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="879"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="882"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="885"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="888"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="895"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="898"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1447"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="901"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="904"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1453"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="911"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="914"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1461"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="917"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="920"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1467"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="927"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="933"/>
         <source>Capture...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="952"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="988"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1059"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="958"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="994"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1065"/>
         <source>Don&apos;t change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="959"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="995"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1066"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="965"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1001"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1072"/>
         <source>Reset to default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="966"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="972"/>
         <source>Define new:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="979"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="985"/>
         <source>Set music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1002"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1008"/>
         <source>Replace music to:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1050"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1056"/>
         <source>Set background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1073"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1079"/>
         <source>Replace background to:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1093"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1099"/>
         <source>Change the autoscroll speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1102"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1108"/>
         <source>Type:</source>
         <comment>Autoscroll type</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1110"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1116"/>
         <source>Simple</source>
         <comment>Simple autoscrolling</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1115"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1121"/>
         <source>Advanced</source>
         <comment>Advanced autoscrolling (draw custom path)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1231"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1237"/>
         <source>Not implemented yet, sorry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1257"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1263"/>
         <source>Common</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1290"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1296"/>
         <source>Display message:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1309"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1315"/>
         <source>Play sound:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1321"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1327"/>
         <source>Do end game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1338"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1344"/>
         <source>Nothing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1343"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1349"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1381"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1387"/>
         <source>Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1398"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1404"/>
         <source>Player Control hold keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1426"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1432"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1433"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1439"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1440"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1446"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1454"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1460"/>
         <source>Jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1468"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1474"/>
         <source>Alt-jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1475"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1481"/>
         <source>Alt-run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1482"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1488"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1489"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1495"/>
         <source>Drop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1506"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1512"/>
         <source>Trigger event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1531"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1537"/>
         <source>Delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="281"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="287"/>
         <source>[Silence]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="386"/>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="2258"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="392"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2461"/>
         <source>[none]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="575"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="581"/>
         <source>Disabled by the strict SMBX64 mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="580"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="586"/>
         <source>Autoscroll section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1129"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1132"/>
         <source>New Event %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1181"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1184"/>
         <source>Copyed Event %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1922"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1247"/>
+        <source>Rename event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1249"/>
+        <source>Remove event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1252"/>
+        <source>Show event statistics...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1348"/>
+        <source>Event &quot;%1&quot; statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1350"/>
+        <source>Total triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1351"/>
+        <source>Block triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1352"/>
+        <source>NPC triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1353"/>
+        <source>Warp triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1354"/>
+        <source>Physical environment triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1355"/>
+        <source>Other events triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1359"/>
+        <source>Autostart type</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1364"/>
+        <source>Level start</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1367"/>
+        <source>Match all conditions</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1370"/>
+        <source>Call and match</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1373"/>
+        <source>[Unknown]</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1382"/>
+        <source>&lt;h2&gt;Event &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused event&amp;gt;&lt;/center&gt;
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1387"/>
+        <source>Triggered by other events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1396"/>
+        <source>Remove this event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1399"/>
+        <source>Event statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2125"/>
         <source>Get section size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1923"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2126"/>
         <source>Please, set current section to %1 for capture data for this event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="2248"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2451"/>
         <source>Please, enter the message box text:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4930,7 +5043,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="630"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1347"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1770"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2134"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2137"/>
         <source>[empty]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4981,61 +5094,146 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="709"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="785"/>
         <source>Layers merge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="710"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="786"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="793"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="870"/>
         <source>New Layer %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="867"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="943"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="951"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="944"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1181"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1189"/>
         <source>Remove layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="868"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="945"/>
         <source>Are you sure you want to remove this layer?
 All objects on this layer will be moved to the &apos;Default&apos; layer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="892"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="977"/>
         <source>Rename layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="894"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="979"/>
         <source>Select all items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="904"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="984"/>
+        <source>Show layer statistics...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="992"/>
         <source>Remove layer with items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="905"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="993"/>
         <source>Remove Layer and keep items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="944"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1102"/>
+        <source>Layer &quot;%1&quot; statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1104"/>
+        <source>Total members</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1105"/>
+        <source>Blocks</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1106"/>
+        <source>Background objects</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1107"/>
+        <source>NPC</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1108"/>
+        <source>Warps</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1109"/>
+        <source>Physical environments</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1112"/>
+        <source>Usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1114"/>
+        <source>Attaches to NPCs</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1115"/>
+        <source>Referred in events</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1119"/>
+        <source>&lt;h2&gt;Layer &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused layer with no members&amp;gt;&lt;/center&gt;
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1124"/>
+        <source>Referred in events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1134"/>
+        <source>Remove this layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1137"/>
+        <source>Layer statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1182"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="952"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1190"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
         <translation type="unfinished"></translation>
@@ -5946,40 +6144,50 @@ number of existing and collected stars in the level will not be shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1010"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1007"/>
         <source>On-Enter event:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1020"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1014"/>
+        <source>On-Exit event:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1024"/>
         <source>Trigger event when he player enters this warp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1062"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1034"/>
+        <source>Trigger event when he player exists this warp from other side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1076"/>
         <source>Level door</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1086"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1100"/>
         <source>Entering this warp ends the current level
 If this flag is enabled, you can only place a warp entrance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1090"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1104"/>
         <source>To other level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1097"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1111"/>
         <source>Prevents any in-level warp to exit at this warp.
 Used for creating a warp from another level.
 If this flag is enabled, you can only place a warp exit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1102"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1116"/>
         <source>From other level</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6008,60 +6216,60 @@ If this flag is enabled, you can only place a warp exit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="811"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="855"/>
         <source>Apply to all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="822"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="866"/>
         <source>Apply to all entries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="823"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="867"/>
         <source>Do you really want to apply this setting to all objects?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1106"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1150"/>
         <source>World map files not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1107"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1151"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1120"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1164"/>
         <source>Select world map file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1121"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1165"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1138"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1182"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1139"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1183"/>
         <source>Can&apos;t open the file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1322"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1366"/>
         <source>Please save the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1323"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1367"/>
         <source>Please save the file before selecting levels.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7526,40 +7734,40 @@ Please reload current file to apply result.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="224"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="157"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="163"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="169"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="227"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="165"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="171"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="177"/>
         <source>[None]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="243"/>
+        <location filename="../main_window/menubar.cpp" line="245"/>
         <source>Sub-windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="249"/>
+        <location filename="../main_window/menubar.cpp" line="251"/>
         <source>Tab Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="258"/>
+        <location filename="../main_window/menubar.cpp" line="260"/>
         <source>Close current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="264"/>
+        <location filename="../main_window/menubar.cpp" line="266"/>
         <source>Cascade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="268"/>
+        <location filename="../main_window/menubar.cpp" line="270"/>
         <source>Tiled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="274"/>
+        <location filename="../main_window/menubar.cpp" line="276"/>
         <source>[No files open]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8508,541 +8716,546 @@ Reason: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="180"/>
+        <location filename="../defines.h" line="181"/>
         <source>Invizible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="181"/>
+        <location filename="../defines.h" line="182"/>
         <source>Slippery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="182"/>
+        <location filename="../defines.h" line="183"/>
         <source>Z-Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="183"/>
+        <location filename="../defines.h" line="184"/>
         <source>Z-Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="184"/>
+        <location filename="../defines.h" line="185"/>
         <source>Friendly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="185"/>
+        <location filename="../defines.h" line="186"/>
         <source>Boss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="186"/>
+        <location filename="../defines.h" line="187"/>
         <source>Not Moveable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="187"/>
-        <location filename="../defines.h" line="243"/>
+        <location filename="../defines.h" line="188"/>
+        <location filename="../defines.h" line="245"/>
         <source>Message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="188"/>
+        <location filename="../defines.h" line="189"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="189"/>
+        <location filename="../defines.h" line="190"/>
         <source>Included NPC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="190"/>
+        <location filename="../defines.h" line="191"/>
         <source>Water Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="191"/>
+        <location filename="../defines.h" line="192"/>
         <source>Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="192"/>
+        <location filename="../defines.h" line="193"/>
         <source>No Vehicles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="193"/>
+        <location filename="../defines.h" line="194"/>
         <source>Two-way warp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="194"/>
+        <location filename="../defines.h" line="195"/>
         <source>Allow NPC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="195"/>
+        <location filename="../defines.h" line="196"/>
         <source>Allow NPC inter level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="196"/>
+        <location filename="../defines.h" line="197"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="197"/>
+        <location filename="../defines.h" line="198"/>
         <source>Need a bomb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="198"/>
+        <location filename="../defines.h" line="199"/>
         <source>Hide number of stars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="199"/>
+        <location filename="../defines.h" line="200"/>
         <source>Enable cannon exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="200"/>
+        <location filename="../defines.h" line="201"/>
         <source>Special state required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="201"/>
+        <location filename="../defines.h" line="202"/>
         <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="202"/>
+        <location filename="../defines.h" line="203"/>
         <source>Hide level entering scene</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="203"/>
+        <location filename="../defines.h" line="204"/>
         <source>Warp Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="204"/>
+        <location filename="../defines.h" line="205"/>
         <source>Warp Transition Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="205"/>
+        <location filename="../defines.h" line="206"/>
         <source>Need Stars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="206"/>
+        <location filename="../defines.h" line="207"/>
         <source>Need Stars message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="207"/>
+        <location filename="../defines.h" line="208"/>
         <source>Cannon exit projectile speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="208"/>
+        <location filename="../defines.h" line="209"/>
         <source>Entrance Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="209"/>
+        <location filename="../defines.h" line="210"/>
         <source>Exit Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="210"/>
+        <location filename="../defines.h" line="211"/>
         <source>Set Level Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="211"/>
+        <location filename="../defines.h" line="212"/>
         <source>Set Level Entrance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="212"/>
+        <location filename="../defines.h" line="213"/>
         <source>Level Warp To</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="213"/>
+        <location filename="../defines.h" line="214"/>
         <source>Activate Generator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="214"/>
+        <location filename="../defines.h" line="215"/>
         <source>Generator Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="215"/>
+        <location filename="../defines.h" line="216"/>
         <source>Generator Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="216"/>
+        <location filename="../defines.h" line="217"/>
         <source>Generator Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="217"/>
+        <location filename="../defines.h" line="218"/>
         <source>Attach Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="218"/>
+        <location filename="../defines.h" line="219"/>
         <source>Event Block Destroyed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="219"/>
+        <location filename="../defines.h" line="220"/>
         <source>Event Block Hited</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="220"/>
+        <location filename="../defines.h" line="221"/>
         <source>Event Layer Empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="221"/>
+        <location filename="../defines.h" line="222"/>
         <source>Event NPC Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="222"/>
+        <location filename="../defines.h" line="223"/>
         <source>Event NPC Die</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="223"/>
+        <location filename="../defines.h" line="224"/>
         <source>Event NPC Talk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="224"/>
+        <location filename="../defines.h" line="225"/>
         <source>Event Warp Enter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="225"/>
-        <source>NPC Special Data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../defines.h" line="226"/>
-        <source>Autostart</source>
+        <source>Event Warp Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="227"/>
-        <source>Layer Smoke Effect</source>
+        <source>NPC Special Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="228"/>
-        <source>Add Hide Layer</source>
+        <source>Autostart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="229"/>
-        <source>Remove Hide Layer</source>
+        <source>Layer Smoke Effect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="230"/>
-        <source>Add Show Layer</source>
+        <source>Add Hide Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="231"/>
-        <source>Remove Show Layer</source>
+        <source>Remove Hide Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="232"/>
-        <source>Add Toggle Layer</source>
+        <source>Add Show Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="233"/>
-        <source>Remove Toggle Layer</source>
+        <source>Remove Show Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="234"/>
-        <source>Moving Layer</source>
+        <source>Add Toggle Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="235"/>
-        <source>Layer Speed Horizontal</source>
+        <source>Remove Toggle Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="236"/>
-        <source>Layer Speed Vertical</source>
+        <source>Moving Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="237"/>
-        <source>Autoscroll Layer</source>
+        <source>Layer Speed Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="238"/>
-        <source>Autoscroll Layer Speed Horizontal</source>
+        <source>Layer Speed Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="239"/>
-        <source>Autoscroll Layer Speed Vertical</source>
+        <source>Autoscroll Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="240"/>
-        <source>Section Size</source>
+        <source>Autoscroll Layer Speed Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="241"/>
-        <source>Section Music</source>
+        <source>Autoscroll Layer Speed Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="242"/>
-        <source>Section Background</source>
+        <source>Section Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="243"/>
+        <source>Section Music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="244"/>
-        <source>Sound</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../defines.h" line="245"/>
-        <source>End Game</source>
+        <source>Section Background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="246"/>
-        <source>Up Key Activate</source>
+        <source>Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="247"/>
-        <source>Down Key Activate</source>
+        <source>End Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="248"/>
-        <source>Left Key Activate</source>
+        <source>Up Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="249"/>
-        <source>Right Key Activate</source>
+        <source>Down Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="250"/>
-        <source>Run Key Activate</source>
+        <source>Left Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="251"/>
-        <source>Alt Run Key Activate</source>
+        <source>Right Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="252"/>
-        <source>Jump Key Activate</source>
+        <source>Run Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="253"/>
-        <source>Alt Jump Key Activate</source>
+        <source>Alt Run Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="254"/>
-        <source>Drop Key Activate</source>
+        <source>Jump Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="255"/>
-        <source>Start Key Activate</source>
+        <source>Alt Jump Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="256"/>
-        <source>Trigger Activate</source>
+        <source>Drop Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="257"/>
-        <source>Trigger Delay</source>
+        <source>Start Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="258"/>
-        <source>Is Warp</source>
+        <source>Trigger Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="259"/>
-        <source>No Back</source>
+        <source>Trigger Delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="260"/>
-        <source>Off Screen Exit</source>
+        <source>Is Warp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="261"/>
-        <source>Underwater</source>
+        <source>No Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="262"/>
-        <source>Background Image</source>
+        <source>Off Screen Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="263"/>
-        <source>Music</source>
+        <source>Underwater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="264"/>
-        <source>Custom Music</source>
+        <source>Background Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="265"/>
-        <source>Level Settings</source>
+        <source>Music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="266"/>
-        <source>Section extra settings</source>
+        <source>Custom Music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="267"/>
-        <source>BGO Sorting Priority</source>
+        <source>Level Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="268"/>
+        <source>Section extra settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="269"/>
+        <source>BGO Sorting Priority</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../defines.h" line="270"/>
-        <location filename="../defines.h" line="296"/>
+        <location filename="../defines.h" line="272"/>
         <location filename="../defines.h" line="298"/>
+        <location filename="../defines.h" line="300"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="277"/>
+        <location filename="../defines.h" line="279"/>
         <source>Always Visible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="278"/>
+        <location filename="../defines.h" line="280"/>
         <source>Big Path Background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="279"/>
+        <location filename="../defines.h" line="281"/>
         <source>Character</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="280"/>
+        <location filename="../defines.h" line="282"/>
         <source>Door ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="281"/>
+        <location filename="../defines.h" line="283"/>
         <source>Game start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="282"/>
+        <location filename="../defines.h" line="284"/>
         <source>Goto X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="283"/>
+        <location filename="../defines.h" line="285"/>
         <source>Goto Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="284"/>
+        <location filename="../defines.h" line="286"/>
         <source>Hub styled world</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="285"/>
+        <location filename="../defines.h" line="287"/>
         <source>Intro Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="286"/>
+        <location filename="../defines.h" line="288"/>
         <source>Level file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="287"/>
+        <location filename="../defines.h" line="289"/>
         <source>Level title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="288"/>
+        <location filename="../defines.h" line="290"/>
         <source>World map extra settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="289"/>
+        <location filename="../defines.h" line="291"/>
         <source>Path Background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="290"/>
+        <location filename="../defines.h" line="292"/>
         <source>Exit at bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="291"/>
+        <location filename="../defines.h" line="293"/>
         <source>Exit at left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="292"/>
+        <location filename="../defines.h" line="294"/>
         <source>Exit at right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="293"/>
+        <location filename="../defines.h" line="295"/>
         <source>Exit at top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="294"/>
+        <location filename="../defines.h" line="296"/>
         <source>Restart after fail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="295"/>
+        <location filename="../defines.h" line="297"/>
         <source>Total stars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11871,7 +12084,7 @@ Do you want to save your changes?</source>
 <context>
     <name>tileset</name>
     <message>
-        <location filename="../tools/tilesets/tileset.cpp" line="98"/>
+        <location filename="../tools/tilesets/tileset.cpp" line="100"/>
         <source>Drag &amp; Drop items into this box!
 Right-click to remove!</source>
         <translation type="unfinished"></translation>

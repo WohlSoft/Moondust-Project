@@ -10,6 +10,10 @@ on:
     branches:
       - master
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: "${{ matrix.config.name }} | ${{ matrix.config.build_type }}"
@@ -83,12 +87,15 @@ jobs:
         g++-8 --version
         cmake --version
 
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 3
-        submodules: recursive
+    - uses: WohlSoft/checkout@v0.1
 
-    - uses: Wohlstand/branch-name@v1.0.1-wohl
+    - uses: WohlSoft/branch-name@v0.1
+
+    - name: Pull submodules
+      shell: bash
+      run: |
+        git submodule init
+        git submodule update
 
     - name: Check if a pull request
       id: event-check
@@ -104,10 +111,8 @@ jobs:
 
     - name: Download Qt
       if: matrix.config.qt_download
-      uses: carlosperate/download-file-action@v2
-      with:
-        file-url: "${{ matrix.config.qt_download }}"
-        file-name: qt.tar.bz2
+      shell: bash
+      run: wget -d -nv -t 5 -O qt.tar.bz2 "${{ matrix.config.qt_download }}"
 
     - name: Extract Qt
       if: matrix.config.qt_install_dir
@@ -120,10 +125,8 @@ jobs:
 
     - name: Download libreadline6
       if: matrix.config.readline6_download
-      uses: carlosperate/download-file-action@v2
-      with:
-        file-url: "${{ matrix.config.readline6_download }}"
-        file-name: libreadline6.deb
+      shell: bash
+      run: wget -d -nv -t 5 -O libreadline6.deb "${{ matrix.config.readline6_download }}"
 
     - name: Install LFTP
       if: matrix.config.readline6_download
@@ -134,10 +137,8 @@ jobs:
 
     - name: Download LFTP
       if: matrix.config.lftp_download
-      uses: carlosperate/download-file-action@v2
-      with:
-        file-url: "${{ matrix.config.lftp_download }}"
-        file-name: lftp.deb
+      shell: bash
+      run: wget -d -nv -t 5 -O lftp.deb "${{ matrix.config.lftp_download }}"
 
     - name: Install LFTP
       if: matrix.config.lftp_download

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -188,6 +188,11 @@ void LvlMusPlay::setNoMusic()
 void LvlMusPlay::setTempo(double tempo)
 {
     PGE_MusPlayer::setTempo(tempo);
+}
+
+void LvlMusPlay::setGain(double gain)
+{
+    PGE_MusPlayer::setGain(gain);
 }
 
 // TODO: Refactor this

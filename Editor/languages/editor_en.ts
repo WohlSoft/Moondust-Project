@@ -2409,14 +2409,6 @@ So, please break these words to avoid this.&lt;/li&gt;
         <translation>NPC/Player Touch Event (Every frame)</translation>
     </message>
     <message>
-        <source>Collision script</source>
-        <translation>Collision script</translation>
-    </message>
-    <message>
-        <source>Mouse click Script</source>
-        <translation>Mouse click Script</translation>
-    </message>
-    <message>
         <source>Collision Event</source>
         <translation>Collision Event</translation>
     </message>
@@ -2463,6 +2455,18 @@ So, please break these words to avoid this.&lt;/li&gt;
     <message>
         <source>Array-ID: %1</source>
         <translation>Array-ID: %1</translation>
+    </message>
+    <message>
+        <source>Collision script function</source>
+        <translation>Collision script function</translation>
+    </message>
+    <message>
+        <source>Mouse click Script function</source>
+        <translation>Mouse click Script function</translation>
+    </message>
+    <message>
+        <source>Sub-Area</source>
+        <translation>Sub-Area</translation>
     </message>
 </context>
 <context>
@@ -3699,6 +3703,97 @@ Do you want to continue?</translation>
         <source>Please, enter the message box text:</source>
         <translation>Please, enter the message box text:</translation>
     </message>
+    <message>
+        <source>Rename event</source>
+        <translation>Rename event</translation>
+    </message>
+    <message>
+        <source>Remove event</source>
+        <translation>Remove event</translation>
+    </message>
+    <message>
+        <source>Show event statistics...</source>
+        <translation>Show event statistics...</translation>
+    </message>
+    <message>
+        <source>Event &quot;%1&quot; statistics</source>
+        <translation>Event &quot;%1&quot; statistics</translation>
+    </message>
+    <message>
+        <source>Total triggers</source>
+        <comment>Event statistics field</comment>
+        <translation>Total triggers</translation>
+    </message>
+    <message>
+        <source>Block triggers</source>
+        <comment>Event statistics field</comment>
+        <translation>Block triggers</translation>
+    </message>
+    <message>
+        <source>NPC triggers</source>
+        <comment>Event statistics field</comment>
+        <translation>NPC triggers</translation>
+    </message>
+    <message>
+        <source>Warp triggers</source>
+        <comment>Event statistics field</comment>
+        <translation>Warp triggers</translation>
+    </message>
+    <message>
+        <source>Physical environment triggers</source>
+        <comment>Event statistics field</comment>
+        <translation>Physical environment triggers</translation>
+    </message>
+    <message>
+        <source>Other events triggers</source>
+        <comment>Event statistics field</comment>
+        <translation>Other events triggers</translation>
+    </message>
+    <message>
+        <source>Autostart type</source>
+        <comment>Event statistics field</comment>
+        <translation>Autostart type</translation>
+    </message>
+    <message>
+        <source>Level start</source>
+        <comment>Event autostart type</comment>
+        <translation>Level start</translation>
+    </message>
+    <message>
+        <source>Match all conditions</source>
+        <comment>Event autostart type</comment>
+        <translation>Match all conditions</translation>
+    </message>
+    <message>
+        <source>Call and match</source>
+        <comment>Event autostart type</comment>
+        <translation>Call and match</translation>
+    </message>
+    <message>
+        <source>[Unknown]</source>
+        <comment>Event autostart type</comment>
+        <translation>[Unknown]</translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Event &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused event&amp;gt;&lt;/center&gt;
+</source>
+        <translation>&lt;h2&gt;Event &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused event&amp;gt;&lt;/center&gt;
+</translation>
+    </message>
+    <message>
+        <source>Triggered by other events</source>
+        <translation>Triggered by other events</translation>
+    </message>
+    <message>
+        <source>Remove this event</source>
+        <translation>Remove this event</translation>
+    </message>
+    <message>
+        <source>Event statistics</source>
+        <translation>Event statistics</translation>
+    </message>
 </context>
 <context>
     <name>LvlHistoryManager</name>
@@ -4069,6 +4164,78 @@ All objects on this layer will be deleted!</translation>
     <message>
         <source>Select all items</source>
         <translation>Select all items</translation>
+    </message>
+    <message>
+        <source>Show layer statistics...</source>
+        <translation>Show layer statistics...</translation>
+    </message>
+    <message>
+        <source>Layer &quot;%1&quot; statistics</source>
+        <translation>Layer &quot;%1&quot; statistics</translation>
+    </message>
+    <message>
+        <source>Total members</source>
+        <comment>Layer statistics field</comment>
+        <translation>Total members</translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <comment>Layer statistics field</comment>
+        <translation>Blocks</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <comment>Layer statistics field</comment>
+        <translation>Background objects</translation>
+    </message>
+    <message>
+        <source>NPC</source>
+        <comment>Layer statistics field</comment>
+        <translation>NPC</translation>
+    </message>
+    <message>
+        <source>Warps</source>
+        <comment>Layer statistics field</comment>
+        <translation>Warps</translation>
+    </message>
+    <message>
+        <source>Physical environments</source>
+        <comment>Layer statistics field</comment>
+        <translation>Physical environments</translation>
+    </message>
+    <message>
+        <source>Usage</source>
+        <translation>Usage</translation>
+    </message>
+    <message>
+        <source>Attaches to NPCs</source>
+        <comment>Layer statistics field</comment>
+        <translation>Attaches to NPCs</translation>
+    </message>
+    <message>
+        <source>Referred in events</source>
+        <comment>Layer statistics field</comment>
+        <translation>Referred in events</translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Layer &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused layer with no members&amp;gt;&lt;/center&gt;
+</source>
+        <translation>&lt;h2&gt;Layer &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused layer with no members&amp;gt;&lt;/center&gt;
+</translation>
+    </message>
+    <message>
+        <source>Referred in events</source>
+        <translation>Referred in events</translation>
+    </message>
+    <message>
+        <source>Remove this layer</source>
+        <translation>Remove this layer</translation>
+    </message>
+    <message>
+        <source>Layer statistics</source>
+        <translation>Layer statistics</translation>
     </message>
 </context>
 <context>
@@ -4875,6 +5042,14 @@ show the current playable character(s) and number of lives.</translation>
     <message>
         <source>Do you really want to apply this setting to all objects?</source>
         <translation>Do you really want to apply this setting to all objects?</translation>
+    </message>
+    <message>
+        <source>On-Exit event:</source>
+        <translation>On-Exit event:</translation>
+    </message>
+    <message>
+        <source>Trigger event when he player exists this warp from other side</source>
+        <translation>Trigger event when he player exists this warp from other side</translation>
     </message>
 </context>
 <context>
@@ -7340,6 +7515,10 @@ Reason: %1
     <message>
         <source>World map extra settings</source>
         <translation>World map extra settings</translation>
+    </message>
+    <message>
+        <source>Event Warp Exit</source>
+        <translation>Event Warp Exit</translation>
     </message>
 </context>
 <context>

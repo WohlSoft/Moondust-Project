@@ -2357,14 +2357,6 @@ So, please break these words to avoid this.&lt;/li&gt;
         <translation>Подія дотику НІП/Гравця (циклічно)</translation>
     </message>
     <message>
-        <source>Collision script</source>
-        <translation>Скрипт колізії</translation>
-    </message>
-    <message>
-        <source>Mouse click Script</source>
-        <translation>Скрипт натискання кнопки миші</translation>
-    </message>
-    <message>
         <source>Collision Event</source>
         <translation>Подія колізії</translation>
     </message>
@@ -2411,6 +2403,18 @@ So, please break these words to avoid this.&lt;/li&gt;
     <message>
         <source>Array-ID: %1</source>
         <translation>ID масиву: %1</translation>
+    </message>
+    <message>
+        <source>Collision script function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mouse click Script function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sub-Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3641,6 +3645,95 @@ Do you want to continue?</source>
         <source>Please, enter the message box text:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rename event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show event statistics...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Event &quot;%1&quot; statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPC triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warp triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical environment triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other events triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autostart type</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level start</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Match all conditions</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Call and match</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[Unknown]</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Event &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused event&amp;gt;&lt;/center&gt;
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triggered by other events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove this event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Event statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlHistoryManager</name>
@@ -4010,6 +4103,76 @@ All elements of this layer will be removed too!</source>
     </message>
     <message>
         <source>Select all items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show layer statistics...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer &quot;%1&quot; statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total members</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished">Блоки</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPC</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished">НІП</translation>
+    </message>
+    <message>
+        <source>Warps</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical environments</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attaches to NPCs</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Referred in events</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Layer &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused layer with no members&amp;gt;&lt;/center&gt;
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Referred in events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove this layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer statistics</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4817,6 +4980,14 @@ Please, select necessary world map in a list:</source>
     <message>
         <source>Do you really want to apply this setting to all objects?</source>
         <translation>Ви справді бажаєте застосувати це налаштування до всіх об&apos;єктів?</translation>
+    </message>
+    <message>
+        <source>On-Exit event:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trigger event when he player exists this warp from other side</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7281,6 +7452,10 @@ File: %1</source>
     </message>
     <message>
         <source>World map extra settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Event Warp Exit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

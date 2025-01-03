@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ class ItemTile : public WldBaseItem
 public:
     ItemTile(QGraphicsItem *parent = nullptr);
     ItemTile(WldScene *parentScene, QGraphicsItem *parent = nullptr);
-    ~ItemTile();
+    virtual ~ItemTile();
 
     void setTileData(WorldTerrainTile inD, obj_w_tile *mergedSet = nullptr, long *animator_id = nullptr);
 

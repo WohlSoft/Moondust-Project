@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -271,7 +271,9 @@ void ItemNPC::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 if(SelItem->data(ITEM_TYPE).toString() == "NPC")
                 {
-                    ItemNPC *sItem = (ItemNPC *)SelItem;
+                    ItemNPC *sItem = qgraphicsitem_cast<ItemNPC *>(SelItem);
+                    Q_ASSERT(sItem);
+
                     if((!sameID) || (sItem->m_data.id == oldID))
                     {
                         oldData.npc.push_back(sItem->m_data);
@@ -283,6 +285,7 @@ void ItemNPC::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 cancelTransform:
             ;
         }
+
         delete npcList;
         if(!newData.npc.isEmpty())
             m_scene->m_history->addTransform(newData, oldData);
@@ -295,6 +298,7 @@ cancelTransform:
                 0, 0, 0, 0, 0, m_scene->m_subWindow);
         npcList->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
         npcList->setGeometry(util::alignToScreenCenter(npcList->size()));
+
         if(npcList->exec() == QDialog::Accepted)
         {
             //apply to all selected items.
@@ -306,12 +310,15 @@ cancelTransform:
             {
                 if(SelItem->data(ITEM_TYPE).toString() == "NPC")
                 {
-                    selData.npc.push_back(((ItemNPC *) SelItem)->m_data);
-                    ((ItemNPC *) SelItem)->setIncludedNPC(selected_npc);
+                    ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
+                    Q_ASSERT(n);
+                    selData.npc.push_back(n->m_data);
+                    n->setIncludedNPC(selected_npc);
                 }
             }
             m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_CHANGENPC, QVariant(selected_npc));
         }
+
         delete npcList;
     }
     else if(selected == copyArrayID)
@@ -359,6 +366,7 @@ cancelTransform:
     {
         LogDebug(QString("NPC.txt path 1: %1").arg(NPCpath1));
         LogDebug(QString("NPC.txt path 2: %1").arg(NPCpath2));
+
         if((!m_scene->m_data->meta.untitled) && (QFileInfo(NPCpath2).exists()))
             m_scene->m_mw->OpenFile(NPCpath2);
         else if((!m_scene->m_data->meta.untitled) && (QFileInfo(NPCpath1).exists()))
@@ -379,8 +387,10 @@ cancelTransform:
         {
             if(SelItem->data(ITEM_TYPE).toString() == "NPC")
             {
-                selData.npc.push_back(((ItemNPC *) SelItem)->m_data);
-                ((ItemNPC *) SelItem)->setFriendly(fri->isChecked());
+                ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
+                Q_ASSERT(n);
+                selData.npc.push_back(n->m_data);
+                n->setFriendly(fri->isChecked());
             }
         }
         m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_FRIENDLY, QVariant(fri->isChecked()));
@@ -393,8 +403,10 @@ cancelTransform:
         {
             if(SelItem->data(ITEM_TYPE).toString() == "NPC")
             {
-                selData.npc.push_back(((ItemNPC *) SelItem)->m_data);
-                ((ItemNPC *) SelItem)->setNoMovable(stat->isChecked());
+                ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
+                Q_ASSERT(n);
+                selData.npc.push_back(n->m_data);
+                n->setNoMovable(stat->isChecked());
             }
         }
         m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_NOMOVEABLE, QVariant(stat->isChecked()));
@@ -413,11 +425,14 @@ cancelTransform:
             {
                 if(SelItem->data(ITEM_TYPE).toString() == "NPC")
                 {
-                    selData.npc.push_back(((ItemNPC *) SelItem)->m_data);
-                    ((ItemNPC *) SelItem)->setMsg(msgBox.currentText);
-                    ((ItemNPC *) SelItem)->setFriendly(msgBox.isFriendlyChecked());
+                    ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
+                    Q_ASSERT(n);
+                    selData.npc.push_back(n->m_data);
+                    n->setMsg(msgBox.currentText);
+                    n->setFriendly(msgBox.isFriendlyChecked());
                 }
             }
+
             m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_MESSAGE, QVariant(msgBox.currentText));
             m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_FRIENDLY, QVariant(msgBox.isFriendlyChecked()));
         }
@@ -430,8 +445,10 @@ cancelTransform:
         {
             if(SelItem->data(ITEM_TYPE).toString() == "NPC")
             {
-                selData.npc.push_back(((ItemNPC *) SelItem)->m_data);
-                ((ItemNPC *) SelItem)->setLegacyBoss(boss->isChecked());
+                ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
+                Q_ASSERT(n);
+                selData.npc.push_back(n->m_data);
+                n->setLegacyBoss(boss->isChecked());
             }
         }
         m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_BOSS, QVariant(boss->isChecked()));
@@ -443,34 +460,40 @@ cancelTransform:
         {
             if(SelItem->data(ITEM_TYPE).toString() == "NPC")
             {
-                selData.npc.push_back(((ItemNPC *) SelItem)->m_data);
-                ((ItemNPC *) SelItem)->changeDirection(-1);
+                ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
+                Q_ASSERT(n);
+                selData.npc.push_back(n->m_data);
+                n->changeDirection(-1);
             }
         }
         m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_DIRECTION, QVariant(-1));
     }
-    if(selected == setRand)
+    else if(selected == setRand)
     {
         LevelData selData;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
             if(SelItem->data(ITEM_TYPE).toString() == "NPC")
             {
-                selData.npc.push_back(((ItemNPC *) SelItem)->m_data);
-                ((ItemNPC *) SelItem)->changeDirection(0);
+                ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
+                Q_ASSERT(n);
+                selData.npc.push_back(n->m_data);
+                n->changeDirection(0);
             }
         }
         m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_DIRECTION, QVariant(0));
     }
-    if(selected == setRight)
+    else if(selected == setRight)
     {
         LevelData selData;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
             if(SelItem->data(ITEM_TYPE).toString() == "NPC")
             {
-                selData.npc.push_back(((ItemNPC *) SelItem)->m_data);
-                ((ItemNPC *) SelItem)->changeDirection(1);
+                ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
+                Q_ASSERT(n);
+                selData.npc.push_back(n->m_data);
+                n->changeDirection(1);
             }
         }
         m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_DIRECTION, QVariant(1));
@@ -500,14 +523,17 @@ cancelTransform:
             section.setBottom(s.size_bottom + mg);
             our_items = m_scene->items(section, Qt::IntersectsItemShape);
         }
+
         for(QGraphicsItem *SelItem : our_items)
         {
             if(SelItem->data(ITEM_TYPE).toString() == "NPC")
             {
-                if(((ItemNPC *) SelItem)->m_data.id == oldID)
+                ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
+                if(n->m_data.id == oldID)
                     selectedList.push_back(SelItem);
             }
         }
+
         if(!selectedList.isEmpty())
         {
             m_scene->removeLvlItems(selectedList);

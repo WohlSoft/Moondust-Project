@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -265,8 +265,9 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     if(SelItem->data(ITEM_TYPE).toString() == "Block")
                     {
-                        ItemBlock *item = (ItemBlock *)SelItem;
-                        if((!sameID) || (item->m_data.id == oldID))
+                        ItemBlock *item = qgraphicsitem_cast<ItemBlock*>(SelItem);
+                        Q_ASSERT(item);
+                        if(!sameID || item->m_data.id == oldID)
                         {
                             oldData.blocks.push_back(item->m_data);
                             item->transformTo(transformTO);
@@ -282,8 +283,9 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     if(SelItem->data(ITEM_TYPE).toString() == "Block")
                     {
-                        ItemBlock *item = (ItemBlock *)SelItem;
-                        if((!sameID) || (item->m_data.id == oldID))
+                        ItemBlock *item = qgraphicsitem_cast<ItemBlock*>(SelItem);
+                        Q_ASSERT(item);
+                        if(!sameID || item->m_data.id == oldID)
                         {
                             oldData.blocks.push_back(item->m_data);
                             LevelBGO bgo;
@@ -381,8 +383,10 @@ typeEventAgain:
         {
             if(SelItem->data(ITEM_TYPE).toString() == "Block")
             {
-                selData.blocks.push_back(((ItemBlock *) SelItem)->m_data);
-                ((ItemBlock *) SelItem)->setInvisible(invis->isChecked());
+                ItemBlock *b = qgraphicsitem_cast<ItemBlock*>(SelItem);
+                Q_ASSERT(b);
+                selData.blocks.push_back(b->m_data);
+                b->setInvisible(invis->isChecked());
             }
         }
         m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_INVISIBLE, QVariant(invis->isChecked()));
@@ -395,8 +399,10 @@ typeEventAgain:
         {
             if(SelItem->data(ITEM_TYPE).toString() == "Block")
             {
-                selData.blocks.push_back(((ItemBlock *) SelItem)->m_data);
-                ((ItemBlock *) SelItem)->setSlippery(slipp->isChecked());
+                ItemBlock *b = qgraphicsitem_cast<ItemBlock*>(SelItem);
+                Q_ASSERT(b);
+                selData.blocks.push_back(b->m_data);
+                b->setSlippery(slipp->isChecked());
             }
         }
         m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_SLIPPERY, QVariant(invis->isChecked()));
@@ -428,10 +434,12 @@ typeEventAgain:
             {
                 if(SelItem->data(ITEM_TYPE).toString() == "Block")
                 {
-                    //((ItemBlock *) SelItem)->blockData.npc_id = selected_npc;
-                    //((ItemBlock *) SelItem)->arrayApply();
-                    selData.blocks.push_back(((ItemBlock *) SelItem)->m_data);
-                    ((ItemBlock *) SelItem)->setIncludedNPC(selected_npc);
+                    ItemBlock *b = qgraphicsitem_cast<ItemBlock*>(SelItem);
+                    Q_ASSERT(b);
+                    //b->blockData.npc_id = selected_npc;
+                    //b->arrayApply();
+                    selData.blocks.push_back(b->m_data);
+                    b->setIncludedNPC(selected_npc);
                 }
             }
             m_scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_CHANGENPC, QVariant(selected_npc));
@@ -468,7 +476,9 @@ typeEventAgain:
         {
             if(SelItem->data(ITEM_TYPE).toString() == "Block")
             {
-                if(((ItemBlock *) SelItem)->m_data.id == oldID)
+                ItemBlock *b = qgraphicsitem_cast<ItemBlock*>(SelItem);
+                Q_ASSERT(b);
+                if(b->m_data.id == oldID)
                     selectedList.push_back(SelItem);
             }
         }
@@ -494,9 +504,11 @@ cancelRemoveSSS:
             {
                 if(SelItem->data(ITEM_TYPE).toString() == "Block")
                 {
-                    selData.blocks.push_back(((ItemBlock *)SelItem)->m_data);
-                    ((ItemBlock *) SelItem)->m_data.meta.custom_params = ch;
-                    ((ItemBlock *) SelItem)->arrayApply();
+                    ItemBlock *b = qgraphicsitem_cast<ItemBlock*>(SelItem);
+                    Q_ASSERT(b);
+                    selData.blocks.push_back(b->m_data);
+                    b->m_data.meta.custom_params = ch;
+                    b->arrayApply();
                 }
             }
             m_scene->m_history->addChangeSettings(selData, new BlockHistory_UserData(), ch);

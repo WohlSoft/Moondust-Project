@@ -2355,14 +2355,6 @@ So, please break these words to avoid this.&lt;/li&gt;
         <translation>Dotknięcie NPC/Gracza (Wszystkie klatki)</translation>
     </message>
     <message>
-        <source>Collision script</source>
-        <translation>Skrypt kolizji</translation>
-    </message>
-    <message>
-        <source>Mouse click Script</source>
-        <translation>Skrypt kliknięcia myszy</translation>
-    </message>
-    <message>
         <source>Collision Event</source>
         <translation>Event kolizji</translation>
     </message>
@@ -2408,6 +2400,18 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collision script function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mouse click Script function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sub-Area</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3640,6 +3644,95 @@ Czy chcesz kontynuować?</translation>
         <source>Please, enter the message box text:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rename event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show event statistics...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Event &quot;%1&quot; statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPC triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warp triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical environment triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other events triggers</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autostart type</source>
+        <comment>Event statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level start</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Match all conditions</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Call and match</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[Unknown]</source>
+        <comment>Event autostart type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Event &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused event&amp;gt;&lt;/center&gt;
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triggered by other events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove this event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Event statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlHistoryManager</name>
@@ -4008,6 +4101,76 @@ Wszystkie obiekty związane z tą warstwą zostaną usunięte!</translation>
     </message>
     <message>
         <source>Select all items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show layer statistics...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer &quot;%1&quot; statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total members</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished">Bloki</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPC</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished">NPC</translation>
+    </message>
+    <message>
+        <source>Warps</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical environments</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attaches to NPCs</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Referred in events</source>
+        <comment>Layer statistics field</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Layer &quot;%1&quot; statistics:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;This is an unused layer with no members&amp;gt;&lt;/center&gt;
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Referred in events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove this layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer statistics</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4813,6 +4976,14 @@ Proszę, wybierz jeden plik z listy:</translation>
         <source>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On-Exit event:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trigger event when he player exists this warp from other side</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7268,6 +7439,10 @@ Reason: %1
     </message>
     <message>
         <source>World map extra settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Event Warp Exit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

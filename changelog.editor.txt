@@ -50,6 +50,11 @@ beta2
 - Added an ability to open an intro level from the world map directly
 - World maps saving into the SMBX-38A format now works
 - Reworked the message box edit dialogue: Added the accurate preview for different target engines
+- Added layer and event statistics that can be opened by layer's or event's context menu
+- Fixed random crashes when removing objects from the scene
+- Resolved the problem of abnormal duplicates of layers and events entries appear in the GUI lists
+- Added On-Exit warp event entry for supported engines
+- Fixed the incorrect refreshing of selected layers and events in some toolboxes when switching between opened files
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

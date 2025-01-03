@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,8 +108,9 @@ void CustomCounterGUI::replaceItem(long what, long with)
     if(counterData.items.contains(what))
     {
         counterData.items[counterData.items.indexOf(what)]=with;
-        QList<QListWidgetItem * > items = ui->ItemList->findItems("*", Qt::MatchWildcard);
-        foreach(QListWidgetItem* x, items)
+
+        QList<QListWidgetItem * > items = util::items(ui->ItemList);
+        for(QListWidgetItem* x : items)
         {
             if(x->data(Qt::UserRole).toInt()==what)
             {
@@ -126,8 +127,9 @@ void CustomCounterGUI::removeItem(long what)
     if(counterData.items.contains(what))
     {
         counterData.items.remove(counterData.items.indexOf(what));
-        QList<QListWidgetItem * > items = ui->ItemList->findItems("*", Qt::MatchWildcard);
-        foreach(QListWidgetItem* x, items)
+
+        QList<QListWidgetItem * > items = util::items(ui->ItemList);
+        for(QListWidgetItem* x : items)
         {
             if(x->data(Qt::UserRole).toInt()==what)
             {

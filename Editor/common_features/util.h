@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ class QDialog;
 class QLayout;
 class QLineEdit;
 class QListWidget;
+class QListWidgetItem;
 class QTableWidget;
 class QComboBox;
 class QTabBar;
@@ -41,6 +42,11 @@ public:
      * \param typeBox ComboBox contains type of search (by contained string in a name or ID number of the element)
      */
     static void updateFilter(QLineEdit* searchEdit, QListWidget* itemList, int searchType);
+    /*!
+     * \brief Returns a list of all items of QListWidget
+     * \param wid Pointer to QListWidget
+     */
+    static QList<QListWidgetItem *> items(QListWidget* wid);
     /*!
      * \brief Removes all entries of QListWidget (with deletion!)
      * \param wid Pointer to QListWidget

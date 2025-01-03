@@ -204,22 +204,22 @@
         <translation>Jeżeli ta flaga jest aktywowana, chwycony przedmiot będzie względnie przesunięty do lewej strony hitboxa. Również chwycony przedmiot będzie relatywnie przesunięty do prawej strony hitboxa.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="689"/>
+        <location filename="../calibration_main.ui" line="692"/>
         <source>Scrolling</source>
         <translation>Przewijanie</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="712"/>
+        <location filename="../calibration_main.ui" line="715"/>
         <source>Scroll right</source>
         <translation>Przewiń w prawo</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="723"/>
+        <location filename="../calibration_main.ui" line="726"/>
         <source>Scroll up</source>
         <translation>Przewiń w górę</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="734"/>
+        <location filename="../calibration_main.ui" line="737"/>
         <source>Tip: Mouse is supported!
 
 Left button - move hitbox
@@ -240,27 +240,27 @@ Przewijanie - Przybliż/Oddal
 Prawy przycisk - porusz równoważnik chwytania, jeśli jest widoczny.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="752"/>
+        <location filename="../calibration_main.ui" line="755"/>
         <source>Zoom out</source>
         <translation>Oddalanie</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="763"/>
+        <location filename="../calibration_main.ui" line="766"/>
         <source>Zoom in</source>
         <translation>Zbliżanie</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="774"/>
+        <location filename="../calibration_main.ui" line="777"/>
         <source>Scroll left</source>
         <translation>Przewiń w lewo</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="796"/>
+        <location filename="../calibration_main.ui" line="799"/>
         <source>Scroll down</source>
         <translation>Przewiń w dół</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="807"/>
+        <location filename="../calibration_main.ui" line="810"/>
         <source>Tip: Mouse is supported!
 
 Left button: Move frame or use actions
@@ -281,32 +281,32 @@ Przewijanie - Przbliżenie/Oddalenie
 Prawy przycisk - Przesuń prawe, dolne krawędzie przycięcia.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="839"/>
+        <location filename="../calibration_main.ui" line="842"/>
         <source>Quit</source>
         <translation>Zakończ</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="857"/>
+        <location filename="../calibration_main.ui" line="860"/>
         <source>Copy calibration settings of the current frame</source>
         <translation>Kopiuj ustawienia kalibracji obecnej klatki</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="872"/>
+        <location filename="../calibration_main.ui" line="875"/>
         <source>Past calibration settings from the clipboard</source>
         <translation>Wklej ustawienia kalibracji ze schowka</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="893"/>
+        <location filename="../calibration_main.ui" line="896"/>
         <source>Open the Wiki page...</source>
         <translation>Otwórz stronę Wiki...</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="927"/>
+        <location filename="../calibration_main.ui" line="930"/>
         <source>Useful for tests or sprites creation from the scratch</source>
         <translation>Użyteczne dla testów lub kreowania spriteów od zera</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="924"/>
+        <location filename="../calibration_main.ui" line="927"/>
         <source>Export a map of hitboxes as image...</source>
         <translation>Eksportuj mapę hitboxów jako obrazek…</translation>
     </message>
@@ -335,12 +335,12 @@ Prawy przycisk - Przesuń prawe, dolne krawędzie przycięcia.</translation>
         <translation>Zapisz konfigurację</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="854"/>
+        <location filename="../calibration_main.ui" line="857"/>
         <source>Copy</source>
         <translation>Kopiuj</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="885"/>
+        <location filename="../calibration_main.ui" line="888"/>
         <source>About</source>
         <translation>O programie</translation>
     </message>
@@ -350,7 +350,7 @@ Prawy przycisk - Przesuń prawe, dolne krawędzie przycięcia.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="229"/>
-        <location filename="../calibration_main.ui" line="958"/>
+        <location filename="../calibration_main.ui" line="961"/>
         <source>Language</source>
         <translation>Język</translation>
     </message>
@@ -408,8 +408,8 @@ Prawy przycisk - Przesuń prawe, dolne krawędzie przycięcia.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="120"/>
-        <location filename="../calibration_main.ui" line="785"/>
-        <location filename="../calibration_main.ui" line="948"/>
+        <location filename="../calibration_main.ui" line="788"/>
+        <location filename="../calibration_main.ui" line="951"/>
         <source>Reset scroll</source>
         <translation type="unfinished"></translation>
     </message>
@@ -474,22 +474,22 @@ Prawy przycisk - Przesuń prawe, dolne krawędzie przycięcia.</translation>
         <translation>Prawidłowy kierunek</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="936"/>
+        <location filename="../calibration_main.ui" line="939"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="953"/>
+        <location filename="../calibration_main.ui" line="956"/>
         <source>Open the srite directory...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="990"/>
+        <location filename="../calibration_main.ui" line="993"/>
         <source>Sprite editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="995"/>
+        <location filename="../calibration_main.ui" line="998"/>
         <source>Extrenal GFX editor...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -499,7 +499,7 @@ Prawy przycisk - Przesuń prawe, dolne krawędzie przycięcia.</translation>
         <translation>Klatka Y</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="831"/>
+        <location filename="../calibration_main.ui" line="834"/>
         <source>Open sprite</source>
         <translation>Otwarty sprite</translation>
     </message>
@@ -582,7 +582,7 @@ Prawy przycisk - Przesuń prawe, dolne krawędzie przycięcia.</translation>
         <translation type="vanished">Kopiuj tą ramkę do wewnętrznego schowka</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="880"/>
+        <location filename="../calibration_main.ui" line="883"/>
         <source>Apply to all</source>
         <translation>Zastosuj dla wszystkich</translation>
     </message>
@@ -596,7 +596,7 @@ Prawy przycisk - Przesuń prawe, dolne krawędzie przycięcia.</translation>
         <translation type="vanished">Wklej ze schowka zewnętrznego</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="869"/>
+        <location filename="../calibration_main.ui" line="872"/>
         <source>Paste</source>
         <translation>Wklej</translation>
     </message>
@@ -605,7 +605,7 @@ Prawy przycisk - Przesuń prawe, dolne krawędzie przycięcia.</translation>
         <translation type="vanished">Edytuj zestaw animacji</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="981"/>
+        <location filename="../calibration_main.ui" line="984"/>
         <source>Animator</source>
         <translation>Animator</translation>
     </message>
@@ -654,12 +654,12 @@ Prawy przycisk - Przesuń prawe, dolne krawędzie przycięcia.</translation>
         <translation>Mapa hitboxa zostały zapisana!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="898"/>
+        <location filename="../calibration_main.ui" line="901"/>
         <source>Save in the same folder with image file</source>
         <translation>Zapisz w tym samym folderze z plikiem obrazka</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="906"/>
+        <location filename="../calibration_main.ui" line="909"/>
         <source>Save into custom place...</source>
         <translation>Zapisz w niestandardowym miejscu…</translation>
     </message>
@@ -749,12 +749,12 @@ Prawy przycisk - Przesuń prawe, dolne krawędzie przycięcia.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="914"/>
+        <location filename="../calibration_main.ui" line="917"/>
         <source>Import data from SMBX-38A level...</source>
         <translation>Importuj dane z poziomu SMBX-38A...</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="919"/>
+        <location filename="../calibration_main.ui" line="922"/>
         <source>Export data into SMBX-38A level...</source>
         <translation>Eksportuj dane do poziomu SMBX-38A...</translation>
     </message>

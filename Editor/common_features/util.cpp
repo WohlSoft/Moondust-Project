@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #include <QDialog>
 #include <QApplication>
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <QDesktopWidget>
+#   include <QDesktopWidget>
 #endif
 #include <QScreen>
 #include <QStyle>
@@ -30,6 +30,9 @@
 #include <QTableWidget>
 #include <QComboBox>
 #include <QTabBar>
+#ifdef DEBUG_BUILD
+#   include <QtDebug>
+#endif
 #include <pge_qt_compat.h>
 
 #include "util.h"
@@ -82,26 +85,57 @@ void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, int search
     itemList->update();
 }
 
+QList<QListWidgetItem *> util::items(QListWidget *wid)
+{
+    QList<QListWidgetItem *> items;
+
+    for(int i = 0; i < wid->count(); ++i)
+    {
+        auto *it = wid->item(i);
+        if(it)
+            items.push_back(it);
+    }
+
+    return items;
+}
+
 void util::memclear(QListWidget *wid)
 {
-    QList<QListWidgetItem *> items = wid->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+    QList<QListWidgetItem *> items = util::items(wid);
     while(!items.isEmpty())
     {
         QListWidgetItem *tmp = items.first();
         items.pop_front();
+#ifdef DEBUG_BUILD
+        qDebug() << "QListWidget: Popping item with label" << tmp->text();
+#endif
         delete tmp;
     }
+
+    wid->clear();
 }
 
 void util::memclear(QTableWidget *wid)
 {
-    QList<QTableWidgetItem *> items = wid->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+    QList<QTableWidgetItem *> items;
+    for(int x = 0; x < wid->rowCount(); ++x)
+    {
+        for(int y = 0; y < wid->columnCount(); ++y)
+        {
+            auto *it = wid->item(x, y);
+            if(it)
+                items.push_back(wid->item(x, y));
+        }
+    }
+
     while(!items.isEmpty())
     {
         QTableWidgetItem *tmp = items.first();
         items.pop_front();
         delete tmp;
     }
+
+    wid->clear();
 }
 
 void util::clearLayoutItems(QLayout *layout)

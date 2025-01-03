@@ -173,22 +173,22 @@
         <translation>若启用此选项，则搬运物品时图像判定位置为左偏移位置，反之为右偏移位置。</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="689"/>
+        <location filename="../calibration_main.ui" line="692"/>
         <source>Scrolling</source>
         <translation>滚动</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="712"/>
+        <location filename="../calibration_main.ui" line="715"/>
         <source>Scroll right</source>
         <translation>向右滚动</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="723"/>
+        <location filename="../calibration_main.ui" line="726"/>
         <source>Scroll up</source>
         <translation>向上滚动</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="734"/>
+        <location filename="../calibration_main.ui" line="737"/>
         <source>Tip: Mouse is supported!
 
 Left button - move hitbox
@@ -209,27 +209,27 @@ Right button - move grab offset if visible.</source>
 右键：移动搬运物品时的偏差（如果显示）。</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="752"/>
+        <location filename="../calibration_main.ui" line="755"/>
         <source>Zoom out</source>
         <translation>缩小</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="763"/>
+        <location filename="../calibration_main.ui" line="766"/>
         <source>Zoom in</source>
         <translation>放大</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="774"/>
+        <location filename="../calibration_main.ui" line="777"/>
         <source>Scroll left</source>
         <translation>向左滚动</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="796"/>
+        <location filename="../calibration_main.ui" line="799"/>
         <source>Scroll down</source>
         <translation>向下滚动</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="807"/>
+        <location filename="../calibration_main.ui" line="810"/>
         <source>Tip: Mouse is supported!
 
 Left button: Move frame or use actions
@@ -250,32 +250,32 @@ Right button - Move the right-bottom crop edges.</source>
 右键：移动右下角裁切范围。</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="839"/>
+        <location filename="../calibration_main.ui" line="842"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="857"/>
+        <location filename="../calibration_main.ui" line="860"/>
         <source>Copy calibration settings of the current frame</source>
         <translation>复制当前帧校正设置</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="872"/>
+        <location filename="../calibration_main.ui" line="875"/>
         <source>Past calibration settings from the clipboard</source>
         <translation>从剪贴板粘贴校正设置</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="893"/>
+        <location filename="../calibration_main.ui" line="896"/>
         <source>Open the Wiki page...</source>
         <translation>打开百科页面……</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="927"/>
+        <location filename="../calibration_main.ui" line="930"/>
         <source>Useful for tests or sprites creation from the scratch</source>
         <translation>适用于测试或从头创作素材</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="924"/>
+        <location filename="../calibration_main.ui" line="927"/>
         <source>Export a map of hitboxes as image...</source>
         <translation>导出分配表至图片……</translation>
     </message>
@@ -304,12 +304,12 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>保存设置</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="854"/>
+        <location filename="../calibration_main.ui" line="857"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="885"/>
+        <location filename="../calibration_main.ui" line="888"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
@@ -319,7 +319,7 @@ Right button - Move the right-bottom crop edges.</source>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="229"/>
-        <location filename="../calibration_main.ui" line="958"/>
+        <location filename="../calibration_main.ui" line="961"/>
         <source>Language</source>
         <translation>语言</translation>
     </message>
@@ -377,8 +377,8 @@ Right button - Move the right-bottom crop edges.</source>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="120"/>
-        <location filename="../calibration_main.ui" line="785"/>
-        <location filename="../calibration_main.ui" line="948"/>
+        <location filename="../calibration_main.ui" line="788"/>
+        <location filename="../calibration_main.ui" line="951"/>
         <source>Reset scroll</source>
         <translation>重置卷轴</translation>
     </message>
@@ -453,22 +453,22 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>右方向</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="936"/>
+        <location filename="../calibration_main.ui" line="939"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="953"/>
+        <location filename="../calibration_main.ui" line="956"/>
         <source>Open the srite directory...</source>
         <translation>打开精灵目录…</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="990"/>
+        <location filename="../calibration_main.ui" line="993"/>
         <source>Sprite editor</source>
         <translation>精灵编辑器</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="995"/>
+        <location filename="../calibration_main.ui" line="998"/>
         <source>Extrenal GFX editor...</source>
         <translation>外部图像编辑器……</translation>
     </message>
@@ -478,7 +478,7 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>帧 Y</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="831"/>
+        <location filename="../calibration_main.ui" line="834"/>
         <source>Open sprite</source>
         <translation>打开图像</translation>
     </message>
@@ -561,7 +561,7 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="vanished">复制到剪贴板</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="880"/>
+        <location filename="../calibration_main.ui" line="883"/>
         <source>Apply to all</source>
         <translation>应用到所有</translation>
     </message>
@@ -575,7 +575,7 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="vanished">从剪贴板粘贴</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="869"/>
+        <location filename="../calibration_main.ui" line="872"/>
         <source>Paste</source>
         <translation>粘贴</translation>
     </message>
@@ -584,7 +584,7 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="vanished">编辑动画组</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="981"/>
+        <location filename="../calibration_main.ui" line="984"/>
         <source>Animator</source>
         <translation>动画师</translation>
     </message>
@@ -633,12 +633,12 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>判定范围地图已保存！</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="898"/>
+        <location filename="../calibration_main.ui" line="901"/>
         <source>Save in the same folder with image file</source>
         <translation>在同一目录下与图片文件保存</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="906"/>
+        <location filename="../calibration_main.ui" line="909"/>
         <source>Save into custom place...</source>
         <translation>另存为……</translation>
     </message>
@@ -728,12 +728,12 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>未设置</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="914"/>
+        <location filename="../calibration_main.ui" line="917"/>
         <source>Import data from SMBX-38A level...</source>
         <translation>从 SMBX-38A 关卡文件中导入数据……</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="919"/>
+        <location filename="../calibration_main.ui" line="922"/>
         <source>Export data into SMBX-38A level...</source>
         <translation>从 SMBX-38A 关卡文件中导出数据……</translation>
     </message>

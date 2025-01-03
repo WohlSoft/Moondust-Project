@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -431,7 +431,7 @@ void ConfigManager::saveCurrentSettings()
 bool ConfigManager::hasConfigPacks()
 {
     //Warning message: if no installed config packs
-    if(ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard).isEmpty())
+    if(ui->configList->count() == 0)
     {
         QMessageBox msgBox(this);
         msgBox.setWindowTitle(tr("No config packs were found"));
@@ -484,7 +484,7 @@ QString ConfigManager::loadConfigs()
     if(!saved_theme.isEmpty())
         m_themePackName = saved_theme;
 
-    auto availableConfigs = ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+    auto availableConfigs = util::items(ui->configList);
 
     // Automatically choice a config pack if only one detected
     if(availableConfigs.size() == 1)

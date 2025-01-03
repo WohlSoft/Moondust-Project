@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -137,6 +137,11 @@ QComboBox *LvlWarpBox::cbox_event_enter()
     return ui->WarpEnterEvent;
 }
 
+QComboBox *LvlWarpBox::cbox_event_exit()
+{
+    return ui->WarpExitEvent;
+}
+
 void LvlWarpBox::setSettingsLock(bool locked)
 {
     m_lockSettings = locked;
@@ -192,6 +197,8 @@ void LvlWarpBox::setSMBX64Strict(bool en)
     ui->warpBoxEnterEvent->setHidden(c.editor.supported_features.level_warp_on_enter_event == EditorSetup::FeaturesSupport::F_HIDDEN);
     ui->WarpEnterEvent->setDisabled(en);
     ui->WarpEnterEvent_label->setDisabled(en);
+    ui->WarpExitEvent->setDisabled(en);
+    ui->WarpExitEvent_label->setDisabled(en);
 }
 
 void LvlWarpBox::re_translate()
@@ -310,6 +317,15 @@ void LvlWarpBox::setDoorData(long index)
             ui->WarpEnterEvent->setCurrentText(door.event_enter);
             if(ui->WarpEnterEvent->currentIndex() < 0)
                 ui->WarpEnterEvent->setCurrentIndex(0);
+        }
+
+        if(door.event_exit.isEmpty())
+            ui->WarpExitEvent->setCurrentIndex(0);
+        else
+        {
+            ui->WarpExitEvent->setCurrentText(door.event_exit);
+            if(ui->WarpExitEvent->currentIndex() < 0)
+                ui->WarpExitEvent->setCurrentIndex(0);
         }
 
         ui->entrance->setDirection(door.idirect);
@@ -601,6 +617,34 @@ void LvlWarpBox::on_WarpEnterEvent_currentIndexChanged(const QString &arg1)
     edit->scene->m_history->addChangeWarpSettings(static_cast<int>(warpId),
             HistorySettings::SETTING_EV_WARP_ENTER,
             QVariant(dirData));
+    edit->scene->doorPointsSync((unsigned int)ui->warpsList->currentData().toInt());
+    edit->scene->applyLayersVisible();
+    edit->LvlData.meta.modified = true;
+}
+
+void LvlWarpBox::on_WarpExitEvent_currentIndexChanged(const QString &arg1)
+{
+    if(m_lockSettings)
+        return;
+
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    QList<QVariant> dirData;
+    unsigned int warpId = getWarpId();
+
+    auto *w = findWarp(edit->LvlData, warpId);
+    if(w)
+    {
+        dirData.push_back(w->event_exit);
+        dirData.push_back(arg1);
+        w->event_exit = arg1;
+    }
+
+    edit->scene->m_history->addChangeWarpSettings(static_cast<int>(warpId),
+                                                  HistorySettings::SETTING_EV_WARP_EXIT,
+                                                  QVariant(dirData));
     edit->scene->doorPointsSync((unsigned int)ui->warpsList->currentData().toInt());
     edit->scene->applyLayersVisible();
     edit->LvlData.meta.modified = true;

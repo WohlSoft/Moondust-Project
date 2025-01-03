@@ -248,7 +248,7 @@ Overwritten worlds: %3
         <location filename="../EpisodeCvt/case_fixer.ui" line="57"/>
         <location filename="../EpisodeCvt/case_fixer.ui" line="120"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Procurar...</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="67"/>
@@ -293,7 +293,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="173"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Iniciar</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="278"/>
@@ -449,7 +449,7 @@ This option is only works if you convert episode for TheXTech.</source>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="284"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Procurar...</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="397"/>
@@ -477,7 +477,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="381"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Iniciar</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="335"/>
@@ -572,7 +572,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="56"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sem arquivos para converter</translation>
     </message>
 </context>
 <context>
@@ -601,7 +601,7 @@ Important: There are only level and world map files gets being converted. Any in
         <location filename="../Graphics/gifs2png.ui" line="149"/>
         <location filename="../Graphics/gifs2png.ui" line="195"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Procurar...</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="188"/>
@@ -646,13 +646,13 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.ui" line="98"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">O que você gostaria?</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
         <location filename="../Graphics/gifs2png.cpp" line="291"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Iniciar</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="75"/>
@@ -745,7 +745,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="289"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Parar</translation>
     </message>
 </context>
 <context>
@@ -783,7 +783,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.ui" line="78"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Procurar...</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="85"/>
@@ -803,13 +803,13 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.ui" line="119"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">O que você gostaria?</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="126"/>
         <location filename="../Graphics/lazyfix.cpp" line="187"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Iniciar</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="133"/>
@@ -885,7 +885,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="185"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Parar</translation>
     </message>
 </context>
 <context>
@@ -1028,7 +1028,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/png2gifs.ui" line="156"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Procurar...</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="163"/>
@@ -1048,13 +1048,13 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/png2gifs.ui" line="98"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">O que você gostaria?</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="27"/>
         <location filename="../Graphics/png2gifs.cpp" line="187"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Iniciar</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="75"/>
@@ -1130,7 +1130,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="185"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Parar</translation>
     </message>
 </context>
 <context>
@@ -1144,7 +1144,7 @@ Important: There are only level and world map files gets being converted. Any in
         <location filename="../Graphics/palette_filter.ui" line="27"/>
         <location filename="../Graphics/palette_filter.cpp" line="210"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Iniciar</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="34"/>
@@ -1190,7 +1190,7 @@ Important: There are only level and world map files gets being converted. Any in
         <location filename="../Graphics/palette_filter.ui" line="162"/>
         <location filename="../Graphics/palette_filter.ui" line="226"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Procurar...</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="169"/>
@@ -1210,7 +1210,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/palette_filter.ui" line="203"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">O que você gostaria?</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="210"/>
@@ -1294,7 +1294,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="208"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Parar</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="217"/>

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,6 +54,10 @@ PgeEngineIpcClient::PgeEngineIpcClient(QObject *parent) :
                      this, &PgeEngineIpcClient::showMainWindow, Qt::QueuedConnection);
     QObject::connect(this, &PgeEngineIpcClient::signalSendLevelBuffer,
                      this, &PgeEngineIpcClient::sendLevelBuffer, Qt::QueuedConnection);
+    QObject::connect(this, &PgeEngineIpcClient::signalSendLevelBufferFull,
+                     this, &PgeEngineIpcClient::sendLevelBufferFull, Qt::QueuedConnection);
+    QObject::connect(this, &PgeEngineIpcClient::signalSendLevelBufferNext,
+                     this, &PgeEngineIpcClient::sendLevelBufferMultipartNext, Qt::QueuedConnection);
 }
 
 void PgeEngineIpcClient::setMainWindow(QWidget *mw)
@@ -83,6 +87,7 @@ void PgeEngineIpcClient::readInputStream(QByteArray &out)
 
         if(c == '\n')
             break; // complete
+
         out.push_back(c);
     }
 }
@@ -181,6 +186,12 @@ void PgeEngineIpcClient::onInputData()
         else if(std::strcmp(msgP, "ENGINE_CLOSED") == 0)
             emit signalEngineClosed();
     }
+    else if(std::strcmp(msg, "READY\n\n") == 0)
+        emit signalSendLevelBufferFull();
+    else if(std::strcmp(msg, "READY_PARTS\n\n") == 0)
+        emit signalSendLevelBufferNext();
+    else if(std::strcmp(msg, "LVLX_NEXT\n\n") == 0)
+        emit signalSendLevelBufferNext();
     else
     {
         // Any unknown commands
@@ -354,9 +365,14 @@ void PgeEngineIpcClient::sendLevelBuffer()
 
     sendNumStars(GlobalSettings::testing.xtra_starsNum);
 
-    LogDebug("Attempt to send LVLX buffer");
-    QString output;
-    FileFormats::WriteExtendedLvlFileRaw(m_levelTestBuffer, output);
+    if(m_levelTestAllowMultipart)
+    {
+        sendLevelBufferMultipart();
+        return;
+    }
+
+    LogDebug("Attempt to send LVLX buffer (full buffer)");
+    FileFormats::WriteExtendedLvlFileRaw(m_levelTestBuffer, m_levelTestBufferRaw);
     QString sendLvlx;
     QString x = (!m_levelTestBuffer.meta.smbx64strict ? "x" : "");
 
@@ -369,19 +385,88 @@ void PgeEngineIpcClient::sendLevelBuffer()
                    .arg(ApplicationPath)
                    .arg("_untitled.lvl").arg(x);
 
-    if(output.size() <= 0)
-        output = "HEAD\nEMPTY:1\nHEAD_END\n";
+    if(m_levelTestBufferRaw.size() <= 0)
+        m_levelTestBufferRaw = "HEAD\nEMPTY:1\nHEAD_END\n";
 
 //#ifdef DEBUG_BUILD
 //        qDebug() << "Sent File data BEGIN >>>>>>>>>>>\n" << output << "\n<<<<<<<<<<<<Sent File data END";
 //#endif
     sendMessage(sendLvlx);
+}
+
+void PgeEngineIpcClient::sendLevelBufferFull()
+{
+    if(!isWorking())
+        return;
+
     QByteArray output_e;
-    base64_encode(output_e, output);
+    base64_encode(output_e, m_levelTestBufferRaw);
     output_e.append('\n');
     m_engine->write(output_e);
     sendMessage("PARSE_LVLX");
     LogDebug("LVLX buffer sent");
+}
+
+void PgeEngineIpcClient::sendLevelBufferMultipart()
+{
+    if(!isWorking())
+        return;
+
+    LogDebug("Attempt to send LVLX buffer (multipart method)");
+    FileFormats::WriteExtendedLvlFileRaw(m_levelTestBuffer, m_levelTestBufferRaw);
+    QString sendLvlx;
+    QString x = (!m_levelTestBuffer.meta.smbx64strict ? "x" : "");
+
+    if(!m_levelTestBuffer.meta.path.isEmpty())
+        sendLvlx = QString("SEND_LVLX_PARTS: %1/%2\n")
+                       .arg(m_levelTestBuffer.meta.path)
+                       .arg(m_levelTestBuffer.meta.filename + ".lvl" + x);
+    else
+        sendLvlx = QString("SEND_LVLX_PARTS: %1/%2%3\n")
+                       .arg(ApplicationPath)
+                       .arg("_untitled.lvl").arg(x);
+
+    if(m_levelTestBufferRaw.size() <= 0)
+        m_levelTestBufferRaw = "HEAD\nEMPTY:1\nHEAD_END\n";
+
+    m_levelTestBufferRawOffset = 0;
+    m_levelTestBufferRawAtEnd = false;
+
+    sendMessage(sendLvlx);
+}
+
+void PgeEngineIpcClient::sendLevelBufferMultipartNext()
+{
+    if(!isWorking())
+        return;
+
+    if(m_levelTestBufferRawAtEnd)
+    {
+        sendMessage("PARSE_LVLX");
+        LogDebug("LVLX buffer sent");
+        return;
+    }
+
+    qDebug() << "LVLX-Multipart: Sending next part, offset" << m_levelTestBufferRawOffset << "of" << m_levelTestBufferRaw.size();
+
+    const int buffSize = 102400;
+    QString buff;
+
+    if(m_levelTestBufferRaw.size() - m_levelTestBufferRawOffset > buffSize)
+    {
+        buff = m_levelTestBufferRaw.mid(m_levelTestBufferRawOffset, buffSize);
+        m_levelTestBufferRawOffset += buffSize;
+    }
+    else
+    {
+        buff = m_levelTestBufferRaw.mid(m_levelTestBufferRawOffset, -1);
+        m_levelTestBufferRawAtEnd = true;
+    }
+
+    QByteArray output_e;
+    base64_encode(output_e, buff);
+    output_e.append('\n');
+    m_engine->write(output_e);
 }
 
 void PgeEngineIpcClient::showMainWindow()
@@ -403,6 +488,11 @@ void PgeEngineIpcClient::sendNumStars(int numStars)
         return;
     QString out = QString("SET_NUMSTARS: %1").arg(numStars);
     sendMessage(out);
+}
+
+void PgeEngineIpcClient::setMultipartMode(bool mp)
+{
+    m_levelTestAllowMultipart = mp;
 }
 
 bool PgeEngineIpcClient::sendMessage(const char *msg)

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -196,6 +196,7 @@ void MainWindow::EventListsSync()
     QComboBox *_sb_npc_el = dock_LvlSearchBox->cbox_event_npc_empty_layer();
     QComboBox *_eb_trigger = dock_LvlEvents->cbox_event_trigger();
     QComboBox *_w_ent = dock_LvlWarpProps->cbox_event_enter();
+    QComboBox *_w_ex = dock_LvlWarpProps->cbox_event_exit();
     QString curDestroyedBlock  = _sb_block_d->currentText();
     QString curHitedBlock      = _sb_block_h->currentText();
     QString curLayerEmptyBlock = _sb_block_l->currentText();
@@ -204,6 +205,7 @@ void MainWindow::EventListsSync()
     QString curTalkNpc = _sb_npc_t->currentText();
     QString curEmptyLayerNpc = _sb_npc_el->currentText();
     QString curEnterEventWarp = _w_ent->currentText();
+    QString curExitEventWarp = _w_ex->currentText();
     int WinType = activeChildWindow();
     _ip_block_d->clear();
     _ip_block_h->clear();
@@ -221,6 +223,7 @@ void MainWindow::EventListsSync()
     _sb_npc_t->clear();
     _sb_npc_el->clear();
     _w_ent->clear();
+    _w_ex->clear();
     QString noEvent = tr("[None]");
     _ip_block_d->addItem(noEvent);
     _ip_block_h->addItem(noEvent);
@@ -235,6 +238,7 @@ void MainWindow::EventListsSync()
     _sb_npc_t->addItem(noEvent);
     _sb_npc_el->addItem(noEvent);
     _w_ent->addItem(noEvent);
+    _w_ex->addItem(noEvent);
 
     if(WinType == MainWindow::WND_Level)
     {
@@ -256,6 +260,7 @@ void MainWindow::EventListsSync()
             _sb_npc_t->addItem(event.name);
             _sb_npc_el->addItem(event.name);
             _w_ent->addItem(event.name);
+            _w_ex->addItem(event.name);
         }
     }
 
@@ -267,6 +272,7 @@ void MainWindow::EventListsSync()
     _sb_npc_t->setCurrentText(curTalkNpc);
     _sb_npc_el->setCurrentText(curEmptyLayerNpc);
     _w_ent->setCurrentText(curEnterEventWarp);
+    _w_ex->setCurrentText(curExitEventWarp);
     dock_LvlEvents->m_internalLock = false;
     dock_LvlWarpProps->setSettingsLock(false);
 
@@ -732,10 +738,9 @@ void LvlEventsBox::eventLayerVisiblySyncList()
             item = new QListWidgetItem;
             item->setText(layer);
             item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-            QList<QListWidgetItem *> items =
-                ui->LVLEvents_layerList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
 
-            foreach(QListWidgetItem *item, items)
+            QList<QListWidgetItem *> items = util::items(ui->LVLEvents_layerList);
+            for(QListWidgetItem *item : items)
             {
                 if(item->text() == layer)
                 {
@@ -753,10 +758,9 @@ void LvlEventsBox::eventLayerVisiblySyncList()
             item = new QListWidgetItem;
             item->setText(layer);
             item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-            QList<QListWidgetItem *> items =
-                ui->LVLEvents_layerList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
 
-            foreach(QListWidgetItem *item, items)
+            QList<QListWidgetItem *> items = util::items(ui->LVLEvents_layerList);
+            for(QListWidgetItem *item : items)
             {
                 if(item->text() == layer)
                 {
@@ -774,10 +778,9 @@ void LvlEventsBox::eventLayerVisiblySyncList()
             item = new QListWidgetItem;
             item->setText(layer);
             item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-            QList<QListWidgetItem *> items =
-                ui->LVLEvents_layerList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
 
-            foreach(QListWidgetItem *item, items)
+            QList<QListWidgetItem *> items = util::items(ui->LVLEvents_layerList);
+            for(QListWidgetItem *item : items)
             {
                 if(item->text() == layer)
                 {
@@ -1208,6 +1211,206 @@ void LvlEventsBox::on_LVLEvent_AutoStart_clicked(bool checked)
         edit->LvlData.events[i].autostart = (int)checked;
         edit->LvlData.meta.modified = true;
     }
+}
+
+static QString boldIfNonZero(const QString &label, int number)
+{
+    if(number > 0)
+        return QString("<li><b>%1</b>: %2</li>\n").arg(label).arg(number);
+    else
+        return QString("<li>%1: %2</li>\n").arg(label).arg(number);
+}
+
+void LvlEventsBox::on_LVLEvents_List_customContextMenuRequested(const QPoint &pos)
+{
+    if(ui->LVLEvents_List->selectedItems().isEmpty())
+        return;
+
+    QListWidgetItem *eventItem = ui->LVLEvents_List->selectedItems()[0];
+    QString eventName = eventItem->text();
+    bool isSysEvent = eventName == "Level - Start" ||
+                      eventName == "P Switch - Start" ||
+                      eventName == "P Switch - End";
+
+    QPoint globPos = ui->LVLEvents_List->mapToGlobal(pos);
+
+    LogDebug(QString("Event's context menu called! %1 %2 -> %3 %4")
+                 .arg(pos.x()).arg(pos.y())
+                 .arg(globPos.x()).arg(globPos.y()));
+
+    QMenu event_menu(this);
+    QAction *rename = nullptr;
+    QAction *remove = nullptr;
+
+    if(!isSysEvent)
+    {
+        rename = event_menu.addAction(tr("Rename event"));
+        event_menu.addSeparator();
+        remove = event_menu.addAction(tr("Remove event"));
+    }
+
+    QAction *showStats = event_menu.addAction(tr("Show event statistics..."));
+
+    QAction *selected = event_menu.exec(globPos);
+
+    if(selected == rename)
+        ui->LVLEvents_List->editItem(eventItem);
+    else if(selected == showStats)
+    {
+        LevelEdit *lvlEdit = mw()->activeLvlEditWin();
+        Q_ASSERT(lvlEdit);
+        Q_ASSERT(lvlEdit->scene);
+        Q_ASSERT(lvlEdit->scene->m_data);
+        const LevelData *d = lvlEdit->scene->m_data;
+        const LevelSMBX64Event *cur = nullptr;
+
+        for(const auto &e : d->events)
+        {
+            if(e.meta.array_id == m_currentEventArrayID)
+            {
+                cur = &e;
+                break;
+            }
+        }
+
+        int statsTotalTriggers = 0;
+        int statsBlockTriggers = 0;
+        int statsNpcTriggers = 0;
+        int statsWarpTriggers = 0;
+        int statsPEZTriggers = 0;
+        int statsEventTriggers = 0;
+
+        QStringList calledByEvents;
+
+        for(auto &o : d->blocks)
+        {
+            if(eventName.compare(o.event_destroy, Qt::CaseInsensitive) == 0 ||
+               eventName.compare(o.event_emptylayer, Qt::CaseInsensitive) == 0 ||
+               eventName.compare(o.event_hit, Qt::CaseInsensitive) == 0 ||
+               eventName.compare(o.event_on_screen, Qt::CaseInsensitive) == 0)
+            {
+                statsTotalTriggers++;
+                statsBlockTriggers++;
+            }
+        }
+
+        for(auto &o : d->npc)
+        {
+            if(eventName.compare(o.event_activate, Qt::CaseInsensitive) == 0 ||
+                eventName.compare(o.event_die, Qt::CaseInsensitive) == 0 ||
+                eventName.compare(o.event_emptylayer, Qt::CaseInsensitive) == 0 ||
+                eventName.compare(o.event_grab, Qt::CaseInsensitive) == 0 ||
+                eventName.compare(o.event_nextframe, Qt::CaseInsensitive) == 0 ||
+                eventName.compare(o.event_talk, Qt::CaseInsensitive) == 0 ||
+                eventName.compare(o.event_touch, Qt::CaseInsensitive) == 0)
+            {
+                statsTotalTriggers++;
+                statsNpcTriggers++;
+            }
+        }
+
+        for(auto &o : d->doors)
+        {
+            if(eventName.compare(o.event_enter, Qt::CaseInsensitive) == 0)
+            {
+                statsTotalTriggers++;
+                statsWarpTriggers++;
+            }
+        }
+
+        for(auto &o : d->physez)
+        {
+            if(eventName.compare(o.touch_event, Qt::CaseInsensitive) == 0)
+            {
+                statsTotalTriggers++;
+                statsPEZTriggers++;
+            }
+        }
+
+        for(auto &o : d->events)
+        {
+            if(eventName.compare(o.trigger, Qt::CaseInsensitive) == 0)
+            {
+                statsTotalTriggers++;
+                statsEventTriggers++;
+                calledByEvents.push_back(o.name);
+            }
+        }
+
+        QString stats;
+        bool used = statsTotalTriggers > 0 || cur->autostart != LevelSMBX64Event::AUTO_None;
+
+
+        // boldIfNonZero
+
+        if(used)
+        {
+            stats = "<h2>" + tr("Event \"%1\" statistics").arg(eventName) + ":</h2>\n";
+            stats += "<ul>";
+            stats += boldIfNonZero(tr("Total triggers", "Event statistics field"), statsTotalTriggers);
+            stats += boldIfNonZero(tr("Block triggers", "Event statistics field"), statsBlockTriggers);
+            stats += boldIfNonZero(tr("NPC triggers", "Event statistics field"), statsNpcTriggers);
+            stats += boldIfNonZero(tr("Warp triggers", "Event statistics field"), statsWarpTriggers);
+            stats += boldIfNonZero(tr("Physical environment triggers", "Event statistics field"), statsPEZTriggers);
+            stats += boldIfNonZero(tr("Other events triggers", "Event statistics field"), statsEventTriggers);
+
+            if(cur->autostart != LevelSMBX64Event::AUTO_None)
+            {
+                stats += "<li><b>" + tr("Autostart type", "Event statistics field") + ":</b>";
+
+                switch(cur->autostart)
+                {
+                case LevelSMBX64Event::AUTO_LevelStart:
+                    stats += tr("Level start", "Event autostart type");
+                    break;
+                case LevelSMBX64Event::AUTO_MatchAll:
+                    stats += tr("Match all conditions", "Event autostart type");
+                    break;
+                case LevelSMBX64Event::AUTO_CallAndMatch:
+                    stats += tr("Call and match", "Event autostart type");
+                    break;
+                default:
+                    stats += tr("[Unknown]", "Event autostart type");
+                    break;
+                }
+
+                stats += "<li/>\n";
+            }
+            stats += "</ul>";
+        }
+        else
+            stats = tr("<h2>Event \"%1\" statistics:</h2>\n"
+                       "<center>&lt;This is an unused event&gt;</center>\n").arg(eventName);
+
+        if(!calledByEvents.isEmpty())
+        {
+            stats += "<h2>" + tr("Triggered by other events") + ":</h2>\n";
+            stats += "<ul>\n";
+            for(auto &e : calledByEvents)
+                stats += QString("<li>%1</li>\n").arg(e);
+            stats += "</ul>\n";
+        }
+
+        QMessageBox s(this);
+        QPushButton removeButton;
+        removeButton.setText(tr("Remove this event"));
+        s.setText(stats);
+        s.setTextFormat(Qt::RichText);
+        s.setWindowTitle(tr("Event statistics"));
+        s.addButton(QMessageBox::Close);
+        if(!used)
+        {
+            s.addButton(&removeButton, QMessageBox::ActionRole);
+            QObject::connect(&removeButton, static_cast<void (QPushButton::*)(bool)>(&QPushButton::clicked),
+                            [this](bool)->void
+                            {
+                                on_LVLEvents_del_clicked();
+                            });
+        }
+        s.exec();
+    }
+    else if(selected == remove)
+        on_LVLEvents_del_clicked();
 }
 
 

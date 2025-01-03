@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2024 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -465,7 +465,9 @@ void DebuggerBox::on_DEBUG_CustomCountersList_itemClicked(QListWidgetItem *item)
     Q_UNUSED(item);
     int itemID = item->data(Qt::UserRole).toInt();
     on_DEBUG_RefreshCoutners_clicked();
-    foreach(QListWidgetItem *x, ui->DEBUG_CustomCountersList->findItems("*", Qt::MatchWildcard))
+
+    auto items = util::items(ui->DEBUG_CustomCountersList);
+    for(QListWidgetItem *x : items)
     {
         if(x->data(Qt::UserRole).toInt() == itemID)
         {
