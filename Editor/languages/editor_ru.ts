@@ -7880,21 +7880,21 @@ Reason: %1
     </message>
     <message>
         <source>Set custom health level</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить уровень здоровья</translation>
     </message>
     <message>
         <source>Reserved item</source>
-        <translation type="unfinished"></translation>
+        <translation>Зпасной предмет</translation>
     </message>
     <message>
         <source>&lt;Unknown&gt;</source>
         <comment>Unknown NPC from the list</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Неизвестно&gt;</translation>
     </message>
     <message>
         <source>[No item]</source>
         <comment>Reserve box of player contains no item</comment>
-        <translation type="unfinished"></translation>
+        <translation>[Нет предмета]</translation>
     </message>
 </context>
 <context>
