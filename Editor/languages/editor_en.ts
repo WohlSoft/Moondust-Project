@@ -7869,6 +7869,24 @@ Reason: %1
         <source>[Unknown type]</source>
         <translation>[Unknown type]</translation>
     </message>
+    <message>
+        <source>Set custom health level</source>
+        <translation>Set custom health level</translation>
+    </message>
+    <message>
+        <source>Reserved item</source>
+        <translation>Reserved item</translation>
+    </message>
+    <message>
+        <source>&lt;Unknown&gt;</source>
+        <comment>Unknown NPC from the list</comment>
+        <translation>&lt;Unknown&gt;</translation>
+    </message>
+    <message>
+        <source>[No item]</source>
+        <comment>Reserve box of player contains no item</comment>
+        <translation>[No item]</translation>
+    </message>
 </context>
 <context>
     <name>TheXTechEngine</name>

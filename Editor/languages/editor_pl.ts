@@ -7795,6 +7795,24 @@ Nie działa podczas przeprowadzania testu zapisanego pliku.</translation>
         <source>[Unknown type]</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Set custom health level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reserved item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;Unknown&gt;</source>
+        <comment>Unknown NPC from the list</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[No item]</source>
+        <comment>Reserve box of player contains no item</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TheXTechEngine</name>
