@@ -88,10 +88,14 @@ struct SETTINGS_TestSettings
     int  p1_state = 1;
     int  p1_vehicleID = 0;
     int  p1_vehicleType = 0;
+    int  p1_health = -1;
+    int  p1_item = 0;
     int  p2_char = 2;
     int  p2_state = 1;
     int  p2_vehicleID = 0;
     int  p2_vehicleType = 0;
+    int  p2_health = -1;
+    int  p2_item = 0;
 };
 
 struct SETTINGS_ScreenGrabSettings

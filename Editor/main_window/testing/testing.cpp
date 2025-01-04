@@ -187,6 +187,22 @@ void MainWindow::initTesting()
             t.p2_vehicleType = vehicleType;
         }
     });
+
+    QObject::connect(&g_intEngine, &IntEngineSignals::enginePlayerStateUpdated2,
+                     this, [](int playerID, int health, int reservedItem)
+    {
+         auto &t =GlobalSettings::testing;
+         if(playerID == 0)
+         {
+             t.p1_health    = health;
+             t.p1_item      = reservedItem;
+         }
+         else if(playerID == 1)
+         {
+             t.p2_health    = health;
+             t.p2_item      = reservedItem;
+         }
+     });
 }
 
 void MainWindow::updateTestingCaps()

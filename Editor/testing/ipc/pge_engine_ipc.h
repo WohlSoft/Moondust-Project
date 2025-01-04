@@ -162,6 +162,14 @@ signals:
      */
     void enginePlayerStateUpdated(int playerID, int character, int state, int vehicleID, int vehicleType);
 
+    /*!
+     * \brief A hook for extra player state being updated
+     * \param playerID Player ID
+     * \param helath Health level
+     * \param reservedItem Reserved NPC-ID
+     */
+    void enginePlayerStateUpdated2(int playerID, int helath, int reservedItem);
+
     /**
      * @brief A hook for the properties close request
      */

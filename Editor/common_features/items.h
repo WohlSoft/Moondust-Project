@@ -10,6 +10,17 @@
 class Items
 {
 public:
+
+    /*!
+     * \brief Retreives sprite or single frame of the requested element using currently active window, no scene needed
+     * \param [__in] itemType Type of the element (Block, BGO, NPC, Terrain tile, World map scenery, Path tile, Level tile)
+     * \param [__in] ItemID ID of requested element
+     * \param [__out] outImg Target Pixmap where will be stored requested sprite
+     * \param [__in] whole Retreive entire srite, overwise single default frame will be retured
+     * \param [__in] targetSize Scale image to requested size, if 0:0 sent, image will be returned as-is
+     */
+    static void getItemGFXCW(int itemType, unsigned long ItemID, QPixmap &outImg, bool whole=false, QSize targetSize=QSize(0,0));
+
     /*!
      * \brief Retreives sprite or single frame of the requested element
      * \param [__in] itemType Type of the element (Block, BGO, NPC, Terrain tile, World map scenery, Path tile, Level tile)
@@ -19,7 +30,7 @@ public:
      * \param [__in] whole Retreive entire srite, overwise single default frame will be retured
      * \param [__in] targetSize Scale image to requested size, if 0:0 sent, image will be returned as-is
      */
-    static void getItemGFX(int itemType, unsigned long ItemID, QPixmap &outImg, QGraphicsScene *scene=NULL, bool whole=false, QSize targetSize=QSize(0,0));
+    static void getItemGFX(int itemType, unsigned long ItemID, QPixmap &outImg, QGraphicsScene *scene=nullptr, bool whole=false, QSize targetSize=QSize(0,0));
 
     /*!
      * \brief Retreives sprite or single frame of the block object configuration
@@ -65,7 +76,7 @@ public:
      * \param type String contains a word which specifies item type
      * \return Item type ID enumerated value
      */
-    static int getItemType(QString type);
+    static int getItemType(const QString &type);
 };
 
 #endif // ITEMS_H

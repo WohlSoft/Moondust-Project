@@ -49,6 +49,7 @@ signals:
     void engineTakenNPC(const LevelNPC &npc);
     void engineNumStarsChanged(int numStars);
     void enginePlayerStateUpdated(int playerID, int character, int state, int vehicleID, int vehicleType);
+    void enginePlayerStateUpdated2(int playerID, int health, int reservedItem);
     void engineCloseProperties();
 };
 

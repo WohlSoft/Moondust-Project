@@ -2,7 +2,9 @@
 #include "ui_testing_settings.h"
 #include <mainwindow.h>
 #include <main_window/global_settings.h>
+#include <editing/_dialogs/itemselectdialog.h>
 #include <data_configs/data_configs.h>
+#include <common_features/items.h>
 
 #include <QMessageBox>
 
@@ -12,10 +14,11 @@ TestingSettings::TestingSettings(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    MainWindow* mw = qobject_cast<MainWindow*>(this->parent());
-    if(mw)
+    m_mw = qobject_cast<MainWindow*>(this->parent());
+
+    if(m_mw)
     {
-        QList<obj_player>& plr = mw->configs.main_characters;
+        QList<obj_player>& plr = m_mw->configs.main_characters;
         ui->p1_character->clear();
         ui->p2_character->clear();
 
@@ -56,14 +59,26 @@ TestingSettings::TestingSettings(QWidget *parent) :
     ui->ex_physdebug->setChecked(GlobalSettings::testing.xtra_physdebug);
     ui->ex_freedom->setChecked(GlobalSettings::testing.xtra_worldfreedom);
     ui->ex_starsNum->setValue(GlobalSettings::testing.xtra_starsNum);
+
     ui->p1_character->setCurrentIndex(GlobalSettings::testing.p1_char-1);
     ui->p1_state->setCurrentIndex(GlobalSettings::testing.p1_state-1);
     ui->p1_vehicleID->setCurrentIndex(GlobalSettings::testing.p1_vehicleID);
     ui->p1_vehicleType->setCurrentIndex(GlobalSettings::testing.p1_vehicleType);
+    ui->p1_health_en->setChecked(GlobalSettings::testing.p1_health > 0);
+    if(GlobalSettings::testing.p1_health > 0)
+        ui->p1_health->setValue(GlobalSettings::testing.p1_health);
+    m_curItemP1 = GlobalSettings::testing.p1_item;
+    updateNpcButton(ui->p1_reserved, m_curItemP1);
+
     ui->p2_character->setCurrentIndex(GlobalSettings::testing.p2_char-1);
     ui->p2_state->setCurrentIndex(GlobalSettings::testing.p2_state-1);
     ui->p2_vehicleID->setCurrentIndex(GlobalSettings::testing.p2_vehicleID);
     ui->p2_vehicleType->setCurrentIndex(GlobalSettings::testing.p2_vehicleType);
+    ui->p2_health_en->setChecked(GlobalSettings::testing.p2_health > 0);
+    if(GlobalSettings::testing.p2_health > 0)
+        ui->p2_health->setValue(GlobalSettings::testing.p2_health);
+    m_curItemP2 = GlobalSettings::testing.p2_item;
+    updateNpcButton(ui->p2_reserved, m_curItemP2);
 
     switch(GlobalSettings::testing.numOfPlayers)
     {
@@ -85,6 +100,15 @@ TestingSettings::TestingSettings(QWidget *parent) :
         default:
         case ConfStatus::ENGINE_MOONDUST:
             ui->initialState->setVisible(false); // Not implemented at Moondust Engine yet
+            // Not implemented at Moondust Engine yet
+            ui->p1_health_en->setVisible(false);
+            ui->p1_health->setVisible(false);
+            ui->p1_reserved_label->setVisible(false);
+            ui->p1_reserved->setVisible(false);
+            ui->p2_health_en->setVisible(false);
+            ui->p2_health->setVisible(false);
+            ui->p2_reserved_label->setVisible(false);
+            ui->p2_reserved->setVisible(false);
             break;
 
         case ConfStatus::ENGINE_THEXTECH:
@@ -102,6 +126,14 @@ TestingSettings::TestingSettings(QWidget *parent) :
             ui->ex_flyup ->setVisible(false);
             ui->ex_debug ->setVisible(false);
             ui->ex_physdebug ->setVisible(false);
+            ui->p1_health_en->setVisible(false);
+            ui->p1_health->setVisible(false);
+            ui->p1_reserved_label->setVisible(false);
+            ui->p1_reserved->setVisible(false);
+            ui->p2_health_en->setVisible(false);
+            ui->p2_health->setVisible(false);
+            ui->p2_reserved_label->setVisible(false);
+            ui->p2_reserved->setVisible(false);
             break;
 
         case ConfStatus::ENGINE_38A:
@@ -109,6 +141,14 @@ TestingSettings::TestingSettings(QWidget *parent) :
             ui->initialState->setVisible(false);
             ui->cheats->setVisible(false);
             ui->debug->setVisible(false);
+            ui->p1_health_en->setVisible(false);
+            ui->p1_health->setVisible(false);
+            ui->p1_reserved_label->setVisible(false);
+            ui->p1_reserved->setVisible(false);
+            ui->p2_health_en->setVisible(false);
+            ui->p2_health->setVisible(false);
+            ui->p2_reserved_label->setVisible(false);
+            ui->p2_reserved->setVisible(false);
             break;
         }
     }
@@ -141,10 +181,15 @@ void TestingSettings::on_buttonBox_accepted()
     GlobalSettings::testing.p1_state = (ui->p1_state->currentIndex()+1);
     GlobalSettings::testing.p1_vehicleID = (ui->p1_vehicleID->currentIndex());
     GlobalSettings::testing.p1_vehicleType = (ui->p1_vehicleType->currentIndex());
+    GlobalSettings::testing.p1_health = ui->p1_health_en->isChecked() ? (ui->p1_health->value()) : -1;
+    GlobalSettings::testing.p1_item = m_curItemP1;
+
     GlobalSettings::testing.p2_char = (ui->p2_character->currentIndex()+1);
     GlobalSettings::testing.p2_state = (ui->p2_state->currentIndex()+1);
     GlobalSettings::testing.p2_vehicleID = (ui->p2_vehicleID->currentIndex());
     GlobalSettings::testing.p2_vehicleType = (ui->p2_vehicleType->currentIndex());
+    GlobalSettings::testing.p2_health = ui->p2_health_en->isChecked() ? (ui->p2_health->value()) : -1;
+    GlobalSettings::testing.p2_item = m_curItemP2;
     this->close();
 }
 
@@ -256,3 +301,62 @@ void TestingSettings::refreshVehicleTypes()
     if(p2_sel_backup <= ui->p2_vehicleType->count())
         ui->p2_vehicleType->setCurrentIndex(p2_sel_backup);
 }
+
+void TestingSettings::updateNpcButton(QPushButton *button, int npcId)
+{
+    QString npcTitle;
+    QPixmap icon;
+
+    LevelEdit *edit = m_mw->activeLvlEditWin();
+
+    if(npcId > 0)
+    {
+        auto &source = edit ? edit->scene->m_localConfigNPCs : m_mw->configs.main_npc;
+
+        if(source.contains(npcId))
+        {
+            auto it = source[npcId];
+            npcTitle = it.setup.name;
+            Items::getItemGFXCW(ItemTypes::LVL_NPC, npcId, icon, false, QSize(16, 16));
+        }
+    }
+
+    if(npcTitle.isEmpty())
+        npcTitle = tr("<Unknown>", "Unknown NPC from the list");
+
+    button->setText(npcId <= 0 ? tr("[No item]", "Reserve box of player contains no item") : QString("NPC-%1 (%2)").arg(npcId).arg(npcTitle));
+
+    if(!icon.isNull())
+        button->setIcon(QIcon(icon.scaledToHeight(16)));
+}
+
+void TestingSettings::on_p1_reserved_clicked()
+{
+    if(!m_mw)
+        return;
+
+    ItemSelectDialog *npcList = new ItemSelectDialog(&m_mw->configs, ItemSelectDialog::TAB_NPC, 0, 0, 0, m_curItemP1, 0, 0, 0, 0, 0, this);
+    util::DialogToCenter(npcList, true);
+
+    if(npcList->exec() == QDialog::Accepted)
+    {
+        m_curItemP1 = npcList->npcID;
+        updateNpcButton(ui->p1_reserved, m_curItemP1);
+    }
+}
+
+void TestingSettings::on_p2_reserved_clicked()
+{
+    if(!m_mw)
+        return;
+
+    ItemSelectDialog *npcList = new ItemSelectDialog(&m_mw->configs, ItemSelectDialog::TAB_NPC, 0, 0, 0, m_curItemP2, 0, 0, 0, 0, 0, this);
+    util::DialogToCenter(npcList, true);
+
+    if(npcList->exec() == QDialog::Accepted)
+    {
+        m_curItemP2 = npcList->npcID;
+        updateNpcButton(ui->p2_reserved, m_curItemP2);
+    }
+}
+
