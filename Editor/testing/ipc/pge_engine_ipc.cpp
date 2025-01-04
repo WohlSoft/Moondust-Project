@@ -179,6 +179,27 @@ void PgeEngineIpcClient::onInputData()
             if(ok)
                 emit enginePlayerStateUpdated(val[0], val[1], val[2], val[3], val[4]);
         }
+        else if(std::strncmp(msgP, "PLAYER_SETUP_UPDATE2 ", 21) == 0)
+        {
+            qApp->processEvents();
+            int val[5];
+            bool ok;
+            QString playernum = QString::fromUtf8(msgP + 21);
+            QStringList p = playernum.split(' ');
+
+            if(p.size() != 3)
+                return;
+
+            for(int i = 0; i < 3; i++)
+            {
+                val[i] = p[i].toInt(&ok);
+                if(!ok)
+                    break;
+            }
+
+            if(ok)
+                emit enginePlayerStateUpdated2(val[0], val[1], val[2]);
+        }
         else if(std::strcmp(msgP, "CLOSE_PROPERTIES") == 0)
             emit engineCloseProperties();
         else if(std::strcmp(msgP, "CONNECT_TO_ENGINE") == 0)
@@ -232,6 +253,8 @@ void PgeEngineIpcClient::init(QProcess *engine)
                      &g_intEngine, &IntEngineSignals::engineNumStarsChanged, Qt::QueuedConnection);
     QObject::connect(this, &PgeEngineIpcClient::enginePlayerStateUpdated,
                      &g_intEngine, &IntEngineSignals::enginePlayerStateUpdated, Qt::QueuedConnection);
+    QObject::connect(this, &PgeEngineIpcClient::enginePlayerStateUpdated2,
+                     &g_intEngine, &IntEngineSignals::enginePlayerStateUpdated2, Qt::QueuedConnection);
     QObject::connect(this, &PgeEngineIpcClient::engineCloseProperties,
                      &g_intEngine, &IntEngineSignals::engineCloseProperties, Qt::QueuedConnection);
 }

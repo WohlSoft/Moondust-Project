@@ -269,10 +269,14 @@ void MainWindow::loadSettings()
         GlobalSettings::testing.p1_state = settings.value("p1-state", 1).toInt();
         GlobalSettings::testing.p1_vehicleID    = settings.value("p1-vehicle-id", 0).toInt();
         GlobalSettings::testing.p1_vehicleType  = settings.value("p1-vehicle-type", 0).toInt();
+        GlobalSettings::testing.p1_health  = settings.value("p1-health", 0).toInt();
+        GlobalSettings::testing.p1_item  = settings.value("p1-item", 0).toInt();
         GlobalSettings::testing.p2_char = settings.value("p2-char", 1).toInt();
         GlobalSettings::testing.p2_state = settings.value("p2-state", 1).toInt();
         GlobalSettings::testing.p2_vehicleID    = settings.value("p2-vehicle-id", 0).toInt();
         GlobalSettings::testing.p2_vehicleType  = settings.value("p2-vehicle-type", 0).toInt();
+        GlobalSettings::testing.p2_health  = settings.value("p2-health", 0).toInt();
+        GlobalSettings::testing.p2_item  = settings.value("p2-item", 0).toInt();
     }
     settings.endGroup();
 
@@ -423,10 +427,14 @@ void MainWindow::saveSettings()
         settings.setValue("p1-state", GlobalSettings::testing.p1_state);
         settings.setValue("p1-vehicle-id", GlobalSettings::testing.p1_vehicleID);
         settings.setValue("p1-vehicle-type", GlobalSettings::testing.p1_vehicleType);
+        settings.setValue("p1-health", GlobalSettings::testing.p1_health);
+        settings.setValue("p1-item", GlobalSettings::testing.p1_item);
         settings.setValue("p2-char", GlobalSettings::testing.p2_char);
         settings.setValue("p2-state", GlobalSettings::testing.p2_state);
         settings.setValue("p2-vehicle-id", GlobalSettings::testing.p2_vehicleID);
         settings.setValue("p2-vehicle-type", GlobalSettings::testing.p2_vehicleType);
+        settings.setValue("p2-health", GlobalSettings::testing.p2_health);
+        settings.setValue("p2-item", GlobalSettings::testing.p2_item);
     }
     settings.endGroup();
 
