@@ -7860,21 +7860,21 @@ Reason: %1
     </message>
     <message>
         <source>Set custom health level</source>
-        <translation type="unfinished"></translation>
+        <translation>设置初始体力</translation>
     </message>
     <message>
         <source>Reserved item</source>
-        <translation type="unfinished"></translation>
+        <translation>道具存储</translation>
     </message>
     <message>
         <source>&lt;Unknown&gt;</source>
         <comment>Unknown NPC from the list</comment>
-        <translation type="unfinished"></translation>
+        <translation>&amp;lt;未知道具&amp;gt;</translation>
     </message>
     <message>
         <source>[No item]</source>
         <comment>Reserve box of player contains no item</comment>
-        <translation type="unfinished"></translation>
+        <translation>[无道具]</translation>
     </message>
 </context>
 <context>
