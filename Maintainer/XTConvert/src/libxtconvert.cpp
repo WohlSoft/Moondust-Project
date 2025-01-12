@@ -801,6 +801,8 @@ public:
                     image_w = FreeImage_GetWidth(image);
                     image_h = FreeImage_GetHeight(image);
                 }
+                else
+                    log_file(LogCategory::ImagePlayerCompressFailed, in_path);
             }
 
             // downscale image further, and threshold alpha, here.
