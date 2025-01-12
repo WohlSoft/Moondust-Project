@@ -63,7 +63,7 @@ void export_wav(QByteArray& out, const Mix_Chunk* chunk)
     *(uint16_t *)&out.data()[32] = 4;
     *(uint16_t *)&out.data()[34] = 16;
     memcpy(&out.data()[36], "data", 4);
-    *(uint32_t *)&out.data()[40] = out.size() - 44;
+    *(uint32_t *)&out.data()[40] = chunk->alen;
 
     memcpy(&out.data()[44], chunk->abuf, chunk->alen);
 }
