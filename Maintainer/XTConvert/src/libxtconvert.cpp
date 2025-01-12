@@ -58,6 +58,13 @@
 
 #include "libxtconvert.h"
 
+static void log_file_callback_default(XTConvert::LogCategory cat, const std::string& str)
+{
+    printf("%s - %s\n", XTConvert::log_category[(int)cat], str.c_str());
+}
+
+static int progress_callback_default(int, int, const std::string&, int, int, const std::string&) { return 0; }
+
 static QByteArray s_get_default_masks()
 {
     QByteArray ret;
@@ -77,6 +84,44 @@ static QByteArray s_get_default_masks()
 
 namespace XTConvert
 {
+
+const char* const log_category[(int)LogCategory::Category_Count] =
+{
+    "Bitmask image",
+    "Transparent image",
+    "Image scaled down",
+    "Image cropped",
+    "Image not 2x",
+    "Oversized player image",
+    "QOA music",
+    "spc2it music",
+    "38A content",
+    "Unknown (copied)",
+    "Unused (skipped)",
+    "Invalid (skipped)",
+    "Custom PNG (skipped)",
+    "Assets GIF (skipped)",
+    "No mask (skipped)",
+};
+
+enum Stage
+{
+    STAGE_EXTRACT = 0,
+    STAGE_CONVERT,
+    STAGE_POST_PROCESS,
+    STAGE_PACK,
+    STAGE_COMPRESS,
+    STAGE_COUNT,
+};
+
+const char* const stage_names[(int)STAGE_COUNT] =
+{
+    "Extracting",
+    "Converting",
+    "Finishing",
+    "Packaging",
+    "Compressing",
+};
 
 static bool validate_image_filename(const QString& filename, QString& type, QString& index, QString& dir, bool& exceeds_max_GIF)
 {
@@ -306,6 +351,17 @@ public:
 
     QString m_error;
 
+    void log_file(LogCategory log_category, const QString& filename)
+    {
+        m_spec.log_file_callback(log_category, m_input_dir.relativeFilePath(filename).toStdString());
+    }
+
+    void progress(int cur_stage, int cur_file, int file_count, const QString& file_name)
+    {
+        const auto& rel_dir = (cur_stage <= STAGE_CONVERT) ? m_input_dir : m_temp_dir;
+        m_spec.progress_callback(cur_stage, STAGE_COUNT, stage_names[cur_stage], cur_file, file_count, rel_dir.relativeFilePath(file_name).toStdString());
+    }
+
     bool save_gif(FIBITMAP* image, const QString& out_path)
     {
         FIBITMAP* image_2 = FreeImage_ColorQuantizeEx(image, FIQ_LFPQUANT);
@@ -381,7 +437,7 @@ public:
         FIBITMAP* image = GraphicsLoad::loadImage(in_path);
         if(!image)
         {
-            qInfo() << "Warning: invalid graphics file at [" << in_path << "], skipping...";
+            log_file(LogCategory::SkippedInvalid, in_path);
             return true;
         }
 
@@ -407,14 +463,14 @@ public:
         if(filename.endsWith(".png") && standard_filename_format && !m_cur_dir.dir.entryInfoList({filename_stem + ".gif"}).isEmpty())
         {
             FreeImage_Unload(image);
-            qInfo() << "Skipping PNG with associated GIF for SMBX 1.3 compatibility" << in_path;
+            log_file(LogCategory::SkippedPNG, in_path);
             return true;
         }
 
         if(filename.endsWith(".gif") && !standard_filename_format && !m_cur_dir.dir.entryInfoList({filename_stem + ".png"}).isEmpty())
         {
             FreeImage_Unload(image);
-            qInfo() << "Skipping GIF with associated PNG for TheXTech compatibility" << in_path;
+            log_file(LogCategory::SkippedGIF, in_path);
             return true;
         }
 
@@ -466,10 +522,10 @@ public:
                     GraphicsLoad::RGBAToMask(mask);
             }
 
-            // Okay, finding a mask failed. Imagine that image is fully opaque in that case, and ignore the mask logic.
+            // Okay, finding a mask failed. So ignore the image.
             if(!mask)
             {
-                qInfo() << "Failed to find mask for GIF " << in_path;
+                log_file(LogCategory::SkippedNoMask, in_path);
                 FreeImage_Unload(image);
                 return false;
             }
@@ -530,7 +586,9 @@ public:
             FreeImage_Unload(image);
             if(!scaled)
             {
-                qInfo() << "Scaling failed at [" << in_path << "], aborting...";
+                m_error = "Scaling failed at [";
+                m_error += in_path;
+                m_error += "], aborting...";
                 return false;
             }
 
@@ -542,7 +600,9 @@ public:
                 FreeImage_Unload(mask);
                 if(!scaled_mask)
                 {
-                    qInfo() << "Scaling failed at [" << in_path << "], aborting...";
+                    m_error = "Scaling failed at [";
+                    m_error += in_path;
+                    m_error += "], aborting...";
                     return false;
                 }
 
@@ -558,7 +618,7 @@ public:
         QString size_text;
         if(output_format == TargetPlatform::Desktop)
         {
-            qInfo() << "mask required for" << in_path;
+            log_file(LogCategory::ImageBitmask, in_path);
 
             if(image_w == orig_w)
                 save_success = QFile::copy(in_path, out_path);
@@ -595,7 +655,7 @@ public:
             // check for transparency
             if(!GraphicsLoad::validateForDepthTest(image))
             {
-                qInfo() << "Using RGBA8888 for " << in_path;
+                log_file(LogCategory::ImageTransparent, in_path);
                 params.process_format = Tex3DS::RGBA8888;
             }
 
@@ -632,6 +692,9 @@ public:
 
                 save_success &= Tex3DS::Process(params);
             }
+
+            if(image_w > 1024 || image_h > 1024 * 3)
+                log_file(LogCategory::ImageCropped, in_path);
 
             size_text = QString("%1\n%2\n").arg(image_w * 2, 4).arg(image_h * 2, 4);
         }
@@ -716,6 +779,9 @@ public:
                         save_success = true;
                     }
                 }
+
+                if(image_h > 1024 * 3 || image_w > 1024 * 3 || (!horiz_mode && image_w > 1024))
+                    log_file(LogCategory::ImageCropped, in_path);
             }
 
             if(save_success)
@@ -757,11 +823,15 @@ public:
 
                 if(!scaled)
                 {
-                    qInfo() << "Scaling failed at [" << in_path << "], aborting...";
+                    m_error = "Scaling failed at [";
+                    m_error += in_path;
+                    m_error += "], aborting...";
                     return false;
                 }
 
                 image = scaled;
+
+                log_file(LogCategory::ImageScaledDown, in_path);
             }
 
             // palettize texture
@@ -771,7 +841,9 @@ public:
             if(!p.convert(PaletteTex::HALF, 0))
             {
                 FreeImage_Unload(image);
-                qInfo() << "Palettizing failed at [" << in_path << "], aborting...";
+                m_error = "Palettizing failed at [";
+                m_error += in_path;
+                m_error += "], aborting...";
                 return false;
             }
 
@@ -786,7 +858,7 @@ public:
             bool rgb32_a3 = (semi_trans || multi_trans) && (container_w * container_h) <= 131072;
             if(rgb32_a3)
             {
-                qInfo() << "rgb32_a3 for" << filename;
+                log_file(LogCategory::ImageTransparent, in_path);
                 flags |= 32;
                 flags |= 16; // use pixel alpha values, not palette entry 1 color key
                 pixels_per_byte = 1;
@@ -940,7 +1012,11 @@ public:
         }
 
         if(!save_success)
-            qInfo() << "Saving failed at [" << in_path << "], aborting...";
+        {
+            m_error = "Saving failed at [";
+            m_error += in_path;
+            m_error += "], aborting...";
+        }
 
         return save_success;
     }
@@ -1011,6 +1087,7 @@ public:
     bool convert_music_16m(const QString&, const QString& in_path, const QString& out_path)
     {
         // qInfo() << "mus2qoa" << out_path;
+        log_file(LogCategory::AudioQoa, in_path);
 
         Mix_Chunk* ch = Mix_LoadWAV(in_path.toUtf8().data());
         if(!ch)
@@ -1167,13 +1244,14 @@ public:
             && (filename.endsWith(".mp3") || filename.endsWith(".ogg") || filename.endsWith(".wav")
                 || filename.endsWith(".vgm") || filename.endsWith(".vgz") || filename.endsWith(".mid")
                 || filename.endsWith(".nsf") || filename.endsWith(".hes")
-                || filename.endsWith(".pttune") || filename.endsWith(".ptcop")))
+                || filename.endsWith(".pttune") || filename.endsWith(".ptcop")
+                || filename.endsWith(".wma")))
         {
             return convert_music_16m(filename, in_path, out_path);
         }
         else if(filename.endsWith(".spc") && m_spec.target_platform == TargetPlatform::T3X)
         {
-            qInfo() << "spc2it" << out_path;
+            log_file(LogCategory::AudioSpc2It, in_path);
             return spc2it_convert(in_path.toUtf8().data(), out_path.toUtf8().data()) == 0;
         }
         else if(m_spec.package_type == PackageType::Episode && (filename.endsWith(".wld") || filename.endsWith(".wldx")))
@@ -1202,7 +1280,7 @@ public:
             || filename.endsWith(".odt") || filename.endsWith(".pdf"))
         {
             // banned filenames
-            qInfo() << "skipping" << in_path;
+            log_file(LogCategory::SkippedUnused, in_path);
             return true;
         }
         // skip TTFs on DSG
@@ -1218,7 +1296,7 @@ public:
                 && !(filename.startsWith("thextech_") && filename.endsWith(".json"))
                 && !filename.endsWith(".ini"))
             {
-                qInfo() << "copying" << out_path;
+                log_file(LogCategory::CopiedUnknown, in_path);
             }
 
             return QFile::copy(in_path, out_path);
@@ -1276,8 +1354,6 @@ public:
                 m_error = "Failed to create graphics directory";
                 return false;
             }
-
-            qInfo() << "Initializing primary graphics.list file";
 
             m_main_graphics_list.setFileName(m_temp_dir.filePath(QString("graphics") + QDir::separator() + "graphics.list"));
             m_main_graphics_list.open(QIODevice::WriteOnly);
@@ -1585,6 +1661,7 @@ public:
             }
             else if(use_fn_in.endsWith(".spc"))
             {
+                log_file(LogCategory::AudioSpc2It, use_fn_in);
                 use_fn_out += ".it";
                 success = (spc2it_convert(use_fn_in.toUtf8().data(), use_fn_out.toUtf8().data()) == 0);
             }
@@ -2084,6 +2161,12 @@ bool Convert(const Spec& spec)
 {
     Converter c;
     c.m_spec = spec;
+
+    if(!c.m_spec.log_file_callback)
+        c.m_spec.log_file_callback = log_file_callback_default;
+
+    if(!c.m_spec.progress_callback)
+        c.m_spec.progress_callback = progress_callback_default;
 
     if(!c.process())
     {
