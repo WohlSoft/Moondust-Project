@@ -72,6 +72,8 @@ bool shrink_player_texture(FIBITMAP** image, bool char5)
     if(!dest_image)
         return false;
 
+    int invalid = 0;
+
     int copy_frame_count = (char5) ? 16 : 38;
 
     for(int dest_frame = 0; dest_frame < copy_frame_count; dest_frame++)
@@ -97,13 +99,34 @@ bool shrink_player_texture(FIBITMAP** image, bool char5)
             }
 
             s_blit(dest_image, source_image, source_x, source_y, dest_x, dest_y, dest_frame_w, dest_frame_h);
+
+            // confirm that it's valid
+            for(int ox = 0; ox < source_frame_w; ox++)
+            {
+                for(int oy = 0; oy < source_frame_h; oy++)
+                {
+                    if(ox < dest_frame_w + 2 && oy < dest_frame_h + 2)
+                        continue;
+
+                    RGBQUAD quad;
+                    if(FreeImage_GetPixelColor(source_image, source_x + ox, source_frame_h * source_rows - (source_y + oy), &quad) && quad.rgbReserved >= 0x40)
+                        invalid++;
+                }
+            }
         }
     }
 
-    FreeImage_Unload(source_image);
-    *image = dest_image;
+    bool okay = (invalid <= 20);
 
-    return true;
+    if(okay)
+    {
+        FreeImage_Unload(source_image);
+        *image = dest_image;
+    }
+    else
+        FreeImage_Unload(dest_image);
+
+    return okay;
 }
 
 PaletteTex::PaletteTex(const uint8_t* pixels_rgba, int width, int height)
