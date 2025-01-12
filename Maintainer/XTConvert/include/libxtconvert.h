@@ -23,6 +23,32 @@
 namespace XTConvert
 {
 
+enum class LogCategory
+{
+    ImageBitmask = 0,
+    ImageTransparent,
+    ImageScaledDown,
+    ImageCropped,
+    ImageNot2x,
+    ImagePlayerCompressFailed,
+    AudioQoa,
+    AudioSpc2It,
+    Content38AToPGEX,
+    CopiedUnknown,
+    SkippedUnused,
+    SkippedInvalid,
+    SkippedPNG,
+    SkippedGIF,
+    SkippedNoMask,
+    Category_Count,
+};
+
+extern const char* const log_category[(int)LogCategory::Category_Count];
+
+typedef void log_file_callback_t(LogCategory log_category, const std::string& filename);
+// returns a negative number to signal interrupt
+typedef int progress_callback_t(int cur_stage, int stage_count, const std::string& stage_name, int cur_file, int file_count, const std::string& file_name);
+
 enum class TargetPlatform
 {
     Desktop,
@@ -50,6 +76,9 @@ struct Spec
     PackageType package_type = PackageType::AssetPack;
     ConvertGIFs convert_gifs = ConvertGIFs::Safe;
     bool legacy_archives = false;
+
+    log_file_callback_t* log_file_callback = nullptr;
+    progress_callback_t* progress_callback = nullptr;
 
     std::string input_path;
     std::string base_assets_path;
