@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Convert Audio (SoX)</string>
+   <string>XTConvert</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../_resources/maintainer.qrc">
@@ -188,7 +188,11 @@
       </layout>
      </item>
      <item>
-      <widget class="QTextBrowser" name="textBrowser_3"/>
+      <widget class="QTextEdit" name="textBrowser_3">
+        <property name="readOnly">
+            <bool>true</bool>
+        </property>
+      </widget>
      </item>
     </layout>
    </item>
