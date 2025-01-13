@@ -1223,6 +1223,12 @@ public:
     {
         sync_cur_dir(in_path);
 
+        bool is_non_tracker_music = filename.endsWith(".mp3") || filename.endsWith(".ogg")
+            || filename.endsWith(".vgm") || filename.endsWith(".vgz") || filename.endsWith(".mid")
+            || filename.endsWith(".nsf") || filename.endsWith(".hes")
+            || filename.endsWith(".pttune") || filename.endsWith(".ptcop")
+            || filename.endsWith(".wma");
+
         if(filename.endsWith("m.gif") && in_path.contains("/graphics/fallback/"))
         {
             // want to clobber auto-generated masks
@@ -1242,12 +1248,7 @@ public:
             return convert_font_ini(filename, in_path, out_path);
         else if(m_spec.target_platform != TargetPlatform::Desktop && filename.endsWith(".ogg") && in_path.contains("/sound/"))
             return convert_sfx(filename, in_path, out_path);
-        else if(m_spec.target_platform == TargetPlatform::DSG
-            && (filename.endsWith(".mp3") || filename.endsWith(".ogg") || filename.endsWith(".wav")
-                || filename.endsWith(".vgm") || filename.endsWith(".vgz") || filename.endsWith(".mid")
-                || filename.endsWith(".nsf") || filename.endsWith(".hes")
-                || filename.endsWith(".pttune") || filename.endsWith(".ptcop")
-                || filename.endsWith(".wma")))
+        else if(m_spec.target_platform == TargetPlatform::DSG && (filename.endsWith(".wav") || is_non_tracker_music))
         {
             return convert_music_16m(filename, in_path, out_path);
         }
@@ -1292,12 +1293,14 @@ public:
         {
             if(!filename.endsWith(".txt") && !filename.endsWith(".lvl") && !filename.endsWith(".lvlx")
                 && !filename.endsWith(".wld") && !filename.endsWith(".wldx")
-                && !filename.endsWith(".ogg") && !filename.endsWith(".mp3") && !filename.endsWith(".spc")
+                && !is_non_tracker_music && !filename.endsWith(".spc")
+                && !filename.endsWith(".it") && !filename.endsWith(".mod") && !filename.endsWith(".xm")
                 && !(filename.startsWith("translation_") && filename.endsWith(".json"))
                 && !(filename.startsWith("assets_") && filename.endsWith(".json"))
                 && !(filename.startsWith("thextech_") && filename.endsWith(".json"))
-                && !filename.endsWith(".ini") && !filename.endsWith(".png")
-                && !filename.endsWith(".gif"))
+                && !filename.endsWith(".ini")
+                && !filename.endsWith(".png") && !filename.endsWith(".gif")
+                && !filename.endsWith(".otf") && !filename.endsWith(".ttf"))
             {
                 log_file(LogCategory::CopiedUnknown, in_path);
             }
