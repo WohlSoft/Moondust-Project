@@ -1,11 +1,49 @@
-#ifndef xt_convert_H
-#define xt_convert_H
+#ifndef XT_CONVERT_H
+#define XT_CONVERT_H
 
 #include <QDialog>
 #include <QQueue>
-#include <QProcess>
-#include <files/episode_box.h>
-#include <QFuture>
+#include <QThread>
+#include <memory>
+
+#include "libxtconvert.h"
+
+struct XTConvertUpdate
+{
+    // if -1, is a progress update; if -2, a completion report
+    XTConvert::LogCategory log_category = XTConvert::LogCategory::Category_Count;
+    QString file_name; // or error message (if any) if log_category is -2
+
+    int cur_stage;
+    int stage_count;
+    QString stage_name;
+    int cur_file;
+    int file_count;
+};
+
+Q_DECLARE_METATYPE(XTConvert::Spec);
+Q_DECLARE_METATYPE(XTConvertUpdate);
+
+class XTConvert_Worker : public QObject
+{
+    Q_OBJECT
+
+    bool is_running = false;
+    bool is_cancelled = false;
+
+public:
+
+    void log_file_callback(XTConvert::LogCategory log_category, const std::string& filename);
+    int progress_callback(int cur_stage, int stage_count, const std::string& stage_name, int cur_file, int file_count, const std::string& file_name);
+
+signals:
+    void status_update(XTConvertUpdate update);
+    void finish();
+
+public slots:
+    void do_cancel();
+    void do_run(XTConvert::Spec spec);
+};
 
 namespace Ui {
 class XTConvertUI;
@@ -20,22 +58,25 @@ public:
     ~XTConvertUI();
     void updateControls();
     void start();
-    void stop(bool do_abort=false);
 
 signals:
-    void doNextStep(int retStatus, int exitStatus);
-    void gotMax(int max);
+    void do_run(XTConvert::Spec);
+    void do_cancel();
 
 private slots:
     void on_start_clicked();
     void on_browse_content_clicked();
     void on_browse_output_clicked();
 
+    void on_status_update(XTConvertUpdate update);
+    void on_finish();
+
 protected:
     void closeEvent( QCloseEvent * e );
 
 private:
-    QFuture<void> process_thread;
+    QThread process_thread;
+    std::unique_ptr<QObject> worker;
 
     QString m_recent_content_path;
     QString m_recent_output_path;
@@ -49,4 +90,4 @@ private:
     QStringList logs;
 };
 
-#endif // xt_convert_H
+#endif // XT_CONVERT_H
