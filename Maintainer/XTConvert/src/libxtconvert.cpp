@@ -29,7 +29,6 @@
 #include <QDirIterator>
 #include <QDateTime>
 #include <QSettings>
-#include <QProcess>
 
 #include <fcntl.h>
 
@@ -58,12 +57,12 @@
 
 #include "libxtconvert.h"
 
-static void log_file_callback_default(XTConvert::LogCategory cat, const std::string& str)
+static void log_file_callback_default(void*, XTConvert::LogCategory cat, const std::string& str)
 {
     printf("%s - %s\n", XTConvert::log_category[(int)cat], str.c_str());
 }
 
-static int progress_callback_default(int, int, const std::string&, int, int, const std::string&) { return 0; }
+static int progress_callback_default(void*, int, int, const std::string&, int, int, const std::string&) { return 0; }
 
 static QByteArray s_get_default_masks()
 {
@@ -102,6 +101,7 @@ const char* const log_category[(int)LogCategory::Category_Count] =
     "Custom PNG (skipped)",
     "Assets GIF (skipped)",
     "No mask (skipped)",
+    "Error Message",
 };
 
 enum Stage
@@ -353,13 +353,13 @@ public:
 
     void log_file(LogCategory log_category, const QString& filename)
     {
-        m_spec.log_file_callback(log_category, m_input_dir.relativeFilePath(filename).toStdString());
+        m_spec.log_file_callback(m_spec.callback_userdata, log_category, m_input_dir.relativeFilePath(filename).toStdString());
     }
 
     void progress(int cur_stage, int cur_file, int file_count, const QString& file_name)
     {
         const auto& rel_dir = (cur_stage <= STAGE_CONVERT) ? m_input_dir : m_temp_dir;
-        m_spec.progress_callback(cur_stage, STAGE_COUNT, stage_names[cur_stage], cur_file, file_count, rel_dir.relativeFilePath(file_name).toStdString());
+        m_spec.progress_callback(m_spec.callback_userdata, cur_stage, STAGE_COUNT, stage_names[cur_stage], cur_file, file_count, rel_dir.relativeFilePath(file_name).toStdString());
     }
 
     bool save_gif(FIBITMAP* image, const QString& out_path)
@@ -1296,7 +1296,8 @@ public:
                 && !(filename.startsWith("translation_") && filename.endsWith(".json"))
                 && !(filename.startsWith("assets_") && filename.endsWith(".json"))
                 && !(filename.startsWith("thextech_") && filename.endsWith(".json"))
-                && !filename.endsWith(".ini"))
+                && !filename.endsWith(".ini") && !filename.endsWith(".png")
+                && !filename.endsWith(".gif"))
             {
                 log_file(LogCategory::CopiedUnknown, in_path);
             }
@@ -2172,7 +2173,7 @@ bool Convert(const Spec& spec)
 
     if(!c.process())
     {
-        qInfo() << "Error" << c.m_error;
+        c.m_spec.log_file_callback(c.m_spec.callback_userdata, LogCategory::ErrorMessage, c.m_error.toStdString());
         return false;
     }
 
