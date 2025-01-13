@@ -40,14 +40,15 @@ enum class LogCategory
     SkippedPNG,
     SkippedGIF,
     SkippedNoMask,
+    ErrorMessage,
     Category_Count,
 };
 
 extern const char* const log_category[(int)LogCategory::Category_Count];
 
-typedef void log_file_callback_t(LogCategory log_category, const std::string& filename);
+typedef void log_file_callback_t(void* userdata, LogCategory log_category, const std::string& filename);
 // returns a negative number to signal interrupt
-typedef int progress_callback_t(int cur_stage, int stage_count, const std::string& stage_name, int cur_file, int file_count, const std::string& file_name);
+typedef int progress_callback_t(void* userdata, int cur_stage, int stage_count, const std::string& stage_name, int cur_file, int file_count, const std::string& file_name);
 
 enum class TargetPlatform
 {
@@ -79,6 +80,7 @@ struct Spec
 
     log_file_callback_t* log_file_callback = nullptr;
     progress_callback_t* progress_callback = nullptr;
+    void* callback_userdata = nullptr;
 
     std::string input_path;
     std::string base_assets_path;
