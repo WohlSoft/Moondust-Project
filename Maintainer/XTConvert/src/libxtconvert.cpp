@@ -144,8 +144,6 @@ static bool validate_image_filename(const QString& filename, QString& type, QStr
 
     dir = type;
 
-    // FIXME: need to handle case where index is larger than would be looked for. This is invalid (and GIFs care about that). This will show up in Mario Classic
-
     // special case: yoshib and yoshit stored in yoshi
     if(type.startsWith('y'))
         dir = "yoshi";
@@ -356,10 +354,10 @@ public:
         m_spec.log_file_callback(m_spec.callback_userdata, log_category, m_input_dir.relativeFilePath(filename).toStdString());
     }
 
-    void progress(int cur_stage, int cur_file, int file_count, const QString& file_name)
+    int progress(int cur_stage, int cur_file, int file_count, const QString& file_name)
     {
         const auto& rel_dir = (cur_stage <= STAGE_CONVERT) ? m_input_dir : m_temp_dir;
-        m_spec.progress_callback(m_spec.callback_userdata, cur_stage, STAGE_COUNT, stage_names[cur_stage], cur_file, file_count, rel_dir.relativeFilePath(file_name).toStdString());
+        return m_spec.progress_callback(m_spec.callback_userdata, cur_stage, STAGE_COUNT, stage_names[cur_stage], cur_file, file_count, rel_dir.relativeFilePath(file_name).toStdString());
     }
 
     bool save_gif(FIBITMAP* image, const QString& out_path)
@@ -1326,7 +1324,9 @@ public:
             meta.setIniCodec("UTF-8");
 #endif
 
+            meta.beginGroup("content");
             QString prev_target = meta.value("platform", "main").toString();
+            meta.endGroup();
             if(prev_target != "main")
             {
                 m_error = "Provided content is already converted for use on [" + prev_target + "]";
@@ -1380,8 +1380,6 @@ public:
             count_it.next();
         }
 
-        qInfo() << file_count << "files to check";
-
         // iterate over all directories
         size_t files_done = 0;
         QDirIterator it(m_input_dir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
@@ -1407,6 +1405,12 @@ public:
                 }
 
                 continue;
+            }
+
+            if(progress(STAGE_CONVERT, files_done, file_count, abs_path) < 0)
+            {
+                m_error = "Conversion canceled by user";
+                return false;
             }
 
             if(!convert_file(filename, abs_path, temp_path))
@@ -1923,12 +1927,31 @@ public:
             m_temp_dir.setPath(m_temp_dir_owner.path());
             m_temp_dir.setFilter(QDir::NoDotAndDotDot | QDir::Files);
 
+            // check count of files
+            size_t file_count = 0;
+            QDirIterator count_it(m_temp_dir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
+            while(count_it.hasNext())
+            {
+                file_count++;
+                count_it.next();
+            }
+
+            // iterate over all directories
+            size_t files_done = 0;
             QDirIterator it(m_temp_dir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
 
             while(it.hasNext())
             {
+                files_done++;
+
                 QString abs_path = it.next();
                 QString rel_path = m_temp_dir.relativeFilePath(abs_path);
+
+                if(progress(STAGE_PACK, files_done, file_count, abs_path) < 0)
+                {
+                    m_error = "Conversion canceled by user";
+                    goto cleanup;
+                }
 
                 QFile file(abs_path);
                 if(!file.open(QIODevice::ReadOnly))
