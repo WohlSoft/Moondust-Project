@@ -225,15 +225,23 @@ void XTConvertUI::on_status_update(XTConvertUpdate update)
 
     if(update.log_category == XTConvert::LogCategory::Category_Count)
     {
-        // update progress bars
+        double progress = (double)update.cur_stage / update.stage_count + (double)update.cur_file / (update.file_count * update.stage_count);
+        ui->progress->setValue((int)(progress * 100));
+
+        QString format = update.stage_name;
+        if(!update.file_name.isEmpty())
+        {
+            format += " ";
+            format += update.file_name;
+        }
+
+        ui->progress->setFormat(format);
+
         return;
     }
 
     // update file table
-    ui->textBrowser_3->append("\n");
-    ui->textBrowser_3->append(XTConvert::log_category[(int)update.log_category]);
-    ui->textBrowser_3->append(" - ");
-    ui->textBrowser_3->append(update.file_name);
+    ui->textBrowser_3->append(XTConvert::log_category[(int)update.log_category] + (" - " + update.file_name));
 }
 
 void XTConvertUI::on_start_clicked()
