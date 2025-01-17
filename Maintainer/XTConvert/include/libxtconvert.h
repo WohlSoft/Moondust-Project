@@ -26,7 +26,9 @@ namespace XTConvert
 enum class LogCategory
 {
     ImageBitmask = 0,
+    ImageBitmaskLost,
     ImageTransparent,
+    ImageTransparencyLost,
     ImageScaledDown,
     ImageCropped,
     ImageNot2x,
