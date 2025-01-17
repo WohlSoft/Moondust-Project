@@ -286,17 +286,17 @@ void XTConvertUI::on_status_update(XTConvertUpdate update)
         switch(XTConvert::log_level[cat])
         {
         case XTConvert::LogLevel::Info:
-            color = Qt::gray;
+            color = QColor(48, 48, 192);
             break;
         case XTConvert::LogLevel::Notice:
-            color = Qt::black;
+            color = QColor(32, 128, 32);
             break;
         case XTConvert::LogLevel::Warning:
         default:
             color = QColor(192, 96, 0);
             break;
         case XTConvert::LogLevel::Error:
-            color = Qt::red;
+            color = QColor(255, 32, 32);
             break;
         }
 
