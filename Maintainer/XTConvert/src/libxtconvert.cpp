@@ -87,7 +87,9 @@ namespace XTConvert
 const char* const log_category[(int)LogCategory::Category_Count] =
 {
     "Bitmask image",
+    "Lost bitmask",
     "Transparent image",
+    "Lost transparency",
     "Image scaled down",
     "Image cropped",
     "Image not 2x",
@@ -531,11 +533,16 @@ public:
 
         TargetPlatform output_format = m_spec.target_platform;
 
+        bool bitmask_required = GraphicsLoad::validateBitmaskRequired(image, mask);
+
         // find out whether mask is actually needed
-        if(m_spec.convert_gifs != ConvertGIFs::All && GraphicsLoad::validateBitmaskRequired(image, mask))
+        if(m_spec.convert_gifs != ConvertGIFs::All && bitmask_required)
             output_format = TargetPlatform::Desktop;
         else if(mask)
         {
+            if(bitmask_required)
+                log_file(LogCategory::ImageBitmaskLost, in_path);
+
             // merge with mask and free
             GraphicsLoad::mergeWithMask(image, mask);
             FreeImage_Unload(mask);
@@ -864,6 +871,8 @@ public:
                 flags |= 16; // use pixel alpha values, not palette entry 1 color key
                 pixels_per_byte = 1;
             }
+            else if(semi_trans || multi_trans)
+                log_file(LogCategory::ImageTransparencyLost, in_path);
 
             // save the image here
             QByteArray dsg_data;
