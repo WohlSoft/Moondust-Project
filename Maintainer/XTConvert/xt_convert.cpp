@@ -204,7 +204,11 @@ void XTConvertUI::start()
     spec.base_assets_path.clear();
 
     m_had_error = false;
-    ui->textBrowser_3->clear();
+
+    for(auto*& log : m_log_entries)
+        log = nullptr;
+
+    ui->logs->clear();
 
     emit do_run(spec);
 }
@@ -264,7 +268,68 @@ void XTConvertUI::on_status_update(XTConvertUpdate update)
     }
 
     // update file table
-    ui->textBrowser_3->append(XTConvert::log_category[(int)update.log_category] + (" - " + update.file_name));
+    int cat = (int)update.log_category;
+    auto*& entry = m_log_entries[cat];
+    if(!entry)
+    {
+        entry = new QTextEdit();
+        ui->logs->addTab(entry, "");
+        entry->setReadOnly(true);
+
+        int pos = ui->logs->count() - 1;
+
+        m_log_entry_counts[cat] = 0;
+        m_cat_to_position[cat] = pos;
+        m_position_to_cat[pos] = cat;
+
+        QColor color;
+        switch(XTConvert::log_level[cat])
+        {
+        case XTConvert::LogLevel::Info:
+            color = Qt::gray;
+            break;
+        case XTConvert::LogLevel::Notice:
+            color = Qt::black;
+            break;
+        case XTConvert::LogLevel::Warning:
+        default:
+            color = QColor(192, 96, 0);
+            break;
+        case XTConvert::LogLevel::Error:
+            color = Qt::red;
+            break;
+        }
+
+        ui->logs->tabBar()->setTabTextColor(pos, color);
+    }
+
+    entry->append(update.file_name);
+    m_log_entry_counts[cat]++;
+
+    QString tab_label = QString(XTConvert::log_category[cat]) + " (" + QString::number(m_log_entry_counts[cat]) + ")";
+
+    ui->logs->setTabText(m_cat_to_position[cat], tab_label);
+
+    while(m_cat_to_position[cat] > 0)
+    {
+        int last_cat = m_position_to_cat[m_cat_to_position[cat] - 1];
+
+        if(XTConvert::log_level[last_cat] > XTConvert::log_level[cat])
+            break;
+        else if(XTConvert::log_level[last_cat] == XTConvert::log_level[cat] && m_log_entry_counts[last_cat] >= m_log_entry_counts[cat])
+            break;
+
+        // need to update positions correctly, low_cat will be in low_pos, and high_cat will be in high_pos
+        int high_pos = m_cat_to_position[cat] - 1;
+        int low_pos = m_cat_to_position[cat];
+        ui->logs->tabBar()->moveTab(low_pos, high_pos);
+
+        m_position_to_cat[low_pos] = last_cat;
+        m_position_to_cat[high_pos] = cat;
+
+        m_cat_to_position[last_cat]++;
+        m_cat_to_position[cat]--;
+    }
 }
 
 void XTConvertUI::on_start_clicked()
