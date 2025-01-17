@@ -1235,7 +1235,7 @@ public:
             || filename.endsWith(".vgm") || filename.endsWith(".vgz") || filename.endsWith(".mid")
             || filename.endsWith(".nsf") || filename.endsWith(".hes")
             || filename.endsWith(".pttune") || filename.endsWith(".ptcop")
-            || filename.endsWith(".wma");
+            || filename.endsWith(".wma") || filename.endsWith(".gbs");
 
         bool is_font = filename.endsWith(".ttf") || filename.endsWith(".otf") || filename.endsWith(".pcf") || filename.endsWith(".woff") || filename.endsWith(".woff2");
 
@@ -1290,7 +1290,7 @@ public:
             || filename.endsWith(".dll") || filename.endsWith(".exe")
             || filename.endsWith(".rar") || filename.endsWith(".zip") || filename.endsWith(".7z")
             || filename.endsWith(".xte") || filename.endsWith(".xta")
-            || filename.endsWith(".odt") || filename.endsWith(".pdf"))
+            || filename.endsWith(".odt") || filename.endsWith(".pdf") || filename.endsWith(".md"))
         {
             // banned filenames
             log_file(LogCategory::SkippedUnused, in_path);
@@ -1304,7 +1304,7 @@ public:
             if(!filename.endsWith(".txt") && !filename.endsWith(".lvl") && !filename.endsWith(".lvlx")
                 && !filename.endsWith(".wld") && !filename.endsWith(".wldx")
                 && !is_non_tracker_music && !filename.endsWith(".spc")
-                && !filename.endsWith(".it") && !filename.endsWith(".mod") && !filename.endsWith(".xm")
+                && !filename.endsWith(".it") && !filename.endsWith(".mod") && !filename.endsWith(".xm") && !filename.endsWith(".s3m")
                 && !(filename.startsWith("translation_") && filename.endsWith(".json"))
                 && !(filename.startsWith("assets_") && filename.endsWith(".json"))
                 && !(filename.startsWith("thextech_") && filename.endsWith(".json"))
