@@ -106,6 +106,28 @@ const char* const log_category[(int)LogCategory::Category_Count] =
     "Error Message",
 };
 
+const LogLevel log_level[(int)LogCategory::Category_Count] =
+{
+    LogLevel::Warning,
+    LogLevel::Warning,
+    LogLevel::Notice,
+    LogLevel::Warning,
+    LogLevel::Warning,
+    LogLevel::Error,
+    LogLevel::Warning,
+    LogLevel::Notice,
+    LogLevel::Info,
+    LogLevel::Info,
+    LogLevel::Error,
+    LogLevel::Notice,
+    LogLevel::Info,
+    LogLevel::Error,
+    LogLevel::Warning,
+    LogLevel::Warning,
+    LogLevel::Warning,
+    LogLevel::Error,
+};
+
 enum Stage
 {
     STAGE_EXTRACT = 0,

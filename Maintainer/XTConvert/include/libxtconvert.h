@@ -46,7 +46,16 @@ enum class LogCategory
     Category_Count,
 };
 
+enum class LogLevel
+{
+    Info = 0,
+    Notice = 1,
+    Warning = 2,
+    Error = 3,
+};
+
 extern const char* const log_category[(int)LogCategory::Category_Count];
+extern const LogLevel log_level[(int)LogCategory::Category_Count];
 
 typedef void log_file_callback_t(void* userdata, LogCategory log_category, const std::string& filename);
 // returns a negative number to signal interrupt
