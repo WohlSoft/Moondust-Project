@@ -185,7 +185,7 @@
          <string>Convert and package game assets and episodes for TheXTech.</string>
         </property>
         <property name="text">
-         <string>TheXTech packager</string>
+         <string>XTConvert</string>
         </property>
        </widget>
       </item>
