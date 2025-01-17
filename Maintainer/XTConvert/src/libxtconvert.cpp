@@ -1228,6 +1228,8 @@ public:
             || filename.endsWith(".pttune") || filename.endsWith(".ptcop")
             || filename.endsWith(".wma");
 
+        bool is_font = filename.endsWith(".ttf") || filename.endsWith(".otf") || filename.endsWith(".pcf") || filename.endsWith(".woff") || filename.endsWith(".woff2");
+
         if(filename.endsWith("m.gif") && in_path.contains("/graphics/fallback/"))
         {
             // want to clobber auto-generated masks
@@ -1286,7 +1288,7 @@ public:
             return true;
         }
         // skip TTFs on DSG
-        else if(m_spec.target_platform == TargetPlatform::DSG && (filename.endsWith(".ttf") || filename.endsWith(".otf")))
+        else if(m_spec.target_platform == TargetPlatform::DSG && is_font)
             return true;
         else
         {
@@ -1299,7 +1301,7 @@ public:
                 && !(filename.startsWith("thextech_") && filename.endsWith(".json"))
                 && !filename.endsWith(".ini")
                 && !filename.endsWith(".png") && !filename.endsWith(".gif")
-                && !filename.endsWith(".otf") && !filename.endsWith(".ttf"))
+                && !is_font)
             {
                 log_file(LogCategory::CopiedUnknown, in_path);
             }
