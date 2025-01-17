@@ -4,7 +4,9 @@
 #include <QDialog>
 #include <QQueue>
 #include <QThread>
+#include <QTextEdit>
 #include <memory>
+#include <array>
 
 #include "libxtconvert.h"
 
@@ -80,6 +82,12 @@ protected:
 private:
     QThread process_thread;
     std::unique_ptr<QObject> worker;
+
+    // NOT OWNED, OWNED BY QTabWidget ui->logs
+    std::array<QTextEdit*, (int)XTConvert::LogCategory::Category_Count> m_log_entries;
+    std::array<int, (int)XTConvert::LogCategory::Category_Count> m_log_entry_counts;
+    std::array<int, (int)XTConvert::LogCategory::Category_Count> m_cat_to_position;
+    std::array<int, (int)XTConvert::LogCategory::Category_Count> m_position_to_cat;
 
     QString m_recent_content_path;
     QString m_recent_output_path;
