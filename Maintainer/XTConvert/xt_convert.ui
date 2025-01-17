@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>598</width>
+    <width>653</width>
     <height>519</height>
    </rect>
   </property>
@@ -235,8 +235,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QTextEdit" name="textBrowser_3">
-       <property name="readOnly">
+      <widget class="QTabWidget" name="logs">
+       <property name="currentIndex">
+        <number>-1</number>
+       </property>
+       <property name="usesScrollButtons">
         <bool>true</bool>
        </property>
       </widget>
