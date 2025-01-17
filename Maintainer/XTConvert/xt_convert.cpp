@@ -151,9 +151,6 @@ void XTConvertUI::updateControls()
     else
         ui->start->setText(tr("Start"));
 
-    ui->progress_big->setEnabled(m_in_progress);
-    ui->progress_sub->setEnabled(m_in_progress);
-
     ui->browse_content->setEnabled(!m_in_progress);
     ui->target_platform->setEnabled(!m_in_progress);
     ui->target_version->setEnabled(!m_in_progress);
@@ -172,12 +169,10 @@ void XTConvertUI::start()
 
     updateControls();
 
-    ui->progress_big->setMaximum(100);
     ui->progress_big->setValue(-1);
 
     ui->progress_big->setFormat("Preparing...");
 
-    ui->progress_sub->setMaximum(100);
     ui->progress_sub->setValue(-1);
 
     ui->progress_sub->setFormat("");
@@ -217,8 +212,6 @@ void XTConvertUI::on_finish()
 {
     m_in_progress = false;
 
-    ui->progress_big->setMaximum(10);
-
     if(m_had_error)
     {
         ui->progress_big->setValue(0);
@@ -226,12 +219,11 @@ void XTConvertUI::on_finish()
     }
     else
     {
-        ui->progress_big->setValue(10);
+        ui->progress_big->setValue(100);
         ui->progress_big->setFormat(tr("Finished"));
     }
 
     ui->progress_sub->setValue(0);
-    ui->progress_sub->setMaximum(10);
     ui->progress_sub->setFormat("");
 
     updateControls();
