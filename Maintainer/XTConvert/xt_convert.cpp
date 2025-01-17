@@ -122,7 +122,6 @@ XTConvertUI::XTConvertUI(QWidget *parent) :
 
     m_in_progress = false;
     m_recent_content_path = ApplicationPath;
-    m_recent_output_path = ApplicationPath;
 
     updateControls();
 }
@@ -139,6 +138,11 @@ XTConvertUI::~XTConvertUI()
 
 void XTConvertUI::updateControls()
 {
+    if(m_target_asset_pack)
+        ui->content_type->setCurrentIndex(1);
+    else
+        ui->content_type->setCurrentIndex(0);
+
     bool content_ready = !ui->content_path->text().isEmpty();
     bool output_ready = !ui->output_path->text().isEmpty();
 
@@ -147,11 +151,14 @@ void XTConvertUI::updateControls()
     else
         ui->start->setText(tr("Start"));
 
-    ui->progress->setEnabled(m_in_progress);
+    ui->progress_big->setEnabled(m_in_progress);
+    ui->progress_sub->setEnabled(m_in_progress);
 
     ui->browse_content->setEnabled(!m_in_progress);
     ui->target_platform->setEnabled(!m_in_progress);
+    ui->target_version->setEnabled(!m_in_progress);
     ui->browse_output->setEnabled(!m_in_progress && content_ready);
+    ui->content_type->setEnabled(!m_in_progress && m_target_archive);
 
     bool convert_ready = content_ready && output_ready;
     ui->start->setEnabled(m_in_progress || convert_ready);
@@ -165,10 +172,15 @@ void XTConvertUI::start()
 
     updateControls();
 
-    ui->progress->setMaximum(100);
-    ui->progress->setValue(-1);
+    ui->progress_big->setMaximum(100);
+    ui->progress_big->setValue(-1);
 
-    ui->progress->setFormat("Preparing...");
+    ui->progress_big->setFormat("Preparing...");
+
+    ui->progress_sub->setMaximum(100);
+    ui->progress_sub->setValue(-1);
+
+    ui->progress_sub->setFormat("");
 
     XTConvert::Spec spec;
 
@@ -185,20 +197,14 @@ void XTConvertUI::start()
     else
         spec.package_type = XTConvert::PackageType::Episode;
 
-    if(ui->target_platform->currentText() == "Mainline")
-        spec.target_platform = XTConvert::TargetPlatform::Desktop;
-    else if(ui->target_platform->currentText() == "3DS")
-        spec.target_platform = XTConvert::TargetPlatform::T3X;
-    else if(ui->target_platform->currentText() == "Wii")
-        spec.target_platform = XTConvert::TargetPlatform::TPL;
-    else if(ui->target_platform->currentText() == "DSi")
-        spec.target_platform = XTConvert::TargetPlatform::DSG;
-
-    // need to add to UI, and update default filenames...
-    spec.legacy_archives = true;
+    spec.target_platform = m_target_platform;
+    spec.legacy_archives = m_target_legacy;
 
     // need to add to UI...
     spec.base_assets_path.clear();
+
+    m_had_error = false;
+    ui->textBrowser_3->clear();
 
     emit do_run(spec);
 }
@@ -207,10 +213,22 @@ void XTConvertUI::on_finish()
 {
     m_in_progress = false;
 
-    ui->progress->setValue(0);
-    ui->progress->setMaximum(10);
+    ui->progress_big->setMaximum(10);
 
-    ui->progress->setFormat("");
+    if(m_had_error)
+    {
+        ui->progress_big->setValue(0);
+        ui->progress_big->setFormat(tr("Error"));
+    }
+    else
+    {
+        ui->progress_big->setValue(10);
+        ui->progress_big->setFormat(tr("Finished"));
+    }
+
+    ui->progress_sub->setValue(0);
+    ui->progress_sub->setMaximum(10);
+    ui->progress_sub->setFormat("");
 
     updateControls();
 }
@@ -219,23 +237,28 @@ void XTConvertUI::on_status_update(XTConvertUpdate update)
 {
     if(update.log_category == XTConvert::LogCategory::ErrorMessage)
     {
+        m_had_error = true;
+
+        if(m_had_error)
+        {
+            ui->progress_big->setValue(0);
+            ui->progress_big->setFormat(tr("Error"));
+        }
+
         QMessageBox::warning(this, "XTConvert", update.file_name);
+
         return;
     }
 
     if(update.log_category == XTConvert::LogCategory::Category_Count)
     {
-        double progress = (double)update.cur_stage / update.stage_count + (double)update.cur_file / (update.file_count * update.stage_count);
-        ui->progress->setValue((int)(progress * 100));
+        double progress_sub = (double)update.cur_file / update.file_count;
+        double progress = (update.cur_stage + progress_sub) / update.stage_count;
+        ui->progress_big->setValue((int)(progress * 100));
+        ui->progress_sub->setValue((int)(progress_sub * 100));
 
-        QString format = update.stage_name;
-        if(!update.file_name.isEmpty())
-        {
-            format += " ";
-            format += update.file_name;
-        }
-
-        ui->progress->setFormat(format);
+        ui->progress_big->setFormat(update.stage_name + " (%p%)");
+        ui->progress_sub->setFormat(update.file_name);
 
         return;
     }
@@ -264,7 +287,7 @@ void XTConvertUI::on_browse_content_clicked()
 {
     QString selected_filter;
 
-    QString filter = "Episode archives and world files (*.wld *.wldx *.xte);;Compressed episode archives (*.zip *.rar *.7z);;Asset pack archives and info files (gameinfo.ini *.xta)";
+    QString filter = "Supported files (*.wld *.wldx *.xte gameinfo.ini *.xta *.zip *.rar *.7z)";
 
     QString file = QFileDialog::getOpenFileName(this, tr("Select content to convert and package"),
                    m_recent_content_path,
@@ -275,22 +298,22 @@ void XTConvertUI::on_browse_content_clicked()
     if(filelower.endsWith("gameinfo.ini") || filelower.endsWith(".xta"))
     {
         m_target_asset_pack = true;
-        ui->content_type->setText(tr("Asset Pack"));
+        m_target_archive = false;
     }
     else if(filelower.endsWith(".zip") || filelower.endsWith(".rar") || filelower.endsWith(".7z"))
     {
-        m_target_asset_pack = false;
-        ui->content_type->setText(tr("Compressed episode"));
+        m_target_archive = true;
     }
     else if(filelower.endsWith(".wld") || filelower.endsWith(".wldx") || filelower.endsWith(".xte"))
     {
+        m_target_archive = false;
         m_target_asset_pack = false;
-        ui->content_type->setText(tr("Episode"));
     }
     else
         return;
 
-    m_recent_content_path = file;
+    QFileInfo fi(file);
+    m_recent_content_path = fi.absolutePath();
 
     ui->content_path->setText(file);
     ui->output_path->setText("");
@@ -300,25 +323,102 @@ void XTConvertUI::on_browse_content_clicked()
 
 void XTConvertUI::on_browse_output_clicked()
 {
+    QString needs_ext;
+
+    if(m_target_platform == XTConvert::TargetPlatform::TPL)
+        needs_ext = ".wii";
+    else if(m_target_platform == XTConvert::TargetPlatform::T3X)
+        needs_ext = ".3ds";
+    else if(m_target_platform == XTConvert::TargetPlatform::DSG)
+        needs_ext = ".dsi";
+
+    if(m_target_legacy)
+    {
+        if(m_target_platform == XTConvert::TargetPlatform::T3X)
+            needs_ext += ".romfs";
+        else
+            needs_ext += ".7z";
+    }
+    else
+    {
+        if(m_target_asset_pack)
+            needs_ext += ".xta";
+        else
+            needs_ext += ".xte";
+    }
+
     QString filter;
     if(m_target_asset_pack)
-        filter = "TheXTech asset pack archives (*.xta)";
+        filter = "TheXTech asset pack (";
     else
-        filter = "TheXTech episode archives (*.xte)";
+        filter = "TheXTech episode (";
+
+    filter += needs_ext;
+    filter += ")";
+
+    if(m_recent_output_path.isEmpty())
+        m_recent_output_path = m_recent_content_path;
 
     QString out = QFileDialog::getSaveFileName(this, tr("Save a package file"),
                   m_recent_output_path,
                   filter, nullptr, c_fileDialogOptions);
     if(out.isEmpty()) return;
 
-    QString needs_ext = (m_target_asset_pack) ? ".xta" : ".xte";
-
     if(!out.endsWith(needs_ext))
         out += needs_ext;
 
-    m_recent_output_path = out;
+    QFileInfo fi(out);
+    m_recent_output_path = fi.absolutePath();
 
     ui->output_path->setText(out);
+
+    updateControls();
+}
+
+void XTConvertUI::on_content_type_currentIndexChanged(int index)
+{
+    if(index == 1)
+        m_target_asset_pack = true;
+    else
+        m_target_asset_pack = false;
+
+    if(!m_target_legacy)
+        ui->output_path->setText("");
+
+    updateControls();
+}
+
+void XTConvertUI::on_target_platform_currentIndexChanged(int index)
+{
+    switch(index)
+    {
+    case 0:
+        m_target_platform = XTConvert::TargetPlatform::Desktop;
+        break;
+    case 1:
+        m_target_platform = XTConvert::TargetPlatform::T3X;
+        break;
+    case 2:
+        m_target_platform = XTConvert::TargetPlatform::TPL;
+        break;
+    case 3:
+        m_target_platform = XTConvert::TargetPlatform::DSG;
+        break;
+    }
+
+    ui->output_path->setText("");
+
+    updateControls();
+}
+
+void XTConvertUI::on_target_version_currentIndexChanged(int index)
+{
+    if(index == 1)
+        m_target_legacy = false;
+    else
+        m_target_legacy = true;
+
+    ui->output_path->setText("");
 
     updateControls();
 }
