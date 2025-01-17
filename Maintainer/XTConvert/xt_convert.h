@@ -67,6 +67,9 @@ private slots:
     void on_start_clicked();
     void on_browse_content_clicked();
     void on_browse_output_clicked();
+    void on_content_type_currentIndexChanged(int index);
+    void on_target_platform_currentIndexChanged(int index);
+    void on_target_version_currentIndexChanged(int index);
 
     void on_status_update(XTConvertUpdate update);
     void on_finish();
@@ -81,9 +84,14 @@ private:
     QString m_recent_content_path;
     QString m_recent_output_path;
 
+    XTConvert::TargetPlatform m_target_platform;
+
+    bool m_target_archive = false;
     bool m_target_asset_pack = false;
+    bool m_target_legacy = true;
 
     bool m_in_progress = false;
+    bool m_had_error = false;
     Ui::XTConvertUI *ui;
 
     //statistics
