@@ -180,20 +180,11 @@
       <layout class="QHBoxLayout" name="horizontalLayout_6">
        <item>
         <widget class="QProgressBar" name="progress_big">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="maximum">
-          <number>1</number>
+          <number>100</number>
          </property>
          <property name="value">
           <number>0</number>
-         </property>
-         <property name="textVisible">
-          <bool>true</bool>
-         </property>
-         <property name="invertedAppearance">
-          <bool>false</bool>
          </property>
          <property name="format">
           <string notr="true"/>
@@ -214,20 +205,11 @@
      </item>
      <item>
       <widget class="QProgressBar" name="progress_sub">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="maximum">
-        <number>1</number>
+        <number>100</number>
        </property>
        <property name="value">
         <number>0</number>
-       </property>
-       <property name="textVisible">
-        <bool>true</bool>
-       </property>
-       <property name="invertedAppearance">
-        <bool>false</bool>
        </property>
        <property name="format">
         <string notr="true"/>
