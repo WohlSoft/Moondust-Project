@@ -1404,6 +1404,17 @@ public:
             QString rel_path = m_input_dir.relativeFilePath(abs_path);
             QString temp_path = m_temp_dir.filePath(rel_path);
 
+            if(m_spec.package_type == PackageType::AssetPack)
+            {
+                if(rel_path.startsWith("screenshots") || rel_path.startsWith("logs")
+                    || rel_path.startsWith("settings") || rel_path.startsWith("gif-recordings")
+                    || rel_path.startsWith("gameplay-records"))
+                {
+                    log_file(LogCategory::SkippedUnused, abs_path);
+                    continue;
+                }
+            }
+
             QString filename = it.fileName().toLower();
 
             if(it.fileInfo().isDir())
