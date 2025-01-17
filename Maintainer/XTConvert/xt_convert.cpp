@@ -349,9 +349,9 @@ void XTConvertUI::on_browse_output_clicked()
 
     QString filter;
     if(m_target_asset_pack)
-        filter = "TheXTech asset pack (";
+        filter = "TheXTech asset pack (*";
     else
-        filter = "TheXTech episode (";
+        filter = "TheXTech episode (*";
 
     filter += needs_ext;
     filter += ")";
@@ -359,13 +359,19 @@ void XTConvertUI::on_browse_output_clicked()
     if(m_recent_output_path.isEmpty())
         m_recent_output_path = m_recent_content_path;
 
-    QString out = QFileDialog::getSaveFileName(this, tr("Save a package file"),
+    QFileDialog dialog(this, tr("Save a package file"),
                   m_recent_output_path,
-                  filter, nullptr, c_fileDialogOptions);
-    if(out.isEmpty()) return;
+                  filter);
 
-    if(!out.endsWith(needs_ext))
-        out += needs_ext;
+    dialog.setDefaultSuffix(needs_ext);
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+    dialog.setOptions(c_fileDialogOptions);
+
+    if(!dialog.exec())
+        return;
+
+    QString out = dialog.selectedFiles().front();
+    if(out.isEmpty()) return;
 
     QFileInfo fi(out);
     m_recent_output_path = fi.absolutePath();
