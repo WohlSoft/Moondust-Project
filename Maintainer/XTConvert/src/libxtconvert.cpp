@@ -1435,6 +1435,12 @@ public:
         }
 
         // do post-processing steps
+        if(progress(STAGE_POST_PROCESS, 0, 1, "") < 0)
+        {
+            m_error = "Conversion canceled by user";
+            return false;
+        }
+
         bool post_process_success = true;
 
         if(m_spec.package_type == PackageType::Episode)
@@ -2019,6 +2025,12 @@ cleanup:
 
         if(success)
         {
+            if(progress(STAGE_COMPRESS, 0, 1, "") < 0)
+            {
+                m_error = "Conversion canceled by user";
+                return false;
+            }
+
             FILE* inf = fopen(iso_path.toUtf8().data(), "rb");
             FILE* outf = fopen(m_spec.destination.c_str(), "wb");
 
@@ -2049,6 +2061,12 @@ cleanup:
 
     bool create_package()
     {
+        if(progress(STAGE_PACK, 0, 1, "") < 0)
+        {
+            m_error = "Conversion canceled by user";
+            return false;
+        }
+
         if(m_spec.legacy_archives)
         {
             if(m_spec.target_platform == TargetPlatform::T3X)
@@ -2098,6 +2116,12 @@ cleanup:
                 if(!fi.isFile())
                 {
                     m_error = "Cannot find input file/directory " + input_path;
+                    return false;
+                }
+
+                if(progress(STAGE_EXTRACT, 0, 1, "") < 0)
+                {
+                    m_error = "Conversion canceled by user";
                     return false;
                 }
 
