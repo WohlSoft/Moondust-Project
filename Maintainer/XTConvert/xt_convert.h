@@ -84,7 +84,7 @@ private:
     QString m_recent_content_path;
     QString m_recent_output_path;
 
-    XTConvert::TargetPlatform m_target_platform;
+    XTConvert::TargetPlatform m_target_platform = XTConvert::TargetPlatform::T3X;
 
     bool m_target_archive = false;
     bool m_target_asset_pack = false;
