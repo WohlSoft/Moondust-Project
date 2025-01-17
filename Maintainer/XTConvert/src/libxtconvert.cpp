@@ -1304,7 +1304,8 @@ public:
             return QFile::copy(in_path, out_path);
         }
         else if(filename.endsWith(".xcf") || filename.endsWith(".db") || filename == ".DS_Store"
-            || filename.endsWith(".psg") || filename.endsWith(".ps") || filename == "progress.json"
+            || filename.endsWith(".psg") || filename.endsWith(".ps") || filename.endsWith(".psd")
+            || filename == "progress.json"
             || filename.endsWith("tst") || filename.endsWith(".tileset.ini") || filename.endsWith(".sav")
             || filename.endsWith(".savx") || filename.endsWith(".pdn") || filename.endsWith(".jpg")
             || filename.endsWith(".jpeg") || filename.endsWith(".ico") || filename.endsWith(".icns")
