@@ -611,6 +611,19 @@ public:
         int image_h = FreeImage_GetHeight(image);
         int image_w = FreeImage_GetWidth(image);
 
+        if(filename.startsWith("mario-") || filename.startsWith("luigi-") || filename.startsWith("peach-") || filename.startsWith("toad-") || filename.startsWith("link-"))
+        {
+            // try to handle mask eventually
+            // FIBITMAP* mask_bak = FreeImage_Clone(mask);
+            if(!mask && shrink_player_texture(&image, filename.startsWith("link-")))
+            {
+                image_w = FreeImage_GetWidth(image);
+                image_h = FreeImage_GetHeight(image);
+            }
+            else
+                log_file(LogCategory::ImagePlayerCompressFailed, in_path);
+        }
+
         // save the image!
         bool save_success = false;
         QString size_text;
@@ -790,18 +803,6 @@ public:
             used_out_path = out_path.chopped(4) + ".dsg";
 
             int flags = 0;
-
-            // FIXME: move this out of the DSG-specific code
-            if(filename.startsWith("mario-") || filename.startsWith("luigi-") || filename.startsWith("peach-") || filename.startsWith("toad-") || filename.startsWith("link-"))
-            {
-                if(shrink_player_texture(&image, filename.startsWith("link-")))
-                {
-                    image_w = FreeImage_GetWidth(image);
-                    image_h = FreeImage_GetHeight(image);
-                }
-                else
-                    log_file(LogCategory::ImagePlayerCompressFailed, in_path);
-            }
 
             // downscale image further, and threshold alpha, here.
             int container_w = next_power_of_2(image_w);
