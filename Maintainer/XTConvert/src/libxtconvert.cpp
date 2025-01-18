@@ -1389,7 +1389,7 @@ public:
 
         m_input_dir.setFilter(QDir::NoDotAndDotDot | QDir::AllEntries);
 
-        if(m_spec.package_type == PackageType::AssetPack)
+        if(m_spec.package_type == PackageType::AssetPack && m_spec.target_platform != TargetPlatform::Desktop)
         {
             if(!m_temp_dir.exists("graphics") && !m_temp_dir.mkdir("graphics"))
             {
