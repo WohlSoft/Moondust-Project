@@ -1257,7 +1257,7 @@ public:
             || filename.endsWith(".vgm") || filename.endsWith(".vgz") || filename.endsWith(".mid")
             || filename.endsWith(".nsf") || filename.endsWith(".hes")
             || filename.endsWith(".pttune") || filename.endsWith(".ptcop")
-            || filename.endsWith(".wma") || filename.endsWith(".gbs");
+            || filename.endsWith(".wma") || filename.endsWith(".gbs") || filename.endsWith(".psm");
 
         bool is_font = filename.endsWith(".ttf") || filename.endsWith(".otf") || filename.endsWith(".pcf") || filename.endsWith(".woff") || filename.endsWith(".woff2");
 
