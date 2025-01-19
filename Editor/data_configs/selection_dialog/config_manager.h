@@ -29,6 +29,8 @@ namespace Ui {
 class ConfigManager;
 }
 
+class PGE_JsEngine;
+
 class ConfigManager : public QDialog
 {
     Q_OBJECT
@@ -70,12 +72,15 @@ public:
      * @brief Checks is current config pack configured (or non-configurable)
      * @return true if config pack is non-configurable or already configured
      */
-    bool isConfigured();
+    bool isConfigured(PGE_JsEngine *js = nullptr);
     /**
      * @brief Starts configure tool if available
      * @return true on success configuring, false if no config tool found, rejected or script was been errored
      */
     bool runConfigureTool();
+
+private:
+    bool configure_loadScript(PGE_JsEngine *js);
 
 private slots:
 

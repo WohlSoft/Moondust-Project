@@ -57,7 +57,7 @@ extern void bitmask_set_bitblit_bg(uint8_t red, uint8_t green, uint8_t blue);
 /**
  * @brief Restore the default pseudo-background colour
  */
-extern void bitmask_reset_bitblit_bg();
+extern void bitmask_reset_bitblit_bg(void);
 
 #ifdef __cplusplus
 }

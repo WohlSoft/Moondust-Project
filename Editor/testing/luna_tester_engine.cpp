@@ -1064,6 +1064,7 @@ void LunaTesterEngine::killProcess()
 #else // anything but _WIN32
 
 #   ifdef __APPLE__
+        Q_UNUSED(lunaExecPath)
         LogDebugNC(QString("LunaEngineWorker: Killing %1 by 'kill'...").arg(smbxExeName));
         QProcess ps;
         ps.start("/bin/ps", {"-A"});
@@ -1071,7 +1072,6 @@ void LunaTesterEngine::killProcess()
         QString psAll = ps.readAllStandardOutput();
 
         QStringList psAllList = psAll.split('\n');
-        QString smbxExeName = smbxExeName;
 
         QRegExp psReg(QString("(\\d+) .*(wine-preloader).*(%1)").arg(smbxExeName));
         for(QString &psOne : psAllList)

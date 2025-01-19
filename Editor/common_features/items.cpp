@@ -121,6 +121,20 @@ void Items::getItemGFX(const obj_wld_generic *inObj, QPixmap &outImg, bool whole
     TPL_getItemGFX(inObj, outImg, whole, targetSize, imgType);
 }
 
+void Items::getItemGFXCW(int itemType, unsigned long ItemID, QPixmap &outImg, bool whole, QSize targetSize)
+{
+    LevelEdit *l_edit = MainWinConnect::pMainWin->activeLvlEditWin();
+    WorldEdit *w_edit = MainWinConnect::pMainWin->activeWldEditWin();
+    QGraphicsScene *scene = nullptr;
+
+    if(l_edit)
+        scene = l_edit->scene;
+    else if(w_edit)
+        scene = w_edit->scene;
+
+    getItemGFX(itemType, ItemID, outImg, scene, whole, targetSize);
+}
+
 void Items::getItemGFX(int itemType, unsigned long ItemID, QPixmap &outImg, QGraphicsScene *scene, bool whole, QSize targetSize)
 {
     LvlScene *scene_lvl = dynamic_cast<LvlScene *>(scene);
@@ -224,7 +238,7 @@ QString Items::getTilesetToolTip(int itemType, unsigned long ItemID, QGraphicsSc
     return "";
 }
 
-int Items::getItemType(QString type)
+int Items::getItemType(const QString &type)
 {
     int target = 0;
 

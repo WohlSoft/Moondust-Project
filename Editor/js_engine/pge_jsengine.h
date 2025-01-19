@@ -69,6 +69,12 @@ public:
         m_jsengine.globalObject().setProperty(regName, m_jsengine.newQObject(obj));
     }
 
+    bool hasFunction(const QString &functionName, bool *ok = nullptr)
+    {
+        QJSValue function = m_jsengine.evaluate(functionName);
+        return checkForErrors(function, ok);
+    }
+
     template<typename RetVal, typename... Args>
     RetVal call(const QString &functionName, bool *ok, Args &&... args)
     {

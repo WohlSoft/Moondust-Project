@@ -366,7 +366,7 @@ int main(int argc, char *argv[])
         setup.removeSource    = switchRemove.getValue();
         setup.skipBackground2 = switchSkipBG.getValue();
         setup.skipNonBW       = switchSkipNonBW.getValue();
-        setup.walkSubDirs     = switchDigRecursive.getValue() | switchDigRecursiveDEP.getValue();
+        setup.walkSubDirs     = switchDigRecursive.getValue() || switchDigRecursiveDEP.getValue();
 
         setup.pathOut     = outputDirectory.getValue();
         setup.configPath  = configDirectory.getValue();

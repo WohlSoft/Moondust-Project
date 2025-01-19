@@ -1204,18 +1204,36 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
 
     args << "--never-pause";
 
+    bool hasHealthAndItem = m_caps.features.contains("ipc-player-health") && m_caps.features.contains("ipc-player-item");
+
     SETTINGS_TestSettings t = GlobalSettings::testing;
     args << "--num-players" << QString::number(t.numOfPlayers);
-    args << "--player1" << QString("c%1;s%2;m%3;t%4")
+    args << "--player1" << (hasHealthAndItem ?
+                            QString("c%1;s%2;m%3;t%4;h%5;r%6")
                                     .arg(t.p1_char)
                                     .arg(t.p1_state)
                                     .arg(t.p1_vehicleID)
-                                    .arg(t.p1_vehicleType);
-    args << "--player2" << QString("c%1;s%2;m%3;t%4")
+                                    .arg(t.p1_vehicleType)
+                                    .arg(t.p1_health)
+                                    .arg(t.p1_item) :
+                            QString("c%1;s%2;m%3;t%4")
+                                    .arg(t.p1_char)
+                                    .arg(t.p1_state)
+                                    .arg(t.p1_vehicleID)
+                                    .arg(t.p1_vehicleType));
+    args << "--player2" << (hasHealthAndItem ?
+                            QString("c%1;s%2;m%3;t%4;h%5;r%6")
                                     .arg(t.p2_char)
                                     .arg(t.p2_state)
                                     .arg(t.p2_vehicleID)
-                                    .arg(t.p2_vehicleType);
+                                    .arg(t.p2_vehicleType)
+                                    .arg(t.p2_health)
+                                    .arg(t.p2_item) :
+                            QString("c%1;s%2;m%3;t%4")
+                                    .arg(t.p2_char)
+                                    .arg(t.p2_state)
+                                    .arg(t.p2_vehicleID)
+                                    .arg(t.p2_vehicleType));
 
     if(t.xtra_god) args << "--god-mode";
     if(t.xtra_showFPS) args << "--show-fps";
@@ -1252,6 +1270,16 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
                 args << "--render" << "opengles11";
             break;
         }
+    }
+
+    if(m_caps.arguments.contains("c"))
+    {
+#if __APPLE__
+        if(!ConfStatus::configDataPath.endsWith(".app/Content/Resources/assets/", Qt::CaseInsensitive))
+            args << "-c" << ConfStatus::configDataPath;
+#else
+        args << "-c" << ConfStatus::configDataPath;
+#endif
     }
 
     if(m_caps.features.contains("vsync-flag") && m_vsyncEnable)
@@ -1389,6 +1417,16 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
         }
     }
 
+    if(m_caps.arguments.contains("c"))
+    {
+#if __APPLE__
+        if(!ConfStatus::configDataPath.endsWith(".app/Content/Resources/assets/", Qt::CaseInsensitive))
+            args << "-c" << ConfStatus::configDataPath;
+#else
+        args << "-c" << ConfStatus::configDataPath;
+#endif
+    }
+
     if(m_caps.features.contains("vsync-flag") && m_vsyncEnable)
         args << "--vsync";
 
@@ -1517,6 +1555,16 @@ bool TheXTechEngine::doTestWorldFile(const QString &worldFile)
                 args << "--render" << "opengles11";
             break;
         }
+    }
+
+    if(m_caps.arguments.contains("c"))
+    {
+#if __APPLE__
+        if(!ConfStatus::configDataPath.endsWith(".app/Contents/Resources/assets/", Qt::CaseInsensitive))
+            args << "-c" << ConfStatus::configDataPath;
+#else
+        args << "-c" << ConfStatus::configDataPath;
+#endif
     }
 
     if(m_caps.features.contains("vsync-flag") && m_vsyncEnable)

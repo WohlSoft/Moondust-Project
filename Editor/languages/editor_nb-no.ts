@@ -7699,12 +7699,12 @@ Do you want to abort current testing process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="272"/>
+        <location filename="../main_window/testing/testing.cpp" line="288"/>
         <source>World map testing of saved file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="273"/>
+        <location filename="../main_window/testing/testing.cpp" line="289"/>
         <source>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
         <translation type="unfinished"></translation>
@@ -9678,34 +9678,46 @@ Reason: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="434"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="432"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="677"/>
+        <source>Set custom health level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="439"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="471"/>
+        <source>Reserved item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="465"/>
         <source>2 Player settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="279"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="492"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="294"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="544"/>
         <source>PLSET_State</source>
         <comment>Character</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="243"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="499"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="340"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="530"/>
         <source>PLSET_Character</source>
         <comment>Character</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="411"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="559"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="274"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="537"/>
         <source>PLSET_VehicleID</source>
         <comment>translate as &quot;Vehicle&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="418"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="566"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="396"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="636"/>
         <source>PLSET_VehicleType</source>
         <comment>translate as &quot;Vehicle type&quot;</comment>
         <translation type="unfinished"></translation>
@@ -9818,16 +9830,28 @@ Reason: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.cpp" line="209"/>
-        <location filename="../main_window/testing/testing_settings.cpp" line="210"/>
+        <location filename="../main_window/testing/testing_settings.cpp" line="254"/>
+        <location filename="../main_window/testing/testing_settings.cpp" line="255"/>
         <source>[No vehicle]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.cpp" line="238"/>
-        <location filename="../main_window/testing/testing_settings.cpp" line="239"/>
+        <location filename="../main_window/testing/testing_settings.cpp" line="283"/>
+        <location filename="../main_window/testing/testing_settings.cpp" line="284"/>
         <source>[Unknown type]</source>
         <translation>[Ukjent type]</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.cpp" line="325"/>
+        <source>&lt;Unknown&gt;</source>
+        <comment>Unknown NPC from the list</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.cpp" line="327"/>
+        <source>[No item]</source>
+        <comment>Reserve box of player contains no item</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
