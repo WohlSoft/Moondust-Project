@@ -1272,6 +1272,16 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
         }
     }
 
+    if(m_caps.arguments.contains("c"))
+    {
+#if __APPLE__
+        if(!ConfStatus::configDataPath.endsWith(".app/Content/Resources/assets/", Qt::CaseInsensitive))
+            args << "-c" << ConfStatus::configDataPath;
+#else
+        args << "-c" << ConfStatus::configDataPath;
+#endif
+    }
+
     if(m_caps.features.contains("vsync-flag") && m_vsyncEnable)
         args << "--vsync";
 
@@ -1407,6 +1417,16 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
         }
     }
 
+    if(m_caps.arguments.contains("c"))
+    {
+#if __APPLE__
+        if(!ConfStatus::configDataPath.endsWith(".app/Content/Resources/assets/", Qt::CaseInsensitive))
+            args << "-c" << ConfStatus::configDataPath;
+#else
+        args << "-c" << ConfStatus::configDataPath;
+#endif
+    }
+
     if(m_caps.features.contains("vsync-flag") && m_vsyncEnable)
         args << "--vsync";
 
@@ -1535,6 +1555,16 @@ bool TheXTechEngine::doTestWorldFile(const QString &worldFile)
                 args << "--render" << "opengles11";
             break;
         }
+    }
+
+    if(m_caps.arguments.contains("c"))
+    {
+#if __APPLE__
+        if(!ConfStatus::configDataPath.endsWith(".app/Contents/Resources/assets/", Qt::CaseInsensitive))
+            args << "-c" << ConfStatus::configDataPath;
+#else
+        args << "-c" << ConfStatus::configDataPath;
+#endif
     }
 
     if(m_caps.features.contains("vsync-flag") && m_vsyncEnable)
