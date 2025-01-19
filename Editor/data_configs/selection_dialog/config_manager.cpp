@@ -560,7 +560,7 @@ void ConfigManager::on_buttonBox_accepted()
     on_configList_itemDoubleClicked(ui->configList->selectedItems().first());
 }
 
-bool ConfigManager::isConfigured()
+bool ConfigManager::isConfigured(PGE_JsEngine *js)
 {
     QString settingsFile = DataConfig::buildLocalConfigPath(m_currentConfigPath);
     if(!QFile::exists(settingsFile))
@@ -576,8 +576,19 @@ bool ConfigManager::isConfigured()
     QString path = settings.value("application-path", QString()).toString();
     settings.endGroup();
 
+    PGE_JsEngine loc_js;
+    bool js_valid = js != nullptr;
+    if(!js)
+    {
+        js = &loc_js;
+        js_valid = configure_loadScript(js);
+    }
+
     // When directory got moved or deleted, config pack should be marked as not configured because got broken
     ret &= !path.isEmpty() && QFileInfo(path).isDir() && QDir(path).exists();
+
+    if(js_valid && js->hasFunction("isValidIntegration"))
+        ret &= js->call<bool>("isValidIntegration", nullptr, path);
 
     return ret;
 }
@@ -715,18 +726,8 @@ bool ConfigManager::runConfigureTool()
     if(ConfStatus::configIsIntegrational)
     {
         PGE_JsEngine js;
-        // QString cpDirName = QDir(m_currentConfigPath).dirName();
-        QString cpSetupFile = DataConfig::buildLocalConfigPath(m_currentConfigPath);
 
-        js.bindProxy(new PGE_JS_Common(parentW), "PGE");
-        js.bindProxy(new PGE_JS_File(m_currentConfigPath, cpSetupFile, parentW), "FileIO");
-        js.bindProxy(new PGE_JS_INI(parentW), "INI");
-        js.bindProxy(new PGE_JS_System(parentW), "System");
-
-        bool successfulLoaded = false;
-        js.loadFileByExpcetedResult<void>(ConfStatus::configConfigureTool, &successfulLoaded);
-
-        if(successfulLoaded)
+        if(configure_loadScript(&js))
         {
             setEnabled(false);
             if(!js.call<bool>("onConfigure", nullptr))
@@ -735,7 +736,7 @@ bool ConfigManager::runConfigureTool()
                 return false;
             }
             setEnabled(true);
-            if(!isConfigured())
+            if(!isConfigured(&js))
                 return false;
             return true;
         }
@@ -760,4 +761,25 @@ bool ConfigManager::runConfigureTool()
                                  QMessageBox::Ok);
         return false;
     }
+}
+
+bool ConfigManager::configure_loadScript(PGE_JsEngine *js)
+{
+    QWidget *parentW = qobject_cast<QWidget *>(parent());
+    if(!parentW || isVisible())
+        parentW = this;
+
+    bool successfulLoaded = false;
+
+    // QString cpDirName = QDir(m_currentConfigPath).dirName();
+    QString cpSetupFile = DataConfig::buildLocalConfigPath(m_currentConfigPath);
+
+    js->bindProxy(new PGE_JS_Common(parentW), "PGE");
+    js->bindProxy(new PGE_JS_File(m_currentConfigPath, cpSetupFile, parentW), "FileIO");
+    js->bindProxy(new PGE_JS_INI(parentW), "INI");
+    js->bindProxy(new PGE_JS_System(parentW), "System");
+
+    js->loadFileByExpcetedResult<void>(ConfStatus::configConfigureTool, &successfulLoaded);
+
+    return successfulLoaded;
 }
