@@ -154,7 +154,7 @@ void bitmask_set_bitblit_bg(uint8_t red, uint8_t green, uint8_t blue)
     s_bitblitBG.rgbBlue = blue;
 }
 
-void bitmask_reset_bitblit_bg()
+void bitmask_reset_bitblit_bg(void)
 {
     s_bitblitBG.rgbRed = 0;
     s_bitblitBG.rgbGreen = 0;
