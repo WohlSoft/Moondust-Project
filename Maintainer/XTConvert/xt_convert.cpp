@@ -375,6 +375,9 @@ void XTConvertUI::on_browse_content_clicked()
     ui->content_path->setText(file);
     ui->output_path->setText("");
 
+    ui->progress_big->setValue(0);
+    ui->progress_big->setFormat("");
+
     updateControls();
 }
 
@@ -435,6 +438,9 @@ void XTConvertUI::on_browse_output_clicked()
 
     ui->output_path->setText(out);
 
+    ui->progress_big->setValue(0);
+    ui->progress_big->setFormat("");
+
     updateControls();
 }
 
@@ -447,6 +453,9 @@ void XTConvertUI::on_content_type_currentIndexChanged(int index)
 
     if(!m_target_legacy)
         ui->output_path->setText("");
+
+    ui->progress_big->setValue(0);
+    ui->progress_big->setFormat("");
 
     updateControls();
 }
@@ -471,6 +480,9 @@ void XTConvertUI::on_target_platform_currentIndexChanged(int index)
 
     ui->output_path->setText("");
 
+    ui->progress_big->setValue(0);
+    ui->progress_big->setFormat("");
+
     updateControls();
 }
 
@@ -482,6 +494,9 @@ void XTConvertUI::on_target_version_currentIndexChanged(int index)
         m_target_legacy = true;
 
     ui->output_path->setText("");
+
+    ui->progress_big->setValue(0);
+    ui->progress_big->setFormat("");
 
     updateControls();
 }
