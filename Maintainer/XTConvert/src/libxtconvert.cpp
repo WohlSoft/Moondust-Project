@@ -1260,6 +1260,7 @@ public:
             || filename.endsWith(".wma") || filename.endsWith(".gbs") || filename.endsWith(".psm");
 
         bool is_font = filename.endsWith(".ttf") || filename.endsWith(".otf") || filename.endsWith(".pcf") || filename.endsWith(".woff") || filename.endsWith(".woff2");
+        bool is_icon = filename.endsWith(".ico") || filename.endsWith(".icns");
 
         if(filename.endsWith("m.gif") && in_path.contains("/graphics/fallback/"))
         {
@@ -1303,12 +1304,18 @@ public:
             scan_episode_translation(in_path);
             return QFile::copy(in_path, out_path);
         }
+        else if(is_icon && m_spec.target_platform != TargetPlatform::Desktop)
+        {
+            // skip icons on non-desktop
+            log_file(LogCategory::SkippedUnused, in_path);
+            return true;
+        }
         else if(filename.endsWith(".xcf") || filename.endsWith(".db") || filename == ".DS_Store"
             || filename.endsWith(".psg") || filename.endsWith(".ps") || filename.endsWith(".psd")
             || filename == "progress.json"
             || filename.endsWith("tst") || filename.endsWith(".tileset.ini") || filename.endsWith(".sav")
-            || filename.endsWith(".savx") || filename.endsWith(".pdn") || filename.endsWith(".jpg")
-            || filename.endsWith(".jpeg") || filename.endsWith(".ico") || filename.endsWith(".icns")
+            || filename.endsWith(".savx") || filename.endsWith(".pdn")
+            || filename.endsWith(".jpg") || filename.endsWith(".jpeg")
             || filename.endsWith(".bmp") || filename.endsWith(".pal")
             || filename.endsWith(".dll") || filename.endsWith(".exe")
             || filename.endsWith(".rar") || filename.endsWith(".zip") || filename.endsWith(".7z")
