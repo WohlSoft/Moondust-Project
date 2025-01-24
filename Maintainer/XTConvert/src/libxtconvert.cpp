@@ -2024,6 +2024,7 @@ public:
                 archive_entry_set_size(entry, got.size());
                 archive_entry_set_filetype(entry, AE_IFREG);
                 archive_entry_set_mtime(entry, file.fileTime(QFileDevice::FileModificationTime).toSecsSinceEpoch(), 0);
+                archive_entry_set_perm(entry, 0755);
 
                 int r = archive_write_header(package, entry);
                 if(r != ARCHIVE_OK)
