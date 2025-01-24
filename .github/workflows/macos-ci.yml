@@ -134,7 +134,7 @@ jobs:
         ./build.sh no-pause ninja deploy static-qt
 
     - name: Deploy to builds.wohlsoft.ru
-      if: success() && github.event_name != 'pull_request' && steps.event-check.outputs.is_pull_request == 'false' && steps.upload-check.outputs.available == 'true'
+      if: success() && github.event_name != 'pull_request' && github.event_name != 'workflow_dispatch' && steps.event-check.outputs.is_pull_request == 'false' && steps.upload-check.outputs.available == 'true'
       shell: bash
       run: |
         if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
