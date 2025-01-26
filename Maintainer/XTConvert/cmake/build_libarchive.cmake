@@ -34,6 +34,7 @@ function(add_libarchive_target)
     set(ENABLE_TEST OFF CACHE BOOL "" FORCE)
     set(ENABLE_COVERAGE OFF CACHE BOOL "" FORCE)
     set(ENABLE_INSTALL OFF CACHE BOOL "" FORCE)
+    set(ENABLE_WERROR OFF CACHE BOOL "" FORCE)
 
     get_target_property(LZ4_INCLUDE_DIR lz4_static INTERFACE_INCLUDE_DIRECTORIES)
     set(LZ4_LIBRARY "$<TARGET_FILE:lz4_static>")
