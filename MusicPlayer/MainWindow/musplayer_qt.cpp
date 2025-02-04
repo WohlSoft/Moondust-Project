@@ -10,6 +10,7 @@
 #include <QUrl>
 #include <QMoveEvent>
 #include <QToolTip>
+#include <QElapsedTimer>
 #include <cmath>
 
 #include "ui_player_main.h"
@@ -119,9 +120,9 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
         Qt::WindowCloseButtonHint |
         Qt::WindowMinimizeButtonHint |
         Qt::MSWindowsFixedSizeDialogHint);
-    QObject::connect(&m_blinker, SIGNAL(timeout()), this, SLOT(_blink_red()));
-    QObject::connect(&m_positionWatcher, SIGNAL(timeout()), this, SLOT(updatePositionSlider()));
-    QObject::connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenu(QPoint)));
+    QObject::connect(&m_blinker, &QTimer::timeout, this, &MusPlayer_Qt::_blink_red);
+    QObject::connect(&m_positionWatcher, &QTimer::timeout, this, &MusPlayer_Qt::updatePositionSlider);
+    QObject::connect(this, &QWidget::customContextMenuRequested, this, &MusPlayer_Qt::contextMenu);
     QObject::connect(ui->volume, &QSlider::valueChanged, [this](int x)
     {
         on_volume_valueChanged(x);
@@ -372,6 +373,8 @@ void MusPlayer_Qt::musicStopped()
         m_blinker.stop();
         ui->recordWav->setStyleSheet("");
     }
+
+    m_musicStopped = true;
 }
 
 void MusPlayer_Qt::on_open_clicked()
@@ -388,15 +391,19 @@ void MusPlayer_Qt::on_open_clicked()
         return;
 
     m_currentMusic = file;
-    PGE_MusicPlayer::stopMusic();
-    qApp->processEvents();
+    on_stop_clicked();
     on_play_clicked();
 }
 
 void MusPlayer_Qt::on_stop_clicked()
 {
-    musicStopped();
+    m_musicStopped = false;
     PGE_MusicPlayer::stopMusic();
+
+    // Wait until stop event will really happen, or finish on timeout
+    QElapsedTimer waiter;
+    while(!m_musicStopped && waiter.elapsed() < 1000)
+        qApp->processEvents();
 }
 
 void MusPlayer_Qt::on_play_clicked()
