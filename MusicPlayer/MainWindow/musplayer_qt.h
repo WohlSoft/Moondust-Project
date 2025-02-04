@@ -130,6 +130,7 @@ private:
     bool   m_positionWatcherLock = false;
     //! UI form class pointer
     Ui::MusPlayerQt *ui = nullptr;
+    bool   m_musicStopped = false;
 
     QPoint    m_oldWindowPos;
 
