@@ -37,6 +37,7 @@ class DialoguesListModel : public QAbstractTableModel
     struct TrView
     {
         int i;
+        int count;
         QString note;
     };
 
@@ -49,6 +50,7 @@ public:
     enum Columns
     {
         C_INDEX = 0,
+        C_NUMBER_ITEMS,
         C_TITLE,
         C_COUNT
     };

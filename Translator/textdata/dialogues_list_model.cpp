@@ -46,6 +46,7 @@ void DialoguesListModel::setData(const QString &lang, const QString &level)
         auto &d = (*m_dialogues)[i];
         TrView e;
         e.i = i;
+        e.count = d.messages.size() - 1;
         e.note = d.note;
         m_view.push_back(e);
     }
@@ -82,6 +83,8 @@ QVariant DialoguesListModel::headerData(int section, Qt::Orientation orientation
     {
     case C_INDEX:
         return tr("No");
+    case C_NUMBER_ITEMS:
+        return tr("Count");
     case C_TITLE:
         return tr("Title");
     }
@@ -117,6 +120,10 @@ QVariant DialoguesListModel::data(const QModelIndex &index, int role) const
     case C_INDEX:
         if(role == Qt::DisplayRole)
             return it.i;
+        break;
+    case C_NUMBER_ITEMS:
+        if(role == Qt::DisplayRole)
+            return it.count;
         break;
     case C_TITLE:
         switch(role)
