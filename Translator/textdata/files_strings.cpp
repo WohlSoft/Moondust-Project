@@ -538,6 +538,46 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
 
         break;
 
+    case Qt::ToolTipRole:
+        switch(index.column())
+        {
+        case C_TYPE:
+            switch(it.source)
+            {
+            case TextTypes::S_WORLD:
+                switch(it.type)
+                {
+                case TextTypes::WDT_LEVEL:
+                    return tr("Level title");
+                case TextTypes::WDT_TITLE:
+                    return tr("Episode title");
+                case TextTypes::WDT_CREDITS:
+                    return tr("Episode credits");
+                }
+                break;
+            case TextTypes::S_LEVEL:
+                switch(it.type)
+                {
+                case TextTypes::LDT_EVENT:
+                    return tr("Event's message box");
+                case TextTypes::LDT_NPC:
+                    return tr("NPC's dialogue message");
+                case TextTypes::LDT_TITLE:
+                    return tr("Level file's title");
+                }
+                break;
+            case TextTypes::S_SCRIPT:
+                switch(it.type)
+                {
+                case TextTypes::SDT_LINE:
+                    return tr("Textual string");
+                }
+                break;
+            }
+            break;
+        }
+        break;
+
     case Qt::DecorationRole:
         switch(index.column())
         {
