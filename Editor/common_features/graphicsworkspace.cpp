@@ -292,10 +292,10 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
 {
     int modS = 128;
     // int modS_h = modS;
-    bool rtl = (qApp->layoutDirection() == Qt::RightToLeft);
+    // bool rtl = (qApp->layoutDirection() == Qt::RightToLeft);
 
-    if(rtl)
-        modS_h *= -1;
+    // if(rtl)
+    //     modS_h *= -1;
 
     if((event->modifiers() & Qt::ShiftModifier) != 0)
     {

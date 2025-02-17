@@ -342,7 +342,7 @@ void LVL_Player::WarpTo(double x, double y, int warpType, int warpDirection, boo
         else
         {
             EventQueueEntry<LVL_Player >playSnd;
-            playSnd.makeCaller([]()->void
+            playSnd.makeCaller([this]()->void
             {
                 PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
             }, 0);
