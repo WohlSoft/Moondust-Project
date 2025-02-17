@@ -342,10 +342,14 @@ void LVL_Player::WarpTo(double x, double y, int warpType, int warpDirection, boo
         else
         {
             EventQueueEntry<LVL_Player >playSnd;
-            playSnd.makeCaller([this]()->void{PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
-                                             }, 0);
+            playSnd.makeCaller([]()->void
+            {
+                PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
+            }, 0);
             m_eventQueue.events.push_back(playSnd);
+
             double pStep = 1.5 / (1000.0 / m_scene->frameDelay());
+
             EventQueueEntry<LVL_Player >warpOut;
             warpOut.makeWaiterCond([this, pStep]()->bool
             {
@@ -353,6 +357,7 @@ void LVL_Player::WarpTo(double x, double y, int warpType, int warpDirection, boo
                 return m_warpPipeOffset <= 0.0f;
             }, false, 0);
             m_eventQueue.events.push_back(warpOut);
+
             EventQueueEntry<LVL_Player >endWarping;
             endWarping.makeCaller([this]()->void
             {

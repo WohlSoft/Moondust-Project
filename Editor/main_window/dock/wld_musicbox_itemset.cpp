@@ -158,7 +158,7 @@ void WorldMusicBoxItemBox::MusicList_itemClicked(const QModelIndex &item)
                 customMusicFile = music;
             });
 
-            QObject::connect(&musicList, &MusicFileList::updateSongPlay, [this, edit, &customMusicFile]()->void
+            QObject::connect(&musicList, &MusicFileList::updateSongPlay, [this, &customMusicFile]()->void
             {
                 if(mw()->getPlayMusicAction()->isChecked())
                     LvlMusPlay::previewCustomMusic(mw(), customMusicFile);

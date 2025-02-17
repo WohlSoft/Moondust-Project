@@ -150,7 +150,7 @@ MusicFileList::MusicFileList(QString searchDirectory, QString curFile, QWidget *
         });
 
         QObject::connect(m_musicSetupButton, static_cast<void (QPushButton::*)(bool)>(&QPushButton::clicked),
-                         this, [this, &searchDirectory](bool)->void
+                         this, [this](bool)->void
         {
             CustomMusicSetup set(this);
             set.initLists();
@@ -181,7 +181,7 @@ MusicFileList::MusicFileList(QString searchDirectory, QString curFile, QWidget *
                 emit musicGainChanged(gain);
             });
 
-            QObject::connect(&set, &CustomMusicSetup::musicButtonClicked, this, [this, &musicPath](bool st)->void
+            QObject::connect(&set, &CustomMusicSetup::musicButtonClicked, this, [this](bool st)->void
             {
                 m_previewButton->setChecked(st);
                 emit m_previewButton->clicked(st);
