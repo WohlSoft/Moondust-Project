@@ -932,7 +932,7 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
             testMusicFile = music;
         });
 
-        QObject::connect(&musicList, &MusicFileList::updateSongPlay, [this, edit, &testMusicFile]()->void
+        QObject::connect(&musicList, &MusicFileList::updateSongPlay, [&testMusicFile]()->void
         {
             if(MainWinConnect::pMainWin->getPlayMusicAction()->isChecked())
                 LvlMusPlay::previewCustomMusic(MainWinConnect::pMainWin, testMusicFile);
@@ -949,7 +949,7 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
         });
 
 
-        QObject::connect(&musicList, &MusicFileList::musicButtonClicked, [this, &testMusicFile](bool st)->void
+        QObject::connect(&musicList, &MusicFileList::musicButtonClicked, [&testMusicFile](bool st)->void
         {
             MainWinConnect::pMainWin->getPlayMusicAction()->setChecked(st);
             if(st)

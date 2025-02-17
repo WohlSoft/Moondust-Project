@@ -675,7 +675,7 @@ void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
         musicPath = music;
     });
 
-    QObject::connect(&musicList, &MusicFileList::updateSongPlay, [this, edit, &musicPath]()->void
+    QObject::connect(&musicList, &MusicFileList::updateSongPlay, [this, &musicPath]()->void
     {
         if(mw()->getPlayMusicAction()->isChecked())
             LvlMusPlay::previewCustomMusic(mw(), musicPath);
@@ -770,7 +770,7 @@ void LvlSectionProps::on_musicSetup_clicked()
         musicPath = music;
     });
 
-    QObject::connect(&set, &CustomMusicSetup::updateSongPlay, [this,edit, &musicPath]()->void
+    QObject::connect(&set, &CustomMusicSetup::updateSongPlay, [this, &musicPath]()->void
     {
         if(mw()->getPlayMusicAction()->isChecked())
             LvlMusPlay::previewCustomMusic(mw(), musicPath);

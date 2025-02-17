@@ -119,7 +119,7 @@ void LuaEngine::init()
     //Add error reporter
     if(!m_errorReporterFunc)
     {
-        m_errorReporterFunc = [this](const std::string & errMsg, const std::string & stacktrace)
+        m_errorReporterFunc = [](const std::string & errMsg, const std::string & stacktrace)
         {
             pLogWarning("Lua-Error: ");
             pLogWarning("Error Message: %s", errMsg.c_str());

@@ -27,7 +27,7 @@
 //Search and load custom User's files
 void LvlScene::loadUserData(QProgressDialog &progress)
 {
-    int i, total = 0;
+    int i; //, total = 0;
 
     //UserNPCs uNPC;
     QImage tempImg;
@@ -187,7 +187,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             if(loaded2) bgU.second_image = uBG.second_image;
         }
 
-        total++;
+        // total++;
         qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(progress.wasCanceled())
             /*progress.setValue(progress.value()+1);
