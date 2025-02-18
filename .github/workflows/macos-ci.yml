@@ -23,8 +23,10 @@ jobs:
       matrix:
         config:
         - {
-            name: "x86_64",
+            name: "Intel x64",
+            arch: "x86_64",
             os: macos-13,
+            osx_target: "10.12",
             extra_path: "/Users/StaticQt/5.14.2/bin",
             build_type: "Release",
             upload_directory: "www/macosx/",
@@ -32,6 +34,19 @@ jobs:
             qt_ver: "5.14.2",
             qt_dir: "/Users/StaticQt/5.14.2/bin",
             qt_lib_dir: "/Users/StaticQt/5.14.2/lib"
+          }
+        - {
+            name: "Apple Silicon",
+            arch: "arm64",
+            os: macos-15,
+            osx_target: "10.13",
+            extra_path: "/Users/StaticQt/5.15.16/bin",
+            build_type: "Release",
+            upload_directory: "www/macosx/",
+            qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/qt-5-14-2-static-macosx-15-3-1.tar.bz2", qt_install_dir: "/Users/StaticQt/",
+            qt_ver: "5.14.2",
+            qt_dir: "/Users/StaticQt/5.15.16/bin",
+            qt_lib_dir: "/Users/StaticQt/5.15.16/lib"
           }
 
     steps:
@@ -101,6 +116,7 @@ jobs:
             echo "QT_LIB_PATH=\"/Users/StaticQt/${QT_VER}/lib/\"" >> _paths.sh;
             echo "QMake=\"qmake\"" >> _paths.sh;
             echo "LRelease=\"lrelease\"" >> _paths.sh;
+            echo "PGE_OSX_TARGET=${{ matrix.config.osx_target }}" >> _paths.sh;
             echo "" >> _paths.sh;
             chmod u+x _paths.sh;
             echo "============== _paths.sh ================="
@@ -132,6 +148,11 @@ jobs:
         export PATH=${{ matrix.config.qt_dir }}:${{ matrix.config.qt_lib_dir }}:/usr/local/opt/coreutils/libexec/gnubin:${PATH}
         TZ=Europe/Moscow date +"%Y-%m-%d %H:%M:%S" > build-temp/build_date_${BRANCH_NAME_RES}_osx.txt
         ./build.sh no-pause ninja deploy static-qt
+
+    - name: Rename package
+      shell: bash
+      run: |
+        mv ./bin-cmake-release/pge-project-${BRANCH_NAME}-macosx.dmg ./bin-cmake-release/pge-project-${BRANCH_NAME}-macosx-${{ matrix.config.arch }}.dmg
 
     - name: Deploy to builds.wohlsoft.ru
       if: success() && github.event_name != 'pull_request' && steps.event-check.outputs.is_pull_request == 'false' && steps.upload-check.outputs.available == 'true'
