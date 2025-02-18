@@ -93,7 +93,7 @@ class DrawToolPicker : public DrawTool
 public:
     explicit DrawToolPicker(QImage *image, FrameTuneScene *parent = 0) :
         DrawTool(image, parent)
-    {};
+    {}
 
     virtual bool mousePress(const QPoint &)
     {
@@ -134,7 +134,7 @@ class DrawToolRubber : public DrawTool
 public:
     explicit DrawToolRubber(QImage *image, FrameTuneScene *parent = 0) :
         DrawTool(image, parent)
-    {};
+    {}
 
     virtual bool mousePress(const QPoint &p)
     {
@@ -185,7 +185,7 @@ class DrawToolLine : public DrawTool
 public:
     explicit DrawToolLine(QImage *image, FrameTuneScene *parent = 0) :
         DrawTool(image, parent)
-    {};
+    {}
 
     virtual bool mousePress(const QPoint &p)
     {
@@ -245,7 +245,7 @@ class DrawToolRect : public DrawTool
 public:
     explicit DrawToolRect(QImage *image, FrameTuneScene *parent = 0) :
         DrawTool(image, parent)
-    {};
+    {}
 
     virtual bool mousePress(const QPoint &p)
     {
@@ -311,7 +311,7 @@ public:
     explicit DrawToolSelect(bool copyMode, QImage *image, FrameTuneScene *parent = 0) :
         DrawTool(image, parent),
         m_copyMode(copyMode)
-    {};
+    {}
 
     virtual ~DrawToolSelect()
     {
@@ -723,8 +723,8 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
 
     if(m_showWall != WALL_NONE)
     {
-        int y, x_begin, x_end;
-        int wall_x, wall_y_begin, wall_y_end;
+        int y = 0, x_begin = 0, x_end = 0;
+        int wall_x = 0, wall_y_begin = 0, wall_y_end = 0;
         bool drawWall = false;
         QRect p;
 
@@ -786,6 +786,7 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
         }
         default:
             Q_ASSERT(false);
+            abort();
             break;
         }
 

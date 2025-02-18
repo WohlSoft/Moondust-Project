@@ -899,7 +899,7 @@ void LvlLayersBox::on_LvlLayerList_itemClicked(QListWidgetItem *item)
     LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
     LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer;
     mw()->dock_LvlItemProps->syncLayerFields(LvlPlacingItems::layer);
-    g_intEngine.sendCurrentLayer(LvlPlacingItems::layer);
+    emit g_intEngine.sendCurrentLayer(LvlPlacingItems::layer);
 }
 
 void LvlLayersBox::on_LvlLayerList_itemSelectionChanged()
@@ -1140,7 +1140,7 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
         {
             s.addButton(&removeButton, QMessageBox::ActionRole);
             QObject::connect(&removeButton, static_cast<void (QPushButton::*)(bool)>(&QPushButton::clicked),
-                             [this](bool)->void
+                             this, [this](bool)->void
                              {
                                  removeCurrentLayer(false);
                              });

@@ -25,7 +25,7 @@
 void LvlScene::makeSectionBG(QProgressDialog &progress)
 //void LvlScene::makeSectionBG(int x, int y, int w, int h)
 {
-    int i, total = 0;
+    int i; //, total = 0;
     LogDebug(QString("Applay Backgrounds"));
 
     //Load Backgrounds
@@ -33,7 +33,7 @@ void LvlScene::makeSectionBG(QProgressDialog &progress)
     {
         setSectionBG(m_data->sections[i]);
 
-        total++;
+        // total++;
 
         if(progress.wasCanceled())
             /*progress.setValue(progress.value()+1);
