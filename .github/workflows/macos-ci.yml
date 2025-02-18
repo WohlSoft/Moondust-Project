@@ -43,7 +43,7 @@ jobs:
             extra_path: "/Users/StaticQt/5.15.16/bin",
             build_type: "Release",
             upload_directory: "www/macosx/",
-            qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/qt-5-14-2-static-macosx-15-3-1.tar.bz2", qt_install_dir: "/Users/StaticQt/",
+            qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/qt-5-15-16-static-macosx-15-3-1.tar.bz2", qt_install_dir: "/Users/StaticQt/",
             qt_ver: "5.14.2",
             qt_dir: "/Users/StaticQt/5.15.16/bin",
             qt_lib_dir: "/Users/StaticQt/5.15.16/lib"
@@ -84,7 +84,8 @@ jobs:
     - name: Install dependencies
       shell: bash
       run: |
-        brew install ninja cmake coreutils binutils gnu-sed lftp wget p7zip axel
+        brew install ninja coreutils binutils gnu-sed lftp axel
+        # cmake wget p7zip
         git submodule init
         git submodule update
         mkdir build-temp
