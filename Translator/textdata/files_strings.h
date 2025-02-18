@@ -77,7 +77,7 @@ public:
         R_NOTE_PTR
     };
 
-    void setData(const QString &lang, int s, const QString &key);
+    void setFileData(const QString &lang, int s, const QString &key);
     void clear();
 
     void updateStatus(const QString &lang);
@@ -85,7 +85,7 @@ public:
     // Header:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-    void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
+    void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
 
     // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;

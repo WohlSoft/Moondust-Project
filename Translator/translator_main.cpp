@@ -129,7 +129,7 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
         auto &index = ar.first();
         QString key = index.data(FilesListModel::R_KEY).toString();
         int type = index.data(FilesListModel::R_TYPE).toInt();
-        m_filesStringsModel->setData(m_recentLang, type, key);
+        m_filesStringsModel->setFileData(m_recentLang, type, key);
 
         if(type == FilesListModel::T_LEVEL)
             m_dialoguesListModel->setData(m_recentLang, key);

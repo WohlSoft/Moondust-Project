@@ -40,7 +40,7 @@ FilesStringsModel::FilesStringsModel(TranslateProject *project, QObject *parent)
     , m_project(project)
 {}
 
-void FilesStringsModel::setData(const QString &lang, int s, const QString &key)
+void FilesStringsModel::setFileData(const QString &lang, int s, const QString &key)
 {
     beginResetModel();
 
