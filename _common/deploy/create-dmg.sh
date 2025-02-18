@@ -124,8 +124,10 @@ Options:
       notarize the disk image (waits and staples) with the keychain stored credentials
   --sandbox-safe
       execute hdiutil with sandbox compatibility and do not bless (not supported for APFS disk images)
-  --subfolder"
-      put all content of source folder into sub-folder"
+  --subfolder
+      put all content of source folder into sub-folder
+  --subfolder-name
+      put all content of source folder into sub-folder with a given name
   --skip-jenkins
       skip Finder-prettifying AppleScript, useful in Sandbox and non-GUI environments
   --version
@@ -256,6 +258,10 @@ while [[ "${1:0:1}" = "-" ]]; do
 		--subfolder)
 			DOSUBFOLDER=1
 			shift;;
+		--subfolder-name)
+			DOSUBFOLDER=1
+			SUB_FOLDER_NAME="$2"
+			shift; shift;;
 		--bless)
 			BLESS=1
 			shift;;
@@ -341,19 +347,21 @@ fi
 
 if [[ $DOSUBFOLDER == 1 ]]; then
 	SRC_FOLDER_TEMP="${SRC_FOLDER}_tmp/"
-	SRC_FOLDER_SF="${SRC_FOLDER}_tmp/${SRC_FOLDER##*/}"
+	if [[ "$SUB_FOLDER_NAME" == "" ]]; then
+		SUB_FOLDER_NAME=${SRC_FOLDER##*/}
+	fi
+	SRC_FOLDER_SF="${SRC_FOLDER_TEMP}/$SUB_FOLDER_NAME"
 	echo "Generating subfolder $SRC_FOLDER_SF..."
 	mkdir -p "$SRC_FOLDER_SF"
-	cp -a "$SRC_FOLDER" "$SRC_FOLDER_SF"
-	SRC_FOLDER="$SRC_FOLDER_SF"
+	cp -a "$SRC_FOLDER/"* "$SRC_FOLDER_SF"
+	SRC_FOLDER="$SRC_FOLDER_TEMP"
+	find "$SRC_FOLDER" -type f -name ".DS_Store" -delete
 fi
 
 if [[ -f "$SRC_FOLDER/.DS_Store" ]]; then
 	echo "Deleting .DS_Store found in source folder"
 	rm "$SRC_FOLDER/.DS_Store"
 fi
-
-find "$SRC_FOLDER" -type f -name ".DS_Store" -delete
 
 # Create the image
 echo "Creating disk image..."
@@ -643,6 +651,11 @@ if [[ -n "${NOTARIZE}" && "${NOTARIZE}" != "-null-" ]]; then
 		echo "The notarization failed with error $?"
 		exit 1
 	fi
+fi
+
+if [[ $DOSUBFOLDER == 1 ]]; then
+	echo "Removing temporary data..."
+	rm -Rf "${SRC_FOLDER_TEMP}"
 fi
 
 # All done!

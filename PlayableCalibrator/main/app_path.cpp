@@ -63,7 +63,7 @@ void AppPathManager::initAppPath(const char *argv0)
         //! If it's a path randomizer
         if(ApplicationPath.startsWith("/private/var/"))
         {
-            QString realAppPath("/Applications/PGE Project");
+            QString realAppPath("/Applications/Moondust Project");
             if(QDir(realAppPath).exists())
                 ApplicationPath = realAppPath;
         }
