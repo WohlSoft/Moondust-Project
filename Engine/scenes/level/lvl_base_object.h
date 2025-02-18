@@ -35,6 +35,9 @@ class LVL_Section;
 class LevelScene;
 class LVL_Block;
 class PGE_LevelCamera;
+class PGE_Phys_Object;
+typedef PGE_Phys_Object *PhysObjPtr;
+
 ///
 /// \brief The PGE_Phys_Object class
 ///
