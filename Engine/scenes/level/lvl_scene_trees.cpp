@@ -71,7 +71,7 @@ void PGE_Phys_Object::TreeMapMember::updatePos()
             m_is_registered = true;
         }
         else
-            st->update(m_self);
+            st->updateAtTree(m_self);
     }
     else
     {
@@ -112,7 +112,7 @@ void PGE_Phys_Object::TreeMapMember::updatePosAndSize()
                 m_is_registered = true;
             }
             else
-                st->update(m_self);
+                st->updateAtTree(m_self);
         }
     }
     else
@@ -141,7 +141,7 @@ void PGE_Phys_Object::TreeMapMember::updateSize()
             m_is_registered = true;
         }
         else
-            st->update(m_self);
+            st->updateAtTree(m_self);
 
     }
     else

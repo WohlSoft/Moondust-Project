@@ -68,17 +68,17 @@ LVL_SubTree::~LVL_SubTree()
     }
 }
 
-void LVL_SubTree::insert(LVL_SubTree::PhysObjPtr item)
+void LVL_SubTree::insert(PhysObjPtr item)
 {
     p->tree.Insert(item);
 }
 
-void LVL_SubTree::update(LVL_SubTree::PhysObjPtr item)
+void LVL_SubTree::updateAtTree(PhysObjPtr item)
 {
     p->tree.Update(item);
 }
 
-void LVL_SubTree::remove(LVL_SubTree::PhysObjPtr item)
+void LVL_SubTree::remove(PhysObjPtr item)
 {
     p->tree.Remove(item);
 }

@@ -32,9 +32,8 @@ class LVL_SubTree : public PGE_Phys_Object
         ~LVL_SubTree();
 
         typedef bool (*t_resultCallback)(PGE_Phys_Object*, void *);
-        typedef PGE_Phys_Object *PhysObjPtr;
         void    insert(PhysObjPtr item);
-        void    update(PhysObjPtr item);
+        void    updateAtTree(PhysObjPtr item);
         void    remove(PhysObjPtr item);
         void    clear();
         void    query(PGE_RectF &zone, t_resultCallback a_resultCallback, void *context);

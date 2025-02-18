@@ -72,7 +72,7 @@ void LVL_Player::attackArea(PGE_RectF area, int action, int type, int filters)
     }
 
     m_scene->queryItems(area, &bodies);
-    int contacts = 0;
+    //int contacts = 0;
     bool findBlocks = (filters & (F_LVLBlock)) != 0;
     //bool findBGOs = (filters & (LVLBGO << 1)) != 0;
     bool findNPCs = (filters & (F_LVLNPC)) != 0;
@@ -82,7 +82,7 @@ void LVL_Player::attackArea(PGE_RectF area, int action, int type, int filters)
     for(PGE_RenderList::iterator it = bodies.begin(); it != bodies.end(); it++)
     {
         PGE_Phys_Object *visibleBody = *it;
-        contacts++;
+        // contacts++;
         if(visibleBody == this) continue;
         if(visibleBody == NULL)
             continue;
