@@ -1344,6 +1344,7 @@ public:
                 && !(filename.startsWith("thextech_") && filename.endsWith(".json"))
                 && !filename.endsWith(".ini")
                 && !filename.endsWith(".png") && !filename.endsWith(".gif")
+                && !filename.endsWith(".wav")
                 && !is_font)
             {
                 log_file(LogCategory::CopiedUnknown, in_path);
