@@ -7,6 +7,10 @@ add_subdirectory(3rdparty/tex3ds EXCLUDE_FROM_ALL)
 add_subdirectory(3rdparty/libimagequant EXCLUDE_FROM_ALL)
 add_subdirectory(3rdparty/spc2it EXCLUDE_FROM_ALL)
 add_subdirectory(3rdparty/mmutil EXCLUDE_FROM_ALL)
+
+set(ZLIB_INCLUDE_DIR ${ZLIB_INCLUDE_DIRS})
+set(ZLIB_LIBRARY ${libZLib_A_Lib})
+
 include(cmake/build_libarchive.cmake)
 find_package(Qt5 REQUIRED COMPONENTS Core)
 
@@ -23,7 +27,8 @@ add_library(libxtconvert
     ${LIBXTCONVERT_RES}
 )
 
-add_dependencies(libxtconvert archive_static lz4_pack_static libromfs3ds libtex3ds libmmutil FreeImage_Local PGE_FileFormatsQt libpng_Local SDLMixerX_Local SDL2_Local)
+add_dependencies(archive_static PGE_AudioCodecs)
+add_dependencies(libxtconvert archive_static lz4_pack_static libromfs3ds libtex3ds libmmutil FreeImage_Local PGE_FileFormatsQt SDLMixerX_Local SDL2_Local)
 
 target_link_libraries(libxtconvert PRIVATE Qt5::Core)
 target_link_libraries(libxtconvert PUBLIC archive_static lz4_pack_static libromfs3ds libtex3ds libmmutil PGE_FreeImage imagequant_a libspc2it PGE_FileFormatsQt)
