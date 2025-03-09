@@ -297,7 +297,7 @@ int main(int argc, char *argv[])
         cmd.parse(argc, argv);
 
         setup.noMakeBackup      = switchNoBackups.getValue();
-        setup.walkSubDirs     = switchDigRecursive.getValue() | switchDigRecursiveDEP.getValue();
+        setup.walkSubDirs     = switchDigRecursive.getValue() || switchDigRecursiveDEP.getValue();
         //nopause         = switchNoPause.getValue();
 
         setup.pathOut     = outputDirectory.getValue();

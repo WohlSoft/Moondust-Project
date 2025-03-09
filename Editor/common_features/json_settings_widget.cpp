@@ -803,7 +803,7 @@ QString JsonSettingsWidget::browseForFileValue(QWidget* target, LineEditType typ
             audioPath = music;
         });
 
-        QObject::connect(&muz, &MusicFileList::updateSongPlay, [this, &root, &audioPath]()->void
+        QObject::connect(&muz, &MusicFileList::updateSongPlay, [&root, &audioPath]()->void
         {
             if(MainWinConnect::pMainWin->getPlayMusicAction()->isChecked())
                 LvlMusPlay::previewCustomMusicAbs(root + audioPath);
@@ -819,12 +819,12 @@ QString JsonSettingsWidget::browseForFileValue(QWidget* target, LineEditType typ
             LvlMusPlay::setGain(gain);
         });
 
-        QObject::connect(&muz, &MusicFileList::playSoundFile, [this, &audioPath](const QString &file)->void
+        QObject::connect(&muz, &MusicFileList::playSoundFile, [](const QString &file)->void
         {
             PGE_SfxPlayer::playFile(file);
         });
 
-        QObject::connect(&muz, &MusicFileList::musicButtonClicked, [this, &root, &audioPath](bool st)->void
+        QObject::connect(&muz, &MusicFileList::musicButtonClicked, [&root, &audioPath](bool st)->void
         {
             MainWinConnect::pMainWin->getPlayMusicAction()->setChecked(st);
             if(st)
@@ -1236,7 +1236,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 fileBoxL->addWidget(preview, 0);
 
                 QObject::connect(preview, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked), this,
-                [id, it, lineType, root, lookAtEpisode, this](bool)
+                [id, it, lineType, root](bool)
                 {
                     QString file = it->text();
                     QString fileNA = file.split('|').first();
@@ -1380,7 +1380,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             if(button_preview)
             {
                 QObject::connect(button_preview, static_cast<void(QToolButton::*)(bool)>(&QToolButton::clicked), this,
-                [id, list, lineType, root, lookAtEpisode, this](bool)
+                [id, list, lineType, root](bool)
                 {
                     auto selected = list->selectedItems();
                     if(selected.isEmpty())
@@ -1492,7 +1492,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
 
             // Opening an editor of item
             QObject::connect(list, &QListWidget::itemDoubleClicked, this,
-            [this, list, id, lineType, root, filters, target, dialogTitle, dialogDescription](QListWidgetItem* item)->void
+            [this, id, lineType, root, filters, target, dialogTitle, dialogDescription](QListWidgetItem* item)->void
             {
                 if(lineType == JSS_LineEdit_Text)
                     return;

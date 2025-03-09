@@ -899,7 +899,7 @@ void LvlLayersBox::on_LvlLayerList_itemClicked(QListWidgetItem *item)
     LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
     LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer;
     mw()->dock_LvlItemProps->syncLayerFields(LvlPlacingItems::layer);
-    g_intEngine.sendCurrentLayer(LvlPlacingItems::layer);
+    emit g_intEngine.sendCurrentLayer(LvlPlacingItems::layer);
 }
 
 void LvlLayersBox::on_LvlLayerList_itemSelectionChanged()
@@ -1102,7 +1102,7 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
             stats = "<h2>" + tr("Layer \"%1\" statistics").arg(layerName) + ":</h2>\n";
             stats += "<ul>";
             stats += boldIfNonZero(tr("Total members", "Layer statistics field"), statsTotalMembers);
-            stats += boldIfNonZero(tr("Blocks", "Layer statistics field"), statsTotalMembers);
+            stats += boldIfNonZero(tr("Blocks", "Layer statistics field"), statsBlocks);
             stats += boldIfNonZero(tr("Background objects", "Layer statistics field"), statsBGOs);
             stats += boldIfNonZero(tr("NPC", "Layer statistics field"), statsNPCs);
             stats += boldIfNonZero(tr("Warps", "Layer statistics field"), statsWarps);
@@ -1140,7 +1140,7 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
         {
             s.addButton(&removeButton, QMessageBox::ActionRole);
             QObject::connect(&removeButton, static_cast<void (QPushButton::*)(bool)>(&QPushButton::clicked),
-                             [this](bool)->void
+                             this, [this](bool)->void
                              {
                                  removeCurrentLayer(false);
                              });

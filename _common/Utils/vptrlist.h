@@ -497,10 +497,12 @@ public:
 
     void move(size_t from, size_t to)
     {
-        size_t m_size = vecPTR::size();
         SHptr *m_data = vecPTR::data();
+#ifndef NDEBUG
+        size_t m_size = vecPTR::size();
         assert(m_size > from);
         assert(m_size > to);
+#endif
         if (from == to)
             return;
         if (from < to)

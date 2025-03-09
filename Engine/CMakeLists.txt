@@ -514,6 +514,7 @@ if(APPLE)
         MACOSX_BUNDLE TRUE
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/pge_engine.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_engine"
+        MACOSX_BUNDLE_BUNDLE_NAME "Moondust Engine"
         MACOSX_BUNDLE_GUI_IDENTIFIER "ru.wohlsoft.pge-engine"
         MACOSX_BUNDLE_SHORT_VERSION_STRING "${ENGINE_VERSION_STRING}"
         MACOSX_BUNDLE_LONG_VERSION_STRING "${ENGINE_VERSION_STRING}"
@@ -526,13 +527,13 @@ if(APPLE)
     set_source_files_properties(${PGE_FILE_ICONS} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
     list(APPEND PGE_ENGINE_LINK_LIBS iconv)
-    if(PGE_USE_LUAJIT)
-        # Required to link on 64-bit macOS
-        # See: http://luajit.org/install.html
-        set_property(TARGET pge_engine APPEND_STRING PROPERTY
-            LINK_FLAGS " -pagezero_size 10000 -image_base 100000000"
-        )
-    endif()
+    # if(PGE_USE_LUAJIT AND "${TARGET_PROCESSOR}" STREQUAL "x86_64")
+    #     # Required to link on 64-bit macOS
+    #     # See: http://luajit.org/install.html
+    #     set_property(TARGET pge_engine APPEND_STRING PROPERTY
+    #         LINK_FLAGS " -pagezero_size 10000 -image_base 100000000"
+    #     )
+    # endif()
 endif()
 
 target_link_libraries(pge_engine

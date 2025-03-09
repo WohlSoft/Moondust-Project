@@ -8,7 +8,8 @@
 
 extern "C" { typedef void (*dsp_copy_func_t)( unsigned char** io, void* state, size_t ); }
 
-class SPC_DSP {
+struct SPC_DSP
+{
 public:
 	typedef BOOST::uint8_t uint8_t;
 

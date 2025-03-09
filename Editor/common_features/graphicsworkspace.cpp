@@ -291,16 +291,16 @@ void GraphicsWorkspace::focusOutEvent(QFocusEvent *event)
 void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
 {
     int modS = 128;
-    int modS_h = modS;
-    bool rtl = (qApp->layoutDirection() == Qt::RightToLeft);
+    // int modS_h = modS;
+    // bool rtl = (qApp->layoutDirection() == Qt::RightToLeft);
 
-    if(rtl)
-        modS_h *= -1;
+    // if(rtl)
+    //     modS_h *= -1;
 
     if((event->modifiers() & Qt::ShiftModifier) != 0)
     {
         modS *= 2;
-        modS_h *= 2;
+        // modS_h *= 2;
     }
 
     auto delta = event->angleDelta();
