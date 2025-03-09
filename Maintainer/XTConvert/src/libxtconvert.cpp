@@ -1091,11 +1091,12 @@ public:
 
     bool convert_sfx(const QString&, const QString& in_path, const QString& out_path)
     {
-        // qInfo() << "ogg2wav" << out_path;
-
         Mix_Chunk* ch = Mix_LoadWAV(in_path.toUtf8().data());
         if(!ch)
-            return false;
+        {
+            log_file(LogCategory::SkippedInvalid, in_path);
+            return true;
+        }
 
         // qInfo() << "length" << ch->alen;
 
@@ -1118,12 +1119,14 @@ public:
 
     bool convert_music_16m(const QString&, const QString& in_path, const QString& out_path)
     {
-        // qInfo() << "mus2qoa" << out_path;
-        log_file(LogCategory::AudioQoa, in_path);
-
         Mix_Chunk* ch = Mix_LoadWAV(in_path.toUtf8().data());
         if(!ch)
-            return false;
+        {
+            log_file(LogCategory::SkippedInvalid, in_path);
+            return true;
+        }
+
+        log_file(LogCategory::AudioQoa, in_path);
 
         QByteArray qoa_data;
 
