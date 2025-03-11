@@ -636,6 +636,12 @@ public:
                 mask = scaled_mask;
             }
         }
+        // make sure that orig_w / orig_h perfectly match the intended drawn size
+        else if(m_spec.target_platform != TargetPlatform::Desktop)
+        {
+            orig_w *= 2;
+            orig_h *= 2;
+        }
 
         int image_h = FreeImage_GetHeight(image);
         int image_w = FreeImage_GetWidth(image);
@@ -648,6 +654,9 @@ public:
             {
                 image_w = FreeImage_GetWidth(image);
                 image_h = FreeImage_GetHeight(image);
+
+                orig_w = image_w * 2;
+                orig_h = image_h * 2;
             }
             else
                 log_file(LogCategory::ImagePlayerCompressFailed, in_path);
@@ -736,7 +745,7 @@ public:
             if(image_w > 1024 || image_h > 1024 * 3)
                 log_file(LogCategory::ImageCropped, in_path);
 
-            size_text = QString("%1\n%2\n").arg(image_w * 2, 4).arg(image_h * 2, 4);
+            size_text = QString("%1\n%2\n").arg(orig_w, 4).arg(orig_h, 4);
         }
         else if(output_format == TargetPlatform::TPL)
         {
@@ -825,7 +834,7 @@ public:
             }
 
             if(save_success)
-                size_text = QString("%1\n%2\n").arg(image_w * 2, 4).arg(image_h * 2, 4);
+                size_text = QString("%1\n%2\n").arg(orig_w, 4).arg(orig_h, 4);
         }
         else if(output_format == TargetPlatform::DSG)
         {
@@ -951,7 +960,7 @@ public:
                 file.close();
                 save_success = true;
 
-                size_text = QString("%1\n%2\n%3\n").arg(image_w * 2, 4).arg(image_h * 2, 4).arg(flags);
+                size_text = QString("%1\n%2\n%3\n").arg(orig_w, 4).arg(orig_h, 4).arg(flags);
             }
         }
 
