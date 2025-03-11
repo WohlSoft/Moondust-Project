@@ -180,7 +180,7 @@ FIBITMAP *GraphicsLoad::fast2xScaleDown(FIBITMAP *image)
     const uint32_t *src_pixels  = reinterpret_cast<uint32_t*>(FreeImage_GetBits(image));
     auto src_pitch_px = static_cast<uint32_t>(FreeImage_GetPitch(image)) / 4;
 
-    // FIXME: round up instead of down
+    // consider rounding up instead of down in the future
     auto dest_w = src_w / 2;
     auto dest_h = src_h / 2;
 
