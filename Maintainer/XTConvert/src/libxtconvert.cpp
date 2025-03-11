@@ -1758,6 +1758,9 @@ public:
 
         for(auto& snd : sound_filenames)
         {
+            if(snd.second.isEmpty())
+                continue;
+
             QString use_fn_in = m_input_dir.filePath("sound" + (QDir::separator() + snd.second));
             QString use_fn_out = m_temp_dir.filePath("sound" + (QDir::separator() + snd.second));
 
