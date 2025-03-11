@@ -937,7 +937,7 @@ public:
 
                     if(col < input_w)
                     {
-                        *(dest++) = (src[0] << 4);
+                        *(dest++) = (src[0] << 0);
                         src += 1;
                     }
                 }
