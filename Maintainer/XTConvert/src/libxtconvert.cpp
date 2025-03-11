@@ -609,6 +609,9 @@ public:
         // 2x downscale by default
         if(m_spec.target_platform != TargetPlatform::Desktop && !m_cur_dir.textures_1x.contains(filename))
         {
+            // if(!GraphicsLoad::validateFor2xScaleDown(image))
+            //     log_file(LogCategory::ImageNot2x, in_path);
+
             FIBITMAP* scaled = GraphicsLoad::fast2xScaleDown(image);
             FreeImage_Unload(image);
             if(!scaled)
