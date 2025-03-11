@@ -301,3 +301,35 @@ bool GraphicsLoad::validateForDepthTest(FIBITMAP *image)
 
     return true;
 }
+
+bool GraphicsLoad::validateFor2xScaleDown(FIBITMAP *image)
+{
+    if(!image)
+        return false;
+
+    if(FreeImage_GetBPP(image) != 32)
+        return false;
+
+    auto w = static_cast<uint32_t>(FreeImage_GetWidth(image));
+    auto h = static_cast<uint32_t>(FreeImage_GetHeight(image));
+    const uint32_t *img_pixels = reinterpret_cast<uint32_t*>(FreeImage_GetBits(image));
+    auto pitch_px = static_cast<uint32_t>(FreeImage_GetPitch(image)) / 4;
+
+    if(w % 2 || h % 2)
+        return false; // Not multiple two!
+
+    for(uint32_t y = 0; y < h; y += 2)
+    {
+        for(uint32_t x = 0; x < w; x += 2)
+        {
+            if(img_pixels[y * pitch_px + x] != img_pixels[y * pitch_px + (x + 1)]
+                || img_pixels[y * pitch_px + x] != img_pixels[(y + 1) * pitch_px + x]
+                || img_pixels[y * pitch_px + x] != img_pixels[(y + 1) * pitch_px + (x + 1)])
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
