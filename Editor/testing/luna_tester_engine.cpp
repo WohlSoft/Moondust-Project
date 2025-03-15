@@ -25,6 +25,7 @@
 #endif
 
 #ifdef _WIN32
+#define PSAPI_VERSION 1
 #include <windows.h>
 #include <psapi.h>
 #include <stdio.h>
@@ -231,7 +232,7 @@ void LunaTesterEngine::init()
                      this, &LunaTesterEngine::gameReadyReadStandardError);
     QObject::connect(&m_lunaGameIPC, &QProcess::readyReadStandardOutput,
                      this, &LunaTesterEngine::gameReadyReadStandardOutput);
-                     
+
     QObject::connect(&g_intEngine, &IntEngineSignals::sendPlacingBlock,
                      this, &LunaTesterEngine::sendPlacingBlock);
     QObject::connect(&g_intEngine, &IntEngineSignals::sendPlacingNPC,
@@ -685,7 +686,7 @@ bool LunaTesterEngine::sendItemPlacing(const QString &rawData, PendingCmd ipcPen
 {
     //{"jsonrpc": "2.0", "method": "sendItemPlacing", "params":
     //   {"sendItemPlacing": <RAW ITEM DATA> }}
-    
+
     if(!isEngineActive())
         return false;
 
@@ -701,9 +702,9 @@ bool LunaTesterEngine::sendItemPlacing(const QString &rawData, PendingCmd ipcPen
     jsonObj["params"] = JSONparams;
     jsonObj["id"] = static_cast<int>(ipcPendCmd);
     jsonOut.setObject(jsonObj);
-    
+
     LogDebug("ENGINE: Place item command: " + rawData);
-    
+
     if(writeToIPC(jsonOut))
     {
         m_pendingCommands += ipcPendCmd;
