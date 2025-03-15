@@ -32,7 +32,9 @@ private slots:
     void on_lazyfix_tool_clicked();
     void on_palette_filter_clicked();
     void on_pathcase_fixer_clicked();
+#ifdef PGE_ENABLE_XTCONVERT
     void on_xt_convert_clicked();
+#endif
 
 private:
     Ui::MaintainerMain *ui;
