@@ -133,6 +133,12 @@ if(NOT EMSCRIPTEN AND NOT ANDROID)
         add_subdirectory(PaletteFilter)
         InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/PaletteFilter_Readme.txt" RENAME "PaletteFilter.readme.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
     endif()
+
+    option(PGE_BUILD_XTCONVERT "Build the XTConvert utility component" ON)
+    if(PGE_BUILD_XTCONVERT)
+        add_subdirectory(XTConvert)
+        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/XTConvert_Readme.txt" RENAME "XTConvert.readme.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+    endif()
 endif()
 
 if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)

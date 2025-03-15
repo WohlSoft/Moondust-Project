@@ -1,0 +1,173 @@
+/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+
+                              OpenSPC ver.300
+                                Source Code
+/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+
+                                 /ntro
+                                 -----
+OpenSPC is an SPC Player created using a very modified SNEeSe SPC CPU core.
+It was made in C (although the SPC core is in Assembly) using DJGPP.  You can
+find new versions and a FAQ for OpenSPC at:
+http://home.gvi.net/~martin
+
+OpenSPC was created by Butcha, and has been contributed to by Cyber Warrior X,
+Crono, and Kadar.  
+
+++++++++++++++++
+Table of Contents
+--------------------------------------------
+
+1.) Disclaimer
+2.) License Rights
+3.) Programming Conventions
+4.) Brief Outline
+
++++++++++++++
+1.) Disclaimer
+--------------------------------------------
+
+This program is still considered to be in beta status.  Neither Butcha nor any
+of the other contributors are responsible for any undesirable effects of using
+this program.  Also, none of the authors are responsible for the possesion or
+use of any copyrighted material taken from copyrighted ROMs using this
+program.
+
++++++++++++++++++
+2.) License Rights
+--------------------------------------------
+
+- OpenSPC Program and Code - General
+  ----------------------------------
+Please do not redistribute either of these without their respective
+documentation.  Also, do not package them with either SPC or IT files from
+copyrighted games.
+
+- OpenSPC Code - Usage Rights
+  ---------------------------
+If you would like to modify the source to OpenSPC in some way, you may send
+your version of it to the authors, who will choose whether to include your
+improvements in future versions.  Please do not make a change or improvement
+and release your own, separate program.  However, independent ports of
+OpenSPC to other platforms are welcome, as long as you let the authors know
+what you've done.  If you would like to use some part of the source in a
+program of your own design, you are free to do so, provided the primary
+author is aware of what you are doing.  Please give the author(s) credit for
+any benefits you receive from either the direct use or the examination of this
+code.
+
+Blah, legal crap. :(  I'm sure none of you out there will try to rip me off...
+But please read and follow this section anyway.
+
++++++++++++++++++++
+3.) Programming Conventions
+--------------------------------------------
+
+I have tried to make the source as uniform as possible, to make it easier to
+read and understand.  Also I have tried to comment wherever possible.  What
+follows is a list of different programming conventions used by me and which
+should be used when modifying the source:
+
+- Tab Spacing is 8
+- if, for, and other bracketed statements should take the following form:
+        if(something)
+        {
+                //Do some stuff
+                //Do some more stuff
+        }
+  Here are some examples of what NOT to do:
+
+        if(something){/*Do some stuff*//*Do some
+        more stuff*/}
+
+        if(something)
+                {
+                        //Do some stuff
+                        //Do some more stuff
+                }
+        if(something){
+        //Do some stuff
+        //Do some more stuff
+        }
+  If there is only one statement within the brackets, they may be omitted.
+  However, the statement should be on the following line and tabbed once:
+        if(something)
+                //Do only one thing
+
+- Global variables:
+  - Try to use them as little as possible
+  - When you do use them, define them in the .c file whose function they most
+    correspond with.  If that .c file is the only one in the project that
+    needs that variable, define it as static.  This goes for functions as
+    well.
+  - If a global variable must be seen outside the .c file it is defined in,
+    include it in the .h file associated with that .c file, and give it a name
+    that corresponds with that file.  For example, any global variable you
+    will find in the sound.c file is preceded by the letters SND: SNDvoices,
+    SNDsamples, etc.  This also goes for functions.
+
+This is all I can think of right now.  For the most part, just observe what
+is already there and try to make your code look and work similarly.
+
+++++++++++++++++
+4.) Brief Outline
+--------------------------------------------
+
+What follows is a rough outline of how the program works:
+
+- Startup: display message, read config file, parse command line
+- Init the SPC: allocate memory, call SNEeSe's Reset command, then load in
+  registers from the input file
+- Init the mixer: make up some tables, init some variables
+- If in graphics mode, initialize allegro graphics and fader routine
+- Init IT dump if capturing to an IT only
+- Queue the notes that started when state was saved
+- Initialize the Allegro sound stream to receive data from the mixer  
+- Main loop:
+  - Check to see whether Allegro wants more data
+    - If so, keep emulating and mixing until buffer is full
+    - Otherwise, render the display (if enabled)
+  - Dump the IT pattern buffers to disk if recording
+  - Check current time against time limit
+  - Check to see if we need to toggle voices or exit as a result of keypress
+- Shut down stuff
+- If dumping to an IT, figure out what the filename would be and save it.
+- End program
+
+Below is an explanation of the processing done when Allegro requests data,
+found in the function SNDMix() in sound.c:
+
+- Run the SNEeSe SPC
+  While this is going on, certain actions have been intercepted from SNEeSe
+  control:
+  - (new in v300) Timer control is now cycle-exact, and is handled by the
+    SNEeSe code.
+  - Reads and writes to the DSP are intercepted so as to return current sound
+    data and update sound data when something new is written.
+  - Control returns from the SNEeSe SPC when the number of cycles that should
+    have gone by in one update have been emulated.
+    (2048000 cycles / num_updates_per_second)
+- Mixer then proceeds to process each of the 8 voices that are currently keyed
+  on.  This includes updating the envelope, and detecting pitch and volume
+  changes so as to update the IT, as well as mixing the audio.  It also
+  updates a global variable used by the display functions to determine the
+  current level of each voice and both channels.
+- IT code writes the information recorded as having changed since the last
+  update.  It must write it twice, once per each channel, left and right,
+  because the SPC has two independent volume controls rather than a volume and
+  a pan. (The display is somewhat faked... using that method to set the pan
+  doesn't result in a very good recording.  Besides, as near as I can tell
+  volume and pan cannot be set simultaneously in an IT file.)
+- Record IT end of row for this completed update.  If we have filled a
+  pattern, use the next buffer.  If no other buffer is available, the main
+  loop must be running too slow.  Either way, simply overwrite the pattern we
+  just recorded since the data has to go SOMEWHERE.  It will skip a pattern 
+  though, so if this happens either turn down the sound quality in the config
+  file, or turn up NUM_PATT_BUFS in it.h.
+- End of update, return from interrupt
+
+I'm sure a lot of the mixer, envelope, and IT data stuff could use some
+optimization; if you'd like to do it, as long as it doesn't lose any of the
+current functionality I'll use it.
+
+        --Butcha

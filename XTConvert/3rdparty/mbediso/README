@@ -1,0 +1,9 @@
+mbediso is a minimal library that lets you use ISO files (and a custom indexed dialect of LZ4-compressed ISO files) as a high-performance random-access archive format.
+
+This has several advantages for open applications, including allowing end users to unpack your data archives with standard tools and allowing them to edit uncompressed archives.
+
+On targets with slow filesystem code, using a single packed archive instead of a directory tree can improve loading throughput by a factor of 5x!
+
+Despite its name, mbediso is primarily suitable for medium-to-large embedded applications at present (uses heap, typical dynamic memory use of ~200KB, and code size ~10KB). However, it has a number of fallback mechanisms, and uncompressed archives can be (slowly) traversed with as little as ~10KB of dynamic memory. Its aims may evolve depending on user demand.
+
+Please reach out to me in the Issues if you have any questions or comments about this library! I'm interested to hear if it is useful to others.

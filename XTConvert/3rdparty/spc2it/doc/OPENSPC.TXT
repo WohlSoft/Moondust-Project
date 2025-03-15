@@ -1,0 +1,296 @@
+This is a modified version of OpenSPC 0.301, improved by Dwedit,
+with support of fractional update rates to generate better IT files.
+
+See http://www.romhacking.net/forum/index.php?topic=10164.0
+
+/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+
+                              OpenSPC ver.301
+
+/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+
+                                 Intro
+                                 -----
+OpenSPC is an SPC Player created using a modified version of SNEeSe's ASM SPC
+core.  The rest was written in C using DJGPP.  You can find new versions and
+a FAQ for OpenSPC at:
+http://home.gvi.net/~martin
+
+OpenSPC was created by Butcha, and has been contributed to by Cyber Warrior X,
+Crono, Kadar, and Cait Sith 2.
+
+++++++++++++++++
+Table of Contents
+--------------------------------------------
+
+1.) What's New
+2.) Disclaimer and License
+3.) System Requirements
+4.) Current Progress
+5.) Future Progress
+6.) Configuration File
+7.) IT Dumping
+8.) Credits/Special Thanks
+
++++++++++++++
+1.) What's New
+--------------------------------------------
+
+v0.301 - Relatively small update
+
+ * Added ID support for SPC files (thanks to Cait Sith 2).  Displays info for
+ SPC files that contain it, in both the lite version and the full version,
+ non-gui mode.
+ * Changed "SPC->IT conversion" name in IT files to the ID song name if
+ specified in SPC file.
+ * Updated to SNEeSe version .36 SPC code, including all optimizations and
+ bugfixes that were present in it.
+
+v0.300 - Another big (and overdue) update
+
+ * Prevented notes that are out of IT's range from writing the invalid data -
+ prevents IT corruption, but probably still won't sound quite right.
+ * Checked for invalid loop points supplied by an SPC file (wouldn't think
+ you'd *need* to check... %#!@$).
+ * Updated display screen with new pitch when sliding.
+ * Fixed rare bug which allowed volumes with opposite signs in both channels
+ to cancel each other out when in mono mode.
+ * Corrected bug where if a voice was keyed off at the same time the sample
+ ended, the voice would not get turned off.  Prevents the big long strings of
+ note cut commands sometimes seen in the IT files.
+ * Decided to scrap my sound drivers in favor of Allegro's.  This means both
+ the Ensoniq SoundScape and ESS AudioDrive should now be supported in addition
+ to all SoundBlaster types.  Note only the sound driver, not the mixer, has
+ been replaced.
+ * As a side effect of this, the onscreen display updates slower now, because
+ Allegro requires much more sound data to be mixed and delivered at once.
+ This is much more noticable with frequencies less than 22050 Hz.
+ * Config file rewritten to reflect changes in sound driver.  Should still be
+ compatible if you have any old frontends, but I'm not sure.
+ * Corrected a bug in ADSR/GAIN which could cause the envelope height to wrap
+ around infinitely. (Jurassic Park)
+ * Implemented main volume registers
+ * Changed to the newest version of SNEeSe SPC core.  TCALL (and therefore
+ Terranigma) now works!  Other optimizations and fixes are also present.
+ * Changed to SNEeSe's SPC timer code.  Timers are now cycle-exact rather than
+ calculated once every update.
+ * Reimplemented ADSR/GAIN in the style of the timer code, which means it is
+ now cycle-exact.  Any song that changed envelope states while monitoring ENVX
+ should now work much better.
+ * Doubled output volume both in the mixer and in IT dumping.  This can
+ potentially cause clipping distortion while mixing and maxed-out volumes in
+ IT files if the volume ever gets too high, but it seems SNES games rarely
+ use high volume which is why it sounded so quiet in the first place.
+ * Fixed up the display for text mode.  Colors and layout should be identical
+ to the graphics mode, especially if used with an 80x50 screen.  Use setgui=2
+ in the config file to activate.
+ * Implemented a command line switch equivalent to the setgui parameter in the
+ config file. (-g x)
+ * Fixed up the colors on the display and allowed the colors to be changed in
+ the config file.
+ * Did a little cleaning and optimization of the source code.
+
+v0.200 - Lots new in this version
+
+ * Allowed IT dumping with other than 200 rows/pattern (change in CFG file)
+ * Fixed bug with volume and IT dumping (played too loud and would
+   sometimes result in undesired volume column effects being applied)
+ * Fixed segmentation fault bug when a negative volume applied to a channel
+ * Fixed a bug with GAIN linear decrease mode
+ * Fixed file loader bug when filename preceded with "..\" <Doh, stupid me>
+ * Fixed file loader bug when loading files with extension .SP1, .SP2, etc. 
+ * Increased number of SPC cycles to execute, while simultaneously
+   implementing system to pause emulation if SPC idle.  Should prevent games
+   like Starfox from slowing down and speeding up, and *might* even save some
+   CPU power in other games
+ * Got rid of the "SPC Sample" for samples without lengths. (Thanks to Crono)
+ * Added .IT pattern compression. (Crono)
+ * Reduced memory requirements when *NOT* logging a .IT file (Crono)
+ * Now uses "specific" mixing method for each style of output. (Crono)
+ * Old Soundblaster drivers tweaked, should sound better and can now go up to
+   45454 Hz.  May introduce some incompatibility, let me know. (Crono)
+ * Soundblaster Pro drivers tweaked, hopefully sound better. (Crono)  
+ * Moved actual emulation stuff from main.c to emu.c.  main.c now only
+   contains main() and other graphics-related stuff.
+ * Added support for Ensoniq Soundscape, SoundFX and MediaFX cards (thanks to
+   Kadar)
+ * Added support for non-standard IRQs.  Let me know if you still have
+   problems getting it to play on your SB-compatible sound card.
+ * Found and eliminated something WinAmp wasn't liking about the way unlooped
+   samples were saved.
+ * Created 'lite' version!  Now capture SPC's to either IT or WAV files
+   direct to disk at maximum speed rather than having to listen to them.
+   Uses command line options to specify parameters.  (Replaced 'main.c' with
+   'lite.c' and removed sound drivers in project file)
+ * Added many of the same command line options to the full version.  If no
+   options are specified it will default to what's in the OPENSPC.CFG file.
+ * Added a preset time limit and current time indicator to both versions.
+ * Replaced the SNEeSe SPC core with a newer version; had hoped this would fix
+   some SPC bugs, but no luck there.  Oh well, hopefully its faster or
+   something.
+ * Broke down and did some SPC debugging myself; managed to get Prince of
+   Persia, WWF, Doom, FF2 (Fabul Castle), SOM2 (Boss Theme), and Simpsons:
+   Bart's Nightmare working a lot better.
+   Details:     - all SBC to memory were subtracting in the wrong order
+                - CMP YA, dp didn't complement the carry flag
+                - membit addressing mode operand bits were mapped incorrectly
+ * Corrected some bugs in GAIN Increase and Decrease modes and re-enabled
+   ENVX reporting; made WWF, Doom, and Simpsons sound even better.
+ * Added a reverse stereo option for those of you experiencing swapped sound
+   channels with an SBPro compatible.
+
+v0.100 - Initial release
+
++++++++++++++++++++++++++
+2.) Disclaimer and License
+--------------------------------------------
+
+This program is still considered to be in beta status.  Neither Butcha nor any
+of the other contributors are responsible for any undesirable effects of using
+this program.  Also, none of the authors are responsible for the possesion or
+use of any copyrighted material taken from copyrighted ROMs using this
+program.
+
+Please do not redistribute this program without its included documentation.
+Also, do not package this program with SPC or IT files from copyrighted games.
+
+++++++++++++++++++++++
+3.) System Requirements
+--------------------------------------------
+
+The light version should have very few requirements.  Probably a 386 with an
+FPU could run it, but I can't say for sure.  Memory shouldn't be a problem as
+long as you have some available swap space.  The following are some tentative
+guidelines for the full version:
+
+Minimum Recommended System:
+
+- 486/100 processor
+- 8MB RAM
+- Sound Blaster or compatible card
+
+Strongly Recommended System :
+
+- Pentium processor (P133 or higher)
+- The more RAM the merrier (especially with Windows 9x) 
+- VGA card (for graphical display) 
+- Sound Blaster 16 or 100% compatible
+
++++++++++++++++++++
+4.) Current Progress
+--------------------------------------------
+
+The following are implemented in the sound engine:
+
+- 16bit digital stereo sound
+- SPC700 Sound CPU (likely still bugs to be found)
+- FULL ADSR and GAIN volume effects (now cycle-exact!)
+- Song capture in the IT format
+- Sound recording to WAV format (lite version only)
+
+The following are missing in the sound engine:
+- ECHO
+- FIR filter
+- Noise
+- Modulation
+
+The following are some known bugs:
+- If the pitch changes too fast while a note is on, an IT file will not be
+  able to reproduce it fast enough, resulting in a subtle "rounding" effect.
+  (i.e. FF3 Atma Weapon)
+- A few games' music doesn't like being played with a fixed update-per-second
+  method, resulting in unpredictable effects
+- Any game that changes the sample location or data while playing will sound
+  strange (Doom, Cannon Fodder).  No easy work around this, because ITs always
+  expect the same sample to stay the same.
+- Dragon Quest seems to have some severe bugs, no idea why
+
+++++++++++++++++++
+5.) Future Progress
+--------------------------------------------
+
+Future progress is completely indefinite at this point, due to my currently 
+attending college at UMR.  I haven't had a lot of free time here, and that
+which I do have I will most likely be devoted to other things.  As far as
+major features missing from the program go, there isn't a whole lot more
+I can add, because it wouldn't transfer into an IT file anyway (echo, filter).
+Noise and modulation might be possibilities, I'd have to look more into it.  I
+would like to have a much better display, but I keep saying that and never get
+around to working on it.  Also, there are the above bugs to fix.  I would
+however like to rewrite the IT code to save more data temporarily into a
+proprietary format, and then convert this data to an IT file.  This would make
+it easier for other people to add support for other filetypes.  It could also
+make the IT code itself more efficient in compressing the resulting file.  I
+have no idea when or if I'll get to this, however.  We'll see.
+
+
++++++++++++++++++++++
+6.) Configuration File (not in lite version)
+--------------------------------------------
+
+Any documentation you need for the configuration file should be found in
+comments inside the OPENSPC.CFG file itself.  If you've let some frontend
+overwrite it and you can't find any comments, you'll have to restore from the
+original ZIP.  I recommend backing up the config before using any frontends,
+if the frontend doesn't do so itself.  Do NOT delete this file, OpenSPC will
+NOT regenerate it.
+
++++++++++++++
+7.) IT Dumping
+--------------------------------------------
+
+IT dumping is done via 16 channels(8 channels each with independent left and
+right volume control).  When you switch on IT dumping, everything you hear in
+the player is saved into the IT file.  This means the IT file starts on the
+first note of the SPC and ends when you hit a key to end recording.  Upon
+pressing a key, a note cut command is issued across all 16 channels, along
+with a command to loop back to the beginning of the song.  This makes it easy
+to record simple looping songs-simply hit a key just before the first note of
+the song plays again, and it should sound pretty decent.  However, many songs
+have an "intro" that they play first, and then go into another section and
+loop.  To make these loop correctly, you will have to manually edit the IT
+yourself.  I will describe how to do it using Impulse Tracker; it is up to you
+to figure it out if you use a different one, but it shouldn't be much
+different.
+
+- First of all, switch on IT dumping and play the song.  Stop recording a
+  second or two after you hear it loop.
+- Open up the resulting IT file in Impulse Tracker.
+- Find the first note of the section that loops.  If it is at the beginning of
+  a pattern, you are incredibly lucky.  If not, go to the next pattern and see
+  where it begins with relation to the music(for example, say the pattern
+  begins 5 rows before channel 2 plays a C#5).  Also, remember which pattern
+  number it is.
+- Go find the end of the song.  Locate the first note of the looped section,
+  then look forward until you find the spot you remembered(5 rows before
+  channel 2 plays C#5, in our example).  Hit ALT-DEL to delete everything in
+  this pattern after that spot.  When the pattern is clear after that spot,
+  put the cursor on the effects column of any channel and enter in effect 'B'
+  followed by the number of the pattern you found in the last step(in hex).
+- Once you've completed this, you'll probably want to delete any extra
+  patterns after this one, along with their respective orders.
+- Play it.  Sound right?  Save it.  If not you either found the wrong spot or
+  entered in the wrong pattern number.
+
+It may sound a little complicated or awkward, but its really not that bad when
+you've done it a few times.  I did it 16 times to create the examples on my
+webpage.  If you'd like you can open them up for an example.
+
++++++++++++++++++++++++++
+8.) Credits/Special Thanks
+--------------------------------------------
+
+Thanks go to:
+
+- Savoury SnaX and Charles Bilyu‚ for the SPC code used in this project.
+- Shawn Hargreaves (and others) for the Allegro library
+- Citizen X for letting CWX see the WinSPC source for ideas
+- Gary Henderson for helping CWX with SPC Dumping and with Terranigma
+- The rest of the Snes9x team for their hard work and the release of the
+  Snes9x source code, although this program contains no Snes9x-derived code. 
+- zsKnight and _Demo_ for an awesome emulator and for inventing SPC files
+  (even though I still think I came up with the idea for playing a sound save-
+  state first :)
+- TheGun and SailorStarFighter for some early betatesting (hi guys :)
+
+        --Butcha

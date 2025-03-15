@@ -98,7 +98,7 @@ endif()
 # without -fPIE. We add that here.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${QT_EXECUTABLE_CXX_FLAGS}")
 
-pge_qt_wrap_ui(UIS_HDRS
+set(PGE_MAINTAINER_UIS
     main_window.ui
     EpisodeCvt/episode_converter.ui
     EpisodeCvt/case_fixer.ui
@@ -107,8 +107,13 @@ pge_qt_wrap_ui(UIS_HDRS
     Graphics/png2gifs.ui
     Graphics/lazyfix.ui
     Graphics/palette_filter.ui
-    XTConvert/xt_convert.ui
 )
+
+if(PGE_BUILD_XTCONVERT)
+    list(APPEND PGE_MAINTAINER_UIS XTConvert/xt_convert.ui)
+endif()
+
+pge_qt_wrap_ui(UIS_HDRS ${PGE_MAINTAINER_UIS})
 
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/maintainer.qrc)
 pge_qt_add_resources(RESOURCE_ADDED ${RESOURCE})
@@ -136,12 +141,19 @@ list(APPEND PGE_MAINTAINER_SRCS
     Graphics/png2gifs.cpp
     Graphics/lazyfix.cpp
     Graphics/palette_filter.cpp
-    XTConvert/xt_convert.cpp
     ${UTF8MAIN_SRCS}
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
     ${QT_PLUGINS_CPP}
 )
+
+if(PGE_BUILD_XTCONVERT)
+    list(APPEND PGE_MAINTAINER_SRCS
+        XTConvert/xt_convert.cpp
+        XTConvert/xt_convert.h
+    )
+    add_definitions(-DPGE_ENABLE_XTCONVERT)
+endif()
 
 if(APPLE)
     add_definitions(-DQ_OS_MACX) # Workaround for MOC
@@ -170,6 +182,10 @@ add_dependencies(pge_maintainer
     moondust_translations
 ) # Needed for Qt to be linked
 
+if(PGE_BUILD_XTCONVERT)
+    add_dependencies(pge_maintainer libxtconvert)
+endif()
+
 add_library(PGE_Maintainer_QtLibs INTERFACE)
 
 # The Qt5Widgets_INCLUDES also includes the include directories for
@@ -186,8 +202,13 @@ target_compile_definitions(PGE_Maintainer_QtLibs
     -DPGE_FILES_QT
 )
 
+target_link_libraries(PGE_Maintainer_QtLibs INTERFACE ${QT_EXTRA_LIBS_PRE})
+
+if(PGE_BUILD_XTCONVERT)
+    target_link_libraries(PGE_Maintainer_QtLibs INTERFACE libxtconvert)
+endif()
+
 target_link_libraries(PGE_Maintainer_QtLibs INTERFACE
-    ${QT_EXTRA_LIBS_PRE}
     PGE_FileFormatsQt
     ${QT_LIBS_LIST}
     ${QT_EXTRA_LIBS}
@@ -287,12 +308,6 @@ if(APPLE)
     find_library(COREFOUNDATION_LIBRARY CoreFoundation)
     list(APPEND PGE_MAINTAINER_LINK_LIBS ${COREFOUNDATION_LIBRARY})
 endif()
-
-# libraries for XTConvert
-add_subdirectory(XTConvert)
-
-list(APPEND PGE_MAINTAINER_LINK_LIBS libxtconvert)
-add_dependencies(pge_maintainer libxtconvert)
 
 target_link_libraries(pge_maintainer
     ${PGE_MAINTAINER_LINK_LIBS}
