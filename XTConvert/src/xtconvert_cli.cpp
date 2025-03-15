@@ -72,6 +72,15 @@ int main(int argc, char** argv)
 
         cmd.parse(argc, argv);
 
+        if((argc <= 1) || !inputPath.isSet() || !outputPath.isSet())
+        {
+            fprintf(stderr, "\n"
+                    "ERROR: Missing input and output paths!\n"
+                    "Type \"%s --help\" to display usage.\n\n", argv[0]);
+            fflush(stdout);
+            return 2;
+        }
+
         if(switchMain.getValue())
             s.target_platform = XTConvert::TargetPlatform::Desktop;
 

@@ -201,6 +201,13 @@ add_executable(xtconvert_cli
 pge_set_nopie(xtconvert_cli)
 
 set_target_properties(xtconvert_cli PROPERTIES OUTPUT_NAME "xtconvert")
+if(WIN32)
+    set_target_properties(xtconvert_cli PROPERTIES WIN32_EXECUTABLE OFF)
+    if(MSVC)
+        target_compile_definitions(xtconvert_cli PRIVATE -DWIN32_CONSOLE)
+    endif()
+endif()
+
 target_link_libraries(xtconvert_cli PRIVATE libxtconvert PGE_XTConvert_QtLibs ${PGE_XTCONVERT_LINK_LIBS})
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
