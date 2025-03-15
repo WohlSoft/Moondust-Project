@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.5)
-project(libxtconvert CXX)
+project(libxtconvert CXX C)
 
 if(WIN32 AND "${TARGET_PROCESSOR}" STREQUAL "i386")
     set(BUILD_WITH_SSE OFF CACHE BOOL "" FORCE)
@@ -27,16 +27,16 @@ include_directories(
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
 # Default GIT version
-include(../../_common/git_version.cmake)
+include(../_common/git_version.cmake)
 # Common building properties and optimization flags
-include(../../_common/build_props.cmake)
+include(../_common/build_props.cmake)
 # Build properties for executable projects
-include(../../_common/executable_build_props.cmake)
+include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
-include(../../_common/static_qt.cmake)
+include(../_common/static_qt.cmake)
 
-include(../../_common/qt-modules/compat/pge_qt_compat.cmake)
-include(../../_common/Utf8Main/utf8main.cmake)
+include(../_common/qt-modules/compat/pge_qt_compat.cmake)
+include(../_common/Utf8Main/utf8main.cmake)
 
 if(PGE_USE_QT5)
     pge_cxx_standard(14)
@@ -90,17 +90,75 @@ add_library(libxtconvert
 add_dependencies(archive_static PGE_AudioCodecs)
 add_dependencies(libxtconvert archive_static lz4_pack_static libromfs3ds libtex3ds libmmutil FreeImage_Local PGE_FileFormatsQt SDLMixerX_Local SDL2_Local)
 
-target_include_directories(libxtconvert PRIVATE ${QT_INCLUDES_LIST})
-target_compile_definitions(libxtconvert PRIVATE ${QT_DEFS_LIST})
-target_link_libraries(libxtconvert PRIVATE ${QT_EXTRA_LIBS_PRE})
-target_link_libraries(libxtconvert PUBLIC archive_static lz4_pack_static libromfs3ds libtex3ds libmmutil PGE_FreeImage imagequant_a libspc2it PGE_FileFormatsQt)
-target_link_libraries(libxtconvert PRIVATE ${QT_LIBS_LIST} ${QT_EXTRA_LIBS})
+add_library(PGE_XTConvert_QtLibs INTERFACE)
+
+target_include_directories(PGE_XTConvert_QtLibs
+    INTERFACE
+    ${QT_INCLUDES_LIST}
+)
+
+target_compile_definitions(PGE_XTConvert_QtLibs
+    INTERFACE
+    ${QT_DEFS_LIST}
+    -DPGE_FILES_QT
+)
+
+target_link_libraries(PGE_XTConvert_QtLibs
+    INTERFACE
+    ${QT_EXTRA_LIBS_PRE}
+    archive_static
+    lz4_pack_static
+    libromfs3ds
+    libtex3ds
+    libmmutil
+    PGE_FreeImage
+    imagequant_a
+    libspc2it
+    PGE_FileFormatsQt
+    ${QT_LIBS_LIST}
+    ${QT_EXTRA_LIBS}
+)
+
+if(QT_PTHREAD)
+    target_link_libraries(PGE_XTConvert_QtLibs PRIVATE ${QT_PTHREAD})
+endif()
+
+set(PGE_XTCONVERT_LINK_LIBS)
+
+if(WIN32)
+    list(APPEND PGE_XTCONVERT_LINK_LIBS
+        version
+    )
+else()
+    if(UNIX AND NOT APPLE AND NOT HAIKU)
+        list(APPEND PGE_XTCONVERT_LINK_LIBS dl)
+    endif()
+endif()
+
+if(NOT EMSCRIPTEN AND NOT MSVC)
+    if(WIN32 AND NOT PGE_ENABLE_STATIC_QT)
+        list(APPEND PGE_XTCONVERT_LINK_LIBS "-static")
+    endif()
+    find_library(_LIB_PTHREAD pthread)
+    if(_LIB_PTHREAD)
+        list(APPEND PGE_XTCONVERT_LINK_LIBS ${_LIB_PTHREAD})
+    endif()
+endif()
+
+if(APPLE)
+    find_library(COREFOUNDATION_LIBRARY CoreFoundation)
+    list(APPEND PGE_XTCONVERT_LINK_LIBS ${COREFOUNDATION_LIBRARY})
+endif()
+
+target_link_libraries(libxtconvert PRIVATE PGE_XTConvert_QtLibs)
 
 if(PGE_STATIC_SDLMIXER)
     target_link_libraries(libxtconvert PUBLIC PGE_SDLMixerX_static PGE_SDL2_static)
 else()
     target_link_libraries(libxtconvert PUBLIC PGE_SDLMixerX PGE_SDL2)
 endif()
+
+target_link_libraries(libxtconvert PRIVATE ${PGE_XTCONVERT_LINK_LIBS})
 
 target_include_directories(libxtconvert PUBLIC include)
 target_include_directories(libxtconvert PRIVATE src)
@@ -109,7 +167,7 @@ set_target_properties(libxtconvert PROPERTIES OUTPUT_NAME "xtconvert")
 # XTConvert cli
 project(xtconvert_cli CXX)
 
-include(../../_common/tclap/tclap.cmake)
+include(../_common/tclap/tclap.cmake)
 
 include_directories(
     ${DEPENDENCIES_INSTALL_DIR}/include
@@ -123,8 +181,14 @@ add_executable(xtconvert_cli src/xtconvert_cli.cpp)
 pge_set_nopie(xtconvert_cli)
 
 set_target_properties(xtconvert_cli PROPERTIES OUTPUT_NAME "xtconvert")
-target_include_directories(xtconvert_cli PRIVATE ${QT_INCLUDES_LIST})
-target_compile_definitions(xtconvert_cli PRIVATE ${QT_DEFS_LIST})
-target_link_libraries(xtconvert_cli PRIVATE ${QT_EXTRA_LIBS_PRE})
-target_link_libraries(xtconvert_cli PUBLIC libxtconvert)
-target_link_libraries(xtconvert_cli PRIVATE ${QT_LIBS_LIST} ${QT_EXTRA_LIBS})
+target_link_libraries(xtconvert_cli PRIVATE libxtconvert PGE_XTConvert_QtLibs ${PGE_XTCONVERT_LINK_LIBS})
+
+string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
+if(${CMAKE_BUILD_TYPE_LOWER} STREQUAL "debug")
+    target_compile_definitions(libxtconvert PRIVATE -DDEBUG_BUILD)
+    target_compile_definitions(xtconvert_cli PRIVATE -DDEBUG_BUILD)
+endif()
+
+install(TARGETS xtconvert_cli
+    RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}"
+)
