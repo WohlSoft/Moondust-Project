@@ -37,6 +37,7 @@ include(../_common/static_qt.cmake)
 
 include(../_common/qt-modules/compat/pge_qt_compat.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
+include(../_common/tclap/tclap.cmake)
 
 if(PGE_USE_QT5)
     pge_cxx_standard(14)
@@ -88,7 +89,17 @@ add_library(libxtconvert
 )
 
 add_dependencies(archive_static PGE_AudioCodecs)
-add_dependencies(libxtconvert archive_static lz4_pack_static libromfs3ds libtex3ds libmmutil FreeImage_Local PGE_FileFormatsQt SDLMixerX_Local SDL2_Local)
+add_dependencies(libxtconvert
+    archive_static
+    lz4_pack_static
+    libromfs3ds
+    libtex3ds
+    libmmutil
+    FreeImage_Local
+    PGE_FileFormatsQt
+    SDLMixerX_Local
+    SDL2_Local
+)
 
 add_library(PGE_XTConvert_QtLibs INTERFACE)
 
@@ -167,17 +178,26 @@ set_target_properties(libxtconvert PROPERTIES OUTPUT_NAME "xtconvert")
 # XTConvert cli
 project(xtconvert_cli CXX)
 
-include(../_common/tclap/tclap.cmake)
-
 include_directories(
     ${DEPENDENCIES_INSTALL_DIR}/include
 )
+
+if(QT_IMPORT_PLUGINS_MODULE)
+    set(QT_PLUGINS_CPP "${CMAKE_BINARY_DIR}/pge_maintainer_plugins.cpp")
+    file(WRITE
+            "${QT_PLUGINS_CPP}"
+            "${QT_IMPORT_PLUGINS_MODULE}")
+endif()
 
 # Executables fail to build with Qt 5/6 in the default configuration
 # without -fPIE. We add that here.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${QT_EXECUTABLE_CXX_FLAGS}")
 
-add_executable(xtconvert_cli src/xtconvert_cli.cpp)
+add_executable(xtconvert_cli
+    src/xtconvert_cli.cpp
+    ${UTF8MAIN_SRCS}
+    ${QT_PLUGINS_CPP}
+)
 pge_set_nopie(xtconvert_cli)
 
 set_target_properties(xtconvert_cli PROPERTIES OUTPUT_NAME "xtconvert")
