@@ -36,12 +36,19 @@ function(add_libarchive_target)
     set(ENABLE_INSTALL OFF CACHE BOOL "" FORCE)
     set(ENABLE_WERROR OFF CACHE BOOL "" FORCE)
 
+    if(WIN32)
+        set(DISABLE_MKGMTIME ON CACHE BOOL "" FORCE)
+    endif()
+
     get_target_property(LZ4_INCLUDE_DIR lz4_static INTERFACE_INCLUDE_DIRECTORIES)
     set(LZ4_LIBRARY "$<TARGET_FILE:lz4_static>")
 
     add_subdirectory(3rdparty/libarchive EXCLUDE_FROM_ALL)
 
     add_dependencies(archive_static lz4_static)
+    if(WIN32)
+        target_compile_definitions(archive_static PRIVATE -D_WIN32_WINNT=0x0500)
+    endif()
 endfunction()
 
 add_libarchive_target()
