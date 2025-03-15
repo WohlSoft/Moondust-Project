@@ -16,10 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <locale>
+#include <iostream>
+#include <stdio.h>
+
+#include <Utf8Main/utf8main.h>
+#include <tclap/CmdLine.h>
 #include "libxtconvert.h"
 #include "version.h"
-#include <tclap/CmdLine.h>
-#include <Utf8Main/utf8main.h>
 
 int main(int argc, char** argv)
 {
