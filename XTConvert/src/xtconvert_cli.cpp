@@ -17,7 +17,9 @@
  */
 
 #include "libxtconvert.h"
+#include "version.h"
 #include <tclap/CmdLine.h>
+#include <Utf8Main/utf8main.h>
 
 int main(int argc, char** argv)
 {
@@ -26,9 +28,9 @@ int main(int argc, char** argv)
     try
     {
         // Define the command line object.
-        TCLAP::CmdLine  cmd("xtconvert\n"
+        TCLAP::CmdLine  cmd(V_FILE_DESC "\n"
                             "Copyright (c) 2024 ds-sloth\n"
-                            "This program is distributed under the GNU GPLv3+ license\n", ' ', "v1.0");
+                            "This program is distributed under the GNU GPLv3+ license\n", ' ', V_FILE_VERSION V_FILE_RELEASE);
 
         TCLAP::UnlabeledValueArg<std::string> inputPath("input-path",
                 "Path to input archive or directory",
@@ -57,7 +59,7 @@ int main(int argc, char** argv)
         switchDSi.hideFromHelp();
 
         TCLAP::OneOf target_platform;
-        target_platform.add(switchMain).add(switch3DS).add(switchWii).add(switchDSi);
+        target_platform.add(&switchMain).add(&switch3DS).add(&switchWii).add(&switchDSi);
 
         TCLAP::SwitchArg switchLegacyArchives("l", "legacy-archives", "For TheXTech v1.3.7: create a 7z archive (or romfs for 3DS) instead of ISO+LZ4", false);
 
