@@ -8,7 +8,9 @@
 #include <Graphics/palette_filter.h>
 #include <EpisodeCvt/episode_converter.h>
 #include <EpisodeCvt/case_fixer.h>
-#include <XTConvert/xt_convert.h>
+#ifdef PGE_ENABLE_XTCONVERT
+#   include <XTConvert/xt_convert.h>
+#endif
 #include <common_features/app_path.h>
 #include <QMessageBox>
 
@@ -36,6 +38,10 @@ MaintainerMain::MaintainerMain(QWidget *parent) :
                              AppPathManager::languagesDir(),
                              AppPathManager::settingsFile());
     m_translator.initTranslator();
+
+#ifndef PGE_ENABLE_XTCONVERT
+    ui->xt_convert->hide();
+#endif
 }
 
 MaintainerMain::~MaintainerMain()
@@ -131,6 +137,7 @@ void MaintainerMain::on_pathcase_fixer_clicked()
     this->show();
 }
 
+#ifdef PGE_ENABLE_XTCONVERT
 void MaintainerMain::on_xt_convert_clicked()
 {
     XTConvertUI xt_convert(nullptr);
@@ -140,3 +147,4 @@ void MaintainerMain::on_xt_convert_clicked()
     xt_convert.exec();
     this->show();
 }
+#endif
