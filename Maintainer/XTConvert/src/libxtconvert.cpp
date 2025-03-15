@@ -23,6 +23,7 @@
 #include <QDebug>
 
 #include <QString>
+#include <QFileInfo>
 #include <QDir>
 #include <QTemporaryDir>
 #include <QTemporaryFile>
@@ -47,6 +48,7 @@
 #include "libtex3ds.h"
 #include "spc2it.h"
 #include "mmutil.h"
+#include "misc.h"
 
 #include "graphics_load.h"
 #include "texconv.h"
@@ -463,7 +465,9 @@ public:
             return true;
         }
 
-        QString filename_stem = filename.chopped(4);
+        const QFileInfo fileInfo(filename);
+        const QFileInfo outPathInfo(out_path);
+        QString filename_stem = fileInfo.baseName();
 
         QString filename_type, filename_index, filename_dir;
         bool exceeds_max_GIF = false;
@@ -589,7 +593,7 @@ public:
                     m_temp_dir.mkdir(fallback_mask_path);
 
                 // append filename
-                fallback_mask_path += filename.chopped(4) + "m.gif";
+                fallback_mask_path += fileInfo.baseName() + "m.gif";
 
                 // don't clobber a version copied from the original fallback folder
                 if(!QFileInfo::exists(fallback_mask_path))
@@ -679,7 +683,7 @@ public:
 
             if(save_success && mask)
             {
-                QString mask_out_path = out_path.chopped(4) + "m.gif";
+                QString mask_out_path = outPathInfo.baseName() + "m.gif";
 
                 if(!mask_path.isEmpty() && image_w == orig_w)
                     save_success = QFile::copy(mask_path, mask_out_path);
@@ -696,7 +700,7 @@ public:
         {
             // break these into their own functions
 
-            used_out_path = out_path.chopped(4) + ".t3x";
+            used_out_path = outPathInfo.baseName() + ".t3x";
 
             FreeImage_FlipVertical(image);
 
@@ -752,7 +756,7 @@ public:
         }
         else if(output_format == TargetPlatform::TPL)
         {
-            used_out_path = out_path.chopped(4) + ".tpl";
+            used_out_path = outPathInfo.baseName() + ".tpl";
 
             FreeImage_FlipVertical(image);
 
@@ -841,7 +845,7 @@ public:
         }
         else if(output_format == TargetPlatform::DSG)
         {
-            used_out_path = out_path.chopped(4) + ".dsg";
+            used_out_path = outPathInfo.baseName() + ".dsg";
 
             int flags = 0;
 
@@ -2042,7 +2046,7 @@ public:
                 archive_entry_set_pathname(entry, rel_path.toUtf8().data());
                 archive_entry_set_size(entry, got.size());
                 archive_entry_set_filetype(entry, AE_IFREG);
-                archive_entry_set_mtime(entry, file.fileTime(QFileDevice::FileModificationTime).toSecsSinceEpoch(), 0);
+                archive_entry_set_mtime(entry, getFileTime(file), 0);
                 archive_entry_set_perm(entry, 0755);
 
                 int r = archive_write_header(package, entry);
