@@ -22,12 +22,19 @@ if(EMSCRIPTEN)
     set(AUDIOCODECS_EMSCRIPTEN_CMAKE_FLAGS -DADLMIDI_USE_DOSBOX_EMULATOR=ON)
 endif()
 
+set(AUDIO_CODECS_BUILD_ARGS)
 set(AudioCodecs_Deps)
+
 if(NOT SDL2_USE_SYSTEM)
     list(APPEND AudioCodecs_Deps SDL2_Local)
-    set(AudioCodecs_SDL2Flag "-DSDL2_REPO_PATH=${DEPENDENCIES_INSTALL_DIR}")
-else()
-    unset(AudioCodecs_SDL2Flag)
+    list(APPEND AUDIO_CODECS_BUILD_ARGS "-DSDL2_REPO_PATH=${DEPENDENCIES_INSTALL_DIR}")
+endif()
+
+if(WIN32 AND "${TARGET_PROCESSOR}" STREQUAL "i386")
+    # Disable SIMD on 32-bit Windows architecture to allow running on old computers
+    list(APPEND AUDIO_CODECS_BUILD_ARGS
+        -DDISABLE_SIMD=ON
+    )
 endif()
 
 set(AudioCodecs_Libs
@@ -59,12 +66,12 @@ ExternalProject_Add(
         "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
         "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
         "-DCMAKE_CONFIGURATION_TYPES=${CMAKE_CONFIGURATION_TYPES}"
-        ${AudioCodecs_SDL2Flag}
         "-DCMAKE_DEBUG_POSTFIX=${PGE_LIBS_DEBUG_SUFFIX}"
         "-DBUILD_OGG_VORBIS=OFF"
         "-DBUILD_FLAC=OFF"
         "-DBUILD_MPG123=OFF"
         "-DBUILD_WAVPACK=OFF"
+        ${AUDIO_CODECS_BUILD_ARGS}
         ${ANDROID_CMAKE_FLAGS}
         ${APPLE_CMAKE_FLAGS}
         ${AUDIOCODECS_EMSCRIPTEN_CMAKE_FLAGS}

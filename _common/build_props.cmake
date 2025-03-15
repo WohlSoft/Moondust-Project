@@ -13,9 +13,11 @@ endif()
 
 # =========================== Architecture info ===============================
 
-include(${CMAKE_CURRENT_LIST_DIR}/TargetArch.cmake)
-target_architecture(TARGET_PROCESSOR)
-message(STATUS "Target architecture: ${TARGET_PROCESSOR}")
+if(NOT DEFINED TARGET_PROCESSOR)
+    include(${CMAKE_CURRENT_LIST_DIR}/TargetArch.cmake)
+    target_architecture(TARGET_PROCESSOR)
+    message(STATUS "Target architecture: ${TARGET_PROCESSOR}")
+endif()
 
 test_big_endian(MOONDUST_IS_BIG_ENDIAN)
 if(MOONDUST_IS_BIG_ENDIAN)
