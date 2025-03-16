@@ -51,7 +51,7 @@ time_t getFileTime(const QFile &f)
     struct stat attr;
     QString fName = f.fileName();
     stat(fName.toStdString().c_str(), &attr);
-    fileTime = ctime(&attr.st_mtime);
+    fileTime = attr.st_mtime;
 #endif
 
     return fileTime;
