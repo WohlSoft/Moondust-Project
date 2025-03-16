@@ -253,7 +253,7 @@ do
         repair-submodules)
             PATH=${PATH}:$PWD/_common
             echo "=== Cleaning-up old state..."
-            git submodule foreach 'pwd; rm -Rf * .git*;'
+            git submodule foreach 'pwd; rm -Rf * .*;'
             echo "=== Fetching new submodules..."
             git submodule init
             git submodule update

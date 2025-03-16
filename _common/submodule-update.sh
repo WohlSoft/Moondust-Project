@@ -1,7 +1,7 @@
 #!/bin/bash
 
 reponame=$(basename `git rev-parse --show-toplevel`)
-dstbranch=$(git branch | sed -n 's/^\* //p')
+dstbranch=$(git symbolic-ref refs/remotes/origin/HEAD --short | sed -n 's/origin\///p')
 echo "-----------------------------------"
 echo "Updating repo $reponame, branch $dstbranch"
 
