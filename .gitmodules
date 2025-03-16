@@ -1,13 +1,11 @@
 [submodule "_common/PGE_File_Formats"]
-    path = _common/PGE_File_Formats
-    url = https://github.com/WohlSoft/PGE-File-Library-STL.git
-    branch = master
-
+	path = _common/PGE_File_Formats
+	url = https://github.com/WohlSoft/PGE-File-Library-STL.git
+	branch = master
 [submodule "_Libs/FreeImage"]
 	path = _Libs/FreeImage
 	url = https://github.com/WohlSoft/libFreeImage.git
-    branch = master
-
+	branch = master
 [submodule "_Libs/AudioCodecs"]
 	path = _Libs/AudioCodecs
 	url = https://github.com/WohlSoft/AudioCodecs.git
