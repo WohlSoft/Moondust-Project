@@ -1211,7 +1211,7 @@ BOOL StackWalker::ShowCallstack(HANDLE hThread, const CONTEXT *context, PReadPro
                 if(this->m_sw->pSGLFA(this->m_hProcess, s.AddrPC.Offset, &(csEntry.offsetFromLine), &Line) != FALSE)
                 {
                     csEntry.lineNumber = Line.LineNumber;
-                    MyStrCpy(csEntry.lineFileName, STACKWALK_MAX_NAMELEN, Line.FileName);
+                    MyStrCpy(csEntry.lineFileName, STACKWALK_MAX_NAMELEN - 1, Line.FileName);
                 }
                 else
                 {
