@@ -41,8 +41,9 @@ TipOfDay::TipOfDay(QString language, QWidget* parent) :
     else // Fallback to English
         ftips.setFileName(":/tips/tips_en.html");
 
-    ftips.open(QIODevice::ReadOnly | QIODevice::Text);
     QTextStream ts(&ftips);
+    ts.setCodec("UTF-8");
+    ftips.open(QIODevice::ReadOnly | QIODevice::Text);
     QString allTipsRaw = ts.readAll();
     ftips.close();
 
