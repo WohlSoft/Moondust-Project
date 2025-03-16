@@ -51,21 +51,28 @@
 [submodule "XTConvert/tex3ds"]
 	path = XTConvert/3rdparty/tex3ds
 	url = https://github.com/WohlSoft/xtconvert-tex3ds.git
-[submodule "XTConvert/3dstools"]
+	branch = master
+[submodule "XTConvert/3rdparty/3dstools"]
 	path = XTConvert/3rdparty/3dstools
 	url = https://github.com/WohlSoft/xtconvert-3dstools.git
-[submodule "XTConvert/libimagequant"]
+	branch = master
+[submodule "XTConvert/3rdparty/libimagequant"]
 	path = XTConvert/3rdparty/libimagequant
 	url = https://github.com/WohlSoft/xtconvert-libimagequant.git
-[submodule "XTConvert/libarchive"]
+	branch = 2.x
+[submodule "XTConvert/3rdparty/libarchive"]
 	path = XTConvert/3rdparty/libarchive
 	url = https://github.com/WohlSoft/xtconvert-libarchive.git
-[submodule "XTConvert/mbediso"]
+	branch = master
+[submodule "XTConvert/3rdparty/mbediso"]
 	path = XTConvert/3rdparty/mbediso
-	url = https://github.com/ds-sloth/mbediso.git
-[submodule "XTConvert/spc2it"]
+	url = https://github.com/WohlSoft/mbediso.git
+	branch = main
+[submodule "XTConvert/3rdparty/spc2it"]
 	path = XTConvert/3rdparty/spc2it
-	url = https://github.com/ds-sloth/spc2it.git
-[submodule "XTConvert/mmutil"]
+	url = https://github.com/WohlSoft/spc2it.git
+	branch = master
+[submodule "XTConvert/3rdparty/mmutil"]
 	path = XTConvert/3rdparty/mmutil
-	url = https://github.com/ds-sloth/mmutil.git
+	url = https://github.com/WohlSoft/mmutil.git
+	branch = master
