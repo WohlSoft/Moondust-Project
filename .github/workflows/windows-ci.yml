@@ -35,7 +35,9 @@ jobs:
             qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.15.10-x64-mingw-w64-13.1.0-shared-release.7z", qt_install_dir: "C:/Qt/",
             qt_dir: "C:/Qt/5.15.10-x64/bin",
             ninja_download: "https://wohlsoft.ru/docs/Software/Ninja-Build/ninja-win.zip", ninja_install_dir: "C:/MinGW-w64/mingw64/bin",
-            lftp_download: "https://wohlsoft.ru/docs/Software/lftp-4.4.15.win64-openssl-1.0.1g.7z", lftp_install_dir: "C:/MinGW-w64/mingw64/"
+            lftp_download: "https://wohlsoft.ru/docs/Software/lftp-4.4.15.win64-openssl-1.0.1g.7z", lftp_install_dir: "C:/MinGW-w64/mingw64/",
+            libxz_download: "https://wohlsoft.ru/docs/Software/MinGW/mingw-w64-x86_64-xz-5.6.4-1-any.7z", libxz_install_dir: "C:/MinGW-w64/mingw64/",
+            libgnurx_download: "https://wohlsoft.ru/docs/Software/MinGW/mingw-w64-x86_64-libgnurx-2.5.1-3-any.7z", libgnurx_install_dir: "C:/MinGW-w64/mingw64/"
           }
         - {
             name: "32-bit",
@@ -50,7 +52,9 @@ jobs:
             qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.6.3-i686-mingw-w64-12.2.0-shared-release.7z", qt_install_dir: "C:/Qt/",
             qt_dir: "C:/Qt/5.6.3-i686/bin",
             ninja_download: "https://wohlsoft.ru/docs/Software/Ninja-Build/ninja-win.zip", ninja_install_dir: "C:/MinGW-w64/mingw32/bin",
-            lftp_download: "https://wohlsoft.ru/docs/Software/lftp-4.4.15.win64-openssl-1.0.1g.7z", lftp_install_dir: "C:/MinGW-w64/mingw32/"
+            lftp_download: "https://wohlsoft.ru/docs/Software/lftp-4.4.15.win64-openssl-1.0.1g.7z", lftp_install_dir: "C:/MinGW-w64/mingw32/",
+            libxz_download: "https://wohlsoft.ru/docs/Software/MinGW/mingw-w64-i686-xz-5.6.4-1-any.7z", libxz_install_dir: "C:/MinGW-w64/mingw32/",
+            libgnurx_download: "https://wohlsoft.ru/docs/Software/MinGW/mingw-w64-i686-libgnurx-2.5.1-3-any.7z", libgnurx_install_dir: "C:/MinGW-w64/mingw32/"
           }
 
     steps:
@@ -97,6 +101,32 @@ jobs:
       shell: bash
       run: |
         7z x mingw.7z -o"${{ matrix.config.mingw_install_dir }}"
+
+    - name: Download libxz
+      if: matrix.config.libxz_download
+      uses: carlosperate/download-file-action@v2
+      with:
+        file-url: "${{ matrix.config.libxz_download }}"
+        file-name: libxz.7z
+
+    - name: Extract libxz
+      if: matrix.config.libxz_install_dir
+      shell: bash
+      run: |
+        7z x libxz.7z bin etc -o"${{ matrix.config.libxz_install_dir }}"
+
+    - name: Download libgnurx
+      if: matrix.config.libgnurx_download
+      uses: carlosperate/download-file-action@v2
+      with:
+        file-url: "${{ matrix.config.libgnurx_download }}"
+        file-name: libgnurx.7z
+
+    - name: Extract libgnurx
+      if: matrix.config.libgnurx_install_dir
+      shell: bash
+      run: |
+        7z x libgnurx.7z bin etc -o"${{ matrix.config.libgnurx_install_dir }}"
 
     - name: Download Qt
       if: matrix.config.qt_download
