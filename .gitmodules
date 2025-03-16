@@ -49,11 +49,11 @@
 [submodule "XTConvert/tex3ds"]
 	path = XTConvert/3rdparty/tex3ds
 	url = https://github.com/WohlSoft/xtconvert-tex3ds.git
-	branch = master
+	branch = libtex3ds
 [submodule "XTConvert/3dstools"]
 	path = XTConvert/3rdparty/3dstools
 	url = https://github.com/WohlSoft/xtconvert-3dstools.git
-	branch = master
+	branch = libromfs3ds
 [submodule "XTConvert/libimagequant"]
 	path = XTConvert/3rdparty/libimagequant
 	url = https://github.com/WohlSoft/xtconvert-libimagequant.git
@@ -61,7 +61,7 @@
 [submodule "XTConvert/libarchive"]
 	path = XTConvert/3rdparty/libarchive
 	url = https://github.com/WohlSoft/xtconvert-libarchive.git
-	branch = master
+	branch = fix-iso-filenames
 [submodule "XTConvert/mbediso"]
 	path = XTConvert/3rdparty/mbediso
 	url = https://github.com/WohlSoft/mbediso.git
