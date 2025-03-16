@@ -25,7 +25,7 @@
 [submodule "_Libs/LuaJIT"]
 	path = _Libs/LuaJIT
 	url = https://github.com/WohlSoft/LuaJIT.git
-	branch = 2.1
+	branch = v2.1
 [submodule "_Libs/libjpeg"]
 	path = _Libs/libjpeg
 	url = https://github.com/WohlSoft/libjpeg.git
