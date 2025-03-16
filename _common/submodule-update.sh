@@ -33,3 +33,16 @@ echo "Updating repo $reponame (path=$repo_path), branch $dstbranch"
 
 git checkout $dstbranch
 git pull origin $dstbranch
+
+if [[ -f .gitmodules ]]; then
+    echo "========================================="
+    echo "Running recursive submodule sync..."
+    echo "========================================="
+    git submodule init
+    git submodule update
+    echo ""
+    git submodule foreach submodule-update.sh "$PWD/.gitmodules"
+    echo "========================================="
+    echo "Exiting recursive scan of the $reponame's submodules!"
+    echo "========================================="
+fi
