@@ -282,6 +282,20 @@ endif()
 
 # ================================ Tweaks ====================================
 
+if(WIN32)
+    add_definitions(-DWINVER=0x0501 -D_WIN32_WINNT=0x0501)
+endif()
+
+# Get rid of the rest of SIMD on 32bit Windows (Maintain compatibility with Pentium III and older processors)
+if(WIN32 AND "${TARGET_PROCESSOR}" STREQUAL "i386")
+    pge_add_opt_flag("-mno-sse2" FLAG_NO_SSE2)
+    pge_add_opt_flag("-mno-sse3" FLAG_NO_SSE3)
+    pge_add_opt_flag("-mno-mmx" FLAG_NO_MMX)
+    pge_add_opt_flag("-mno-3dnow" FLAG_NO_3DNOW)
+    pge_add_opt_flag("-mno-avx2" FLAG_NO_AVX2)
+    pge_add_opt_flag("-mfpmath=387" FLAG_FPMATH387)
+endif()
+
 # -fPIC thing
 if(LIBRARY_PROJECT AND NOT WIN32)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
