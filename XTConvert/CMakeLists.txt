@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.5)
+cmake_minimum_required (VERSION 3.5...3.10)
 project(libxtconvert CXX C)
 
 if(WIN32 AND "${TARGET_PROCESSOR}" STREQUAL "i386")
