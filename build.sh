@@ -241,7 +241,7 @@ do
             ;;
         update-submodules)
             PATH=${PATH}:$PWD/_common
-            git submodule foreach submodule-update.sh
+            git submodule foreach submodule-update.sh "$PWD/.gitmodules"
 
             # EXTRA update Java files of Android project
             printf "\n\n"
@@ -253,12 +253,12 @@ do
         repair-submodules)
             PATH=${PATH}:$PWD/_common
             echo "=== Cleaning-up old state..."
-            git submodule foreach 'pwd; rm -Rf * .git*;'
+            git submodule foreach 'pwd; rm -Rf * .*;'
             echo "=== Fetching new submodules..."
             git submodule init
             git submodule update
             echo ""
-            git submodule foreach submodule-update.sh
+            git submodule foreach submodule-update.sh "$PWD/.gitmodules"
             echo ""
             echo "==== Fixed! ===="
             exit 0;

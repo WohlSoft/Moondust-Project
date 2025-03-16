@@ -188,6 +188,21 @@ else()
         set(SDL2_EMSCRIPTEN_CMAKE_FLAGS "-DEXTRA_CFLAGS=-s USE_PTHREADS=1" -DPTHREADS=ON -DPTHREADS_SEM=ON)
     endif()
 
+    set(SDL2_CMAKE_NOSIMD_FLAGS)
+    if(WIN32 AND "${TARGET_PROCESSOR}" STREQUAL "i386")
+        set(SDL2_CMAKE_NOSIMD_FLAGS
+            "-DSDL_SSEMATH=OFF"
+            "-DSDL_SSE=OFF"
+            "-DSDL_SSE2=OFF"
+            "-DSDL_SSE3=OFF"
+            "-DSDL_MMX=OFF"
+            "-DSDL_3DNOW=OFF"
+            "-DSDL_ALTIVEC=OFF"
+            "-DSDL_ARMSIMD=OFF"
+            "-DSDL_ARMNEON=OFF"
+        )
+    endif()
+
     ExternalProject_Add(
         SDL2_Local
         PREFIX ${CMAKE_BINARY_DIR}/external/SDL2
@@ -210,6 +225,7 @@ else()
             # $<$<BOOL:WIN32>:-DWASAPI=OFF>  #For some experiment, enable WASAPI support
             ${SDL2_WIN32_CMAKE_FLAGS}
             ${SDL2_LINUX_CMAKE_FLAGS}
+            ${SDL2_CMAKE_NOSIMD_FLAGS}
             ${SDL2_ANDROID_CMAKE_FLAGS}
             ${ANDROID_CMAKE_FLAGS}
             ${SDL2_EMSCRIPTEN_CMAKE_FLAGS}

@@ -23,6 +23,10 @@ else()
     set(PGE_ARCHITECTURE_BITS "unk")
 endif()
 
+include(${CMAKE_CURRENT_LIST_DIR}/TargetArch.cmake)
+target_architecture(TARGET_PROCESSOR)
+message(STATUS "Target architecture: ${TARGET_PROCESSOR}")
+
 # Date and time when build was initiated
 string(TIMESTAMP MOONDUST_DATETIME "%Y-%m-%d %H:%m:%S UTC" UTC)
 # Keep this string being fixed to don't lead unfair rebuilds during local debugs
