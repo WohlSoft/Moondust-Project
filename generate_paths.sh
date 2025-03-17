@@ -80,28 +80,38 @@ if ! $PREFER_STATIC; then
                5.12 5.12.0 5.12.1 5.12.2 5.12.3 5.12.4 5.12.5 5.12.6 5.12.7 5.12.8 5.12.9 5.12.10 5.12.11 5.12.12 \
                5.13 5.13.0 5.13.1 5.13.2 5.13.3 5.13.4 \
                5.14 5.14.0 5.14.1 5.14.2 5.14.3 5.14.4 5.14.5 5.14.6 5.14.7 5.14.8 5.14.9 5.14.10 5.14.11 5.14.12 \
-               5.15 5.15.0 5.15.1 5.15.2 5.15.3 5.15.4 5.15.5 5.15.6 5.15.7 5.15.8 5.15.9 5.15.10 5.15.11 5.15.12
+               5.15 5.15.0 5.15.1 5.15.2 5.15.3 5.15.4 5.15.5 5.15.6 5.15.7 5.15.8 5.15.9 5.15.10 5.15.11 5.15.12 \
+               5.15.14 5.15.15 5.15.16 5.15.17 5.15.18 5.15.19 5.15.20 5.15.21 5.15.22 5.15.23 5.15.24 5.15.25
     do
-        if [[ -f /opt/Qt/$var/$GCC_ARCH/bin/qmake ]]; then
-            QT_VERSION=$var/$GCC_ARCH
-            QT_PATH=~/Qt/$QT_VERSION/bin/
-            QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
-            AUTODETECTED=true
-        elif [[ -f ~/Qt/$var/$GCC_ARCH/bin/qmake ]]; then
-            QT_VERSION=$var/$GCC_ARCH
-            QT_PATH=~/Qt/$QT_VERSION/bin/
-            QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
-            AUTODETECTED=true
-        elif [[ -f /opt/Qt/$var/$CLANG_ARCH/bin/qmake ]]; then
-            QT_VERSION=$var/$CLANG_ARCH
-            QT_PATH=~/Qt/$QT_VERSION/bin/
-            QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
-            AUTODETECTED=true
-        elif [[ -f ~/Qt/$var/$CLANG_ARCH/bin/qmake ]]; then
-            QT_VERSION=$var/$CLANG_ARCH
-            QT_PATH=~/Qt/$QT_VERSION/bin/
-            QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
-            AUTODETECTED=true
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            if [[ -f /usr/local/Cellar/qt@5/$var/bin/qmake ]]; then
+                    QT_VERSION=$var
+                    QT_PATH=/usr/local/Cellar/qt@5/$QT_VERSION/bin
+                    QT_LIB_PATH=/usr/local/Cellar/qt@5/$QT_VERSION/lib
+                    AUTODETECTED=true
+            fi
+        else
+            if [[ -f /opt/Qt/$var/$GCC_ARCH/bin/qmake ]]; then
+                QT_VERSION=$var/$GCC_ARCH
+                QT_PATH=~/opt/Qt/$QT_VERSION/bin
+                QT_LIB_PATH=/opt/Qt/$QT_VERSION/lib
+                AUTODETECTED=true
+            elif [[ -f ~/Qt/$var/$GCC_ARCH/bin/qmake ]]; then
+                QT_VERSION=$var/$GCC_ARCH
+                QT_PATH=~/Qt/$QT_VERSION/bin
+                QT_LIB_PATH=~/Qt/$QT_VERSION/lib
+                AUTODETECTED=true
+            elif [[ -f /opt/Qt/$var/$CLANG_ARCH/bin/qmake ]]; then
+                QT_VERSION=$var/$CLANG_ARCH
+                QT_PATH=/opt/Qt/$QT_VERSION/bin
+                QT_LIB_PATH=/opt/Qt/$QT_VERSION/lib
+                AUTODETECTED=true
+            elif [[ -f ~/Qt/$var/$CLANG_ARCH/bin/qmake ]]; then
+                QT_VERSION=$var/$CLANG_ARCH
+                QT_PATH=~/Qt/$QT_VERSION/bin
+                QT_LIB_PATH=~/Qt/$QT_VERSION/lib
+                AUTODETECTED=true
+            fi
         fi
     done
 fi
@@ -118,12 +128,13 @@ if [[ $PREFER_SHARED == false && $AUTODETECTED == false ]]; then
                5.12 5.12.0 5.12.1 5.12.2 5.12.3 5.12.4 5.12.5 5.12.6 5.12.7 5.12.8 5.12.9 5.12.10 5.12.11 5.12.12 \
                5.13 5.13.0 5.13.1 5.13.2 5.13.3 5.13.4 \
                5.14 5.14.0 5.14.1 5.14.2 5.14.3 5.14.4 5.14.5 5.14.6 5.14.7 5.14.8 5.14.9 5.14.10 5.14.11 5.14.12 \
-               5.15 5.15.0 5.15.1 5.15.2 5.15.3 5.15.4 5.15.5 5.15.6 5.15.7 5.15.8 5.15.9 5.15.10 5.15.11 5.15.12
+               5.15 5.15.0 5.15.1 5.15.2 5.15.3 5.15.4 5.15.5 5.15.6 5.15.7 5.15.8 5.15.9 5.15.10 5.15.11 5.15.12 \
+               5.15.14 5.15.15 5.15.16 5.15.17 5.15.18 5.15.19 5.15.20 5.15.21 5.15.22 5.15.23 5.15.24 5.15.25
     do
         if [[ -f ~/Qt/${var}_static/bin/qmake ]]; then
             QT_VERSION=${var}_static
-            QT_PATH=~/Qt/$QT_VERSION/bin/
-            QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
+            QT_PATH=~/Qt/$QT_VERSION/bin
+            QT_LIB_PATH=~/Qt/$QT_VERSION/lib
             AUTODETECTED=true
             STATIC_QT=true
         fi
@@ -132,36 +143,36 @@ fi
 
 if [[ "$OSTYPE" == "msys"* ]]; then
     if [[ $PREFER_STATIC == false && -f "${MSYSTEM_PREFIX}/bin/qmake" ]]; then
-        QT_VERSION="${MSYSTEM_PREFIX:1}/"
-        QT_PATH="${MSYSTEM_PREFIX}/bin/"
-        QT_LIB_PATH="${MSYSTEM_PREFIX}/lib/"
+        QT_VERSION="${MSYSTEM_PREFIX:1}"
+        QT_PATH="${MSYSTEM_PREFIX}/bin"
+        QT_LIB_PATH="${MSYSTEM_PREFIX}/lib"
         AUTODETECTED=true
     elif [[ $PREFER_SHARED == false && -f "${MSYSTEM_PREFIX}/qt5-static/bin/qmake" ]]; then
         QT_VERSION="${MSYSTEM_PREFIX:1}/qt5-static"
-        QT_PATH="${MSYSTEM_PREFIX}/qt5-static/bin/"
-        QT_LIB_PATH="${MSYSTEM_PREFIX}/qt5-static/lib/"
+        QT_PATH="${MSYSTEM_PREFIX}/qt5-static/bin"
+        QT_LIB_PATH="${MSYSTEM_PREFIX}/qt5-static/lib"
         AUTODETECTED=true
         STATIC_QT=true
     elif [[ $PREFER_STATIC == false && -f /mingw64/bin/qmake ]]; then
         QT_VERSION=mingw64/qt5
-        QT_PATH=/mingw64/qt5/bin/
-        QT_LIB_PATH=/mingw64/qt5/lib/
+        QT_PATH=/mingw64/qt5/bin
+        QT_LIB_PATH=/mingw64/qt5/lib
         AUTODETECTED=true
     elif [[ $PREFER_SHARED == false && -f /mingw64/qt5-static/bin/qmake ]]; then
         QT_VERSION=mingw64/qt5-static
-        QT_PATH=/mingw64/qt5-static/bin/
-        QT_LIB_PATH=/mingw64/qt5-static/lib/
+        QT_PATH=/mingw64/qt5-static/bin
+        QT_LIB_PATH=/mingw64/qt5-static/lib
         AUTODETECTED=true
         STATIC_QT=true
     elif [[ $PREFER_STATIC == false && -f /mingw32/bin/qmake ]]; then
         QT_VERSION=mingw32/qt5
-        QT_PATH=/mingw32/qt5/bin/
-        QT_LIB_PATH=/mingw32/qt5/lib/
+        QT_PATH=/mingw32/qt5/bin
+        QT_LIB_PATH=/mingw32/qt5/lib
         AUTODETECTED=true
     elif [[ $PREFER_SHARED == false && -f /mingw32/qt5-static/bin/qmake ]]; then
         QT_VERSION=mingw32/qt5-static
-        QT_PATH=/mingw32/qt5-static/bin/
-        QT_LIB_PATH=/mingw32/qt5-static/lib/
+        QT_PATH=/mingw32/qt5-static/bin
+        QT_LIB_PATH=/mingw32/qt5-static/lib
         AUTODETECTED=true
         STATIC_QT=true
     fi
@@ -172,9 +183,9 @@ for var in "$@"
 do
     case "$var" in
         silent)
-                OPEN_GEDIT=false
-                AUTODETECTED=false
-            ;;
+            OPEN_GEDIT=false
+            AUTODETECTED=false
+        ;;
     esac
 done
 
