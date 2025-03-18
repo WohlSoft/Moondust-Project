@@ -113,7 +113,7 @@ jobs:
       if: matrix.config.libxz_install_dir
       shell: bash
       run: |
-        7z x libxz.7z bin etc -o"${{ matrix.config.libxz_install_dir }}"
+        7z x libxz.7z bin lib include -o"${{ matrix.config.libxz_install_dir }}"
 
     - name: Download libgnurx
       if: matrix.config.libgnurx_download
@@ -126,7 +126,7 @@ jobs:
       if: matrix.config.libgnurx_install_dir
       shell: bash
       run: |
-        7z x libgnurx.7z bin etc -o"${{ matrix.config.libgnurx_install_dir }}"
+        7z x libgnurx.7z bin lib include -o"${{ matrix.config.libgnurx_install_dir }}"
 
     - name: Download Qt
       if: matrix.config.qt_download
