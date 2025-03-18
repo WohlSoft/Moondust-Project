@@ -61,17 +61,8 @@ set(QT_EXECUTABLE_CXX_FLAGS
     ${QT_Core_EXECUTABLE_COMPILE_FLAGS}
 )
 
-add_subdirectory(3rdparty/mbediso EXCLUDE_FROM_ALL)
-add_subdirectory(3rdparty/3dstools EXCLUDE_FROM_ALL)
-add_subdirectory(3rdparty/tex3ds EXCLUDE_FROM_ALL)
-add_subdirectory(3rdparty/libimagequant EXCLUDE_FROM_ALL)
-add_subdirectory(3rdparty/spc2it EXCLUDE_FROM_ALL)
-add_subdirectory(3rdparty/mmutil EXCLUDE_FROM_ALL)
-
 set(ZLIB_INCLUDE_DIR ${ZLIB_INCLUDE_DIRS})
 set(ZLIB_LIBRARY ${libZLib_A_Lib})
-
-include(cmake/build_libarchive.cmake)
 
 qt5_add_resources(LIBXTCONVERT_RES "${CMAKE_CURRENT_SOURCE_DIR}/_resources/libxtconvert.qrc")
 
@@ -88,14 +79,15 @@ add_library(libxtconvert
     src/json.hpp src/qoa.h
 )
 
-add_dependencies(archive_static PGE_AudioCodecs)
 add_dependencies(libxtconvert
-    archive_static
-    lz4_pack_static
-    libromfs3ds
-    libtex3ds
-    libmmutil
+    PGE_libarchive
+    PGE_liblz4
+    PGE_lib3dstools
+    PGE_libtex3ds
+    PGE_libmmutil
     FreeImage_Local
+    PGE_libimagequant
+    PGE_libspc2it
     PGE_FileFormatsQt
     SDLMixerX_Local
     SDL2_Local
@@ -117,14 +109,14 @@ target_compile_definitions(PGE_XTConvert_QtLibs
 target_link_libraries(PGE_XTConvert_QtLibs
     INTERFACE
     ${QT_EXTRA_LIBS_PRE}
-    archive_static
-    lz4_pack_static
-    libromfs3ds
-    libtex3ds
-    libmmutil
+    PGE_libarchive
+    PGE_liblz4
+    PGE_lib3dstools
+    PGE_libtex3ds
+    PGE_libmmutil
     PGE_FreeImage
-    imagequant_a
-    libspc2it
+    PGE_libimagequant
+    PGE_libspc2it
     PGE_FileFormatsQt
     ${QT_LIBS_LIST}
     ${QT_EXTRA_LIBS}

@@ -40,12 +40,12 @@ function(add_libarchive_target)
         set(DISABLE_MKGMTIME ON CACHE BOOL "" FORCE)
     endif()
 
-    get_target_property(LZ4_INCLUDE_DIR lz4_static INTERFACE_INCLUDE_DIRECTORIES)
-    set(LZ4_LIBRARY "$<TARGET_FILE:lz4_static>")
+    get_target_property(LZ4_INCLUDE_DIR PGE_liblz4 INTERFACE_INCLUDE_DIRECTORIES)
+    set(LZ4_LIBRARY "${liblz4_A_Lib}")
 
     add_subdirectory(3rdparty/libarchive EXCLUDE_FROM_ALL)
 
-    add_dependencies(archive_static lz4_static)
+    add_dependencies(archive_static PGE_liblz4 libmbediso_Local)
     if(WIN32)
         target_compile_definitions(archive_static PRIVATE -D_WIN32_WINNT=0x0500)
     endif()
