@@ -12,6 +12,7 @@ add_custom_target(create_dmg
         --app-drop-link 450 320
         --subfolder-name "Moondust Project"
         --no-internet-enable
+        --hdiutil-verbose
         "${CMAKE_INSTALL_PREFIX}/pge-project-${PACKAGE_SUFFIX}-macosx.dmg"
         "${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY}/"
         COMMENT "Packing DMG..."
