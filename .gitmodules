@@ -46,31 +46,31 @@
 	path = _Libs/FileMapper
 	url = https://github.com/WohlSoft/FileMapper.git
 	branch = master
-[submodule "XTConvert/tex3ds"]
-	path = XTConvert/3rdparty/tex3ds
+[submodule "_Libs/tex3ds"]
+	path = _Libs/tex3ds
 	url = https://github.com/WohlSoft/xtconvert-tex3ds.git
 	branch = libtex3ds
-[submodule "XTConvert/3dstools"]
-	path = XTConvert/3rdparty/3dstools
+[submodule "_Libs/3dstools"]
+	path = _Libs/3dstools
 	url = https://github.com/WohlSoft/xtconvert-3dstools.git
 	branch = libromfs3ds
-[submodule "XTConvert/libimagequant"]
-	path = XTConvert/3rdparty/libimagequant
+[submodule "_Libs/libimagequant"]
+	path = _Libs/libimagequant
 	url = https://github.com/WohlSoft/xtconvert-libimagequant.git
 	branch = 2.x
-[submodule "XTConvert/libarchive"]
-	path = XTConvert/3rdparty/libarchive
+[submodule "_Libs/libarchive"]
+	path = _Libs/libarchive
 	url = https://github.com/WohlSoft/xtconvert-libarchive.git
 	branch = fix-iso-filenames
-[submodule "XTConvert/mbediso"]
-	path = XTConvert/3rdparty/mbediso
+[submodule "_Libs/mbediso"]
+	path = _Libs/mbediso
 	url = https://github.com/WohlSoft/mbediso.git
 	branch = main
-[submodule "XTConvert/spc2it"]
-	path = XTConvert/3rdparty/spc2it
+[submodule "_Libs/spc2it"]
+	path = _Libs/spc2it
 	url = https://github.com/WohlSoft/spc2it.git
 	branch = master
-[submodule "XTConvert/mmutil"]
-	path = XTConvert/3rdparty/mmutil
+[submodule "_Libs/mmutil"]
+	path = _Libs/mmutil
 	url = https://github.com/WohlSoft/mmutil.git
 	branch = master

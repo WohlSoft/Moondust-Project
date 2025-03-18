@@ -282,6 +282,7 @@ endif()
 
 # ================================ Tweaks ====================================
 
+# Enforce the Windows XP compatibility
 if(WIN32)
     add_definitions(-DWINVER=0x0501 -D_WIN32_WINNT=0x0501)
 endif()
