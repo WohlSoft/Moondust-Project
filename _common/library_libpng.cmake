@@ -38,7 +38,8 @@ else()
     else()
         set(PNG_STATICLIB_NAME "libpng16_static")
     endif()
-    set(libPNG_A_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}${PNG_STATICLIB_NAME}${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
+
+    set_static_lib(libPNG_A_Lib "${DEPENDENCIES_INSTALL_DIR}" ${PNG_STATICLIB_NAME})
     set(PNG_INCLUDE_DIRS "${DEPENDENCIES_INSTALL_DIR}/include")
 
     ExternalProject_Add(
