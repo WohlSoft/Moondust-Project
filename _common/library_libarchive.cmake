@@ -58,7 +58,7 @@ ExternalProject_Add(
         "-DENABLE_COVERAGE=OFF"
         "-DENABLE_WERROR=OFF"
         "-DLZ4_LIBRARY=${liblz4_A_Lib}"
-        "-DLZ4_INCLUDE_DIR=${LZ3_INCLUDE_DIRS}"
+        "-DLZ4_INCLUDE_DIR=${LZ4_INCLUDE_DIRS}"
         ${ANDROID_CMAKE_FLAGS}
         ${APPLE_CMAKE_FLAGS}
         ${LIBARCHIVE_EXTRA_FLAGS}
@@ -66,7 +66,7 @@ ExternalProject_Add(
         "${libarchive_A_Lib}"
 )
 
-add_dependencies(archive_Local PGE_liblz4 PGE_ZLib PGE_AudioCodecs)
+add_dependencies(archive_Local lz4_Local PGE_liblz4 PGE_ZLib PGE_AudioCodecs)
 
 message("-- libarchive will be built: ${libarchive_A_Lib} --")
 

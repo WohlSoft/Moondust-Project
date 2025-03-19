@@ -81,6 +81,7 @@ add_library(libxtconvert
 
 add_dependencies(libxtconvert
     PGE_libarchive
+    PGE_liblz4pack
     PGE_liblz4
     PGE_lib3dstools
     PGE_libtex3ds
@@ -110,6 +111,7 @@ target_link_libraries(PGE_XTConvert_QtLibs
     INTERFACE
     ${QT_EXTRA_LIBS_PRE}
     PGE_libarchive
+    PGE_liblz4pack
     PGE_liblz4
     PGE_lib3dstools
     PGE_libtex3ds
