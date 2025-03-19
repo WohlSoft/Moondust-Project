@@ -27,8 +27,13 @@
 
 class ItemLevel : public WldBaseItem
 {
-    Q_OBJECT
     void construct();
+
+    static inline QString tr(const char *sourceText, const char *disambiguation = nullptr, int n = -1)
+    {
+        return QCoreApplication::translate("ItemLevel", sourceText, disambiguation, n);
+    }
+
 public:
     ItemLevel(QGraphicsItem *parent = nullptr);
     ItemLevel(WldScene *parentScene, QGraphicsItem *parent = nullptr);

@@ -28,10 +28,8 @@
 #include <math.h>
 
 class WldScene;
-class WldBaseItem: public QObject,
-    public QGraphicsItem
+class WldBaseItem : public QGraphicsItem
 {
-    Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 
     /*!

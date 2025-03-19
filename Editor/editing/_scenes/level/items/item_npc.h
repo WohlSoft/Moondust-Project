@@ -27,8 +27,13 @@
 
 class ItemNPC : public LvlBaseItem
 {
-    Q_OBJECT
     void construct();
+
+    static inline QString tr(const char *sourceText, const char *disambiguation = nullptr, int n = -1)
+    {
+        return QCoreApplication::translate("ItemNPC", sourceText, disambiguation, n);
+    }
+
 public:
     ItemNPC(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
     ItemNPC(bool noScene = false, QGraphicsItem *parent = nullptr);

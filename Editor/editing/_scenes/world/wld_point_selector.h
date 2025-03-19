@@ -34,6 +34,7 @@ class WldPointSelector : public QObject
     QGraphicsItem *m_pointItem;
     //! Sprite of the point indicator
     QPixmap         m_pointImg;
+
 public:
     explicit WldPointSelector(WldScene *scene, QObject *parent = nullptr);
     virtual ~WldPointSelector();

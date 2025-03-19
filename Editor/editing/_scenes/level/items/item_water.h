@@ -27,8 +27,13 @@
 
 class ItemPhysEnv : public LvlBaseItem
 {
-    Q_OBJECT
     void construct();
+
+    static inline QString tr(const char *sourceText, const char *disambiguation = nullptr, int n = -1)
+    {
+        return QCoreApplication::translate("ItemPhysEnv", sourceText, disambiguation, n);
+    }
+
 public:
     ItemPhysEnv(QGraphicsItem *parent = nullptr);
     ItemPhysEnv(LvlScene *parentScene, QGraphicsItem *parent = nullptr);

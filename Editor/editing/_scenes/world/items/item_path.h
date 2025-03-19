@@ -27,8 +27,13 @@
 
 class ItemPath : public WldBaseItem
 {
-    Q_OBJECT
     void construct();
+
+    static inline QString tr(const char *sourceText, const char *disambiguation = nullptr, int n = -1)
+    {
+        return QCoreApplication::translate("ItemPath", sourceText, disambiguation, n);
+    }
+
 public:
     ItemPath(QGraphicsItem *parent = nullptr);
     ItemPath(WldScene *parentScene, QGraphicsItem *parent = nullptr);
