@@ -2433,8 +2433,6 @@ void LvlEventsBox::sctBackgroundImageChanged(int index)
 
 void LvlEventsBox::on_LVLEvent_Cmn_Msg_clicked()
 {
-    if(m_currentEventArrayID < 0) return;
-
     int WinType = mw()->activeChildWindow();
 
     if(WinType == MainWindow::WND_Level)
