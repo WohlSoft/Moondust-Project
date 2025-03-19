@@ -1,13 +1,11 @@
 # libmbediso is a compact ISO library made by ds-sloth
 
 add_library(PGE_libmbediso INTERFACE)
-add_library(PGE_liblz4 INTERFACE)
+add_library(PGE_liblz4pack INTERFACE)
 
 set_static_lib(libmbediso_A_Lib "${DEPENDENCIES_INSTALL_DIR}" mbediso)
 set_static_lib(liblz4_pack_static_A_Lib "${DEPENDENCIES_INSTALL_DIR}" lz4_pack_static)
-set_static_lib(liblz4_A_Lib "${DEPENDENCIES_INSTALL_DIR}" lz4)
 set(MBEDISO_INCLUDE_DIRS "${DEPENDENCIES_INSTALL_DIR}/include")
-set(LZ3_INCLUDE_DIRS "${DEPENDENCIES_INSTALL_DIR}/include/mbediso/lz4")
 
 ExternalProject_Add(
     libmbediso_Local
@@ -21,19 +19,23 @@ ExternalProject_Add(
         "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
         "-DDISABLE_FORCE_DEBUG_POSTFIX=ON"
         "-DCMAKE_DEBUG_POSTFIX=${PGE_LIBS_DEBUG_SUFFIX}"
+        "-DUSE_EXTERNAL_LZ4=ON"
+        "-DLZ4_INCLUDE_DIRS=${LZ4_INCLUDE_DIRS}"
+        "-DLZ4_LIBRARIES=${liblz4_A_Lib};${liblz4_pack_static_A_Lib}"
         ${ANDROID_CMAKE_FLAGS}
         ${APPLE_CMAKE_FLAGS}
     BUILD_BYPRODUCTS
         "${libmbediso_A_Lib}"
         "${liblz4_pack_static_A_Lib}"
-        "${liblz4_A_Lib}"
 )
+add_dependencies(libmbediso_Local lz4_Local)
 
 message("-- libmbediso will be built: ${libmbediso_A_Lib} --")
 
 target_link_libraries(PGE_libmbediso INTERFACE "${libmbediso_A_Lib}")
 target_include_directories(PGE_libmbediso INTERFACE "${MBEDISO_INCLUDE_DIRS}")
+add_dependencies(PGE_libmbediso PGE_liblz4 libmbediso_Local)
 
-target_link_libraries(PGE_liblz4 INTERFACE "${liblz4_pack_static_A_Lib}" "${liblz4_A_Lib}")
-target_include_directories(PGE_liblz4 INTERFACE "${LZ3_INCLUDE_DIRS}")
-add_dependencies(PGE_liblz4 libmbediso_Local)
+target_link_libraries(PGE_liblz4pack INTERFACE "${liblz4_pack_static_A_Lib}" "${liblz4_A_Lib}")
+target_include_directories(PGE_liblz4pack INTERFACE "${MBEDISO_INCLUDE_DIRS}")
+add_dependencies(PGE_liblz4pack libmbediso_Local)
