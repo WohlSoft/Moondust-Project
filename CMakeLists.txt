@@ -136,6 +136,7 @@ if(NOT EMSCRIPTEN AND NOT ANDROID)
 
     option(PGE_BUILD_XTCONVERT "Build the XTConvert utility component" ON)
     if(PGE_BUILD_XTCONVERT)
+        include(_common/library_lz4.cmake)
         include(_common/library_mbediso.cmake)
         include(_common/library_lib3dstools.cmake)
         include(_common/library_tex3ds.cmake)

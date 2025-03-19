@@ -74,3 +74,7 @@
 	path = _Libs/mmutil
 	url = https://github.com/WohlSoft/mmutil.git
 	branch = master
+[submodule "_Libs/lz4"]
+	path = _Libs/lz4
+	url = https://github.com/WohlSoft/lz4.git
+	branch = release-patches
