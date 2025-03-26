@@ -465,9 +465,12 @@ public:
             return true;
         }
 
+        // filename is a name and baseName works here
         const QFileInfo fileInfo(filename);
-        const QFileInfo outPathInfo(out_path);
         QString filename_stem = fileInfo.baseName();
+        // out_path is a *path* and basename doesn't work here
+        QString output_stem = out_path;
+        output_stem.truncate(output_stem.length() + filename_stem.length() - filename.length());
 
         QString filename_type, filename_index, filename_dir;
         bool exceeds_max_GIF = false;
@@ -593,7 +596,7 @@ public:
                     m_temp_dir.mkdir(fallback_mask_path);
 
                 // append filename
-                fallback_mask_path += fileInfo.baseName() + "m.gif";
+                fallback_mask_path += filename_stem + "m.gif";
 
                 // don't clobber a version copied from the original fallback folder
                 if(!QFileInfo::exists(fallback_mask_path))
@@ -683,7 +686,7 @@ public:
 
             if(save_success && mask)
             {
-                QString mask_out_path = outPathInfo.baseName() + "m.gif";
+                QString mask_out_path = output_stem + "m.gif";
 
                 if(!mask_path.isEmpty() && image_w == orig_w)
                     save_success = QFile::copy(mask_path, mask_out_path);
@@ -700,7 +703,7 @@ public:
         {
             // break these into their own functions
 
-            used_out_path = outPathInfo.baseName() + ".t3x";
+            used_out_path = output_stem + ".t3x";
 
             FreeImage_FlipVertical(image);
 
@@ -756,7 +759,7 @@ public:
         }
         else if(output_format == TargetPlatform::TPL)
         {
-            used_out_path = outPathInfo.baseName() + ".tpl";
+            used_out_path = output_stem + ".tpl";
 
             FreeImage_FlipVertical(image);
 
@@ -845,7 +848,7 @@ public:
         }
         else if(output_format == TargetPlatform::DSG)
         {
-            used_out_path = outPathInfo.baseName() + ".dsg";
+            used_out_path = output_stem + ".dsg";
 
             int flags = 0;
 
