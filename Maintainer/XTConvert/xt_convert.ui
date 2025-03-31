@@ -134,6 +134,11 @@
            <string>Wii</string>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>DSi</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
