@@ -26,3 +26,4 @@ message("-- lib3dstools will be built: ${lib3dstools_A_Lib} --")
 
 target_link_libraries(PGE_lib3dstools INTERFACE "${lib3dstools_A_Lib}")
 target_include_directories(PGE_lib3dstools INTERFACE "${DEPENDENCIES_INSTALL_DIR}/include")
+add_dependencies(PGE_lib3dstools lib3dstools_Local)
