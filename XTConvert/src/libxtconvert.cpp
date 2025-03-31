@@ -1271,7 +1271,7 @@ public:
         m_episode_info.title_translations[lang_name] = translated_title;
     }
 
-    bool convert_file(const QString& filename, const QString& in_path, const QString& out_path)
+    bool convert_file(const QString& filename, const QString& in_path, const QString& out_path, const QString& rel_path)
     {
         sync_cur_dir(in_path);
 
@@ -1280,6 +1280,9 @@ public:
             || filename.endsWith(".nsf") || filename.endsWith(".hes")
             || filename.endsWith(".pttune") || filename.endsWith(".ptcop")
             || filename.endsWith(".wma") || filename.endsWith(".gbs") || filename.endsWith(".psm");
+
+        bool is_tracker_music = filename.endsWith(".spc") || filename.endsWith(".it")
+            || filename.endsWith(".mod") || filename.endsWith(".xm") || filename.endsWith(".s3m");
 
         bool is_font = filename.endsWith(".ttf") || filename.endsWith(".otf") || filename.endsWith(".pcf") || filename.endsWith(".woff") || filename.endsWith(".woff2");
         bool is_icon = filename.endsWith(".ico") || filename.endsWith(".icns");
@@ -1295,15 +1298,15 @@ public:
         else if(m_spec.target_platform != TargetPlatform::Desktop && filename.endsWith("m.gif"))
             return true;
         // defer these until the end
-        else if(m_spec.package_type == PackageType::AssetPack && m_spec.target_platform == TargetPlatform::DSG && (in_path.contains("/sound/") || in_path.contains("/music/")))
+        else if(m_spec.package_type == PackageType::AssetPack && m_spec.target_platform == TargetPlatform::DSG && (rel_path.startsWith("sound/") || rel_path.startsWith("music/")))
             return true;
-        else if(m_spec.target_platform != TargetPlatform::Desktop && (filename.endsWith(".png") || filename.endsWith(".gif")) && !in_path.contains("/graphics/fallback/"))
+        else if(m_spec.target_platform != TargetPlatform::Desktop && (filename.endsWith(".png") || filename.endsWith(".gif")) && !rel_path.startsWith("graphics/fallback/"))
             return convert_image(filename, in_path, out_path);
         else if(filename.endsWith(".ini") && m_cur_dir.convert_font_inis)
             return convert_font_ini(filename, in_path, out_path);
-        else if(m_spec.target_platform != TargetPlatform::Desktop && filename.endsWith(".ogg") && in_path.contains("/sound/"))
+        else if(m_spec.target_platform != TargetPlatform::Desktop && filename.endsWith(".ogg") && rel_path.startsWith("sound/"))
             return convert_sfx(filename, in_path, out_path);
-        else if(m_spec.target_platform == TargetPlatform::DSG && (filename.endsWith(".wav") || is_non_tracker_music))
+        else if(m_spec.target_platform == TargetPlatform::DSG && (filename.endsWith(".wav") || is_non_tracker_music || is_tracker_music))
         {
             return convert_music_16m(filename, in_path, out_path);
         }
@@ -1356,8 +1359,7 @@ public:
         {
             if(!filename.endsWith(".txt") && !filename.endsWith(".lvl") && !filename.endsWith(".lvlx")
                 && !filename.endsWith(".wld") && !filename.endsWith(".wldx")
-                && !is_non_tracker_music && !filename.endsWith(".spc")
-                && !filename.endsWith(".it") && !filename.endsWith(".mod") && !filename.endsWith(".xm") && !filename.endsWith(".s3m")
+                && !is_non_tracker_music && !is_tracker_music
                 && !(filename.startsWith("translation_") && filename.endsWith(".json"))
                 && !(filename.startsWith("assets_") && filename.endsWith(".json"))
                 && !(filename.startsWith("thextech_") && filename.endsWith(".json"))
@@ -1490,7 +1492,7 @@ public:
                 return false;
             }
 
-            if(!convert_file(filename, abs_path, temp_path))
+            if(!convert_file(filename, abs_path, temp_path, rel_path))
             {
                 m_error = "Failed to convert file ";
                 m_error += temp_path;
