@@ -60,8 +60,6 @@ int main(int argc, char** argv)
         TCLAP::SwitchArg switchWii("w", "wii", "Convert to Wii-compatible format (tpl)", false);
         TCLAP::SwitchArg switchDSi("d", "dsi", "Convert to DSi-compatible format (dsg + qoa + maxmod)", false);
 
-        switchDSi.hideFromHelp();
-
         TCLAP::OneOf target_platform;
         target_platform.add(&switchMain).add(&switch3DS).add(&switchWii).add(&switchDSi);
 
