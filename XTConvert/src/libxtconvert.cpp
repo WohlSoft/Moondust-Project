@@ -1108,6 +1108,32 @@ public:
         return true;
     }
 
+    bool convert_lvl(const QString&, const QString& in_path, const QString& out_path)
+    {
+        LevelData lvl;
+
+        FileFormats::SetSMBX64LvlFlags(FileFormats::F_SMBX64_KEEP_LEGACY_NPC_IN_BLOCK_CODES);
+
+        if(!FileFormats::OpenLevelFile(in_path, lvl))
+            return false;
+
+        bool is_lvlx = (lvl.meta.RecentFormat == LevelData::PGEX);
+        bool is_lvl38a = (lvl.meta.RecentFormat == LevelData::SMBX38A);
+        if(is_lvlx && lvl.meta.configPackId == "SMBX2")
+        {
+            m_error = "Level targets SMBX2.";
+            return false;
+        }
+
+        if(!FileFormats::SaveLevelFile(lvl, out_path + 'x', LevelData::PGEX))
+        {
+            m_error = "Could not save level.";
+            return false;
+        }
+
+        return true;
+    }
+
     bool convert_sfx(const QString&, const QString& in_path, const QString& out_path)
     {
         Mix_Chunk* ch = Mix_LoadWAV(in_path.toUtf8().data());
@@ -1304,6 +1330,8 @@ public:
             return convert_image(filename, in_path, out_path);
         else if(filename.endsWith(".ini") && m_cur_dir.convert_font_inis)
             return convert_font_ini(filename, in_path, out_path);
+        else if(m_spec.target_platform != TargetPlatform::Desktop && filename.endsWith(".lvl"))
+            return convert_lvl(filename, in_path, out_path);
         else if(m_spec.target_platform != TargetPlatform::Desktop && filename.endsWith(".ogg") && rel_path.startsWith("sound/"))
             return convert_sfx(filename, in_path, out_path);
         else if(m_spec.target_platform == TargetPlatform::DSG && (filename.endsWith(".wav") || is_non_tracker_music || is_tracker_music))
