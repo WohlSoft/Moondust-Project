@@ -30,8 +30,8 @@ void ItemPoint::construct()
     m_imageSize.setHeight(32);
 }
 
-ItemPoint::ItemPoint(QGraphicsItem *parent)
-    : WldBaseItem(parent)
+ItemPoint::ItemPoint(QGraphicsItem *parent, QObject *q_parent)
+    : QObject(q_parent), WldBaseItem(parent)
 {
     construct();
 }

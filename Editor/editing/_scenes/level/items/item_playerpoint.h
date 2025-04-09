@@ -27,8 +27,13 @@
 
 class ItemPlayerPoint : public LvlBaseItem
 {
-    Q_OBJECT
     void construct();
+
+    static inline QString tr(const char *sourceText, const char *disambiguation = nullptr, int n = -1)
+    {
+        return QCoreApplication::translate("ItemPlayerPoint", sourceText, disambiguation, n);
+    }
+
 public:
     explicit ItemPlayerPoint(QGraphicsItem *parent = nullptr);
     explicit ItemPlayerPoint(LvlScene *parentScene, QGraphicsItem *parent = nullptr);

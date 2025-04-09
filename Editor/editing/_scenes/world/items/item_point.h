@@ -25,11 +25,13 @@
 #include "../wld_scene.h"
 #include "wld_base_item.h"
 
-class ItemPoint : public WldBaseItem
+class ItemPoint : public QObject, public WldBaseItem
 {
+    Q_OBJECT
     void construct();
+
 public:
-    ItemPoint(QGraphicsItem *parent = nullptr);
+    ItemPoint(QGraphicsItem *parent = nullptr, QObject *q_parent = nullptr);
     ItemPoint(WldScene *scenePoint, QGraphicsItem *parent = nullptr);
     virtual ~ItemPoint();
 

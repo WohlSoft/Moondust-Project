@@ -27,8 +27,13 @@
 
 class ItemTile : public WldBaseItem
 {
-    Q_OBJECT
     void construct();
+
+    static inline QString tr(const char *sourceText, const char *disambiguation = nullptr, int n = -1)
+    {
+        return QCoreApplication::translate("ItemTile", sourceText, disambiguation, n);
+    }
+
 public:
     ItemTile(QGraphicsItem *parent = nullptr);
     ItemTile(WldScene *parentScene, QGraphicsItem *parent = nullptr);
