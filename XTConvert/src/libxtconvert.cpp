@@ -1125,7 +1125,8 @@ public:
             return false;
         }
 
-        if(!FileFormats::SaveLevelFile(lvl, out_path + 'x', FileFormats::LevelFileFormat::LVL_PGEX))
+        // yes, a false ".lvl" file -- this is needed to prevent interfering with links between levels without modifying the world map, which could interfere with gamesaves
+        if(!FileFormats::SaveLevelFile(lvl, out_path, FileFormats::LevelFileFormat::LVL_PGEX))
         {
             m_error = "Could not save level.";
             return false;
