@@ -1125,7 +1125,7 @@ public:
             return false;
         }
 
-        if(!FileFormats::SaveLevelFile(lvl, out_path + 'x', LevelData::PGEX))
+        if(!FileFormats::SaveLevelFile(lvl, out_path + 'x', FileFormats::LevelFileFormat::LVL_PGEX))
         {
             m_error = "Could not save level.";
             return false;
