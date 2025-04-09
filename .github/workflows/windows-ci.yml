@@ -227,6 +227,14 @@ jobs:
         mkdir _packed
         mv bin-cmake-release/_packed/*.zip _packed
 
+    - name: Upload artifact
+      if: success() && steps.upload-check.outputs.available == 'true'
+      uses: actions/upload-artifact@v4
+      continue-on-error: true
+      with:
+        path: _packed/*.zip
+        name: ${{ matrix.config.name }} ${{ matrix.config.build_type }}
+
     - name: Deploy to builds.wohlsoft.ru
       if: success() && github.event_name != 'pull_request' && github.event_name != 'workflow_dispatch' && steps.event-check.outputs.is_pull_request == 'false' && steps.upload-check.outputs.available == 'true'
       shell: bash
