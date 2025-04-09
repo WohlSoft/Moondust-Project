@@ -1363,9 +1363,10 @@ public:
             log_file(LogCategory::SkippedUnused, in_path);
             return true;
         }
-        else if(filename.endsWith(".xcf") || filename.endsWith(".db") || filename == ".DS_Store"
+        // note that filename is lowercase
+        else if(filename.endsWith(".xcf") || filename.endsWith(".db") || filename == ".ds_store"
             || filename.endsWith(".psg") || filename.endsWith(".ps") || filename.endsWith(".psd")
-            || filename == "progress.json"
+            || filename == "progress.json" || filename == "desktop.ini"
             || filename.endsWith("tst") || filename.endsWith(".tileset.ini") || filename.endsWith(".sav")
             || filename.endsWith(".savx") || filename.endsWith(".pdn")
             || filename.endsWith(".jpg") || filename.endsWith(".jpeg")
@@ -1385,6 +1386,7 @@ public:
             return true;
         else
         {
+            // note that filename is lowercase
             if(!filename.endsWith(".txt") && !filename.endsWith(".lvl") && !filename.endsWith(".lvlx")
                 && !filename.endsWith(".wld") && !filename.endsWith(".wldx")
                 && !is_non_tracker_music && !is_tracker_music
