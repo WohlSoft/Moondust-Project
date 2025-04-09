@@ -1374,7 +1374,7 @@ public:
             || filename.endsWith(".rar") || filename.endsWith(".zip") || filename.endsWith(".7z")
             || filename.endsWith(".xte") || filename.endsWith(".xta")
             || filename.endsWith(".odt") || filename.endsWith(".pdf") || filename.endsWith(".md") || filename.endsWith(".rtf")
-            || filename.endsWith(".tmp"))
+            || filename.endsWith(".tmp") || filename.endsWith(".bak"))
         {
             // banned filenames
             log_file(LogCategory::SkippedUnused, in_path);
