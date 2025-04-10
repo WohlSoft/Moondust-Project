@@ -103,7 +103,7 @@ static int copy_data(struct archive* ar, struct archive* aw)
     }
 }
 
-static bool extract_archive(const char* dest_dir, const char* data, size_t size)
+static bool extract_archive(const char* dest_dir, const char* data, size_t size, uint32_t& source_hash)
 {
     std::string target = dest_dir;
     if(target.back() != '/' && target.back() != '\\')
@@ -156,7 +156,7 @@ static bool extract_archive(const char* dest_dir, const char* data, size_t size)
 
         // check for LZ4
         FILE* f = fopen(data, "rb");
-        char buf[4];
+        uint8_t buf[4];
         if(f && fread(buf, 1, 4, f) == 4 && buf[0] == 0x04 && buf[1] == 0x22 && buf[2] == 0x4d && buf[3] == 0x18)
         {
             fseek(f, 0, SEEK_SET);
@@ -172,6 +172,15 @@ static bool extract_archive(const char* dest_dir, const char* data, size_t size)
 
             if(f_out)
                 fclose(f_out);
+
+            fseek(f, -4, SEEK_END);
+            if(fread(buf, 1, 4, f) == 4)
+            {
+                source_hash = (buf[0])
+                    | ((uint32_t)(buf[1]) <<  8)
+                    | ((uint32_t)(buf[2]) << 16)
+                    | ((uint32_t)(buf[3]) << 24);
+            }
         }
 
         if(f)
@@ -242,14 +251,15 @@ cleanup:
     return ret;
 }
 
-bool extract_archive_file(const char* dest_dir, const char* filename)
+bool extract_archive_file(const char* dest_dir, const char* filename, uint32_t& source_hash)
 {
-    return extract_archive(dest_dir, filename, 0);
+    return extract_archive(dest_dir, filename, 0, source_hash);
 }
 
 bool extract_archive_data(const char* dest_dir, const uint8_t* data, size_t len)
 {
-    return extract_archive(dest_dir, (const char*)data, len);
+    uint32_t source_hash;
+    return extract_archive(dest_dir, (const char*)data, len, source_hash);
 }
 
 } // namespace XTConvert
