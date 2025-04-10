@@ -27,8 +27,13 @@
 
 class ItemScene : public WldBaseItem
 {
-    Q_OBJECT
     void construct();
+
+    static inline QString tr(const char *sourceText, const char *disambiguation = nullptr, int n = -1)
+    {
+        return QCoreApplication::translate("ItemScene", sourceText, disambiguation, n);
+    }
+
 public:
     ItemScene(QGraphicsItem *parent = nullptr);
     ItemScene(WldScene *parentScene, QGraphicsItem *parent = nullptr);

@@ -27,8 +27,13 @@
 
 class ItemMusic : public WldBaseItem
 {
-    Q_OBJECT
     void construct();
+
+    static inline QString tr(const char *sourceText, const char *disambiguation = nullptr, int n = -1)
+    {
+        return QCoreApplication::translate("ItemMusic", sourceText, disambiguation, n);
+    }
+
 public:
     ItemMusic(QGraphicsItem *parent = nullptr);
     ItemMusic(WldScene *parentScene, QGraphicsItem *parent = nullptr);

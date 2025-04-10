@@ -40,7 +40,7 @@ void WldBaseItem::construct()
 }
 
 WldBaseItem::WldBaseItem(QGraphicsItem *parent) :
-    QGraphicsItem(parent), m_scene(nullptr)
+    QGraphicsItem(parent)
 {
     construct();
 }

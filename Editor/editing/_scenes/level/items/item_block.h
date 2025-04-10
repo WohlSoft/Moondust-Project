@@ -27,8 +27,13 @@
 
 class ItemBlock : public LvlBaseItem
 {
-    Q_OBJECT
     void construct();
+
+    static inline QString tr(const char *sourceText, const char *disambiguation = nullptr, int n = -1)
+    {
+        return QCoreApplication::translate("ItemBlock", sourceText, disambiguation, n);
+    }
+
 public:
     ItemBlock(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
     ItemBlock(QGraphicsItem *parent = nullptr);

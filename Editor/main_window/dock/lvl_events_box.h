@@ -166,7 +166,7 @@ private:
 
     Ui::LvlEventsBox *ui;
 
-    long m_currentEventArrayID = 0;
+    uint32_t m_currentEventArrayID = 0;
     bool m_internalLock = false;
 
     bool m_lockEventSectionDataList = false;
