@@ -297,6 +297,7 @@ class Converter
     QFile m_main_graphics_list;
 
     EpisodeInfo m_episode_info;
+    uint32_t m_source_hash = 0;
 
     void sync_cur_dir(const QString& in_file)
     {
@@ -1597,6 +1598,9 @@ public:
         if(!pack_id.isEmpty() && meta.value("pack-id", "").toString().isEmpty())
             meta.setValue("pack-id", pack_id);
 
+        if(m_source_hash)
+            meta.setValue("source-hash", m_source_hash);
+
         meta.endGroup();
 
         // properties
@@ -1689,6 +1693,9 @@ public:
 
         if(!version.isEmpty())
             meta.setValue("version", version);
+
+        if(m_source_hash)
+            meta.setValue("source-hash", m_source_hash);
 
         meta.endGroup();
 
@@ -2195,6 +2202,7 @@ cleanup:
         MixerX_Sentinel ms(m_spec);
 
         init_mask_arrays();
+        m_source_hash = 0;
 
         if(!ms.valid)
         {
@@ -2236,7 +2244,7 @@ cleanup:
                     return false;
                 }
 
-                if(!extract_archive_file(m_input_dir.path().toUtf8().data(), input_path.toUtf8().data()))
+                if(!extract_archive_file(m_input_dir.path().toUtf8().data(), input_path.toUtf8().data(), m_source_hash))
                 {
                     m_error = "Could not extract input file";
                     return false;
@@ -2275,7 +2283,8 @@ cleanup:
 
                 if(fi.isFile())
                 {
-                    if(!extract_archive_file(m_assets_dir.path().toUtf8().data(), base_assets_path.toUtf8().data()))
+                    uint32_t assets_hash;
+                    if(!extract_archive_file(m_assets_dir.path().toUtf8().data(), base_assets_path.toUtf8().data(), assets_hash))
                     {
                         m_error = "Could not extract base assets";
                         return false;
