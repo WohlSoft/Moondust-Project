@@ -42,7 +42,11 @@ TipOfDay::TipOfDay(QString language, QWidget* parent) :
         ftips.setFileName(":/tips/tips_en.html");
 
     QTextStream ts(&ftips);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     ts.setCodec("UTF-8");
+#else
+    ts.setEncoding(QStringConverter::Utf8);
+#endif
     ftips.open(QIODevice::ReadOnly | QIODevice::Text);
     QString allTipsRaw = ts.readAll();
     ftips.close();

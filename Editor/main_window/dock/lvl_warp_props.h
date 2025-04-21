@@ -47,9 +47,9 @@ public slots:
 
 private slots:
     void on_warpsList_currentIndexChanged(int index); //Door list
-    void on_WarpLayer_currentIndexChanged(const QString &arg1); //Door's layers list
-    void on_WarpEnterEvent_currentIndexChanged(const QString &arg1);
-    void on_WarpExitEvent_currentIndexChanged(const QString &arg1);
+    void on_WarpLayer_currentIndexChanged(int arg1i); //Door's layers list
+    void on_WarpEnterEvent_currentIndexChanged(int arg1i);
+    void on_WarpExitEvent_currentIndexChanged(int arg1i);
     void addWarpEntry();
     void removeWarpEntry();
     void duplicateWarpEntry();

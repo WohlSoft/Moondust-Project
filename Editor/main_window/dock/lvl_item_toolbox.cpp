@@ -42,6 +42,20 @@ LevelItemBox::LevelItemBox(QWidget *parent) :
     ui->setupUi(this);
     this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
 
+    QObject::connect(ui->BlockGroupList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+                     this, &LevelItemBox::update_block_group_filter);
+    QObject::connect(ui->BGOGroupList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+                     this, &LevelItemBox::update_bgo_group_filter);
+    QObject::connect(ui->NPCGroupList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+                     this, &LevelItemBox::update_npc_group_filter);
+
+    QObject::connect(ui->BlockCatList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+                     this, &LevelItemBox::update_block_category_filter);
+    QObject::connect(ui->BGOCatList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+                     this, &LevelItemBox::update_bgo_category_filter);
+    QObject::connect(ui->NPCCatList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+                     this, &LevelItemBox::update_npc_category_filter);
+
     m_blockModel = new ItemBoxListModel(this);
     ui->BlockItemsList->setModel(m_blockModel);
     connect(ui->BlockItemsList, &QListView::clicked, this, &LevelItemBox::BlockList_itemClicked);
@@ -436,23 +450,23 @@ void LevelItemBox::on_NPCItemsList_customContextMenuRequested(const QPoint &pos)
 
 
 // ///////////////////////////////////
-void LevelItemBox::on_BlockGroupList_currentIndexChanged(const QString &arg1)
+void LevelItemBox::update_block_group_filter(int arg1)
 {
     if(m_lockGroup)
         return;
-    m_blockModel->setGroupFilter(arg1);
+    m_blockModel->setGroupFilter(ui->BlockGroupList->itemText(arg1));
     m_lockCategory = true;
     ui->BlockCatList->clear();
     ui->BlockCatList->addItems(m_blockModel->getCategoriesList(m_allLabelText));
     m_lockCategory = false;
 }
 
-void LevelItemBox::on_BGOGroupList_currentIndexChanged(const QString &arg1)
+void LevelItemBox::update_bgo_group_filter(int arg1)
 {
     if(m_lockGroup)
         return;
 
-    m_bgoModel->setGroupFilter(arg1);
+    m_bgoModel->setGroupFilter(ui->BGOGroupList->itemText(arg1));
 
     m_lockCategory = true;
     ui->BGOCatList->clear();
@@ -460,12 +474,12 @@ void LevelItemBox::on_BGOGroupList_currentIndexChanged(const QString &arg1)
     m_lockCategory = false;
 }
 
-void LevelItemBox::on_NPCGroupList_currentIndexChanged(const QString &arg1)
+void LevelItemBox::update_npc_group_filter(int arg1)
 {
     if(m_lockGroup)
         return;
 
-    m_npcModel->setGroupFilter(arg1);
+    m_npcModel->setGroupFilter(ui->NPCGroupList->itemText(arg1));
 
     m_lockCategory = true;
     ui->NPCCatList->clear();
@@ -474,25 +488,28 @@ void LevelItemBox::on_NPCGroupList_currentIndexChanged(const QString &arg1)
 }
 
 // ///////////////////////////////////
-void LevelItemBox::on_BlockCatList_currentIndexChanged(const QString &arg1)
+void LevelItemBox::update_block_category_filter(int arg1)
 {
     if(m_lockCategory)
         return;
-    m_blockModel->setCategoryFilter(arg1);
+
+    m_blockModel->setCategoryFilter(ui->BlockCatList->itemText(arg1));
 }
 
-void LevelItemBox::on_BGOCatList_currentIndexChanged(const QString &arg1)
+void LevelItemBox::update_bgo_category_filter(int arg1)
 {
     if(m_lockCategory)
         return;
-    m_bgoModel->setCategoryFilter(arg1);
+
+    m_bgoModel->setCategoryFilter(ui->BGOCatList->itemText(arg1));
 }
 
-void LevelItemBox::on_NPCCatList_currentIndexChanged(const QString &arg1)
+void LevelItemBox::update_npc_category_filter(int arg1)
 {
     if(m_lockCategory)
         return;
-    m_npcModel->setCategoryFilter(arg1);
+
+    m_npcModel->setCategoryFilter(ui->NPCCatList->itemText(arg1));
 }
 
 

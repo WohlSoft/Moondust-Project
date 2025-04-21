@@ -99,13 +99,13 @@ private slots:
     void on_PROPS_BlockInvis_clicked(bool checked);
     void on_PROPS_BlkSlippery_clicked(bool checked);
     void on_PROPS_BlockIncludes_clicked();
-    void on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1);
-    void on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg1);
-    void on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1);
-    void on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1);
+    void on_PROPS_BlockLayer_currentIndexChanged(int arg1i);
+    void on_PROPS_BlkEventDestroy_currentIndexChanged(int arg1i);
+    void on_PROPS_BlkEventHited_currentIndexChanged(int arg1i);
+    void on_PROPS_BlkEventLayerEmpty_currentIndexChanged(int arg1i);
 
     //BGO
-    void on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1);
+    void on_PROPS_BGOLayer_currentIndexChanged(int arg1i);
     void on_PROPS_BGO_Z_Layer_currentIndexChanged(int index);
     void on_PROPS_BGO_Z_Offset_valueChanged(double arg1);
     void on_PROPS_BGO_smbx64_sp_valueChanged(int arg1);
@@ -128,12 +128,12 @@ private slots:
     void on_PROPS_NPCGenType_currentIndexChanged(int index);
     void on_PROPS_NPCGenTime_valueChanged(double arg1);
     void npcGeneratorDirectionChange(int direction);
-    void on_PROPS_NpcLayer_currentIndexChanged(const QString &arg1);
-    void on_PROPS_NpcAttachLayer_currentIndexChanged(const QString &arg1);
-    void on_PROPS_NpcEventActivate_currentIndexChanged(const QString &arg1);
-    void on_PROPS_NpcEventDeath_currentIndexChanged(const QString &arg1);
-    void on_PROPS_NpcEventTalk_currentIndexChanged(const QString &arg1);
-    void on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QString &arg1);
+    void on_PROPS_NpcLayer_currentIndexChanged(int arg1i);
+    void on_PROPS_NpcAttachLayer_currentIndexChanged(int arg1i);
+    void on_PROPS_NpcEventActivate_currentIndexChanged(int arg1i);
+    void on_PROPS_NpcEventDeath_currentIndexChanged(int arg1i);
+    void on_PROPS_NpcEventTalk_currentIndexChanged(int arg1i);
+    void on_PROPS_NpcEventEmptyLayer_currentIndexChanged(int arg1i);
 
 protected:
     void keyPressEvent(QKeyEvent *event);
