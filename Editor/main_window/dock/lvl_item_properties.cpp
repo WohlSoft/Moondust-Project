@@ -1373,10 +1373,12 @@ void LvlItemProperties::on_PROPS_BlockIncludes_clicked()
 
 }
 
-void LvlItemProperties::on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1)
+void LvlItemProperties::on_PROPS_BlockLayer_currentIndexChanged(int arg1i)
 {
     if(m_externalLock || m_internalLock)
         return;
+
+    QString arg1 = ui->PROPS_BlockLayer->itemText(arg1i);
 
     if(m_currentBlockArrayId < 0)
     {
@@ -1403,10 +1405,12 @@ void LvlItemProperties::on_PROPS_BlockLayer_currentIndexChanged(const QString &a
 
 }
 
-void LvlItemProperties::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg1)
+void LvlItemProperties::on_PROPS_BlkEventDestroy_currentIndexChanged(int arg1i)
 {
     if(m_externalLock || m_internalLock)
         return;
+
+    QString arg1 = ui->PROPS_BlkEventDestroy->itemText(arg1i);
 
     if(m_currentBlockArrayId < 0)
     {
@@ -1445,10 +1449,12 @@ void LvlItemProperties::on_PROPS_BlkEventDestroy_currentIndexChanged(const QStri
 
 }
 
-void LvlItemProperties::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
+void LvlItemProperties::on_PROPS_BlkEventHited_currentIndexChanged(int arg1i)
 {
     if(m_externalLock || m_internalLock)
         return;
+
+    QString arg1 = ui->PROPS_BlkEventHited->itemText(arg1i);
 
     if(m_currentBlockArrayId < 0)
     {
@@ -1486,10 +1492,12 @@ void LvlItemProperties::on_PROPS_BlkEventHited_currentIndexChanged(const QString
 
 }
 
-void LvlItemProperties::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1)
+void LvlItemProperties::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(int arg1i)
 {
     if(m_externalLock || m_internalLock)
         return;
+
+    QString arg1 = ui->PROPS_BlkEventLayerEmpty->itemText(arg1i);
 
     if(m_currentBlockArrayId < 0)
     {
@@ -1534,10 +1542,12 @@ void LvlItemProperties::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QS
 
 // ///////////BGO///////////////////////////
 
-void LvlItemProperties::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1)
+void LvlItemProperties::on_PROPS_BGOLayer_currentIndexChanged(int arg1i)
 {
     if(m_externalLock || m_internalLock)
         return;
+
+    QString arg1 = ui->PROPS_BGOLayer->itemText(arg1i);
 
     if(m_currentBgoArrayId < 0)
     {
@@ -2380,10 +2390,12 @@ void LvlItemProperties::npcGeneratorDirectionChange(int direction)
     edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_GENDIR, QVariant(direction));
 }
 
-void LvlItemProperties::on_PROPS_NpcLayer_currentIndexChanged(const QString &arg1)
+void LvlItemProperties::on_PROPS_NpcLayer_currentIndexChanged(int arg1i)
 {
     if(m_externalLock || m_internalLock)
         return;
+
+    QString arg1 = ui->PROPS_NpcLayer->itemText(arg1i);
 
     if(m_currentNpcArrayId < 0)
     {
@@ -2410,10 +2422,12 @@ void LvlItemProperties::on_PROPS_NpcLayer_currentIndexChanged(const QString &arg
 
 }
 
-void LvlItemProperties::on_PROPS_NpcAttachLayer_currentIndexChanged(const QString &arg1)
+void LvlItemProperties::on_PROPS_NpcAttachLayer_currentIndexChanged(int arg1i)
 {
     if(m_externalLock || m_internalLock)
         return;
+
+    QString arg1 = ui->PROPS_NpcAttachLayer->itemText(arg1i);
 
     if(m_currentNpcArrayId < 0)
     {
@@ -2450,10 +2464,12 @@ void LvlItemProperties::on_PROPS_NpcAttachLayer_currentIndexChanged(const QStrin
         edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_ATTACHLAYER, QVariant(""));
 }
 
-void LvlItemProperties::on_PROPS_NpcEventActivate_currentIndexChanged(const QString &arg1)
+void LvlItemProperties::on_PROPS_NpcEventActivate_currentIndexChanged(int arg1i)
 {
     if(m_externalLock || m_internalLock)
         return;
+
+    QString arg1 = ui->PROPS_NpcEventActivate->itemText(arg1i);
 
     if(m_currentNpcArrayId < 0)
     {
@@ -2491,10 +2507,12 @@ void LvlItemProperties::on_PROPS_NpcEventActivate_currentIndexChanged(const QStr
         edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_ACTIVATE, QVariant(""));
 }
 
-void LvlItemProperties::on_PROPS_NpcEventDeath_currentIndexChanged(const QString &arg1)
+void LvlItemProperties::on_PROPS_NpcEventDeath_currentIndexChanged(int arg1i)
 {
     if(m_externalLock || m_internalLock)
         return;
+
+    QString arg1 = ui->PROPS_NpcEventDeath->itemText(arg1i);
 
     if(m_currentNpcArrayId < 0)
     {
@@ -2532,10 +2550,12 @@ void LvlItemProperties::on_PROPS_NpcEventDeath_currentIndexChanged(const QString
         edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_DEATH, QVariant(""));
 }
 
-void LvlItemProperties::on_PROPS_NpcEventTalk_currentIndexChanged(const QString &arg1)
+void LvlItemProperties::on_PROPS_NpcEventTalk_currentIndexChanged(int arg1i)
 {
     if(m_externalLock || m_internalLock)
         return;
+
+    QString arg1 = ui->PROPS_NpcEventTalk->itemText(arg1i);
 
     if(m_currentNpcArrayId < 0)
     {
@@ -2573,10 +2593,12 @@ void LvlItemProperties::on_PROPS_NpcEventTalk_currentIndexChanged(const QString 
         edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_TALK, QVariant(""));
 }
 
-void LvlItemProperties::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QString &arg1)
+void LvlItemProperties::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(int arg1i)
 {
     if(m_externalLock || m_internalLock)
         return;
+
+    QString arg1 = ui->PROPS_NpcEventEmptyLayer->itemText(arg1i);
 
     if(m_currentNpcArrayId < 0)
     {

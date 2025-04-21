@@ -566,13 +566,15 @@ void LvlWarpBox::on_WarpSetExit_clicked()
     mw()->activeLvlEditWin()->setFocus();
 }
 
-void LvlWarpBox::on_WarpLayer_currentIndexChanged(const QString &arg1)
+void LvlWarpBox::on_WarpLayer_currentIndexChanged(int arg1i)
 {
     if(m_lockSettings)
         return;
 
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
         return;
+
+    QString arg1 = ui->WarpLayer->itemText(arg1i);
 
     LevelEdit *edit = mw()->activeLvlEditWin();
     QList<QVariant> dirData;
@@ -594,7 +596,7 @@ void LvlWarpBox::on_WarpLayer_currentIndexChanged(const QString &arg1)
     edit->LvlData.meta.modified = true;
 }
 
-void LvlWarpBox::on_WarpEnterEvent_currentIndexChanged(const QString &arg1)
+void LvlWarpBox::on_WarpEnterEvent_currentIndexChanged(int arg1i)
 {
     if(m_lockSettings)
         return;
@@ -602,6 +604,7 @@ void LvlWarpBox::on_WarpEnterEvent_currentIndexChanged(const QString &arg1)
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
         return;
 
+    QString arg1 = ui->WarpEnterEvent->itemText(arg1i);
     LevelEdit *edit = mw()->activeLvlEditWin();
     QList<QVariant> dirData;
     unsigned int warpId = getWarpId();
@@ -622,7 +625,7 @@ void LvlWarpBox::on_WarpEnterEvent_currentIndexChanged(const QString &arg1)
     edit->LvlData.meta.modified = true;
 }
 
-void LvlWarpBox::on_WarpExitEvent_currentIndexChanged(const QString &arg1)
+void LvlWarpBox::on_WarpExitEvent_currentIndexChanged(int arg1i)
 {
     if(m_lockSettings)
         return;
@@ -630,6 +633,7 @@ void LvlWarpBox::on_WarpExitEvent_currentIndexChanged(const QString &arg1)
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
         return;
 
+    QString arg1 = ui->WarpExitEvent->itemText(arg1i);
     LevelEdit *edit = mw()->activeLvlEditWin();
     QList<QVariant> dirData;
     unsigned int warpId = getWarpId();

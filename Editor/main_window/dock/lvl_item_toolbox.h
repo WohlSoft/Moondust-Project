@@ -41,13 +41,13 @@ private slots:
     void on_BGOItemsList_customContextMenuRequested(const QPoint &pos);
     void on_NPCItemsList_customContextMenuRequested(const QPoint &pos);
 
-    void on_BlockGroupList_currentIndexChanged(const QString &arg1);
-    void on_BGOGroupList_currentIndexChanged(const QString &arg1);
-    void on_NPCGroupList_currentIndexChanged(const QString &arg1);
+    void update_block_group_filter(int arg1);
+    void update_bgo_group_filter(int arg1);
+    void update_npc_group_filter(int arg1);
 
-    void on_BlockCatList_currentIndexChanged(const QString &arg1);
-    void on_BGOCatList_currentIndexChanged(const QString &arg1);
-    void on_NPCCatList_currentIndexChanged(const QString &arg1);
+    void update_block_category_filter(int arg1);
+    void update_bgo_category_filter(int arg1);
+    void update_npc_category_filter(int arg1);
 
     //Item was clicked
     void BlockList_itemClicked(const QModelIndex &item);
