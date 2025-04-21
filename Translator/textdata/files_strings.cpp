@@ -485,6 +485,17 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
 
     switch(role)
     {
+    case Qt::TextAlignmentRole:
+        switch(index.column())
+        {
+        case C_TITLE:
+            return (int)(Qt::AlignLeft | Qt::AlignVCenter);
+        default:
+            return Qt::AlignCenter;
+        }
+
+        break;
+
     case Qt::DisplayRole:
         switch(index.column())
         {
@@ -495,29 +506,29 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
                 switch(it.type)
                 {
                 case TextTypes::WDT_LEVEL:
-                    return tr("L");
+                    return tr("Level");
                 case TextTypes::WDT_TITLE:
-                    return tr("T");
+                    return tr("Titile");
                 case TextTypes::WDT_CREDITS:
-                    return tr("C");
+                    return tr("Credits");
                 }
                 break;
             case TextTypes::S_LEVEL:
                 switch(it.type)
                 {
                 case TextTypes::LDT_EVENT:
-                    return tr("E");
+                    return tr("Event");
                 case TextTypes::LDT_NPC:
-                    return tr("N");
+                    return tr("NPC");
                 case TextTypes::LDT_TITLE:
-                    return tr("T");
+                    return tr("Title");
                 }
                 break;
             case TextTypes::S_SCRIPT:
                 switch(it.type)
                 {
                 case TextTypes::SDT_LINE:
-                    return tr("L");
+                    return tr("Line");
                 }
                 break;
             }
@@ -581,6 +592,40 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
     case Qt::DecorationRole:
         switch(index.column())
         {
+        case C_TYPE:
+            switch(it.source)
+            {
+            case TextTypes::S_WORLD:
+                switch(it.type)
+                {
+                case TextTypes::WDT_LEVEL:
+                    return QIcon(":/images/level.png");
+                case TextTypes::WDT_TITLE:
+                    return QIcon(":/images/world.png");
+                case TextTypes::WDT_CREDITS:
+                    return QIcon(":/images/s_check_danger.png");
+                }
+                break;
+            case TextTypes::S_LEVEL:
+                switch(it.type)
+                {
+                case TextTypes::LDT_EVENT:
+                    return QIcon(":/images/scripts.png");
+                case TextTypes::LDT_NPC:
+                    return QIcon(":/images/coin.png");
+                case TextTypes::LDT_TITLE:
+                    return QIcon(":/images/level.png");
+                }
+                break;
+            case TextTypes::S_SCRIPT:
+                switch(it.type)
+                {
+                case TextTypes::SDT_LINE:
+                    return QIcon(":/images/scripts.png");
+                }
+                break;
+            }
+            break;
         case C_STATE:
             switch(it.state)
             {

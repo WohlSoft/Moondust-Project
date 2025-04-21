@@ -23,5 +23,6 @@
         <file>images/s_check_empty.png</file>
         <file>images/s_check_danger.png</file>
         <file>images/editdelete.png</file>
+        <file>images/coin.png</file>
     </qresource>
 </RCC>

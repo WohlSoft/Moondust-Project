@@ -58,9 +58,9 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
 
     m_filesStringsModel = new FilesStringsModel(&m_project, ui->fileStrings);
     ui->fileStrings->setModel(m_filesStringsModel);
-    ui->fileStrings->setColumnWidth(0, 30);
-    ui->fileStrings->setColumnWidth(1, 30);
-    ui->fileStrings->setColumnWidth(2, 200);
+    ui->fileStrings->setColumnWidth(0, 80);
+    ui->fileStrings->setColumnWidth(1, 24);
+    ui->fileStrings->setColumnWidth(2, 300);
 
     m_dialoguesListModel = new DialoguesListModel(&m_project, ui->dialoguesList);
     ui->dialoguesList->setModel(m_dialoguesListModel);
