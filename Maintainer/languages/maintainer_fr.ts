@@ -97,7 +97,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="115"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which has wrong preferences.&lt;/p&gt;&lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ici vous pouvez facilement convertir votre musique ou fichiers SFX.&lt;/p&gt;&lt;p&gt;Cette fonctionnalité utilise le convertisseur audio &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Ici vous pouvez facilement convertir votre musique ou fichiers SFX.&lt;/p&gt;&lt;p&gt;Cette fonctionnalité utilise le convertisseur audio &lt;a href=&quot;http&#xa0;://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration&#xa0;: underline&#x202f;; color&#xa0;:#0000ff&#x202f;;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="142"/>
