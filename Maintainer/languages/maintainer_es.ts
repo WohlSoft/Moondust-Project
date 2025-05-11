@@ -6,12 +6,12 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Convertir audio (SoX)</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="301"/>
         <source>Don&apos;t change format</source>
-        <translation type="unfinished"></translation>
+        <translation>No cambiar formato</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="307"/>
@@ -21,32 +21,32 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="330"/>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Definir velocidad de bits</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="428"/>
         <source>Files will be converted into MP3</source>
-        <translation type="unfinished"></translation>
+        <translation>Los archivos serán convertidos a MP3</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="471"/>
         <source>Files will be converted into FLAC</source>
-        <translation type="unfinished"></translation>
+        <translation>Los archivos serán convertidos a FLAC</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="488"/>
         <source>Files will be converted into OGG</source>
-        <translation type="unfinished"></translation>
+        <translation>Los archivos serán convertidos a OGG</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="504"/>
         <source>Set quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Fijar calidad</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="583"/>
         <source>Files will be converted into WAV</source>
-        <translation type="unfinished"></translation>
+        <translation>Los archivos serán convertidos a WAV</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="620"/>
@@ -57,7 +57,7 @@
         <location filename="../Music/audiocvt_sox_gui.ui" line="78"/>
         <location filename="../Music/audiocvt_sox_gui.ui" line="630"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar...</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="150"/>
@@ -82,7 +82,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="238"/>
         <source>Convert specified files</source>
-        <translation type="unfinished"></translation>
+        <translation>Convertir archivos específicos</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="248"/>
@@ -124,14 +124,14 @@
         <location filename="../Music/audiocvt_sox_gui.cpp" line="45"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="210"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Comenzar</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="138"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="144"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="241"/>
         <source>SoX error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error de SoX</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="138"/>
@@ -154,12 +154,12 @@ Please set SoX path first</source>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="178"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Nada para convertir</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="182"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Detener</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="241"/>

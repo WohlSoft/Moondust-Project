@@ -298,7 +298,7 @@ Prawy przycisk - Przesuń prawe, dolne krawędzie przycięcia.</translation>
     <message>
         <location filename="../calibration_main.ui" line="896"/>
         <source>Open the Wiki page...</source>
-        <translation>Otwórz stronę Wiki...</translation>
+        <translation type="unfinished">Otwórz stronę Wiki...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="930"/>
@@ -751,12 +751,12 @@ Prawy przycisk - Przesuń prawe, dolne krawędzie przycięcia.</translation>
     <message>
         <location filename="../calibration_main.ui" line="917"/>
         <source>Import data from SMBX-38A level...</source>
-        <translation>Importuj dane z poziomu SMBX-38A...</translation>
+        <translation type="unfinished">Importuj dane z poziomu SMBX-38A...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="922"/>
         <source>Export data into SMBX-38A level...</source>
-        <translation>Eksportuj dane do poziomu SMBX-38A...</translation>
+        <translation type="unfinished">Eksportuj dane do poziomu SMBX-38A...</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="91"/>

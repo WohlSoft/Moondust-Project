@@ -257,7 +257,7 @@
     <message>
         <location filename="../calibration_main.ui" line="308"/>
         <source>Show sprite map...</source>
-        <translation>Arată mapă sprite-uri..</translation>
+        <translation type="unfinished">Arată mapă sprite-uri..</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="331"/>
@@ -534,7 +534,7 @@ Butonul din dreapta - Orientează colţurile din dreapta-jos</translation>
     <message>
         <location filename="../calibration_main.ui" line="896"/>
         <source>Open the Wiki page...</source>
-        <translation>Deschide pagina Wiki...</translation>
+        <translation type="unfinished">Deschide pagina Wiki...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="901"/>
@@ -549,12 +549,12 @@ Butonul din dreapta - Orientează colţurile din dreapta-jos</translation>
     <message>
         <location filename="../calibration_main.ui" line="917"/>
         <source>Import data from SMBX-38A level...</source>
-        <translation>Importează date din nivel SMBX-38A...</translation>
+        <translation type="unfinished">Importează date din nivel SMBX-38A...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="922"/>
         <source>Export data into SMBX-38A level...</source>
-        <translation>Exportează date în nivel SMBX-38A...</translation>
+        <translation type="unfinished">Exportează date în nivel SMBX-38A...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="927"/>
@@ -990,7 +990,7 @@ Butonul din dreapta - Orientează colţurile din dreapta-jos</translation>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="501"/>
         <source>Open frame in editor...</source>
-        <translation>Deschide imaginea în editor...</translation>
+        <translation type="unfinished">Deschide imaginea în editor...</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="508"/>

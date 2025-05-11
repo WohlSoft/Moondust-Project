@@ -959,7 +959,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="501"/>
         <source>Open frame in editor...</source>
-        <translation>Åpne ramme i behandler …</translation>
+        <translation type="unfinished">Åpne ramme i behandler …</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="508"/>

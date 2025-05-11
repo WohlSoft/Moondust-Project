@@ -259,7 +259,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="896"/>
         <source>Open the Wiki page...</source>
-        <translation>Отворете Уики страницата...</translation>
+        <translation type="unfinished">Отворете Уики страницата...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="930"/>
@@ -424,7 +424,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="308"/>
         <source>Show sprite map...</source>
-        <translation>Показване на картата на спрайта...</translation>
+        <translation type="unfinished">Показване на картата на спрайта...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="382"/>
@@ -694,12 +694,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="917"/>
         <source>Import data from SMBX-38A level...</source>
-        <translation>Импортиране на данни от ниво SMBX-38A...</translation>
+        <translation type="unfinished">Импортиране на данни от ниво SMBX-38A...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="922"/>
         <source>Export data into SMBX-38A level...</source>
-        <translation>Експортирайте данни в ниво SMBX-38A...</translation>
+        <translation type="unfinished">Експортирайте данни в ниво SMBX-38A...</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="91"/>
@@ -985,7 +985,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="501"/>
         <source>Open frame in editor...</source>
-        <translation>Отворете кадъра в редактора...</translation>
+        <translation type="unfinished">Отворете кадъра в редактора...</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="508"/>
