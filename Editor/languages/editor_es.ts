@@ -65,7 +65,7 @@
     <message>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation>La música se reproducirá automáticamente cuando abra el archivo</translation>
+        <translation>La música se reproducirá automáticamente cuando abra un nivel</translation>
     </message>
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
