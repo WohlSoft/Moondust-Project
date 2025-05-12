@@ -85,7 +85,7 @@
         <location filename="../custom_music_setup/custom_music_setup.ui" line="92"/>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="303"/>
         <source>Browse...</source>
-        <translation>Kiválasztás...</translation>
+        <translation type="unfinished">Kiválasztás...</translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="106"/>

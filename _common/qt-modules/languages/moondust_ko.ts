@@ -114,7 +114,7 @@
         <location filename="../custom_music_setup/custom_music_setup.ui" line="92"/>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="303"/>
         <source>Browse...</source>
-        <translation>검색...</translation>
+        <translation type="unfinished">검색...</translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="106"/>
