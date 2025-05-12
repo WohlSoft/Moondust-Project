@@ -70,7 +70,7 @@
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation>Máximo número de elementos que permitirán animación para items. Si el límite se excede, la animación será pausada mientras no remueva los elementos de más.</translation>
+        <translation>Máximo número de elementos que se estarán animando en cualquier momento. Si el límite se excede, algunos elementos dejarán de animarse, a menos que elimines algunos o aumentes el límite.</translation>
     </message>
     <message>
         <source>Files</source>
@@ -86,7 +86,7 @@
     </message>
     <message>
         <source>Middle mouse button actions</source>
-        <translation>Características del botón medio del mouse</translation>
+        <translation>Acciones de botón medio del mouse</translation>
     </message>
     <message>
         <source>Change the placement mode of the selected item</source>
@@ -200,7 +200,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>1 - Pipe</source>
-        <translation>1 - Tubo</translation>
+        <translation>1 - Tubería</translation>
     </message>
     <message>
         <source>2 - Door</source>
@@ -224,7 +224,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Note: Some of those settings will take change on application restart</source>
-        <translation>Nota: algunas de esas opciones pueden requerir reinicio del programa</translation>
+        <translation>Nota: algunas opciones pueden requerir reiniciar el programa</translation>
     </message>
     <message>
         <source>Enable auto-scaling on the High-DPI screens</source>
@@ -232,11 +232,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Display tabs horizontally</source>
-        <translation>Mostrar pestañas horizontal</translation>
+        <translation>Mostrar pestañas horizontalmente</translation>
     </message>
     <message>
         <source>Display tabs vertically</source>
-        <translation>Mostrar pestañas vertical</translation>
+        <translation>Mostrar pestañas verticalmente</translation>
     </message>
     <message>
         <source>World Map Item toolbox</source>
