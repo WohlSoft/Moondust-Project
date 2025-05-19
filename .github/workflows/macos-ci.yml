@@ -5,7 +5,7 @@ on:
     branches:
       - master
       - stable
-      - wip-translator
+      - wip-xtconvert
   pull_request:
     branches:
       - master
