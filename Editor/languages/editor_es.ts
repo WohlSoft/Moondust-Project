@@ -5,15 +5,15 @@
     <name>AbstractRuntimeEngine</name>
     <message>
         <source>World map testing via IPC is not supported</source>
-        <translation>Prueba de Mapa Mundial via IPC no es soportado</translation>
+        <translation type="unfinished">Prueba de Mapa Mundial via IPC no es soportado</translation>
     </message>
     <message>
         <source>World map testing is not supported</source>
-        <translation>Prueba de Mapa Mundial no es soportado</translation>
+        <translation type="unfinished">Prueba de Mapa Mundial no es soportado</translation>
     </message>
     <message>
         <source>This feature is not implemented</source>
-        <translation>Esta característica no esta implementada</translation>
+        <translation>Esta característica no está implementada</translation>
     </message>
 </context>
 <context>
@@ -36,7 +36,7 @@
     </message>
     <message>
         <source>Performance</source>
-        <translation>Performance</translation>
+        <translation>Rendimiento</translation>
     </message>
     <message>
         <source>Animation</source>
@@ -65,12 +65,12 @@
     <message>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation>La música se reproducirá automáticamente cuando abra el archivo</translation>
+        <translation>La música se reproducirá automáticamente al abrir un archivo</translation>
     </message>
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation>Máximo número de elementos que permitirán animación para items. Si el límite se excede, la animación será pausada mientras no remueva los elementos de más.</translation>
+        <translation>Máximo número de elementos que se estarán animando en cualquier momento. Si el límite se excede, algunos elementos dejarán de animarse, a menos que elimines algunos o aumentes el límite.</translation>
     </message>
     <message>
         <source>Files</source>
@@ -86,7 +86,7 @@
     </message>
     <message>
         <source>Middle mouse button actions</source>
-        <translation>Características del botón medio del mouse</translation>
+        <translation>Acciones de botón medio del mouse</translation>
     </message>
     <message>
         <source>Change the placement mode of the selected item</source>
@@ -120,7 +120,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Maximum number of remembered history actions.</source>
-        <translation>Máximo número de acciones de historial.</translation>
+        <translation>Máximo número de acciones del historial.</translation>
     </message>
     <message>
         <source>Defaults</source>
@@ -168,7 +168,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Delay (seconds):</source>
-        <translation>Retraso:</translation>
+        <translation>Retraso (segundos):</translation>
     </message>
     <message>
         <source>Direction</source>
@@ -200,7 +200,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>1 - Pipe</source>
-        <translation>1 - Tubo</translation>
+        <translation>1 - Tubería</translation>
     </message>
     <message>
         <source>2 - Door</source>
@@ -224,7 +224,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Note: Some of those settings will take change on application restart</source>
-        <translation>Nota: algunas de esas opciones pueden requerir reinicio del programa</translation>
+        <translation>Nota: algunas opciones pueden requerir reiniciar el programa</translation>
     </message>
     <message>
         <source>Enable auto-scaling on the High-DPI screens</source>
@@ -232,11 +232,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Display tabs horizontally</source>
-        <translation>Mostrar pestañas horizontal</translation>
+        <translation>Mostrar pestañas horizontalmente</translation>
     </message>
     <message>
         <source>Display tabs vertically</source>
-        <translation>Mostrar pestañas vertical</translation>
+        <translation>Mostrar pestañas verticalmente</translation>
     </message>
     <message>
         <source>World Map Item toolbox</source>
@@ -336,11 +336,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Font</source>
-        <translation>Fuente de letra</translation>
+        <translation>Fuente</translation>
     </message>
     <message>
         <source>Font size</source>
-        <translation>Tamaño de letra</translation>
+        <translation>Tamaño de la fuente</translation>
     </message>
     <message>
         <source>Use default</source>
@@ -524,7 +524,7 @@ Por favor defínala primero</translation>
     </message>
     <message>
         <source>Files will be converted into FLAC</source>
-        <translation>Archivos serán convertidos a FLAC</translation>
+        <translation>Los archivos serán convertidos a FLAC</translation>
     </message>
     <message>
         <source>Files will be converted into OGG</source>
@@ -536,13 +536,13 @@ Por favor defínala primero</translation>
     </message>
     <message>
         <source>Files will be converted into WAV</source>
-        <translation>Archivos serán convertidos a WAV</translation>
+        <translation>Los archivos serán convertidos a WAV</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
 &lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aquí puede convertir su música o archivos SFX que fueron &lt;br&gt;formateados incorrectamente (frecuencia de muestreo incorrecta, códec malo, etc.)&lt;/p&gt;
-&lt;p&gt;Esta característica usa &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; conversor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Aquí puede convertir su música o archivos SFX que fueron &lt;br&gt;formateados incorrectamente (frecuencia de muestreo incorrecta, códec malo, etc.)&lt;/p&gt;
+&lt;p&gt;Esta característica usa &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; conversor.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -565,15 +565,15 @@ Por favor defínala primero</translation>
     </message>
     <message>
         <source>Move time:</source>
-        <translation>Tiempo de movimiento</translation>
+        <translation type="unfinished">Tiempo de movimiento:</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Distancia</translation>
+        <translation>Distancia:</translation>
     </message>
     <message>
         <source>Size of one block:</source>
-        <translation>Tamaño de un bloque</translation>
+        <translation>Tamaño de un bloque:</translation>
     </message>
 </context>
 <context>
@@ -899,7 +899,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     </message>
     <message>
         <source>You might want to report this data to developers:</source>
-        <translation type="unfinished">Tal vez quieras reportar esta información a los desarrolladores</translation>
+        <translation>Tal vez quieras reportar esta información a los desarrolladores:</translation>
     </message>
     <message>
         <source>Copy report into clipboard</source>
@@ -1157,7 +1157,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esta es la &lt;span style=&quot; font-weight:600;&quot;&gt;Altura&lt;/span&gt; de la imagen destino. La imagen destino será escalada a esta altura.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Esta es la &lt;span style=&quot; font-weight:600;&quot;&gt;Altura&lt;/span&gt; de la imagen destino. La imagen destino será escalada a esta altura.&lt;/p&gt;</translation>
     </message>
     <message>
         <source> px</source>
@@ -1169,11 +1169,11 @@ Por favor guárdelos antes de hacer algo más.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cuando se controle, esto calculará el tamaño de la dimensión opuesta (altura o ancho) para hacer una imagen destino con las proporciones correctas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Cuando se controle, esto calculará el tamaño de la dimensión opuesta (altura o ancho) para hacer una imagen destino con las proporciones correctas.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Este es el&lt;span style=&quot; font-weight:600;&quot;&gt;Ancho&lt;/span&gt; de la imagen destino. La imagen destino será escalada a este ancho.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Este es el&lt;span style=&quot; font-weight:600;&quot;&gt;Ancho&lt;/span&gt; de la imagen destino. La imagen destino será escalada a este ancho.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Width</source>
@@ -1246,10 +1246,11 @@ sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 as well as toolboxes in toolbars and menus. This editor also allows you to select multiple objects at once!&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; Aún podrá cambiar la interfaz a través del menú &lt;u&gt;Ayuda&lt;/u&gt; o seleccionando casillas del menú &lt;u&gt;Ver&lt;/u&gt; e intercambiando sub-ventanas y pestañas en el menú &lt;u&gt;Ventana&lt;/u&gt;.&lt;br/&gt;
-&lt;br/&gt;
-&lt;b&gt;Tip 2:&lt;/b&gt; A diferencia del editor clásico, la mayoria de las características de elementos están disponibles del menú contextual (abriéndose con el botón derecho del ratón), cajas de las barras de herramientas (paneles arrastrables con íconos en la parte superior de la ventana) y menúes. ¡El editor usa multi selección!&lt;br/&gt;
-&lt;br/&gt;
+        <translation>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; Aún podrá cambiar la interfaz a través del menú &lt;u&gt;Ayuda&lt;/u&gt; o seleccionando casillas del menú &lt;u&gt;Ver&lt;/u&gt; e intercambiando sub-ventanas y pestañas en el menú &lt;u&gt;Ventana&lt;/u&gt;.&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;Tip 2:&lt;/b&gt; A diferencia del editor clásico, la mayoria de las características de elementos están disponibles del menú contextual (abriéndose con el botón derecho del ratón),
+cajas de las barras de herramientas (paneles arrastrables con íconos en la parte superior de la ventana) y menúes. ¡El editor usa multi selección!&lt;br&gt;
+&lt;br&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; ¡Use el botón medio del ratón para para intercambiar puesta del elemento seleccionado o grupo duplicado!&lt;/p&gt;</translation>
     </message>
     <message>
@@ -1934,7 +1935,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Este mensaje aparecerá cuando el jugador hable con este PNJ.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nota:&lt;/span&gt; Todas las comillas y caracteres de nueva línea serán removidos.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Este mensaje aparecerá cuando el jugador hable con este PNJ.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nota:&lt;/span&gt; Todas las comillas y caracteres de nueva línea serán removidos.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
@@ -2038,7 +2039,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     <name>ItemMusic</name>
     <message>
         <source>&lt;Silence&gt;</source>
-        <translation>&lt;Silencio&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Play this</source>
@@ -2891,7 +2892,7 @@ version code must be less or equal specific code)</source>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
-        <translation>&lt;Guardar archivo primero&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Level items browser</source>
@@ -3026,9 +3027,8 @@ version code must be less or equal specific code)</source>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
-        <translation type="unfinished">Comienza las pruebas en el motor clásico.
-Para que funcione, LunaLUA debe estar actualizado.
-De otra manera, estará limitado.</translation>
+        <translation>Comienza las pruebas en el motor clásico.
+Esta opción necesita LunaLUA.</translation>
     </message>
     <message>
         <source>Reset checkpoints</source>
@@ -3101,7 +3101,7 @@ Se sugiere deshabilitar esto en máquinas lentas o en caso de que se presente al
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">Explorar...</translation>
+        <translation>Explorar…</translation>
     </message>
     <message>
         <source>Save</source>
@@ -3317,7 +3317,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nota:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; y &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; no soportan más de 21 secciones.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; no soportan más de 6 secciones.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nota:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; y &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; no soportan más de 21 secciones.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; no soportan más de 6 secciones.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Destiation</source>
@@ -4451,7 +4451,7 @@ Zonas físicas de ambiente:	%6
     </message>
     <message>
         <source>Browse...</source>
-        <translation>Explorar...</translation>
+        <translation>Explorar…</translation>
     </message>
     <message>
         <source>Section:</source>
@@ -4828,7 +4828,6 @@ Si está activo, es posible definir sólo puntos de salida.</translation>
         <source>Determines the warp through which the player will enter the target level.
 If set to zero, the player will start at the pre-defined level start point.</source>
         <translation>Declada ID de traslado del nivel destino si el valor no es cero.
-El jugador entrará al nivel a través de un punto de traslado específico.
 Si el valor es cero, el nivel comenzará en el punto de comienzo pre-declarado.</translation>
     </message>
     <message>
@@ -4846,8 +4845,7 @@ Si el valor es cero, el nivel comenzará en el punto de comienzo pre-declarado.<
     </message>
     <message>
         <source>Brings the player&apos;s held item to the target level of this warp.</source>
-        <translation>Mantener PNJ en mano cuando el jugador entre
-a otro nivel a través de este traslado.</translation>
+        <translation type="unfinished">Mantener PNJ en mano cuando el jugador entre a otro nivel a través de este traslado.</translation>
     </message>
     <message>
         <source>Allow inter-level NPC</source>
@@ -5334,7 +5332,7 @@ Los objetos no podrán ser puestos unos sobre otros, haciéndolo de otro modo re
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Habilitar animación en objetos animados&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;Si el mapa tiene demasiados objetos, se recomienda &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; ¡esta opción!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Habilitar animación en objetos animados&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;Si el mapa tiene demasiados objetos, se recomienda &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; ¡esta opción!&lt;/span&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Go to the left-top of the section</source>
@@ -5795,7 +5793,7 @@ Los objetos no podrán ser puestos unos sobre otros, haciéndolo de otro modo re
     </message>
     <message>
         <source>&lt;empty&gt;</source>
-        <translation>&lt;vacío&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Copy</source>
@@ -6450,7 +6448,10 @@ Expected config pack ID: %4</source>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, choose the engine application yourself!</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede probar, no se encuentra el motor: 
+
+%1
+¡Por favor elija la aplicación por usted mismo!</translation>
     </message>
     <message>
         <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
@@ -7282,12 +7283,12 @@ Descripción del error:
     <message>
         <source>Bad file format
 File: %1</source>
-        <translation>Formato de archivo corrupto: %1 {1?}</translation>
+        <translation>Formato de archivo corrupto
+Archivo: %1</translation>
     </message>
     <message>
         <source>Line Number: %1</source>
-        <translation>Número de línea: %1
- {1?}</translation>
+        <translation>Número de línea: %1</translation>
     </message>
     <message>
         <source>Line Data: %1</source>
@@ -7516,7 +7517,7 @@ Reason: %1
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">Explorar...</translation>
+        <translation>Explorar…</translation>
     </message>
     <message>
         <source>Save</source>
@@ -7796,7 +7797,7 @@ Reason: %1
     <name>TheXTechEngine</name>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">Explorar...</translation>
+        <translation>Explorar…</translation>
     </message>
     <message>
         <source>Save</source>
@@ -8231,6 +8232,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
         <translation>¡Bienvenido al editor de tilesets!
 
 Éste es un editor de tilesets globales.
+%1
 Todos los tilesets que se harán aquí serán guardados en ésta carpeta:
 %1
 Por ej. Éstos funcionarán globalmente para éste pack de configuraciones y pueden ser usados en los grupos de tilesets.
@@ -8827,7 +8829,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">Explorar...</translation>
+        <translation>Explorar…</translation>
     </message>
     <message>
         <source>Location of Wine</source>
@@ -8956,7 +8958,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cuando esté marcada, se calculará el tamaño de la dimensión opuesta (altura o anchura) para crear una imagen de destino con las proporciones.&lt;/p&gt;&lt;/body&gt; correctas&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Cuando esté marcada, se calculará el tamaño de la dimensión opuesta (altura o anchura) para crear una imagen de destino con las proporciones.&lt;/p&gt; correctas</translation>
     </message>
     <message>
         <source>Keep original aspect ratio</source>
@@ -8968,7 +8970,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esto es el &lt;span style=&quot; font-weight:600;&quot;&gt;Ancho &lt;/span&gt; de la imagen. Imagen de objetivo será escalada a este ancho.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Esto es el &lt;span style=&quot; font-weight:600;&quot;&gt;Ancho &lt;/span&gt; de la imagen. Imagen de objetivo será escalada a este ancho.&lt;/p&gt;</translation>
     </message>
     <message>
         <source> px</source>
@@ -8976,7 +8978,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the &lt;span style=&quot; font-weight:600;&quot;&gt;Altura&lt;/span&gt; de la imagen. La imagen destino será escalada a esta altura.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;This is the &lt;span style=&quot; font-weight:600;&quot;&gt;Altura&lt;/span&gt; de la imagen. La imagen destino será escalada a esta altura.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Width</source>

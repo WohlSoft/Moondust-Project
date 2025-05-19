@@ -298,7 +298,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="896"/>
         <source>Open the Wiki page...</source>
-        <translation>Відкрити Wiki-сторінку...</translation>
+        <translation type="unfinished">Відкрити Wiki-сторінку...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="930"/>
@@ -471,7 +471,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="308"/>
         <source>Show sprite map...</source>
-        <translation>Показати карту спрайта...</translation>
+        <translation type="unfinished">Показати карту спрайта...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="382"/>
@@ -761,12 +761,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="917"/>
         <source>Import data from SMBX-38A level...</source>
-        <translation>Імпорт даних із рівня SMBX-38A...</translation>
+        <translation type="unfinished">Імпорт даних із рівня SMBX-38A...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="922"/>
         <source>Export data into SMBX-38A level...</source>
-        <translation>Експорт даних в рівень SMBX-38A...</translation>
+        <translation type="unfinished">Експорт даних в рівень SMBX-38A...</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="91"/>
@@ -1076,7 +1076,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="501"/>
         <source>Open frame in editor...</source>
-        <translation>Відкрити кадр у редагувачі...</translation>
+        <translation type="unfinished">Відкрити кадр у редагувачі...</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="508"/>

@@ -298,7 +298,7 @@ Right button - Move the right-bottom crop edges.</translation>
     <message>
         <location filename="../calibration_main.ui" line="896"/>
         <source>Open the Wiki page...</source>
-        <translation>Open the Wiki page...</translation>
+        <translation>Open the Wiki page…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="930"/>
@@ -600,7 +600,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
     <message>
         <location filename="../calibration_main.ui" line="308"/>
         <source>Show sprite map...</source>
-        <translation>Show sprite map...</translation>
+        <translation>Show sprite map…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="382"/>
@@ -757,12 +757,12 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
     <message>
         <location filename="../calibration_main.ui" line="917"/>
         <source>Import data from SMBX-38A level...</source>
-        <translation>Import data from SMBX-38A level...</translation>
+        <translation>Import data from SMBX-38A level…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="922"/>
         <source>Export data into SMBX-38A level...</source>
-        <translation>Export data into SMBX-38A level...</translation>
+        <translation>Export data into SMBX-38A level…</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="91"/>
@@ -1101,7 +1101,7 @@ Do you want to continue?</translation>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="501"/>
         <source>Open frame in editor...</source>
-        <translation>Open frame in editor...</translation>
+        <translation>Open frame in editor…</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="508"/>

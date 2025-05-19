@@ -398,7 +398,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <name>AudioCvt_Sox_gui</name>
     <message>
         <source>Convert Audio (SoX)</source>
-        <translation>Konvertiere Audio</translation>
+        <translation>Audio konvertieren (SoX)</translation>
     </message>
     <message>
         <source>SoX executable path:</source>

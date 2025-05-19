@@ -524,7 +524,7 @@ Jobb gomb - mozgasd a jobb alsó satkat a levágáshoz.</translation>
     <message>
         <location filename="../calibration_main.ui" line="896"/>
         <source>Open the Wiki page...</source>
-        <translation>Wiki-oldal megnyitása...</translation>
+        <translation type="unfinished">Wiki-oldal megnyitása...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="901"/>

@@ -81,7 +81,7 @@
     </message>
     <message>
         <source>Browse...</source>
-        <translation>உலாவுக ...</translation>
+        <translation type="unfinished">உலாவுக ...</translation>
     </message>
     <message>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>Filter...</source>
-        <translation>வடிகட்டி ...</translation>
+        <translation type="unfinished">வடிகட்டி ...</translation>
     </message>
 </context>
 <context>
@@ -369,7 +369,7 @@
     </message>
     <message>
         <source>Settings...</source>
-        <translation>அமைப்புகள் ...</translation>
+        <translation type="unfinished">அமைப்புகள் ...</translation>
     </message>
     <message>
         <source>Extra settings are not specified</source>

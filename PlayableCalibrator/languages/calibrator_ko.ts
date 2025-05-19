@@ -682,7 +682,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="917"/>
         <source>Import data from SMBX-38A level...</source>
-        <translation>SMBX-38A 레벨로부터 데이터 불러오기...</translation>
+        <translation type="unfinished">SMBX-38A 레벨로부터 데이터 불러오기...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="896"/>
@@ -692,7 +692,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="922"/>
         <source>Export data into SMBX-38A level...</source>
-        <translation>SBMX-38A 레벨로 데이터 내보내기...</translation>
+        <translation type="unfinished">SBMX-38A 레벨로 데이터 내보내기...</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="90"/>

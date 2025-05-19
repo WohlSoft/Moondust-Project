@@ -282,7 +282,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="896"/>
         <source>Open the Wiki page...</source>
-        <translation>Ouvrir la page du Wiki…</translation>
+        <translation type="unfinished">Ouvrir la page du Wiki…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="930"/>
@@ -735,12 +735,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="917"/>
         <source>Import data from SMBX-38A level...</source>
-        <translation>Importer des données à partir d&apos;un fichier de niveau SMBX-38A…</translation>
+        <translation type="unfinished">Importer des données à partir d&apos;un fichier de niveau SMBX-38A…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="922"/>
         <source>Export data into SMBX-38A level...</source>
-        <translation>Exporter les données dans un fichier de niveau SMBX-38A…</translation>
+        <translation type="unfinished">Exporter les données dans un fichier de niveau SMBX-38A…</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="91"/>
@@ -1050,7 +1050,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="501"/>
         <source>Open frame in editor...</source>
-        <translation>Ouvrir l&apos;image dans l&apos;éditeur…</translation>
+        <translation type="unfinished">Ouvrir l&apos;image dans l&apos;éditeur…</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="508"/>

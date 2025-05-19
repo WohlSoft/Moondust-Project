@@ -704,12 +704,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="917"/>
         <source>Import data from SMBX-38A level...</source>
-        <translation>Importar datos de un nivel de SMBX-38A...</translation>
+        <translation>Importar datos de un nivel de SMBX-38A…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="922"/>
         <source>Export data into SMBX-38A level...</source>
-        <translation>Exportar datos a un nivel de SMBX-38A...</translation>
+        <translation>Exportar datos a un nivel de SMBX-38A…</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="91"/>

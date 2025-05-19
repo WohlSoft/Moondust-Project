@@ -81,7 +81,7 @@
     </message>
     <message>
         <source>Browse...</source>
-        <translation>Преглед...</translation>
+        <translation type="unfinished">Преглед...</translation>
     </message>
     <message>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
