@@ -73,6 +73,11 @@ if(SevenZipProgram)
         list(APPEND MinGW_BuiltDlls "pthreadGC-3.dll")
     endif()
 
+    if(PGE_BUILD_XTCONVERT)
+        # XTConvert needs to supply the liblzma-5.dll
+        list(APPEND MinGW_BuiltDlls "liblzma-5.dll")
+    endif()
+
     set(PGE_CommonQtFiles)
     if(NOT PGE_ENABLE_STATIC_QT)
         set(PGE_CommonQtFiles
@@ -138,6 +143,17 @@ if(SevenZipProgram)
         "LazyFixTool.readme.txt"
     )
 
+    if(PGE_BUILD_XTCONVERT)
+        set(PGE_XTConvertFiles
+            ${MinGW_BuiltDlls}
+            # FIXME: Get rid of MixerX support and replace with the separated hand-made audio processing library
+            # which is way more accurate and stable solution of audio decoding and encoding.
+            "SDL2${PGE_DLL_SUFFIX}.dll"
+            "SDL2_mixer_ext${PGE_DLL_SUFFIX}.dll"
+            "xtconvert.exe"
+        )
+    endif()
+
     set(PGE_MaintainerFiles
         ${PGE_CommonQtFiles}
         "tools"
@@ -148,6 +164,10 @@ if(SevenZipProgram)
         "languages/maintainer_*.qm"
         "languages/*.png"
     )
+
+    if(PGE_BUILD_XTCONVERT)
+        list(APPEND PGE_MaintainerFiles ${PGE_XTConvertFiles})
+    endif()
 
     set(PGE_InstallCommonFiles
         ${PGE_CommonFiles}
@@ -186,6 +206,10 @@ if(SevenZipProgram)
         "languages/qt_*.qm"
         "languages/*.png"
     )
+
+    if(PGE_BUILD_XTCONVERT)
+        list(APPEND PGE_InstallToolsFiles ${PGE_XTConvertFiles})
+    endif()
 
     add_custom_target(create_zip_install
         WORKING_DIRECTORY "${ZIP_SRC_DIR}"
@@ -231,6 +255,16 @@ if(SevenZipProgram)
         DEPENDS mkdir_packed_create_zip
         COMMENT "Packing tools into ZIP archive..."
     )
+
+    if(PGE_BUILD_XTCONVERT)
+        add_custom_command(TARGET create_zip_tools
+            WORKING_DIRECTORY "${ZIP_SRC_DIR}"
+            COMMAND ${SevenZipProgram} a -tzip -mx9
+                "${ZIP_PACK_DIR}/XTConvert-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
+                ${PGE_XTConvertFiles}
+            DEPENDS mkdir_packed_create_zip
+        )
+    endif()
 
     add_custom_target(create_zip
         WORKING_DIRECTORY "${ZIP_SRC_DIR}"
