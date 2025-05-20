@@ -63,6 +63,7 @@ if(SevenZipProgram)
         "libgcc*.dll"
         "libstdc*.dll"
     )
+    # DLLs variables formed at the deployment.dll, via the find_mingw_dll() macro
     if(MINGWDLL_MINGWEX)
         list(APPEND MinGW_BuiltDlls "libmingwex-0.dll")
     endif()
@@ -74,8 +75,13 @@ if(SevenZipProgram)
     endif()
 
     if(PGE_BUILD_XTCONVERT)
-        # XTConvert needs to supply the liblzma-5.dll
-        list(APPEND MinGW_BuiltDlls "liblzma-5.dll")
+        # XTConvert needs to supply the liblzma-5.dll and libgnurx-0.dll
+        if(MINGWDLL_LZMA5)
+            list(APPEND MinGW_BuiltDlls "liblzma-5.dll")
+        endif()
+        if(MINGWDLL_GNURX)
+            list(APPEND MinGW_BuiltDlls "libgnurx-0.dll")
+        endif()
     endif()
 
     set(PGE_CommonQtFiles)

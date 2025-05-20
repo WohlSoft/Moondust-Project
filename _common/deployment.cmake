@@ -95,6 +95,10 @@ function(pgeSetupQtDeploymet _is_static_qt _is_shared_mixer)
         find_mingw_dll(WINPTHREAD       "libwinpthread-1.dll" MINGW_DLLS "${MINGW_BIN_PATH}")
         find_mingw_dll(WINPTHREADGC3    "pthreadGC-3.dll" MINGW_DLLS "${MINGW_BIN_PATH}")
         find_mingw_dll(STDCPP           "libstdc++-6.dll" MINGW_DLLS "${MINGW_BIN_PATH}")
+        if(PGE_BUILD_XTCONVERT)
+            find_mingw_dll(LZMA5            "liblzma-5.dll" MINGW_DLLS "${MINGW_BIN_PATH}")
+            find_mingw_dll(GNURX            "libgnurx-0.dll" MINGW_DLLS "${MINGW_BIN_PATH}")
+        endif()
 
         message("MinGW DLLs: [${MINGW_DLLS}]")
 
