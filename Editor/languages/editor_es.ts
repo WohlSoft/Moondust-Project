@@ -228,7 +228,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation>Habilitar auto escalar en pantallas High-DPI</translation>
+        <translation>Habilitar auto-escalado en monitores con una alta densisdad de pixeles (DPI)</translation>
     </message>
     <message>
         <source>Display tabs horizontally</source>
