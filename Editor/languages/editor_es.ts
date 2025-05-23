@@ -1971,11 +1971,11 @@ depending on which playable character is used.</source>
     </message>
     <message>
         <source>Player number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de jugador:</translation>
     </message>
     <message>
         <source>State number</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de estado</translation>
     </message>
     <message>
         <source>Show/Hide the message box preview area</source>
