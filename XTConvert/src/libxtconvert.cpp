@@ -1307,7 +1307,8 @@ public:
             || filename.endsWith(".vgm") || filename.endsWith(".vgz") || filename.endsWith(".mid")
             || filename.endsWith(".nsf") || filename.endsWith(".hes")
             || filename.endsWith(".pttune") || filename.endsWith(".ptcop")
-            || filename.endsWith(".wma") || filename.endsWith(".gbs") || filename.endsWith(".psm");
+            || filename.endsWith(".wma") || filename.endsWith(".gbs") || filename.endsWith(".psm")
+            || filename.endsWith(".flac");
 
         bool is_tracker_music = filename.endsWith(".spc") || filename.endsWith(".it")
             || filename.endsWith(".mod") || filename.endsWith(".xm") || filename.endsWith(".s3m");
