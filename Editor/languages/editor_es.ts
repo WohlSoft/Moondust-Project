@@ -1979,15 +1979,15 @@ depending on which playable character is used.</source>
     </message>
     <message>
         <source>Show/Hide the message box preview area</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar/Ocultar el área de previsualización del cuadro de mensaje</translation>
     </message>
     <message>
         <source>Enter the NPC&apos;s dialogue message text:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Introducir el mensaje del diálogo del NPC:</translation>
     </message>
     <message>
         <source>Target engine:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Motor objetivo:</translation>
     </message>
     <message>
         <source>This field allows you to preview the message box like it shown in different engines
@@ -2031,7 +2031,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     <message>
         <source>Preview</source>
         <comment>The text on the switch button</comment>
-        <translation type="unfinished">Previsualización</translation>
+        <translation>Previsualización</translation>
     </message>
     <message>
         <source>This is a text of the message that will be shown when the player tries to talk to the NPC, or when an event with a non-empty message text is triggered.</source>
@@ -2098,7 +2098,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Matriz de ID: %1</translation>
     </message>
 </context>
 <context>
@@ -2237,7 +2237,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matriz de ID: %1</translation>
     </message>
 </context>
 <context>
@@ -2292,7 +2292,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matriz de ID: %1</translation>
     </message>
 </context>
 <context>
@@ -2403,7 +2403,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matriz de ID: %1</translation>
     </message>
     <message>
         <source>Collision script function</source>
@@ -2411,11 +2411,11 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Mouse click Script function</source>
-        <translation type="unfinished"></translation>
+        <translation>Función de guion del clic del ratón</translation>
     </message>
     <message>
         <source>Sub-Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Subárea</translation>
     </message>
 </context>
 <context>
@@ -2493,7 +2493,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matriz de ID: %1</translation>
     </message>
 </context>
 <context>
@@ -2627,64 +2627,64 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matriz de ID: %1</translation>
     </message>
 </context>
 <context>
     <name>JsonSettingsWidget</name>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Explorar</translation>
+        <translation>Explorar</translation>
     </message>
     <message>
         <source>Play</source>
-        <translation type="unfinished">Reproducir</translation>
+        <translation>Reproducir</translation>
     </message>
     <message>
         <source>[empty]</source>
-        <translation type="unfinished">[vacío]</translation>
+        <translation>[vacío]</translation>
     </message>
     <message>
         <source>W</source>
         <comment>Width, shortly</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">An</translation>
     </message>
     <message>
         <source>H</source>
         <comment>Height, shortly</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Al</translation>
     </message>
     <message>
         <source>%1 coins</source>
-        <translation type="unfinished">%1 monedas</translation>
+        <translation>%1 moneda(s)</translation>
     </message>
     <message>
         <source>Add new item into the list</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir ítem nuevo a la lista</translation>
     </message>
     <message>
         <source>Remove selected item from the list</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar ítem seleccionado de la lista</translation>
     </message>
     <message>
         <source>Play selected file</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproducir archivo seleccionado</translation>
     </message>
     <message>
         <source>Open...</source>
-        <translation type="unfinished">Abrir...</translation>
+        <translation>Abrir...</translation>
     </message>
     <message>
         <source>Open selected file</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir archivo seleccionado</translation>
     </message>
     <message>
         <source>Add new line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Añadir línea</translation>
     </message>
     <message>
         <source>Please enter a text line to add:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Introduzca una línea de texto para añadir:</translation>
     </message>
 </context>
 <context>
@@ -2848,7 +2848,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>SMBX-38A file version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versión del archivo SMBX-38A</translation>
     </message>
     <message>
         <source>Which version do you want to save as? (from 64 to 69)
@@ -3024,7 +3024,7 @@ version code must be less or equal specific code)</source>
     <message>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
-        <translation type="unfinished">Probar nivel</translation>
+        <translation>Probar nivel</translation>
     </message>
     <message>
         <source>Starts level testing in the legacy engine.
@@ -3035,16 +3035,16 @@ Esta opción necesita LunaLUA.</translation>
     </message>
     <message>
         <source>Reset checkpoints</source>
-        <translation type="unfinished">Reiniciar checkpoints</translation>
+        <translation>Reiniciar puntos de guardado</translation>
     </message>
     <message>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation type="unfinished">Reiniciar todos los checkpoints a su estado inicial.</translation>
+        <translation>Reiniciar todos los puntos de guardado.</translation>
     </message>
     <message>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
-        <translation type="unfinished">Deshabilitar OpenGL</translation>
+        <translation>Deshabilitar OpenGL</translation>
     </message>
     <message>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
@@ -3053,54 +3053,54 @@ Esta opción necesita LunaLUA.</translation>
     <message>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation type="unfinished">Ejecutar en segundo plano</translation>
+        <translation>Ejecutar en segundo plano</translation>
     </message>
     <message>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation type="unfinished">Permite probar el nivel mucho más rapido despues de la primer ejecución.
-Requiere una poderosa computadora, de otra manera el motor se congelará en la siguiente ejecución.
-Se sugiere deshabilitar esto en máquinas lentas o en caso de que se presente algún problema al probar.</translation>
+        <translation type="unfinished">Permite probar el nivel mucho más rápido después de la primera ejecución.
+Requiere una poderosa computadora; si no, el motor puede congelarse en la siguiente ejecución.
+Se sugiere deshabilitar esto en máquinas lentas o en caso de problemas al probar un nivel.</translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="unfinished">Termina el proceso del LunaTester para que el motor pueda ejecutarse de nuevo.</translation>
+        <translation>Termina el proceso del LunaTester para que el motor pueda ejecutarse de nuevo.</translation>
     </message>
     <message>
         <source>Start Game</source>
         <comment>Launch LunaTester as a normal game.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Empezar</translation>
     </message>
     <message>
         <source>Launch LunaTester as a normal game.</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar LunaTester como un juego normal.</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="unfinished">¿Está seguro de querer cerrar LunaTester? Si está probando un nivel, ¡esto lo terminará inmediatamente!</translation>
+        <translation>¿Está seguro de querer cerrar LunaTester? Si está probando un nivel, ¡esto lo terminará inmediatamente!</translation>
     </message>
     <message>
         <source>LunaTester has been successfully closed.</source>
-        <translation type="unfinished">Se terminó el proceso de LunaTester exitosamente.</translation>
+        <translation>LunaTester se ha cerrado con éxito.</translation>
     </message>
     <message>
         <source>LunaTester is not running.</source>
-        <translation type="unfinished">LunaTester no está siendo ejecutado.</translation>
+        <translation>LunaTester no se está ejecutando.</translation>
     </message>
     <message>
         <source>Please select a path to LunaTester:</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor seleccione un camino para LunaTester:</translation>
     </message>
     <message>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
-        <translation type="unfinished">Usar predeterminado</translation>
+        <translation>Usar predeterminado</translation>
     </message>
     <message>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
-        <translation type="unfinished">Personalizado</translation>
+        <translation>Personalizado</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -3108,11 +3108,11 @@ Se sugiere deshabilitar esto en máquinas lentas o en caso de que se presente al
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Guardar</translation>
+        <translation>Guardar</translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
-        <translation type="unfinished">¡Checkpoints reiniciados!</translation>
+        <translation>¡Puntos de guardado reiniciados con éxito!</translation>
     </message>
     <message>
         <source>LunaLUA tester is not started!</source>
@@ -3124,11 +3124,11 @@ Se sugiere deshabilitar esto en máquinas lentas o en caso de que se presente al
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation type="unfinished">¡Error al enviar nivel a LunaLUA-SMBX!</translation>
+        <translation>¡Error al enviar nivel a LunaLUA-SMBX!</translation>
     </message>
     <message>
         <source>LunaTester error</source>
-        <translation type="unfinished">Error de LunaTester</translation>
+        <translation>Error de LunaTester</translation>
     </message>
     <message>
         <source>Change the path to LunaTester...</source>
@@ -3137,17 +3137,17 @@ Se sugiere deshabilitar esto en máquinas lentas o en caso de que se presente al
     </message>
     <message>
         <source>Select the location of LunaTester.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar la ubicación de LunaTester.</translation>
     </message>
     <message>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Camino a LunaTester</translation>
     </message>
     <message>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione una ubicación para LunaTester</translation>
     </message>
     <message>
         <source>SMBX64 limits are exceeded!</source>
@@ -3301,7 +3301,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Finalizar proceso de funcionamiento</translation>
     </message>
 </context>
 <context>
