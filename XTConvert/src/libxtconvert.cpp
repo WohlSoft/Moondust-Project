@@ -163,8 +163,8 @@ static bool validate_image_filename(const QString& filename, QString& type, QStr
 
     static const std::array<std::pair<const char*, unsigned int>, 17> valid_types = {{
         {"background", 200}, {"background2", 100}, {"block", 700}, {"effect", 200}, {"level", 100},
-        {"link", 7}, {"luigi", 7}, {"mario", 7}, {"npc", 302}, {"path", 100},
-        {"peach", 7}, {"player", 5}, {"scene", 100}, {"tile", 400}, {"toad", 7},
+        {"link", 11}, {"luigi", 11}, {"mario", 11}, {"npc", 306}, {"path", 100},
+        {"peach", 11}, {"player", 5}, {"scene", 100}, {"tile", 400}, {"toad", 11},
         {"yoshib", 10}, {"yoshit", 10}
     }};
 
