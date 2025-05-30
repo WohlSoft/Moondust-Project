@@ -16,7 +16,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="307"/>
         <source>Files will be in same format</source>
-        <translation type="unfinished"></translation>
+        <translation>Los archivos estarán en el mismo formato</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="330"/>
@@ -51,7 +51,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="620"/>
         <source>FFMPEG binary path:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Camino al FFMPEG binario:</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="78"/>
@@ -67,17 +67,17 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="191"/>
         <source>Path to a level file to process</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Camino hacia un archivo de nivel para procesar</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="205"/>
         <source>Convert all music files of specific episode</source>
-        <translation type="unfinished"></translation>
+        <translation>Convertir todos los archivos de música de un episodio específico</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="228"/>
         <source>Convert music of specific level</source>
-        <translation type="unfinished"></translation>
+        <translation>Convertir la música de un nivel específico</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="238"/>
@@ -87,7 +87,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="248"/>
         <source>Path to an episode directory to process</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Camino hacia un directorio de episodios para procesar</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="24"/>
@@ -103,22 +103,23 @@
         <location filename="../Music/audiocvt_sox_gui.ui" line="142"/>
         <source>Convert into new format
 (open necessary tab to choice target format)</source>
-        <translation type="unfinished"></translation>
+        <translation>Convertir a un nuevo formato
+(abrir pestaña necesaria para elegir el formato meta)</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="108"/>
         <source>make backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Hacer una copia de seguridad</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="287"/>
         <source>Sox binary path:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Camino binario de SoX:</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="128"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="45"/>
@@ -149,7 +150,7 @@ Please set SoX path first</source>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="178"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="503"/>
         <source>Nothing to do</source>
-        <translation type="unfinished"></translation>
+        <translation>Nada que hacer</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="178"/>
@@ -164,7 +165,7 @@ Please set SoX path first</source>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="241"/>
         <source>Operation cancaled</source>
-        <translation type="unfinished"></translation>
+        <translation>Operación cancelada</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="308"/>
@@ -204,17 +205,17 @@ Overwritten worlds: %3
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="583"/>
         <source>Open FFMPEG binary path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Abrir camino del FFMPEG binario</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="596"/>
         <source>Add file to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir archivo para convertir</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="634"/>
         <source>Selecting a level file to convert custom music</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Selección de un archivo de nivel para convertir música personalizada</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="647"/>
@@ -237,23 +238,23 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="44"/>
         <source>What episode to fix?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Qué episodio hay que arreglar?</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="50"/>
         <source>Path to an episode directory to process</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Camino hacia un directorio de episodios para procesar</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="57"/>
         <location filename="../EpisodeCvt/case_fixer.ui" line="120"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar…</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="67"/>
         <source>Choose the mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Elegir el modo:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="73"/>
@@ -278,27 +279,27 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="106"/>
         <source>It&apos;s needed to verify filenames of customized resources</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Es necesario verificar los nombres de archivos de los recursos personalizados</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="113"/>
         <source>Path to a configuration package</source>
-        <translation type="unfinished"></translation>
+        <translation>Camino hacia un paquete de configuración</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="153"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="173"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Empezar</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="278"/>
         <source>Episode path error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Error del camino del episodio</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="279"/>
@@ -313,12 +314,12 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="317"/>
         <source>Can&apos;t initialize job because %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Imposible empezar este trabajo porque %1</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="338"/>
         <source>Work finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Trabajo completado</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="338"/>
@@ -346,32 +347,32 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="81"/>
         <source>Initializing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciando…</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="88"/>
         <source>No files to scan</source>
-        <translation type="unfinished"></translation>
+        <translation>Ningún archivo para escanear</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="147"/>
         <source>Looking for levels and world maps...</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscando niveles y mapas de mundo…</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="162"/>
         <source>Processing levels and world maps...</source>
-        <translation type="unfinished"></translation>
+        <translation>Procesando niveles y mapas de mundo…</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="173"/>
         <source>Looking for resources...</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscando recursos…</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="193"/>
         <source>Processing resources...</source>
-        <translation type="unfinished"></translation>
+        <translation>Procesando recursos…</translation>
     </message>
 </context>
 <context>
@@ -379,12 +380,12 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="14"/>
         <source>Episode conversion tool</source>
-        <translation type="unfinished"></translation>
+        <translation>Herramienta de conversión de episodios</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="311"/>
         <source>Episode path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Camino hacia el episodio:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="291"/>
@@ -399,7 +400,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="54"/>
         <source>Simple</source>
-        <translation type="unfinished"></translation>
+        <translation>Simple</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="63"/>
@@ -414,27 +415,27 @@ This option is only works if you convert episode for TheXTech.</source>
         <location filename="../EpisodeCvt/episode_converter.ui" line="69"/>
         <location filename="../EpisodeCvt/episode_converter.ui" line="140"/>
         <source>Apply Pre-1.3 NPC settings for TheXTech</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Usar ajustes PNJ Pre-1.3 en TheXTech</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="82"/>
         <source>Select the engine for which you want to convert the episode:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Seleccionar el motor para el que quiera convertir el episodio:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="106"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Avanzado</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="153"/>
         <source>Target format for levels:</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato meta para los niveles:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="183"/>
         <source>Same as levels</source>
-        <translation type="unfinished"></translation>
+        <translation>El mismo que los niveles</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="238"/>
@@ -449,7 +450,7 @@ This option is only works if you convert episode for TheXTech.</source>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="284"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar…</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="397"/>
@@ -462,27 +463,27 @@ Important: There are only level and world map files gets being converted. Any in
         <location filename="../EpisodeCvt/episode_converter.ui" line="212"/>
         <location filename="../EpisodeCvt/episode_converter.ui" line="225"/>
         <source>Version:</source>
-        <translation type="unfinished"></translation>
+        <translation>Versión:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="298"/>
         <source>Look for subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar subdirectorios</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="374"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="381"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="335"/>
         <source>[Select an engine]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Seleccionar un motor]</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="678"/>
@@ -498,18 +499,18 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="701"/>
         <source>World map(s) without an episode, format: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mapa(s) de mundo sin episodio, formato: %1</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="724"/>
         <source>Level(s) without an episode, format: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel(es) sin episodio, formato: %1</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="881"/>
         <source>Unknown episode</source>
         <comment>Heuristicly detected episode format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Episodio desconocido</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="885"/>
@@ -519,7 +520,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="937"/>
         <source>Episode path error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Error del camino del episodio</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="938"/>
@@ -544,7 +545,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="1013"/>
         <source>Work finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Trabajo completado</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="1013"/>
@@ -559,7 +560,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="1017"/>
         <source>Episode conversion aborted with error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Conversión del episodio anulada por un error: %1</translation>
     </message>
 </context>
 <context>
@@ -572,7 +573,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="56"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ningún archivo para convertir</translation>
     </message>
 </context>
 <context>
@@ -585,7 +586,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.ui" line="109"/>
         <source>Convert files</source>
-        <translation type="unfinished"></translation>
+        <translation>Convertir archivos</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="125"/>
@@ -601,7 +602,7 @@ Important: There are only level and world map files gets being converted. Any in
         <location filename="../Graphics/gifs2png.ui" line="149"/>
         <location filename="../Graphics/gifs2png.ui" line="195"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar…</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="188"/>
@@ -621,7 +622,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.ui" line="178"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Procesar todo el contenido de los subdirectorios</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="202"/>
@@ -641,18 +642,18 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.ui" line="168"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Banderas</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="98"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Qué quiere hacer?</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
         <location filename="../Graphics/gifs2png.cpp" line="291"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="75"/>
@@ -667,12 +668,12 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.ui" line="68"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="71"/>
         <source>Process is busy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">El proceso está ocupado</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="72"/>
@@ -685,7 +686,7 @@ Important: There are only level and world map files gets being converted. Any in
         <location filename="../Graphics/gifs2png.cpp" line="131"/>
         <location filename="../Graphics/gifs2png.cpp" line="140"/>
         <source>Incorrect input</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrada incorrecta</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="113"/>
@@ -720,22 +721,22 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="207"/>
         <source>Process was exited with a code %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>El proceso se ha terminado con un código %1.</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="217"/>
         <source>Process was terminated</source>
-        <translation type="unfinished"></translation>
+        <translation>El proceso se ha interrumpido</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="218"/>
         <source>Conversion has been termiated.</source>
-        <translation type="unfinished"></translation>
+        <translation>La conversión se ha interrumpido.</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="223"/>
         <source>Unsuccess exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Salida sin éxito</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="224"/>
@@ -745,7 +746,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="289"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Detener</translation>
     </message>
 </context>
 <context>
@@ -758,7 +759,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.ui" line="31"/>
         <source>Process files</source>
-        <translation type="unfinished"></translation>
+        <translation>Procesar archivos</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="47"/>
@@ -778,12 +779,12 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.ui" line="71"/>
         <source>Don&apos;t create backup for old images</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">No crear copia de seguridad de las imágenes antiguas</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="78"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar…</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="85"/>
@@ -793,23 +794,23 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.ui" line="98"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Banderas</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="105"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Procesar todo el contenido de los subdirectorios</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="119"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Qué quiere hacer?</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="126"/>
         <location filename="../Graphics/lazyfix.cpp" line="187"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="133"/>
@@ -819,7 +820,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.ui" line="167"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="174"/>
@@ -840,7 +841,7 @@ Important: There are only level and world map files gets being converted. Any in
         <location filename="../Graphics/lazyfix.cpp" line="102"/>
         <location filename="../Graphics/lazyfix.cpp" line="111"/>
         <source>Incorrect input</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrada incorrecta</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="103"/>
@@ -855,27 +856,27 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="133"/>
         <source>Select an input directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar un directorio de entrada</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="155"/>
         <source>Process was exited with a code %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>El proceso se ha terminado con un código %1.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="165"/>
         <source>Process was terminated</source>
-        <translation type="unfinished"></translation>
+        <translation>El proceso se ha interrumpido</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="166"/>
         <source>Processing has been termiated.</source>
-        <translation type="unfinished"></translation>
+        <translation>El proceso se ha interrumpido.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="171"/>
         <source>Unsuccess exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Salida sin éxito</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="172"/>
@@ -885,7 +886,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="185"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Detener</translation>
     </message>
 </context>
 <context>
@@ -893,7 +894,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../main_window.ui" line="14"/>
         <source>Maintainer Main Menu</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Menú principal de Maintainer</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="29"/>

@@ -366,7 +366,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>Opacity of locked items</source>
         <comment>The title of group where user can set up the opacity level of locked items</comment>
-        <translation type="unfinished">Opacidad de los ítems bloqueados</translation>
+        <translation>Opacidad de los elementos bloqueados</translation>
     </message>
     <message>
         <source>Opacity</source>
@@ -717,7 +717,7 @@ The Official Moondust Devkit has a support of the SMBX2 Beta4 and older only. Ho
     <message>
         <source>Incompatible integrational</source>
         <comment>Level of config pack incompatibility. An obsolete and incompatible integrational config package.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Integracional incompatible</translation>
     </message>
     <message>
         <source>Incompatible</source>

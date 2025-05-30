@@ -336,7 +336,7 @@ Mondes écrasés : %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="341"/>
         <source>Error occouped while work process</source>
-        <translation>Un erreur s&apos;est produite lors du traitement</translation>
+        <translation>Une erreur s&apos;est produite lors du traitement</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="342"/>
@@ -426,7 +426,7 @@ Formats pris en charge :
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="54"/>
         <source>Simple</source>
-        <translation type="unfinished"></translation>
+        <translation>Simple</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="63"/>
@@ -441,37 +441,37 @@ This option is only works if you convert episode for TheXTech.</source>
         <location filename="../EpisodeCvt/episode_converter.ui" line="69"/>
         <location filename="../EpisodeCvt/episode_converter.ui" line="140"/>
         <source>Apply Pre-1.3 NPC settings for TheXTech</source>
-        <translation type="unfinished"></translation>
+        <translation>Appliquer paramètres Pre-1.3 NPC à TheXTech</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="82"/>
         <source>Select the engine for which you want to convert the episode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner le moteur pour lequel vous voulez convertir l&apos;épisode&#xa0;:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="106"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Avancé</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="153"/>
         <source>Target format for levels:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Format cible pour les niveaux&#xa0;:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="183"/>
         <source>Same as levels</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Le même que les niveaux</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="238"/>
         <source>Target format for worlds:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Format cible des mondes&#xa0;:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="264"/>
         <source>New config pack ID:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nouveau ID de pack de config&#xa0;:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="284"/>
@@ -517,7 +517,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="335"/>
         <source>[Select an engine]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Sélectionnez un moteur]</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="678"/>
@@ -533,23 +533,23 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="701"/>
         <source>World map(s) without an episode, format: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Carte(s) des mondes sans un épisode, format&#xa0;: %1</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="724"/>
         <source>Level(s) without an episode, format: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Niveau(x) sans épisodes, format&#xa0;: %1</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="881"/>
         <source>Unknown episode</source>
         <comment>Heuristicly detected episode format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Épisode inconnu</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="885"/>
         <source>Guessed episode format: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Format d&apos;épisode estimé&#xa0;: %1</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="937"/>
@@ -646,7 +646,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.ui" line="216"/>
         <source>Skip images with non-black-and-white masks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Passer les images avec des masques pas en noir et blanc</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="156"/>

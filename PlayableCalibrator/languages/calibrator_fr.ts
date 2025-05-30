@@ -282,7 +282,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="896"/>
         <source>Open the Wiki page...</source>
-        <translation type="unfinished">Ouvrir la page du Wiki…</translation>
+        <translation>Ouvrir la page du Wiki…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="930"/>
@@ -358,7 +358,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="97"/>
         <source>Add the drawing of wall, floor, or ceiling. Can be used as an indication of how playable character interacts with surfaces.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter le dessin d&apos;un mur, sol ou plafond. Peut être utilisé comme aperçu de comment le personnage jouable interagit avec les surfaces.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="100"/>
@@ -445,7 +445,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="308"/>
         <source>Show sprite map...</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer carte des sprites…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="382"/>
@@ -465,12 +465,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="956"/>
         <source>Open the srite directory...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le répertoire des sprites…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="993"/>
         <source>Sprite editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditeur de sprites</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="998"/>
@@ -735,12 +735,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="917"/>
         <source>Import data from SMBX-38A level...</source>
-        <translation type="unfinished">Importer des données à partir d&apos;un fichier de niveau SMBX-38A…</translation>
+        <translation>Importer des données d&apos;un niveau SMBX-38A…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="922"/>
         <source>Export data into SMBX-38A level...</source>
-        <translation type="unfinished">Exporter les données dans un fichier de niveau SMBX-38A…</translation>
+        <translation>Exporter les données dans un niveau SMBX-38A…</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="91"/>
@@ -836,7 +836,7 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../main/settings.cpp" line="108"/>
         <source>Select a path to the graphical editor executable</source>
         <comment>File dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner un chemin vers l&apos;exécutable de l&apos;éditeur graphique</translation>
     </message>
 </context>
 <context>
@@ -895,7 +895,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="23"/>
         <source>Sprite editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditeur de sprites</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="52"/>
@@ -905,7 +905,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="55"/>
         <source>Drag mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mode de traînée</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="76"/>
@@ -931,7 +931,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="110"/>
         <source>Pencil to draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Crayon pour dessiner</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="113"/>
@@ -1009,7 +1009,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="312"/>
         <source>Show sprite map</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer carte de sprites</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="322"/>
@@ -1025,7 +1025,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="370"/>
         <source>Referrence frame:</source>
-        <translation type="unfinished"></translation>
+        <translation>Cadre de référence&#xa0;:</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="403"/>
@@ -1050,7 +1050,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="501"/>
         <source>Open frame in editor...</source>
-        <translation type="unfinished">Ouvrir l&apos;image dans l&apos;éditeur…</translation>
+        <translation>Ouvrir l&apos;image dans l&apos;éditeur…</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="508"/>

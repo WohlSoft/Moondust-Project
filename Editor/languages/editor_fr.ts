@@ -352,26 +352,26 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Autosave</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarde automatique</translation>
     </message>
     <message>
         <source>Automatically save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder fichier automatiquement toutes les</translation>
     </message>
     <message>
         <source>minutes</source>
         <comment>Autosave interval units</comment>
-        <translation type="unfinished"></translation>
+        <translation>minutes</translation>
     </message>
     <message>
         <source>Opacity of locked items</source>
         <comment>The title of group where user can set up the opacity level of locked items</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opacité des éléments verrouillés</translation>
     </message>
     <message>
         <source>Opacity</source>
         <comment>Opacity of locked items (label text)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opacité</translation>
     </message>
     <message>
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
@@ -541,8 +541,8 @@ Veuillez d&apos;abord définir le chemin de SoX</translation>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
 &lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ici vous pouvez rapidement convertir vos musiques ou fichiers SFX qui &lt;br&gt;n&apos;ont pas été formatés correctement (mauvais taux d&apos;échantillonnage, mauvais codec, etc.).&lt;/p&gt;
-&lt;p&gt;Cette fonctionnalité utilise le convertisseur audio &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration&#x202f;: underline&#x202f;; color&#x202f;:#0000ff&#x202f;;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Ici vous pouvez rapidement convertir vos musiques ou fichiers SFX qui &lt;br&gt;n&apos;ont pas été formatés correctement (mauvais taux d&apos;échantillonnage, mauvais codec, etc.).&lt;/p&gt;
+&lt;p&gt;Cette fonctionnalité utilise le convertisseur audio &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color&#xa0;:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -686,12 +686,12 @@ Chemin d&apos;accès : %3</translation>
     <message>
         <source>Legacy configuration package</source>
         <comment>Warning message box title</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pack de configuration d&apos;héritage</translation>
     </message>
     <message>
         <source>Incompatible configuration package</source>
         <comment>Warning message box title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pack de configuration incompatible</translation>
     </message>
     <message>
         <source>You have an incompatible configuration package designed for the SMBX2 project to use it with the modified version of the DevKit which is incompatible to the mainstream.
@@ -707,12 +707,12 @@ The Official Moondust Devkit has a support of the SMBX2 Beta4 and older only. Ho
     <message>
         <source>Outdated</source>
         <comment>Level of config pack incompatibility. Outdated means it MAY work, but some minor errors are possible.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dépassé</translation>
     </message>
     <message>
         <source>Legacy, incompatible</source>
         <comment>Level of config pack incompatibility. Legacy means this config pack is too old to work on this version of Editor.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Héritage, incompatible</translation>
     </message>
     <message>
         <source>Incompatible integrational</source>
@@ -722,7 +722,7 @@ The Official Moondust Devkit has a support of the SMBX2 Beta4 and older only. Ho
     <message>
         <source>Incompatible</source>
         <comment>Level of config pack incompatibility. Incompatible, means, it&apos;s a totally incompatible config pack, probably, created for a modified version of the Moondust.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Incompatible</translation>
     </message>
     <message>
         <source>You have a legacy configuration package.&lt;br&gt;
@@ -918,7 +918,10 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
 - What operating system you are using?</source>
-        <translation type="unfinished"></translation>
+        <translation>Lors de l&apos;envoi d&apos;un rapport, veuillez expliquer ce qui a causé le plantage.
+- Veuillez donner une liste d&apos;étapes que vous avez effectuez pour causer le plantage.	
+- Si le plantage a eu lieu lors de la modification d&apos;un fichier en particulier, veuillez le joindre au rapport.
+- Quel système d&apos;exploitation utilisez-vous&#x202f;?</translation>
     </message>
     <message>
         <source>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
@@ -926,7 +929,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation>Poster un rapport sur le Forum WohlSoft (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</source>
@@ -1004,7 +1007,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     <name>DataConfig</name>
     <message>
         <source>Invalid config pack version</source>
-        <translation type="unfinished"></translation>
+        <translation>Version de pack de config. invalide</translation>
     </message>
     <message>
         <source>Can&apos;t load the configuration package: the &quot;api-version&quot; field is missing at the main.ini.</source>
@@ -1157,7 +1160,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Il s&apos;agit de la &lt;span style=&quot; font-weight:600;&quot;&gt;hauteur&lt;/span&gt; de l&apos;image cible. L&apos;image cible sera redimensionnée à cette hauteur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Il s&apos;agit de la &lt;span style=&quot; font-weight:600;&quot;&gt;Hauteur&lt;/span&gt; de l&apos;image cible. L&apos;image cible sera redimensionnée à cette hauteur.&lt;/p&gt;</translation>
     </message>
     <message>
         <source> px</source>
@@ -1173,11 +1176,11 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lorsque cette case est cochée, cela permettra de calculer la taille de la dimension opposée (hauteur ou largeur) pour créer une image cible avec les bonnes proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Lorsque cette case est cochée, cela permettra de calculer la taille de la dimension opposée (hauteur ou largeur) pour créer une image cible avec les bonnes proportions.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Il s&apos;agit de la &lt;span style=&quot; font-weight:600;&quot;&gt;largeur&lt;/span&gt; de l&apos;image cible. L&apos;image cible sera redimensionnée à cette largeur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Il s&apos;agit de la &lt;span style=&quot; font-weight:600;&quot;&gt;Largeur&lt;/span&gt; de l&apos;image cible. L&apos;image cible sera redimensionnée à cette largeur.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Width</source>
@@ -1246,12 +1249,12 @@ sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 as well as toolboxes in toolbars and menus. This editor also allows you to select multiple objects at once!&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;Astuce 1 :&lt;/b&gt; Vous pouvez modifier la disposition à tout moment depuis le menu &lt;u&gt;Aide&lt;/u&gt;, les boîtes d&apos;outils dans le menu &lt;u&gt;Vue&lt;/u&gt;, et les cases à cocher de disposition des fenêtres dans le menu &lt;u&gt;Fenêtre&lt;/u&gt;.&lt;br/&gt;
-&lt;br/&gt;
-&lt;b&gt;Astuce 2 :&lt;/b&gt; Contrairement à l&apos;ancien éditeur, de nombreuses fonctions sont rapidement accessibles à partir du menu contextuel (ouvert par un clic droit),
-ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet éditeur vous permet également de sélectionner plusieurs objets à la fois !&lt;br/&gt;
-&lt;br/&gt;
-&lt;b&gt;Astuce 3 :&lt;/b&gt; Utilisez le bouton central de la souris pour basculer entre le placement de l&apos;objet sélectionné et la copie d&apos;un groupe d&apos;objets !&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;&lt;b&gt;Astuce 1&#xa0;:&lt;/b&gt; Vous pouvez modifier la disposition à tout moment depuis le menu &lt;u&gt;Aide&lt;/u&gt;, les boîtes d&apos;outils dans le menu &lt;u&gt;Vue&lt;/u&gt;, et les cases à cocher de disposition des fenêtres dans le menu &lt;u&gt;Fenêtre&lt;/u&gt;.&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;Astuce 2&#xa0;:&lt;/b&gt; Contrairement à l&apos;ancien éditeur, de nombreuses fonctions sont rapidement accessibles à partir du menu contextuel (ouvert par un clic droit),
+ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet éditeur vous permet également de sélectionner plusieurs objets à la fois&#x202f;!&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;Astuce 3&#xa0;:&lt;/b&gt; Utilisez le bouton central de la souris pour basculer entre le placement de l&apos;objet sélectionné et la copie d&apos;un groupe d&apos;objets&#x202f;!&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Welcome to Moondust Editor!</source>
@@ -1546,7 +1549,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matrice de ID&#xa0;: %1</translation>
     </message>
 </context>
 <context>
@@ -1685,11 +1688,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matrice de ID&#xa0;: %1</translation>
     </message>
     <message>
         <source>Please enter the message text that which will be shown:</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez entrer le texte qui sera affiché&#xa0;:</translation>
     </message>
 </context>
 <context>
@@ -1825,31 +1828,31 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished">Direction</translation>
+        <translation>Direction</translation>
     </message>
     <message>
         <source>Left</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Gauche</translation>
+        <translation>Gauche</translation>
     </message>
     <message>
         <source>Up</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Haut</translation>
+        <translation>Haut</translation>
     </message>
     <message>
         <source>Right</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Droite</translation>
+        <translation>Droite</translation>
     </message>
     <message>
         <source>Down</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Bas</translation>
+        <translation>Bas</translation>
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matrice de ID&#xa0;: %1</translation>
     </message>
 </context>
 <context>
@@ -1924,7 +1927,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matrice de ID&#xa0;: %1</translation>
     </message>
 </context>
 <context>
@@ -1935,7 +1938,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Il s&apos;agit du message qui sera affiché si le joueur parle avec le PNJ.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque :&lt;/span&gt; Tous les guillemets et retours à la ligne seront supprimés.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Il s&apos;agit du message qui sera affiché si le joueur parle avec le PNJ.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque&#xa0;:&lt;/span&gt; Tous les guillemets et retours à la ligne seront supprimés.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
@@ -1943,11 +1946,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Preview settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres de l&apos;aperçu</translation>
     </message>
     <message>
         <source>Font size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille de police&#xa0;:</translation>
     </message>
     <message>
         <source>Defines the size of the font in this preview.
@@ -1964,27 +1967,27 @@ depending on which playable character is used.</source>
     </message>
     <message>
         <source>Preprocessor</source>
-        <translation type="unfinished"></translation>
+        <translation>Préprocesseur</translation>
     </message>
     <message>
         <source>Player number:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nombre de joueur&#xa0;:</translation>
     </message>
     <message>
         <source>State number</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre d&apos;état</translation>
     </message>
     <message>
         <source>Show/Hide the message box preview area</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer/Cacher la zone d&apos;aperçu du cadre de message</translation>
     </message>
     <message>
         <source>Enter the NPC&apos;s dialogue message text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrer le message de dialogue du NPC&#xa0;:</translation>
     </message>
     <message>
         <source>Target engine:</source>
-        <translation type="unfinished"></translation>
+        <translation>Moteur cible&#xa0;:</translation>
     </message>
     <message>
         <source>This field allows you to preview the message box like it shown in different engines
@@ -2028,7 +2031,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     <message>
         <source>Preview</source>
         <comment>The text on the switch button</comment>
-        <translation type="unfinished">Aperçu</translation>
+        <translation>Aperçu</translation>
     </message>
     <message>
         <source>This is a text of the message that will be shown when the player tries to talk to the NPC, or when an event with a non-empty message text is triggered.</source>
@@ -2039,7 +2042,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     <name>ItemMusic</name>
     <message>
         <source>&lt;Silence&gt;</source>
-        <translation>&lt;Aucun&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Play this</source>
@@ -2095,7 +2098,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matrice de ID&#xa0;: %1</translation>
     </message>
 </context>
 <context>
@@ -2234,7 +2237,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matrice de ID&#xa0;: %1</translation>
     </message>
 </context>
 <context>
@@ -2289,7 +2292,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matrice de ID&#xa0;: %1</translation>
     </message>
 </context>
 <context>
@@ -2400,11 +2403,11 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matrice de ID&#xa0;: %1</translation>
     </message>
     <message>
         <source>Collision script function</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fonction de collision du script</translation>
     </message>
     <message>
         <source>Mouse click Script function</source>
@@ -2412,7 +2415,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Sub-Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Sous-zone</translation>
     </message>
 </context>
 <context>
@@ -2490,7 +2493,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matrice de ID&#xa0;: %1</translation>
     </message>
 </context>
 <context>
@@ -2624,7 +2627,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matrice de ID&#xa0;: %1</translation>
     </message>
 </context>
 <context>
@@ -2657,31 +2660,31 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Add new item into the list</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter nouvel élément à la liste</translation>
     </message>
     <message>
         <source>Remove selected item from the list</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer élément selectionné de la liste</translation>
     </message>
     <message>
         <source>Play selected file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jouer le fichier sélectionné</translation>
     </message>
     <message>
         <source>Open...</source>
-        <translation type="unfinished">Ouvrir…</translation>
+        <translation>Ouvrir…</translation>
     </message>
     <message>
         <source>Open selected file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir fichier sélectionné</translation>
     </message>
     <message>
         <source>Add new line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter nouvelle ligne</translation>
     </message>
     <message>
         <source>Please enter a text line to add:</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez entrer une ligne de texte pour ajouter&#xa0;:</translation>
     </message>
 </context>
 <context>
@@ -2845,7 +2848,7 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
         <source>SMBX-38A file version</source>
-        <translation type="unfinished"></translation>
+        <translation>Version du fichier SMBX-38A</translation>
     </message>
     <message>
         <source>Which version do you want to save as? (from 64 to 69)
@@ -2892,7 +2895,7 @@ version code must be less or equal specific code)</source>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
-        <translation>&lt;Enregistrer le fichier d&apos;abord&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Level items browser</source>
@@ -3307,7 +3310,7 @@ Cela signifie qu&apos;il est impossible de lancer le test d&apos;un niveau avec 
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Met fin au processus en cours d&apos;exécution</translation>
     </message>
 </context>
 <context>
@@ -3326,7 +3329,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque&#x202f;:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8…64&lt;/span&gt; et &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; ne supportent pas plus de 21 sections.&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1…7&lt;/span&gt; ne supportent pas plus de 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque&#xa0;:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8…64&lt;/span&gt; et &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; ne supportent pas plus de 21 sections.&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1…7&lt;/span&gt; ne supportent pas plus de 6 sections.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Destiation</source>
@@ -3641,23 +3644,23 @@ Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>Please, enter the message box text:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Veuillez entrer le texte du cadre de message&#xa0;:</translation>
     </message>
     <message>
         <source>Rename event</source>
-        <translation type="unfinished"></translation>
+        <translation>Renommer l&apos;évènement</translation>
     </message>
     <message>
         <source>Remove event</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer évènement</translation>
     </message>
     <message>
         <source>Show event statistics...</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer les statistiques de l&apos;évènement…</translation>
     </message>
     <message>
         <source>Event &quot;%1&quot; statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Statistiques de l&apos;évènement &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Total triggers</source>
@@ -3692,7 +3695,7 @@ Souhaitez-vous continuer ?</translation>
     <message>
         <source>Autostart type</source>
         <comment>Event statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Type de démarrage auto</translation>
     </message>
     <message>
         <source>Level start</source>
@@ -3712,25 +3715,27 @@ Souhaitez-vous continuer ?</translation>
     <message>
         <source>[Unknown]</source>
         <comment>Event autostart type</comment>
-        <translation type="unfinished"></translation>
+        <translation>[Inconnu]</translation>
     </message>
     <message>
         <source>&lt;h2&gt;Event &quot;%1&quot; statistics:&lt;/h2&gt;
 &lt;center&gt;&amp;lt;This is an unused event&amp;gt;&lt;/center&gt;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h2&gt;Statistiques de l&apos;évènement &quot;%1&quot;&#xa0;: &lt;/h2&gt;
+&lt;center&gt;&amp;lt;Ceci est un évènement inutilisé&amp;gt;&lt;/center&gt;
+</translation>
     </message>
     <message>
         <source>Triggered by other events</source>
-        <translation type="unfinished"></translation>
+        <translation>Déclenché par d&apos;autres évènements</translation>
     </message>
     <message>
         <source>Remove this event</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer cet évènement</translation>
     </message>
     <message>
         <source>Event statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Statistiques de l&apos;évènement</translation>
     </message>
 </context>
 <context>
@@ -4101,35 +4106,35 @@ Tous les objets de cette couche seront supprimés !</translation>
     </message>
     <message>
         <source>Select all items</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner tous les éléments</translation>
     </message>
     <message>
         <source>Show layer statistics...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Montrer les statistiques des calques…</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; statistics</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Statistiques du calque &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Total members</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Membres totaux</translation>
     </message>
     <message>
         <source>Blocks</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished">Blocs</translation>
+        <translation>Blocs</translation>
     </message>
     <message>
         <source>Background objects</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Objets de l&apos;arrière-plan</translation>
     </message>
     <message>
         <source>NPC</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished">PNJ</translation>
+        <translation>PNJ</translation>
     </message>
     <message>
         <source>Warps</source>
@@ -4139,16 +4144,16 @@ Tous les objets de cette couche seront supprimés !</translation>
     <message>
         <source>Physical environments</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>Environnements physiques</translation>
     </message>
     <message>
         <source>Usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilisation</translation>
     </message>
     <message>
         <source>Attaches to NPCs</source>
         <comment>Layer statistics field</comment>
-        <translation type="unfinished"></translation>
+        <translation>S&apos;attache aux PNJ</translation>
     </message>
     <message>
         <source>Referred in events</source>
@@ -4159,7 +4164,9 @@ Tous les objets de cette couche seront supprimés !</translation>
         <source>&lt;h2&gt;Layer &quot;%1&quot; statistics:&lt;/h2&gt;
 &lt;center&gt;&amp;lt;This is an unused layer with no members&amp;gt;&lt;/center&gt;
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;h2&gt;Statistiques du calque &quot;%1&quot;&#xa0;:&lt;/h2&gt;
+&lt;center&gt;&amp;lt;Ceci est un calque sans membres&amp;gt;&lt;/center&gt;
+</translation>
     </message>
     <message>
         <source>Referred in events</source>
@@ -4167,11 +4174,11 @@ Tous les objets de cette couche seront supprimés !</translation>
     </message>
     <message>
         <source>Remove this layer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer ce calque</translation>
     </message>
     <message>
         <source>Layer statistics</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Statistiques du calque</translation>
     </message>
 </context>
 <context>
@@ -4952,7 +4959,7 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Needs floor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A besoin d&apos;un sol</translation>
     </message>
     <message>
         <source>Create the duplicate warp entry with same settings (except for already placed points)</source>
@@ -4960,11 +4967,11 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Apply to all</source>
-        <translation type="unfinished"></translation>
+        <translation>Appliquer à tous</translation>
     </message>
     <message>
         <source>Apply to all entries</source>
-        <translation type="unfinished"></translation>
+        <translation>Appliquer à toutes les entrées</translation>
     </message>
     <message>
         <source>Do you really want to apply this setting to all objects?</source>
@@ -4974,7 +4981,9 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
         <source>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher un écran vide au lieu de l&apos;écran de chargement.
+Dans l&apos;écran de chargement de l&apos;ancien moteur, il y aurait autrement	
+affiché le(s) personnage(s) jouable(s) actuel(s) et le nombre de vies.</translation>
     </message>
     <message>
         <source>On-Exit event:</source>
@@ -5343,7 +5352,7 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activer les animations des objets animés&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;Si la carte possède trop d&apos;objets, il est recommandé de &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;désactiver&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; cette option !&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Activer les animations des objets animés&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;Si la carte possède trop d&apos;objets, il est recommandé de &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;désactiver&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; cette option&#x202f;!&lt;/span&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Go to the left-top of the section</source>
@@ -5794,7 +5803,7 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
     </message>
     <message>
         <source>&lt;empty&gt;</source>
-        <translation>&lt;vide&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Copy</source>
@@ -6374,7 +6383,7 @@ Voir %2 pour plus d&apos;information.</translation>
     </message>
     <message>
         <source>&lt;no extra settings&gt;</source>
-        <translation>&lt;aucun paramètre supplémentaire&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show camera grid</source>
@@ -6464,13 +6473,17 @@ Identifiant de paquet de configuration attendu : %4</translation>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, choose the engine application yourself!</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de commencer les tests, moteur introuvable&#xa0;:
+%1
+Veuillez choisir l&apos;application de moteur vous-même&#x202f;!</translation>
     </message>
     <message>
         <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lancer l&apos;utilitaire, Moondust Maintainer est introuvable&#xa0;: 
+%1
+Veuillez sélectionner l&apos;application Moondust Maintainer pat vous-même&#x202f;!</translation>
     </message>
 </context>
 <context>
@@ -7405,14 +7418,17 @@ si vous enregistrez le fichier</translation>
     </message>
     <message>
         <source>Needs floor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A besoin d&apos;un sol</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nous sommes désolé, mais l&apos;éditeur Moondust a planté. 
+Motif&#xa0;: Dépassement de mémoire&#x202f;!
+
+Pour éviter ceci, essayez de fermer d&apos;autres programmes non nécessaires pour libérer de la mémoire.</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
@@ -7421,18 +7437,26 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation type="unfinished"></translation>
+        <translation>Nous sommes désolés, mais l&apos;éditeur Moondust à planté. 
+Motif&#xa0;: Exception non gérée
+
+Veuillez nous en informer sur le forum de l&apos;équipe afin que nous puissions corriger ce problème, merci
+
+Lien du forum&#xa0;: wohlsoft.ru/forum</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: %1
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Nous sommes désolés, mais l&apos;éditeur Moondust à planté.	
+Motif&#xa0;: %1
+
+</translation>
     </message>
     <message>
         <source>World map extra settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Paramètres supplémentaires de la carte du monde</translation>
     </message>
     <message>
         <source>Event Warp Exit</source>
@@ -7781,11 +7805,11 @@ Reason: %1
     </message>
     <message>
         <source>[No vehicle]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Aucun véhicule]</translation>
     </message>
     <message>
         <source>[Unknown type]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Type inconnu]</translation>
     </message>
     <message>
         <source>Set custom health level</source>
@@ -7793,7 +7817,7 @@ Reason: %1
     </message>
     <message>
         <source>Reserved item</source>
-        <translation type="unfinished"></translation>
+        <translation>Élément réservé</translation>
     </message>
     <message>
         <source>&lt;Unknown&gt;</source>
@@ -7803,7 +7827,7 @@ Reason: %1
     <message>
         <source>[No item]</source>
         <comment>Reserve box of player contains no item</comment>
-        <translation type="unfinished"></translation>
+        <translation>[Aucun élément]</translation>
     </message>
 </context>
 <context>
@@ -8011,12 +8035,12 @@ Arguments : %2</translation>
     <message>
         <source>Test world</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tester le monde</translation>
     </message>
     <message>
         <source>Test saved world</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tester le monde sauvegardé</translation>
     </message>
     <message>
         <source>Choose a start warp...</source>
@@ -8031,7 +8055,7 @@ Arguments : %2</translation>
     <message>
         <source>Don&apos;t save</source>
         <comment>Save slot sub-menu item.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ne pas sauvegarder</translation>
     </message>
     <message>
         <source>Save slot 1</source>
@@ -8051,27 +8075,27 @@ Arguments : %2</translation>
     <message>
         <source>Modern OpenGL</source>
         <comment>Hardware accelerated with modern OpenGL</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">OpenGL Moderne</translation>
     </message>
     <message>
         <source>Legacy OpenGL 1.1</source>
         <comment>Hardware accelerated with legacy OpenGL</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">OpenGL Héritage 1.1</translation>
     </message>
     <message>
         <source>Modern OpenGL ES</source>
         <comment>Hardware accelerated with modern OpenGL ES</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">OpenGL Moderne ES</translation>
     </message>
     <message>
         <source>Legacy OpenGL ES 1.1</source>
         <comment>Hardware accelerated with legacy OpenGL ES</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">OpenGL Héritage ES 1.1</translation>
     </message>
     <message>
         <source>Enable V-Sync</source>
         <comment>Enable the vertical synchronisation if available</comment>
-        <translation type="unfinished"></translation>
+        <translation>Activer la synchronisation verticale</translation>
     </message>
 </context>
 <context>
@@ -8663,12 +8687,12 @@ Des données pourraient être corrompues !</translation>
     <message>
         <source>Any</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">N&apos;importe lequel</translation>
     </message>
     <message>
         <source>None</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished">Aucun</translation>
+        <translation>Aucun</translation>
     </message>
     <message>
         <source>Card Roulette Exit</source>
@@ -8678,7 +8702,7 @@ Des données pourraient être corrompues !</translation>
     <message>
         <source>Ball Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sortie de balle</translation>
     </message>
     <message>
         <source>Walked Offscreen</source>
@@ -8688,7 +8712,7 @@ Des données pourraient être corrompues !</translation>
     <message>
         <source>Secret Exit</source>
         <comment>Exit type name</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sortie secrète</translation>
     </message>
     <message>
         <source>Crystal Sphare Exit</source>
@@ -8972,7 +8996,7 @@ Des données pourraient être corrompues !</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lorsque cette case est cochée, cela permettra de calculer la taille de la dimension opposée (hauteur ou largeur) pour créer une image cible avec les bonnes proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Lorsque cette case est cochée, cela permettra de calculer la taille de la dimension opposée (hauteur ou largeur) pour créer une image cible avec les bonnes proportions.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Keep original aspect ratio</source>
@@ -8984,7 +9008,7 @@ Des données pourraient être corrompues !</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Il s&apos;agit de la &lt;span style=&quot; font-weight:600;&quot;&gt;largeur&lt;/span&gt; de l&apos;image. L&apos;image cible redimensionnée à cette largeur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Il s&apos;agit de la &lt;span style=&quot; font-weight:600;&quot;&gt;largeur&lt;/span&gt; de l&apos;image. L&apos;image cible redimensionnée à cette largeur.&lt;/p&gt;</translation>
     </message>
     <message>
         <source> px</source>
@@ -8992,7 +9016,7 @@ Des données pourraient être corrompues !</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Il s&apos;agit de la &lt;span style=&quot; font-weight:600;&quot;&gt;hauteur&lt;/span&gt; de l&apos;image cible. L&apos;image cible sera redimensionnée à cette hauteur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;p&gt;Il s&apos;agit de la &lt;span style=&quot; font-weight:600;&quot;&gt;Hauteur&lt;/span&gt; de l&apos;image cible. L&apos;image cible sera redimensionnée à cette hauteur.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Width</source>
@@ -9379,15 +9403,15 @@ List of known SMBX versions and format codes:
 %1
 (To allow level file work in specific SMBX version,
 version code must be less or equal specific code)</source>
-        <translation type="unfinished">Sous quelle version souhaitez-vous enregistrer ? (entre 0 et 64)
-Liste des versions de SMBX connues et codes de format :
+        <translation type="unfinished">Sous quelle version souhaitez-vous enregistrer&#x202f;? (entre 0 et 64)
+Liste des versions de SMBX connues et codes de format&#xa0;:
 %1
 (Pour autoriser le fichier de niveau à fonctionner dans une version spécifique de SMBX,
 la version du fichier doit être inférieure ou égale à ce code de version SMBX.)</translation>
     </message>
     <message>
         <source>SMBX-38A file version</source>
-        <translation type="unfinished"></translation>
+        <translation>Version du fichier SMBX-38A</translation>
     </message>
     <message>
         <source>Which version do you want to save as? (from 64 to 69)
@@ -9496,7 +9520,7 @@ version code must be less or equal specific code)</source>
     </message>
     <message>
         <source>Counting...</source>
-        <translation>Compte du nombre d&apos;étoiles…</translation>
+        <translation>En train de compter…</translation>
     </message>
     <message>
         <source>Calculating total star count in accessible levels</source>
@@ -9520,16 +9544,16 @@ version code must be less or equal specific code)</source>
     </message>
     <message>
         <source>Open current intro level</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir niveau d&apos;intro actuel</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished">Ouvrir</translation>
+        <translation>Ouvrir</translation>
     </message>
     <message>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished">Erreur dans le fichier %1 :
+        <translation>Erreur dans le fichier %1&#xa0;:
 %2</translation>
     </message>
 </context>
@@ -9573,11 +9597,11 @@ version code must be less or equal specific code)</source>
     </message>
     <message>
         <source>[Copy this description]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Copier cette description]</translation>
     </message>
     <message>
         <source>[Copied!]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Copié&#x202f;!]</translation>
     </message>
 </context>
 <context>
