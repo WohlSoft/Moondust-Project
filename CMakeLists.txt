@@ -36,6 +36,7 @@ else()
 endif()
 
 option(PGE_STATIC_SDLMIXER "Prefer static assembly of SDL Mixer X and libraries" ${PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT})
+option(ENABLE_ADDRESS_SANITIZER "Enable the Address Sanitizer GCC feature" OFF)
 
 if(PGE_STATIC_SDLMIXER)
     set(PGE_SHARED_SDLMIXER OFF)
@@ -169,6 +170,12 @@ if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)
     if(PGE_BUILD_MAINTAINER)
         add_subdirectory(Maintainer)
         qtDeployAdd(pge_maintainer)
+    endif()
+
+    option(PGE_BUILD_TRANSLATOR "Build the Translator utility component (Qt5 required)" ON)
+    if(PGE_BUILD_TRANSLATOR)
+        add_subdirectory(Translator)
+        qtDeployAdd(pge_translator)
     endif()
 
     pgeSetupQtDeploymet(${PGE_ENABLE_STATIC_QT} ${PGE_SHARED_SDLMIXER})
