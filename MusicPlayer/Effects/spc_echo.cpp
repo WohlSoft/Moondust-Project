@@ -22,24 +22,46 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+#if defined(__3DS__) || defined(__SWITCH__) || defined(__WII__) || defined(__WIIU__) || defined(VITA)
+#define INTEGER_ONLY_ECHO
+#endif
+
+#ifdef INTEGER_ONLY_ECHO
+#define EFFECT_FX_COMMON_INT16DST
+#endif
+
 #include <tgmath.h>
 #include <string.h>
 #include "spc_echo.h"
 #include "fx_common.hpp"
 
+#ifdef INTEGER_ONLY_ECHO
+typedef int32_t spc_sample_t;
+#else
+typedef float spc_sample_t;
+#endif
 
+#ifdef INTEGER_ONLY_ECHO
+#define CLAMP16F( io )\
+{\
+    if ( (int16_t) io != io )\
+        io = (io >> 31) ^ 0x7FFF;\
+}
+#else
 #define CLAMP16F( io )\
     {\
         if(io < -1.f)\
             io = -1.f;\
         else if(io > 1.f)\
             io = 1.f;\
-    }\
+    }
+#endif
 
 #define ECHO_HIST_SIZE  8
 #define SDSP_RATE       32000
 #define MAX_CHANNELS    10
 #define ECHO_BUFFER_SIZE (32 * 1024 * MAX_CHANNELS)
+
 
 //// Global registers
 //enum
@@ -70,14 +92,15 @@
 //};
 
 
-struct SpcEcho
+typedef struct SpcEcho
 {
     int is_valid = 0;
-    float echo_ram[ECHO_BUFFER_SIZE];
+
+    spc_sample_t echo_ram[ECHO_BUFFER_SIZE];
 
     // Echo history keeps most recent 8 samples (twice the size to simplify wrap handling)
-    float echo_hist[ECHO_HIST_SIZE * 2 * MAX_CHANNELS][MAX_CHANNELS];
-    float (*echo_hist_pos)[MAX_CHANNELS] = echo_hist; // &echo_hist [0 to 7]
+    spc_sample_t echo_hist[ECHO_HIST_SIZE * 2 * MAX_CHANNELS][MAX_CHANNELS];
+    spc_sample_t (*echo_hist_pos)[MAX_CHANNELS] = echo_hist; // &echo_hist [0 to 7]
 
     //! offset from ESA in echo buffer
     int echo_offset = 0;
@@ -87,7 +110,11 @@ struct SpcEcho
     double  rate_factor = 1.0;
     int     rate = SDSP_RATE;
     int     channels = 2;
+#ifdef INTEGER_ONLY_ECHO
+    uint16_t format = AUDIO_S16;
+#else
     uint16_t format = AUDIO_F32;
+#endif
 
     //! Flags
     uint8_t reg_flg = 0;
@@ -183,21 +210,21 @@ struct SpcEcho
     {
         int frames = len / (sample_size * channels);
 
-        float main_out[MAX_CHANNELS];
-        float echo_out[MAX_CHANNELS];
-        float echo_in[MAX_CHANNELS];
+        spc_sample_t main_out[MAX_CHANNELS];
+        spc_sample_t echo_out[MAX_CHANNELS];
+        spc_sample_t echo_in[MAX_CHANNELS];
 
         int c;
-        float ov;
+        spc_sample_t ov;
 
         int f, e_offset;
-        float v;
+        spc_sample_t v;
 
-        float mvoll[2] = {(float)reg_mvoll, (float)reg_mvolr};
-        float evoll[2] = {(float)reg_evoll, (float)reg_evolr};
+        spc_sample_t mvoll[2] = {(spc_sample_t)reg_mvoll, (spc_sample_t)reg_mvolr};
+        spc_sample_t evoll[2] = {(spc_sample_t)reg_evoll, (spc_sample_t)reg_evolr};
 
-        float (*echohist_pos)[MAX_CHANNELS];
-        float *echo_ptr;
+        spc_sample_t (*echohist_pos)[MAX_CHANNELS];
+        spc_sample_t *echo_ptr;
 
         memset(main_out, 0, sizeof(main_out));
         memset(echo_out, 0, sizeof(echo_out));
@@ -221,7 +248,7 @@ struct SpcEcho
             echo_ptr = echo_ram + echo_offset;
 
             if(!echo_offset)
-                echo_length = (int)round((((reg_edl & 0x0F) * 0x400 * channels) / 2) * rate_factor);
+                echo_length = (int)round((((reg_edl & 0x0F) * 0x400 * channels) / 2.0) * rate_factor);
             e_offset += channels;
             if(e_offset >= echo_length)
                 e_offset = 0;
@@ -255,8 +282,11 @@ struct SpcEcho
             {
                 for(c = 0; c < channels; c++)
                 {
-                    //v = (echo_out[c] >> 7) + ((echo_in[c] * reg_efb) >> 14);
+#ifdef INTEGER_ONLY_ECHO
+                    v = (echo_out[c] >> 7) + ((echo_in[c] * reg_efb) >> 14);
+#else
                     v = (echo_out[c] / 128) + ((echo_in[c] * reg_efb) / 16384.f);
+#endif
                     CLAMP16F(v);
                     echo_ptr[c] = v;
                 }
@@ -265,7 +295,11 @@ struct SpcEcho
             /* Sound out */
             for(c = 0; c < channels; c++)
             {
+#ifdef INTEGER_ONLY_ECHO
+                ov = (main_out[c] * mvoll[c % 2] + echo_in[c] * evoll[c % 2]) >> 14;
+#else
                 ov = (main_out[c] * mvoll[c % 2] + echo_in[c] * evoll[c % 2]) / 16384;
+#endif
                 CLAMP16F(ov);
                 if((reg_flg & 0x40))
                     ov = 0;
@@ -274,7 +308,7 @@ struct SpcEcho
         }
         while(--frames);
     }
-};
+} SpcEcho;
 
 
 SpcEcho *echoEffectInit(int rate, uint16_t format, int channels)

@@ -36,6 +36,201 @@
 
 #define MAX_CHANNELS    10
 
+#ifdef EFFECT_FX_COMMON_INT16DST // int16 output
+// Float32-LE
+static int16_t getFloatLSBSample(uint8_t *raw, int c)
+{
+    union
+    {
+        float f;
+        uint32_t r;
+    } o;
+    raw += (c * sizeof(float));
+    o.r = (((uint32_t)raw[0] <<  0) & 0x000000FF) |
+          (((uint32_t)raw[1] <<  8) & 0x0000FF00) |
+          (((uint32_t)raw[2] << 16) & 0x00FF0000) |
+          (((uint32_t)raw[3] << 24) & 0xFF000000);
+    return o.f * INT16_MAX;
+}
+static void setFloatLSBSample(uint8_t **raw, int16_t ov)
+{
+    float f = (float)ov / INT16_MAX;
+    void *t = &f;
+    uint32_t r = *(uint32_t*)t;
+    *(*raw)++ = (uint8_t)((r >> 0) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 8) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 16) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 24) & 0xFF);
+}
+
+// Float32-BE
+static int16_t getFloatMSBSample(uint8_t *raw, int c)
+{
+    union
+    {
+        float f;
+        uint32_t r;
+    } o;
+    raw += (c * sizeof(float));
+    o.r = (((uint32_t)raw[3] <<  0) & 0x000000FF) |
+          (((uint32_t)raw[2] <<  8) & 0x0000FF00) |
+          (((uint32_t)raw[1] << 16) & 0x00FF0000) |
+          (((uint32_t)raw[0] << 24) & 0xFF000000);
+    return o.f * INT16_MAX;
+}
+static void setFloatMSBSample(uint8_t **raw, int16_t ov)
+{
+    float f = (float)ov / INT16_MAX;
+    void *t = &f;
+    uint32_t r = *(uint32_t*)t;
+    *(*raw)++ = (uint8_t)((r >> 24) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 16) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 8) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 0) & 0xFF);
+}
+
+// int32_t-LE
+static int16_t getInt32LSB(uint8_t *raw, int c)
+{
+    uint32_t r;
+    int32_t f;
+    raw += (c * sizeof(int32_t));
+    r = (((uint32_t)raw[0] <<  0) & 0x000000FF) |
+        (((uint32_t)raw[1] <<  8) & 0x0000FF00) |
+        (((uint32_t)raw[2] << 16) & 0x00FF0000) |
+        (((uint32_t)raw[3] << 24) & 0xFF000000);
+    f = *(int32_t*)(&r);
+    return f >> 16;
+}
+static void setInt32LSB(uint8_t **raw, int16_t ov)
+{
+    int32_t f = ((int32_t)ov << 16);
+    uint32_t r = *(uint32_t*)(&f);
+    *(*raw)++ = (uint8_t)((r >> 0) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 8) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 16) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 24) & 0xFF);
+}
+
+// int32_t-BE
+static int16_t getInt32MSB(uint8_t *raw, int c)
+{
+    uint32_t r;
+    int32_t f;
+    raw += (c * sizeof(int32_t));
+    r = (((uint32_t)raw[3] <<  0) & 0x000000FF) |
+        (((uint32_t)raw[2] <<  8) & 0x0000FF00) |
+        (((uint32_t)raw[1] << 16) & 0x00FF0000) |
+        (((uint32_t)raw[0] << 24) & 0xFF000000);
+    f = *(int32_t*)(&r);
+    return f >> 16;
+}
+static void setInt32MSB(uint8_t **raw, int16_t ov)
+{
+    int32_t f = ((int32_t)ov << 16);
+    uint32_t r = *(uint32_t*)(&f);
+    *(*raw)++ = (uint8_t)((r >> 24) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 16) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 8) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 0) & 0xFF);
+}
+
+// int16_t-LE
+static int16_t getInt16LSB(uint8_t *raw, int c)
+{
+    uint16_t r;
+    int16_t f;
+    raw += (c * sizeof(int16_t));
+    r = (((uint16_t)raw[0] <<  0) & 0x00FF) |
+        (((uint16_t)raw[1] <<  8) & 0xFF00);
+    f = *(int16_t*)(&r);
+    return f;
+}
+static void setInt16LSB(uint8_t **raw, int16_t f)
+{
+    uint16_t r = *(uint16_t*)(&f);
+    *(*raw)++ = (uint8_t)((r >> 0) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 8) & 0xFF);
+}
+
+// int16_t-BE
+static int16_t getInt16MSB(uint8_t *raw, int c)
+{
+    uint16_t r;
+    int16_t f;
+    raw += (c * sizeof(int16_t));
+    r = (((uint16_t)raw[1] <<  0) & 0x00FF) |
+        (((uint16_t)raw[0] <<  8) & 0xFF00);
+    f = *(int16_t*)(&r);
+    return f;
+}
+static void setInt16MSB(uint8_t **raw, int16_t f)
+{
+    uint16_t r = *(uint16_t*)(&f);
+    *(*raw)++ = (uint8_t)((r >> 8) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 0) & 0xFF);
+}
+
+// uint16_t-LE
+static int16_t getuint16_tLSB(uint8_t *raw, int c)
+{
+    uint16_t r;
+    raw += (c * sizeof(uint16_t));
+    r = (((uint16_t)raw[0] <<  0) & 0x00FF) |
+        (((uint16_t)raw[1] <<  8) & 0xFF00);
+    return (int16_t)r + INT16_MIN;
+}
+static void setuint16_tLSB(uint8_t **raw, int16_t ov)
+{
+    int16_t f = ov - INT16_MIN;
+    uint16_t r = *(uint16_t*)(&f);
+    *(*raw)++ = (uint8_t)((r >> 0) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 8) & 0xFF);
+}
+
+// uint16_t-BE
+static int16_t getuint16_tMSB(uint8_t *raw, int c)
+{
+    uint16_t r;
+    raw += (c * sizeof(uint16_t));
+    r = (((uint16_t)raw[1] <<  0) & 0x00FF) |
+        (((uint16_t)raw[0] <<  8) & 0xFF00);
+    return (int16_t)r + INT16_MIN;
+}
+static void setuint16_tMSB(uint8_t **raw, int16_t ov)
+{
+    int16_t f = ov - INT16_MIN;
+    uint16_t r = *(uint16_t*)(&f);
+    *(*raw)++ = (uint8_t)((r >> 8) & 0xFF);
+    *(*raw)++ = (uint8_t)((r >> 0) & 0xFF);
+}
+
+// int8_t
+static int16_t getInt8(uint8_t *raw, int c)
+{
+    int16_t f;
+    raw += (c * sizeof(int8_t));
+    f = ((int16_t)(int8_t)(*raw)) << 8;
+    return f;
+}
+static void setInt8(uint8_t **raw, int16_t ov)
+{
+    *(*raw)++ = (uint8_t)(ov >> 8);
+}
+
+// uint8_t
+static int16_t getuint8_t(uint8_t *raw, int c)
+{
+    raw += (c * sizeof(int8_t));
+    return (int16_t)((int)*raw + INT8_MIN) << 8;
+}
+static void setuint8_t(uint8_t **raw, int16_t ov)
+{
+    *(*raw)++ = (uint8_t)((ov >> 8) - INT8_MAX);
+}
+
+#else // int16 output end, Float32 output begin
+
 // Float32-LE
 static float getFloatLSBSample(uint8_t *raw, int c)
 {
@@ -233,10 +428,17 @@ static void setuint8_t(uint8_t **raw, float ov)
 {
     *(*raw)++ = (uint8_t)((ov * INT8_MAX) - INT8_MIN);
 }
+#endif // Float32 output end
 
 
+#ifdef EFFECT_FX_COMMON_INT16DST
+typedef int16_t (*ReadSampleCB)(uint8_t* raw, int channel);
+typedef  void (*WriteSampleCB)(uint8_t** raw, int16_t sample);
+#else
 typedef float (*ReadSampleCB)(uint8_t* raw, int channel);
 typedef  void (*WriteSampleCB)(uint8_t** raw, float sample);
+#endif
+
 
 static bool initFormat(ReadSampleCB &readSample,
                        WriteSampleCB &writeSample,

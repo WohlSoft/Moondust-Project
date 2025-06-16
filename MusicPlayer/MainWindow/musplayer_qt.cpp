@@ -191,8 +191,7 @@ void MusPlayer_Qt::dropEvent(QDropEvent *e)
     }
 
     ui->recordWav->setEnabled(!m_currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
-    PGE_MusicPlayer::stopMusic();
-    qApp->processEvents();
+    on_stop_clicked();
     on_play_clicked();
     this->raise();
     e->accept();
@@ -340,8 +339,7 @@ void MusPlayer_Qt::openMusicByArg(QString musPath)
         return;
 
     m_currentMusic = musPath;
-    PGE_MusicPlayer::stopMusic();
-    qApp->processEvents();
+    on_stop_clicked();
     on_play_clicked();
 }
 
@@ -349,8 +347,7 @@ void MusPlayer_Qt::restartMusic()
 {
     if(Mix_PlayingMusicStream(PGE_MusicPlayer::s_playMus))
     {
-        PGE_MusicPlayer::stopMusic();
-        qApp->processEvents();
+        on_stop_clicked();
         on_play_clicked();
     }
 }
@@ -397,6 +394,9 @@ void MusPlayer_Qt::on_open_clicked()
 
 void MusPlayer_Qt::on_stop_clicked()
 {
+    if(!PGE_MusicPlayer::s_playMus)
+        return; // Nothing to stop
+
     m_musicStopped = false;
     PGE_MusicPlayer::stopMusic();
 
