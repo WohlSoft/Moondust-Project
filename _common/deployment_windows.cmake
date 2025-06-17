@@ -120,6 +120,12 @@ if(SevenZipProgram)
         "changelog.musplay.txt"
     )
 
+    set(PGE_TranslatorFiles
+        ${PGE_CommonQtFiles}
+        "pge_translator.exe"
+        "changelog.translator.txt"
+    )
+
     set(PGE_CalibratorFiles
         ${PGE_CommonQtFiles}
         "calibrator"
@@ -205,6 +211,7 @@ if(SevenZipProgram)
         "pge_musplay.exe"
         "pge_calibrator.exe"
         "pge_maintainer.exe"
+        "pge_translator.exe"
         "calibrator"
         "tools"
         "languages/calibrator_*.qm"
@@ -240,6 +247,9 @@ if(SevenZipProgram)
         COMMAND ${SevenZipProgram} a -tzip -mx9
             "${ZIP_PACK_DIR}/pge-musplay-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
             ${PGE_MusPlayFiles}
+        COMMAND ${SevenZipProgram} a -tzip -mx9
+            "${ZIP_PACK_DIR}/pge-translator-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
+            ${PGE_TranslatorFiles}
         COMMAND ${SevenZipProgram} a -tzip -mx9
             "${ZIP_PACK_DIR}/pge-maintainer-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
             ${PGE_MaintainerFiles}

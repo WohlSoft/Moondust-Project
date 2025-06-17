@@ -5,11 +5,11 @@
     <name>AbstractRuntimeEngine</name>
     <message>
         <source>World map testing via IPC is not supported</source>
-        <translation type="unfinished">Prueba de Mapa Mundial via IPC no es soportado</translation>
+        <translation>La prueba del mapa del mundo vía IPC no es compatible</translation>
     </message>
     <message>
         <source>World map testing is not supported</source>
-        <translation type="unfinished">Prueba de Mapa Mundial no es soportado</translation>
+        <translation>La prueba del mapa del mundo no es compatible</translation>
     </message>
     <message>
         <source>This feature is not implemented</source>
@@ -228,7 +228,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation>Habilitar auto escalar en pantallas High-DPI</translation>
+        <translation>Habilitar auto-escalado en monitores con una alta densisdad de pixeles (DPI)</translation>
     </message>
     <message>
         <source>Display tabs horizontally</source>
@@ -348,42 +348,42 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Palette</source>
-        <translation type="unfinished">Paleta de color</translation>
+        <translation>Paleta</translation>
     </message>
     <message>
         <source>Autosave</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardado automático</translation>
     </message>
     <message>
         <source>Automatically save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar archivo automáticamente cada</translation>
     </message>
     <message>
         <source>minutes</source>
         <comment>Autosave interval units</comment>
-        <translation type="unfinished"></translation>
+        <translation>minutos</translation>
     </message>
     <message>
         <source>Opacity of locked items</source>
         <comment>The title of group where user can set up the opacity level of locked items</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opacidad de los elementos bloqueados</translation>
     </message>
     <message>
         <source>Opacity</source>
         <comment>Opacity of locked items (label text)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opacidad</translation>
     </message>
     <message>
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
         <comment>Explanation for the opacity of locked items</comment>
-        <translation type="unfinished"></translation>
+        <translation>Define el nivel de opacidad que se aplicará a todos los elementos bloqueados de la escena.</translation>
     </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
     <message>
         <source>Calculating total star count in accessible levels</source>
-        <translation>Contar estrellas en niveles puestos</translation>
+        <translation>Contando la cantidad de estrellas en los niveles disponibles</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -565,7 +565,7 @@ Por favor defínala primero</translation>
     </message>
     <message>
         <source>Move time:</source>
-        <translation type="unfinished">Tiempo de movimiento:</translation>
+        <translation>Duración del movimiento:</translation>
     </message>
     <message>
         <source>Distance:</source>
@@ -677,21 +677,21 @@ Ruta de archivo: %3</translation>
     </message>
     <message>
         <source>Integrational configuration package is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>El paquete de configuración de integración es incompatible</translation>
     </message>
     <message>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with this version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este paquete de configuración de integración es más antiguo que la versión 42 de la API y ya no es compatible con esta versión de Moondust Devkit. Desde la versión 42 de la API, los paquetes de configuración de integración deben usar el archivo de ajustes locales en lugar del archivo main.ini.</translation>
     </message>
     <message>
         <source>Legacy configuration package</source>
         <comment>Warning message box title</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Paquete de configuración de legado</translation>
     </message>
     <message>
         <source>Incompatible configuration package</source>
         <comment>Warning message box title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Paquete de configuración incompatible</translation>
     </message>
     <message>
         <source>You have an incompatible configuration package designed for the SMBX2 project to use it with the modified version of the DevKit which is incompatible to the mainstream.
@@ -707,22 +707,22 @@ The Official Moondust Devkit has a support of the SMBX2 Beta4 and older only. Ho
     <message>
         <source>Outdated</source>
         <comment>Level of config pack incompatibility. Outdated means it MAY work, but some minor errors are possible.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Obsoleto</translation>
     </message>
     <message>
         <source>Legacy, incompatible</source>
         <comment>Level of config pack incompatibility. Legacy means this config pack is too old to work on this version of Editor.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Legado, incompatible</translation>
     </message>
     <message>
         <source>Incompatible integrational</source>
         <comment>Level of config pack incompatibility. An obsolete and incompatible integrational config package.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Integracional incompatible</translation>
     </message>
     <message>
         <source>Incompatible</source>
         <comment>Level of config pack incompatibility. Incompatible, means, it&apos;s a totally incompatible config pack, probably, created for a modified version of the Moondust.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Incompatible</translation>
     </message>
     <message>
         <source>You have a legacy configuration package.&lt;br&gt;
@@ -907,11 +907,11 @@ Por favor guárdelos antes de hacer algo más.</translation>
     </message>
     <message>
         <source>Copied!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Copiado!</translation>
     </message>
     <message>
         <source>Join the official Moondust Discord server to submit the report</source>
-        <translation type="unfinished"></translation>
+        <translation>Únase al servidor de Discord oficial de Moondust para enviar el informe</translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
@@ -922,11 +922,11 @@ Por favor guárdelos antes de hacer algo más.</translation>
     </message>
     <message>
         <source>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished"></translation>
+        <translation>Oh-oh, el Editor de Moondust se ha cerrado :(&lt;br&gt;Información detallada del accidente:</translation>
     </message>
     <message>
         <source>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation>Envíe un informe en el Foro WohlSoft (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</source>
@@ -1004,11 +1004,11 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <name>DataConfig</name>
     <message>
         <source>Invalid config pack version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versión del paq. de config. inválida</translation>
     </message>
     <message>
         <source>Can&apos;t load the configuration package: the &quot;api-version&quot; field is missing at the main.ini.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede cargar el paquete de configuración: falta el campo «api-version» en el main.ini.</translation>
     </message>
 </context>
 <context>
@@ -1126,7 +1126,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation type="unfinished">Args: {comandos del motor} Enviar comando o mensaje en el motor ejecutándose</translation>
+        <translation>Args: {comandos del motor} Envía un comando o mensaje al motor Moondust si se está ejecutando</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
@@ -1255,7 +1255,7 @@ cajas de las barras de herramientas (paneles arrastrables con íconos en la part
     </message>
     <message>
         <source>Welcome to Moondust Editor!</source>
-        <translation type="unfinished">¡Bienvenido al Editor de Moondust!</translation>
+        <translation>¡Bienvenida al Editor de Moondust!</translation>
     </message>
 </context>
 <context>
@@ -1276,7 +1276,7 @@ cajas de las barras de herramientas (paneles arrastrables con íconos en la part
     <name>HistoryElementChangeLayerVisibility</name>
     <message>
         <source>Toggle the visibility of a layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar/Ocultar la visibilidad de una capa</translation>
     </message>
 </context>
 <context>
@@ -1400,12 +1400,12 @@ cajas de las barras de herramientas (paneles arrastrables con íconos en la part
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation type="unfinished">Archivo de nivel PGE</translation>
+        <translation>Archivo de nivel Moondust</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation type="unfinished">Mapa PGE</translation>
+        <translation>Mapa de mundo Moondust</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
@@ -1546,7 +1546,7 @@ cajas de las barras de herramientas (paneles arrastrables con íconos en la part
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matriz de ID: %1</translation>
     </message>
 </context>
 <context>
@@ -1685,11 +1685,11 @@ cajas de las barras de herramientas (paneles arrastrables con íconos en la part
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matriz de ID: %1</translation>
     </message>
     <message>
         <source>Please enter the message text that which will be shown:</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor introduzca el texto que se mostrará:</translation>
     </message>
 </context>
 <context>
@@ -1825,31 +1825,31 @@ cajas de las barras de herramientas (paneles arrastrables con íconos en la part
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished">Dirección</translation>
+        <translation>Dirección</translation>
     </message>
     <message>
         <source>Left</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Izquierda</translation>
+        <translation>Izquierda</translation>
     </message>
     <message>
         <source>Up</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Arriba</translation>
+        <translation>Arriba</translation>
     </message>
     <message>
         <source>Right</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Derecha</translation>
+        <translation>Derecha</translation>
     </message>
     <message>
         <source>Down</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Abajo</translation>
+        <translation>Abajo</translation>
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matriz de ID: %1</translation>
     </message>
 </context>
 <context>
@@ -1924,7 +1924,7 @@ cajas de las barras de herramientas (paneles arrastrables con íconos en la part
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matriz de ID: %1</translation>
     </message>
 </context>
 <context>
@@ -1943,18 +1943,21 @@ cajas de las barras de herramientas (paneles arrastrables con íconos en la part
     </message>
     <message>
         <source>Preview settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes de previsualización</translation>
     </message>
     <message>
         <source>Font size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de letra:</translation>
     </message>
     <message>
         <source>Defines the size of the font in this preview.
 
 This field does NOT affects the result shown in the game itself,
 it&apos;s only used for the preview convenience in this dialogue.</source>
-        <translation type="unfinished"></translation>
+        <translation>Define el tamaño de la letra en esta previsualización.
+
+Este campo NO afecta el resultado que se muestra en el juego,
+solo se usa para la conveniencia de la previsualización en este diálogo.</translation>
     </message>
     <message>
         <source>Preprocessor is the sepecial feature of TheXTech engine since the version 1.3.6.1 which allows
@@ -1964,27 +1967,27 @@ depending on which playable character is used.</source>
     </message>
     <message>
         <source>Preprocessor</source>
-        <translation type="unfinished"></translation>
+        <translation>Preprocesor</translation>
     </message>
     <message>
         <source>Player number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de jugador:</translation>
     </message>
     <message>
         <source>State number</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de estado</translation>
     </message>
     <message>
         <source>Show/Hide the message box preview area</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar/Ocultar el área de previsualización del cuadro de mensaje</translation>
     </message>
     <message>
         <source>Enter the NPC&apos;s dialogue message text:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Introducir el mensaje del diálogo del NPC:</translation>
     </message>
     <message>
         <source>Target engine:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Motor objetivo:</translation>
     </message>
     <message>
         <source>This field allows you to preview the message box like it shown in different engines
@@ -2028,7 +2031,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     <message>
         <source>Preview</source>
         <comment>The text on the switch button</comment>
-        <translation type="unfinished">Previsualización</translation>
+        <translation>Previsualización</translation>
     </message>
     <message>
         <source>This is a text of the message that will be shown when the player tries to talk to the NPC, or when an event with a non-empty message text is triggered.</source>
@@ -2095,7 +2098,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Matriz de ID: %1</translation>
     </message>
 </context>
 <context>
@@ -2234,7 +2237,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matriz de ID: %1</translation>
     </message>
 </context>
 <context>
@@ -2289,7 +2292,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matriz de ID: %1</translation>
     </message>
 </context>
 <context>
@@ -2400,7 +2403,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matriz de ID: %1</translation>
     </message>
     <message>
         <source>Collision script function</source>
@@ -2408,11 +2411,11 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Mouse click Script function</source>
-        <translation type="unfinished"></translation>
+        <translation>Función de guion del clic del ratón</translation>
     </message>
     <message>
         <source>Sub-Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Subárea</translation>
     </message>
 </context>
 <context>
@@ -2490,7 +2493,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matriz de ID: %1</translation>
     </message>
 </context>
 <context>
@@ -2624,64 +2627,64 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <source>Array-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Matriz de ID: %1</translation>
     </message>
 </context>
 <context>
     <name>JsonSettingsWidget</name>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Explorar</translation>
+        <translation>Explorar</translation>
     </message>
     <message>
         <source>Play</source>
-        <translation type="unfinished">Reproducir</translation>
+        <translation>Reproducir</translation>
     </message>
     <message>
         <source>[empty]</source>
-        <translation type="unfinished">[vacío]</translation>
+        <translation>[vacío]</translation>
     </message>
     <message>
         <source>W</source>
         <comment>Width, shortly</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">An</translation>
     </message>
     <message>
         <source>H</source>
         <comment>Height, shortly</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Al</translation>
     </message>
     <message>
         <source>%1 coins</source>
-        <translation type="unfinished">%1 monedas</translation>
+        <translation>%1 moneda(s)</translation>
     </message>
     <message>
         <source>Add new item into the list</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir ítem nuevo a la lista</translation>
     </message>
     <message>
         <source>Remove selected item from the list</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar ítem seleccionado de la lista</translation>
     </message>
     <message>
         <source>Play selected file</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproducir archivo seleccionado</translation>
     </message>
     <message>
         <source>Open...</source>
-        <translation type="unfinished">Abrir...</translation>
+        <translation>Abrir...</translation>
     </message>
     <message>
         <source>Open selected file</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir archivo seleccionado</translation>
     </message>
     <message>
         <source>Add new line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Añadir línea</translation>
     </message>
     <message>
         <source>Please enter a text line to add:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Introduzca una línea de texto para añadir:</translation>
     </message>
 </context>
 <context>
@@ -2845,7 +2848,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>SMBX-38A file version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versión del archivo SMBX-38A</translation>
     </message>
     <message>
         <source>Which version do you want to save as? (from 64 to 69)
@@ -3021,7 +3024,7 @@ version code must be less or equal specific code)</source>
     <message>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
-        <translation type="unfinished">Probar nivel</translation>
+        <translation>Probar nivel</translation>
     </message>
     <message>
         <source>Starts level testing in the legacy engine.
@@ -3032,16 +3035,16 @@ Esta opción necesita LunaLUA.</translation>
     </message>
     <message>
         <source>Reset checkpoints</source>
-        <translation type="unfinished">Reiniciar checkpoints</translation>
+        <translation>Reiniciar puntos de guardado</translation>
     </message>
     <message>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation type="unfinished">Reiniciar todos los checkpoints a su estado inicial.</translation>
+        <translation>Reiniciar todos los puntos de guardado.</translation>
     </message>
     <message>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
-        <translation type="unfinished">Deshabilitar OpenGL</translation>
+        <translation>Deshabilitar OpenGL</translation>
     </message>
     <message>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
@@ -3050,54 +3053,54 @@ Esta opción necesita LunaLUA.</translation>
     <message>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation type="unfinished">Ejecutar en segundo plano</translation>
+        <translation>Ejecutar en segundo plano</translation>
     </message>
     <message>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation type="unfinished">Permite probar el nivel mucho más rapido despues de la primer ejecución.
-Requiere una poderosa computadora, de otra manera el motor se congelará en la siguiente ejecución.
-Se sugiere deshabilitar esto en máquinas lentas o en caso de que se presente algún problema al probar.</translation>
+        <translation type="unfinished">Permite probar el nivel mucho más rápido después de la primera ejecución.
+Requiere una poderosa computadora; si no, el motor puede congelarse en la siguiente ejecución.
+Se sugiere deshabilitar esto en máquinas lentas o en caso de problemas al probar un nivel.</translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="unfinished">Termina el proceso del LunaTester para que el motor pueda ejecutarse de nuevo.</translation>
+        <translation>Termina el proceso del LunaTester para que el motor pueda ejecutarse de nuevo.</translation>
     </message>
     <message>
         <source>Start Game</source>
         <comment>Launch LunaTester as a normal game.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Empezar</translation>
     </message>
     <message>
         <source>Launch LunaTester as a normal game.</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar LunaTester como un juego normal.</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="unfinished">¿Está seguro de querer cerrar LunaTester? Si está probando un nivel, ¡esto lo terminará inmediatamente!</translation>
+        <translation>¿Está seguro de querer cerrar LunaTester? Si está probando un nivel, ¡esto lo terminará inmediatamente!</translation>
     </message>
     <message>
         <source>LunaTester has been successfully closed.</source>
-        <translation type="unfinished">Se terminó el proceso de LunaTester exitosamente.</translation>
+        <translation>LunaTester se ha cerrado con éxito.</translation>
     </message>
     <message>
         <source>LunaTester is not running.</source>
-        <translation type="unfinished">LunaTester no está siendo ejecutado.</translation>
+        <translation>LunaTester no se está ejecutando.</translation>
     </message>
     <message>
         <source>Please select a path to LunaTester:</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor seleccione un camino para LunaTester:</translation>
     </message>
     <message>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
-        <translation type="unfinished">Usar predeterminado</translation>
+        <translation>Usar predeterminado</translation>
     </message>
     <message>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
-        <translation type="unfinished">Personalizado</translation>
+        <translation>Personalizado</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -3105,11 +3108,11 @@ Se sugiere deshabilitar esto en máquinas lentas o en caso de que se presente al
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Guardar</translation>
+        <translation>Guardar</translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
-        <translation type="unfinished">¡Checkpoints reiniciados!</translation>
+        <translation>¡Puntos de guardado reiniciados con éxito!</translation>
     </message>
     <message>
         <source>LunaLUA tester is not started!</source>
@@ -3121,11 +3124,11 @@ Se sugiere deshabilitar esto en máquinas lentas o en caso de que se presente al
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation type="unfinished">¡Error al enviar nivel a LunaLUA-SMBX!</translation>
+        <translation>¡Error al enviar nivel a LunaLUA-SMBX!</translation>
     </message>
     <message>
         <source>LunaTester error</source>
-        <translation type="unfinished">Error de LunaTester</translation>
+        <translation>Error de LunaTester</translation>
     </message>
     <message>
         <source>Change the path to LunaTester...</source>
@@ -3134,17 +3137,17 @@ Se sugiere deshabilitar esto en máquinas lentas o en caso de que se presente al
     </message>
     <message>
         <source>Select the location of LunaTester.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar la ubicación de LunaTester.</translation>
     </message>
     <message>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Camino a LunaTester</translation>
     </message>
     <message>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione una ubicación para LunaTester</translation>
     </message>
     <message>
         <source>SMBX64 limits are exceeded!</source>
@@ -3298,7 +3301,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Finalizar proceso de funcionamiento</translation>
     </message>
 </context>
 <context>
@@ -8231,13 +8234,11 @@ I.e. there are will work globally for this configuration package and can be used
 If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
         <translation>¡Bienvenido al editor de tilesets!
 
-Éste es un editor de tilesets globales.
+Todos los tilesets creados aquí se guardarán en esta carpeta:
 %1
-Todos los tilesets que se harán aquí serán guardados en ésta carpeta:
-%1
-Por ej. Éstos funcionarán globalmente para éste pack de configuraciones y pueden ser usados en los grupos de tilesets.
+Es decir, estarán disponibles globalmente para este paquete de configuraciones y se pueden usar en los grupos de tilesets.
 
-Si desea crear tilesets específicos para niveles/mapas con gráficos personalizados, por favor abra la &apos;Caja de tilesets&apos; y busque el botón &apos;Nuevo tileset&apos; en la pestaña &apos;Custom&apos;.</translation>
+Si desea crear tilesets específicos para niveles/mapas con gráficos personalizados, por favor abra la Caja de Tilesets y busque el botón «Nuevo tileset» en la pestaña «Personalizado».</translation>
     </message>
     <message>
         <source>Remove tileset</source>

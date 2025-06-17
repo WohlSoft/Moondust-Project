@@ -81,7 +81,7 @@
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">Parcourir…</translation>
+        <translation>Parcourir…</translation>
     </message>
     <message>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
@@ -261,11 +261,11 @@
     </message>
     <message>
         <source>Automatic arpeggio</source>
-        <translation type="unfinished"></translation>
+        <translation>Arpège automatique</translation>
     </message>
     <message>
         <source>Channel allocation mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode de distribution de chaînes&#xa0;:</translation>
     </message>
     <message>
         <source>Select one of the channel allocation algorithms:
@@ -279,11 +279,11 @@
     <message>
         <source>Disable the echo effect while playing files of SPC format</source>
         <comment>Tooltip for the &quot;Disable SPC echo&quot; checkbox</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Désactiver l&apos;effet d&apos;écho pendant la reproduction de fichiers de format SPC</translation>
     </message>
     <message>
         <source>Disable SPC echo</source>
-        <translation type="unfinished"></translation>
+        <translation>Désactiver l&apos;écho SPC</translation>
     </message>
     <message>
         <source>Sounding off delay based</source>
@@ -293,7 +293,7 @@
     <message>
         <source>Same instrument</source>
         <comment>Channel allocation mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Même instrument</translation>
     </message>
     <message>
         <source>Any free released</source>
@@ -302,7 +302,7 @@
     </message>
     <message>
         <source>libEDMIDI (OPLL, SCC, PSG)</source>
-        <translation type="unfinished"></translation>
+        <translation>libEDMIDI (OPLL, SCC, PSG)</translation>
     </message>
 </context>
 <context>
@@ -321,7 +321,7 @@
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrer…</translation>
     </message>
 </context>
 <context>
@@ -356,24 +356,24 @@
     <message>
         <source>Test SFX</source>
         <comment>Preview selected sound file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tester effets sonores</translation>
     </message>
     <message>
         <source>Music play/stop</source>
         <comment>Preview selected music file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Passer/Arrêter la musique</translation>
     </message>
     <message>
         <source>Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres…</translation>
     </message>
     <message>
         <source>Extra settings are not specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Les paramètres supplémentaires ne sont pas spécifiés</translation>
     </message>
     <message>
         <source>Extra settings are not supported for this music file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Les paramètres supplémentaires ne sont pas compatibles avec ce format de fichier de musique</translation>
     </message>
     <message>
         <source>Music settings arguments:

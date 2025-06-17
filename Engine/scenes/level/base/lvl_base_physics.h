@@ -38,6 +38,7 @@ class PGE_physBody
 public:
     PGE_physBody() = default;
     PGE_physBody(const PGE_physBody &o) = default;
+    PGE_physBody &operator=(const PGE_physBody &o) = default;
 
     // void processCollisions(PGE_RenderList &objs);
 
