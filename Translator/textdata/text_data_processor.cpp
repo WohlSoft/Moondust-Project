@@ -302,9 +302,14 @@ bool TextDataProcessor::scanEpisode(const QString &directory, TranslateProject &
             importScript(origin, f, rfp);
     }
 
-    // FIXME: Remove this after adding the "languages manager" module
-    updateTranslation(proj, "ru");
-    updateTranslation(proj, "zh-cn");
+    // Update existing language entries
+    for(auto l = proj.begin(); l != proj.end(); ++l)
+    {
+        if(l.key() == "metadata")
+            continue;
+
+        updateTranslation(proj, l.key());
+    }
 
     saveJSONs(directory, proj);
 
