@@ -667,3 +667,14 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
     // FIXME: Implement me!
     return QVariant();
 }
+
+void FilesStringsModel::syncField(const QModelIndex &index, const TrLine &data)
+{
+    if(!index.isValid() || index.row() >= m_view.size())
+        return;
+
+    auto &it = m_view[index.row()];
+
+    it.tr_note = data.note;
+    it.title = data.text;
+}

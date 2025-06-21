@@ -93,6 +93,8 @@ public:
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+    void syncField(const QModelIndex &index, const TrLine &data);
+
 private:
 };
 

@@ -137,6 +137,11 @@ TranslatorMain::TranslatorMain(QWidget *parent) :
             m_dialoguesListModel->clear();
     });
 
+    QObject::connect(ui->sourceLineRO, &GrowingTextEdit::textChanged,
+                     this, &TranslatorMain::updateSourceLineContent);
+    QObject::connect(ui->sourceLineNote, &QLineEdit::textChanged,
+                     this, &TranslatorMain::updateSourceLineNote);
+
     QObject::connect(ui->fileStrings->selectionModel(), &QItemSelectionModel::selectionChanged,
                      this,
                      static_cast<void (TranslatorMain::*)(const QItemSelection &, const QItemSelection &)>(&TranslatorMain::syncTranslationFieldsContent));
@@ -476,10 +481,18 @@ void TranslatorMain::openProject(const QString &d, bool singleLevel)
 
 void TranslatorMain::resetTranslationFields()
 {
+    m_sourceKey.root.clear();
+    m_sourceKey.group = -1;
+    m_sourceKey.key = -1;
+    m_sourceKey.type =  -1;
     ui->previewZone->clearText();
+    ui->sourceLineRO->blockSignals(true);
     ui->sourceLineRO->clear();
+    ui->sourceLineRO->blockSignals(false);
+    ui->sourceLineNote->blockSignals(true);
     ui->sourceLineNote->clear();
     ui->sourceLineNote->setEnabled(false);
+    ui->sourceLineNote->blockSignals(false);
     m_sourceNotePtr = nullptr;
     for(auto &k : m_translateFields)
         k->clearItem();
@@ -610,6 +623,8 @@ void TranslatorMain::updateTranslationFields(const QModelIndex &s)
     int type = s.data(FilesStringsModel::R_TYPE).toInt();
     int key = s.data(FilesStringsModel::R_KEY).toInt();
 
+    m_sourceKey.lastString = s;
+
     updateTranslationFields(group, root, type, key, text, note);
 }
 
@@ -622,9 +637,17 @@ void TranslatorMain::updateTranslationFields(int group,
 {
     bool isOrigin = m_recentLang == "metadata";
     bool translated = false;
+    ui->sourceLineRO->blockSignals(true);
     ui->sourceLineRO->setPlainText(text);
+    ui->sourceLineRO->blockSignals(false);
+    ui->sourceLineNote->blockSignals(true);
     ui->sourceLineNote->setText(tr_note);
     ui->sourceLineNote->setEnabled(true);
+    ui->sourceLineNote->blockSignals(false);
+    m_sourceKey.root = root;
+    m_sourceKey.group = group;
+    m_sourceKey.key = key;
+    m_sourceKey.type = type;
 
     for(auto &k : m_translateFields)
     {
@@ -642,6 +665,44 @@ void TranslatorMain::updateTranslationFields(int group,
 
     if(!translated)
         ui->previewZone->setText(text);
+}
+
+void TranslatorMain::updateSourceLineNote()
+{
+    if(m_sourceKey.root.isEmpty() || m_sourceKey.group < 0 || m_sourceKey.type < 0)
+        return; // No source key selected
+
+    QString text = ui->sourceLineNote->text();
+    bool ok;
+
+    TrLine &srcLine = TextDataProcessor::getItemRef(m_project,
+                                                    "metadata",
+                                                    m_sourceKey.root,
+                                                    m_sourceKey.group,
+                                                    m_sourceKey.type,
+                                                    m_sourceKey.key,
+                                                    &ok);
+
+    if(ok)
+    {
+        srcLine.note = text;
+        m_filesStringsModel->syncField(m_sourceKey.lastString, srcLine);
+
+        qDebug() << "Updated note for the source line at " << m_sourceKey.root << "G=" << m_sourceKey.group << "T=" << m_sourceKey.type << "K=" << m_sourceKey.key;
+    }
+    else
+        qWarning() << "Failed to find the source line at " << m_sourceKey.root << "G=" << m_sourceKey.group << "T=" << m_sourceKey.type << "K=" << m_sourceKey.key;
+}
+
+void TranslatorMain::updateSourceLineContent()
+{
+    if(m_sourceKey.root.isEmpty() || m_sourceKey.group < 0 || m_sourceKey.type < 0)
+        return; // No source key selected
+
+    QString text = ui->sourceLineRO->toPlainText();
+
+    // TODO: Implement the proper source line edit and synchronization
+    // The source line should be aslo changed at the original file itself
 }
 
 void TranslatorMain::updateActions()
