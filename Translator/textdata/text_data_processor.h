@@ -35,6 +35,14 @@ public:
     bool scanSingleLevel(const QString &file, TranslateProject &proj);
     bool createTranslation(TranslateProject &proj, const QString &lang);
 
+    static TrLine &getItemRef(TranslateProject &proj,
+                              const QString &lang,
+                              const QString &root,
+                              int group,
+                              int type,
+                              int key,
+                              bool *ok = nullptr);
+
 private:
     void importLevel(TranslationData &origin, const QString &path, const QString &shortPath);
     void importWorld(TranslationData &origin, const QString &path, const QString &shortPath);
