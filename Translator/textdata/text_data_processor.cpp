@@ -1278,7 +1278,7 @@ bool TextDataProcessor::saveJSONs(const QString &directory, const TranslateProje
             {
                 wo["credits"] = wa.credits.text;
                 if(!wa.credits.text.isEmpty())
-                    wo["credits-n"] = wa.credits.text;
+                    wo["credits-n"] = wa.credits.note;
 
                 if(!isOrigin)
                 {
@@ -1915,7 +1915,7 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                     }
 
                     et.title.text = ito["tit"].toString();
-                    et.title.note = ito["tit-u"].toString();
+                    et.title.note = ito["tit-n"].toString();
                     et.title.unfinished = ito["u"].toBool(false);
                     et.title.vanished = ito["v"].toBool(false);
                     et.filename = ito["f"].toString("");
