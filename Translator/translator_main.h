@@ -79,6 +79,16 @@ private:
     DialoguesListModel *m_dialoguesListModel = nullptr;
     LangsListModel *m_langsListModel = nullptr;
 
+    // Source key
+    struct SourceKey
+    {
+        QString root;
+        int group = -1;
+        int type = -1;
+        int key = -1;
+        QModelIndex lastString;
+    } m_sourceKey;
+
     // Misc. data
     QSettings m_setup;
     SimpleHighlighter *m_highLighter = nullptr;
@@ -113,6 +123,9 @@ private:
                                  int key,
                                  const QString &text,
                                  const QString &tr_note);
+
+    void updateSourceLineNote();
+    void updateSourceLineContent();
 
     void updateActions();
     void updateRecent();

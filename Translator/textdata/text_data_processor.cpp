@@ -37,6 +37,7 @@
 #include <QFileInfo>
 #include <PGE_File_Formats/file_formats.h>
 
+#include "text_types.h"
 #include "text_data_processor.h"
 
 
@@ -302,9 +303,14 @@ bool TextDataProcessor::scanEpisode(const QString &directory, TranslateProject &
             importScript(origin, f, rfp);
     }
 
-    // FIXME: Remove this after adding the "languages manager" module
-    updateTranslation(proj, "ru");
-    updateTranslation(proj, "zh-cn");
+    // Update existing language entries
+    for(auto l = proj.begin(); l != proj.end(); ++l)
+    {
+        if(l.key() == "metadata")
+            continue;
+
+        updateTranslation(proj, l.key());
+    }
 
     saveJSONs(directory, proj);
 
@@ -337,6 +343,113 @@ bool TextDataProcessor::createTranslation(TranslateProject &proj, const QString 
 {
     updateTranslation(proj, lang);
     return true;
+}
+
+TrLine &TextDataProcessor::getItemRef(TranslateProject &proj, const QString &lang, const QString &root, int group, int type, int key, bool *ok)
+{
+    static TrLine errored;
+
+    if(ok)
+        *ok = true;
+
+    try
+    {
+        if(!proj.contains(lang))
+            throw std::logic_error("Language missing");
+
+        auto &l = proj[lang];
+
+        switch(group)
+        {
+        case TextTypes::S_WORLD:
+        {
+            if(!l.worlds.contains(root))
+                throw std::logic_error("World entry (group) is missing");
+
+            auto &r = l.worlds[root];
+
+            switch(type)
+            {
+            case TextTypes::WDT_LEVEL:
+                if(!r.level_titles.contains(key))
+                    std::logic_error("Level key is not found");
+
+                return r.level_titles[key].title;
+
+            case TextTypes::WDT_TITLE:
+                return r.title;
+
+            case TextTypes::WDT_CREDITS:
+                return r.credits;
+
+            default:
+                std::logic_error("Invalid world item type");
+            }
+
+            break;
+        }
+        case TextTypes::S_LEVEL:
+        {
+            if(!l.levels.contains(root))
+                throw std::logic_error("Level entry (group) is missing");
+
+            auto &r = l.levels[root];
+
+            switch(type)
+            {
+            case TextTypes::LDT_EVENT:
+                if(!r.events.contains(key))
+                    std::logic_error("Event key is not found");
+
+                return r.events[key].message;
+
+            case TextTypes::LDT_NPC:
+                if(!r.npc.contains(key))
+                    std::logic_error("NPCkey is not found");
+
+                return r.npc[key].talk;
+
+            case TextTypes::LDT_TITLE:
+                return r.title;
+
+            default:
+                std::logic_error("Invalid level item type");
+            }
+            break;
+        }
+        case TextTypes::S_SCRIPT:
+        {
+            if(!l.scripts.contains(root))
+                throw std::logic_error("Script entry (group) is missing");
+
+            auto &r = l.scripts[root];
+
+            switch(type)
+            {
+            case TextTypes::SDT_LINE:
+                if(!r.lines.contains(key))
+                    std::logic_error("NPCkey is not found");
+
+                return r.lines[key].translation;
+
+            default:
+                std::logic_error("Invalid level item type");
+            }
+            break;
+        }
+        default:
+            throw std::logic_error("Invalid file group");
+        }
+
+    }
+    catch(const std::exception &)
+    {
+        if(ok)
+            *ok = false;
+        return errored;
+    }
+
+    return errored;
 }
 
 void TextDataProcessor::importLevel(TranslationData &origin, const QString &path, const QString &shortPath)
@@ -1165,7 +1278,7 @@ bool TextDataProcessor::saveJSONs(const QString &directory, const TranslateProje
             {
                 wo["credits"] = wa.credits.text;
                 if(!wa.credits.text.isEmpty())
-                    wo["credits-n"] = wa.credits.text;
+                    wo["credits-n"] = wa.credits.note;
 
                 if(!isOrigin)
                 {
@@ -1802,7 +1915,7 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                     }
 
                     et.title.text = ito["tit"].toString();
-                    et.title.note = ito["tit-u"].toString();
+                    et.title.note = ito["tit-n"].toString();
                     et.title.unfinished = ito["u"].toBool(false);
                     et.title.vanished = ito["v"].toBool(false);
                     et.filename = ito["f"].toString("");

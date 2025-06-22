@@ -81,7 +81,7 @@
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">浏览……</translation>
+        <translation>浏览……</translation>
     </message>
     <message>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished">筛选……</translation>
+        <translation>筛选……</translation>
     </message>
 </context>
 <context>
@@ -369,7 +369,7 @@
     </message>
     <message>
         <source>Settings...</source>
-        <translation type="unfinished">设置……</translation>
+        <translation>设置……</translation>
     </message>
     <message>
         <source>Extra settings are not specified</source>
