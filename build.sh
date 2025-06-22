@@ -254,9 +254,10 @@ do
             PATH=${PATH}:$PWD/_common
             echo "=== Cleaning-up old state..."
             git submodule foreach 'pwd; rm -Rf * .*;'
+            git submodule deinit --all -f
             echo "=== Fetching new submodules..."
             git submodule init
-            git submodule update
+            git submodule update --init --recursive
             echo ""
             git submodule foreach submodule-update.sh "$PWD/.gitmodules"
             echo ""
