@@ -1299,22 +1299,98 @@ public:
         m_episode_info.title_translations[lang_name] = translated_title;
     }
 
+    static bool fEndsWith(const QStringList &filters, const QString &fileName)
+    {
+        for(auto &filter : filters)
+        {
+            if(fileName.endsWith(filter))
+                return true;
+        }
+
+        return false;
+    }
+
+    static bool fEqual(const QStringList &filters, const QString &fileName)
+    {
+        for(auto &filter : filters)
+        {
+            if(fileName == filter)
+                return true;
+        }
+
+        return false;
+    }
+
     bool convert_file(const QString& filename, const QString& in_path, const QString& out_path, const QString& rel_path)
     {
         sync_cur_dir(in_path);
 
-        bool is_non_tracker_music = filename.endsWith(".mp3") || filename.endsWith(".ogg")
-            || filename.endsWith(".vgm") || filename.endsWith(".vgz") || filename.endsWith(".mid")
-            || filename.endsWith(".nsf") || filename.endsWith(".hes")
-            || filename.endsWith(".pttune") || filename.endsWith(".ptcop")
-            || filename.endsWith(".wma") || filename.endsWith(".gbs") || filename.endsWith(".psm")
-            || filename.endsWith(".flac");
+        const QStringList non_tracker_music =
+        {
+            // MPEG 1 Layer III
+            ".mp3",
+            // OGG Vorbis, FLAC, and Opus
+            ".ogg", ".flac", ".opus",
+            // Uncompressed audio data
+            ".aiff",
+            // MIDI
+            ".mid", ".midi", ".rmi", ".mus", ".kar", ".xmi", ".cmf",
+            // Id Music File (OPL2 raw) / Imago Orpheus (Tracker music)
+            ".imf", ".wlf",
+            // GAME EMU (Chiptunes)
+            ".spc", ".ay", ".gbs", ".gym", ".hes", ".kss", ".nsf",
+            ".nsfe", ".sap", ".vgm", ".vgz",
+            // PXTONE
+            ".pttune", ".ptcop",
+            // Windows Media Audio
+            ".wma"
+        };
 
-        bool is_tracker_music = filename.endsWith(".spc") || filename.endsWith(".it")
-            || filename.endsWith(".mod") || filename.endsWith(".xm") || filename.endsWith(".s3m");
+        const QStringList tracker_music =
+        {
+            ".mod", ".it", ".s3m", ".669", ".med", ".xm", ".amf",
+            ".apun", ".dsm", ".far", ".gdm", ".mtm", ".psm",
+            ".okt", ".stm", ".stx", ".ult", ".uni", ".mptm"
+        };
 
-        bool is_font = filename.endsWith(".ttf") || filename.endsWith(".otf") || filename.endsWith(".pcf") || filename.endsWith(".woff") || filename.endsWith(".woff2");
-        bool is_icon = filename.endsWith(".ico") || filename.endsWith(".icns");
+        const QStringList junk_files_tails =
+        {
+            // OS junk
+            ".db", ".db:encryptable", ".tmp", ".bak",
+            // Moondust Tilesets
+            ".tileset.ini", ".tsgrp.ini",
+            // Game saves
+            ".sav", ".savx", ".dat",
+            // Unsupported images
+            ".jpg", ".jpeg", ".bmp", ".tga", ".pcx",
+            // Special graphics formats
+            ".xcf", ".psd", ".pdn", ".ai", ".psg", ".ps",
+            // Executables
+            ".dll", ".exe",
+            // Archives
+            ".rar", ".zip", ".7z", ".tar", ".gz", ".bz2", ".xz", ".lzma",
+            // TheXTech packages
+            ".xte", ".xta",
+            // Documents
+            ".odt", ".ods", ".pdf", ".md", ".rtf", ".doc", ".docx", ".xls", ".xlsx",
+            // Scripts (except lua)
+            ".sh", ".bat", ".cmd", ".py", ".pl", ".php", ".rb",
+            // Other
+            ".pal", "tst"
+        };
+
+        const QStringList junk_files_match =
+        {
+            ".ds_store", "desktop.ini", "progress.json"
+        };
+
+        bool is_non_tracker_music = fEndsWith(non_tracker_music, filename);
+        bool is_tracker_music = fEndsWith(tracker_music, filename);
+
+        bool is_midi_bank = fEndsWith({".wopl", ".wopn", ".sf2", ".sf3"}, filename);
+
+        bool is_font = fEndsWith({".ttf", ".otf", ".pcf", ".woff", ".woff2"}, filename);
+        bool is_icon = fEndsWith({".ico", ".icns"}, filename);
 
         if(filename.endsWith("m.gif") && in_path.contains("/graphics/fallback/"))
         {
@@ -1367,18 +1443,7 @@ public:
             return true;
         }
         // note that filename is lowercase
-        else if(filename.endsWith(".xcf") || filename.endsWith(".db") || filename == ".ds_store"
-            || filename.endsWith(".psg") || filename.endsWith(".ps") || filename.endsWith(".psd")
-            || filename == "progress.json" || filename == "desktop.ini"
-            || filename.endsWith("tst") || filename.endsWith(".tileset.ini") || filename.endsWith(".sav")
-            || filename.endsWith(".savx") || filename.endsWith(".pdn")
-            || filename.endsWith(".jpg") || filename.endsWith(".jpeg")
-            || filename.endsWith(".bmp") || filename.endsWith(".pal")
-            || filename.endsWith(".dll") || filename.endsWith(".exe")
-            || filename.endsWith(".rar") || filename.endsWith(".zip") || filename.endsWith(".7z")
-            || filename.endsWith(".xte") || filename.endsWith(".xta")
-            || filename.endsWith(".odt") || filename.endsWith(".pdf") || filename.endsWith(".md") || filename.endsWith(".rtf")
-            || filename.endsWith(".tmp") || filename.endsWith(".bak"))
+        else if(fEndsWith(junk_files_tails, filename) || fEqual(junk_files_match, filename))
         {
             // banned filenames
             log_file(LogCategory::SkippedUnused, in_path);
@@ -1392,7 +1457,7 @@ public:
             // note that filename is lowercase
             if(!filename.endsWith(".txt") && !filename.endsWith(".lvl") && !filename.endsWith(".lvlx")
                 && !filename.endsWith(".wld") && !filename.endsWith(".wldx")
-                && !is_non_tracker_music && !is_tracker_music
+                && !is_non_tracker_music && !is_tracker_music && !is_midi_bank
                 && !(filename.startsWith("translation_") && filename.endsWith(".json"))
                 && !(filename.startsWith("assets_") && filename.endsWith(".json"))
                 && !(filename.startsWith("thextech_") && filename.endsWith(".json"))
