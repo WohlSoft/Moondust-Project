@@ -60,8 +60,8 @@ public:
 
     const MDAudioFileSpec &getInSpec() const;
 
-    bool openInFile(const std::string &file);
-    bool openOutFile(const std::string &file, const MDAudioFileSpec &dstSpec);
+    bool openInFile(const std::string &file, int *detectedFormat = nullptr);
+    bool openOutFile(const std::string &file, int dstFormat, const MDAudioFileSpec &dstSpec);
 
     uint32_t numChunks() const;
     uint32_t curChunk() const;
