@@ -27,10 +27,12 @@ struct SDL_RWops;
 
 struct MDAudioFileSpec
 {
-    uint64_t m_total_length = 0;
-    uint64_t m_loop_start = 0;
-    uint64_t m_loop_end = 0;
+    int64_t  m_total_length = 0;
+    int64_t  m_loop_start = 0;
+    int64_t  m_loop_end = 0;
+    int64_t  m_loop_len = 0;
 
+    int      m_channels = 0;
     int      m_sample_format = 0;
     int      m_sample_rate = 0;
 
@@ -38,6 +40,12 @@ struct MDAudioFileSpec
     std::string m_meta_artist;
     std::string m_meta_album;
     std::string m_meta_copyright;
+
+    // Encoding settings
+    bool vbr = false;
+    int quality = -1;
+    int bitrate = -1;
+    int profile = -1;
 };
 
 class MDAudioFile
@@ -48,18 +56,31 @@ protected:
     MDAudioFileSpec m_spec;
     std::string     m_lastError;
 
+    static bool isLoopTag(const char* tag);
+    static int64_t parseTime(char *time, long samplerate_hz);
+    static std::string parseidiMetaTag(const char *src);
+
 public:
     MDAudioFile();
     virtual ~MDAudioFile();
 
-    virtual std::string getLastError();
+    enum CodecSpec
+    {
+        SPEC_READ = 0x01,
+        SPEC_WRITE = 0x02,
+        SPEC_FIXED_SAMPLE_RATE = 0x04
+    };
+
+    virtual uint32_t getCodecSpec() const = 0;
+
+    std::string getLastError();
 
     virtual bool openRead(SDL_RWops *file) = 0;
     virtual bool openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec) = 0;
 
     virtual bool close() = 0;
 
-    virtual size_t readChunk(uint8_t *out, size_t outSize) = 0;
+    virtual size_t readChunk(uint8_t *out, size_t outSize, bool *spec_changed = nullptr) = 0;
     virtual size_t writeChunk(uint8_t *in, size_t inSize) = 0;
 
     const MDAudioFileSpec &getSpec() const;
