@@ -37,12 +37,12 @@ const MDAudioFileSpec &MoondustAudioProcessor::getInSpec() const
     return m_in_file->getSpec();
 }
 
-bool MoondustAudioProcessor::openInFile(const std::string &file)
+bool MoondustAudioProcessor::openInFile(const std::string &file, int *detectedFormat)
 {
     return false;
 }
 
-bool MoondustAudioProcessor::openOutFile(const std::string &file, const MDAudioFileSpec &dstSpec)
+bool MoondustAudioProcessor::openOutFile(const std::string &file, int dstFormat, const MDAudioFileSpec &dstSpec)
 {
     return false;
 }
