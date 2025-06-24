@@ -1449,8 +1449,8 @@ public:
             log_file(LogCategory::SkippedUnused, in_path);
             return true;
         }
-        // skip TTFs on DSG
-        else if(m_spec.target_platform == TargetPlatform::DSG && is_font)
+        // skip TTFs and midi banks on DSG
+        else if(m_spec.target_platform == TargetPlatform::DSG && (is_font || is_midi_bank))
             return true;
         else
         {
@@ -1464,7 +1464,7 @@ public:
                 && !filename.endsWith(".ini")
                 && !filename.endsWith(".png") && !filename.endsWith(".gif")
                 && !filename.endsWith(".wav")
-                && !is_font)
+                && !is_font && !is_icon)
             {
                 log_file(LogCategory::CopiedUnknown, in_path);
             }
