@@ -2,6 +2,7 @@
 #define COVERTER_DIALOGUE_H
 
 #include <QDialog>
+#include <QSettings>
 #include <QFuture>
 
 #include "audio_processor.h"
@@ -16,8 +17,19 @@ class CoverterDialogue : public QDialog
 {
     Q_OBJECT
 
+    QSettings m_setup;
     MoondustAudioProcessor m_cvt;
+    MDAudioFileSpec m_dstSpec;
     QFuture<void> m_runner;
+
+    enum Phase
+    {
+        PHASE_IDLE = 0,
+        PHASE_LENGHT_MEASURE,
+        PHASE_CONVERSION
+    };
+
+    int m_phase = PHASE_IDLE;
 
 public:
     CoverterDialogue(QWidget *parent = nullptr);
