@@ -38,6 +38,8 @@ public:
 
     bool close() override;
 
+    bool readRewind() override;
+
     size_t readChunk(uint8_t *out, size_t outSize, bool *spec_changed = nullptr) override;
     size_t writeChunk(uint8_t *in, size_t inSize) override;
 };
