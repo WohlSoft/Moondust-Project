@@ -80,6 +80,8 @@ public:
 
     virtual bool close() = 0;
 
+    virtual bool readRewind() = 0;
+
     virtual size_t readChunk(uint8_t *out, size_t outSize, bool *spec_changed = nullptr) = 0;
     virtual size_t writeChunk(uint8_t *in, size_t inSize) = 0;
 

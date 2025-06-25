@@ -31,7 +31,7 @@ struct SDL_RWops;
 struct _SDL_AudioStream;
 typedef struct _SDL_AudioStream SDL_AudioStream;
 
-#define MD_AUDIO_CHUNK_SIZE 1024
+#define MD_AUDIO_CHUNK_SIZE 4096
 
 class MoondustAudioProcessor
 {
@@ -47,8 +47,8 @@ class MoondustAudioProcessor
     SDL_AudioStream *m_cvt_stream = nullptr;
     bool init_cvt_stream();
 
-    uint32_t m_curChunk = 0;
-    uint32_t m_numChunks = 0;
+    double m_curChunk = 0;
+    double m_numChunks = 0;
 
     bool m_done = false;
 
@@ -80,7 +80,9 @@ public:
     int64_t getSamplesReadStat() const;
     int64_t getSamplesWrittenStat() const;
 
-    bool runChunk();
+    bool rewindRead();
+
+    bool runChunk(bool dry = false);
 
     bool done() const;
 
