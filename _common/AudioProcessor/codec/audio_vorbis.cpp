@@ -217,19 +217,7 @@ bool MDAudioVorbis::openRead(SDL_RWops *file)
 
     m_spec.m_total_length = ov_pcm_total(&m_vf, -1);
 
-#ifdef OGG_USE_TREMOR
-    result = ov_time_seek(&m_vf, 0);
-#else
-    result = ov_time_seek(&m_vf, 0.0);
-#endif
-
-    if(result)
-    {
-        set_ov_error("ov_time_seek", result);
-        return false;
-    }
-
-    return true;
+    return readRewind();
 }
 
 bool MDAudioVorbis::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
@@ -341,6 +329,31 @@ bool MDAudioVorbis::close()
     }
 
     m_spec = MDAudioFileSpec();
+
+    return true;
+}
+
+bool MDAudioVorbis::readRewind()
+{
+    if(m_write)
+    {
+        m_lastError = "Function readRewind called when write is open.";
+        return false; // This function works for read only!
+    }
+
+    int result;
+
+#ifdef OGG_USE_TREMOR
+    result = ov_time_seek(&m_vf, 0);
+#else
+    result = ov_time_seek(&m_vf, 0.0);
+#endif
+
+    if(result)
+    {
+        set_ov_error("ov_time_seek", result);
+        return false;
+    }
 
     return true;
 }
