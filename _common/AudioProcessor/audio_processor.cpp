@@ -45,7 +45,7 @@ bool MoondustAudioProcessor::init_cvt_stream()
     m_in_buffer.resize(MD_AUDIO_CHUNK_SIZE * sample_in);
     m_out_buffer.resize(MD_AUDIO_CHUNK_SIZE * sample_out);
 
-    m_numChunks = m_in_buffer.size() / sample_in;
+    m_numChunks = (source.m_total_length * sample_in) / (double)MD_AUDIO_CHUNK_SIZE;
     m_curChunk = 0;
 
     return true;
@@ -71,24 +71,33 @@ const MDAudioFileSpec &MoondustAudioProcessor::getInSpec() const
 
 bool MoondustAudioProcessor::openInFile(const std::string &file, int *detectedFormat)
 {
-    m_in_file.reset(new MDAudioVorbis);
     if(m_rw_in)
         SDL_RWclose(m_rw_in);
 
     m_rw_in = SDL_RWFromFile(file.c_str(), "rb");
     if(!m_rw_in)
     {
+        m_lastError = "Failed to open input file by SDL_RWFromFile for read.";
         m_in_file.reset();
         return false;
     }
 
     m_in_filePath = file;
 
+
+    m_in_file.reset(new MDAudioVorbis);
+
+
     if(!m_in_file->openRead(m_rw_in))
     {
+        m_lastError = m_in_file->getLastError();
         m_in_file.reset();
         return false;
     }
+
+    const auto &source = m_in_file->getSpec();
+    size_t sample_in = (SDL_AUDIO_BITSIZE(source.m_sample_format) / 8) * source.m_channels;
+    m_numChunks = (source.m_total_length * sample_in) / MD_AUDIO_CHUNK_SIZE;
 
     if(detectedFormat)
         *detectedFormat = FORMAT_OGG_VORBIS;
@@ -101,13 +110,23 @@ bool MoondustAudioProcessor::openOutFile(const std::string &file, int dstFormat,
     if(!m_in_file.get())
         return false;
 
-    m_out_file.reset(new MDAudioVorbis);
+    switch(dstFormat)
+    {
+    case FORMAT_OGG_VORBIS:
+        m_out_file.reset(new MDAudioVorbis);
+        break;
+    default:
+        m_lastError = "Incorrect or unsupported destination format";
+        return false;
+    }
+
     if(m_rw_out)
         SDL_RWclose(m_rw_out);
 
     m_rw_out = SDL_RWFromFile(file.c_str(), "wb");
     if(!m_rw_out)
     {
+        m_lastError = "Failed to open output file by SDL_RWFromFile for write.";
         m_out_file.reset();
         return false;
     }
@@ -156,18 +175,18 @@ void MoondustAudioProcessor::close()
     m_in_filePath.clear();
     m_out_filePath.clear();
     m_done = false;
-    m_numChunks = 0;
-    m_curChunk = 0;
+    m_numChunks = 0.0;
+    m_curChunk = 0.0;
 }
 
 uint32_t MoondustAudioProcessor::numChunks() const
 {
-    return m_numChunks;
+    return (int)round(m_numChunks);
 }
 
 uint32_t MoondustAudioProcessor::curChunk() const
 {
-    return m_curChunk;
+    return (int)round(m_curChunk);
 }
 
 int64_t MoondustAudioProcessor::getBytesReadStat() const
@@ -196,7 +215,20 @@ int64_t MoondustAudioProcessor::getSamplesWrittenStat() const
     return m_stat_write / sample_out;
 }
 
-bool MoondustAudioProcessor::runChunk()
+bool MoondustAudioProcessor::rewindRead()
+{
+    m_done = false;
+    m_stat_write = 0;
+    m_stat_read = 0;
+    m_curChunk = 0.0;
+
+    if(!init_cvt_stream())
+        return false;
+
+    return m_in_file->readRewind();
+}
+
+bool MoondustAudioProcessor::runChunk(bool dry)
 {
     int filled = 0, amount = 0, written = 0, attempts = 10;
     bool spec_changed = false;
@@ -221,7 +253,7 @@ bool MoondustAudioProcessor::runChunk()
         if(amount > 0)
         {
             m_stat_read += amount;
-            m_curChunk++;
+            m_curChunk += amount / (double)MD_AUDIO_CHUNK_SIZE;
             if(SDL_AudioStreamPut(m_cvt_stream, m_in_buffer.data(), amount) < 0)
                 return false;
         }
@@ -238,7 +270,10 @@ bool MoondustAudioProcessor::runChunk()
 
     } while(filled == 0);
 
-    written = m_out_file->writeChunk(m_out_buffer.data(), filled);
+    if(dry)
+        written = filled;
+    else if(m_out_file.get())
+        written = m_out_file->writeChunk(m_out_buffer.data(), filled);
 
     if(written == 0)
         return false;
