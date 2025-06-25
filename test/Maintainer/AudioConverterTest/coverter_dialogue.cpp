@@ -142,7 +142,7 @@ void CoverterDialogue::runner()
 
                 if(prev_progress != m_cvt.curChunk())
                 {
-                    qDebug() << "Progress" << m_cvt.curChunk() << " of " << m_cvt.numChunks() * 2;
+                    // qDebug() << "Progress" << m_cvt.curChunk() << " of " << m_cvt.numChunks() * 2;
                     emit updateProgress(m_cvt.curChunk());
                     prev_progress = m_cvt.curChunk();
                 }
@@ -178,7 +178,7 @@ void CoverterDialogue::runner()
 
                 if(prev_progress != m_cvt.curChunk())
                 {
-                    qDebug() << "Progress" << m_cvt.numChunks() + m_cvt.curChunk() << " of " << m_cvt.numChunks() * 2;
+                    // qDebug() << "Progress" << m_cvt.numChunks() + m_cvt.curChunk() << " of " << m_cvt.numChunks() * 2;
                     emit updateProgress(m_cvt.numChunks() + m_cvt.curChunk());
                     prev_progress = m_cvt.curChunk();
                 }
