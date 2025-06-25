@@ -25,6 +25,7 @@ class MDAudioVorbis : public MDAudioFile
     int set_ov_error(const char *function, int error);
 
     bool updateSection();
+    void writeFlush();
 
 public:
     MDAudioVorbis();

@@ -31,7 +31,7 @@ struct SDL_RWops;
 struct _SDL_AudioStream;
 typedef struct _SDL_AudioStream SDL_AudioStream;
 
-#define MD_AUDIO_CHUNK_SIZE 4096
+#define MD_AUDIO_CHUNK_SIZE 1024
 
 class MoondustAudioProcessor
 {
@@ -39,10 +39,13 @@ class MoondustAudioProcessor
     std::vector<uint8_t> m_in_buffer;
     std::vector<uint8_t> m_out_buffer;
 
+    SDL_RWops *m_rw_in = nullptr;
+    SDL_RWops *m_rw_out = nullptr;
     std::unique_ptr<MDAudioFile> m_in_file;
     std::unique_ptr<MDAudioFile> m_out_file;
 
-    SDL_AudioStream *m_cvt_stream;
+    SDL_AudioStream *m_cvt_stream = nullptr;
+    bool init_cvt_stream();
 
     uint32_t m_curChunk = 0;
     uint32_t m_numChunks = 0;
@@ -51,6 +54,9 @@ class MoondustAudioProcessor
 
     std::string m_in_filePath;
     std::string m_out_filePath;
+
+    int64_t m_stat_read = 0;
+    int64_t m_stat_write = 0;
 
 public:
     MoondustAudioProcessor();
@@ -63,8 +69,16 @@ public:
     bool openInFile(const std::string &file, int *detectedFormat = nullptr);
     bool openOutFile(const std::string &file, int dstFormat, const MDAudioFileSpec &dstSpec);
 
+    void close();
+
     uint32_t numChunks() const;
     uint32_t curChunk() const;
+
+    int64_t getBytesReadStat() const;
+    int64_t getBytesWrittenStat() const;
+
+    int64_t getSamplesReadStat() const;
+    int64_t getSamplesWrittenStat() const;
 
     bool runChunk();
 

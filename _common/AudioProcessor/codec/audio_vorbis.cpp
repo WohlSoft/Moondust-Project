@@ -54,6 +54,40 @@ bool MDAudioVorbis::updateSection()
     return true;
 }
 
+void MDAudioVorbis::writeFlush()
+{
+    int eos = 0;
+
+    while(vorbis_analysis_blockout(&m_vd, &m_vb) == 1)
+    {
+        /* analysis, assume we want to use bitrate management */
+        vorbis_analysis(&m_vb, nullptr);
+        vorbis_bitrate_addblock(&m_vb);
+
+        while(vorbis_bitrate_flushpacket(&m_vd, &m_op))
+        {
+            /* weld the packet into the bitstream */
+            ogg_stream_packetin(&m_os, &m_op);
+
+            /* write out pages (if any) */
+            while(!eos)
+            {
+                int result = ogg_stream_pageout(&m_os, &m_og);
+                if(result == 0)
+                    break;
+
+                SDL_RWwrite(m_file, m_og.header, 1, m_og.header_len);
+                SDL_RWwrite(m_file, m_og.body, 1, m_og.body_len);
+
+                /* this could be set above, but for illustrative purposes, I do
+                   it here (to show that vorbis does know where the stream ends) */
+                if(ogg_page_eos(&m_og))
+                    eos = 1;
+            }
+        }
+    }
+}
+
 MDAudioVorbis::MDAudioVorbis() : MDAudioFile()
 {}
 
@@ -289,6 +323,8 @@ bool MDAudioVorbis::close()
         if(m_file)
         {
             vorbis_analysis_wrote(&m_vd, 0);
+            writeFlush();
+
             ogg_stream_clear(&m_os);
             vorbis_block_clear(&m_vb);
             vorbis_dsp_clear(&m_vd);
@@ -321,10 +357,11 @@ size_t MDAudioVorbis::readChunk(uint8_t *out, size_t outSize, bool *spec_changed
 #else
     amount = (int)ov_read(&m_vf, (char*)out, outSize, SDL_BYTEORDER == SDL_BIG_ENDIAN, 2, 1, &cur_section);
 #endif
-    if (amount < 0)
+
+    if(amount < 0)
     {
         set_ov_error("ov_read", amount);
-        return 0;
+        return ~(size_t)0;
     }
 
     if(cur_section != m_section)
@@ -344,7 +381,7 @@ size_t MDAudioVorbis::readChunk(uint8_t *out, size_t outSize, bool *spec_changed
 size_t MDAudioVorbis::writeChunk(uint8_t *in, size_t inSize)
 {
     long i;
-    int eos = 0;
+    size_t written = 0;
     int sample_size = m_spec.m_channels * sizeof(short);
     /* expose the buffer to submit data */
 
@@ -359,36 +396,10 @@ size_t MDAudioVorbis::writeChunk(uint8_t *in, size_t inSize)
             buffer[c][i] = *(in_s++) / 32768.f;
     }
 
+    written += i * sample_size;
     vorbis_analysis_wrote(&m_vd, i);
 
-    while(vorbis_analysis_blockout(&m_vd, &m_vb) == 1)
-    {
-        /* analysis, assume we want to use bitrate management */
-        vorbis_analysis(&m_vb, nullptr);
-        vorbis_bitrate_addblock(&m_vb);
+    writeFlush();
 
-        while(vorbis_bitrate_flushpacket(&m_vd, &m_op))
-        {
-            /* weld the packet into the bitstream */
-            ogg_stream_packetin(&m_os, &m_op);
-
-            /* write out pages (if any) */
-            while(!eos)
-            {
-                int result = ogg_stream_pageout(&m_os, &m_og);
-                if(result == 0)
-                    break;
-
-                SDL_RWwrite(m_file, m_og.header, 1, m_og.header_len);
-                SDL_RWwrite(m_file, m_og.body, 1, m_og.body_len);
-
-                /* this could be set above, but for illustrative purposes, I do
-                   it here (to show that vorbis does know where the stream ends) */
-                if(ogg_page_eos(&m_og))
-                    eos = 1;
-            }
-        }
-    }
-
-    return 0;
+    return written;
 }
