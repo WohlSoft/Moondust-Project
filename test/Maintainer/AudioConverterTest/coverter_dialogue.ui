@@ -192,6 +192,29 @@
      </property>
     </widget>
    </widget>
+   <widget class="QComboBox" name="dstFormat">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>130</y>
+      <width>121</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>110</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Target format:</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QProgressBar" name="cvtProgress">
    <property name="enabled">

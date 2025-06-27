@@ -36,6 +36,7 @@ bool MoondustAudioProcessor::init_cvt_stream()
                                       obtained.m_sample_format, obtained.m_channels, obtained.m_sample_rate);
     if(!m_cvt_stream)
     {
+        m_lastError = "Failed to initialize SDL Audio Stream: " + std::string(SDL_GetError());
         close();
         return false;
     }
@@ -82,7 +83,7 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, int *detectedFo
     if(!m_rw_in)
     {
         m_lastError = "Failed to open input file by SDL_RWFromFile for read.";
-        m_in_file.reset();
+        m_in_file.reset(nullptr);
         return false;
     }
 
@@ -90,7 +91,7 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, int *detectedFo
     if(SDL_RWread(m_rw_in, magic, 1, 99) < 24)
     {
         m_lastError = "Couldn't read any first 24 bytes of audio data";
-        m_in_file.reset();
+        m_in_file.reset(nullptr);
         SDL_RWclose(m_rw_in);
         m_rw_in = nullptr;
         return false;
@@ -98,7 +99,7 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, int *detectedFo
     SDL_RWseek(m_rw_in, 0, RW_SEEK_SET);
 
     m_in_filePath = file;
-    m_in_file.reset();
+    m_in_file.reset(nullptr);
 
     if(SDL_memcmp(magic, "OggS", 4) == 0)
     {
@@ -137,7 +138,7 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, int *detectedFo
     if(!m_in_file->openRead(m_rw_in))
     {
         m_lastError = m_in_file->getLastError();
-        m_in_file.reset();
+        m_in_file.reset(nullptr);
         SDL_RWclose(m_rw_in);
         m_rw_in = nullptr;
         return false;
@@ -181,7 +182,7 @@ bool MoondustAudioProcessor::openOutFile(const std::string &file, int dstFormat,
     if(!m_rw_out)
     {
         m_lastError = "Failed to open output file by SDL_RWFromFile for write.";
-        m_out_file.reset();
+        m_out_file.reset(nullptr);
         return false;
     }
 
@@ -189,12 +190,20 @@ bool MoondustAudioProcessor::openOutFile(const std::string &file, int dstFormat,
 
     if(!m_out_file->openWrite(m_rw_out, dstSpec))
     {
-        m_out_file.reset();
+        m_lastError = m_out_file->getLastError();
+        m_out_file.reset(nullptr);
+        SDL_RWclose(m_rw_in);
+        m_rw_in = nullptr;
         return false;
     }
 
     if(!init_cvt_stream())
+    {
+        m_out_file.reset(nullptr);
+        SDL_RWclose(m_rw_in);
+        m_rw_in = nullptr;
         return false;
+    }
 
     m_stat_read = 0;
     m_stat_write = 0;
@@ -207,7 +216,7 @@ void MoondustAudioProcessor::close()
     if(m_out_file.get())
     {
         m_out_file->close();
-        m_out_file.reset();
+        m_out_file.reset(nullptr);
         SDL_RWclose(m_rw_out);
         m_rw_out = nullptr;
     }
@@ -215,7 +224,7 @@ void MoondustAudioProcessor::close()
     if(m_in_file.get())
     {
         m_in_file->close();
-        m_in_file.reset();
+        m_in_file.reset(nullptr);
         SDL_RWclose(m_rw_in);
         m_rw_in = nullptr;
     }

@@ -22,13 +22,19 @@ class MDAudioQOA : public MDAudioFile
     uint32_t qoa_file_begin = 0;
     uint32_t qoa_file_size = 0;
 
+    // Encoder
+    uint32_t written_bytes = 0;
+    uint32_t written_samples = 0;
+    std::vector<uint8_t> m_encode_buffer;
+
     uint32_t decode_frame();
+    uint32_t encode_frame();
 
 public:
     MDAudioQOA(bool encodeXQOA = false);
     virtual ~MDAudioQOA();
 
-    uint32_t getCodecSpec() const;
+    uint32_t getCodecSpec() const override;
 
     bool openRead(SDL_RWops *file) override;
     bool openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec) override;
