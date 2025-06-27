@@ -19,6 +19,7 @@
 
 #include "audio_processor.h"
 #include "codec/audio_vorbis.h"
+#include "codec/audio_qoa.h"
 
 #include <SDL2/SDL.h>
 
@@ -71,6 +72,9 @@ const MDAudioFileSpec &MoondustAudioProcessor::getInSpec() const
 
 bool MoondustAudioProcessor::openInFile(const std::string &file, int *detectedFormat)
 {
+    Uint8 magic[100];
+    Uint8 submagic[4];
+
     if(m_rw_in)
         SDL_RWclose(m_rw_in);
 
@@ -82,16 +86,60 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, int *detectedFo
         return false;
     }
 
+    SDL_memset(magic, 0, 100);
+    if(SDL_RWread(m_rw_in, magic, 1, 99) < 24)
+    {
+        m_lastError = "Couldn't read any first 24 bytes of audio data";
+        m_in_file.reset();
+        SDL_RWclose(m_rw_in);
+        m_rw_in = nullptr;
+        return false;
+    }
+    SDL_RWseek(m_rw_in, 0, RW_SEEK_SET);
+
     m_in_filePath = file;
+    m_in_file.reset();
 
+    if(SDL_memcmp(magic, "OggS", 4) == 0)
+    {
+        SDL_RWseek(m_rw_in, 28, RW_SEEK_CUR);
+        SDL_RWread(m_rw_in, magic, 1, 8);
+        SDL_RWseek(m_rw_in,-36, RW_SEEK_CUR);
 
-    m_in_file.reset(new MDAudioVorbis);
+        if (SDL_memcmp(magic, "OpusHead", 8) == 0)
+        {
+            // m_in_file.reset(new MDAudioOpus);
+        }
+        else if (magic[0] == 0x7F && SDL_memcmp(magic + 1, "FLAC", 4) == 0)
+        {
+            // m_in_file.reset(new MDAudioFLAC);
+        }
+        else
+        {
+            m_in_file.reset(new MDAudioVorbis);
+        }
+    }
+    else if (SDL_memcmp(magic, "qoaf", 4) == 0)
+        m_in_file.reset(new MDAudioQOA);
+    else if (SDL_memcmp(magic, "XQOA", 4) == 0)
+        m_in_file.reset(new MDAudioQOA(true));
 
+    SDL_RWseek(m_rw_in, 0, RW_SEEK_SET);
+
+    if(!m_in_file.get())
+    {
+        m_lastError = "Unknown or unsupported file format";
+        SDL_RWclose(m_rw_in);
+        m_rw_in = nullptr;
+        return false;
+    }
 
     if(!m_in_file->openRead(m_rw_in))
     {
         m_lastError = m_in_file->getLastError();
         m_in_file.reset();
+        SDL_RWclose(m_rw_in);
+        m_rw_in = nullptr;
         return false;
     }
 
@@ -114,6 +162,12 @@ bool MoondustAudioProcessor::openOutFile(const std::string &file, int dstFormat,
     {
     case FORMAT_OGG_VORBIS:
         m_out_file.reset(new MDAudioVorbis);
+        break;
+    case FORMAT_QOA:
+        m_out_file.reset(new MDAudioQOA);
+        break;
+    case FORMAT_XQOA:
+        m_out_file.reset(new MDAudioQOA(true));
         break;
     default:
         m_lastError = "Incorrect or unsupported destination format";
