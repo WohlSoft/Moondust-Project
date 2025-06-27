@@ -68,12 +68,22 @@ public:
 
     enum CodecSpec
     {
+        //! Codec can only read
         SPEC_READ = 0x01,
+        //! Codec can only write
         SPEC_WRITE = 0x02,
+        //! Codec supports only one of allowed sample rates
         SPEC_FIXED_SAMPLE_RATE = 0x04,
+        //! Codec supports loop points
         SPEC_LOOP_POINTS = 0x08,
+        //! Codec supports meta-tags
         SPEC_META_TAGS = 0x10,
-        SPEC_MULTI_TRACK = 0x20
+        //! Codec supports multi-track format
+        SPEC_MULTI_TRACK = 0x20,
+        //! Codec can generate output with any desired sample rate
+        SPEC_SOURCE_ANY_RATE = 0x40,
+        //! Codec can generate output with any desired sample format
+        SPEC_SOURCE_ANY_FORMAT = 0x80
     };
 
     virtual uint32_t getCodecSpec() const = 0;
