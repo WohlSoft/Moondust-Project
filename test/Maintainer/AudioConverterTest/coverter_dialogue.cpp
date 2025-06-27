@@ -93,12 +93,12 @@ void CoverterDialogue::on_runCvt_clicked()
     else // Otherwise, just write down as-is
     {
         m_phase = PHASE_CONVERSION;
+    }
 
-        if(!m_cvt.openOutFile(ui->fileOut->text().toStdString(), ui->dstFormat->currentData().toInt(), m_dstSpec))
-        {
-            qWarning() << "Failed to open output file" << ui->fileOut->text() << QString::fromStdString(m_cvt.getLastError());
-            return;
-        }
+    if(!m_cvt.openOutFile(ui->fileOut->text().toStdString(), ui->dstFormat->currentData().toInt(), m_dstSpec))
+    {
+        qWarning() << "Failed to open output file" << ui->fileOut->text() << QString::fromStdString(m_cvt.getLastError());
+        return;
     }
 
     m_runner = QtConcurrent::run<void>(this, &CoverterDialogue::runner);
@@ -137,7 +137,12 @@ void CoverterDialogue::runner()
             switch(m_phase)
             {
             case PHASE_LENGHT_MEASURE:
-                m_cvt.runChunk(true);
+                if(!m_cvt.runChunk(true))
+                {
+                    qWarning() << "Conversion failed: (Phase Measure) can't read source file";
+                    emit workFinished();
+                    return;
+                }
 
                 if(prev_progress != m_cvt.curChunk())
                 {
@@ -161,7 +166,7 @@ void CoverterDialogue::runner()
 
                     m_cvt.rewindRead();
 
-                    if(!m_cvt.openOutFile(ui->fileOut->text().toStdString(), FORMAT_OGG_VORBIS, m_dstSpec))
+                    if(!m_cvt.openOutFile(ui->fileOut->text().toStdString(), ui->dstFormat->currentData().toInt(), m_dstSpec))
                     {
                         qWarning() << "Failed to open output file" << ui->fileOut->text();
                         emit workFinished();
@@ -173,7 +178,12 @@ void CoverterDialogue::runner()
 
                 break;
             case PHASE_CONVERSION:
-                m_cvt.runChunk(false);
+                if(!m_cvt.runChunk(false))
+                {
+                    qWarning() << "Conversion failed: (Phase Conversion) can't read source file";
+                    emit workFinished();
+                    return;
+                }
 
                 if(prev_progress != m_cvt.curChunk())
                 {
@@ -187,7 +197,13 @@ void CoverterDialogue::runner()
         }
         else
         {
-            m_cvt.runChunk();
+            if(!m_cvt.runChunk())
+            {
+                qWarning() << "Conversion failed: can't read source file";
+                emit workFinished();
+                return;
+            }
+
             emit updateProgress(m_cvt.curChunk());
         }
     }
