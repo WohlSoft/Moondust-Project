@@ -398,7 +398,17 @@ bool MDAudioQOA::close()
         if(m_file)
         {
             if(sample_data_pos > 0)
+            {
+                if(m_spec.m_loop_len != 0)
+                {
+                    // Extra samples to make loop end to not fail
+                    if(sample_data_pos + 4 <= sample_data_len)
+                        sample_data_pos += 4;
+                    else
+                        sample_data_pos = sample_data_len;
+                }
                 encode_frame(); // Finish the data that was left
+            }
 
             // Finalize the written data and update the header
             SDL_RWseek(m_file, qoa_file_begin, SEEK_SET);

@@ -264,6 +264,9 @@ int64_t MoondustAudioProcessor::getBytesWrittenStat() const
 
 int64_t MoondustAudioProcessor::getSamplesReadStat() const
 {
+    if(!m_in_file.get())
+        return 0;
+
     const auto &source = m_in_file->getSpec();
     size_t sample_in = (SDL_AUDIO_BITSIZE(source.m_sample_format) / 8) * source.m_channels;
 
@@ -272,6 +275,9 @@ int64_t MoondustAudioProcessor::getSamplesReadStat() const
 
 int64_t MoondustAudioProcessor::getSamplesWrittenStat() const
 {
+    if(!m_out_file.get())
+        return 0;
+
     const auto &obtained = m_out_file->getSpec();
     size_t sample_out = (SDL_AUDIO_BITSIZE(obtained.m_sample_format) / 8) * obtained.m_channels;
 
@@ -300,7 +306,11 @@ bool MoondustAudioProcessor::runChunk(bool dry)
     {
         filled = SDL_AudioStreamGet(m_cvt_stream, m_out_buffer.data(), m_out_buffer.size());
         if(filled != 0)
+        {
+            if(filled < 0)
+                return false;
             break;
+        }
 
         amount = m_in_file->readChunk(m_in_buffer.data(), m_in_buffer.size(), &spec_changed);
 
