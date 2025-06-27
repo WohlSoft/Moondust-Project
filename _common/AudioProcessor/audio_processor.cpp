@@ -326,6 +326,7 @@ bool MoondustAudioProcessor::runChunk(bool dry)
 {
     int filled = 0, amount = 0, written = 0, attempts = 10;
     bool spec_changed = false;
+    const auto &src_spec = m_in_file->getSpec();
 
     do
     {
@@ -351,14 +352,13 @@ bool MoondustAudioProcessor::runChunk(bool dry)
 
         if(amount > 0)
         {
-            if(m_cutAtLoopEnd)
+            if(m_cutAtLoopEnd && src_spec.m_loop_end > 0)
             {
-                const auto &source = m_in_file->getSpec();
-                size_t sample_in = (SDL_AUDIO_BITSIZE(source.m_sample_format) / 8) * source.m_channels;
+                size_t sample_in = (SDL_AUDIO_BITSIZE(src_spec.m_sample_format) / 8) * src_spec.m_channels;
 
-                if(source.m_loop_end > 0 && m_stat_read + amount > (source.m_loop_end * sample_in) + sample_in)
+                if(src_spec.m_loop_end > 0 && m_stat_read + amount > (src_spec.m_loop_end * sample_in) + sample_in)
                 {
-                    amount = (source.m_loop_end * sample_in) - m_stat_read + sample_in;
+                    amount = (src_spec.m_loop_end * sample_in) - m_stat_read + sample_in;
                     m_cuttedAtLoop = true;
                 }
             }
