@@ -98,7 +98,7 @@ MDAudioVorbis::~MDAudioVorbis()
 
 uint32_t MDAudioVorbis::getCodecSpec() const
 {
-    return SPEC_READ | SPEC_WRITE;
+    return SPEC_READ | SPEC_WRITE | SPEC_LOOP_POINTS | SPEC_META_TAGS;
 }
 
 static size_t sdl_read_func(void *ptr, size_t size, size_t nmemb, void *datasource)
@@ -127,7 +127,6 @@ bool MDAudioVorbis::openRead(SDL_RWops *file)
     ov_callbacks callbacks;
     vorbis_comment *vc = nullptr;
     SDL_bool is_loop_length = SDL_FALSE;
-    int result;
 
     close();
 

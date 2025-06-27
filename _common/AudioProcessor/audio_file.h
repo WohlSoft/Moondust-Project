@@ -32,6 +32,9 @@ struct MDAudioFileSpec
     int64_t  m_loop_end = 0;
     int64_t  m_loop_len = 0;
 
+    uint32_t m_multitrack_chans = 0;
+    uint32_t m_multitrack_tracks = 0;
+
     int      m_channels = 0;
     int      m_sample_format = 0;
     int      m_sample_rate = 0;
@@ -68,7 +71,10 @@ public:
     {
         SPEC_READ = 0x01,
         SPEC_WRITE = 0x02,
-        SPEC_FIXED_SAMPLE_RATE = 0x04
+        SPEC_FIXED_SAMPLE_RATE = 0x04,
+        SPEC_LOOP_POINTS = 0x08,
+        SPEC_META_TAGS = 0x10,
+        SPEC_MULTI_TRACK = 0x20
     };
 
     virtual uint32_t getCodecSpec() const = 0;
