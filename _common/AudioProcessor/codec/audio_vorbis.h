@@ -31,7 +31,7 @@ public:
     MDAudioVorbis();
     virtual ~MDAudioVorbis();
 
-    uint32_t getCodecSpec() const;
+    uint32_t getCodecSpec() const override;
 
     bool openRead(SDL_RWops *file) override;
     bool openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec) override;
