@@ -383,6 +383,8 @@ bool MDAudioQOA::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     head_size = qoa_encode_header(&info, header);
     SDL_RWwrite(m_file, header, 1, head_size);
 
+    written_bytes += head_size;
+
     return true;
 }
 
