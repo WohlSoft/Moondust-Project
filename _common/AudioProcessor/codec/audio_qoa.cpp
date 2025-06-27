@@ -37,15 +37,37 @@ uint32_t MDAudioQOA::decode_frame()
 
     got_bytes = SDL_RWread(m_file, m_decode_buffer.data(), 1, encoded_frame_size);
 
-    qoa_decode_frame(m_decode_buffer.data(), got_bytes, &info, (int16_t*)m_sample_buffer.data(), &samples_decoded);
-
-    /* required a multiple of 4 */
-    // samples_decoded &= ~3;
+    qoa_decode_frame(m_decode_buffer.data(), got_bytes, &info,
+                    (int16_t*)m_sample_buffer.data(), &samples_decoded);
 
     sample_data_pos = 0;
     sample_data_len = samples_decoded;
 
     return samples_decoded;
+}
+
+uint32_t MDAudioQOA::encode_frame()
+{
+    unsigned int samples_encoded = 0;
+    size_t got_bytes;
+
+    got_bytes = qoa_encode_frame((int16_t*)m_sample_buffer.data(),
+                                 &info, sample_data_pos, m_encode_buffer.data());
+
+    if(SDL_RWwrite(m_file, m_encode_buffer.data(), 1, got_bytes) != got_bytes)
+    {
+        m_lastError = "QOA: Failed to write frame data to the file";
+        return 0;
+    }
+
+    samples_encoded = sample_data_pos;
+
+    written_samples += sample_data_pos;
+    written_bytes += got_bytes;
+
+    sample_data_pos = 0;
+
+    return samples_encoded;
 }
 
 MDAudioQOA::MDAudioQOA(bool encodeXQOA) :
@@ -243,15 +265,164 @@ bool MDAudioQOA::openRead(SDL_RWops *file)
     return true;
 }
 
+static bool writeMetaTag(SDL_RWops *m_file, const std::string &tag)
+{
+    size_t ret;
+
+    ret = SDL_WriteBE32(m_file, (Uint32)tag.size()) * sizeof(Uint32);
+    if(!tag.empty())
+        ret += SDL_RWwrite(m_file, tag.c_str(), 1, tag.size());
+
+    return ret == (sizeof(Uint32) + tag.size());
+}
+
 bool MDAudioQOA::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
 {
-    return false;
+    uint8_t header[QOA_MIN_FILESIZE];
+    std::vector<uint8_t> xqoa_header;
+    uint32_t xqoa_head_size;
+    uint32_t head_size;
+
+    close();
+
+    m_write = true;
+    m_file = file;
+
+    m_spec = dstSpec;
+
+    written_bytes = 0;
+    written_samples = 0;
+    qoa_file_begin = 0;
+
+    m_spec.m_sample_format = AUDIO_S16SYS; // Can only work with the PCM16
+
+    info.channels = m_spec.m_channels;
+    info.samplerate = m_spec.m_sample_rate;
+    info.samples = m_spec.m_total_length;
+
+    m_encode_buffer.resize(qoa_max_frame_size(&info));
+    sample_data_len = QOA_FRAME_LEN;
+    m_sample_buffer.resize(info.channels * QOA_FRAME_LEN * sizeof(Sint16) * 2);
+
+    for(uint32_t c = 0; c < info.channels; c++)
+    {
+        /* Set the initial LMS weights to {0, 0, -1, 2}. This helps with the
+        prediction of the first few ms of a file. */
+        info.lms[c].weights[0] = 0;
+        info.lms[c].weights[1] = 0;
+        info.lms[c].weights[2] = -(1<<13);
+        info.lms[c].weights[3] =  (1<<14);
+
+        /* Explicitly set the history samples to 0, as we might have some
+        garbage in there. */
+        for(int i = 0; i < QOA_LMS_LEN; i++)
+            info.lms[c].history[i] = 0;
+    }
+
+    // Create XQOA header
+    if(m_encodeXQOA)
+    {
+        xqoa_header.resize(sizeof(XQOAHeaderRAW));
+        XQOAHeaderRAW *head_raw = reinterpret_cast<XQOAHeaderRAW *>(xqoa_header.data());
+        SDL_memcpy(head_raw->magic, "XQOA", 4);
+
+        xqoa_head_size = sizeof(XQOAHeaderRAW) +
+                         (sizeof(Uint32) * 4) +
+                         m_spec.m_meta_title.size() +
+                         m_spec.m_meta_album.size() +
+                         m_spec.m_meta_artist.size() +
+                         m_spec.m_meta_copyright.size();
+
+        head_raw->head_size = SDL_SwapBE32(xqoa_head_size);
+        head_raw->qoa_data_size = 0; // Will be filled later
+        head_raw->loop_start = SDL_SwapBE32(m_spec.m_loop_start);
+        head_raw->loop_end = SDL_SwapBE32(m_spec.m_loop_end);
+        head_raw->multitrack_chans = SDL_SwapBE32(m_spec.m_multitrack_chans);
+        head_raw->multitrack_tracks = SDL_SwapBE32(m_spec.m_multitrack_tracks);
+
+        if(SDL_RWwrite(m_file, xqoa_header.data(), 1, xqoa_header.size()) != xqoa_header.size())
+        {
+            m_lastError = "XQOA: Failed to write the header data.";
+            close();
+            return false;
+        }
+
+        qoa_file_begin = xqoa_head_size;
+
+        if(!writeMetaTag(m_file, m_spec.m_meta_title))
+        {
+            m_lastError = "XQOA: Failed to write the TITLE tag data.";
+            close();
+            return false;
+        }
+
+        if(!writeMetaTag(m_file, m_spec.m_meta_artist))
+        {
+            m_lastError = "XQOA: Failed to write the ARTIST tag data.";
+            close();
+            return false;
+        }
+
+        if(!writeMetaTag(m_file, m_spec.m_meta_album))
+        {
+            m_lastError = "XQOA: Failed to write the ALBUM tag data.";
+            close();
+            return false;
+        }
+
+        if(!writeMetaTag(m_file, m_spec.m_meta_copyright))
+        {
+            m_lastError = "XQOA: Failed to write the COPYRIGHT tag data.";
+            close();
+            return false;
+        }
+    }
+
+    // Write initial header
+    SDL_RWseek(m_file, qoa_file_begin, SEEK_SET);
+    head_size = qoa_encode_header(&info, header);
+    SDL_RWwrite(m_file, header, 1, head_size);
+
+    return true;
 }
 
 bool MDAudioQOA::close()
 {
     if(m_write)
     {
+        uint8_t header[QOA_MIN_FILESIZE];
+        uint32_t head_size;
+
+        if(m_file)
+        {
+            if(sample_data_pos > 0)
+                encode_frame(); // Finish the data that was left
+
+            // Finalize the written data and update the header
+            SDL_RWseek(m_file, qoa_file_begin, SEEK_SET);
+            info.samples = written_samples;
+            head_size = qoa_encode_header(&info, header);
+            SDL_RWwrite(m_file, header, 1, head_size);
+
+            if(m_encodeXQOA) // Also, save the size of the written data to the XQOA header
+            {
+                uint8_t size[4];
+                SDL_RWseek(m_file, 0x08, SEEK_SET);
+                *(uint32_t*)size = SDL_SwapBE32(written_bytes);
+                SDL_RWwrite(m_file, size, 1, 4);
+            }
+
+            SDL_RWseek(m_file, 0, SEEK_SET);
+
+            m_encode_buffer.clear();
+            m_sample_buffer.clear();
+        }
+
+        written_bytes = 0;
+        written_samples = 0;
+        sample_data_pos = 0;
+        sample_data_len = 0;
+
         m_file = nullptr;
     }
     else if(m_file)
@@ -265,6 +436,9 @@ bool MDAudioQOA::close()
 
         m_decode_buffer.clear();
         m_sample_buffer.clear();
+
+        SDL_RWseek(m_file, 0, SEEK_SET);
+
         m_file = nullptr;
     }
 
@@ -337,5 +511,43 @@ size_t MDAudioQOA::readChunk(uint8_t *out, size_t outSize, bool *spec_changed)
 
 size_t MDAudioQOA::writeChunk(uint8_t *in, size_t inSize)
 {
-    return 0;
+    int dst_index = sample_data_pos * info.channels;
+    int frame_size = (sizeof(int16_t) * info.channels);
+    int16_t *in_samples = reinterpret_cast<int16_t*>(in);
+    int16_t *sample_buffer = reinterpret_cast<int16_t*>(m_sample_buffer.data());
+    int num_samples = inSize / frame_size;
+    int samples_written = 0;
+    int i, to_copy, samples_left;
+
+    for(i = 0; i < num_samples; )
+    {
+        /* Do we have to encode more samples? */
+        if(sample_data_len - sample_data_pos == 0)
+        {
+            if(!encode_frame())
+                break; /* Error of the write occurred */
+            dst_index = 0;
+        }
+
+        samples_left = (int)sample_data_len - sample_data_pos;
+
+        if(samples_left <= num_samples - i)
+            to_copy = samples_left;
+        else
+            to_copy = num_samples - i;
+
+        if(to_copy <= 0)
+            break; /* Something went wrong... */
+
+        SDL_memcpy(sample_buffer + dst_index, in_samples, to_copy * frame_size);
+        in_samples += to_copy * info.channels;
+        dst_index += to_copy * info.channels;
+        sample_data_pos += to_copy;
+        sample_pos += to_copy;
+        samples_written += to_copy;
+
+        i += to_copy;
+    }
+
+    return samples_written;
 }

@@ -45,6 +45,11 @@ CoverterDialogue::CoverterDialogue(QWidget *parent)
     ui->fileOut->setText(m_setup.value("file-out").toString());
     ui->fileOut->blockSignals(false);
     m_setup.endGroup();
+
+    ui->dstFormat->addItem("OGG Vorbis", (int)FORMAT_OGG_VORBIS);
+    ui->dstFormat->addItem("QOA (Plain QOA)", (int)FORMAT_QOA);
+    ui->dstFormat->addItem("XQOA (Extended QOA)", (int)FORMAT_XQOA);
+    ui->dstFormat->setCurrentIndex(0);
 }
 
 CoverterDialogue::~CoverterDialogue()
@@ -57,7 +62,7 @@ void CoverterDialogue::on_runCvt_clicked()
 {
     if(!m_cvt.openInFile(ui->fileIn->text().toStdString()))
     {
-        qWarning() << "Failed to open input file" << ui->fileIn->text();
+        qWarning() << "Failed to open input file" << ui->fileIn->text() << QString::fromStdString(m_cvt.getLastError());
         return;
     }
 
@@ -89,17 +94,11 @@ void CoverterDialogue::on_runCvt_clicked()
     {
         m_phase = PHASE_CONVERSION;
 
-        if(!m_cvt.openOutFile(ui->fileOut->text().toStdString(), FORMAT_OGG_VORBIS, m_dstSpec))
+        if(!m_cvt.openOutFile(ui->fileOut->text().toStdString(), ui->dstFormat->currentData().toInt(), m_dstSpec))
         {
-            qWarning() << "Failed to open output file" << ui->fileOut->text();
+            qWarning() << "Failed to open output file" << ui->fileOut->text() << QString::fromStdString(m_cvt.getLastError());
             return;
         }
-    }
-
-    if(!m_cvt.openOutFile(ui->fileOut->text().toStdString(), FORMAT_OGG_VORBIS, m_dstSpec))
-    {
-        qWarning() << "Failed to open output file" << ui->fileOut->text();
-        return;
     }
 
     m_runner = QtConcurrent::run<void>(this, &CoverterDialogue::runner);
