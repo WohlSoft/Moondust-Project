@@ -2,6 +2,8 @@
 set(AUDIO_PROCESSOR_SRC
     ${CMAKE_CURRENT_LIST_DIR}/audio_processor.cpp
     ${CMAKE_CURRENT_LIST_DIR}/audio_processor.h
+    ${CMAKE_CURRENT_LIST_DIR}/audio_detect.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/audio_detect.h
     ${CMAKE_CURRENT_LIST_DIR}/audio_file.cpp
     ${CMAKE_CURRENT_LIST_DIR}/audio_file.h
     ${CMAKE_CURRENT_LIST_DIR}/audio_format.h
