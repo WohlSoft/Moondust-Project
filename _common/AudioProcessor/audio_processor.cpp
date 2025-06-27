@@ -356,9 +356,9 @@ bool MoondustAudioProcessor::runChunk(bool dry)
                 const auto &source = m_in_file->getSpec();
                 size_t sample_in = (SDL_AUDIO_BITSIZE(source.m_sample_format) / 8) * source.m_channels;
 
-                if(source.m_loop_end > 0 && m_stat_read + amount > (source.m_loop_end * sample_in))
+                if(source.m_loop_end > 0 && m_stat_read + amount > (source.m_loop_end * sample_in) + sample_in)
                 {
-                    amount = m_stat_read + amount - (source.m_loop_end * sample_in);
+                    amount = (source.m_loop_end * sample_in) - m_stat_read + sample_in;
                     m_cuttedAtLoop = true;
                 }
             }
