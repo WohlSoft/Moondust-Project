@@ -18,6 +18,7 @@
  */
 
 #include "audio_processor.h"
+#include "audio_detect.h"
 #include "codec/audio_vorbis.h"
 #include "codec/audio_qoa.h"
 #include "codec/audio_midi_adl.h"
@@ -78,8 +79,8 @@ const MDAudioFileSpec &MoondustAudioProcessor::getInSpec() const
 
 bool MoondustAudioProcessor::openInFile(const std::string &file, int *detectedFormat)
 {
-    Uint8 magic[100];
-    Uint8 submagic[4];
+    AudioFormats format = FORMAT_UNKNOWN;
+    std::string err;
 
     if(m_rw_in)
         SDL_RWclose(m_rw_in);
@@ -90,6 +91,9 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, int *detectedFo
     m_stat_read = 0;
     m_curChunk = 0.0;
 
+    if(detectedFormat)
+        *detectedFormat = FORMAT_UNKNOWN;
+
     m_rw_in = SDL_RWFromFile(file.c_str(), "rb");
     if(!m_rw_in)
     {
@@ -98,49 +102,78 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, int *detectedFo
         return false;
     }
 
-    SDL_memset(magic, 0, 100);
-    if(SDL_RWread(m_rw_in, magic, 1, 99) < 24)
+    format = audio_detect_format(m_rw_in, err);
+
+    SDL_RWseek(m_rw_in, 0, RW_SEEK_SET);
+
+    if(format == FORMAT_UNKNOWN)
     {
-        m_lastError = "Couldn't read any first 24 bytes of audio data";
+        m_lastError = "Failed to detect the file format: " + err;
         m_in_file.reset(nullptr);
         SDL_RWclose(m_rw_in);
         m_rw_in = nullptr;
         return false;
     }
-    SDL_RWseek(m_rw_in, 0, RW_SEEK_SET);
 
-    m_in_filePath = file;
-    m_in_file.reset(nullptr);
+    if(detectedFormat)
+        *detectedFormat = format;
 
-    if(SDL_memcmp(magic, "OggS", 4) == 0)
+    switch(format)
     {
-        SDL_RWseek(m_rw_in, 28, RW_SEEK_CUR);
-        SDL_RWread(m_rw_in, magic, 1, 8);
-        SDL_RWseek(m_rw_in,-36, RW_SEEK_CUR);
+    case FORMAT_WAV:
+    case FORMAT_AIFF:
+        break;
 
-        if(SDL_memcmp(magic, "OpusHead", 8) == 0)
-        {
-            // m_in_file.reset(new MDAudioOpus);
-        }
-        else if(magic[0] == 0x7F && SDL_memcmp(magic + 1, "FLAC", 4) == 0)
-        {
-            // m_in_file.reset(new MDAudioFLAC);
-        }
-        else
-        {
-            m_in_file.reset(new MDAudioVorbis);
-        }
-    }
-    else if(SDL_memcmp(magic, "qoaf", 4) == 0)
+    case FORMAT_OGG_VORBIS:
+        m_in_file.reset(new MDAudioVorbis);
+        break;
+
+    case FORMAT_OPUS:
+        // m_in_file.reset(new MDAudioOpus);
+        break;
+
+    case FORMAT_FLAC:
+        // m_in_file.reset(new MDAudioFLAC);
+        break;
+
+    case FORMAT_MP3:
+        break;
+
+    case FORMAT_WAVPACK:
+        break;
+
+    case FORMAT_TRACKER:
+        break;
+
+    case FORMAT_FFMPEG:
+        break;
+
+    case FORMAT_MIDI:
+    case FORMAT_RIFF_MIDI:
+    case FORMAT_XMI:
+    case FORMAT_MUS:
+    case FORMAT_IMF:
+    case FORMAT_MIDI_ADL:
+        m_in_file.reset(new MDAudioADLMIDI);
+        break;
+
+    case FORMAT_GME:
+        break;
+
+    case FORMAT_PXTONE:
+        break;
+
+    case FORMAT_QOA:
         m_in_file.reset(new MDAudioQOA);
-    else if(SDL_memcmp(magic, "XQOA", 4) == 0)
-        m_in_file.reset(new MDAudioQOA(true));
-    else if(SDL_memcmp(magic, "MThd", 4) == 0)
-        m_in_file.reset(new MDAudioADLMIDI);
-    else if((SDL_memcmp(magic, "RIFF", 4) == 0) && (SDL_memcmp(magic + 8, "RMID", 4) == 0))
-        m_in_file.reset(new MDAudioADLMIDI);
+        break;
 
-    SDL_RWseek(m_rw_in, 0, RW_SEEK_SET);
+    case FORMAT_XQOA:
+        m_in_file.reset(new MDAudioQOA(true));
+        break;
+
+    default:
+        break;
+    }
 
     if(!m_in_file.get())
     {

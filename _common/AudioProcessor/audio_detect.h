@@ -17,31 +17,31 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef AUDIO_FORMAT_H
-#define AUDIO_FORMAT_H
+#pragma once
+#ifndef AUDIO_DETECT_H
+#define AUDIO_DETECT_H
 
-enum AudioFormats
+#include <string>
+
+#include "audio_format.h"
+
+typedef enum Mix_MIDI_Player
 {
-    FORMAT_UNKNOWN = 0,
-    FORMAT_WAV,
-    FORMAT_AIFF,
-    FORMAT_OGG_VORBIS,
-    FORMAT_OPUS,
-    FORMAT_FLAC,
-    FORMAT_MP3,
-    FORMAT_WAVPACK,
-    FORMAT_TRACKER,
-    FORMAT_FFMPEG,
-    FORMAT_MIDI,
-    FORMAT_MIDI_ADL,
-    FORMAT_RIFF_MIDI,
-    FORMAT_XMI,
-    FORMAT_MUS,
-    FORMAT_IMF,
-    FORMAT_GME,
-    FORMAT_PXTONE,
-    FORMAT_QOA,
-    FORMAT_XQOA,
-};
+    MIDI_ADLMIDI,
+    MIDI_Native,
+    MIDI_Timidity,
+    MIDI_OPNMIDI,
+    MIDI_Fluidsynth,
+    MIDI_EDMIDI,
+    MIDI_ANY,
+    MIDI_KnownPlayers, /* Count of MIDI player types */
+    MIDI_KnownDevices = MIDI_KnownPlayers /* Backward compatibility */
+} Mix_MIDI_Player;
 
-#endif // AUDIO_FORMAT_H
+extern int midiplayer_current;
+
+typedef struct SDL_RWops SDL_RWops;
+
+AudioFormats audio_detect_format(SDL_RWops *src, std::string &error);
+
+#endif // AUDIO_DETECT_H
