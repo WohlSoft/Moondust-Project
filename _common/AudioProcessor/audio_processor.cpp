@@ -20,6 +20,7 @@
 #include "audio_processor.h"
 #include "codec/audio_vorbis.h"
 #include "codec/audio_qoa.h"
+#include "codec/audio_midi_adl.h"
 
 #include <SDL2/SDL.h>
 
@@ -117,11 +118,11 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, int *detectedFo
         SDL_RWread(m_rw_in, magic, 1, 8);
         SDL_RWseek(m_rw_in,-36, RW_SEEK_CUR);
 
-        if (SDL_memcmp(magic, "OpusHead", 8) == 0)
+        if(SDL_memcmp(magic, "OpusHead", 8) == 0)
         {
             // m_in_file.reset(new MDAudioOpus);
         }
-        else if (magic[0] == 0x7F && SDL_memcmp(magic + 1, "FLAC", 4) == 0)
+        else if(magic[0] == 0x7F && SDL_memcmp(magic + 1, "FLAC", 4) == 0)
         {
             // m_in_file.reset(new MDAudioFLAC);
         }
@@ -130,10 +131,14 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, int *detectedFo
             m_in_file.reset(new MDAudioVorbis);
         }
     }
-    else if (SDL_memcmp(magic, "qoaf", 4) == 0)
+    else if(SDL_memcmp(magic, "qoaf", 4) == 0)
         m_in_file.reset(new MDAudioQOA);
-    else if (SDL_memcmp(magic, "XQOA", 4) == 0)
+    else if(SDL_memcmp(magic, "XQOA", 4) == 0)
         m_in_file.reset(new MDAudioQOA(true));
+    else if(SDL_memcmp(magic, "MThd", 4) == 0)
+        m_in_file.reset(new MDAudioADLMIDI);
+    else if((SDL_memcmp(magic, "RIFF", 4) == 0) && (SDL_memcmp(magic + 8, "RMID", 4) == 0))
+        m_in_file.reset(new MDAudioADLMIDI);
 
     SDL_RWseek(m_rw_in, 0, RW_SEEK_SET);
 
