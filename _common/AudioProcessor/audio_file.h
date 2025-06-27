@@ -55,7 +55,6 @@ class MDAudioFile
 {
 protected:
     SDL_RWops       *m_file = nullptr;
-    uint64_t        m_position = 0;
     MDAudioFileSpec m_spec;
     std::string     m_lastError;
 

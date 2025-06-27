@@ -215,6 +215,19 @@
      <string>Target format:</string>
     </property>
    </widget>
+   <widget class="QCheckBox" name="dstCutAtLoopEnd">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>160</y>
+      <width>121</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Cut at loop-end</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QProgressBar" name="cvtProgress">
    <property name="enabled">
