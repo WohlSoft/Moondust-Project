@@ -51,6 +51,8 @@ class MoondustAudioProcessor
     double m_numChunks = 0;
 
     bool m_done = false;
+    bool m_cuttedAtLoop = false;
+    bool m_cutAtLoopEnd = false;
 
     std::string m_in_filePath;
     std::string m_out_filePath;
@@ -70,6 +72,8 @@ public:
     bool openOutFile(const std::string &file, int dstFormat, const MDAudioFileSpec &dstSpec);
 
     void close();
+
+    void setCutAtLoopEnd(bool en);
 
     uint32_t numChunks() const;
     uint32_t curChunk() const;
