@@ -680,23 +680,23 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
             tr.title.note = old.title.note;
 
             // Import dialogues' notes
-            for(int i = 0; i < old.dialogues.size(); ++i)
+            for(auto &di_o : old.dialogues)
             {
-                auto &di_n = tr.dialogues[i];
-                auto &di_o = old.dialogues[i];
+                for(auto &di_n : tr.dialogues)
+                {
+                    if(di_o.messages.empty() || di_n.messages.empty())
+                        continue; // Not ours
 
-                if(di_o.messages.empty() || di_n.messages.empty())
-                    continue; // Not ours
+                    // Check if the same source inits the dialogue:
+                    const auto &mo = di_o.messages.first();
+                    const auto &mn = di_n.messages.first();
 
-                // Check if the same source inits the dialogue:
-                const auto &mo = di_o.messages.first();
-                const auto &mn = di_n.messages.first();
+                    if(mo.type != mn.type || mo.item_index != mn.item_index)
+                        continue; // Also not ours
 
-                if(mo.type != mn.type || mo.item_index != mn.item_index)
-                    continue; // Also not ours
-
-                // And now, it's really ours, so, import the note
-                di_n.note = di_o.note;
+                    // And now, it's really ours, so, import the note
+                    di_n.note = di_o.note;
+                }
             }
 
             // Import NPC source notes
