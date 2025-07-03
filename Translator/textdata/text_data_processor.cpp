@@ -683,29 +683,16 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
             for(int i = 0; i < old.dialogues.size(); ++i)
             {
                 auto &di_n = tr.dialogues[i];
-
-                // Check if dialogue equal:
-                if(i >= tr.dialogues.size())
-                    continue; // Not ours
-
                 auto &di_o = old.dialogues[i];
 
-                if(di_o.messages.size() != di_n.messages.size())
-                    continue; // Also not ours
+                if(di_o.messages.empty() || di_n.messages.empty())
+                    continue; // Not ours
 
-                bool equal = true;
-                // Compare messages
-                for(int m = 0; m < di_o.messages.size(); ++m)
-                {
-                    if(di_o.messages[m].type != di_n.messages[m].type ||
-                       di_o.messages[m].item_index != di_n.messages[m].item_index)
-                    {
-                       equal = false;
-                       break;
-                    }
-                }
+                // Check if the same source inits the dialogue:
+                const auto &mo = di_o.messages.first();
+                const auto &mn = di_n.messages.first();
 
-                if(!equal)
+                if(mo.type != mn.type || mo.item_index != mn.item_index)
                     continue; // Also not ours
 
                 // And now, it's really ours, so, import the note
