@@ -6361,7 +6361,7 @@ Consulte %2 para obtener más información.</translation>
     </message>
     <message>
         <source>Start Game</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Empezar</translation>
     </message>
     <message>
         <source>Test world map</source>
@@ -6751,7 +6751,7 @@ Descripción del error:
     <message>
         <source>Start Game</source>
         <comment>Launch PGE Engine as a normal game</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Empezar</translation>
     </message>
     <message>
         <source>Unsupported yet</source>
@@ -7493,7 +7493,7 @@ Reason: %1
     <message>
         <source>Start Game</source>
         <comment>Launch SMBX-38A as a normal game</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Empezar</translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
@@ -7819,7 +7819,7 @@ Reason: %1
     <message>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Empezar</translation>
     </message>
     <message>
         <source>Please select a path to TheXTech executable:</source>
@@ -9374,7 +9374,7 @@ el código debe ser menor o igual al código específico)</translation>
     </message>
     <message>
         <source>SMBX-38A file version</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Versión del archivo SMBX-38A</translation>
     </message>
     <message>
         <source>Which version do you want to save as? (from 64 to 69)

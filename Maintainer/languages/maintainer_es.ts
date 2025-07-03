@@ -390,7 +390,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="291"/>
         <source>Path to an episode directory to process</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Camino hacia un directorio de episodios para procesar</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="24"/>
@@ -535,7 +535,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="978"/>
         <source>Can&apos;t initialize job because %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Imposible empezar este trabajo porque %1</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="993"/>
@@ -716,7 +716,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="184"/>
         <source>Select an input directory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Seleccionar un directorio de entrada</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="207"/>
@@ -830,7 +830,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="65"/>
         <source>Process is busy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">El proceso está ocupado</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="66"/>
@@ -1004,7 +1004,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/png2gifs.ui" line="109"/>
         <source>Convert files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Convertir archivos</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="125"/>
@@ -1039,12 +1039,12 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/png2gifs.ui" line="176"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Banderas</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="183"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Procesar todo el contenido de los subdirectorios</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="98"/>
@@ -1070,12 +1070,12 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/png2gifs.ui" line="68"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cerrar</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="65"/>
         <source>Process is busy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">El proceso está ocupado</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="66"/>
@@ -1086,7 +1086,7 @@ Important: There are only level and world map files gets being converted. Any in
         <location filename="../Graphics/png2gifs.cpp" line="102"/>
         <location filename="../Graphics/png2gifs.cpp" line="111"/>
         <source>Incorrect input</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Entrada incorrecta</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="103"/>
@@ -1101,27 +1101,27 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="133"/>
         <source>Select an input directory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Seleccionar un directorio de entrada</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="155"/>
         <source>Process was exited with a code %1.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">El proceso se ha terminado con un código %1.</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="165"/>
         <source>Process was terminated</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">El proceso se ha interrumpido</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="166"/>
         <source>Conversion has been termiated.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">La conversión se ha interrumpido.</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="171"/>
         <source>Unsuccess exit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Salida sin éxito</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="172"/>
@@ -1131,7 +1131,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="185"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Detener</translation>
     </message>
 </context>
 <context>
@@ -1160,12 +1160,12 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/palette_filter.ui" line="81"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cerrar</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="115"/>
         <source>Process files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Procesar archivos</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="131"/>
@@ -1185,7 +1185,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/palette_filter.ui" line="155"/>
         <source>Don&apos;t create backup for old images</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">No crear copia de seguridad de las imágenes antiguas</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="162"/>
@@ -1201,12 +1201,12 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/palette_filter.ui" line="182"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Banderas</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="189"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Procesar todo el contenido de los subdirectorios</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="203"/>
@@ -1231,7 +1231,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="65"/>
         <source>Process is busy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">El proceso está ocupado</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="66"/>
@@ -1244,7 +1244,7 @@ Important: There are only level and world map files gets being converted. Any in
         <location filename="../Graphics/palette_filter.cpp" line="123"/>
         <location filename="../Graphics/palette_filter.cpp" line="132"/>
         <source>Incorrect input</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Entrada incorrecta</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="87"/>
@@ -1265,27 +1265,27 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="156"/>
         <source>Select an input directory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Seleccionar un directorio de entrada</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="178"/>
         <source>Process was exited with a code %1.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">El proceso se ha terminado con un código %1.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="188"/>
         <source>Process was terminated</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">El proceso se ha interrumpido</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="189"/>
         <source>Processing has been termiated.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">El proceso se ha interrumpido.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="194"/>
         <source>Unsuccess exit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Salida sin éxito</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="195"/>
@@ -1295,7 +1295,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="208"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Detener</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="217"/>
