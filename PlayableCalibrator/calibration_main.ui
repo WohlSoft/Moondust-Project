@@ -235,6 +235,9 @@
      <string>Tools</string>
     </property>
     <addaction name="actionChangeGFXEditor"/>
+    <addaction name="separator"/>
+    <addaction name="actionResetFrameSettings"/>
+    <addaction name="actionSetDirectionByHalves"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -996,6 +999,16 @@ Right button - Move the right-bottom crop edges.</string>
   <action name="actionChangeGFXEditor">
    <property name="text">
     <string>Extrenal GFX editor...</string>
+   </property>
+  </action>
+  <action name="actionResetFrameSettings">
+   <property name="text">
+    <string>Reset incorrect frame settings...</string>
+   </property>
+  </action>
+  <action name="actionSetDirectionByHalves">
+   <property name="text">
+    <string>Set direction by halves...</string>
    </property>
   </action>
  </widget>

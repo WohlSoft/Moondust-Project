@@ -152,6 +152,8 @@ private slots:
     void on_actionSpriteEditor_triggered();
 
     void on_actionChangeGFXEditor_triggered();
+    void on_actionResetFrameSettings_triggered();
+    void on_actionSetDirectionByHalves_triggered();
 
 private:
     int m_frmX = 0;

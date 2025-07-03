@@ -21,6 +21,7 @@
 //#include <QtDebug>
 #include <QSettings>
 #include <QMenu>
+#include <QDialog>
 #include <QColorDialog>
 
 #include "calibration_main.h"
@@ -969,3 +970,134 @@ void CalibrationMain::on_actionChangeGFXEditor_triggered()
     changeGfxEditor();
 }
 
+
+void CalibrationMain::on_actionResetFrameSettings_triggered()
+{
+    QDialog resetSetup(this);
+    QGridLayout *l = new QGridLayout(&resetSetup);
+
+    resetSetup.setWindowTitle(tr("Reset incorrect frame setup...", "Reset frame properties"));
+
+    resetSetup.setLayout(l);
+    QLabel *info = new QLabel(tr("Select properties to reset if they were inproperly set:", "Reset frame properties"), &resetSetup);
+    l->addWidget(info , 0, 0, 1, 3);
+
+    QCheckBox *resetDuck = new QCheckBox(tr("Is duck frame"), &resetSetup);
+    l->addWidget(resetDuck, 1, 0, 1, 3);
+
+    QCheckBox *resetRightDir = new QCheckBox(tr("Right direction"), &resetSetup);
+    l->addWidget(resetRightDir, 2, 0, 1, 3);
+
+    QCheckBox *resetShowItem = new QCheckBox(tr("Show carried item"), &resetSetup);
+    l->addWidget(resetShowItem, 3, 0, 1, 3);
+
+    QCheckBox *resetMountRide = new QCheckBox(tr("Mount riding"), &resetSetup);
+    l->addWidget(resetMountRide, 4, 0, 1, 3);
+
+    QFrame *hLine = new QFrame(&resetSetup);
+    hLine->setObjectName(QString::fromUtf8("line"));
+    hLine->setGeometry(QRect(320, 150, 118, 3));
+    hLine->setFrameShape(QFrame::HLine);
+    hLine->setFrameShadow(QFrame::Sunken);
+    l->addWidget(hLine, 5, 0, 1, 3);
+
+    QCheckBox *resetAll = new QCheckBox(tr("Reset at all frames"), &resetSetup);
+    l->addWidget(resetAll, 6, 0, 1, 3);
+
+    QPushButton *hit = new QPushButton(&resetSetup);
+    hit->setText(tr("Confirm"));
+    l->addWidget(hit, 7, 1, 1, 1);
+    QObject::connect(hit, static_cast<void (QAbstractButton::*)(bool)>(&QAbstractButton::clicked),
+                     &resetSetup, &QDialog::accept);
+
+    int ret = resetSetup.exec();
+    if(ret == QDialog::Accepted)
+    {
+        QFileInfo ourFile(m_currentFile);
+        QString ini_default = ApplicationPath + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
+
+        Calibration default_conf;
+        loadConfig(default_conf, ini_default);
+
+        if(default_conf.matrixWidth != m_calibration.matrixWidth || default_conf.matrixHeight != m_calibration.matrixHeight)
+        {
+            QMessageBox::warning(this,
+                                 tr("Incompatible sprite"),
+                                 tr("Can't perform the reset to incompatible sprite (the width and/or height of matrix are different)."));
+            return;
+        }
+
+        bool rstDuck = resetDuck->isChecked();
+        bool rstRight = resetRightDir->isChecked();
+        bool rstItem = resetShowItem->isChecked();
+        bool rstMount = resetMountRide->isChecked();
+
+        if(resetAll->isChecked())
+        {
+            for(auto it = m_calibration.frames.begin(); it != m_calibration.frames.end(); ++it)
+            {
+                auto pos = it.key();
+                auto &frame = it.value();
+                auto &def = default_conf.frames[pos];
+
+                if(rstDuck)
+                    frame.isDuck = def.isDuck;
+
+                if(rstRight)
+                    frame.isRightDir = def.isRightDir;
+
+                if(rstItem)
+                    frame.showGrabItem = def.showGrabItem;
+
+                if(rstMount)
+                    frame.isMountRiding = def.isMountRiding;
+            }
+        }
+        else
+        {
+            auto &frame = m_calibration.frames[ {m_frmX, m_frmY}];
+            auto &def = default_conf.frames[ {m_frmX, m_frmY}];
+
+            if(rstDuck)
+                frame.isDuck = def.isDuck;
+
+            if(rstRight)
+                frame.isRightDir = def.isRightDir;
+
+            if(rstItem)
+                frame.showGrabItem = def.showGrabItem;
+
+            if(rstMount)
+                frame.isMountRiding = def.isMountRiding;
+        }
+
+        m_wasModified = true;
+
+        updateControls();
+        updateScene();
+    }
+}
+
+void CalibrationMain::on_actionSetDirectionByHalves_triggered()
+{
+    int ret = QMessageBox::question(this,
+                                    tr("Set direction by halves"),
+                                    tr("This action will set the \"Right direction\" option at all right frames on the matrix, "
+                                       "and unset at all left frames. This action is supposed to be used with SMBX-compatible sprites. "
+                                       "If your sprite is not based on SMBX standard, you will break it. Apply this action?"), QMessageBox::Yes|QMessageBox::No);
+    if(ret == QMessageBox::Yes)
+    {
+        for(auto it = m_calibration.frames.begin(); it != m_calibration.frames.end(); ++it)
+        {
+            auto pos = it.key();
+            auto &frame = it.value();
+
+            frame.isRightDir = (pos.first >= m_calibration.matrixWidth / 2);
+        }
+
+        m_wasModified = true;
+
+        updateControls();
+        updateScene();
+    }
+}
