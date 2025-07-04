@@ -597,7 +597,7 @@ void CalibrationMain::grabOffsetYupdate()
 void CalibrationMain::enableFrame()
 {
     m_wasModified = true;
-    m_calibration.frames[ {m_frmX, m_frmY}].used = true;
+    m_calibration.frames[{m_frmX, m_frmY}].used = true;
     if(!ui->EnableFrame->isChecked())
     {
         ui->EnableFrame->setChecked(true);

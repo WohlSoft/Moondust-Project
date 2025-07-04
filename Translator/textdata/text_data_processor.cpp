@@ -669,7 +669,63 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
     }
 
     if(hasStrings)
+    {
+        // Try to merge comments from the previous copy
+        if(origin.levels.contains(shortPath))
+        {
+            // Backup
+            const auto old = origin.levels[shortPath];
+
+            // Copy back the title's note
+            tr.title.note = old.title.note;
+
+            // Import dialogues' notes
+            for(auto &di_o : old.dialogues)
+            {
+                for(auto &di_n : tr.dialogues)
+                {
+                    if(di_o.messages.empty() || di_n.messages.empty())
+                        continue; // Not ours
+
+                    // Check if the same source inits the dialogue:
+                    const auto &mo = di_o.messages.first();
+                    const auto &mn = di_n.messages.first();
+
+                    if(mo.type != mn.type || mo.item_index != mn.item_index)
+                        continue; // Also not ours
+
+                    // And now, it's really ours, so, import the note
+                    di_n.note = di_o.note;
+                }
+            }
+
+            // Import NPC source notes
+            for(auto &no : old.npc)
+            {
+                for(auto &nn : tr.npc)
+                {
+                    if(no.npc_index != nn.npc_index || no.npc_id != nn.npc_id)
+                        continue; // Not ours
+
+                    nn.talk.note = no.talk.note;
+                }
+            }
+
+            // Import NPC source notes
+            for(auto &no : old.events)
+            {
+                for(auto &nn : tr.events)
+                {
+                    if(no.event_index != nn.event_index)
+                        continue; // Not ours
+
+                    nn.message.note = no.message.note;
+                }
+            }
+        }
+
         origin.levels.insert(shortPath, tr);
+    }
     else
     {
         QFileInfo f(path);
@@ -724,7 +780,35 @@ void TextDataProcessor::importWorld(TranslationData &origin, const QString &path
     }
 
     if(hasStrings)
+    {
+        // Try to merge comments from the previous copy
+        if(origin.worlds.contains(shortPath))
+        {
+            // Backup
+            const auto old = origin.worlds[shortPath];
+
+            // Copy back the title's note
+            tr.title.note = old.title.note;
+            // Copy back the credits' note
+            tr.credits.note = old.credits.note;
+
+            // Import NPC source notes
+            for(auto &no : old.level_titles)
+            {
+                for(auto &nn : tr.level_titles)
+                {
+                    if(no.level_index != nn.level_index || no.filename != nn.filename)
+                        continue; // Not ours
+
+                    nn.title.note = no.title.note;
+                }
+            }
+
+            origin.worlds.insert(shortPath, tr);
+        }
+
         origin.worlds.insert(shortPath, tr);
+    }
     else
     {
         QFileInfo f(path);
@@ -906,7 +990,30 @@ void TextDataProcessor::importScript(TranslationData &origin, const QString &pat
 #undef PARSE_FMT_STR_2
 
     if(hasStrings)
+    {
+        // Try to merge comments from the previous copy
+        if(origin.scripts.contains(shortPath))
+        {
+            // Backup
+            const auto old = origin.scripts[shortPath];
+
+            // Import NPC source notes
+            for(auto &no : old.lines)
+            {
+                for(auto &nn : tr.lines)
+                {
+                    if(no.line != nn.line || no.source != nn.source)
+                        continue; // Not ours
+
+                    nn.translation.note = no.translation.note;
+                }
+            }
+
+            origin.scripts.insert(shortPath, tr);
+        }
+
         origin.scripts.insert(shortPath, tr);
+    }
 }
 
 void TextDataProcessor::recountStats(TranslateProject &proj, TranslationData &tr, bool isOrigin)

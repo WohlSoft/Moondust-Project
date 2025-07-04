@@ -1,0 +1,16 @@
+[Desktop Entry]
+Version=1.0
+Name=MixerX Player
+GenericName=SDL Mixer X Music Player
+Comment=Music player based on SDL Mixer X audio library
+Encoding=UTF-8
+Version=1.0
+Icon=@DESKTOP_ICON@
+Exec=@DESKTOP_EXEC@ %F
+X-Purism-FormFactor=Workstation;Mobile;
+Categories=AudioVideo;Audio
+Type=Application
+StartupWMClass=@DESKTOP_EXEC@
+Terminal=false
+Name[ru_RU]=Проигрыватель MixerX
+

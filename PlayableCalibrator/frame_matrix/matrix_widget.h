@@ -27,6 +27,7 @@ public:
     void setTexture(const QPixmap &texture, int cellsX, int cellsY);
     void setGridSize(int w, int h);
     void setFrame(int x, int y);
+    void resetFramesEnabled();
     void setFrameEnabled(int x, int y, bool en);
 
 protected:
