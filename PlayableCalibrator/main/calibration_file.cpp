@@ -45,13 +45,17 @@ void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration
 
     conf.beginGroup("common");
     {
+        dst.compatProfile = conf.value("compat", Calibration::COMPAT_UNSPECIFIED).toInt();
+
+        if(merge_with && dst.compatProfile == Calibration::COMPAT_CALIBRATOR_FULL)
+            merge_with = nullptr; // Don't merge
+
         dst.frameWidth = conf.value("width", pMerge(frameWidth, -1)).toInt();
         dst.frameHeight = conf.value("height", pMerge(frameHeight, -1)).toInt();
         dst.frameHeightDuck = conf.value("height-duck", pMerge(frameHeightDuck, -1)).toInt();
         dst.grabOffsetX = conf.value("grab-offset-x", pMerge(grabOffsetX, 0)).toInt();
         dst.grabOffsetY = conf.value("grab-offset-y", pMerge(grabOffsetY, 0)).toInt();
         dst.grabOverTop = conf.value("over-top-grab", pMerge(grabOverTop, false)).toBool();
-        dst.compatProfile = conf.value("compat", Calibration::COMPAT_UNSPECIFIED).toInt();
     }
     conf.endGroup();
 
@@ -84,6 +88,8 @@ void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration
 
     if(merge_with)
         dst.frames = merge_with->frames;
+    else
+        dst.frames.clear();
 
     for(const auto &key : framesKeys)
     {
@@ -114,16 +120,19 @@ void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration
             if(frame.used)
                 dst.frameWidth = static_cast<int>(frame.w);
         }
+
         if(dst.frameHeight < 0)
         {
             if(frame.used)
                 dst.frameHeight = static_cast<int>(frame.h);
         }
+
         if(dst.frameHeightDuck < 0)
         {
             if(frame.used)
                 dst.frameHeightDuck = static_cast<int>(frame.h);
         }
+
         dst.frames.insert({x, y}, frame);
     }
 

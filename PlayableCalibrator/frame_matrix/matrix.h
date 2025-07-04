@@ -78,6 +78,7 @@ signals:
     void frameSelected(int x, int y);
     void referenceSelected(int x, int y);
     void currentFrameSwitched(bool enabled);
+    void frameStateUpdated(int x, int y, bool enState);
 
 private:
     LabelType m_labelType = LabelNormal;

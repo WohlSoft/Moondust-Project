@@ -29,6 +29,8 @@ void Matrix::rebuildGrid()
     if(!m_allowEnableDisable)
         return;
 
+    ui->SpriteMatrix->resetFramesEnabled();
+
     for(auto it = m_conf->frames.begin(); it != m_conf->frames.end(); ++it)
         ui->SpriteMatrix->setFrameEnabled(it.key().first, it.key().second, it.value().used);
 }

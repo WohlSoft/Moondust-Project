@@ -65,6 +65,12 @@ void MatrixWidget::setFrame(int x, int y)
    repaint();
 }
 
+void MatrixWidget::resetFramesEnabled()
+{
+    m_enabledFrames.clear();
+    repaint();
+}
+
 void MatrixWidget::setFrameEnabled(int x, int y, bool en)
 {
     m_enabledFrames[{x, y}] = en;
