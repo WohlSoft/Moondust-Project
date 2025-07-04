@@ -277,12 +277,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="1006"/>
         <source>Reset incorrect frame settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>重置错误帧设置……</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="1011"/>
         <source>Set direction by halves...</source>
-        <translation type="unfinished"></translation>
+        <translation>一键设置玩家方向……</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="930"/>
@@ -745,43 +745,43 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../calibration_main.cpp" line="979"/>
         <source>Reset incorrect frame setup...</source>
         <comment>Reset frame properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>重置错误帧设置……</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="982"/>
         <source>Select properties to reset if they were inproperly set:</source>
         <comment>Reset frame properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>选择要重置的错误帧属性：</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="1004"/>
         <source>Reset at all frames</source>
-        <translation type="unfinished"></translation>
+        <translation>重置全部帧</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="1008"/>
         <source>Confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>确认</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="1025"/>
         <source>Incompatible sprite</source>
-        <translation type="unfinished"></translation>
+        <translation>不兼容的图像</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="1026"/>
         <source>Can&apos;t perform the reset to incompatible sprite (the width and/or height of matrix are different).</source>
-        <translation type="unfinished"></translation>
+        <translation>无法重置不兼容的图像，因为宽度和/或高度不同。</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="1084"/>
         <source>Set direction by halves</source>
-        <translation type="unfinished"></translation>
+        <translation>一键设置玩家方向</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="1085"/>
         <source>This action will set the &quot;Right direction&quot; option at all right frames on the matrix, and unset at all left frames. This action is supposed to be used with SMBX-compatible sprites. If your sprite is not based on SMBX standard, you will break it. Apply this action?</source>
-        <translation type="unfinished"></translation>
+        <translation>该操作会将所有右方向的帧上勾选“右方向”，并在所有左方向的帧上取消勾选“右方向”，目的是与SMBX兼容。如果您的图像不是SMBX标准，将无法正常运作。要继续吗？</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="920"/>
