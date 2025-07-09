@@ -110,6 +110,18 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
     QAction *mirrorSprite = m_toolActions.addAction(tr("Mirror SMBX sprite..."));
     QObject::connect(mirrorSprite, static_cast<void (QAction::*)(bool)>(&QAction::triggered),
                      this, &ImageCalibrator::toolMirrorSMBXFrames);
+    QAction *eraseUnused = m_toolActions.addAction(tr("Erase image data of unused frames..."));
+    QObject::connect(eraseUnused, static_cast<void (QAction::*)(bool)>(&QAction::triggered),
+                     this, [this]()->void
+    {
+        int ret = QMessageBox::question(this,
+                                        tr("Erase unused frame images"),
+                                        tr("Are you sure you want to erase image data of all unused frames?"),
+                                        QMessageBox::Yes|QMessageBox::No);
+
+        if(ret == QMessageBox::Yes)
+            ui->preview->runAction(FrameTuneScene::ACTION_ERASE_UNUSED);
+    });
 
     ui->toolQuickActions->setMenu(&m_toolActions);
 
@@ -117,6 +129,12 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
                      this, &ImageCalibrator::toolMirrorSMBXAction);
     QObject::connect(ui->preview, &FrameTuneScene::actionFramePasted,
                      this, &ImageCalibrator::frameEdited);
+    QObject::connect(ui->preview, &FrameTuneScene::actionUnusedErased,
+                     this, &ImageCalibrator::toolEraseUnused);
+    QObject::connect(ui->preview, &FrameTuneScene::actionFrameFlipedH,
+                     this, &ImageCalibrator::toolFlipFrameH);
+    QObject::connect(ui->preview, &FrameTuneScene::actionFrameFlipedV,
+                     this, &ImageCalibrator::toolFlipFrameV);
 }
 
 ImageCalibrator::~ImageCalibrator()
@@ -589,6 +607,56 @@ void ImageCalibrator::toolMirrorSMBXAction(int dir)
 
     m_matrix->updateScene(generateTarget());
     updateScene();
+}
+
+void ImageCalibrator::toolEraseUnused()
+{
+    const int w = m_conf->cellWidth;
+    const int h = m_conf->cellHeight;
+
+    for(int x = 0; x < m_conf->matrixWidth; ++x)
+    {
+        for(int y = 0; y < m_conf->matrixHeight; ++y)
+        {
+            Calibration::FramePos pos = {x, y};
+            if(m_conf->frames.contains(pos))
+            {
+                auto &f = m_conf->frames[pos];
+                if(f.used)
+                    continue; // We need UNUSED
+            }
+
+            // Put updated frame to target
+            QPainter dstPaint(&m_sprite);
+            dstPaint.setCompositionMode(QPainter::CompositionMode_Source);
+            dstPaint.fillRect(x * w, y * h, w, h, QColor(0, 0, 0, 0));
+            dstPaint.end();
+
+            // Draw the same on original (otherwise it will just fail)
+            QPainter dstPaintOrig(&m_spriteOrig);
+            dstPaintOrig.setCompositionMode(QPainter::CompositionMode_Source);
+            dstPaintOrig.fillRect(x * w, y * h, w, h, QColor(0, 0, 0, 0));
+            dstPaintOrig.end();
+
+            // Reset image offsets since they became overriden
+            auto &o = m_imgOffsets[x][y];
+            o.offsetX = 0;
+            o.offsetY = 0;
+        }
+    }
+
+    m_matrix->updateScene(generateTarget());
+    updateScene();
+}
+
+void ImageCalibrator::toolFlipFrameH()
+{
+
+}
+
+void ImageCalibrator::toolFlipFrameV()
+{
+
 }
 
 void ImageCalibrator::on_CropW_valueChanged(int arg1)

@@ -153,6 +153,8 @@ public:
         ACTION_SMBX64_LEFT_TO_RIGHT,
         // Copy right side of the sprite into left and mirror (including hitboxes)
         ACTION_SMBX64_RIGHT_TO_LEFT,
+        // Physically erase any frames from the image that not marked as "used"
+        ACTION_ERASE_UNUSED,
     };
 
     void runAction(Actions action);
@@ -176,6 +178,7 @@ signals:
     void actionFrameFlipedH();
     void actionFrameFlipedV();
     void actionFramePasted();
+    void actionUnusedErased();
 
 private:
     Wall m_showWall = WALL_NONE;

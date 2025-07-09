@@ -9,6 +9,7 @@
 beta2
 * Fixed processing of paths while reading/writing INI files
 * Added an ability to make full mirror of the SMBX-format sprite (copy all frames and hitboxes from one side to another)
+* Added an action to clean image data of frames not marked as used (not marked by a green check at the frame selection toolbox)
 
 2.3
 * Begin the changelog
