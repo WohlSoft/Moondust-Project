@@ -745,6 +745,10 @@ void FrameTuneScene::runAction(Actions action)
     case ACTION_SMBX64_RIGHT_TO_LEFT:
         emit actionMirrorSMBX(+1);
         break;
+
+    case ACTION_ERASE_UNUSED:
+        emit actionUnusedErased();
+        break;
     }
 }
 

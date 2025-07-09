@@ -106,6 +106,10 @@ private slots:
     void toolMirrorSMBXFrames();
     void toolMirrorSMBXAction(int dir);
 
+    void toolEraseUnused();
+    void toolFlipFrameH();
+    void toolFlipFrameV();
+
     void on_Matrix_clicked(bool checked);
     void on_Reset_clicked();
     void makeBackup();
