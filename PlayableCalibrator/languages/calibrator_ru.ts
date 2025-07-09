@@ -671,17 +671,17 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation type="vanished">Сохранено</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="349"/>
+        <location filename="../main/calibration_file.cpp" line="358"/>
         <source>Configuration saved in file</source>
         <translation>Конфигурация сохранена в файле</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="676"/>
+        <location filename="../main/calibration_file.cpp" line="685"/>
         <source>Bad data generated</source>
         <translation>Сгенерированы испорченные данные</translation>
     </message>
     <message>
-        <location filename="../main/calibration_file.cpp" line="677"/>
+        <location filename="../main/calibration_file.cpp" line="686"/>
         <source>Some generated values are out of range, SMBX-38A may crash. File will not be patched.</source>
         <translation>Некоторые сгенерированные значения находятся за пределами диапазонов, SMBX-38A может сломаться. Файл останется неизменным.</translation>
     </message>
@@ -1210,6 +1210,55 @@ Do you want to continue?</source>
         <source>Reset calibration</source>
         <translation>Сбросить калибровку</translation>
     </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="110"/>
+        <source>Mirror SMBX sprite...</source>
+        <translation>Отразить SMBX-спрайт...</translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="380"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="440"/>
+        <source>Incompatible sprite</source>
+        <translation>Несовместимый спрайт</translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="381"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="441"/>
+        <source>Can&apos;t perform the SMBX sprite mirror to incompatible sprite (the width and/or height of matrix are not equal to 10 and sprite is not equal to 1000x1000).</source>
+        <translation>Неозможно применить отражение SMBX-спрайта на несовместимом спрайте (ширина и/или высота матрицы не равна 10 и размер спрайта не равен 1000x1000).</translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="388"/>
+        <source>Mirror frames on the SMBX sprite...</source>
+        <comment>Mirror SMBX frames</comment>
+        <translation>Отразить кадры SMBX-спрайта...</translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="391"/>
+        <source>Select the way how frames will be mirrored:</source>
+        <comment>Mirror SMBX frames</comment>
+        <translation>Выберите направление, по которому кадры будут отражены:</translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="394"/>
+        <source>Copy direction</source>
+        <translation>Направление копирования</translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="399"/>
+        <source>Left to right</source>
+        <translation>Слева направо</translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="401"/>
+        <source>Right to left</source>
+        <translation>Справа налево</translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="407"/>
+        <source>Confirm</source>
+        <translation>Подтвердить</translation>
+    </message>
 </context>
 <context>
     <name>Matrix</name>
@@ -1239,25 +1288,25 @@ To choose a frame for edit, push to the button over a necessary frame.</source>
         <translation type="vanished">Выбрать кадр %1 x %1</translation>
     </message>
     <message>
-        <location filename="../frame_matrix/matrix.cpp" line="127"/>
+        <location filename="../frame_matrix/matrix.cpp" line="129"/>
         <source>Click a frame by the left mouse button to choose it. Use the right mouse button to set or unset check on a frame. The settings of each unchecked frame will not be saved into the calibration file.</source>
         <comment>Frame selector&apos;s label, normal version</comment>
         <translation>Чтобы выбрать кадр, нажмите на него левой кнопкой мыши. Правой кнопкой мыши можно поставить/снять галочку на кадре. Настройки каждого неотмеченного кадра не будут сохранены в файл калибровки.</translation>
     </message>
     <message>
-        <location filename="../frame_matrix/matrix.cpp" line="134"/>
+        <location filename="../frame_matrix/matrix.cpp" line="136"/>
         <source>Click a frame by the left mouse button to choose it. Use the right mouse button to set or unset check on a frame. The settings of each unchecked frame will not be saved into the calibration file. Use the middle mouse button to pick up the frame as a reference on the scene.</source>
         <comment>Frame selector&apos;s label, sprite editor version</comment>
         <translation>Чтобы выбрать кадр, нажмите на него левой кнопкой мыши. Левой кнопкой мыши можно поставить/снять галочку на кадре. Настройки каждого неотмеченного кадра не будут сохранены в файл калибровки. Средней кнопкой мыши можно взять кадр как образец на сцену.</translation>
     </message>
     <message>
-        <location filename="../frame_matrix/matrix.cpp" line="142"/>
+        <location filename="../frame_matrix/matrix.cpp" line="144"/>
         <source>Click a frame by the left mouse button to add it to the list.</source>
         <comment>Frame selector&apos;s label, animation editor, add action</comment>
         <translation>Чтобы добавить кадр в список, нажмите на него левой кнопкой мыши.</translation>
     </message>
     <message>
-        <location filename="../frame_matrix/matrix.cpp" line="147"/>
+        <location filename="../frame_matrix/matrix.cpp" line="149"/>
         <source>Click a frame by the left mouse button to take it to the list instead of selected.</source>
         <comment>Frame selector&apos;s label, animation editor, change action</comment>
         <translation>Чтобы выбрать кадр на замену выбранному, нажмите на него левой кнопкой мыши.</translation>
