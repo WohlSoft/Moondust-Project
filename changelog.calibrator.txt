@@ -8,6 +8,7 @@
 * Fixed the accuracy of the grabbed item rendering, compared with the SMBX code
 beta2
 * Fixed processing of paths while reading/writing INI files
+* Added an ability to make full mirror of the SMBX-format sprite (copy all frames and hitboxes from one side to another)
 
 2.3
 * Begin the changelog
