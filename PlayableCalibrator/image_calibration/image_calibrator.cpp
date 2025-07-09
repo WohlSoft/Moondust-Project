@@ -1,13 +1,14 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QSettings>
+#include <QDialog>
 #include <QFocusEvent>
 
 #include "image_calibrator.h"
 #include <ui_image_calibrator.h>
 #include "calibration_main.h"
 #include "main/graphics.h"
-#include "main/mouse_scene.h"
+// #include "main/mouse_scene.h"
 #include "frame_matrix/matrix.h"
 
 
@@ -105,8 +106,17 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
     QObject::connect(ui->toolRedo, &QToolButton::clicked,
                      this, &ImageCalibrator::historyRedo);
 
-    // TODO: Show this once it gets implemented
-    ui->toolQuickActions->setVisible(false);
+    // Tools actions
+    QAction *mirrorSprite = m_toolActions.addAction(tr("Mirror SMBX sprite..."));
+    QObject::connect(mirrorSprite, static_cast<void (QAction::*)(bool)>(&QAction::triggered),
+                     this, &ImageCalibrator::toolMirrorSMBXFrames);
+
+    ui->toolQuickActions->setMenu(&m_toolActions);
+
+    QObject::connect(ui->preview, &FrameTuneScene::actionMirrorSMBX,
+                     this, &ImageCalibrator::toolMirrorSMBXAction);
+    QObject::connect(ui->preview, &FrameTuneScene::actionFramePasted,
+                     this, &ImageCalibrator::frameEdited);
 }
 
 ImageCalibrator::~ImageCalibrator()
@@ -359,6 +369,225 @@ void ImageCalibrator::updateAllOffsets(int deltaX, int deltaY)
         }
     }
 
+    updateScene();
+}
+
+void ImageCalibrator::toolMirrorSMBXFrames()
+{
+    if(m_conf->matrixWidth != 10 || m_conf->matrixHeight != 10 || m_conf->spriteWidth != 1000 || m_conf->spriteHeight != 1000)
+    {
+        QMessageBox::warning(this,
+                             tr("Incompatible sprite"),
+                             tr("Can't perform the SMBX sprite mirror to incompatible sprite (the width and/or height of matrix are not equal to 10 and sprite is not equal to 1000x1000)."));
+        return;
+    }
+
+    QDialog resetSetup(this);
+    QGridLayout *l = new QGridLayout(&resetSetup);
+
+    resetSetup.setWindowTitle(tr("Mirror frames on the SMBX sprite...", "Mirror SMBX frames"));
+
+    resetSetup.setLayout(l);
+    QLabel *info = new QLabel(tr("Select the way how frames will be mirrored:", "Mirror SMBX frames"), &resetSetup);
+    l->addWidget(info , 0, 0, 1, 3);
+
+    QGroupBox *dir = new QGroupBox(tr("Copy direction"), &resetSetup);
+    QHBoxLayout *dirL = new QHBoxLayout(dir);
+    dir->setLayout(dirL);
+    l->addWidget(dir, 1, 0, 1, 3);
+
+    QRadioButton *dirLeft = new QRadioButton(tr("Left to right"), dir);
+    dirL->addWidget(dirLeft);
+    QRadioButton *dirRight = new QRadioButton(tr("Right to left"), dir);
+    dirL->addWidget(dirRight);
+    dirRight->setChecked(true);
+
+
+    QPushButton *hit = new QPushButton(&resetSetup);
+    hit->setText(tr("Confirm"));
+    l->addWidget(hit, 7, 1, 1, 1);
+    QObject::connect(hit, static_cast<void (QAbstractButton::*)(bool)>(&QAbstractButton::clicked),
+                     &resetSetup, &QDialog::accept);
+
+    int ret = resetSetup.exec();
+    if(ret == QDialog::Accepted)
+    {
+        if(dirLeft->isChecked())
+            ui->preview->runAction(FrameTuneScene::ACTION_SMBX64_LEFT_TO_RIGHT);
+        else if(dirRight->isChecked())
+            ui->preview->runAction(FrameTuneScene::ACTION_SMBX64_RIGHT_TO_LEFT);
+
+        updateControls();
+        updateScene();
+    }
+}
+
+void ImageCalibrator::toolMirrorSMBXAction(int dir)
+{
+    if(dir > 1)
+        dir = 1;
+    else if(dir < -1)
+        dir = -1;
+    else if(dir == 0)
+    {
+        qWarning() << "Invalid direction value: " << dir;
+        return;
+    }
+
+    if(m_conf->matrixWidth != 10 || m_conf->matrixHeight != 10 || m_conf->spriteWidth != 1000 || m_conf->spriteHeight != 1000)
+    {
+        QMessageBox::warning(this,
+                             tr("Incompatible sprite"),
+                             tr("Can't perform the SMBX sprite mirror to incompatible sprite (the width and/or height of matrix are not equal to 10 and sprite is not equal to 1000x1000)."));
+        return;
+    }
+
+    for(int i = 0; i <= 49; ++i)
+    {
+        int src = i * dir;
+        int dst = src * -1;
+        int src_frm_x = static_cast<int>(std::floor((src + 49.0f) / 10.0f));
+        int src_frm_y = (src + 49) % 10;
+        int dst_frm_x = static_cast<int>(std::floor((dst + 49.0f) / 10.0f));
+        int dst_frm_y = (dst + 49) % 10;
+        QImage img;
+        QRgb tmp_pix;
+        int w = m_conf->cellWidth;
+        int h = m_conf->cellHeight;
+        int xl = 0, xr = w;
+        int yt = 0, yb = h;
+        int dst_x = dst_frm_x * w;
+        int dst_y = dst_frm_y * h;
+
+        auto &frmSrc = m_conf->frames[{src_frm_x, src_frm_y}];
+        auto &frmDst = m_conf->frames[{dst_frm_x, dst_frm_y}];
+
+        if(!frmSrc.used)
+            continue; // Skip unused frames
+
+        img = getFrame(src_frm_x, src_frm_y).toImage();
+
+        // Find left side
+        for(int x = 0; x < w; ++x)
+        {
+            bool found = false;
+            for(int y = 0; y < h; ++y)
+            {
+                if(img.pixelColor(x, y).alpha() > 0)
+                {
+                    found = true;
+                    xl = x;
+                    break;
+                }
+            }
+
+            if(found)
+                break;
+        }
+
+        // Find right side
+        for(int x = w - 1; x >= 0; --x)
+        {
+            bool found = false;
+            for(int y = 0; y < h; ++y)
+            {
+                if(img.pixelColor(x, y).alpha() > 0)
+                {
+                    found = true;
+                    xr = x + 1;
+                    break;
+                }
+            }
+
+            if(found)
+                break;
+        }
+
+        // Find top side
+        for(int y = 0; y < h; ++y)
+        {
+            bool found = false;
+            for(int x = 0; x < w; ++x)
+            {
+                if(img.pixelColor(x, y).alpha() > 0)
+                {
+                    found = true;
+                    yt = y;
+                    break;
+                }
+            }
+
+            if(found)
+                break;
+        }
+
+        // find bottom side
+        for(int y = h - 1; y >= 0; --y)
+        {
+            bool found = false;
+            for(int x = 0; x < w; ++x)
+            {
+                if(img.pixelColor(x, y).alpha() > 0)
+                {
+                    found = true;
+                    yb = y + 1;
+                    break;
+                }
+            }
+
+            if(found)
+                break;
+        }
+
+        if(xl > xr || yt > yb)
+            continue; // Seems an empty, nothing to copy
+
+        // Flip the frame itself
+        for(int exl = xl, exr = xr - 1; exl < exr; ++exl, --exr)
+        {
+            for(int y = yt; y < yb; ++y)
+            {
+                tmp_pix = img.pixel(exr, y);
+                img.setPixel(exr, y, img.pixel(exl, y));
+                img.setPixel(exl, y, tmp_pix);
+            }
+        }
+
+        // Put updated frame to target
+        QPainter dstPaint(&m_sprite);
+        dstPaint.setCompositionMode(QPainter::CompositionMode_Source);
+        dstPaint.drawImage(dst_x, dst_y, img);
+        dstPaint.end();
+
+        // Draw the same on original (otherwise it will just fail)
+        QPainter dstPaintOrig(&m_spriteOrig);
+        dstPaintOrig.setCompositionMode(QPainter::CompositionMode_Source);
+        dstPaintOrig.drawImage(dst_x, dst_y, img);
+        dstPaintOrig.end();
+
+        // Copy and adjust properties
+        frmDst.used = frmSrc.used;
+        frmDst.isDuck = frmSrc.isDuck;
+        frmDst.isMountRiding = frmSrc.isMountRiding;
+        frmDst.isRightDir = !frmSrc.isRightDir;
+        frmDst.showGrabItem = frmSrc.showGrabItem;
+        frmDst.w = frmSrc.w;
+        frmDst.h = frmSrc.h;
+        frmDst.offsetY = frmSrc.offsetY;
+
+        int relHitL = frmSrc.offsetX - xl;
+        int relHitR = xr - (frmSrc.offsetX + m_conf->frameWidth);
+
+        frmDst.offsetX = frmSrc.offsetX - relHitL + relHitR;
+        m_hitboxModified = true;
+
+        // Reset image offsets since they became overriden
+        auto &o = m_imgOffsets[dst_frm_x][dst_frm_y];
+        o.offsetX = 0;
+        o.offsetY = 0;
+    }
+
+    m_matrix->updateScene(generateTarget());
     updateScene();
 }
 

@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QImage>
 #include <QList>
+#include <QMenu>
 #include <QFileSystemWatcher>
 #include <QGraphicsRectItem>
 #include <QGraphicsPixmapItem>
@@ -67,6 +68,8 @@ class ImageCalibrator : public QDialog
 
     QVector<QVector<FrameHistory > > m_history;
 
+    QMenu m_toolActions;
+
     Matrix *m_matrix = nullptr;
 public:
     explicit ImageCalibrator(Calibration *conf, QWidget *parent = nullptr);
@@ -99,6 +102,9 @@ private slots:
     void updateOffset(int x, int y, int offsetX, int offsetY);
     void updateOffsets(int x, int y, int deltaX, int deltaY);
     void updateAllOffsets(int deltaX, int deltaY);
+
+    void toolMirrorSMBXFrames();
+    void toolMirrorSMBXAction(int dir);
 
     void on_Matrix_clicked(bool checked);
     void on_Reset_clicked();

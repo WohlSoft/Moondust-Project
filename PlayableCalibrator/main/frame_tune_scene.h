@@ -172,6 +172,11 @@ signals:
     void delta(Qt::MouseButton button, int deltaX, int deltaY);
     void mouseReleased();
 
+    void actionMirrorSMBX(int dir);
+    void actionFrameFlipedH();
+    void actionFrameFlipedV();
+    void actionFramePasted();
+
 private:
     Wall m_showWall = WALL_NONE;
 };

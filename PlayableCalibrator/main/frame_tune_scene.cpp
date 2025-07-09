@@ -682,8 +682,70 @@ FrameTuneScene::Mode FrameTuneScene::mode() const
 
 void FrameTuneScene::runAction(Actions action)
 {
-    Q_UNUSED(action)
-    // TODO: Implement me
+    switch(action)
+    {
+    default:
+    case ACTION_NOTHING:
+        break;
+
+    case ACTION_COPY_FRAME:
+        // TODO: Implement me
+        break;
+
+    case ACTION_PASTE_FRAME:
+        emit actionFramePasted();
+        break;
+
+    case ACTION_HFLIP_CUR_FRAME:
+    {
+        int w = m_image.width();
+        int h = m_image.height();
+        QRgb pix;
+
+        for(int xl = 0, xr = w - 1; xl < xr; ++xl, --xr)
+        {
+            for(int y = 0; y < h; ++y)
+            {
+                pix = m_image.pixel(xr, y);
+                m_image.setPixel(xr, y, m_image.pixel(xl, y));
+                m_image.setPixel(xl, y, pix);
+            }
+        }
+
+        repaint();
+        emit actionFrameFlipedH();
+        break;
+    }
+
+    case ACTION_VFLIP_CUR_FRAME:
+    {
+        int w = m_image.width();
+        int h = m_image.height();
+        QRgb pix;
+
+        for(int yt = 0, yb = w - 1; yt < yb; ++yt, --yb)
+        {
+            for(int x = 0; x < h; ++x)
+            {
+                pix = m_image.pixel(x, yb);
+                m_image.setPixel(x, yb, m_image.pixel(x, yt));
+                m_image.setPixel(x, yt, pix);
+            }
+        }
+
+        repaint();
+        emit actionFrameFlipedV();
+        break;
+    }
+
+    case ACTION_SMBX64_LEFT_TO_RIGHT:
+        emit actionMirrorSMBX(-1);
+        break;
+
+    case ACTION_SMBX64_RIGHT_TO_LEFT:
+        emit actionMirrorSMBX(+1);
+        break;
+    }
 }
 
 QSize FrameTuneScene::sizeHint() const
