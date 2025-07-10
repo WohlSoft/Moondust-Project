@@ -1172,12 +1172,12 @@ Do you want to continue?</translation>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="515"/>
         <source>Forces any draw operations to be aligned by 2x2 pixel cells.</source>
-        <translation type="unfinished"></translation>
+        <translation>Forces any draw operations to be aligned by 2x2 pixel cells.</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="518"/>
         <source>2-pix draw mode</source>
-        <translation type="unfinished"></translation>
+        <translation>2-pix draw mode</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="534"/>

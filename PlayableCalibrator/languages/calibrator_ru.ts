@@ -1172,12 +1172,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="515"/>
         <source>Forces any draw operations to be aligned by 2x2 pixel cells.</source>
-        <translation type="unfinished"></translation>
+        <translation>Любые операции рисования будут принудительно выровнены по сетке 2x2 пикселя.</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="518"/>
         <source>2-pix draw mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Двупиксельное рисование</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="534"/>
