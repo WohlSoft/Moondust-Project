@@ -1104,46 +1104,66 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="398"/>
-        <location filename="../image_calibration/image_calibrator.cpp" line="458"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="126"/>
+        <source>Flip horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="133"/>
+        <source>Flip vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="142"/>
+        <source>Copy frame to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="149"/>
+        <source>Paste frame from clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="429"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="489"/>
         <source>Incompatible sprite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="399"/>
-        <location filename="../image_calibration/image_calibrator.cpp" line="459"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="430"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="490"/>
         <source>Can&apos;t perform the SMBX sprite mirror to incompatible sprite (the width and/or height of matrix are not equal to 10 and sprite is not equal to 1000x1000).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="406"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="437"/>
         <source>Mirror frames on the SMBX sprite...</source>
         <comment>Mirror SMBX frames</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="409"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="440"/>
         <source>Select the way how frames will be mirrored:</source>
         <comment>Mirror SMBX frames</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="412"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="443"/>
         <source>Copy direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="417"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="448"/>
         <source>Left to right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="419"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="450"/>
         <source>Right to left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="425"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="456"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>

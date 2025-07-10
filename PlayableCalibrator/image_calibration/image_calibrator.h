@@ -26,12 +26,19 @@ class ImageCalibrator : public QDialog
 
     QVector<QVector<CalibrationFrame > > m_imgOffsets;
     Calibration *m_conf = nullptr;
+    CalibrationFrame m_setupBuffer;
     CalibrationMain *m_mw = nullptr;
 
     struct FrameHistory
     {
         int state = -1;
-        QVector<QPixmap> history;
+        struct Entry
+        {
+            QPixmap img;
+            CalibrationFrame setup;
+        };
+
+        QVector<Entry> history;
 
         bool canUndo()
         {
@@ -43,25 +50,37 @@ class ImageCalibrator : public QDialog
             return state < history.size() - 1;
         }
 
-        QPixmap undo()
+        QPixmap undo(CalibrationFrame &setupOut)
         {
             if(!canUndo())
                 return QPixmap();
-            return history[--state];
+
+            auto &h = history[--state];
+            setupOut = h.setup;
+            return h.img;
         }
 
-        QPixmap redo()
+        QPixmap redo(CalibrationFrame &setupOut)
         {
             if(!canRedo())
                 return QPixmap();
-            return history[++state];
+
+            auto &h = history[++state];
+            setupOut = h.setup;
+            return h.img;
         }
 
-        void addHistory(const QPixmap &img)
+        void addHistory(const QPixmap &img, const CalibrationFrame &setup)
         {
+            Entry e;
+
             if(!history.isEmpty() && canRedo())
                 history.resize(state + 1);
-            history.push_back(img);
+
+            e.img = img;
+            e.setup = setup;
+
+            history.push_back(e);
             state++;
         }
     };

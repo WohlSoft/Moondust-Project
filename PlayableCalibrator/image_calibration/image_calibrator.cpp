@@ -123,6 +123,36 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
             ui->preview->runAction(FrameTuneScene::ACTION_ERASE_UNUSED);
     });
 
+    QAction *flipH = m_toolActions.addAction(tr("Flip horizontally"));
+    QObject::connect(flipH, static_cast<void (QAction::*)(bool)>(&QAction::triggered),
+                     this, [this]()->void
+    {
+        ui->preview->runAction(FrameTuneScene::ACTION_HFLIP_CUR_FRAME);
+    });
+
+    QAction *flipV = m_toolActions.addAction(tr("Flip vertically"));
+    QObject::connect(flipV, static_cast<void (QAction::*)(bool)>(&QAction::triggered),
+                     this, [this]()->void
+    {
+        ui->preview->runAction(FrameTuneScene::ACTION_VFLIP_CUR_FRAME);
+    });
+
+    m_toolActions.addSeparator();
+
+    QAction *clipCopy = m_toolActions.addAction(tr("Copy frame to clipboard"));
+    QObject::connect(clipCopy, static_cast<void (QAction::*)(bool)>(&QAction::triggered),
+                     this, [this]()->void
+    {
+        ui->preview->runAction(FrameTuneScene::ACTION_COPY_FRAME);
+    });
+
+    QAction *clipPaste = m_toolActions.addAction(tr("Paste frame from clipboard"));
+    QObject::connect(clipPaste, static_cast<void (QAction::*)(bool)>(&QAction::triggered),
+                     this, [this]()->void
+    {
+        ui->preview->runAction(FrameTuneScene::ACTION_PASTE_FRAME);
+    });
+
     ui->toolQuickActions->setMenu(&m_toolActions);
 
     QObject::connect(ui->preview, &FrameTuneScene::actionMirrorSMBX,
@@ -282,6 +312,7 @@ void ImageCalibrator::frameSelected(int x, int y)
     updateControls();
     m_lockUI = false;
     updateScene();
+    m_setupBuffer = m_conf->frames[{x, y}];
 }
 
 void ImageCalibrator::referenceSelected(int x, int y)
@@ -651,12 +682,32 @@ void ImageCalibrator::toolEraseUnused()
 
 void ImageCalibrator::toolFlipFrameH()
 {
+    Calibration::FramePos pos = {m_frmX, m_frmY};
+    auto &f = m_conf->frames[pos];
 
+    m_setupBuffer = f;
+
+    int relHitL = f.offsetX;
+    int relHitR = m_conf->cellWidth - (f.offsetX + m_conf->frameWidth);
+    f.offsetX += -relHitL + relHitR;
+
+    ui->preview->setFrameSetup(f);
+    frameEdited();
 }
 
 void ImageCalibrator::toolFlipFrameV()
 {
+    Calibration::FramePos pos = {m_frmX, m_frmY};
+    auto &f = m_conf->frames[pos];
 
+    m_setupBuffer = f;
+
+    int relHitT = f.offsetY;
+    int relHitB = m_conf->cellHeight - (f.offsetY + m_conf->frameHeight);
+    f.offsetY += -relHitT + relHitB;
+
+    ui->preview->setFrameSetup(f);
+    frameEdited();
 }
 
 void ImageCalibrator::on_CropW_valueChanged(int arg1)
@@ -1015,14 +1066,17 @@ void ImageCalibrator::tempFrameUpdatedProceed()
         return; // Invalid frame
 
     auto &his = m_history[m_tempFileX][m_tempFileY];
+    auto &setup = m_conf->frames[{m_frmX, m_frmY}];
 
     // Preserve first frame
     if(his.history.empty())
-        his.addHistory(getFrame(m_tempFileX, m_tempFileY));
+        his.addHistory(getFrame(m_tempFileX, m_tempFileY), m_setupBuffer);
 
     updateFrame(m_tempFileX, m_tempFileY, f);
 
-    his.addHistory(getFrame(m_tempFileX, m_tempFileY));
+    his.addHistory(getFrame(m_tempFileX, m_tempFileY), setup);
+
+    m_setupBuffer = setup;
 
     m_spriteOrig = m_sprite;
     m_spriteModified = true;
@@ -1034,14 +1088,17 @@ void ImageCalibrator::frameEdited()
 {
     auto f = ui->preview->getImage();
     auto &his = m_history[m_frmX][m_frmY];
+    auto &setup = m_conf->frames[{m_frmX, m_frmY}];
 
     // Preserve first frame
     if(his.history.empty())
-        his.addHistory(getCurrentFrame());
+        his.addHistory(getCurrentFrame(), m_setupBuffer);
 
     updateCurrentFrame(f);
 
-    his.addHistory(getCurrentFrame());
+    his.addHistory(getCurrentFrame(), setup);
+
+    m_setupBuffer = setup;
 
     m_spriteOrig = m_sprite;
     m_spriteModified = true;
@@ -1074,10 +1131,11 @@ void ImageCalibrator::updateFrame(int x, int y, const QPixmap &f)
 void ImageCalibrator::historyUndo(bool)
 {
     auto &his = m_history[m_frmX][m_frmY];
+    auto &setup = m_conf->frames[{m_frmX, m_frmY}];
     if(!his.canUndo())
         return;
 
-    updateCurrentFrame(his.undo());
+    updateCurrentFrame(his.undo(setup));
     updateScene();
     m_matrix->updateScene(generateTarget());
     ui->toolUndo->setEnabled(his.canUndo());
@@ -1087,10 +1145,11 @@ void ImageCalibrator::historyUndo(bool)
 void ImageCalibrator::historyRedo(bool)
 {
     auto &his = m_history[m_frmX][m_frmY];
+    auto &setup = m_conf->frames[{m_frmX, m_frmY}];
     if(!his.canRedo())
         return;
 
-    updateCurrentFrame(his.redo());
+    updateCurrentFrame(his.redo(setup));
     updateScene();
     m_matrix->updateScene(generateTarget());
     ui->toolUndo->setEnabled(his.canUndo());
