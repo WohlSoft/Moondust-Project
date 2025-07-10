@@ -52,6 +52,7 @@ class FrameTuneScene : public QFrame
     double  m_refOpacity = 0.5;
 
     QColor  m_bgColor;
+    bool    m_backgroundChess = false;
 
     int     m_hitboxWidth = 0;
     int     m_hitboxHeight = 0;
@@ -102,6 +103,7 @@ public:
     void set2pixDrawMode(bool en);
     void resetScroll();
     void setBgColor(QColor clr);
+    void setBgChess(bool chess);
 
     void setBlockRepaint(bool en);
 
