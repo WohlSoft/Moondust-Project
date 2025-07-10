@@ -1,6 +1,8 @@
 #include "frame_tune_scene.h"
+#include <QApplication>
 #include <QPainter>
 #include <QWheelEvent>
+#include <QClipboard>
 #include <QKeyEvent>
 #include <QtDebug>
 #include <cmath>
@@ -689,11 +691,22 @@ void FrameTuneScene::runAction(Actions action)
         break;
 
     case ACTION_COPY_FRAME:
-        // TODO: Implement me
+        qApp->clipboard()->setImage(m_image);
         break;
 
     case ACTION_PASTE_FRAME:
-        emit actionFramePasted();
+        if(!qApp->clipboard()->image().isNull())
+        {
+            QImage i = qApp->clipboard()->image();
+            QPainter p(&m_image);
+            p.setCompositionMode(QPainter::CompositionMode_Source);
+            int dstX = (i.width() / 2) - (i.width() / 2);
+            int dstY = (i.height() / 2) - (i.height() / 2);
+            p.drawImage(dstX, dstY, i);
+            p.end();
+            repaint();
+            emit actionFramePasted();
+        }
         break;
 
     case ACTION_HFLIP_CUR_FRAME:
