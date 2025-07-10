@@ -15,6 +15,39 @@ protected:
     QImage *m_image;
     FrameTuneScene *m_self;
 
+    void drawCursor(QPainter &p, const QRect& dst, double zoom, const QPoint &pos)
+    {
+        if(zoom <= 1.0 && !m_self->m_2pixDrawMode)
+            p.drawPoint(pos);
+        else
+        {
+            if(m_self->m_2pixDrawMode)
+            {
+                QPoint p2 = (pos / 2);
+                p.drawRect(QRectF(dst.x() + p2.x() * zoom * 2,
+                                  dst.y() + p2.y() * zoom * 2,
+                                  zoom * 2,
+                                  zoom * 2
+                           ));
+            }
+            else
+            {
+                p.drawRect(QRectF(dst.x() + pos.x() * zoom,
+                                  dst.y() + pos.y() * zoom,
+                                  zoom,
+                                  zoom
+                           ));
+            }
+        }
+    }
+
+    QPoint roundPoint(QPoint s)
+    {
+        s.setX(static_cast<int>(std::round(s.x() / 2.0f)) * 2);
+        s.setY(static_cast<int>(std::round(s.y() / 2.0f)) * 2);
+        return s;
+    }
+
 public:
     explicit DrawTool(QImage *image, FrameTuneScene *parent = 0) :
         QObject(parent),
@@ -74,10 +107,9 @@ public:
     {
         if(m_self->m_2pixDrawMode)
         {
-            QPoint p2 = p / 2;
             QPainter pa(&m_buf2x);
             pa.setPen(m_self->m_drawColor);
-            pa.drawLine(startAt / 2, p2);
+            pa.drawLine(startAt / 2, p / 2);
             pa.end();
             QPainter pad(m_image);
             pad.drawImage(0, 0, m_buf2x.scaled(m_image->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
@@ -90,6 +122,7 @@ public:
             pa.drawLine(startAt, p);
             pa.end();
         }
+
         startAt = p;
         return true;
     }
@@ -103,29 +136,7 @@ public:
     {
         p.setPen(QPen(Qt::gray, 1));
         p.setBrush(m_self->m_drawColor);
-
-        if(zoom <= 1.0 && !m_self->m_2pixDrawMode)
-            p.drawPoint(pos);
-        else
-        {
-            if(m_self->m_2pixDrawMode)
-            {
-                QPoint p2 = (pos / 2);
-                p.drawRect(QRectF(dst.x() + p2.x() * zoom * 2,
-                                  dst.y() + p2.y() * zoom * 2,
-                                  zoom * 2,
-                                  zoom * 2
-                           ));
-            }
-            else
-            {
-                p.drawRect(QRectF(dst.x() + pos.x() * zoom,
-                                  dst.y() + pos.y() * zoom,
-                                  zoom,
-                                  zoom
-                           ));
-            }
-        }
+        drawCursor(p, dst, zoom, pos);
     }
 };
 
@@ -156,6 +167,7 @@ public:
     {
         p.setPen(QPen(Qt::gray, 1));
         p.setBrush(m_self->m_drawColor);
+
         if(zoom <= 1.0)
             p.drawPoint(pos);
         else
@@ -172,6 +184,8 @@ public:
 class DrawToolRubber : public DrawTool
 {
     QPoint startAt;
+    QImage m_buf2x;
+
 public:
     explicit DrawToolRubber(QImage *image, FrameTuneScene *parent = 0) :
         DrawTool(image, parent)
@@ -180,18 +194,48 @@ public:
     virtual bool mousePress(const QPoint &p)
     {
         startAt = p;
-        m_image->setPixel(p.x(), p.y(), 0x00000000);
+        if(m_self->m_2pixDrawMode)
+        {
+            QPoint p2 = p / 2;
+            m_buf2x = m_image->scaled(m_image->size() / 2, Qt::KeepAspectRatio, Qt::FastTransformation);
+            m_buf2x.setPixel(p2.x(), p2.y(), 0x00000000);
+            QPainter pa(m_image);
+            pa.setCompositionMode(QPainter::CompositionMode_Source);
+            pa.drawImage(0, 0, m_buf2x.scaled(m_image->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
+            pa.end();
+        }
+        else
+        {
+            m_image->setPixel(p.x(), p.y(), 0x00000000);
+        }
         return true;
     }
 
     virtual bool mouseMove(const QPoint &p, const QPoint &)
     {
-        QPainter pa(m_image);
-        pa.setCompositionMode (QPainter::CompositionMode_Source);
-        pa.setPen(Qt::transparent);
-        pa.drawLine(startAt, p);
-        pa.end();
+        if(m_self->m_2pixDrawMode)
+        {
+            QPainter pa(&m_buf2x);
+            pa.setCompositionMode(QPainter::CompositionMode_Source);
+            pa.setPen(QColor(0, 0, 0, 0));
+            pa.drawLine(startAt / 2, p / 2);
+            pa.end();
+            QPainter pad(m_image);
+            pad.setCompositionMode(QPainter::CompositionMode_Source);
+            pad.drawImage(0, 0, m_buf2x.scaled(m_image->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
+            pad.end();
+        }
+        else
+        {
+            QPainter pa(m_image);
+            pa.setCompositionMode(QPainter::CompositionMode_Source);
+            pa.setPen(Qt::transparent);
+            pa.drawLine(startAt, p);
+            pa.end();
+        }
+
         startAt = p;
+
         return true;
     }
 
@@ -204,16 +248,7 @@ public:
     {
         p.setPen(QPen(Qt::gray, 1));
         p.setBrush(Qt::transparent);
-        if(zoom <= 1.0)
-            p.drawPoint(pos);
-        else
-        {
-            p.drawRect(QRectF(dst.x() + pos.x() * zoom,
-                              dst.y() + pos.y() * zoom,
-                              zoom,
-                              zoom
-                       ));
-        }
+        drawCursor(p, dst, zoom, pos);
     }
 };
 
@@ -290,28 +325,7 @@ public:
         p.setPen(QPen(Qt::gray, 1));
         p.setBrush(m_self->m_drawColor);
 
-        if(zoom <= 1.0 && !m_self->m_2pixDrawMode)
-            p.drawPoint(pos);
-        else
-        {
-            if(m_self->m_2pixDrawMode)
-            {
-                QPoint p2 = (pos / 2);
-                p.drawRect(QRectF(dst.x() + p2.x() * zoom * 2,
-                                  dst.y() + p2.y() * zoom * 2,
-                                  zoom * 2,
-                                  zoom * 2
-                           ));
-            }
-            else
-            {
-                p.drawRect(QRectF(dst.x() + pos.x() * zoom,
-                                  dst.y() + pos.y() * zoom,
-                                  zoom,
-                                  zoom
-                           ));
-            }
-        }
+        drawCursor(p, dst, zoom, pos);
 
         if(demo.isNull())
             return;
@@ -336,27 +350,57 @@ public:
     virtual bool mousePress(const QPoint &p)
     {
         startAt = p;
-        demo = QImage(m_image->size(), QImage::Format_ARGB32);
-        demo.fill(Qt::transparent);
-        demo.setPixel(p.x(), p.y(), m_self->m_drawColor.toRgb().rgba());
+
+        if(m_self->m_2pixDrawMode)
+        {
+            demo = QImage(m_image->size() / 2, QImage::Format_ARGB32);
+            demo.fill(Qt::transparent);
+            demo.setPixel(p.x() / 2, p.y() / 2, m_self->m_drawColor.toRgb().rgba());
+        }
+        else
+        {
+            demo = QImage(m_image->size(), QImage::Format_ARGB32);
+            demo.fill(Qt::transparent);
+            demo.setPixel(p.x(), p.y(), m_self->m_drawColor.toRgb().rgba());
+        }
+
         return true;
     }
 
     virtual bool mouseMove(const QPoint &p, const QPoint &)
     {
-        demo = QImage(m_image->size(), QImage::Format_ARGB32);
-        demo.fill(Qt::transparent);
-        QPainter pa(&demo);
-        pa.setPen(m_self->m_drawColor);
-        pa.drawRect(QRect(startAt, p));
-        pa.end();
+        if(m_self->m_2pixDrawMode)
+        {
+            demo = QImage(m_image->size() / 2, QImage::Format_ARGB32);
+            demo.fill(Qt::transparent);
+            QPainter pa(&demo);
+            pa.setPen(m_self->m_drawColor);
+            pa.drawRect(QRect(startAt / 2, p / 2));
+            pa.end();
+        }
+        else
+        {
+            demo = QImage(m_image->size(), QImage::Format_ARGB32);
+            demo.fill(Qt::transparent);
+            QPainter pa(&demo);
+            pa.setPen(m_self->m_drawColor);
+            pa.drawRect(QRect(startAt, p));
+            pa.end();
+        }
+
         return true;
     }
 
     virtual bool mouseRelease(const QPoint &)
     {
         QPainter pa(m_image);
-        pa.drawImage(0, 0, demo);
+        pa.setPen(m_self->m_drawColor);
+
+        if(m_self->m_2pixDrawMode)
+            pa.drawImage(0, 0, demo.scaled(demo.size() * 2, Qt::KeepAspectRatio, Qt::FastTransformation));
+        else
+            pa.drawImage(0, 0, demo);
+
         pa.end();
         demo = QImage();
         return true;
@@ -366,20 +410,16 @@ public:
     {
         p.setPen(QPen(Qt::gray, 1));
         p.setBrush(m_self->m_drawColor);
-        if(zoom <= 1.0)
-            p.drawPoint(pos);
-        else
-        {
-            p.drawRect(QRectF(dst.x() + pos.x() * zoom,
-                              dst.y() + pos.y() * zoom,
-                              zoom,
-                              zoom
-                       ));
-        }
+
+        drawCursor(p, dst, zoom, pos);
 
         if(demo.isNull())
             return;
-        p.drawImage(dst, demo);
+
+        if(m_self->m_2pixDrawMode)
+            p.drawImage(dst, demo.scaled(demo.size() * 2, Qt::KeepAspectRatio, Qt::FastTransformation));
+        else
+            p.drawImage(dst, demo);
     }
 };
 
@@ -401,16 +441,17 @@ public:
 
     virtual ~DrawToolSelect()
     {
-        mouseDoubleClick(QPoint());
+        DrawToolSelect::mouseDoubleClick(QPoint());
     }
 
     virtual bool mousePress(const QPoint &p)
     {
-        startAt = p;
+        startAt = m_self->m_2pixDrawMode ? roundPoint(p) : p;
+
         if(floating.isNull())
         {
             selecting = true;
-            selection = QRect(startAt, p);
+            selection = QRect(startAt, m_self->m_2pixDrawMode ? roundPoint(p) : p);
         }
         else
         {
@@ -425,17 +466,20 @@ public:
         if(resetting)
             return false;
 
+        QPoint pd = (m_self->m_2pixDrawMode) ? roundPoint(p) : p;
+        QPoint pdelta = (m_self->m_2pixDrawMode) ? roundPoint(delta) : delta;
+
         if(selecting)
         {
-            selection.setLeft(startAt.x() > p.x() ? p.x() : startAt.x());
-            selection.setTop(startAt.y() > p.y() ? p.y() : startAt.y());
-            selection.setRight((startAt.x() <= p.x() ? p.x() : startAt.x()) - 1);
-            selection.setBottom((startAt.y() <= p.y() ? p.y() : startAt.y()) - 1);
+            selection.setLeft(startAt.x() > pd.x() ? pd.x() : startAt.x());
+            selection.setTop(startAt.y() > pd.y() ? pd.y() : startAt.y());
+            selection.setRight((startAt.x() <= pd.x() ? pd.x() : startAt.x()) - 1);
+            selection.setBottom((startAt.y() <= pd.y() ? pd.y() : startAt.y()) - 1);
         }
         else if(moving)
         {
-            selection.translate(delta);
-            startAt = p;
+            selection.translate(pdelta);
+            startAt = pd;
         }
         return true;
     }
@@ -484,8 +528,8 @@ public:
         auto r = QRectF(dst.x() + selection.x() * zoom,
                         dst.y() + selection.y() * zoom,
                         selection.width() * zoom,
-                        selection.height() * zoom
-                     );
+                        selection.height() * zoom);
+
         if(selecting)
         {
             p.setPen(QPen(Qt::red, 2, Qt::DotLine));
