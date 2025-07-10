@@ -968,113 +968,123 @@ Butonul din dreapta - Orientează colţurile din dreapta-jos</translation>
         <translation>Refaceţi o schimbare recentă</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="281"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="425"/>
         <source>When using mouse to move the picture, also move hitbox too. Use this if you want to align the frame without breaking the calibration setup.</source>
         <translation>Folosind mouse-ul pentru a mişca imaginea, se va mişca spaţiul de coliziune la fel. Foloseşte asta dacă doreşti să aliniezi imaginea fără să strici setările calibrării.</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="284"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="428"/>
         <source>Hitbox move</source>
         <translation>Mişcă spaţiu coliziune</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="298"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="458"/>
         <source>Current frame (10x10):</source>
         <translation>Imaginea curentă (10x10):</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="305"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="323"/>
         <source>Drag offset X</source>
         <translation>Trage offset X</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="312"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="505"/>
         <source>Show sprite map</source>
         <translation>Previzualizează mapă sprite</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="322"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="465"/>
         <source>Clear</source>
         <comment>reference frame</comment>
         <translation>Eliberează</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="343"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="316"/>
         <source>Drag frame offset:</source>
         <translation>Trage offset imagine:</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="370"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="364"/>
         <source>Referrence frame:</source>
         <translation>Imagine referenţă:</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="403"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="337"/>
         <source>Opacity</source>
         <translation>Opacitate</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="410"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="351"/>
         <source>Frame X</source>
         <translation>Imagine X</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="433"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="398"/>
         <source>Crop right</source>
         <translation>Redimensionează la dreapta</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="447"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="330"/>
         <source>Drag offset Y</source>
         <translation>Trage offset Y</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="467"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="405"/>
         <source>Crop bottom</source>
         <translation>Redimensionează jos</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="487"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="344"/>
         <source>Reset calibration</source>
         <translation>Restaureaza calibrare</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="494"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="435"/>
         <source>Frame Y</source>
         <translation>Imagine Y</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="501"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="384"/>
         <source>Open frame in editor...</source>
         <translation type="unfinished">Deschide imaginea în editor...</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="508"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="442"/>
         <source>Move all frames of the sprite synchroniously with current. Use this to simplify the general re-aligning work.</source>
         <translation>Mută toate imaginile acestui sprite sincronizat cu sprite-ul curent. Simplifică re-aducerea coordonatelor.</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="511"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="445"/>
         <source>Move all frames</source>
         <translation>Mută toate imaginile</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="527"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="515"/>
+        <source>Forces any draw operations to be aligned by 2x2 pixel cells.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.ui" line="518"/>
+        <source>2-pix draw mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.ui" line="534"/>
         <source>Save image</source>
         <translation>Salvează imaginea</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="533"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="540"/>
         <source>Write PNG+GIFs</source>
         <translation>Exportează PNG+GIF</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="540"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="547"/>
         <source>Write PNG</source>
         <translation>Exportează PNG</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="547"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="554"/>
         <source>Write masked GIFs</source>
         <translation>Exporteaza GIF (cu mască)</translation>
     </message>
@@ -1119,46 +1129,66 @@ Butonul din dreapta - Orientează colţurile din dreapta-jos</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="429"/>
-        <location filename="../image_calibration/image_calibrator.cpp" line="489"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="158"/>
+        <source>Copy frame to clipboard and shrink 2x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="165"/>
+        <source>Paste frame from clipboard and grow 2x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="174"/>
+        <source>Clean frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="181"/>
+        <source>Fix the 2pix format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="467"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="527"/>
         <source>Incompatible sprite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="430"/>
-        <location filename="../image_calibration/image_calibrator.cpp" line="490"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="468"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="528"/>
         <source>Can&apos;t perform the SMBX sprite mirror to incompatible sprite (the width and/or height of matrix are not equal to 10 and sprite is not equal to 1000x1000).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="437"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="475"/>
         <source>Mirror frames on the SMBX sprite...</source>
         <comment>Mirror SMBX frames</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="440"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="478"/>
         <source>Select the way how frames will be mirrored:</source>
         <comment>Mirror SMBX frames</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="443"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="481"/>
         <source>Copy direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="448"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="486"/>
         <source>Left to right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="450"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="488"/>
         <source>Right to left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="456"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="494"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>

@@ -940,7 +940,7 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="vanished">Калібрування зображення</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="410"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="351"/>
         <source>Frame X</source>
         <translation>Кадр X</translation>
     </message>
@@ -957,7 +957,7 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="vanished">Калібрування зображення:</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="298"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="458"/>
         <source>Current frame (10x10):</source>
         <translation>Даний кадр (10х10):</translation>
     </message>
@@ -966,7 +966,7 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="vanished">Зміщення X</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="494"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="435"/>
         <source>Frame Y</source>
         <translation>Кадр Y</translation>
     </message>
@@ -1074,93 +1074,103 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>Повторити дію</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="281"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="425"/>
         <source>When using mouse to move the picture, also move hitbox too. Use this if you want to align the frame without breaking the calibration setup.</source>
         <translation>Якщо ви використовуєте мишку для переміщення зображення, з ним буде також переміщуватись хітбокс. Користуйтесь цим, якщо ви бажаєте зрівняти кадр без спотворень налаштувань калібрування.</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="284"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="428"/>
         <source>Hitbox move</source>
         <translation>Перемістити хітбокс</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="305"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="323"/>
         <source>Drag offset X</source>
         <translation>Зміщення Х</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="312"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="505"/>
         <source>Show sprite map</source>
         <translation>Показати карту спрайта</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="322"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="465"/>
         <source>Clear</source>
         <comment>reference frame</comment>
         <translation>Очистити</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="343"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="316"/>
         <source>Drag frame offset:</source>
         <translation>Перемістити кадр:</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="370"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="364"/>
         <source>Referrence frame:</source>
         <translation>Кадр-зразок:</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="403"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="337"/>
         <source>Opacity</source>
         <translation>Прозорість</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="433"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="398"/>
         <source>Crop right</source>
         <translation>Зріз зправа</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="447"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="330"/>
         <source>Drag offset Y</source>
         <translation>Зміщення Y</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="467"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="405"/>
         <source>Crop bottom</source>
         <translation>Зріз знизу</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="501"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="384"/>
         <source>Open frame in editor...</source>
         <translation type="unfinished">Відкрити кадр у редагувачі...</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="508"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="442"/>
         <source>Move all frames of the sprite synchroniously with current. Use this to simplify the general re-aligning work.</source>
         <translation>Перемістити всі кадри спрайту згідно з цим. Користуйтесь цим, щоб спростити загальну роботу по вирівнюванню.</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="511"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="445"/>
         <source>Move all frames</source>
         <translation>Перемістити всі кадри</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="527"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="515"/>
+        <source>Forces any draw operations to be aligned by 2x2 pixel cells.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.ui" line="518"/>
+        <source>2-pix draw mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.ui" line="534"/>
         <source>Save image</source>
         <translation>Зберегти зображення</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="533"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="540"/>
         <source>Write PNG+GIFs</source>
         <translation>Записати PNG+GIFи</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="540"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="547"/>
         <source>Write PNG</source>
         <translation>Записати PNG</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="547"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="554"/>
         <source>Write masked GIFs</source>
         <translation>Записати GIFи з масками</translation>
     </message>
@@ -1177,7 +1187,7 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="vanished">Вибрати кадр у спрайті</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="487"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="344"/>
         <source>Reset calibration</source>
         <translation>Скинути калібрування</translation>
     </message>
@@ -1222,46 +1232,66 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="429"/>
-        <location filename="../image_calibration/image_calibrator.cpp" line="489"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="158"/>
+        <source>Copy frame to clipboard and shrink 2x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="165"/>
+        <source>Paste frame from clipboard and grow 2x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="174"/>
+        <source>Clean frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="181"/>
+        <source>Fix the 2pix format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="467"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="527"/>
         <source>Incompatible sprite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="430"/>
-        <location filename="../image_calibration/image_calibrator.cpp" line="490"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="468"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="528"/>
         <source>Can&apos;t perform the SMBX sprite mirror to incompatible sprite (the width and/or height of matrix are not equal to 10 and sprite is not equal to 1000x1000).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="437"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="475"/>
         <source>Mirror frames on the SMBX sprite...</source>
         <comment>Mirror SMBX frames</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="440"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="478"/>
         <source>Select the way how frames will be mirrored:</source>
         <comment>Mirror SMBX frames</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="443"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="481"/>
         <source>Copy direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="448"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="486"/>
         <source>Left to right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="450"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="488"/>
         <source>Right to left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="456"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="494"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
