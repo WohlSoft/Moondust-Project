@@ -909,7 +909,7 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="vanished">图像校正</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="410"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="351"/>
         <source>Frame X</source>
         <translation>帧 X</translation>
     </message>
@@ -926,7 +926,7 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="vanished">图像校正：</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="298"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="458"/>
         <source>Current frame (10x10):</source>
         <translation>当前帧（10 x 10）：</translation>
     </message>
@@ -935,7 +935,7 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="vanished">偏移 X</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="494"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="435"/>
         <source>Frame Y</source>
         <translation>帧 Y</translation>
     </message>
@@ -1043,93 +1043,103 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>恢复</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="281"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="425"/>
         <source>When using mouse to move the picture, also move hitbox too. Use this if you want to align the frame without breaking the calibration setup.</source>
         <translation>使用鼠标移动图像的同时移动判定框。如果您想要在不影响到校正设置的情况下对齐帧，请启用该选项。</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="284"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="428"/>
         <source>Hitbox move</source>
         <translation>移动判定框</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="305"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="323"/>
         <source>Drag offset X</source>
         <translation>拿起时横向偏移</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="312"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="505"/>
         <source>Show sprite map</source>
         <translation>显示精灵地图</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="322"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="465"/>
         <source>Clear</source>
         <comment>reference frame</comment>
         <translation>清除</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="343"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="316"/>
         <source>Drag frame offset:</source>
         <translation>拿起时偏移：</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="370"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="364"/>
         <source>Referrence frame:</source>
         <translation>对照帧：</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="403"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="337"/>
         <source>Opacity</source>
         <translation>透明度</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="433"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="398"/>
         <source>Crop right</source>
         <translation>向右裁剪</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="447"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="330"/>
         <source>Drag offset Y</source>
         <translation>拿起时纵向偏移</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="467"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="405"/>
         <source>Crop bottom</source>
         <translation>向下裁剪</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="501"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="384"/>
         <source>Open frame in editor...</source>
         <translation>在编辑器中打开帧……</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="508"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="442"/>
         <source>Move all frames of the sprite synchroniously with current. Use this to simplify the general re-aligning work.</source>
         <translation>同步移动所有精灵中的帧至当前，使用此功能可简化对齐方式。</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="511"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="445"/>
         <source>Move all frames</source>
         <translation>移动所有帧</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="527"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="515"/>
+        <source>Forces any draw operations to be aligned by 2x2 pixel cells.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.ui" line="518"/>
+        <source>2-pix draw mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.ui" line="534"/>
         <source>Save image</source>
         <translation>保存图片</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="533"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="540"/>
         <source>Write PNG+GIFs</source>
         <translation>同时保存为 PNG 和带影子文件的 GIF</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="540"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="547"/>
         <source>Write PNG</source>
         <translation>保存为 PNG</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="547"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="554"/>
         <source>Write masked GIFs</source>
         <translation>保存为带影子文件的 GIF</translation>
     </message>
@@ -1146,29 +1156,29 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="vanished">从图片中选择帧</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="487"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="344"/>
         <source>Reset calibration</source>
         <translation>校正重置</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="110"/>
         <source>Mirror SMBX sprite...</source>
-        <translation type="unfinished"></translation>
+        <translation>对SMBX图像进行镜像……</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="113"/>
         <source>Erase image data of unused frames...</source>
-        <translation type="unfinished"></translation>
+        <translation>删除未使用帧的图像……</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="118"/>
         <source>Erase unused frame images</source>
-        <translation type="unfinished"></translation>
+        <translation>删除未使用帧的图像</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="119"/>
         <source>Are you sure you want to erase image data of all unused frames?</source>
-        <translation type="unfinished"></translation>
+        <translation>确定要删除未使用的帧的图像吗？</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="126"/>
@@ -1191,48 +1201,68 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="429"/>
-        <location filename="../image_calibration/image_calibrator.cpp" line="489"/>
-        <source>Incompatible sprite</source>
-        <translation type="unfinished">不兼容的图像</translation>
-    </message>
-    <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="430"/>
-        <location filename="../image_calibration/image_calibrator.cpp" line="490"/>
-        <source>Can&apos;t perform the SMBX sprite mirror to incompatible sprite (the width and/or height of matrix are not equal to 10 and sprite is not equal to 1000x1000).</source>
+        <location filename="../image_calibration/image_calibrator.cpp" line="158"/>
+        <source>Copy frame to clipboard and shrink 2x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="437"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="165"/>
+        <source>Paste frame from clipboard and grow 2x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="174"/>
+        <source>Clean frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="181"/>
+        <source>Fix the 2pix format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="467"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="527"/>
+        <source>Incompatible sprite</source>
+        <translation>不兼容的图像</translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="468"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="528"/>
+        <source>Can&apos;t perform the SMBX sprite mirror to incompatible sprite (the width and/or height of matrix are not equal to 10 and sprite is not equal to 1000x1000).</source>
+        <translation>抱歉，该图像的阵列不为10x10且图像大小不为1000x1000，无法对该图像进行镜像操作。</translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.cpp" line="475"/>
         <source>Mirror frames on the SMBX sprite...</source>
         <comment>Mirror SMBX frames</comment>
-        <translation type="unfinished"></translation>
+        <translation>在SMBX中的帧镜像图像……</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="440"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="478"/>
         <source>Select the way how frames will be mirrored:</source>
         <comment>Mirror SMBX frames</comment>
-        <translation type="unfinished"></translation>
+        <translation>选择帧的复制模式：</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="443"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="481"/>
         <source>Copy direction</source>
-        <translation type="unfinished"></translation>
+        <translation>复制方向</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="448"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="486"/>
         <source>Left to right</source>
-        <translation type="unfinished"></translation>
+        <translation>从左到右</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="450"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="488"/>
         <source>Right to left</source>
-        <translation type="unfinished"></translation>
+        <translation>从右到左</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="456"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="494"/>
         <source>Confirm</source>
-        <translation type="unfinished">确认</translation>
+        <translation>确认</translation>
     </message>
 </context>
 <context>

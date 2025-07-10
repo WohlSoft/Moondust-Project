@@ -46,6 +46,7 @@ public:
 class DrawToolPencil : public DrawTool
 {
     QPoint startAt;
+    QImage m_buf2x;
 public:
     explicit DrawToolPencil(QImage *image, FrameTuneScene *parent = 0) :
         DrawTool(image, parent)
@@ -54,16 +55,41 @@ public:
     virtual bool mousePress(const QPoint &p)
     {
         startAt = p;
-        m_image->setPixel(p.x(), p.y(), m_self->m_drawColor.toRgb().rgba());
+        if(m_self->m_2pixDrawMode)
+        {
+            QPoint p2 = p / 2;
+            m_buf2x = QImage(m_image->size() / 2, QImage::Format_RGBA8888);
+            m_buf2x.fill(QColor(0, 0, 0, 0));
+            m_buf2x.setPixel(p2.x(), p2.y(), m_self->m_drawColor.toRgb().rgba());
+            QPainter pa(m_image);
+            pa.drawImage(0, 0, m_buf2x.scaled(m_image->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
+            pa.end();
+        }
+        else
+            m_image->setPixel(p.x(), p.y(), m_self->m_drawColor.toRgb().rgba());
         return true;
     }
 
     virtual bool mouseMove(const QPoint &p, const QPoint &)
     {
-        QPainter pa(m_image);
-        pa.setPen(m_self->m_drawColor);
-        pa.drawLine(startAt, p);
-        pa.end();
+        if(m_self->m_2pixDrawMode)
+        {
+            QPoint p2 = p / 2;
+            QPainter pa(&m_buf2x);
+            pa.setPen(m_self->m_drawColor);
+            pa.drawLine(startAt / 2, p2);
+            pa.end();
+            QPainter pad(m_image);
+            pad.drawImage(0, 0, m_buf2x.scaled(m_image->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
+            pad.end();
+        }
+        else
+        {
+            QPainter pa(m_image);
+            pa.setPen(m_self->m_drawColor);
+            pa.drawLine(startAt, p);
+            pa.end();
+        }
         startAt = p;
         return true;
     }
@@ -77,15 +103,28 @@ public:
     {
         p.setPen(QPen(Qt::gray, 1));
         p.setBrush(m_self->m_drawColor);
-        if(zoom <= 1.0)
+
+        if(zoom <= 1.0 && !m_self->m_2pixDrawMode)
             p.drawPoint(pos);
         else
         {
-            p.drawRect(QRectF(dst.x() + pos.x() * zoom,
-                              dst.y() + pos.y() * zoom,
-                              zoom,
-                              zoom
-                       ));
+            if(m_self->m_2pixDrawMode)
+            {
+                QPoint p2 = (pos / 2);
+                p.drawRect(QRectF(dst.x() + p2.x() * zoom * 2,
+                                  dst.y() + p2.y() * zoom * 2,
+                                  zoom * 2,
+                                  zoom * 2
+                           ));
+            }
+            else
+            {
+                p.drawRect(QRectF(dst.x() + pos.x() * zoom,
+                                  dst.y() + pos.y() * zoom,
+                                  zoom,
+                                  zoom
+                           ));
+            }
         }
     }
 };
@@ -192,20 +231,43 @@ public:
     virtual bool mousePress(const QPoint &p)
     {
         startAt = p;
-        demo = QImage(m_image->size(), QImage::Format_ARGB32);
-        demo.fill(Qt::transparent);
-        demo.setPixel(p.x(), p.y(), m_self->m_drawColor.toRgb().rgba());
+
+        if(m_self->m_2pixDrawMode)
+        {
+            demo = QImage(m_image->size() / 2, QImage::Format_ARGB32);
+            demo.fill(Qt::transparent);
+            demo.setPixel(p.x() / 2, p.y() / 2, m_self->m_drawColor.toRgb().rgba());
+        }
+        else
+        {
+            demo = QImage(m_image->size(), QImage::Format_ARGB32);
+            demo.fill(Qt::transparent);
+            demo.setPixel(p.x(), p.y(), m_self->m_drawColor.toRgb().rgba());
+        }
+
         return true;
     }
 
     virtual bool mouseMove(const QPoint &p, const QPoint &)
     {
-        demo = QImage(m_image->size(), QImage::Format_ARGB32);
-        demo.fill(Qt::transparent);
-        QPainter pa(&demo);
-        pa.setPen(m_self->m_drawColor);
-        pa.drawLine(startAt, p);
-        pa.end();
+        if(m_self->m_2pixDrawMode)
+        {
+            demo = QImage(m_image->size() / 2, QImage::Format_ARGB32);
+            demo.fill(Qt::transparent);
+            QPainter pa(&demo);
+            pa.setPen(m_self->m_drawColor);
+            pa.drawLine(startAt / 2, p / 2);
+            pa.end();
+        }
+        else
+        {
+            demo = QImage(m_image->size(), QImage::Format_ARGB32);
+            demo.fill(Qt::transparent);
+            QPainter pa(&demo);
+            pa.setPen(m_self->m_drawColor);
+            pa.drawLine(startAt, p);
+            pa.end();
+        }
         return true;
     }
 
@@ -213,7 +275,12 @@ public:
     {
         QPainter pa(m_image);
         pa.setPen(m_self->m_drawColor);
-        pa.drawImage(0, 0, demo);
+
+        if(m_self->m_2pixDrawMode)
+            pa.drawImage(0, 0, demo.scaled(demo.size() * 2, Qt::KeepAspectRatio, Qt::FastTransformation));
+        else
+            pa.drawImage(0, 0, demo);
+
         demo = QImage();
         return true;
     }
@@ -222,20 +289,37 @@ public:
     {
         p.setPen(QPen(Qt::gray, 1));
         p.setBrush(m_self->m_drawColor);
-        if(zoom <= 1.0)
+
+        if(zoom <= 1.0 && !m_self->m_2pixDrawMode)
             p.drawPoint(pos);
         else
         {
-            p.drawRect(QRectF(dst.x() + pos.x() * zoom,
-                              dst.y() + pos.y() * zoom,
-                              zoom,
-                              zoom
-                       ));
+            if(m_self->m_2pixDrawMode)
+            {
+                QPoint p2 = (pos / 2);
+                p.drawRect(QRectF(dst.x() + p2.x() * zoom * 2,
+                                  dst.y() + p2.y() * zoom * 2,
+                                  zoom * 2,
+                                  zoom * 2
+                           ));
+            }
+            else
+            {
+                p.drawRect(QRectF(dst.x() + pos.x() * zoom,
+                                  dst.y() + pos.y() * zoom,
+                                  zoom,
+                                  zoom
+                           ));
+            }
         }
 
         if(demo.isNull())
             return;
-        p.drawImage(dst, demo);
+
+        if(m_self->m_2pixDrawMode)
+            p.drawImage(dst, demo.scaled(demo.size() * 2, Qt::KeepAspectRatio, Qt::FastTransformation));
+        else
+            p.drawImage(dst, demo);
     }
 };
 
@@ -588,6 +672,11 @@ void FrameTuneScene::setHitBoxFocus(bool en)
         repaint();
 }
 
+void FrameTuneScene::set2pixDrawMode(bool en)
+{
+    m_2pixDrawMode = en;
+}
+
 void FrameTuneScene::resetScroll()
 {
     curScrollOffset() = QPoint(0, 0);
@@ -694,6 +783,12 @@ void FrameTuneScene::runAction(Actions action)
         qApp->clipboard()->setImage(m_image);
         break;
 
+    case ACTION_COPY_FRAME_2X_SHRINK:
+    {
+        qApp->clipboard()->setImage(m_image.scaled(m_image.size() / 2, Qt::KeepAspectRatio, Qt::FastTransformation));
+        break;
+    }
+
     case ACTION_PASTE_FRAME:
         if(!qApp->clipboard()->image().isNull())
         {
@@ -708,6 +803,22 @@ void FrameTuneScene::runAction(Actions action)
             emit actionFramePasted();
         }
         break;
+
+    case ACTION_PASTE_FRAME_2X_GROW:
+        if(!qApp->clipboard()->image().isNull())
+        {
+            QImage i = qApp->clipboard()->image();
+            QPainter p(&m_image);
+            p.setCompositionMode(QPainter::CompositionMode_Source);
+            int dstX = (i.width() / 2) - (i.width() / 2);
+            int dstY = (i.height() / 2) - (i.height() / 2);
+            p.drawImage(dstX, dstY, i.scaled(i.size() * 2, Qt::KeepAspectRatio, Qt::FastTransformation));
+            p.end();
+            repaint();
+            emit actionFramePasted();
+        }
+        break;
+
 
     case ACTION_HFLIP_CUR_FRAME:
     {
@@ -762,6 +873,29 @@ void FrameTuneScene::runAction(Actions action)
     case ACTION_ERASE_UNUSED:
         emit actionUnusedErased();
         break;
+
+    case ACTION_ERASE_FRAME:
+    {
+        QPainter p(&m_image);
+        p.setCompositionMode(QPainter::CompositionMode_Source);
+        p.fillRect(m_image.rect(), QColor(0, 0, 0, 0));
+        p.end();
+        repaint();
+        emit actionFramePasted();
+        break;
+    }
+
+    case ACTION_FIX_2PIX:
+    {
+        QImage i = m_image.scaled(m_image.size() / 2, Qt::KeepAspectRatio, Qt::FastTransformation);
+        QPainter p(&m_image);
+        p.setCompositionMode(QPainter::CompositionMode_Source);
+        p.drawImage(0, 0, i.scaled(i.size() * 2, Qt::KeepAspectRatio, Qt::FastTransformation));
+        p.end();
+        repaint();
+        emit actionFramePasted();
+        break;
+    }
     }
 }
 

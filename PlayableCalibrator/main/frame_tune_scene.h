@@ -31,6 +31,8 @@ class FrameTuneScene : public QFrame
 
     bool    m_drawGrid = true;
     bool    m_drawMetaData = true;
+    //! Restrict any pixel operations to be aligned to 2x2 cells
+    bool    m_2pixDrawMode = false;
 
     friend class DrawTool;
     friend class DrawToolPencil;
@@ -97,6 +99,7 @@ public:
     void setDrawMetaData(bool en);
     void setDrawGrid(bool en);
     void setHitBoxFocus(bool en);
+    void set2pixDrawMode(bool en);
     void resetScroll();
     void setBgColor(QColor clr);
 
@@ -141,10 +144,14 @@ public:
     {
         // blank action
         ACTION_NOTHING = 0,
-        // Copy frame into built-in clipboard
+        // Copy frame into system clipboard
         ACTION_COPY_FRAME,
-        // Paste frame from the clipboard
+        // Copy frame into system clipboard and shrink it by 2x
+        ACTION_COPY_FRAME_2X_SHRINK,
+        // Paste frame from the system clipboard
         ACTION_PASTE_FRAME,
+        // Paste frame from the system clipboard and increase it by 2x
+        ACTION_PASTE_FRAME_2X_GROW,
         // Flip current frame horizontally
         ACTION_HFLIP_CUR_FRAME,
         // Flip current frame vertically
@@ -155,6 +162,10 @@ public:
         ACTION_SMBX64_RIGHT_TO_LEFT,
         // Physically erase any frames from the image that not marked as "used"
         ACTION_ERASE_UNUSED,
+        // Physically erase content of this frame
+        ACTION_ERASE_FRAME,
+        // Turn the frame into 2pix format: scale down by 2x, and scale it up again
+        ACTION_FIX_2PIX,
     };
 
     void runAction(Actions action);

@@ -153,6 +153,39 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
         ui->preview->runAction(FrameTuneScene::ACTION_PASTE_FRAME);
     });
 
+    m_toolActions.addSeparator();
+
+    QAction *clipCopy2x = m_toolActions.addAction(tr("Copy frame to clipboard and shrink 2x"));
+    QObject::connect(clipCopy2x, static_cast<void (QAction::*)(bool)>(&QAction::triggered),
+                     this, [this]()->void
+    {
+        ui->preview->runAction(FrameTuneScene::ACTION_COPY_FRAME_2X_SHRINK);
+    });
+
+    QAction *clipPaste2x = m_toolActions.addAction(tr("Paste frame from clipboard and grow 2x"));
+    QObject::connect(clipPaste2x, static_cast<void (QAction::*)(bool)>(&QAction::triggered),
+                     this, [this]()->void
+    {
+        ui->preview->runAction(FrameTuneScene::ACTION_PASTE_FRAME_2X_GROW);
+    });
+
+    m_toolActions.addSeparator();
+
+    QAction *cleanFrame = m_toolActions.addAction(tr("Clean frame"));
+    QObject::connect(cleanFrame, static_cast<void (QAction::*)(bool)>(&QAction::triggered),
+                     this, [this]()->void
+    {
+        ui->preview->runAction(FrameTuneScene::ACTION_ERASE_FRAME);
+    });
+
+    QAction *fix2pix = m_toolActions.addAction(tr("Fix the 2pix format"));
+    QObject::connect(fix2pix, static_cast<void (QAction::*)(bool)>(&QAction::triggered),
+                     this, [this]()->void
+    {
+        ui->preview->runAction(FrameTuneScene::ACTION_FIX_2PIX);
+    });
+
+
     ui->toolQuickActions->setMenu(&m_toolActions);
 
     QObject::connect(ui->preview, &FrameTuneScene::actionMirrorSMBX,
@@ -419,6 +452,11 @@ void ImageCalibrator::updateAllOffsets(int deltaX, int deltaY)
     }
 
     updateScene();
+}
+
+void ImageCalibrator::on_dublPixDrawMode_clicked(bool checked)
+{
+    ui->preview->set2pixDrawMode(checked);
 }
 
 void ImageCalibrator::toolMirrorSMBXFrames()

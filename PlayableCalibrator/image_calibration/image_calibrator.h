@@ -122,6 +122,8 @@ private slots:
     void updateOffsets(int x, int y, int deltaX, int deltaY);
     void updateAllOffsets(int deltaX, int deltaY);
 
+    void on_dublPixDrawMode_clicked(bool checked);
+
     void toolMirrorSMBXFrames();
     void toolMirrorSMBXAction(int dir);
 
