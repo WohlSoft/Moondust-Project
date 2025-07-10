@@ -1153,22 +1153,22 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="110"/>
         <source>Mirror SMBX sprite...</source>
-        <translation type="unfinished"></translation>
+        <translation>对SMBX图像进行镜像……</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="113"/>
         <source>Erase image data of unused frames...</source>
-        <translation type="unfinished"></translation>
+        <translation>删除未使用帧的图像……</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="118"/>
         <source>Erase unused frame images</source>
-        <translation type="unfinished"></translation>
+        <translation>删除未使用帧的图像</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="119"/>
         <source>Are you sure you want to erase image data of all unused frames?</source>
-        <translation type="unfinished"></translation>
+        <translation>确定要删除未使用的帧的图像吗？</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="126"/>
@@ -1194,45 +1194,45 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../image_calibration/image_calibrator.cpp" line="429"/>
         <location filename="../image_calibration/image_calibrator.cpp" line="489"/>
         <source>Incompatible sprite</source>
-        <translation type="unfinished">不兼容的图像</translation>
+        <translation>不兼容的图像</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="430"/>
         <location filename="../image_calibration/image_calibrator.cpp" line="490"/>
         <source>Can&apos;t perform the SMBX sprite mirror to incompatible sprite (the width and/or height of matrix are not equal to 10 and sprite is not equal to 1000x1000).</source>
-        <translation type="unfinished"></translation>
+        <translation>抱歉，该图像的阵列不为10x10且图像大小不为1000x1000，无法对该图像进行镜像操作。</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="437"/>
         <source>Mirror frames on the SMBX sprite...</source>
         <comment>Mirror SMBX frames</comment>
-        <translation type="unfinished"></translation>
+        <translation>在SMBX中的帧镜像图像……</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="440"/>
         <source>Select the way how frames will be mirrored:</source>
         <comment>Mirror SMBX frames</comment>
-        <translation type="unfinished"></translation>
+        <translation>选择帧的复制模式：</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="443"/>
         <source>Copy direction</source>
-        <translation type="unfinished"></translation>
+        <translation>复制方向</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="448"/>
         <source>Left to right</source>
-        <translation type="unfinished"></translation>
+        <translation>从左到右</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="450"/>
         <source>Right to left</source>
-        <translation type="unfinished"></translation>
+        <translation>从右到左</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="456"/>
         <source>Confirm</source>
-        <translation type="unfinished">确认</translation>
+        <translation>确认</translation>
     </message>
 </context>
 <context>
