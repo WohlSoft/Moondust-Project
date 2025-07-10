@@ -735,6 +735,13 @@ void FrameTuneScene::setBgColor(QColor clr)
         repaint();
 }
 
+void FrameTuneScene::setBgChess(bool chess)
+{
+    m_backgroundChess = chess;
+    if(!m_blockRepaint)
+        repaint();
+}
+
 void FrameTuneScene::setBlockRepaint(bool en)
 {
     m_blockRepaint = en;
@@ -953,6 +960,26 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
     QPainter painter(this);
     painter.fillRect(rect(), QBrush(m_bgColor));
 
+    if(m_backgroundChess)
+    {
+        painter.save();
+        auto r = rect();
+        int gridSize = 8;
+        int w = r.width() / gridSize;
+        int h = r.height() / gridSize;
+
+        for(int y = 0; y < h; ++y)
+        {
+            for(int x = 0; x < w; ++x)
+            {
+                QColor colour = ((x + (y % 2)) % 2) ? Qt::darkGray : Qt::gray;
+                painter.fillRect(x * gridSize, y * gridSize, gridSize, gridSize, QBrush(colour));
+            }
+        }
+
+        painter.restore();
+    }
+
     auto canvas = rect();
     auto c = canvas.center() + (curScrollOffset() * m_zoom);
     QRect dst;
@@ -1129,15 +1156,16 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
 
         if(m_drawGrid && m_drawMetaData)
         {
+            QColor gridColour = m_backgroundChess ? Qt::black : Qt::gray;
             painter.save();
-            painter.setPen(QPen(Qt::gray, 1));
+            painter.setPen(QPen(gridColour, 1));
             painter.setBrush(Qt::transparent);
             painter.drawRect(dst);
             painter.restore();
 
             painter.save();
             painter.setOpacity(5.0);
-            painter.setPen(QPen(Qt::gray, 1, Qt::DotLine));
+            painter.setPen(QPen(gridColour, 1, Qt::DotLine));
 
             if(m_zoom > 3.0)
             {
@@ -1170,6 +1198,14 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
         painter.save();
         painter.setOpacity(m_refOpacity);
         painter.drawPixmap(dst, m_ref);
+        painter.restore();
+    }
+
+    if(!m_curTool.isNull())
+    {
+        QPoint globalCursorPos = mapFromGlobal(QCursor::pos());
+        painter.save();
+        m_curTool->drawPreview(painter, dst, m_zoom, mapToImg(globalCursorPos));
         painter.restore();
     }
 
@@ -1246,14 +1282,6 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
                 dst.y() + tye * m_zoom
             );
         }
-        painter.restore();
-    }
-
-    if(!m_curTool.isNull())
-    {
-        QPoint globalCursorPos = mapFromGlobal(QCursor::pos());
-        painter.save();
-        m_curTool->drawPreview(painter, dst, m_zoom, mapToImg(globalCursorPos));
         painter.restore();
     }
 }

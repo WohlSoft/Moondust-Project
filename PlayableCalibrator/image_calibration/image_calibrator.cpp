@@ -25,6 +25,8 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
     Q_ASSERT(conf);
     ui->setupUi(this);
 
+    ui->preview->setBgChess(true);
+
     ui->preview->setAllowScroll(true);
     QObject::connect(ui->preview, &FrameTuneScene::delta,
                      this, [this](Qt::MouseButton button, int deltaX, int deltaY)->void
