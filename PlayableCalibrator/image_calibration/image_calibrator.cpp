@@ -727,11 +727,14 @@ void ImageCalibrator::toolFlipFrameH()
 
     m_setupBuffer = f;
 
-    int relHitL = f.offsetX;
-    int relHitR = m_conf->cellWidth - (f.offsetX + m_conf->frameWidth);
-    f.offsetX += -relHitL + relHitR;
+    if(ui->hitboxMove->isChecked())
+    {
+        int relHitL = f.offsetX;
+        int relHitR = m_conf->cellWidth - (f.offsetX + m_conf->frameWidth);
+        f.offsetX += -relHitL + relHitR;
+        ui->preview->setFrameSetup(f);
+    }
 
-    ui->preview->setFrameSetup(f);
     frameEdited();
 }
 
@@ -742,11 +745,14 @@ void ImageCalibrator::toolFlipFrameV()
 
     m_setupBuffer = f;
 
-    int relHitT = f.offsetY;
-    int relHitB = m_conf->cellHeight - (f.offsetY + m_conf->frameHeight);
-    f.offsetY += -relHitT + relHitB;
+    if(ui->hitboxMove->isChecked())
+    {
+        int relHitT = f.offsetY;
+        int relHitB = m_conf->cellHeight - (f.offsetY + m_conf->frameHeight);
+        f.offsetY += -relHitT + relHitB;
+        ui->preview->setFrameSetup(f);
+    }
 
-    ui->preview->setFrameSetup(f);
     frameEdited();
 }
 
