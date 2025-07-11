@@ -1116,12 +1116,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="515"/>
         <source>Forces any draw operations to be aligned by 2x2 pixel cells.</source>
-        <translation type="unfinished"></translation>
+        <translation>强制以2x2像素网格为单位进行绘制。</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="518"/>
         <source>2-pix draw mode</source>
-        <translation type="unfinished"></translation>
+        <translation>2x2像素绘制模式</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="534"/>
@@ -1183,32 +1183,32 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="126"/>
         <source>Flip horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>水平翻转</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="133"/>
         <source>Flip vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直翻转</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="142"/>
         <source>Copy frame to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>复制帧到剪贴板</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="149"/>
         <source>Paste frame from clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>从剪贴板粘贴帧</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="158"/>
         <source>Copy frame to clipboard and shrink 2x</source>
-        <translation type="unfinished"></translation>
+        <translation>复制帧并缩小一半</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="165"/>
         <source>Paste frame from clipboard and grow 2x</source>
-        <translation type="unfinished"></translation>
+        <translation>复制帧并放大一倍</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="174"/>
@@ -1218,7 +1218,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="181"/>
         <source>Fix the 2pix format</source>
-        <translation type="unfinished"></translation>
+        <translation>修复2像素点格式</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="467"/>
