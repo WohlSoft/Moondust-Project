@@ -77,6 +77,8 @@ class FrameTuneScene : public QFrame
 
     QPoint mapToImg(const QPointF &p);
 
+    void drawChess(QPainter &painter, const QRect &r);
+
 public:
     explicit FrameTuneScene(QWidget *parent = nullptr);
     virtual ~FrameTuneScene();
@@ -138,6 +140,8 @@ public:
 
     void setMode(Mode mode);
     Mode mode() const;
+    bool isToolBusy() const;
+    void cancelTool();
 
     /*!
      * \brief Quick actions over current frame or over entire sprite

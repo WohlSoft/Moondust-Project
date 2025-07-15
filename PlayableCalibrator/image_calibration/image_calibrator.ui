@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>626</width>
-    <height>600</height>
+    <width>816</width>
+    <height>611</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -26,7 +26,19 @@
    <iconset resource="../_resources/images.qrc">
     <normaloff>:/images/Icon16.png</normaloff>:/images/Icon16.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,0,0,1000">
+  <layout class="QGridLayout" name="calibratorLayout" columnstretch="0,0,0,1000">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item row="0" column="3">
     <widget class="FrameTuneScene" name="preview">
      <property name="frameShape">
@@ -45,7 +57,7 @@
      <property name="frameShadow">
       <enum>QFrame::Plain</enum>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="toolboxLayout">
       <item>
        <widget class="QToolButton" name="toolDrag">
         <property name="toolTip">
@@ -274,7 +286,7 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
+     <layout class="QGridLayout" name="frameSetupLayout">
       <item row="7" column="1">
        <widget class="QSpinBox" name="CropW">
         <property name="enabled">

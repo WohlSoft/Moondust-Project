@@ -57,6 +57,11 @@ public:
 
     virtual ~DrawTool() {}
 
+    virtual bool toolIsBusy() = 0;
+
+    virtual void cancel() {}
+    virtual bool apply() { return false; }
+
     virtual bool mousePress(const QPoint &p) = 0;
     virtual bool mouseMove(const QPoint &p, const QPoint &delta) = 0;
     virtual bool mouseRelease(const QPoint &p) = 0;
@@ -85,7 +90,12 @@ public:
         DrawTool(image, parent)
     {}
 
-    virtual bool mousePress(const QPoint &p)
+    bool toolIsBusy() override
+    {
+        return false;
+    }
+
+    virtual bool mousePress(const QPoint &p) override
     {
         startAt = p;
         if(m_self->m_2pixDrawMode)
@@ -103,7 +113,7 @@ public:
         return true;
     }
 
-    virtual bool mouseMove(const QPoint &p, const QPoint &)
+    virtual bool mouseMove(const QPoint &p, const QPoint &) override
     {
         if(m_self->m_2pixDrawMode)
         {
@@ -127,12 +137,12 @@ public:
         return true;
     }
 
-    virtual bool mouseRelease(const QPoint &)
+    virtual bool mouseRelease(const QPoint &) override
     {
         return false;
     }
 
-    virtual void drawPreview(QPainter &p, const QRect& dst, double zoom, const QPoint &pos)
+    virtual void drawPreview(QPainter &p, const QRect& dst, double zoom, const QPoint &pos) override
     {
         p.setPen(QPen(Qt::gray, 1));
         p.setBrush(m_self->m_drawColor);
@@ -147,23 +157,28 @@ public:
         DrawTool(image, parent)
     {}
 
-    virtual bool mousePress(const QPoint &)
+    bool toolIsBusy() override
     {
         return false;
     }
 
-    virtual bool mouseMove(const QPoint &, const QPoint &)
+    bool mousePress(const QPoint &) override
     {
         return false;
     }
 
-    virtual bool mouseRelease(const QPoint &p)
+    bool mouseMove(const QPoint &, const QPoint &) override
+    {
+        return false;
+    }
+
+    bool mouseRelease(const QPoint &p) override
     {
         m_self->m_drawColor.setRgba(m_image->pixel(p.x(), p.y()));
         return true;
     }
 
-    virtual void drawPreview(QPainter &p, const QRect& dst, double zoom, const QPoint &pos)
+    void drawPreview(QPainter &p, const QRect& dst, double zoom, const QPoint &pos) override
     {
         p.setPen(QPen(Qt::gray, 1));
         p.setBrush(m_self->m_drawColor);
@@ -191,7 +206,12 @@ public:
         DrawTool(image, parent)
     {}
 
-    virtual bool mousePress(const QPoint &p)
+    bool toolIsBusy() override
+    {
+        return false;
+    }
+
+    bool mousePress(const QPoint &p) override
     {
         startAt = p;
         if(m_self->m_2pixDrawMode)
@@ -211,7 +231,7 @@ public:
         return true;
     }
 
-    virtual bool mouseMove(const QPoint &p, const QPoint &)
+    bool mouseMove(const QPoint &p, const QPoint &) override
     {
         if(m_self->m_2pixDrawMode)
         {
@@ -239,12 +259,12 @@ public:
         return true;
     }
 
-    virtual bool mouseRelease(const QPoint &)
+    bool mouseRelease(const QPoint &) override
     {
         return false;
     }
 
-    virtual void drawPreview(QPainter &p, const QRect& dst, double zoom, const QPoint &pos)
+    void drawPreview(QPainter &p, const QRect& dst, double zoom, const QPoint &pos) override
     {
         p.setPen(QPen(Qt::gray, 1));
         p.setBrush(Qt::transparent);
@@ -263,7 +283,12 @@ public:
         DrawTool(image, parent)
     {}
 
-    virtual bool mousePress(const QPoint &p)
+    bool toolIsBusy() override
+    {
+        return false;
+    }
+
+    bool mousePress(const QPoint &p) override
     {
         startAt = p;
 
@@ -283,7 +308,7 @@ public:
         return true;
     }
 
-    virtual bool mouseMove(const QPoint &p, const QPoint &)
+    bool mouseMove(const QPoint &p, const QPoint &) override
     {
         if(m_self->m_2pixDrawMode)
         {
@@ -306,7 +331,7 @@ public:
         return true;
     }
 
-    virtual bool mouseRelease(const QPoint &)
+    bool mouseRelease(const QPoint &) override
     {
         QPainter pa(m_image);
         pa.setPen(m_self->m_drawColor);
@@ -320,7 +345,7 @@ public:
         return true;
     }
 
-    virtual void drawPreview(QPainter &p, const QRect& dst, double zoom, const QPoint &pos)
+    void drawPreview(QPainter &p, const QRect& dst, double zoom, const QPoint &pos) override
     {
         p.setPen(QPen(Qt::gray, 1));
         p.setBrush(m_self->m_drawColor);
@@ -347,7 +372,12 @@ public:
         DrawTool(image, parent)
     {}
 
-    virtual bool mousePress(const QPoint &p)
+    bool toolIsBusy() override
+    {
+        return false;
+    }
+
+    bool mousePress(const QPoint &p) override
     {
         startAt = p;
 
@@ -367,7 +397,7 @@ public:
         return true;
     }
 
-    virtual bool mouseMove(const QPoint &p, const QPoint &)
+    bool mouseMove(const QPoint &p, const QPoint &) override
     {
         if(m_self->m_2pixDrawMode)
         {
@@ -391,7 +421,7 @@ public:
         return true;
     }
 
-    virtual bool mouseRelease(const QPoint &)
+    bool mouseRelease(const QPoint &) override
     {
         QPainter pa(m_image);
         pa.setPen(m_self->m_drawColor);
@@ -406,7 +436,7 @@ public:
         return true;
     }
 
-    virtual void drawPreview(QPainter &p, const QRect& dst, double zoom, const QPoint &pos)
+    void drawPreview(QPainter &p, const QRect& dst, double zoom, const QPoint &pos) override
     {
         p.setPen(QPen(Qt::gray, 1));
         p.setBrush(m_self->m_drawColor);
@@ -428,10 +458,17 @@ class DrawToolSelect : public DrawTool
     QPoint startAt;
     QImage floating;
     QRect  selection;
-    bool selecting = true;
-    bool moving = true;
-    bool resetting = false;
-    bool m_copyMode = false;
+    QRect  origRect;
+    const bool m_copyMode = false;
+
+    enum State
+    {
+        STATE_SELECT = 0,
+        STATE_DRAW,
+        STATE_MOVE,
+        STATE_FLOAT,
+        STATE_RESET
+    } m_state = STATE_SELECT;
 
 public:
     explicit DrawToolSelect(bool copyMode, QImage *image, FrameTuneScene *parent = 0) :
@@ -439,105 +476,159 @@ public:
         m_copyMode(copyMode)
     {}
 
-    virtual ~DrawToolSelect()
+    bool toolIsBusy() override
     {
-        DrawToolSelect::mouseDoubleClick(QPoint());
+        return m_state == STATE_FLOAT || m_state == STATE_MOVE;
     }
 
-    virtual bool mousePress(const QPoint &p)
+    void cancel() override
     {
-        startAt = m_self->m_2pixDrawMode ? roundPoint(p) : p;
-
-        if(floating.isNull())
-        {
-            selecting = true;
-            selection = QRect(startAt, m_self->m_2pixDrawMode ? roundPoint(p) : p);
-        }
-        else
-        {
-            moving = true;
-        }
-
-        return true;
+        m_state = STATE_SELECT;
+        floating = QImage();
     }
 
-    virtual bool mouseMove(const QPoint &p, const QPoint &delta)
-    {
-        if(resetting)
-            return false;
-
-        QPoint pd = (m_self->m_2pixDrawMode) ? roundPoint(p) : p;
-        QPoint pdelta = (m_self->m_2pixDrawMode) ? roundPoint(delta) : delta;
-
-        if(selecting)
-        {
-            selection.setLeft(startAt.x() > pd.x() ? pd.x() : startAt.x());
-            selection.setTop(startAt.y() > pd.y() ? pd.y() : startAt.y());
-            selection.setRight((startAt.x() <= pd.x() ? pd.x() : startAt.x()) - 1);
-            selection.setBottom((startAt.y() <= pd.y() ? pd.y() : startAt.y()) - 1);
-        }
-        else if(moving)
-        {
-            selection.translate(pdelta);
-            startAt = pd;
-        }
-        return true;
-    }
-
-    virtual bool mouseDoubleClick(const QPoint &)
+    bool apply()  override
     {
         if(!floating.isNull())
         {
-            resetting = true;
+            m_state = STATE_RESET;
             QPainter p(m_image);
+
+            if(!m_copyMode) // Erase original area
+            {
+                p.setCompositionMode(QPainter::CompositionMode_Source);
+                p.setPen(Qt::NoPen);
+                p.setBrush(Qt::transparent);
+                p.drawRect(origRect);
+            }
+
+            p.setCompositionMode(QPainter::CompositionMode_SourceOver);
             p.drawImage(selection.topLeft(), floating);
             p.end();
             floating = QImage();
             return true;
         }
+
         return false;
     }
 
-    virtual bool mouseRelease(const QPoint &)
+    virtual ~DrawToolSelect()
     {
-        if(selecting && !resetting)
-        {
-            if(selection.intersects(m_image->rect()))
-            {
-                floating = m_image->copy(selection);
-                if(!floating.isNull() && !m_copyMode)
-                {
-                    QPainter pa(m_image);
-                    pa.setCompositionMode(QPainter::CompositionMode_Source);
-                    pa.setPen(Qt::NoPen);
-                    pa.setBrush(Qt::transparent);
-                    pa.drawRect(selection);
-                    pa.end();
-                }
-            }
-        }
+        DrawToolSelect::cancel();
+    }
 
-        selecting = false;
-        moving = false;
-        resetting = false;
+    bool mousePress(const QPoint &p) override
+    {
+        startAt = m_self->m_2pixDrawMode ? roundPoint(p) : p;
+
+        if(m_state == STATE_SELECT)
+        {
+            selection = origRect = QRect(startAt, m_self->m_2pixDrawMode ? roundPoint(p) : p);
+            m_state = STATE_DRAW;
+        }
+        else if(m_state == STATE_FLOAT)
+            m_state = STATE_MOVE;
+
         return true;
     }
 
-    virtual void drawPreview(QPainter &p, const QRect &dst, double zoom, const QPoint &)
+    bool mouseMove(const QPoint &p, const QPoint &delta) override
+    {
+        if(m_state == STATE_RESET || m_state == STATE_SELECT)
+            return false;
+
+        QPoint pd = (m_self->m_2pixDrawMode) ? roundPoint(p) : p;
+        QPoint pdelta = (m_self->m_2pixDrawMode) ? roundPoint(delta) : delta;
+
+        if(m_state == STATE_DRAW)
+        {
+            selection.setLeft(startAt.x() > pd.x() ? pd.x() : startAt.x());
+            selection.setTop(startAt.y() > pd.y() ? pd.y() : startAt.y());
+            selection.setRight((startAt.x() <= pd.x() ? pd.x() : startAt.x()) - 1);
+            selection.setBottom((startAt.y() <= pd.y() ? pd.y() : startAt.y()) - 1);
+            origRect = selection;
+        }
+        else if(m_state == STATE_MOVE)
+        {
+            selection.translate(pdelta);
+            startAt = pd;
+        }
+
+        return true;
+    }
+
+    bool mouseDoubleClick(const QPoint &) override
+    {
+        return DrawToolSelect::apply();
+    }
+
+    bool mouseRelease(const QPoint &) override
+    {
+        if(m_state == STATE_DRAW)
+        {
+            if(selection.isNull() || selection.width() == 0 || selection.height() == 0)
+            {
+                m_state = STATE_SELECT;
+                return true;
+            }
+
+            if(selection.intersects(m_image->rect()))
+            {
+                floating = m_image->copy(selection);
+                m_state = STATE_FLOAT;
+                return true;
+            }
+
+            m_state = STATE_SELECT;
+        }
+        else if(m_state == STATE_MOVE)
+        {
+            m_state = STATE_FLOAT;
+        }
+        else if(m_state == STATE_RESET)
+        {
+            m_state = STATE_SELECT;
+        }
+
+        return false;
+    }
+
+    void drawPreview(QPainter &p, const QRect &dst, double zoom, const QPoint &) override
     {
         auto r = QRectF(dst.x() + selection.x() * zoom,
                         dst.y() + selection.y() * zoom,
                         selection.width() * zoom,
                         selection.height() * zoom);
 
-        if(selecting)
+        auto o = QRectF(dst.x() + origRect.x() * zoom,
+                        dst.y() + origRect.y() * zoom,
+                        origRect.width() * zoom,
+                        origRect.height() * zoom);
+
+        if(m_state == STATE_DRAW)
         {
             p.setPen(QPen(Qt::red, 2, Qt::DotLine));
             p.drawRect(r);
         }
-        else if(!floating.isNull())
+        else if((m_state == STATE_FLOAT || m_state == STATE_MOVE) && !floating.isNull())
         {
+            if(!m_copyMode)
+            {
+                p.setCompositionMode(QPainter::CompositionMode_Source);
+                p.setPen(Qt::NoPen);
+
+                if(m_self->m_backgroundChess)
+                    m_self->drawChess(p, o.toRect());
+                else
+                {
+                    p.setBrush(m_self->m_bgColor);
+                    p.drawRect(o);
+                }
+            }
+
+            p.setCompositionMode(QPainter::CompositionMode_SourceOver);
             p.setPen(QPen(Qt::cyan, 4, Qt::DotLine));
+            p.setBrush(Qt::transparent);
             p.drawRect(r);
             p.drawImage(r, floating);
         }
@@ -586,6 +677,31 @@ QPoint FrameTuneScene::mapToImg(const QPointF &p)
     qDebug() << "x=" << o.x() << "y=" << o.y();
 
     return o;
+}
+
+void FrameTuneScene::drawChess(QPainter &painter, const QRect &r)
+{
+    int gridSize = 8;
+    int w = r.width() / gridSize;
+    int h = r.height() / gridSize;
+    // Ensure drawn chess is matches the background one (ensure the accurate offset!)
+    int xBeg = r.x() - std::abs(r.x() % (gridSize * 2));
+    int yBeg = r.y() - std::abs(r.y() % (gridSize * 2));
+
+    painter.save();
+    painter.setClipRect(r);
+    painter.setPen(Qt::NoPen);
+
+    for(int y = 0; y <= h + 2; ++y)
+    {
+        for(int x = 0; x <= w + 2; ++x)
+        {
+            QColor colour = ((x + (y % 2)) % 2) ? Qt::darkGray : Qt::gray;
+            painter.fillRect(xBeg + x * gridSize, yBeg + y * gridSize, gridSize, gridSize, QBrush(colour));
+        }
+    }
+
+    painter.restore();
 }
 
 FrameTuneScene::FrameTuneScene(QWidget *parent) : QFrame(parent)
@@ -817,6 +933,20 @@ void FrameTuneScene::setMode(Mode mode)
     }
 }
 
+bool FrameTuneScene::isToolBusy() const
+{
+    return m_mode != MODE_NONE && m_curTool->toolIsBusy();
+}
+
+void FrameTuneScene::cancelTool()
+{
+    if(!m_curTool.isNull() && m_curTool->toolIsBusy())
+    {
+        m_curTool->cancel();
+        repaint();
+    }
+}
+
 FrameTuneScene::Mode FrameTuneScene::mode() const
 {
     return (Mode)m_mode;
@@ -961,24 +1091,7 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
     painter.fillRect(rect(), QBrush(m_bgColor));
 
     if(m_backgroundChess)
-    {
-        painter.save();
-        auto r = rect();
-        int gridSize = 8;
-        int w = r.width() / gridSize;
-        int h = r.height() / gridSize;
-
-        for(int y = 0; y < h; ++y)
-        {
-            for(int x = 0; x < w; ++x)
-            {
-                QColor colour = ((x + (y % 2)) % 2) ? Qt::darkGray : Qt::gray;
-                painter.fillRect(x * gridSize, y * gridSize, gridSize, gridSize, QBrush(colour));
-            }
-        }
-
-        painter.restore();
-    }
+        drawChess(painter, rect());
 
     auto canvas = rect();
     auto c = canvas.center() + (curScrollOffset() * m_zoom);
@@ -1154,43 +1267,7 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
     {
         painter.drawImage(dst, m_image);
 
-        if(m_drawGrid && m_drawMetaData)
-        {
-            QColor gridColour = m_backgroundChess ? Qt::black : Qt::gray;
-            painter.save();
-            painter.setPen(QPen(gridColour, 1));
-            painter.setBrush(Qt::transparent);
-            painter.drawRect(dst);
-            painter.restore();
 
-            painter.save();
-            painter.setOpacity(5.0);
-            painter.setPen(QPen(gridColour, 1, Qt::DotLine));
-
-            if(m_zoom > 3.0)
-            {
-                for(int y = 0; y < m_image.height(); y += 2)
-                {
-                    painter.drawLine(
-                        dst.x() + 0 * m_zoom,
-                        dst.y() + y * m_zoom - 1,
-                        dst.x() + m_image.width() * m_zoom,
-                        dst.y() + y * m_zoom - 1
-                    );
-                }
-
-                for(int x = 0; x < m_image.width(); x += 2)
-                {
-                    painter.drawLine(
-                        dst.x() + x * m_zoom - 1,
-                        dst.y() + 0 * m_zoom,
-                        dst.x() + x * m_zoom - 1,
-                        dst.y() + m_image.height() * m_zoom
-                    );
-                }
-            }
-            painter.restore();
-        }
     }
 
     if(!m_ref.isNull())
@@ -1206,6 +1283,45 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
         QPoint globalCursorPos = mapFromGlobal(QCursor::pos());
         painter.save();
         m_curTool->drawPreview(painter, dst, m_zoom, mapToImg(globalCursorPos));
+        painter.restore();
+    }
+
+    if(!m_image.isNull() && m_drawGrid && m_drawMetaData)
+    {
+        QColor gridColour = m_backgroundChess ? Qt::black : Qt::gray;
+        painter.save();
+        painter.setPen(QPen(gridColour, 1));
+        painter.setBrush(Qt::transparent);
+        painter.drawRect(dst);
+        painter.restore();
+
+        painter.save();
+        painter.setOpacity(5.0);
+        painter.setPen(QPen(gridColour, 1, Qt::DotLine));
+
+        if(m_zoom > 3.0)
+        {
+            for(int y = 0; y < m_image.height(); y += 2)
+            {
+                painter.drawLine(
+                    dst.x() + 0 * m_zoom,
+                    dst.y() + y * m_zoom - 1,
+                    dst.x() + m_image.width() * m_zoom,
+                    dst.y() + y * m_zoom - 1
+                );
+            }
+
+            for(int x = 0; x < m_image.width(); x += 2)
+            {
+                painter.drawLine(
+                    dst.x() + x * m_zoom - 1,
+                    dst.y() + 0 * m_zoom,
+                    dst.x() + x * m_zoom - 1,
+                    dst.y() + m_image.height() * m_zoom
+                );
+            }
+        }
+
         painter.restore();
     }
 

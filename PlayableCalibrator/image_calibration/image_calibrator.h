@@ -19,6 +19,7 @@ namespace Ui
 
 class CalibrationMain;
 class Matrix;
+class QStatusBar;
 
 class ImageCalibrator : public QDialog
 {
@@ -28,6 +29,7 @@ class ImageCalibrator : public QDialog
     Calibration *m_conf = nullptr;
     CalibrationFrame m_setupBuffer;
     CalibrationMain *m_mw = nullptr;
+    QStatusBar *m_status = nullptr;
 
     struct FrameHistory
     {
@@ -108,7 +110,9 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *e);
-    virtual void focusInEvent(QFocusEvent *event);
+    void focusInEvent(QFocusEvent *event);
+    void keyPressEvent(QKeyEvent *e);
+    void keyReleaseEvent(QKeyEvent *e);
 
 private slots:
     void on_FrameX_valueChanged(int arg1);

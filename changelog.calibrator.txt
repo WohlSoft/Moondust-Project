@@ -10,6 +10,9 @@ beta2
 * Fixed processing of paths while reading/writing INI files
 * Added an ability to make full mirror of the SMBX-format sprite (copy all frames and hitboxes from one side to another)
 * Added an action to clean image data of frames not marked as used (not marked by a green check at the frame selection toolbox)
+* Select and copy tool at the sprite editor no longer will fill the history by junk entries
+* Added working hotkeys at the sprite editor for the rest of tools and actions (to do: document that!)
+* Added the status bar to the sprite editor instead of the message boxes while saving images
 
 2.3
 * Begin the changelog
