@@ -2,6 +2,7 @@
 #include <QDir>
 #include <QSettings>
 #include <QDialog>
+#include <QStatusBar>
 #include <QFocusEvent>
 
 #include "image_calibrator.h"
@@ -57,7 +58,7 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
     {
         if(ui->preview->mode() == FrameTuneScene::MODE_NONE)
             m_matrix->updateScene(generateTarget());
-        else
+        else if(!ui->preview->isToolBusy())
             frameEdited();
     });
 
@@ -77,14 +78,19 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
                      this, &ImageCalibrator::tempFrameUpdated);
 
     ui->toolDrag->setShortcut(Qt::Key_D);
-    ui->toolPencil->setShortcut(Qt::Key_N);
-    ui->toolPicker->setShortcut(Qt::Key_O);
-    ui->toolRubber->setShortcut(Qt::Key_R);
+    // ui->toolPencil->setShortcut(Qt::Key_N);
+    // ui->toolPicker->setShortcut(Qt::Key_O);
+    // ui->toolRubber->setShortcut(Qt::Key_R);
+    // ui->toolSelect->setShortcut(Qt::Key_S);
+    // ui->toolSelectCopy->setShortcut(Qt::Key_C);
 
-    ui->toolUndo->setShortcut(QKeySequence("Ctrl+Z"));
-    ui->toolRedo->setShortcut(QKeySequence("Ctrl+Y"));
+    // ui->toolUndo->setShortcut(QKeySequence("Ctrl+Z"));
+    // ui->toolRedo->setShortcut(QKeySequence("Ctrl+Y"));
 
     ui->toolDrag->setChecked(true);
+
+    m_status = new QStatusBar(this);
+    ui->calibratorLayout->addWidget(m_status, 4, 0, 1, 4);
 
     QObject::connect(ui->toolDrag, &QToolButton::clicked,
                      this, &ImageCalibrator::toolChanged);
@@ -315,6 +321,92 @@ void ImageCalibrator::closeEvent(QCloseEvent *)
 void ImageCalibrator::focusInEvent(QFocusEvent *)
 {
     tempFrameUpdatedProceed();
+}
+
+void ImageCalibrator::keyPressEvent(QKeyEvent *e)
+{
+    if(e->key() == Qt::Key_Escape)
+    {
+        if(ui->preview->isToolBusy())
+            ui->preview->cancelTool();
+        return;
+    }
+
+    switch(e->key())
+    {
+    case Qt::Key_O:
+        ui->toolPicker->click();
+        break;
+
+    case Qt::Key_N:
+        ui->toolPencil->click();
+        break;
+
+    case Qt::Key_L:
+        ui->toolLine->click();
+        break;
+
+    case Qt::Key_R:
+        ui->toolRects->click();
+        break;
+
+    case Qt::Key_F:
+        if(e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))
+            ui->preview->runAction(FrameTuneScene::ACTION_VFLIP_CUR_FRAME);
+        if(e->modifiers() == Qt::ControlModifier)
+            ui->preview->runAction(FrameTuneScene::ACTION_HFLIP_CUR_FRAME);
+        break;
+
+    case Qt::Key_E:
+        if(e->modifiers() == Qt::ControlModifier)
+            ui->preview->runAction(FrameTuneScene::ACTION_ERASE_FRAME);
+        break;
+
+    case Qt::Key_C:
+        if(e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))
+            ui->preview->runAction(FrameTuneScene::ACTION_COPY_FRAME_2X_SHRINK);
+        if(e->modifiers() == Qt::ControlModifier)
+            ui->preview->runAction(FrameTuneScene::ACTION_COPY_FRAME);
+        else
+            ui->toolSelectCopy->click();
+        break;
+
+    case Qt::Key_V:
+        if(e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))
+            ui->preview->runAction(FrameTuneScene::ACTION_PASTE_FRAME_2X_GROW);
+        if(e->modifiers() == Qt::ControlModifier)
+            ui->preview->runAction(FrameTuneScene::ACTION_PASTE_FRAME);
+        break;
+
+    case Qt::Key_Z:
+        if(e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier))
+            ui->toolRedo->click();
+        if(e->modifiers() == Qt::ControlModifier)
+            ui->toolUndo->click();
+        break;
+
+    case Qt::Key_Y:
+        if(e->modifiers() == Qt::ControlModifier)
+            ui->toolUndo->click();
+        break;
+
+    case Qt::Key_S:
+        if(e->modifiers() == Qt::ControlModifier)
+            ui->WritePNG->click();
+        else
+            ui->toolSelect->click();
+        break;
+    }
+
+    QDialog::keyPressEvent(e);
+}
+
+void ImageCalibrator::keyReleaseEvent(QKeyEvent *e)
+{
+    if(e->key() == Qt::Key_Escape)
+        return;
+
+    QDialog::keyPressEvent(e);
 }
 
 
@@ -822,9 +914,7 @@ void ImageCalibrator::on_WritePNG_GIF_clicked()
     QImage targetGif = target.toImage();
     Graphics::toMaskedGif(targetGif, m_gifPath);
     saveCalibrates();
-    QMessageBox::information(this,
-                             "Image was overwritten",
-                             "Calibrated sprite was saved in:\n" + m_pngPath + "\n" + m_gifPath, QMessageBox::Ok);
+    m_status->showMessage("Calibrated sprite was saved in: " + m_pngPath + " - " + m_gifPath, 5000);
 }
 
 void ImageCalibrator::on_WritePNG_clicked()
@@ -833,9 +923,7 @@ void ImageCalibrator::on_WritePNG_clicked()
     QPixmap target = generateTarget();
     target.save(m_pngPath, "PNG");
     saveCalibrates();
-    QMessageBox::information(this,
-                             "Image was overwritten",
-                             "Calibrated sprite was saved in:\n" + m_pngPath, QMessageBox::Ok);
+    m_status->showMessage("Calibrated sprite was saved in: " + m_pngPath, 5000);
 }
 
 void ImageCalibrator::on_WriteGIF_clicked()
@@ -844,9 +932,7 @@ void ImageCalibrator::on_WriteGIF_clicked()
     QImage target = generateTarget().toImage();
     Graphics::toMaskedGif(target, m_gifPath);
     saveCalibrates();
-    QMessageBox::information(this,
-                             "Image was overwritten",
-                             "Calibrated sprite was saved in:\n" + m_gifPath, QMessageBox::Ok);
+    m_status->showMessage("Calibrated sprite was saved in:\n" + m_gifPath, 5000);
 }
 
 void ImageCalibrator::updateControls()
@@ -1181,6 +1267,12 @@ void ImageCalibrator::historyUndo(bool)
     if(!his.canUndo())
         return;
 
+    if(ui->preview->isToolBusy())
+    {
+        ui->preview->cancelTool();
+        return;
+    }
+
     updateCurrentFrame(his.undo(setup));
     updateScene();
     m_matrix->updateScene(generateTarget());
@@ -1194,6 +1286,9 @@ void ImageCalibrator::historyRedo(bool)
     auto &setup = m_conf->frames[{m_frmX, m_frmY}];
     if(!his.canRedo())
         return;
+
+    if(ui->preview->isToolBusy())
+        return; // Can't redo while current tool is busy
 
     updateCurrentFrame(his.redo(setup));
     updateScene();

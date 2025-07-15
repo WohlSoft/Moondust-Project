@@ -1018,7 +1018,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="178"/>
         <source>Draw a rectangle</source>
-        <translation>绘制三角形</translation>
+        <translation>绘制矩形</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="181"/>
@@ -1028,7 +1028,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="195"/>
         <source>Perform one of actions on a current frame or the whole sprite</source>
-        <translation>在当前帧或整个图像中执行其中一个动作</translation>
+        <translation>在当前帧或整个图像中执行相应操作</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="222"/>
@@ -1213,12 +1213,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="174"/>
         <source>Clean frame</source>
-        <translation type="unfinished"></translation>
+        <translation>删除当前帧的图像</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="181"/>
         <source>Fix the 2pix format</source>
-        <translation>修复2像素点格式</translation>
+        <translation>修复2x2像素点格式</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.cpp" line="467"/>
