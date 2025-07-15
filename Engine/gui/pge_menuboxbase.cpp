@@ -22,7 +22,7 @@
 #include <fontman/font_manager.h>
 #include <graphics/window.h>
 
-#include <common_features/app_path.h>
+#include <common_features/app_path/app_path.h>
 #include <audio/pge_audio.h>
 #include <settings/global_settings.h>
 #include <Logger/logger.h>

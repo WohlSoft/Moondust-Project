@@ -25,7 +25,7 @@
 
 #include "gl_renderer.h"
 #include "window.h"
-#include "../common_features/app_path.h"
+#include "../common_features/app_path/app_path.h"
 
 #include <common_features/graphics_funcs.h>
 #include <Logger/logger.h>

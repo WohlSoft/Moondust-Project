@@ -21,7 +21,7 @@
 #include "play_sfx.h"
 
 #include <gui/pge_msgbox.h>
-#include <common_features/app_path.h>
+#include <common_features/app_path/app_path.h>
 #include <FileMapper/file_mapper.h>
 #include <fmt_format_ne.h>
 

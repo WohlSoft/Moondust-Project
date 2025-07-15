@@ -24,7 +24,7 @@
 #include <algorithm>
 
 #include "translator.h"
-#include "app_path.h"
+#include "app_path/app_path.h"
 #include <Logger/logger.h>
 
 #ifdef __ANDROID__

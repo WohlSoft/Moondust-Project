@@ -28,7 +28,7 @@
 #include "../scenes/scene_title.h"
 #include "../scenes/scene_gameover.h"
 
-#include <common_features/app_path.h>
+#include <common_features/app_path/app_path.h>
 #include <common_features/tr.h>
 #include <audio/pge_audio.h>
 #include <settings/global_settings.h>

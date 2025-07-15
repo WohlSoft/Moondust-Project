@@ -19,7 +19,7 @@
 
 #include "scene_level.h"
 
-#include <common_features/app_path.h>
+#include <common_features/app_path/app_path.h>
 #include <common_features/graphics_funcs.h>
 #include <common_features/pge_delay.h>
 #include <settings/debugger.h>

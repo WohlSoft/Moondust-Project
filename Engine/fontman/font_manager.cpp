@@ -22,7 +22,7 @@
 #include "raster_font.h"
 #include "ttf_font.h"
 
-#include <common_features/app_path.h>
+#include <common_features/app_path/app_path.h>
 #include <common_features/graphics_funcs.h>
 #include <Logger/logger.h>
 #include <data_configs/config_manager.h>

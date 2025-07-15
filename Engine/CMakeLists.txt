@@ -128,7 +128,7 @@ list(APPEND PGE_ENGINE_SRCS
     audio/pge_audio.cpp
     audio/play_music.cpp
     audio/play_sfx.cpp
-    common_features/app_path.cpp
+    common_features/app_path/app_path.cpp
     common_features/crash_handler.cpp
     common_features/episode_state.cpp
     common_features/fader.cpp
@@ -318,7 +318,7 @@ endif()
 if(APPLE)
     FILE(GLOB PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/_resources/file_icons/*.icns")
     list(APPEND PGE_ENGINE_SRCS
-        common_features/apple/app_path_macosx.m
+        common_features/app_path/apple/app_path_macosx.m
         _resources/cat.icns
         ${PGE_LANG_BIN_FILES}
         ${PGE_FILE_ICONS}

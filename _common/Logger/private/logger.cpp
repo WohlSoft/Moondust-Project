@@ -29,7 +29,7 @@
 #endif
 
 #include <IniProcessor/ini_processing.h>
-#include <common_features/app_path.h>
+#include <common_features/app_path/app_path.h>
 
 #include <fmt_format_ne.h>
 #include <fmt/fmt_printf.h>
