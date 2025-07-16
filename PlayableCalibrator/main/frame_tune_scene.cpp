@@ -15,6 +15,11 @@ protected:
     QImage *m_image;
     FrameTuneScene *m_self;
 
+    static QPoint to2pix(const QPoint p)
+    {
+        return (p / 2) - QPoint(1, 1);
+    }
+
     void drawCursor(QPainter &p, const QRect& dst, double zoom, const QPoint &pos)
     {
         if(zoom <= 1.0 && !m_self->m_2pixDrawMode)
@@ -23,7 +28,7 @@ protected:
         {
             if(m_self->m_2pixDrawMode)
             {
-                QPoint p2 = (pos / 2);
+                QPoint p2 = to2pix(pos);
                 p.drawRect(QRectF(dst.x() + p2.x() * zoom * 2,
                                   dst.y() + p2.y() * zoom * 2,
                                   zoom * 2,
@@ -100,7 +105,7 @@ public:
         startAt = p;
         if(m_self->m_2pixDrawMode)
         {
-            QPoint p2 = p / 2;
+            QPoint p2 = to2pix(p);
             m_buf2x = QImage(m_image->size() / 2, QImage::Format_RGBA8888);
             m_buf2x.fill(QColor(0, 0, 0, 0));
             m_buf2x.setPixel(p2.x(), p2.y(), m_self->m_drawColor.toRgb().rgba());
@@ -119,7 +124,7 @@ public:
         {
             QPainter pa(&m_buf2x);
             pa.setPen(m_self->m_drawColor);
-            pa.drawLine(startAt / 2, p / 2);
+            pa.drawLine(to2pix(startAt), to2pix(p));
             pa.end();
             QPainter pad(m_image);
             pad.drawImage(0, 0, m_buf2x.scaled(m_image->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
@@ -175,6 +180,7 @@ public:
     bool mouseRelease(const QPoint &p) override
     {
         m_self->m_drawColor.setRgba(m_image->pixel(p.x(), p.y()));
+        emit m_self->drawColourChanged(m_self->m_drawColor);
         return true;
     }
 
@@ -216,7 +222,7 @@ public:
         startAt = p;
         if(m_self->m_2pixDrawMode)
         {
-            QPoint p2 = p / 2;
+            QPoint p2 = to2pix(p);
             m_buf2x = m_image->scaled(m_image->size() / 2, Qt::KeepAspectRatio, Qt::FastTransformation);
             m_buf2x.setPixel(p2.x(), p2.y(), 0x00000000);
             QPainter pa(m_image);
@@ -238,7 +244,7 @@ public:
             QPainter pa(&m_buf2x);
             pa.setCompositionMode(QPainter::CompositionMode_Source);
             pa.setPen(QColor(0, 0, 0, 0));
-            pa.drawLine(startAt / 2, p / 2);
+            pa.drawLine(to2pix(startAt), to2pix(p));
             pa.end();
             QPainter pad(m_image);
             pad.setCompositionMode(QPainter::CompositionMode_Source);
@@ -277,6 +283,7 @@ class DrawToolLine : public DrawTool
 {
     QPoint startAt;
     QImage demo;
+    bool m_drawing = false;
 
 public:
     explicit DrawToolLine(QImage *image, FrameTuneScene *parent = 0) :
@@ -296,7 +303,7 @@ public:
         {
             demo = QImage(m_image->size() / 2, QImage::Format_ARGB32);
             demo.fill(Qt::transparent);
-            demo.setPixel(p.x() / 2, p.y() / 2, m_self->m_drawColor.toRgb().rgba());
+            demo.setPixel(to2pix(p), m_self->m_drawColor.toRgb().rgba());
         }
         else
         {
@@ -305,18 +312,23 @@ public:
             demo.setPixel(p.x(), p.y(), m_self->m_drawColor.toRgb().rgba());
         }
 
+        m_drawing = true;
+
         return true;
     }
 
     bool mouseMove(const QPoint &p, const QPoint &) override
     {
+        if(!m_drawing)
+            return false;
+
         if(m_self->m_2pixDrawMode)
         {
             demo = QImage(m_image->size() / 2, QImage::Format_ARGB32);
             demo.fill(Qt::transparent);
             QPainter pa(&demo);
             pa.setPen(m_self->m_drawColor);
-            pa.drawLine(startAt / 2, p / 2);
+            pa.drawLine(to2pix(startAt), to2pix(p));
             pa.end();
         }
         else
@@ -333,6 +345,9 @@ public:
 
     bool mouseRelease(const QPoint &) override
     {
+        if(!m_drawing)
+            return false;
+
         QPainter pa(m_image);
         pa.setPen(m_self->m_drawColor);
 
@@ -342,23 +357,32 @@ public:
             pa.drawImage(0, 0, demo);
 
         demo = QImage();
+        m_drawing = false;
+
         return true;
     }
 
     void drawPreview(QPainter &p, const QRect& dst, double zoom, const QPoint &pos) override
     {
+        p.save();
         p.setPen(QPen(Qt::gray, 1));
         p.setBrush(m_self->m_drawColor);
 
-        drawCursor(p, dst, zoom, pos);
+        if(!m_drawing)
+            drawCursor(p, dst, zoom, pos);
 
-        if(demo.isNull())
+        if(!m_drawing || demo.isNull())
+        {
+            p.restore();
             return;
+        }
 
         if(m_self->m_2pixDrawMode)
             p.drawImage(dst, demo.scaled(demo.size() * 2, Qt::KeepAspectRatio, Qt::FastTransformation));
         else
             p.drawImage(dst, demo);
+
+        p.restore();
     }
 };
 
@@ -366,6 +390,7 @@ class DrawToolRect : public DrawTool
 {
     QPoint startAt;
     QImage demo;
+    bool m_drawing = false;
 
 public:
     explicit DrawToolRect(QImage *image, FrameTuneScene *parent = 0) :
@@ -385,7 +410,7 @@ public:
         {
             demo = QImage(m_image->size() / 2, QImage::Format_ARGB32);
             demo.fill(Qt::transparent);
-            demo.setPixel(p.x() / 2, p.y() / 2, m_self->m_drawColor.toRgb().rgba());
+            demo.setPixel(to2pix(p), m_self->m_drawColor.toRgb().rgba());
         }
         else
         {
@@ -394,18 +419,23 @@ public:
             demo.setPixel(p.x(), p.y(), m_self->m_drawColor.toRgb().rgba());
         }
 
+        m_drawing = true;
+
         return true;
     }
 
     bool mouseMove(const QPoint &p, const QPoint &) override
     {
+        if(!m_drawing)
+            return false;
+
         if(m_self->m_2pixDrawMode)
         {
             demo = QImage(m_image->size() / 2, QImage::Format_ARGB32);
             demo.fill(Qt::transparent);
             QPainter pa(&demo);
             pa.setPen(m_self->m_drawColor);
-            pa.drawRect(QRect(startAt / 2, p / 2));
+            pa.drawRect(QRect(to2pix(startAt), to2pix(p) - QPoint(1, 1)));
             pa.end();
         }
         else
@@ -414,7 +444,7 @@ public:
             demo.fill(Qt::transparent);
             QPainter pa(&demo);
             pa.setPen(m_self->m_drawColor);
-            pa.drawRect(QRect(startAt, p));
+            pa.drawRect(QRect(startAt, p - QPoint(1, 1)));
             pa.end();
         }
 
@@ -423,6 +453,9 @@ public:
 
     bool mouseRelease(const QPoint &) override
     {
+        if(!m_drawing)
+            return false;
+
         QPainter pa(m_image);
         pa.setPen(m_self->m_drawColor);
 
@@ -433,23 +466,32 @@ public:
 
         pa.end();
         demo = QImage();
+        m_drawing = false;
+
         return true;
     }
 
     void drawPreview(QPainter &p, const QRect& dst, double zoom, const QPoint &pos) override
     {
+        p.save();
         p.setPen(QPen(Qt::gray, 1));
         p.setBrush(m_self->m_drawColor);
 
-        drawCursor(p, dst, zoom, pos);
+        if(!m_drawing)
+            drawCursor(p, dst, zoom, pos);
 
-        if(demo.isNull())
+        if(!m_drawing || demo.isNull())
+        {
+            p.restore();
             return;
+        }
 
         if(m_self->m_2pixDrawMode)
             p.drawImage(dst, demo.scaled(demo.size() * 2, Qt::KeepAspectRatio, Qt::FastTransformation));
         else
             p.drawImage(dst, demo);
+
+        p.restore();
     }
 };
 
@@ -674,9 +716,16 @@ QPoint FrameTuneScene::mapToImg(const QPointF &p)
     }
 
     QPoint o = QPoint(qRound((p.x() - dst.x()) / m_zoom), qRound((p.y() - dst.y()) / m_zoom));
+#ifdef DEBUG_BUILD
     qDebug() << "x=" << o.x() << "y=" << o.y();
+#endif
 
     return o;
+}
+
+QPointF FrameTuneScene::zoomedPos(const QPointF &p)
+{
+    return (p - QPointF(m_zoom / 2.0, m_zoom / 2.0)) / m_zoom;
 }
 
 void FrameTuneScene::drawChess(QPainter &painter, const QRect &r)
@@ -851,6 +900,14 @@ void FrameTuneScene::setBgColor(QColor clr)
         repaint();
 }
 
+void FrameTuneScene::setDrawColour(QColor clr)
+{
+    m_drawColor = clr;
+    emit drawColourChanged(m_drawColor);
+    if(!m_blockRepaint)
+        repaint();
+}
+
 void FrameTuneScene::setBgChess(bool chess)
 {
     m_backgroundChess = chess;
@@ -868,6 +925,11 @@ void FrameTuneScene::setBlockRepaint(bool en)
 QColor FrameTuneScene::getBgColor() const
 {
     return m_bgColor;
+}
+
+QColor FrameTuneScene::getDrawColour() const
+{
+    return m_drawColor;
 }
 
 void FrameTuneScene::setWall(Wall w)
@@ -1437,7 +1499,7 @@ void FrameTuneScene::mousePressEvent(QMouseEvent *event)
     }
 
     pressed = true;
-    prevPos = event->Q_EventLocalPos() / m_zoom;
+    prevPos = zoomedPos(event->Q_EventLocalPos());
     button = event->button();
 
     if(button == Qt::LeftButton && m_mode != MODE_NONE)
@@ -1460,7 +1522,7 @@ void FrameTuneScene::mouseMoveEvent(QMouseEvent *event)
         return;
     }
 
-    auto p = event->Q_EventLocalPos() / m_zoom;
+    auto p = zoomedPos(event->Q_EventLocalPos());
     auto &so = curScrollOffset();
     int dX = 0, dY = 0;
 

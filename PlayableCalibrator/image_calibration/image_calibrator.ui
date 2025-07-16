@@ -83,6 +83,23 @@
        </widget>
       </item>
       <item>
+       <widget class="QToolButton" name="toolColour">
+        <property name="toolTip">
+         <string>Changes current draw colour (affects pencil, line, and rectangle tools).</string>
+        </property>
+        <property name="text">
+         <string>Draw colour</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../_resources/images.qrc">
+          <normaloff>:/edit/edit_colour.png</normaloff>:/edit/edit_colour.png</iconset>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QToolButton" name="toolSelect">
         <property name="toolTip">
          <string>Select fragment and cut it, move it into necessary place and double-click to paste</string>

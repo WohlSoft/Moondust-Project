@@ -5,6 +5,7 @@
 #include <QDialog>
 #include <QPixmap>
 #include <QImage>
+#include <QSet>
 #include <QList>
 #include <QMenu>
 #include <QFileSystemWatcher>
@@ -21,6 +22,11 @@ class CalibrationMain;
 class Matrix;
 class QStatusBar;
 
+inline uint qHash(const QColor &key, uint seed)
+{
+    return qHash(key.rgba(), seed);
+}
+
 class ImageCalibrator : public QDialog
 {
     Q_OBJECT
@@ -30,6 +36,9 @@ class ImageCalibrator : public QDialog
     CalibrationFrame m_setupBuffer;
     CalibrationMain *m_mw = nullptr;
     QStatusBar *m_status = nullptr;
+
+    QSet<QColor> m_recent_colours;
+    QSet<QColor> m_frame_colours;
 
     struct FrameHistory
     {
@@ -159,6 +168,8 @@ private slots:
     void on_openFrameInEditor_clicked();
 
     void toolChanged(bool);
+    void pickColour();
+    void refreshColours();
 
 
 private:
