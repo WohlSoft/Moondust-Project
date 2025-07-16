@@ -76,6 +76,7 @@ class FrameTuneScene : public QFrame
     QPoint &curScrollOffset();
 
     QPoint mapToImg(const QPointF &p);
+    QPointF zoomedPos(const QPointF &p);
 
     void drawChess(QPainter &painter, const QRect &r);
 
@@ -105,11 +106,13 @@ public:
     void set2pixDrawMode(bool en);
     void resetScroll();
     void setBgColor(QColor clr);
+    void setDrawColour(QColor clr);
     void setBgChess(bool chess);
 
     void setBlockRepaint(bool en);
 
     QColor getBgColor() const;
+    QColor getDrawColour() const;
 
     enum Wall
     {
@@ -190,6 +193,7 @@ protected:
 signals:
     void delta(Qt::MouseButton button, int deltaX, int deltaY);
     void mouseReleased();
+    void drawColourChanged(const QColor &c);
 
     void actionMirrorSMBX(int dir);
     void actionFrameFlipedH();

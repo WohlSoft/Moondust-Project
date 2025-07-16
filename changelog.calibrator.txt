@@ -13,6 +13,7 @@ beta2
 * Select and copy tool at the sprite editor no longer will fill the history by junk entries
 * Added working hotkeys at the sprite editor for the rest of tools and actions (to do: document that!)
 * Added the status bar to the sprite editor instead of the message boxes while saving images
+* Added draw colour select button at the sprite editor
 
 2.3
 * Begin the changelog

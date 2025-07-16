@@ -18,7 +18,7 @@
  */
 
 #include "global_settings.h"
-#include <common_features/app_path.h>
+#include <common_features/app_path/app_path.h>
 #include <graphics/window.h>
 #include <controls/controller_joystick.h>
 #include <controls/controller_keyboard.h>

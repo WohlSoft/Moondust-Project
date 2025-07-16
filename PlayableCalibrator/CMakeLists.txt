@@ -181,6 +181,14 @@ if(QT_PTHREAD)
     target_link_libraries(PGE_Calibrator_QtLibs INTERFACE ${QT_PTHREAD})
 endif()
 
+string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
+if(${CMAKE_BUILD_TYPE_LOWER} STREQUAL "debug")
+    target_compile_definitions(pge_calibrator
+        PRIVATE
+        -DDEBUG_BUILD
+    )
+endif()
+
 add_dependencies(pge_calibrator
     FreeImage_Local
     libpng_Local

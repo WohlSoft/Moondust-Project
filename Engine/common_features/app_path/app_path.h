@@ -27,16 +27,54 @@ extern std::string  ApplicationPathSTD;
 class AppPathManager
 {
 public:
+
+    /*!
+     * \brief Initialise all paths
+     */
     static void initAppPath();
+
+    /*!
+     * \brief Get the path to the game settings file
+     * \return Path to the game settings file
+     */
     static std::string settingsFileSTD();
+
+    /*!
+     * \brief Get the path to the writable user directory
+     * \return Path to ther writable user directory, always ends with a slash
+     */
     static std::string userAppDirSTD();
+
+    /*!
+     * \brief Get the path to engine languages directory
+     * \return Path to ther engine languages directory, always ends with a slash
+     */
     static std::string languagesDir();
+
+    /*!
+     * \brief Get the path to the logs output directory
+     * \return Path to ther logs output directory, always ends with a slash
+     */
     static std::string logsDir();
+
+    /*!
+     * \brief Get the path to the screenshots output directory
+     * \return Path to ther screenshots output directory, always ends with a slash
+     */
     static std::string screenshotsDir();
+
+    /*!
+     * \brief Get the path to the game saves directory
+     * \return Path to ther game saves directory, always ends with a slash
+     */
     static std::string gameSaveRootDir();
+
     static void install();
+
     static bool isPortable();
+
     static bool userDirIsAvailable();
+
 #ifdef __EMSCRIPTEN__
     static void syncFs();
 #endif

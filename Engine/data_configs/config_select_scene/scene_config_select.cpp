@@ -40,7 +40,7 @@
 #include <Utils/maths.h>
 #include <cstdlib>
 
-#include <common_features/app_path.h>
+#include <common_features/app_path/app_path.h>
 
 #include <common_features/util.h>
 #include <common_features/graphics_funcs.h>

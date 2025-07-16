@@ -20,7 +20,7 @@
 #ifndef CONFIG_MANAGER_H
 #define CONFIG_MANAGER_H
 
-#include "../common_features/app_path.h"
+#include "../common_features/app_path/app_path.h"
 #include "../common_features/pge_texture.h"
 #include "../common_features/simple_animator.h"
 #include "../common_features/npc_animator.h"

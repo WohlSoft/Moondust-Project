@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QStatusBar>
 #include <QFocusEvent>
+#include <QColorDialog>
 
 #include "image_calibrator.h"
 #include <ui_image_calibrator.h>
@@ -94,6 +95,8 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
 
     QObject::connect(ui->toolDrag, &QToolButton::clicked,
                      this, &ImageCalibrator::toolChanged);
+    QObject::connect(ui->toolColour, &QToolButton::clicked,
+                     this, &ImageCalibrator::pickColour);
     QObject::connect(ui->toolSelect, &QToolButton::clicked,
                      this, &ImageCalibrator::toolChanged);
     QObject::connect(ui->toolSelectCopy, &QToolButton::clicked,
@@ -206,6 +209,8 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
                      this, &ImageCalibrator::toolFlipFrameH);
     QObject::connect(ui->preview, &FrameTuneScene::actionFrameFlipedV,
                      this, &ImageCalibrator::toolFlipFrameV);
+    QObject::connect(ui->preview, &FrameTuneScene::drawColourChanged,
+                     this, &ImageCalibrator::refreshColours);
 }
 
 ImageCalibrator::~ImageCalibrator()
@@ -953,6 +958,7 @@ void ImageCalibrator::updateScene()
     auto &his = m_history[m_frmX][m_frmY];
     ui->toolUndo->setEnabled(his.canUndo());
     ui->toolRedo->setEnabled(his.canRedo());
+    refreshColours();
 }
 
 void ImageCalibrator::saveCalibrates()
@@ -1175,6 +1181,54 @@ void ImageCalibrator::toolChanged(bool)
         ui->preview->setMode(FrameTuneScene::MODE_RECT);
         ui->toolRects->setChecked(true);
     }
+}
+
+void ImageCalibrator::pickColour()
+{
+    QColorDialog d(this);
+    d.setOptions(QColorDialog::DontUseNativeDialog);
+
+    int idx = 0;
+    for(auto &c : m_recent_colours)
+        d.setCustomColor(idx, c);
+
+    d.setCurrentColor(ui->preview->getDrawColour());
+
+    if(d.exec() == QDialog::Accepted)
+    {
+        int num = d.customCount();
+        m_recent_colours.clear();
+
+        for(int i = 0; i < num; ++i)
+            m_recent_colours.insert(d.customColor(i));
+
+        ui->preview->setDrawColour(d.currentColor());
+    }
+}
+
+void ImageCalibrator::refreshColours()
+{
+    if(m_imgOffsets.empty())
+        return; // Otherwise will fail
+
+    m_frame_colours.clear();
+
+    QImage f = getCurrentFrame().toImage();
+
+    for(int y = 0; y < f.height(); ++y)
+    {
+        for(int x = 0; x < f.width(); ++x)
+        {
+            QColor pix = f.pixelColor(x, y);
+
+            if(!m_frame_colours.contains(pix))
+                m_frame_colours.insert(pix);
+        }
+    }
+
+    QImage c = QImage(16, 16, QImage::Format_ARGB32);
+    c.fill(ui->preview->getDrawColour());
+    ui->toolColour->setIcon(QIcon(QPixmap::fromImage(c)));
 }
 
 void ImageCalibrator::tempFrameUpdated(const QString &path)

@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <cstdio>
-#include "../common_features/app_path.h"
+#include "../common_features/app_path/app_path.h"
 #include <networking/intproc.h>
 #include <fmt_format_ne.h>
 

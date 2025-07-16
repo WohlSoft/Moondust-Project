@@ -98,7 +98,7 @@ static void saveCustomState()
 #endif
 
 #include "app_path.h"
-#include "../version.h"
+#include "../../version.h"
 
 #include <SDL2/SDL.h>
 
