@@ -46,6 +46,9 @@
 	path = _Libs/FileMapper
 	url = https://github.com/WohlSoft/FileMapper.git
 	branch = master
+[submodule "_Libs/libtiff"]
+	path = _Libs/libtiff
+	url = https://github.com/WohlSoft/libtiff.git
 [submodule "_Libs/tex3ds"]
 	path = _Libs/tex3ds
 	url = https://github.com/WohlSoft/xtconvert-tex3ds.git
@@ -84,6 +87,3 @@
 [submodule "_Libs/libxz"]
 	path = _Libs/libxz
 	url = https://github.com/WohlSoft/xz.git
-[submodule "_Libs/libtiff"]
-	path = _Libs/libtiff
-	url = https://github.com/WohlSoft/libtiff.git
