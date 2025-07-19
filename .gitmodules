@@ -84,3 +84,6 @@
 [submodule "_Libs/libxz"]
 	path = _Libs/libxz
 	url = https://github.com/WohlSoft/xz.git
+[submodule "_Libs/libtiff"]
+	path = _Libs/libtiff
+	url = https://github.com/WohlSoft/libtiff.git

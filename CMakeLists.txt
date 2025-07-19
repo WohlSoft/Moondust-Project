@@ -65,6 +65,9 @@ include(_common/library_FreeImage.cmake)
 include(_common/library_FreeType.cmake)
 include(_common/library_SDLMixerX.cmake)
 include(_common/library_PGE_FL.cmake)
+if(PGE_ENABLE_STATIC_QT AND "${CMAKE_SYSTEM}" MATCHES "Linux")
+    include(_common/library_tiff.cmake)
+endif()
 
 if(NOT USE_SYSTEM_LIBPNG)
     add_dependencies(libpng_Local AudioCodecs_Local) #Zlib is needed to libPNG
