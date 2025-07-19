@@ -46,3 +46,6 @@
 	path = _Libs/FileMapper
 	url = https://github.com/WohlSoft/FileMapper.git
 	branch = master
+[submodule "_Libs/libtiff"]
+	path = _Libs/libtiff
+	url = https://github.com/WohlSoft/libtiff.git
