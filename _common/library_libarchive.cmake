@@ -59,6 +59,8 @@ ExternalProject_Add(
         "-DENABLE_WERROR=OFF"
         "-DLZ4_LIBRARY=${liblz4_A_Lib}"
         "-DLZ4_INCLUDE_DIR=${LZ4_INCLUDE_DIRS}"
+        "-DLIBLZMA_LIBRARY=${liblzma_A_Lib}"
+        "-DLIBLZMA_INCLUDE_DIR=${LZMA_INCLUDE_DIRS}"
         ${ANDROID_CMAKE_FLAGS}
         ${APPLE_CMAKE_FLAGS}
         ${LIBARCHIVE_EXTRA_FLAGS}
@@ -66,12 +68,10 @@ ExternalProject_Add(
         "${libarchive_A_Lib}"
 )
 
-add_dependencies(archive_Local lz4_Local PGE_liblz4 PGE_ZLib PGE_AudioCodecs)
+add_dependencies(archive_Local lz4_Local PGE_liblz4 lzma_Local gnurx_Local PGE_ZLib PGE_AudioCodecs)
 
 message("-- libarchive will be built: ${libarchive_A_Lib} --")
 
-find_package(LibLZMA REQUIRED)
-
-target_link_libraries(PGE_libarchive INTERFACE "${libarchive_A_Lib}" ${LIBLZMA_LIBRARIES})
-target_include_directories(PGE_libarchive INTERFACE "${DEPENDENCIES_INSTALL_DIR}/include" ${LIBLZMA_INCLUDE_DIR})
-add_dependencies(PGE_libarchive archive_Local)
+target_link_libraries(PGE_libarchive INTERFACE "${libarchive_A_Lib}" PGE_liblzma)
+target_include_directories(PGE_libarchive INTERFACE "${DEPENDENCIES_INSTALL_DIR}/include")
+add_dependencies(PGE_libarchive archive_Local lzma_Local PGE_libgnurx)
