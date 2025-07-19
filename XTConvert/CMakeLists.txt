@@ -45,21 +45,32 @@ else()
     pge_cxx_standard(17)
 endif()
 
-set(QT_LIBS_LIST
-    ${QT_Core_LIBRARIES}
-)
+if(PGE_QT_STATIC_DETECTE)
+    set(QT_LIBS_LIST
+        ${QT_Gui_LIBRARIES}
+        ${QT_Core_LIBRARIES}
+    )
 
-set(QT_DEFS_LIST
-    ${QT_Core_DEFINITIONS}
-)
+    set(QT_DEFS_LIST
+        ${QT_Core_DEFINITIONS}
+        ${QT_Gui_DEFINITIONS}
+    )
 
-set(QT_INCLUDES_LIST
-    ${QT_Core_INCLUDE_DIRS}
-)
+    set(QT_INCLUDES_LIST
+        ${QT_Core_INCLUDE_DIRS}
+        ${QT_Gui_INCLUDE_DIRS}
+    )
 
-set(QT_EXECUTABLE_CXX_FLAGS
-    ${QT_Core_EXECUTABLE_COMPILE_FLAGS}
-)
+    set(QT_EXECUTABLE_CXX_FLAGS
+        ${QT_Core_EXECUTABLE_COMPILE_FLAGS}
+        ${QT_Gui_EXECUTABLE_COMPILE_FLAGS}
+    )
+else()
+    set(QT_LIBS_LIST ${QT_Core_LIBRARIES})
+    set(QT_DEFS_LIST ${QT_Core_DEFINITIONS})
+    set(QT_INCLUDES_LIST ${QT_Core_INCLUDE_DIRS})
+    set(QT_EXECUTABLE_CXX_FLAGS ${QT_Core_EXECUTABLE_COMPILE_FLAGS})
+endif()
 
 set(ZLIB_INCLUDE_DIR ${ZLIB_INCLUDE_DIRS})
 set(ZLIB_LIBRARY ${libZLib_A_Lib})
@@ -87,6 +98,7 @@ add_dependencies(libxtconvert
     PGE_libtex3ds
     PGE_libmmutil
     FreeImage_Local
+    FREETYPE_Local
     PGE_libimagequant
     PGE_libspc2it
     PGE_FileFormatsQt
@@ -100,6 +112,9 @@ target_include_directories(PGE_XTConvert_QtLibs
     INTERFACE
     ${QT_INCLUDES_LIST}
 )
+if(QT_PTHREAD)
+    target_link_libraries(PGE_XTConvert_QtLibs INTERFACE ${QT_PTHREAD})
+endif()
 
 target_compile_definitions(PGE_XTConvert_QtLibs
     INTERFACE
@@ -177,7 +192,7 @@ include_directories(
 )
 
 if(QT_IMPORT_PLUGINS_MODULE)
-    set(QT_PLUGINS_CPP "${CMAKE_BINARY_DIR}/pge_maintainer_plugins.cpp")
+    set(QT_PLUGINS_CPP "${CMAKE_BINARY_DIR}/pge_xtconvert_plugins.cpp")
     file(WRITE
             "${QT_PLUGINS_CPP}"
             "${QT_IMPORT_PLUGINS_MODULE}")
