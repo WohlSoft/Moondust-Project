@@ -78,3 +78,9 @@
 	path = _Libs/lz4
 	url = https://github.com/WohlSoft/lz4.git
 	branch = release-patches
+[submodule "_Libs/libgnurx"]
+	path = _Libs/libgnurx
+	url = https://github.com/WohlSoft/libgnurx.git
+[submodule "_Libs/libxz"]
+	path = _Libs/libxz
+	url = https://github.com/WohlSoft/xz.git
