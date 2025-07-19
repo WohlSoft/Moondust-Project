@@ -282,6 +282,15 @@ void ConfigManager::loadConfigPackList()
     QString     configPath      = ApplicationPath + "/configs/";
     //! User profile PGE config dir
     QString     configPath_user = AppPathManager::userAppDir() + "/configs/";
+#ifdef MOONDUST_UNIX_INSTALL
+    QString     configPathSys;
+#   ifdef __HAIKU__
+    // FIXME: check that this Haiku-specific logic is correct
+    configPathSys = "/boot/system/data/" MOONDUST_UNIX_SHARE_DIR "/configs/";
+#   else
+    configPathSys = "/usr/share/games/" MOONDUST_UNIX_SHARE_DIR "/configs/";
+#   endif
+#endif
 
     //Create empty config directory if not exists
     if(!QDir(configPath).exists())
@@ -292,6 +301,22 @@ void ConfigManager::loadConfigPackList()
         if(!QDir(configPath_user).exists())
             QDir().mkdir(configPath_user);
     }
+
+#ifdef MOONDUST_UNIX_INSTALL
+    if(QDir(configPathSys).exists())
+    {
+        QDir configDir(configPathSys);
+        QStringList configs = configDir.entryList(QDir::AllDirs);
+        for(QString &cpName : configs)
+        {
+            QString config_dir = configPathSys + cpName + "/";
+            configPackPair path;
+            path.first  = cpName;       //name of config dir
+            path.second = config_dir;   //Full path
+            config_paths.append(path);
+        }
+    }
+#endif
 
     if(QDir(configPath).exists())
     {
