@@ -45,7 +45,7 @@ else()
     pge_cxx_standard(17)
 endif()
 
-if(PGE_QT_STATIC_DETECTE)
+if(PGE_ENABLE_STATIC_QT)
     set(QT_LIBS_LIST
         ${QT_Gui_LIBRARIES}
         ${QT_Core_LIBRARIES}
