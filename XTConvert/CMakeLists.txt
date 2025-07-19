@@ -125,7 +125,7 @@ target_link_libraries(PGE_XTConvert_QtLibs
 )
 
 if(QT_PTHREAD)
-    target_link_libraries(PGE_XTConvert_QtLibs PRIVATE ${QT_PTHREAD})
+    target_link_libraries(PGE_XTConvert_QtLibs INTERFACE ${QT_PTHREAD})
 endif()
 
 set(PGE_XTCONVERT_LINK_LIBS)
