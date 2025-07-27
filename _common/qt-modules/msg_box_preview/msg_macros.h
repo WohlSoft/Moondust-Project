@@ -30,6 +30,13 @@
 extern bool msgMacroParseTokens(const std::string &line, std::vector<std::string> &tokens);
 #endif
 
+/**
+ * @brief Pre-Process the message (apply conditions, or place player names where is possible)
+ * @param in Input text to pre-process
+ * @param out Output text of pre-processing result
+ * @param macro_player ID of playable character to match the condition
+ * @param macro_state ID of character state to match the condition
+ */
 extern void msgMacroProcess(const std::string &in, std::string &out, int macro_player, int macro_state);
 
 #endif // MSGMACROS_H
