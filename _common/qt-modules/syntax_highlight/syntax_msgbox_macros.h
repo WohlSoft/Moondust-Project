@@ -34,18 +34,26 @@ static inline SimpleHighlighter *s_makeMsgBoxMacrosHighlighter(QTextDocument *pa
     c_fmt.setForeground(Qt::blue);
     c_fmt.setFontWeight(QFont::Bold);
     highLighter->addRule(Q_QRegExp("^#if"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^#iw_if"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^#in_if"), c_fmt);
     highLighter->addRule(Q_QRegExp("^#elif"), c_fmt);
     highLighter->addRule(Q_QRegExp("^#else"), c_fmt);
     highLighter->addRule(Q_QRegExp("^#endif$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^#iw_endif$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^#in_endif$"), c_fmt);
 
     c_fmt.setForeground(Qt::cyan);
     c_fmt.setFontWeight(QFont::Bold);
     highLighter->addRule(Q_QRegExp("^#if (\\w+\\(.*\\))$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^#iw_if (\\w+\\(.*\\))$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^#in_if (\\w+\\(.*\\))$"), c_fmt);
     highLighter->addRule(Q_QRegExp("^#elif (\\w+\\(.*\\))$"), c_fmt);
 
     c_fmt.setForeground(Qt::magenta);
     c_fmt.setFontWeight(QFont::Normal);
     highLighter->addRule(Q_QRegExp("^#if \\w+\\((.*)\\)$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^#iw_if \\w+\\((.*)\\)$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^#in_if \\w+\\((.*)\\)$"), c_fmt);
     highLighter->addRule(Q_QRegExp("^#elif \\w+\\((.*)\\)$"), c_fmt);
 
     return highLighter;
