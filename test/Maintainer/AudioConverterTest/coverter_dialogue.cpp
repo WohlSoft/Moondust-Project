@@ -122,7 +122,11 @@ void CoverterDialogue::on_runCvt_clicked()
         return;
     }
 
-    m_runner = QtConcurrent::run<void>(this, &CoverterDialogue::runner);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    m_runner = QtConcurrent::run(this, &CoverterDialogue::runner);
+#else
+    m_runner = QtConcurrent::run(&CoverterDialogue::runner, this);
+#endif
 }
 
 void CoverterDialogue::workStartedRun()
