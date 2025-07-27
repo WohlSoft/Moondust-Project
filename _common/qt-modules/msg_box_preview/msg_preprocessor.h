@@ -30,6 +30,21 @@
 extern bool msgMacroParseTokens(const std::string &line, std::vector<std::string> &tokens);
 #endif
 
+/**
+ * @brief Pre-Process the message (apply conditions, or place player names where is possible)
+ * @param in Input text to pre-process
+ * @param out Output of the result
+ * @param macro_player The player number who triggered this message box, or -1 to heuristically detect somebody.
+ * @param macro_state The player's state number that is set or -1 to heuristically detect something.
+ */
 extern void msgMacroProcess(const std::string &in, std::string &out, int macro_player, int macro_state);
+
+/**
+ * @brief Pre-Process the message (apply conditions, or place player names where is possible)
+ * @param text Input-Output text to pre-process
+ * @param playerWho The player number who triggered this message box, or -1 to heuristically detect somebody.
+ * @param stateWhich The player's state number that is set or -1 to heuristically detect something.
+ */
+extern void preProcessMessage(std::string &text, int macro_player, int macro_state);
 
 #endif // MSGMACROS_H

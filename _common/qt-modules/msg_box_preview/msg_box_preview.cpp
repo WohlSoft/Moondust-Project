@@ -5,7 +5,7 @@
 #include <QStack>
 
 #include "msg_box_preview.h"
-#include "msg_macros.h"
+#include "msg_preprocessor.h"
 
 
 QString MsgBoxPreview::runPreProcessor()

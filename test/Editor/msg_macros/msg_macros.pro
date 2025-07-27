@@ -11,8 +11,8 @@ DEFINES += MOONDUST_UNIT_TEST
 INCLUDEPATH += ../../../_common/qt-modules/msg_box_preview/
 
 HEADERS += \
-        ../../../_common/qt-modules/msg_box_preview/msg_macros.h
+        ../../../_common/qt-modules/msg_box_preview/msg_preprocessor.h
 
 SOURCES += \
         main.cpp \
-        ../../../_common/qt-modules/msg_box_preview/msg_macros.cpp
+        ../../../_common/qt-modules/msg_box_preview/msg_preprocessor.cpp
