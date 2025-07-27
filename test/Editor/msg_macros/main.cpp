@@ -2,7 +2,7 @@
 #include <QtDebug>
 #include <QVector>
 
-#include "msg_preprocessor.h"
+#include "msg_macros.h"
 
 void testTokensList(const std::string &line)
 {

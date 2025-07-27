@@ -20,7 +20,7 @@
 #include <cstring>
 #include <string>
 #include <vector>
-#include "msg_preprocessor.h"
+#include "msg_macros.h"
 
 #ifndef MOONDUST_UNIT_TEST
 static
@@ -287,7 +287,6 @@ static CondLineTail replace_newline(CondCmd cmd)
     }
 }
 
-
 void msgMacroProcess(const std::string &in, std::string &ret, int macro_player, int macro_state)
 {
     struct State
@@ -414,12 +413,4 @@ void msgMacroProcess(const std::string &in, std::string &ret, int macro_player, 
             ret.append(t);
         }
     } while(end < in.size() - 1);
-}
-
-
-void preProcessMessage(std::string &text, int macro_player, int macro_state)
-{
-    std::string ret;
-    msgMacroProcess(text, ret, macro_player, macro_state);
-    text = ret;
 }
