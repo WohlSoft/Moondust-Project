@@ -33,28 +33,28 @@ static inline SimpleHighlighter *s_makeMsgBoxMacrosHighlighter(QTextDocument *pa
     QTextCharFormat c_fmt;
     c_fmt.setForeground(Qt::blue);
     c_fmt.setFontWeight(QFont::Bold);
-    highLighter->addRule(Q_QRegExp("^#if"), c_fmt);
-    highLighter->addRule(Q_QRegExp("^#iw_if"), c_fmt);
-    highLighter->addRule(Q_QRegExp("^#in_if"), c_fmt);
-    highLighter->addRule(Q_QRegExp("^#elif"), c_fmt);
-    highLighter->addRule(Q_QRegExp("^#else"), c_fmt);
-    highLighter->addRule(Q_QRegExp("^#endif$"), c_fmt);
-    highLighter->addRule(Q_QRegExp("^#iw_endif$"), c_fmt);
-    highLighter->addRule(Q_QRegExp("^#in_endif$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *if"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *if_iw"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *if_in"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *elif"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *else"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *endif$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *endif_iw$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *endif_in$"), c_fmt);
 
     c_fmt.setForeground(Qt::cyan);
     c_fmt.setFontWeight(QFont::Bold);
-    highLighter->addRule(Q_QRegExp("^#if (\\w+\\(.*\\))$"), c_fmt);
-    highLighter->addRule(Q_QRegExp("^#iw_if (\\w+\\(.*\\))$"), c_fmt);
-    highLighter->addRule(Q_QRegExp("^#in_if (\\w+\\(.*\\))$"), c_fmt);
-    highLighter->addRule(Q_QRegExp("^#elif (\\w+\\(.*\\))$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *if +(\\w+\\(.*\\))$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *if_iw +(\\w+\\(.*\\))$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *if_in +(\\w+\\(.*\\))$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *elif +(\\w+\\(.*\\))$"), c_fmt);
 
     c_fmt.setForeground(Qt::magenta);
     c_fmt.setFontWeight(QFont::Normal);
-    highLighter->addRule(Q_QRegExp("^#if \\w+\\((.*)\\)$"), c_fmt);
-    highLighter->addRule(Q_QRegExp("^#iw_if \\w+\\((.*)\\)$"), c_fmt);
-    highLighter->addRule(Q_QRegExp("^#in_if \\w+\\((.*)\\)$"), c_fmt);
-    highLighter->addRule(Q_QRegExp("^#elif \\w+\\((.*)\\)$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *if +\\w+\\((.*)\\)$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *if_iw +\\w+\\((.*)\\)$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *if_in +\\w+\\((.*)\\)$"), c_fmt);
+    highLighter->addRule(Q_QRegExp("^# *elif +\\w+\\((.*)\\)$"), c_fmt);
 
     return highLighter;
 }
