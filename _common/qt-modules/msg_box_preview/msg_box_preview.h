@@ -13,6 +13,7 @@ class MsgBoxPreview : public QWidget
     int m_letter_w = 0;
     int m_letter_h = 0;
     QString m_currentText;
+    QString m_errorText;
     QStringList m_shownLines;
     bool doVanilla = true;
 
