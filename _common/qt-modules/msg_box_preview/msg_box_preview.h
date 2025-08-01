@@ -17,6 +17,8 @@ class MsgBoxPreview : public QWidget
     QStringList m_shownLines;
     bool doVanilla = true;
 
+    int m_previewType = 0;
+
     struct MacroCond
     {
         int player = 1;
@@ -37,6 +39,17 @@ public:
     void setFontSize(int size);
     int fontSize() const;
     void setVanillaMode(bool vanilla);
+
+    enum PreviewType
+    {
+        PREVIEW_MESSAGEBOX = 0,
+        PREVIEW_FILE_TITLE,
+        PREVIEW_LEVEL_TITLE,
+        PREVIEW_CREDITS,
+        PREVIEW_SCRIPT_PRINT
+    };
+
+    void setPreviewType(PreviewType pt);
 
     QSize sizeHint() const;
 

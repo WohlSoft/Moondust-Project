@@ -96,6 +96,13 @@ void MsgBoxPreview::setVanillaMode(bool vanilla)
     update();
 }
 
+void MsgBoxPreview::setPreviewType(PreviewType pt)
+{
+    m_previewType = (int)pt;
+    updateLines();
+    update();
+}
+
 QSize MsgBoxPreview::sizeHint() const
 {
     return QSize((28 * m_letter_w) + 20, 200);
@@ -132,45 +139,107 @@ void MsgBoxPreview::paintEvent(QPaintEvent *e)
         return; // Don't draw anything when field is empty
 
     const int boxYtop = 10;
-    int boxY = boxYtop;
-    int boxX = 10;
     const int paddingL = m_letter_w / 2;
     const int paddingR = m_letter_w / 2;
     const int paddingT = m_letter_h / 4;
     const int paddingB = m_letter_h / 4;
     const int boxW = paddingL + (27 * m_letter_w) + paddingR;
-    int boxH = 0;
 
-    boxX = (rect().width() / 2) - (boxW / 2);
-
-    p.fillRect(boxX, boxY, boxW, paddingT, Qt::darkBlue);
-
-    boxY += paddingT;
-    boxH += paddingT  + paddingB - 2;
-
-    p.setFont(m_font);
-    p.setBrush(Qt::white);
-    p.setPen(Qt::white);
-
-    for(const auto &tempText : m_shownLines)
+    switch(m_previewType)
     {
-        p.fillRect(boxX, boxY, boxW, m_letter_h, Qt::darkBlue);
+    default:
+    case PREVIEW_MESSAGEBOX:
+    {
+        int boxY = boxYtop;
+        int boxX = 10;
+        int boxH = 0;
 
-        if(m_shownLines.size() == 1)
-            printLine(p, boxX + paddingL + ((27 * m_letter_w) / 2) - ((tempText.length() * m_letter_w) / 2), boxY, tempText);
-        else
-            printLine(p, boxX + paddingL, boxY, tempText);
+        boxX = (rect().width() / 2) - (boxW / 2);
 
-        boxY += m_letter_h;
-        boxH += m_letter_h;
+        p.fillRect(boxX, boxY, boxW, paddingT, Qt::darkBlue);
+
+        boxY += paddingT;
+        boxH += paddingT  + paddingB - 2;
+
+        p.setFont(m_font);
+        p.setBrush(Qt::white);
+        p.setPen(Qt::white);
+
+        for(const auto &tempText : m_shownLines)
+        {
+            p.fillRect(boxX, boxY, boxW, m_letter_h, Qt::darkBlue);
+
+            if(m_shownLines.size() == 1)
+                printLine(p, boxX + paddingL + ((27 * m_letter_w) / 2) - ((tempText.length() * m_letter_w) / 2), boxY, tempText);
+            else
+                printLine(p, boxX + paddingL, boxY, tempText);
+
+            boxY += m_letter_h;
+            boxH += m_letter_h;
+        }
+
+        p.fillRect(boxX, boxY, boxW, paddingB, Qt::darkBlue);
+        p.setPen(QPen(Qt::white, 2));
+        p.setBrush(Qt::transparent);
+        p.drawRect(boxX, boxYtop, boxW, boxH);
+        break;
     }
 
-    p.fillRect(boxX, boxY, boxW, paddingB, Qt::darkBlue);
-    p.setPen(QPen(Qt::white, 2));
-    p.setBrush(Qt::transparent);
-    p.drawRect(boxX, boxYtop, boxW, boxH);
+    case PREVIEW_FILE_TITLE:
+    {
+        QRect r = rect();
+        r.setLeft(r.left() + 10);
+        r.setTop(r.top() + 10);
+        r.setRight(r.right() - 10);
+        r.setBottom(r.bottom() - 10);
+        p.setFont(m_font);
+        p.setBrush(Qt::white);
+        p.setPen(Qt::white);
+        p.drawText(r, Qt::AlignHCenter|Qt::AlignTop, m_currentText);
+        break;
+    }
 
-    if(!m_errorText.isEmpty())
+    case PREVIEW_LEVEL_TITLE:
+    {
+        QRect r = rect();
+        r.setLeft(r.left() + 10);
+        r.setTop(r.top() + 10);
+        r.setRight(r.right() - 10);
+        r.setBottom(r.bottom() - 10);
+        p.setFont(m_font);
+        p.setBrush(Qt::white);
+        p.setPen(Qt::white);
+        p.drawText(r, Qt::AlignLeft|Qt::AlignTop|Qt::TextWordWrap, m_currentText);
+        break;
+    }
+
+    case PREVIEW_CREDITS:
+        if(!m_currentText.isEmpty())
+        {
+            p.setFont(m_font);
+            p.setBrush(Qt::white);
+            p.setPen(Qt::white);
+            p.drawText(rect(), Qt::AlignCenter, m_currentText);
+        }
+        break;
+
+    case PREVIEW_SCRIPT_PRINT:
+    {
+        QRect r = rect();
+        r.setLeft(r.left() + 10);
+        r.setTop(r.top() + 10);
+        r.setRight(r.right() - 10);
+        r.setBottom(r.bottom() - 10);
+        p.setFont(m_font);
+        p.setBrush(Qt::white);
+        p.setPen(Qt::white);
+        p.drawText(r, Qt::AlignLeft|Qt::AlignTop, m_currentText);
+        break;
+    }
+    }
+
+
+    if(m_macroEnable && !m_errorText.isEmpty())
     {
         int errW = rect().width() - 20;
         int errH = 0;
@@ -225,7 +294,6 @@ void MsgBoxPreview::paintEvent(QPaintEvent *e)
         p.setBrush(Qt::transparent);
         p.drawRect(10, errYtop, errW, errH);
     }
-
 }
 
 void MsgBoxPreview::updateLines()
