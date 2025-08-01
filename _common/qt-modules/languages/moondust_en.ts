@@ -340,6 +340,41 @@
     </message>
 </context>
 <context>
+    <name>MsgBoxPreview</name>
+    <message>
+        <source>Bad #command syntax</source>
+        <translation>Bad #command syntax</translation>
+    </message>
+    <message>
+        <source>Bad function() syntax</source>
+        <translation>Bad function() syntax</translation>
+    </message>
+    <message>
+        <source>Unknown #command specified</source>
+        <translation>Unknown #command specified</translation>
+    </message>
+    <message>
+        <source>Unknown function() specified</source>
+        <translation>Unknown function() specified</translation>
+    </message>
+    <message>
+        <source>Bad function() arguments specified</source>
+        <translation>Bad function() arguments specified</translation>
+    </message>
+    <message>
+        <source>Extra characters at end of the code line</source>
+        <translation>Extra characters at end of the code line</translation>
+    </message>
+    <message>
+        <source>Illegal usage of a #command</source>
+        <translation>Illegal usage of a #command</translation>
+    </message>
+    <message>
+        <source>Macro error: </source>
+        <translation>Macro error: </translation>
+    </message>
+</context>
+<context>
     <name>MusicFileList</name>
     <message>
         <source>Select Custom music</source>
