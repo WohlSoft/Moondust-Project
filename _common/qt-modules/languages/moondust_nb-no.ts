@@ -439,6 +439,49 @@
     </message>
 </context>
 <context>
+    <name>MsgBoxPreview</name>
+    <message>
+        <location filename="../msg_box_preview/msg_box_preview.cpp" line="21"/>
+        <source>Bad #command syntax</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../msg_box_preview/msg_box_preview.cpp" line="24"/>
+        <source>Bad function() syntax</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../msg_box_preview/msg_box_preview.cpp" line="27"/>
+        <source>Unknown #command specified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../msg_box_preview/msg_box_preview.cpp" line="30"/>
+        <source>Unknown function() specified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../msg_box_preview/msg_box_preview.cpp" line="33"/>
+        <source>Bad function() arguments specified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../msg_box_preview/msg_box_preview.cpp" line="36"/>
+        <source>Extra characters at end of the code line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../msg_box_preview/msg_box_preview.cpp" line="39"/>
+        <source>Illegal usage of a #command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../msg_box_preview/msg_box_preview.cpp" line="250"/>
+        <source>Macro error: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MusicFileList</name>
     <message>
         <location filename="../file_list_browser/musicfilelist.cpp" line="39"/>

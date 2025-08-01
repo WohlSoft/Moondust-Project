@@ -965,7 +965,7 @@ Do you want to continue?</source>
         <translation type="vanished">Калибровка изображения</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="351"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="380"/>
         <source>Frame X</source>
         <translation>Кадр X</translation>
     </message>
@@ -982,7 +982,7 @@ Do you want to continue?</source>
         <translation type="vanished">Калибровка картинки:</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="458"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="487"/>
         <source>Current frame (10x10):</source>
         <translation>Текущий кадр (10x10):</translation>
     </message>
@@ -991,7 +991,7 @@ Do you want to continue?</source>
         <translation type="vanished">Смещение X</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="435"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="464"/>
         <source>Frame Y</source>
         <translation>Кадр Y</translation>
     </message>
@@ -1005,197 +1005,207 @@ Do you want to continue?</source>
         <translation>Редактор спрайтов</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="52"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="64"/>
         <source>Drag the frame through entire sprite</source>
         <translation>Перетащить кадр через весь спрайт</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="55"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="67"/>
         <source>Drag mode</source>
         <translation>Режим перетаскивания</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="76"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="88"/>
+        <source>Changes current draw colour (affects pencil, line, and rectangle tools).</source>
+        <translation>Поменять текущий цвет рисования (влияет на карандаш, линию и прямоугольник).</translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.ui" line="91"/>
+        <source>Draw colour</source>
+        <translation>Цвет рисования</translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.ui" line="105"/>
         <source>Select fragment and cut it, move it into necessary place and double-click to paste</source>
         <translation>Выберите фрагмент и вырежьте его, перетащите в нужное положение, и произведите двойной щелочок мыши, чтобы вставить</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="79"/>
-        <location filename="../image_calibration/image_calibrator.ui" line="198"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="108"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="227"/>
         <source>Select and move</source>
         <translation>Выбрать и переместить</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="93"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="122"/>
         <source>Select fragment and copy it, move it into necessary place and double-click to paste</source>
         <translation>Выберите фрагмент и скопируйте его, перетащите в нужное положение, и произведите двойной щелочок мыши, чтобы вставить</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="96"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="125"/>
         <source>Select and copy</source>
         <translation>Выбрать и скопировать</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="110"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="139"/>
         <source>Pencil to draw</source>
         <translation>Карандаш, чтобы рисовать</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="113"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="142"/>
         <source>Pencil</source>
         <translation>Карандаш</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="127"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="156"/>
         <source>Pick a color</source>
         <translation>Подобрать цвет с изображения</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="130"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="159"/>
         <source>Color picker</source>
         <translation>Цветовая проба</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="144"/>
-        <location filename="../image_calibration/image_calibrator.ui" line="147"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="173"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="176"/>
         <source>Rubber</source>
         <translation>Ластик</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="161"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="190"/>
         <source>Draw a line</source>
         <translation>Нарисовать линию</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="164"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="193"/>
         <source>Draw lines</source>
         <translation>Рисование линий</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="178"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="207"/>
         <source>Draw a rectangle</source>
         <translation>Нарисовать прямоугольник</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="181"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="210"/>
         <source>Draw rectangles</source>
         <translation>Рисование прямоугольников</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="195"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="224"/>
         <source>Perform one of actions on a current frame or the whole sprite</source>
         <translation>Выполнить одно из действий над текущим кадром или над всем спрайтом</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="222"/>
-        <location filename="../image_calibration/image_calibrator.ui" line="225"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="251"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="254"/>
         <source>Undo a recent change</source>
         <translation>Отменить недавнее изменение</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="239"/>
-        <location filename="../image_calibration/image_calibrator.ui" line="242"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="268"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="271"/>
         <source>Redo a recent change</source>
         <translation>Повторить недавнее изменение</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="425"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="454"/>
         <source>When using mouse to move the picture, also move hitbox too. Use this if you want to align the frame without breaking the calibration setup.</source>
         <translation>Используя мышь для перетаскивания картинки, также будет перетаскиваться хитбокс. Используйте это, если хотите выровнять кадр без искажения настроек калибровки.</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="428"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="457"/>
         <source>Hitbox move</source>
         <translation>Перетаскивать хитбокс</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="323"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="352"/>
         <source>Drag offset X</source>
         <translation>Смещение X</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="505"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="534"/>
         <source>Show sprite map</source>
         <translation>Показать карту спрайта</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="465"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="494"/>
         <source>Clear</source>
         <comment>reference frame</comment>
         <translation>Очистить</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="316"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="345"/>
         <source>Drag frame offset:</source>
         <translation>Перетащить кадр:</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="364"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="393"/>
         <source>Referrence frame:</source>
         <translation>Кадр-образец:</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="337"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="366"/>
         <source>Opacity</source>
         <translation>Прозрачность</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="398"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="427"/>
         <source>Crop right</source>
         <translation>Срез справа</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="330"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="359"/>
         <source>Drag offset Y</source>
         <translation>Смещение Y</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="405"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="434"/>
         <source>Crop bottom</source>
         <translation>Срез снизу</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="384"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="413"/>
         <source>Open frame in editor...</source>
         <translation>Открыть кадр в редакторе...</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="442"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="471"/>
         <source>Move all frames of the sprite synchroniously with current. Use this to simplify the general re-aligning work.</source>
         <translation>Перемещать все кадры спрайта синхронно с текущим. Используйте это, чтобы упростить общую работу по выравниванию.</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="445"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="474"/>
         <source>Move all frames</source>
         <translation>Таскать все кадры</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="515"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="544"/>
         <source>Forces any draw operations to be aligned by 2x2 pixel cells.</source>
         <translation>Любые операции рисования будут принудительно выровнены по сетке 2x2 пикселя.</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="518"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="547"/>
         <source>2-pix draw mode</source>
         <translation>Двупиксельное рисование</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="534"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="563"/>
         <source>Save image</source>
         <translation>Сохранить изображение</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="540"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="569"/>
         <source>Write PNG+GIFs</source>
         <translation>Записать PNG+GIFы</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="547"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="576"/>
         <source>Write PNG</source>
         <translation>Записать PNG</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="554"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="583"/>
         <source>Write masked GIFs</source>
         <translation>Записать GIFы с масками</translation>
     </message>
@@ -1216,111 +1226,111 @@ Do you want to continue?</source>
         <translation type="vanished">Выбрать кадр на спрайте</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="344"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="373"/>
         <source>Reset calibration</source>
         <translation>Сбросить калибровку</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="110"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="121"/>
         <source>Mirror SMBX sprite...</source>
         <translation>Отразить SMBX-спрайт...</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="113"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="124"/>
         <source>Erase image data of unused frames...</source>
         <translation>Стереть данные изображения на неиспользуемых кадрах...</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="118"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="129"/>
         <source>Erase unused frame images</source>
         <translation>Стереть изображение на неиспользуемых кадрах</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="119"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="130"/>
         <source>Are you sure you want to erase image data of all unused frames?</source>
         <translation>Вы уверены, что хотите стереть данные на изображении в областях всех неиспользуемых кадров?</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="126"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="137"/>
         <source>Flip horizontally</source>
         <translation>Отразить горизонтально</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="133"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="144"/>
         <source>Flip vertically</source>
         <translation>Отразить вертикально</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="142"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="153"/>
         <source>Copy frame to clipboard</source>
         <translation>Скопировать кадр в буфер обмена</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="149"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="160"/>
         <source>Paste frame from clipboard</source>
         <translation>Вставить кадр из буфера обмена</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="158"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="169"/>
         <source>Copy frame to clipboard and shrink 2x</source>
         <translation>Скопировать кадр в буфер с двукратным-уменьшением</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="165"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="176"/>
         <source>Paste frame from clipboard and grow 2x</source>
         <translation>Вставить кадр из буфера с двукратным увеличением</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="174"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="185"/>
         <source>Clean frame</source>
         <translation>Очистить кадр</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="181"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="192"/>
         <source>Fix the 2pix format</source>
         <translation>Исправить двупиксельный формат</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="467"/>
-        <location filename="../image_calibration/image_calibrator.cpp" line="527"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="566"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="626"/>
         <source>Incompatible sprite</source>
         <translation>Несовместимый спрайт</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="468"/>
-        <location filename="../image_calibration/image_calibrator.cpp" line="528"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="567"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="627"/>
         <source>Can&apos;t perform the SMBX sprite mirror to incompatible sprite (the width and/or height of matrix are not equal to 10 and sprite is not equal to 1000x1000).</source>
         <translation>Неозможно применить отражение SMBX-спрайта на несовместимом спрайте (ширина и/или высота матрицы не равна 10 и размер спрайта не равен 1000x1000).</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="475"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="574"/>
         <source>Mirror frames on the SMBX sprite...</source>
         <comment>Mirror SMBX frames</comment>
         <translation>Отразить кадры SMBX-спрайта...</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="478"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="577"/>
         <source>Select the way how frames will be mirrored:</source>
         <comment>Mirror SMBX frames</comment>
         <translation>Выберите направление, по которому кадры будут отражены:</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="481"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="580"/>
         <source>Copy direction</source>
         <translation>Направление копирования</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="486"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="585"/>
         <source>Left to right</source>
         <translation>Слева направо</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="488"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="587"/>
         <source>Right to left</source>
         <translation>Справа налево</translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.cpp" line="494"/>
+        <location filename="../image_calibration/image_calibrator.cpp" line="593"/>
         <source>Confirm</source>
         <translation>Подтвердить</translation>
     </message>

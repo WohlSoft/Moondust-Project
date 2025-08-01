@@ -81,7 +81,7 @@
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">Обзор...</translation>
+        <translation>Обзор...</translation>
     </message>
     <message>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished">Фильтр...</translation>
+        <translation>Фильтр...</translation>
     </message>
 </context>
 <context>
@@ -337,6 +337,41 @@
     <message>
         <source>Please, select level file from list for use them:</source>
         <translation>Пожалуйста, выберите файл уровня из списка, чтобы использовать его:</translation>
+    </message>
+</context>
+<context>
+    <name>MsgBoxPreview</name>
+    <message>
+        <source>Bad #command syntax</source>
+        <translation>Неверный синтаксис #команды</translation>
+    </message>
+    <message>
+        <source>Bad function() syntax</source>
+        <translation>Неверный синтакси функции()</translation>
+    </message>
+    <message>
+        <source>Unknown #command specified</source>
+        <translation>Указана неизвестная #команда</translation>
+    </message>
+    <message>
+        <source>Unknown function() specified</source>
+        <translation>Указана неизвестная функция()</translation>
+    </message>
+    <message>
+        <source>Bad function() arguments specified</source>
+        <translation>Указаны некорректные аргументы фукнции()</translation>
+    </message>
+    <message>
+        <source>Extra characters at end of the code line</source>
+        <translation>Лишние символы в конце строки кода</translation>
+    </message>
+    <message>
+        <source>Illegal usage of a #command</source>
+        <translation>Нарушение использования #команды</translation>
+    </message>
+    <message>
+        <source>Macro error: </source>
+        <translation>Ошибка макроса: </translation>
     </message>
 </context>
 <context>
@@ -369,7 +404,7 @@
     </message>
     <message>
         <source>Settings...</source>
-        <translation type="unfinished">Настройки...</translation>
+        <translation>Настройки...</translation>
     </message>
     <message>
         <source>Extra settings are not specified</source>
