@@ -637,6 +637,7 @@ void TranslatorMain::updateTranslationFields(int group,
 {
     bool isOrigin = m_recentLang == "metadata";
     bool translated = false;
+    MsgBoxPreview::PreviewType previewType = MsgBoxPreview::PREVIEW_MESSAGEBOX;
     ui->sourceLineRO->blockSignals(true);
     ui->sourceLineRO->setPlainText(text);
     ui->sourceLineRO->blockSignals(false);
@@ -649,12 +650,46 @@ void TranslatorMain::updateTranslationFields(int group,
     m_sourceKey.key = key;
     m_sourceKey.type = type;
 
+    switch(group)
+    {
+    case TextTypes::S_WORLD:
+        switch(type)
+        {
+        case TextTypes::WDT_LEVEL:
+            previewType = MsgBoxPreview::PREVIEW_LEVEL_TITLE;
+            break;
+        case TextTypes::WDT_CREDITS:
+            previewType = MsgBoxPreview::PREVIEW_CREDITS;
+            break;
+        case TextTypes::WDT_TITLE:
+            previewType = MsgBoxPreview::PREVIEW_FILE_TITLE;
+            break;
+        }
+
+        break;
+    case TextTypes::S_LEVEL:
+        switch(type)
+        {
+        case TextTypes::LDT_TITLE:
+            previewType = MsgBoxPreview::PREVIEW_FILE_TITLE;
+            break;
+        default:
+            break;
+        }
+
+        break;
+    case TextTypes::S_SCRIPT:
+        previewType = MsgBoxPreview::PREVIEW_SCRIPT_PRINT;
+        break;
+    }
+
     for(auto &k : m_translateFields)
     {
         k->setItem(group, root, type, key);
         if(!isOrigin && k->getLang() == m_recentLang)
         {
             auto &ss = k->getText();
+            ui->previewZone->setPreviewType(previewType);
             if(!ss.isEmpty())
             {
                 ui->previewZone->setText(ss);
@@ -664,7 +699,10 @@ void TranslatorMain::updateTranslationFields(int group,
     }
 
     if(!translated)
+    {
+        ui->previewZone->setPreviewType(previewType);
         ui->previewZone->setText(text);
+    }
 }
 
 void TranslatorMain::updateSourceLineNote()

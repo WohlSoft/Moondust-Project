@@ -176,6 +176,8 @@ if(${CMAKE_BUILD_TYPE_LOWER} STREQUAL "debug")
     )
 endif()
 
+target_compile_definitions(pge_translator PRIVATE ${MSG_BOX_PREVIEW_DEFS})
+
 target_link_libraries(PGE_Translator_QtLibs INTERFACE
     ${QT_EXTRA_LIBS_PRE}
     PGE_FileFormatsQt

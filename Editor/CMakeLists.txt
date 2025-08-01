@@ -707,6 +707,7 @@ target_include_directories(PGE_QtLibs
 
 target_compile_definitions(pge_editor
     PRIVATE
+    ${MSG_BOX_PREVIEW_DEFS}
     -DPGE_EDITOR
     -DUSE_SDL_MIXER
 )
