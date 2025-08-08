@@ -613,8 +613,9 @@ void LvlWarpBox::on_WarpEnterEvent_currentIndexChanged(int arg1i)
     if(w)
     {
         dirData.push_back(w->event_enter);
-        dirData.push_back(arg1);
-        w->event_enter = arg1;
+        QString newEvent = arg1i > 0 ? arg1 : QString();
+        dirData.push_back(newEvent);
+        w->event_enter = newEvent;
     }
 
     edit->scene->m_history->addChangeWarpSettings(static_cast<int>(warpId),
@@ -642,8 +643,9 @@ void LvlWarpBox::on_WarpExitEvent_currentIndexChanged(int arg1i)
     if(w)
     {
         dirData.push_back(w->event_exit);
-        dirData.push_back(arg1);
-        w->event_exit = arg1;
+        QString newEvent = arg1i > 0 ? arg1 : QString();
+        dirData.push_back(newEvent);
+        w->event_exit = newEvent;
     }
 
     edit->scene->m_history->addChangeWarpSettings(static_cast<int>(warpId),
