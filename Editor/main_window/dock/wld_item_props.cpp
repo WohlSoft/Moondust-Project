@@ -98,7 +98,7 @@ void WLD_ItemProps::re_translate()
 
 
 static bool s_setExitCodeMenuCode(QMenu *menu, int code);
-static void s_updateToolButton(QToolButton *tb, QMenu *menu, QIcon icons[3]);
+static void s_updateToolButton(QToolButton *tb, QMenu *menu, const QIcon icons[3]);
 
 void WLD_ItemProps::openPropertiesFor(int Type, WorldLevelTile level, bool newItem, bool dontShow)
 {
@@ -211,7 +211,7 @@ static bool s_setExitCodeMenuCode(QMenu *menu, int code)
     return found;
 }
 
-static void s_updateToolButton(QToolButton *tb, QMenu *menu, QIcon icons[])
+static void s_updateToolButton(QToolButton *tb, QMenu *menu, const QIcon icons[3])
 {
     for(auto *a : menu->actions())
     {
