@@ -582,7 +582,7 @@ public:
         QString used_out_path = out_path;
 
         // save mask fallback here if we are in the global graphics dir
-        if(m_cur_dir.make_fallback_masks && output_format != TargetPlatform::Desktop && may_have_mask)
+        if(m_cur_dir.make_fallback_masks && !bitmask_required && may_have_mask)
         {
             FIBITMAP* fallback_mask = FreeImage_Clone(image);
 
@@ -614,8 +614,37 @@ public:
         int orig_w = FreeImage_GetWidth(image);
         int orig_h = FreeImage_GetHeight(image);
 
-        // 2x downscale by default
-        if(m_spec.target_platform != TargetPlatform::Desktop && !m_cur_dir.textures_1x.contains(filename))
+        // properties for QOIs
+        bool qoi_is_1x = false;
+        bool qoi_is_trans = true;
+        bool already_1x = !m_cur_dir.textures_1x.contains(filename);
+
+        // 2x downscale only if safe on Desktop, and check for RGBA
+        if(m_spec.target_platform == TargetPlatform::Desktop)
+        {
+            if(!mask && !already_1x && GraphicsLoad::validateFor2xScaleDown(image))
+            {
+                FIBITMAP* scaled = GraphicsLoad::fast2xScaleDown(image);
+                FreeImage_Unload(image);
+                if(!scaled)
+                {
+                    m_error = "Scaling failed at [";
+                    m_error += in_path;
+                    m_error += "], aborting...";
+                    return false;
+                }
+
+                image = scaled;
+                qoi_is_1x = true;
+            }
+            // else
+            //     log_file(LogCategory::ImageNot2x, in_path);
+
+            if(!mask && GraphicsLoad::validateForDepthTest(image))
+                qoi_is_trans = false;
+        }
+        // 2x downscale by default on non-desktop
+        else if(!already_1x)
         {
             // if(!GraphicsLoad::validateFor2xScaleDown(image))
             //     log_file(LogCategory::ImageNot2x, in_path);
@@ -648,7 +677,7 @@ public:
             }
         }
         // make sure that orig_w / orig_h perfectly match the intended drawn size
-        else if(m_spec.target_platform != TargetPlatform::Desktop)
+        else
         {
             orig_w *= 2;
             orig_h *= 2;
@@ -661,13 +690,22 @@ public:
         {
             // try to handle mask eventually
             // FIBITMAP* mask_bak = FreeImage_Clone(mask);
-            if(!mask && shrink_player_texture(&image, filename.startsWith("link-")))
+            int px_scale = (m_spec.target_platform == TargetPlatform::Desktop && !qoi_is_1x) ? 2 : 1;
+            if(!mask && shrink_player_texture(&image, filename.startsWith("link-"), px_scale))
             {
                 image_w = FreeImage_GetWidth(image);
                 image_h = FreeImage_GetHeight(image);
 
-                orig_w = image_w * 2;
-                orig_h = image_h * 2;
+                if(px_scale == 1)
+                {
+                    orig_w = image_w * 2;
+                    orig_h = image_h * 2;
+                }
+                else
+                {
+                    orig_w = image_w;
+                    orig_h = image_h;
+                }
             }
             else
                 log_file(LogCategory::ImagePlayerCompressFailed, in_path);
@@ -676,7 +714,7 @@ public:
         // save the image!
         bool save_success = false;
         QString size_text;
-        if(output_format == TargetPlatform::Desktop)
+        if(output_format == TargetPlatform::Desktop && bitmask_required)
         {
             log_file(LogCategory::ImageBitmask, in_path);
 
@@ -699,6 +737,39 @@ public:
 
             // set the size text here...!
             size_text = QString("%1\n%2\n").arg(orig_w, 4).arg(orig_h, 4);
+        }
+        else if(output_format == TargetPlatform::Desktop)
+        {
+            save_success = true;
+
+            // add QOI tags for channels (depth test) and colorspace (1x indicator)
+            FITAG* tag = FreeImage_CreateTag();
+            if(tag)
+            {
+                int val;
+
+                FreeImage_SetTagLength(tag, 1);
+                FreeImage_SetTagCount(tag, 1);
+                FreeImage_SetTagType(tag, FIDT_BYTE);
+
+                FreeImage_SetTagKey(tag, "channels");
+                FreeImage_SetTagValue(tag, &(val = (qoi_is_trans) ? 4 : 3));
+                if(!FreeImage_SetMetadata(FIMD_COMMENTS, image, FreeImage_GetTagKey(tag), tag))
+                    save_success = false;
+
+                FreeImage_SetTagKey(tag, "colorspace");
+                FreeImage_SetTagValue(tag, &(val = (qoi_is_1x) ? 1 : 0));
+                if(!FreeImage_SetMetadata(FIMD_COMMENTS, image, FreeImage_GetTagKey(tag), tag))
+                    save_success = false;
+
+                FreeImage_DeleteTag(tag);
+                tag = NULL;
+            }
+            else
+                save_success = false;
+
+            if(save_success)
+                save_success = FreeImage_Save(FIF_QOI, image, out_path.toUtf8());
         }
         else if(output_format == TargetPlatform::T3X)
         {
@@ -1405,7 +1476,7 @@ public:
         // defer these until the end
         else if(m_spec.package_type == PackageType::AssetPack && m_spec.target_platform == TargetPlatform::DSG && (rel_path.startsWith("sound/") || rel_path.startsWith("music/")))
             return true;
-        else if(m_spec.target_platform != TargetPlatform::Desktop && (filename.endsWith(".png") || filename.endsWith(".gif")) && !rel_path.startsWith("graphics/fallback/"))
+        else if((filename.endsWith(".png") || filename.endsWith(".gif")) && !rel_path.startsWith("graphics/fallback/"))
             return convert_image(filename, in_path, out_path);
         else if(filename.endsWith(".ini") && m_cur_dir.convert_font_inis)
             return convert_font_ini(filename, in_path, out_path);
