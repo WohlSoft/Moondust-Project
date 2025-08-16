@@ -39,7 +39,7 @@ static inline int next_power_of_2(int val)
 void write_uint16_le(uint8_t* dest, uint16_t src);
 uint16_t color_to_rgb5a1(liq_color color);
 
-bool shrink_player_texture(FIBITMAP** image, bool char5);
+bool shrink_player_texture(FIBITMAP** image, bool char5, int px_scale = 1);
 
 struct PaletteTex
 {
