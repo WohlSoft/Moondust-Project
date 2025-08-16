@@ -49,22 +49,22 @@ static bool s_blit(FIBITMAP* dest, FIBITMAP* src, int sx, int sy, int dx, int dy
     return succ;
 }
 
-bool shrink_player_texture(FIBITMAP** image, bool char5)
+bool shrink_player_texture(FIBITMAP** image, bool char5, int px_scale)
 {
-    const int source_frame_w = 50;
-    const int source_frame_h = 50;
+    const int source_frame_w = 50 * px_scale;
+    const int source_frame_h = 50 * px_scale;
     const int source_cols = 10;
     const int source_rows = 10;
 
-    const int dest_frame_w = (char5) ? 32 : 24;
-    const int dest_frame_h = 32;
+    const int dest_frame_w = ((char5) ? 32 : 24) * px_scale;
+    const int dest_frame_h = 32 * px_scale;
     const int dest_cols = (char5) ? 4 : 10;
     const int dest_rows_per_dir = 4;
     const int dest_rows = dest_rows_per_dir * 2;
 
     FIBITMAP* source_image = *image;
 
-    if(FreeImage_GetWidth(source_image) != source_frame_w * source_cols || FreeImage_GetHeight(source_image) != source_frame_h * source_rows)
+    if((int)FreeImage_GetWidth(source_image) != source_frame_w * source_cols || (int)FreeImage_GetHeight(source_image) != source_frame_h * source_rows)
         return false;
 
     FIBITMAP* dest_image = FreeImage_AllocateT(FIT_BITMAP, dest_frame_w * dest_cols, dest_frame_h * dest_rows, 32);
