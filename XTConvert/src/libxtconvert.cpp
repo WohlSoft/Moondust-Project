@@ -1592,8 +1592,12 @@ public:
 
             if(!convert_file(filename, abs_path, temp_path, rel_path))
             {
-                m_error = "Failed to convert file ";
-                m_error += temp_path;
+                if(m_error.isEmpty())
+                {
+                    m_error = "Failed to convert file ";
+                    m_error += temp_path;
+                }
+
                 return false;
             }
         }
