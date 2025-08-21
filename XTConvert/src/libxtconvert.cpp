@@ -617,7 +617,7 @@ public:
         // properties for QOIs
         bool qoi_is_1x = false;
         bool qoi_is_trans = true;
-        bool already_1x = !m_cur_dir.textures_1x.contains(filename);
+        bool already_1x = m_cur_dir.textures_1x.contains(filename);
 
         // 2x downscale only if safe on Desktop, and check for RGBA
         if(m_spec.target_platform == TargetPlatform::Desktop)
