@@ -1452,7 +1452,7 @@ public:
 
         const QStringList junk_files_match =
         {
-            ".ds_store", "desktop.ini", "progress.json"
+            ".ds_store", "desktop.ini", "progress.json", "nomariochallenge",
         };
 
         bool is_non_tracker_music = fEndsWith(non_tracker_music, filename);
