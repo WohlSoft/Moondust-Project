@@ -149,7 +149,7 @@ jobs:
         fi
         export PATH=${{ matrix.config.qt_dir }}:${{ matrix.config.qt_lib_dir }}:/usr/local/opt/coreutils/libexec/gnubin:${PATH}
         TZ=Europe/Moscow date +"%Y-%m-%d %H:%M:%S" > build-temp/build_date_${BRANCH_NAME_RES}_osx.txt
-        ./build.sh no-pause ninja deploy-pkg static-qt
+        ./build.sh no-pause ninja deploy deploy-pkg static-qt
 
     - name: Rename package
       shell: bash
