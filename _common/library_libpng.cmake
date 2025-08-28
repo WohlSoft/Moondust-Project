@@ -58,9 +58,9 @@ else()
             ${APPLE_CMAKE_FLAGS}
             "-DPNG_SHARED=OFF"
             "-DPNG_STATIC=ON"
-            "-DPNG_BUILD_ZLIB=ON"
+            "-UPNG_BUILD_ZLIB" # Now deprecated field
             "-DZLIB_INCLUDE_DIR=${DEPENDENCIES_INSTALL_DIR}/include"
-            "-DZLIB_LIBRARY=${libZLib_A_Lib}"
+            "-DZLIB_ROOT=${DEPENDENCIES_INSTALL_DIR}"
             "-DPNG_TESTS=OFF"
         BUILD_BYPRODUCTS
             "${libPNG_A_Lib}"
