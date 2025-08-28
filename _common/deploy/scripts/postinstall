@@ -1,0 +1,28 @@
+#!/bin/bash
+
+INST_TARGET="/Applications/Moondust Project"
+
+function setAttr()
+{
+    if [[ -f "$INST_TARGET/$1" || -d "$INST_TARGET/$1" ]]; then
+        xattr -rd com.apple.quarantine "$INST_TARGET/$1"
+    fi
+}
+
+setAttr "Moondust Editor.app"
+setAttr "Moondust Engine.app"
+setAttr "Moondust Maintainer.app"
+setAttr "Moondust Character Calibrator.app"
+setAttr "Moondust Music Player.app"
+setAttr "Moondust Translator.app"
+setAttr "GIFs2PNG"
+setAttr "LazyFixTool"
+setAttr "PaletteFilter"
+setAttr "PNG2GIFs"
+
+mkdir "$INST_TARGET/logs"
+mkdir "$INST_TARGET/configs"
+ln -s "$HOME/Library/Application Support/PGE Project" "$INST_TARGET/Data directory"
+chown $USER -R "$INST_TARGET"
+
+exit 0

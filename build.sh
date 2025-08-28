@@ -13,6 +13,7 @@ flag_pack_src=false
 flag_pack_src_gz=false
 flag_cmake_it_ninja=false
 flag_cmake_deploy=false
+flag_cmake_deploy_pkg=false
 flag_cmake_static_qt=false
 flag_debug_build=false
 flag_portable=false
@@ -156,6 +157,9 @@ do
             ;;
         deploy)
                 flag_cmake_deploy=true
+            ;;
+        deploy-pkg)
+                flag_cmake_deploy_pkg=true
             ;;
         portable)
                 flag_portable=true
@@ -505,7 +509,11 @@ fi
 
 deployTarget="create_tar"
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    deployTarget="create_dmg"
+    if ${flag_cmake_deploy_pkg} ; then
+        deployTarget="create_pkg"
+    else
+        deployTarget="create_dmg"
+    fi
 elif [[ "$OSTYPE" == "msys"* ]]; then
     deployTarget="create_zip"
 fi
