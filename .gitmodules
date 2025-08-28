@@ -49,3 +49,4 @@
 [submodule "_Libs/libtiff"]
 	path = _Libs/libtiff
 	url = https://github.com/WohlSoft/libtiff.git
+	branch = master
