@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.5)
+cmake_minimum_required (VERSION 3.5...4.0)
 project(MoondustTranslator C CXX)
 
 if(POLICY CMP0071) # Automoc
@@ -230,6 +230,7 @@ if(APPLE)
         MACOSX_BUNDLE TRUE
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/translator.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_translator"
+        MACOSX_BUNDLE_BUNDLE_NAME "Moondust Translator"
         MACOSX_BUNDLE_GUI_IDENTIFIER "ru.wohlsoft.pge-translator"
         MACOSX_BUNDLE_SHORT_VERSION_STRING "${TRANSLATOR_VERSION_STRING}"
         MACOSX_BUNDLE_LONG_VERSION_STRING "${TRANSLATOR_VERSION_STRING}"

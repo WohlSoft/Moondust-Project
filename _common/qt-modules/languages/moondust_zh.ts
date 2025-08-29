@@ -343,23 +343,23 @@
     <name>MsgBoxPreview</name>
     <message>
         <source>Bad #command syntax</source>
-        <translation type="unfinished"></translation>
+        <translation>#command语法错误</translation>
     </message>
     <message>
         <source>Bad function() syntax</source>
-        <translation type="unfinished"></translation>
+        <translation>function()语法错误</translation>
     </message>
     <message>
         <source>Unknown #command specified</source>
-        <translation type="unfinished"></translation>
+        <translation>未知的#command参数</translation>
     </message>
     <message>
         <source>Unknown function() specified</source>
-        <translation type="unfinished"></translation>
+        <translation>未知的function()参数</translation>
     </message>
     <message>
         <source>Bad function() arguments specified</source>
-        <translation type="unfinished"></translation>
+        <translation>function()参数错误</translation>
     </message>
     <message>
         <source>Extra characters at end of the code line</source>
@@ -367,11 +367,11 @@
     </message>
     <message>
         <source>Illegal usage of a #command</source>
-        <translation type="unfinished"></translation>
+        <translation>#command用法错误</translation>
     </message>
     <message>
         <source>Macro error: </source>
-        <translation type="unfinished"></translation>
+        <translation>宏错误： </translation>
     </message>
 </context>
 <context>

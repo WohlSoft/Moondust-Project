@@ -149,12 +149,13 @@ jobs:
         fi
         export PATH=${{ matrix.config.qt_dir }}:${{ matrix.config.qt_lib_dir }}:/usr/local/opt/coreutils/libexec/gnubin:${PATH}
         TZ=Europe/Moscow date +"%Y-%m-%d %H:%M:%S" > build-temp/build_date_${BRANCH_NAME_RES}_osx.txt
-        ./build.sh no-pause ninja deploy static-qt
+        ./build.sh no-pause ninja deploy deploy-pkg static-qt
 
     - name: Rename package
       shell: bash
       run: |
-        mv ./bin-cmake-release/pge-project-${BRANCH_NAME}-macosx.dmg ./bin-cmake-release/pge-project-${BRANCH_NAME}-macosx-${{ matrix.config.arch }}.dmg
+        mv ./bin-cmake-release/pge-project-${BRANCH_NAME}-macosx.pkg ./bin-cmake-release/pge-project-${BRANCH_NAME}-macosx-${{ matrix.config.arch }}.pkg
+        # mv ./bin-cmake-release/pge-project-${BRANCH_NAME}-macosx.dmg ./bin-cmake-release/pge-project-${BRANCH_NAME}-macosx-${{ matrix.config.arch }}.dmg
 
     - name: Upload artifact
       if: success() && steps.upload-check.outputs.available == 'true'
@@ -180,7 +181,10 @@ jobs:
         fi
 
         UPLOAD_LIST="set ssl:verify-certificate no;"
-        for q in ./bin-cmake-release/*.dmg; do
+        # for q in ./bin-cmake-release/*.dmg; do
+        #     UPLOAD_LIST="${UPLOAD_LIST} put -O ${{ matrix.config.upload_directory }} $q;"
+        # done
+        for q in ./bin-cmake-release/*.pkg; do
             UPLOAD_LIST="${UPLOAD_LIST} put -O ${{ matrix.config.upload_directory }} $q;"
         done
         UPLOAD_LIST="${UPLOAD_LIST} put -O ./www/_versions build-temp/build_date_${BRANCH_NAME_RES}_osx.txt;"
