@@ -19,6 +19,7 @@ setAttr "GIFs2PNG"
 setAttr "LazyFixTool"
 setAttr "PaletteFilter"
 setAttr "PNG2GIFs"
+setAttr "xtconvert"
 
 mkdir "$INST_TARGET/logs"
 mkdir "$INST_TARGET/configs"
