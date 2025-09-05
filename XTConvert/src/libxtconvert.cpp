@@ -1471,7 +1471,8 @@ public:
 
             return QFile::copy(in_path, out_path);
         }
-        else if(m_spec.target_platform != TargetPlatform::Desktop && filename.endsWith("m.gif"))
+        // don't copy masks (if they are needed, they will be copied when their image is copied)
+        else if(filename.endsWith("m.gif"))
             return true;
         // defer these until the end
         else if(m_spec.package_type == PackageType::AssetPack && m_spec.target_platform == TargetPlatform::DSG && (rel_path.startsWith("sound/") || rel_path.startsWith("music/")))
