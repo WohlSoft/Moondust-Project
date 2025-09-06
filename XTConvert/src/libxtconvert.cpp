@@ -769,7 +769,11 @@ public:
                 save_success = false;
 
             if(save_success)
-                save_success = FreeImage_Save(FIF_QOI, image, out_path.toUtf8());
+            {
+                // save with PNG extension, not GIF, to avoid engine's mask merging algorithm
+                QString qoi_out_path = output_stem + ".png";
+                save_success = FreeImage_Save(FIF_QOI, image, qoi_out_path.toUtf8());
+            }
         }
         else if(output_format == TargetPlatform::T3X)
         {
