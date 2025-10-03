@@ -88,7 +88,7 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QMenu ItemMenu;
 
     /*************Layers*******************/
-    QMenu *LayerName = ItemMenu.addMenu(tr("Layer: ") + QString("[%1]").arg(m_data.layer).replace("&", "&&"));
+    QMenu *LayerName = ItemMenu.addMenu(tr("Layer: ") + QString("[%1]").arg(util::str2ui(m_data.layer)));
     QAction *setLayer;
     QList<QAction *> layerItems;
     QAction *newLayer = LayerName->addAction(tr("Add to new layer..."));
@@ -101,7 +101,7 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             continue;
 
         QString label = layer.name + ((layer.hidden) ? " " + tr("[hidden]") : "");
-        setLayer = LayerName->addAction(label.replace("&", "&&"));
+        setLayer = LayerName->addAction(util::str2ui(label));
         setLayer->setData(layer.name);
         setLayer->setCheckable(true);
         setLayer->setEnabled(true);

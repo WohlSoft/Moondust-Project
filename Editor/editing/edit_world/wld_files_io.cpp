@@ -801,7 +801,7 @@ void WorldEdit::setCurrentFile(const QString &fileName)
     WldData.meta.untitled = false;
     //document()->setModified(false);
     setWindowModified(false);
-    setWindowTitle(QString(WldData.EpisodeTitle == "" ? userFriendlyCurrentFile() : WldData.EpisodeTitle).replace("&", "&&&"));
+    setWindowTitle(util::str2ui3(WldData.EpisodeTitle == "" ? userFriendlyCurrentFile() : WldData.EpisodeTitle));
 }
 
 QString WorldEdit::strippedName(const QString &fullFileName)

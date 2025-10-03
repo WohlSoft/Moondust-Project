@@ -130,12 +130,12 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         dstLevelPath = m_scene->m_data->meta.path + "/" + dstLevelName;
     }
 
-    QAction *openLvl = itemMenu.addAction(tr("Open target level: %1").arg(dstLevelName).replace("&", "&&"));
+    QAction *openLvl = itemMenu.addAction(tr("Open target level: %1").arg(util::str2ui(dstLevelName)));
     openLvl->setVisible((!dstLevelName.isEmpty()) && QFile::exists(dstLevelPath));
     openLvl->deleteLater();
 
     /*************Layers*******************/
-    QMenu *layerName =     itemMenu.addMenu(tr("Layer: ") + QString("[%1]").arg(m_data.layer).replace("&", "&&"));
+    QMenu *layerName =     itemMenu.addMenu(tr("Layer: ") + QString("[%1]").arg(util::str2ui(m_data.layer)));
     QAction *setLayer;
     QList<QAction *> layerItems;
 
@@ -149,7 +149,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             continue;
 
         QString label = layer.name + ((layer.hidden) ? " " + tr("[hidden]") : "");
-        setLayer = layerName->addAction(label.replace("&", "&&"));
+        setLayer = layerName->addAction(util::str2ui(label));
         setLayer->setData(layer.name);
         setLayer->setCheckable(true);
         setLayer->setEnabled(true);

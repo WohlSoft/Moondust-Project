@@ -640,7 +640,7 @@ void LvlItemProperties::openNpcProps(LevelNPC &npc, bool isPlacingNew, bool dont
         npcmsg.resize(18);
         npcmsg.push_back("...");
     }
-    ui->PROPS_NpcTMsg->setText(npcmsg.replace("&", "&&&"));
+    ui->PROPS_NpcTMsg->setText(util::str2ui3(npcmsg));
 
     ui->PROPS_NpcFri->setChecked(npc.friendly);
     ui->PROPS_NPCNoMove->setChecked(npc.nomove);
@@ -2049,7 +2049,7 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
             npcmsg.resize(18);
             npcmsg.push_back("...");
         }
-        ui->PROPS_NpcTMsg->setText(npcmsg.replace("&", "&&&"));
+        ui->PROPS_NpcTMsg->setText(util::str2ui(npcmsg));
         ui->PROPS_NpcFri->setChecked(msgBox->isFriendlyChecked());
     }
     delete msgBox;
