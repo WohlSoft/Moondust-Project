@@ -296,3 +296,99 @@ QRect util::alignToScreenCenter(const QSize size)
 
     return QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, size, screenRect);
 }
+
+QString util::str2ui(const QString &in)
+{
+    QString ret;
+    const QChar ampersand('&');
+    const QString twoAmpersand(QStringLiteral("&&"));
+
+    for(const QChar &c : in)
+    {
+        if(c == ampersand)
+            ret.push_back(twoAmpersand);
+        else
+            ret.push_back(c);
+    }
+
+    return ret;
+}
+
+QString util::str2ui3(const QString &in)
+{
+    QString ret;
+    const QChar ampersand('&');
+    const QString triAmpersand(QStringLiteral("&&"));
+
+    for(const QChar &c : in)
+    {
+        if(c == ampersand)
+            ret.push_back(triAmpersand);
+        else
+            ret.push_back(c);
+    }
+
+    return ret;
+}
+
+QString util::ui2str(const QString &in)
+{
+    QString ret;
+    const QChar ampersand('&');
+    int numAmpersands = 0;
+
+    for(const QChar &c : in)
+    {
+        if(c == ampersand)
+        {
+            ++numAmpersands;
+            if(numAmpersands == 2)
+            {
+                numAmpersands = 0;
+                ret.push_back(ampersand);
+                continue;
+            }
+        }
+        else if(numAmpersands == 1)
+        {
+            numAmpersands = 0;
+            ret.push_back(ampersand);
+        }
+
+        if(numAmpersands == 0)
+            ret.push_back(c);
+    }
+
+    return ret;
+}
+
+QString util::ui32str(const QString &in)
+{
+    QString ret;
+    const QChar ampersand('&');
+    int numAmpersands = 0;
+
+    for(const QChar &c : in)
+    {
+        if(c == ampersand)
+        {
+            ++numAmpersands;
+            if(numAmpersands == 3)
+            {
+                numAmpersands = 0;
+                ret.push_back(ampersand);
+                continue;
+            }
+        }
+        else if(numAmpersands > 0)
+        {
+            numAmpersands = 0;
+            ret.push_back(ampersand);
+        }
+
+        if(numAmpersands == 0)
+            ret.push_back(c);
+    }
+
+    return ret;
+}

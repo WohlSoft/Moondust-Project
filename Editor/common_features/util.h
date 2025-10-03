@@ -136,6 +136,34 @@ public:
      * \return Aligned to center rectangle
      */
     static QRect alignToScreenCenter(const QSize size);
+
+    /*!
+     * \brief Converts string into UI-friendly format with escaped ampersands
+     * \param in Input string
+     * \return Converted into UI-friendly string, ampersands should be displayed correctly
+     */
+    static QString str2ui(const QString &in);
+
+    /*!
+     * \brief Converts string into UI-friendly format primarily for window titles
+     * \param in Input string
+     * \return Converted into UI-friendly string, ampersands should be displayed correctly
+     */
+    static QString str2ui3(const QString &in);
+
+    /*!
+     * \brief Converts string from UI-friendly format with escaped ampersands into normal string
+     * \param in Input string
+     * \return Converted into UI-friendly string, ampersands should be displayed correctly
+     */
+    static QString ui2str(const QString &in);
+
+    /*!
+     * \brief Converts string from UI-friendly format with escaped ampersands into normal string
+     * \param in Input string
+     * \return Converted into UI-friendly string, ampersands should be displayed correctly
+     */
+    static QString ui32str(const QString &in);
 };
 
 #endif // UTIL_H

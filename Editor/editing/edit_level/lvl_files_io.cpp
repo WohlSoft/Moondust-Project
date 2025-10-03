@@ -694,9 +694,7 @@ void LevelEdit::updateTitle()
     else
         title += LvlData.LevelName;
 
-    title.replace("&", "&&&");
-
-    setWindowTitle(title.replace("&", "&&&"));
+    setWindowTitle(util::str2ui3(title));
 }
 
 bool LevelEdit::maybeSave()

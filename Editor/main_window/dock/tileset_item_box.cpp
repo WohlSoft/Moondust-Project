@@ -375,8 +375,7 @@ void TilesetItemBox::prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups
     auto *cMenu = qvariant_cast<QMenu*>(c->property("menu"));
     if(!util::contains(c, tilesetGroups.groupName))
     {
-        QString g = tilesetGroups.groupName;
-        g.replace("&", "&&");
+        QString g = util::str2ui(tilesetGroups.groupName);
         int tabIndex = c->addTab(g);//Escaped ampersands
         QAction *a = cMenu->addAction(g);
         a->setData(tabIndex);
@@ -464,8 +463,8 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
                         , "Debug");
 #endif
 
-        QString currentGroup = currentCombo->tabText(currentCombo->currentIndex());
-        currentGroup.replace("&&", "&");//Restore non-escaped ampersands
+        QString currentGroup = util::ui2str(currentCombo->tabText(currentCombo->currentIndex()));
+
         for(auto &tsGroup : mw()->configs.main_tilesets_grp)
         {
             if((tsGroup.groupCat == category)

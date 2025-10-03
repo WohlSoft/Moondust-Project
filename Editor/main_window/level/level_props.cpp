@@ -50,7 +50,7 @@ void MainWindow::on_actionLevelProp_triggered()
         e->LvlData.LevelName = levelProps.m_levelTitle;
         e->LvlData.custom_params = levelProps.m_customParams;
         e->LvlData.meta.modified = true;
-        e->setWindowTitle(QString(levelProps.m_levelTitle.isEmpty() ? e->userFriendlyCurrentFile() : levelProps.m_levelTitle).replace("&", "&&&"));
+        e->setWindowTitle(util::str2ui3(levelProps.m_levelTitle.isEmpty() ? e->userFriendlyCurrentFile() : levelProps.m_levelTitle));
         updateWindowMenu();
     }
 }
