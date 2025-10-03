@@ -437,41 +437,61 @@ void LvlLayersBox::modifyLayer(QString layerName, bool visible)
 {
     //Apply layer's visibly to all items
     LevelEdit *edit = mw()->activeLvlEditWin();
-    if(!edit) return;
+    if(!edit)
+        return;
 
-    QList<QGraphicsItem *> ItemList = edit->scene->items();
+    QList<QGraphicsItem *> itemList = edit->scene->items();
 
-    for(QList<QGraphicsItem *>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    for(QList<QGraphicsItem *>::iterator it = itemList.begin(); it != itemList.end(); ++it)
     {
-        if((*it)->data(ITEM_IS_CURSOR).toString() == "CURSOR") continue; //skip cursor item
+        QGraphicsItem *item = *it;
 
-        if((*it)->data(ITEM_TYPE).toString() == "Block")
+        if(item->data(ITEM_IS_CURSOR).toString() == QStringLiteral("CURSOR"))
+            continue; //skip cursor item
+
+        if(item->data(ITEM_TYPE).toString() == QStringLiteral("Block"))
         {
-            if(((ItemBlock *)(*it))->m_data.layer == layerName)
-                (*it)->setVisible(visible);
+            ItemBlock *sItem = qgraphicsitem_cast<ItemBlock *>(item);
+            Q_ASSERT(sItem);
+
+            if(sItem->m_data.layer == layerName)
+                sItem->setVisible(visible);
 
         }
-        else if((*it)->data(ITEM_TYPE).toString() == "BGO")
+        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("BGO"))
         {
-            if(((ItemBGO *)(*it))->m_data.layer == layerName)
-                (*it)->setVisible(visible);
+            ItemBGO *sItem = qgraphicsitem_cast<ItemBGO *>(item);
+            Q_ASSERT(sItem);
+
+            if(sItem->m_data.layer == layerName)
+                sItem->setVisible(visible);
         }
-        else if((*it)->data(ITEM_TYPE).toString() == "NPC")
+        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("NPC"))
         {
-            if(((ItemNPC *)(*it))->m_data.layer == layerName)
-                (*it)->setVisible(visible);
+            ItemNPC *sItem = qgraphicsitem_cast<ItemNPC *>(item);
+            Q_ASSERT(sItem);
+
+            if(sItem->m_data.layer == layerName)
+                sItem->setVisible(visible);
         }
-        else if((*it)->data(ITEM_TYPE).toString() == "Water")
+        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("Water"))
         {
-            if(((ItemPhysEnv *)(*it))->m_data.layer == layerName)
-                (*it)->setVisible(visible);
+            ItemPhysEnv *sItem = qgraphicsitem_cast<ItemPhysEnv *>(item);
+            Q_ASSERT(sItem);
+
+            if(sItem->m_data.layer == layerName)
+                sItem->setVisible(visible);
         }
-        else if(((*it)->data(ITEM_TYPE).toString() == "Door_enter") || ((*it)->data(ITEM_TYPE).toString() == "Door_exit"))
+        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("Door_enter") || item->data(ITEM_TYPE).toString() == QStringLiteral("Door_exit"))
         {
-            if(((ItemDoor *)(*it))->m_data.layer == layerName)
-                (*it)->setVisible(visible);
+            ItemDoor *sItem = qgraphicsitem_cast<ItemDoor *>(item);
+            Q_ASSERT(sItem);
+
+            if(sItem->m_data.layer == layerName)
+                sItem->setVisible(visible);
         }
     }
+
     mw()->LayerListsSync();  //Sync comboboxes in properties
 }
 
@@ -481,50 +501,68 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName)
     LevelEdit *edit = mw()->activeLvlEditWin();
     if(!edit) return;
 
-    QList<QGraphicsItem *> ItemList = edit->scene->items();
+    QList<QGraphicsItem *> itemList = edit->scene->items();
 
-    for(QList<QGraphicsItem *>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    for(QList<QGraphicsItem *>::iterator it = itemList.begin(); it != itemList.end(); ++it)
     {
-        if((*it)->data(ITEM_IS_CURSOR).toString() == "CURSOR") continue; //skip cursor item
+        QGraphicsItem *item = *it;
 
-        if((*it)->data(ITEM_TYPE).toString() == "Block")
+        if(item->data(ITEM_IS_CURSOR).toString() == QStringLiteral("CURSOR"))
+            continue; //skip cursor item
+
+        if(item->data(ITEM_TYPE).toString() == QStringLiteral("Block"))
         {
-            if(((ItemBlock *)(*it))->m_data.layer == layerName)
+            ItemBlock *sItem = qgraphicsitem_cast<ItemBlock *>(item);
+            Q_ASSERT(sItem);
+
+            if(sItem->m_data.layer == layerName)
             {
-                ((ItemBlock *)(*it))->m_data.layer = newLayerName;
-                ((ItemBlock *)(*it))->arrayApply();
+                sItem->m_data.layer = newLayerName;
+                sItem->arrayApply();
             }
         }
-        else if((*it)->data(ITEM_TYPE).toString() == "BGO")
+        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("BGO"))
         {
-            if(((ItemBGO *)(*it))->m_data.layer == layerName)
+            ItemBGO *sItem = qgraphicsitem_cast<ItemBGO *>(item);
+            Q_ASSERT(sItem);
+
+            if(sItem->m_data.layer == layerName)
             {
-                ((ItemBGO *)(*it))->m_data.layer = newLayerName;
-                ((ItemBGO *)(*it))->arrayApply();
+                sItem->m_data.layer = newLayerName;
+                sItem->arrayApply();
             }
         }
-        else if((*it)->data(ITEM_TYPE).toString() == "NPC")
+        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("NPC"))
         {
-            if(((ItemNPC *)(*it))->m_data.layer == layerName)
+            ItemNPC *sItem = qgraphicsitem_cast<ItemNPC *>(item);
+            Q_ASSERT(sItem);
+
+            if(sItem->m_data.layer == layerName)
             {
-                ((ItemNPC *)(*it))->m_data.layer = newLayerName;
-                ((ItemNPC *)(*it))->arrayApply();
+                sItem->m_data.layer = newLayerName;
+                sItem->arrayApply();
             }
         }
-        else if((*it)->data(ITEM_TYPE).toString() == "Water")
+        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("Water"))
         {
-            if(((ItemPhysEnv *)(*it))->m_data.layer == layerName)
+            ItemPhysEnv *sItem = qgraphicsitem_cast<ItemPhysEnv *>(item);
+            Q_ASSERT(sItem);
+
+            if(sItem->m_data.layer == layerName)
             {
-                ((ItemPhysEnv *)(*it))->m_data.layer = newLayerName;
-                ((ItemPhysEnv *)(*it))->arrayApply();
+                sItem->m_data.layer = newLayerName;
+                sItem->arrayApply();
             }
         }
-        else if(((*it)->data(ITEM_TYPE).toString() == "Door_enter") || ((*it)->data(ITEM_TYPE).toString() == "Door_exit"))
+        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("Door_enter") || item->data(ITEM_TYPE).toString() == QStringLiteral("Door_exit"))
         {
-            if(((ItemDoor *)(*it))->m_data.layer == layerName)
+            ItemDoor *sItem = qgraphicsitem_cast<ItemDoor *>(item);
+            Q_ASSERT(sItem);
+
+            if(sItem->m_data.layer == layerName)
             {
-                ((ItemDoor *)(*it))->m_data.layer = newLayerName;
-                ((ItemDoor *)(*it))->arrayApply();
+                sItem->m_data.layer = newLayerName;
+                sItem->arrayApply();
             }
         }
     }
@@ -565,79 +603,94 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName, bool vis
     if(!edit)
         return;
 
-    QList<QGraphicsItem *> ItemList = edit->scene->items();
-
-
     LevelData modData;
-    for(QList<QGraphicsItem *>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    QList<QGraphicsItem *> itemList = edit->scene->items();
+
+    for(QList<QGraphicsItem *>::iterator it = itemList.begin(); it != itemList.end(); ++it)
     {
-        if((*it)->data(ITEM_IS_CURSOR).toString() == "CURSOR")
+        QGraphicsItem *item = *it;
+
+        if(item->data(ITEM_IS_CURSOR).toString() == QStringLiteral("CURSOR"))
             continue; //skip cursor item
 
-        if((*it)->data(ITEM_TYPE).toString() == "Block")
+        if(item->data(ITEM_TYPE).toString() == QStringLiteral("Block"))
         {
-            if(((ItemBlock *)(*it))->m_data.layer == layerName)
+            ItemBlock *sItem = qgraphicsitem_cast<ItemBlock *>(item);
+            Q_ASSERT(sItem);
+
+            if(sItem->m_data.layer == layerName)
             {
-                modData.blocks.push_back(((ItemBlock *)(*it))->m_data);
-                ((ItemBlock *)(*it))->m_data.layer = newLayerName;
-                (*it)->setVisible(visible);
-                ((ItemBlock *)(*it))->arrayApply();
+                modData.blocks.push_back(sItem->m_data);
+                sItem->m_data.layer = newLayerName;
+                sItem->setVisible(visible);
+                sItem->arrayApply();
             }
 
         }
-        else if((*it)->data(ITEM_TYPE).toString() == "BGO")
+        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("BGO"))
         {
-            if(((ItemBGO *)(*it))->m_data.layer == layerName)
-            {
-                modData.bgo.push_back(((ItemBGO *)(*it))->m_data);
-                ((ItemBGO *)(*it))->m_data.layer = newLayerName;
-                (*it)->setVisible(visible);
-                ((ItemBGO *)(*it))->arrayApply();
+            ItemBGO *sItem = qgraphicsitem_cast<ItemBGO *>(item);
+            Q_ASSERT(sItem);
 
+            if(sItem->m_data.layer == layerName)
+            {
+                modData.bgo.push_back(sItem->m_data);
+                sItem->m_data.layer = newLayerName;
+                sItem->setVisible(visible);
+                sItem->arrayApply();
             }
         }
-        else if((*it)->data(ITEM_TYPE).toString() == "NPC")
+        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("NPC"))
         {
-            if(((ItemNPC *)(*it))->m_data.layer == layerName)
+            ItemNPC *sItem = qgraphicsitem_cast<ItemNPC *>(item);
+            Q_ASSERT(sItem);
+
+            if(sItem->m_data.layer == layerName)
             {
-                modData.npc.push_back(((ItemNPC *)(*it))->m_data);
-                ((ItemNPC *)(*it))->m_data.layer = newLayerName;
-                (*it)->setVisible(visible);
-                ((ItemNPC *)(*it))->arrayApply();
+                modData.npc.push_back(sItem->m_data);
+                sItem->m_data.layer = newLayerName;
+                sItem->setVisible(visible);
+                sItem->arrayApply();
             }
         }
-        else if((*it)->data(ITEM_TYPE).toString() == "Water")
+        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("Water"))
         {
-            if(((ItemPhysEnv *)(*it))->m_data.layer == layerName)
+            ItemPhysEnv *sItem = qgraphicsitem_cast<ItemPhysEnv *>(item);
+            Q_ASSERT(sItem);
+
+            if(sItem->m_data.layer == layerName)
             {
-                modData.physez.push_back(((ItemPhysEnv *)(*it))->m_data);
-                ((ItemPhysEnv *)(*it))->m_data.layer = newLayerName;
-                (*it)->setVisible(visible);
-                ((ItemPhysEnv *)(*it))->arrayApply();
+                modData.physez.push_back(sItem->m_data);
+                sItem->m_data.layer = newLayerName;
+                sItem->setVisible(visible);
+                sItem->arrayApply();
             }
         }
-        else if(((*it)->data(ITEM_TYPE).toString() == "Door_enter") || ((*it)->data(ITEM_TYPE).toString() == "Door_exit"))
+        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("Door_enter") || item->data(ITEM_TYPE).toString() == QStringLiteral("Door_exit"))
         {
-            if(((ItemDoor *)(*it))->m_data.layer == layerName)
+            ItemDoor *sItem = qgraphicsitem_cast<ItemDoor *>(item);
+            Q_ASSERT(sItem);
+
+            if(sItem->m_data.layer == layerName)
             {
-                if((*it)->data(ITEM_TYPE).toString() == "Door_enter")
+                if(sItem->data(ITEM_TYPE).toString() == QStringLiteral("Door_enter"))
                 {
-                    LevelDoor tData = ((ItemDoor *)(*it))->m_data;
+                    LevelDoor tData = sItem->m_data;
                     tData.isSetIn = true;
                     tData.isSetOut = false;
                     modData.doors.push_back(tData);
                 }
-                else if((*it)->data(ITEM_TYPE).toString() == "Door_exit")
+                else if(sItem->data(ITEM_TYPE).toString() == QStringLiteral("Door_exit"))
                 {
-                    LevelDoor tData = ((ItemDoor *)(*it))->m_data;
+                    LevelDoor tData = sItem->m_data;
                     tData.isSetIn = false;
                     tData.isSetOut = true;
                     modData.doors.push_back(tData);
                 }
 
-                ((ItemDoor *)(*it))->m_data.layer = newLayerName;
-                (*it)->setVisible(visible);
-                ((ItemDoor *)(*it))->arrayApply();
+                sItem->m_data.layer = newLayerName;
+                sItem->setVisible(visible);
+                sItem->arrayApply();
             }
         }
     }
@@ -651,7 +704,7 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName, bool vis
 
     if(historyRecord == 0)
     {
-        if(newLayerName == "Default")
+        if(newLayerName == QStringLiteral("Default"))
         {
             for(int i = 0; i < edit->LvlData.layers.size(); i++)
             {
@@ -868,8 +921,10 @@ void LvlLayersBox::on_AddLayer_clicked()
 {
     int NewCounter = 1;
     QString newName = tr("New Layer %1");
+
     while(layerIsExist(newName.arg(NewCounter)))
         NewCounter++;
+
     addNewLayer(newName.arg(NewCounter), true);
 }
 
@@ -879,8 +934,10 @@ void LvlLayersBox::on_LvlLayerList_itemClicked(QListWidgetItem *item)
     int WinType = mw()->activeChildWindow();
     int itemType = 0;
     LevelEdit *edit = nullptr;
+
     if(WinType == MainWindow::WND_Level)
         edit = mw()->activeLvlEditWin();
+
     bool allow = (edit && edit->sceneCreated);
 
     if(allow)
@@ -1163,8 +1220,10 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 
         QList<QGraphicsItem*> items = lvlEdit->getGraphicsView()->items();
 
-        for(auto *it : items)
+        for(QList<QGraphicsItem*>::iterator itr = items.begin(); itr != items.end(); ++itr)
         {
+            QGraphicsItem *it = *itr;
+
             if(it->data(ITEM_IS_ITEM).toInt() != 1)
                 continue;
 
