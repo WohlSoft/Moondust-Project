@@ -22,6 +22,7 @@
 
 #include <stdint.h>
 #include <string>
+#include <map>
 
 struct SDL_RWops;
 
@@ -57,10 +58,19 @@ protected:
     SDL_RWops       *m_file = nullptr;
     MDAudioFileSpec m_spec;
     std::string     m_lastError;
+    int             m_argTrack = 0; //!< GME only track number
+    typedef std::map<std::string, std::string> ArgsMap;
+    ArgsMap m_args;
 
     static bool isLoopTag(const char* tag);
     static int64_t parseTime(char *time, long samplerate_hz);
     static std::string parseidiMetaTag(const char *src);
+
+    int getArgI(const std::string &key, int def);
+    bool getArgB(const std::string &key, bool def);
+    float getArgF(const std::string &key, float def);
+    double getArgD(const std::string &key, double def);
+    std::string getArgS(const std::string &key, const std::string def);
 
 public:
     MDAudioFile();
@@ -89,6 +99,8 @@ public:
     virtual uint32_t getCodecSpec() const = 0;
 
     std::string getLastError();
+
+    void setArgs(const std::string &args);
 
     virtual bool openRead(SDL_RWops *file) = 0;
     virtual bool openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec) = 0;
