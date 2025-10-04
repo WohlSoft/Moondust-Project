@@ -67,8 +67,8 @@ bool MDAudioPXTone::openRead(SDL_RWops *file)
     pxtnERR ret;
     close();
 
-    tempo = getArgD("t=", 1.0);
-    gain = getArgF("g=", 1.0f);
+    tempo = m_args.getArgD("t=", 1.0);
+    gain = m_args.getArgF("g=", 1.0f);
 
     pxtn = new pxtnService(_pxtn_r, _pxtn_w, _pxtn_s, _pxtn_p);
 
