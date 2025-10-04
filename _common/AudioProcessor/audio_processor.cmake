@@ -7,6 +7,8 @@ set(AUDIO_PROCESSOR_SRC
     ${CMAKE_CURRENT_LIST_DIR}/audio_file.cpp
     ${CMAKE_CURRENT_LIST_DIR}/audio_file.h
     ${CMAKE_CURRENT_LIST_DIR}/audio_format.h
+    ${CMAKE_CURRENT_LIST_DIR}/music_args.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/music_args.h
 
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_vorbis.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_vorbis.h
