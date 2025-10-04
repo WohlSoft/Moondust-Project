@@ -122,8 +122,9 @@ bool MDAudioADLMIDI::openRead(SDL_RWops *file)
     alloc_mode = m_args.getArgI("o", -1);
     chips_count = m_args.getArgI("c", -1);
     four_op_channels = m_args.getArgI("f", -1);
-    full_brightness_range = m_args.getArgI("r", 0);
-    soft_pan = m_args.getArgI("p", 1);
+    full_brightness_range = m_args.getArgBI("r", 0);
+    auto_arpeggio = m_args.getArgBI("j", 0);
+    soft_pan = m_args.getArgBI("p", 1);
     emulator = m_args.getArgI("e", -1);
     custom_bank_path = m_args.getArgS("x=", std::string());
     tempo = m_args.getArgD("t=", 1.0);
