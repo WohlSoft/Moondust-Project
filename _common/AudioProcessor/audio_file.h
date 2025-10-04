@@ -22,6 +22,7 @@
 
 #include <stdint.h>
 #include <string>
+#include <vector>
 #include <map>
 
 struct SDL_RWops;
@@ -52,15 +53,30 @@ struct MDAudioFileSpec
     int profile = -1;
 };
 
+struct MDAudioFileSpecWanted
+{
+    int m_channels = 0;
+    int m_sample_format = 0;
+    int m_sample_rate = 0;
+
+    int getChannels(int def, int max) const;
+    int getSampleRate(int def) const;
+    int getSampleFormat(int def) const;
+};
+
 class MDAudioFile
 {
 protected:
     SDL_RWops       *m_file = nullptr;
     MDAudioFileSpec m_spec;
+    MDAudioFileSpecWanted m_specWanted;
     std::string     m_lastError;
     int             m_argTrack = 0; //!< GME only track number
     typedef std::map<std::string, std::string> ArgsMap;
     ArgsMap m_args;
+
+    // Optional: for formats that supposed to use gaining
+    std::vector<uint8_t> m_read_buffer;
 
     static bool isLoopTag(const char* tag);
     static int64_t parseTime(char *time, long samplerate_hz);
@@ -71,6 +87,8 @@ protected:
     float getArgF(const std::string &key, float def);
     double getArgD(const std::string &key, double def);
     std::string getArgS(const std::string &key, const std::string def);
+
+    void copyGained(float gain, uint8_t *buf_in, uint8_t *buf_out, size_t buf_size);
 
 public:
     MDAudioFile();
@@ -111,6 +129,8 @@ public:
 
     virtual size_t readChunk(uint8_t *out, size_t outSize, bool *spec_changed = nullptr) = 0;
     virtual size_t writeChunk(uint8_t *in, size_t inSize) = 0;
+
+    void setWantedSpec(const MDAudioFileSpecWanted &spec);
 
     const MDAudioFileSpec &getSpec() const;
 };
