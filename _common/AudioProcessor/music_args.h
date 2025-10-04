@@ -20,6 +20,7 @@ public:
 
     int getArgI(const std::string &key, int def) const;
     bool getArgB(const std::string &key, bool def) const;
+    int getArgBI(const std::string &key, bool def) const;
     float getArgF(const std::string &key, float def) const;
     double getArgD(const std::string &key, double def) const;
     std::string getArgS(const std::string &key, const std::string def) const;
