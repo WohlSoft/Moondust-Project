@@ -83,6 +83,15 @@ bool MusicArgs::getArgB(const std::string &key, bool def) const
     return v->second != "0";
 }
 
+int MusicArgs::getArgBI(const std::string &key, bool def) const
+{
+    ArgsMap::const_iterator v = m_args.find(key);
+    if(v == m_args.end())
+        return def;
+
+    return v->second != "0" ? 1 : 0;
+}
+
 float MusicArgs::getArgF(const std::string &key, float def) const
 {
     ArgsMap::const_iterator v = m_args.find(key);
