@@ -31,6 +31,38 @@ class MDAudioADLMIDI : public MDAudioFile
 {
     struct ADL_MIDIPlayer *m_synth = nullptr;
 
+    int bank = 58;
+    int tremolo = -1;
+    int vibrato = -1;
+    int scalemod = -1;
+    int volume_model = 0;
+    int alloc_mode = -1;
+    int chips_count = -1;
+    int four_op_channels = -1;
+    int full_brightness_range = 0;
+    int auto_arpeggio = 0;
+    int soft_pan = 1;
+    int emulator = -1;
+    std::string custom_bank_path;
+    double tempo = 1.0;
+    float gain = 1.0f;
+
+    bool reCreateSynth();
+    bool reInit();
+    bool reOpenFile();
+
+    struct AudioFormat_t
+    {
+        /*! type of sample */
+        int type;
+        /*! size in bytes of the storage type */
+        unsigned containerSize;
+        /*! distance in bytes between consecutive samples */
+        unsigned sampleOffset;
+    } m_sample_format;
+
+    std::vector<uint8_t> m_in_file;
+
 public:
     MDAudioADLMIDI();
     virtual ~MDAudioADLMIDI();
