@@ -128,51 +128,6 @@ std::string MDAudioFile::parseidiMetaTag(const char *src)
     return ret;
 }
 
-int MDAudioFile::getArgI(const std::string &key, int def)
-{
-    ArgsMap::iterator v = m_args.find(key);
-    if(v == m_args.end())
-        return def;
-
-    return SDL_atoi(v->second.c_str());
-}
-
-bool MDAudioFile::getArgB(const std::string &key, bool def)
-{
-    ArgsMap::iterator v = m_args.find(key);
-    if(v == m_args.end())
-        return def;
-
-    return v->second != "0";
-}
-
-float MDAudioFile::getArgF(const std::string &key, float def)
-{
-    ArgsMap::iterator v = m_args.find(key);
-    if(v == m_args.end())
-        return def;
-
-    return (float)SDL_strtod(v->second.c_str(), NULL);
-}
-
-double MDAudioFile::getArgD(const std::string &key, double def)
-{
-    ArgsMap::iterator v = m_args.find(key);
-    if(v == m_args.end())
-        return def;
-
-    return SDL_strtod(v->second.c_str(), NULL);
-}
-
-std::string MDAudioFile::getArgS(const std::string &key, const std::string def)
-{
-    ArgsMap::iterator v = m_args.find(key);
-    if(v == m_args.end())
-        return def;
-
-    return v->second;
-}
-
 void MDAudioFile::copyGained(float gain, uint8_t *buf_in, uint8_t *buf_out, size_t buf_size)
 {
     switch(m_spec.m_sample_format)
@@ -208,48 +163,9 @@ std::string MDAudioFile::getLastError()
     return m_lastError;
 }
 
-void MDAudioFile::setArgs(const std::string &args)
+void MDAudioFile::setArgs(const MusicArgs &args)
 {
-    std::string chunk;
-    size_t pos = 0;
-    m_argTrack = 0;
-    m_args.clear();
-
-    if(args.empty())
-        return;
-
-    // Begins with digit
-    if(args[0] >= '0' && args[0] <= '9')
-    {
-        size_t tail = args.find(';');
-        if(tail == std::string::npos)
-        {
-            // Entire args string is a number
-            m_argTrack = SDL_atoi(args.c_str());
-            return;
-        }
-
-        chunk = args.substr(0, tail);
-        m_argTrack = SDL_atoi(chunk.c_str());
-    }
-
-    while(pos < args.size())
-    {
-        size_t tail;
-        std::string key;
-        std::string value;
-
-        key.push_back(args[pos++]);
-
-        if(args[pos] == '=')
-            key.push_back(args[pos++]);
-
-        tail = args.find(';');
-        value = args.substr(pos, tail);
-        pos += value.size() + 1;
-
-        m_args.insert({key, value});
-    }
+    m_args = args;
 }
 
 void MDAudioFile::setWantedSpec(const MDAudioFileSpecWanted &spec)
@@ -261,4 +177,3 @@ const MDAudioFileSpec &MDAudioFile::getSpec() const
 {
     return m_spec;
 }
-

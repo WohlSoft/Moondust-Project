@@ -114,20 +114,20 @@ bool MDAudioADLMIDI::openRead(SDL_RWops *file)
     close();
 
     // Init settings
-    bank = getArgI("b", 58);
-    tremolo = getArgI("t", -1);
-    vibrato = getArgI("v", -1);
-    scalemod = getArgI("m", -1);
-    volume_model = getArgI("l", 0);
-    alloc_mode = getArgI("o", -1);
-    chips_count = getArgI("c", -1);
-    four_op_channels = getArgI("f", -1);
-    full_brightness_range = getArgI("r", 0);
-    soft_pan = getArgI("p", 1);
-    emulator = getArgI("e", -1);
-    custom_bank_path = getArgS("x=", std::string());
-    tempo = getArgD("t=", 1.0);
-    gain = getArgF("g=", 2.0f);
+    bank = m_args.getArgI("b", 58);
+    tremolo = m_args.getArgI("t", -1);
+    vibrato = m_args.getArgI("v", -1);
+    scalemod = m_args.getArgI("m", -1);
+    volume_model = m_args.getArgI("l", 0);
+    alloc_mode = m_args.getArgI("o", -1);
+    chips_count = m_args.getArgI("c", -1);
+    four_op_channels = m_args.getArgI("f", -1);
+    full_brightness_range = m_args.getArgI("r", 0);
+    soft_pan = m_args.getArgI("p", 1);
+    emulator = m_args.getArgI("e", -1);
+    custom_bank_path = m_args.getArgS("x=", std::string());
+    tempo = m_args.getArgD("t=", 1.0);
+    gain = m_args.getArgF("g=", 2.0f);
 
     m_file = file;
 
