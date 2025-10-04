@@ -79,9 +79,9 @@ bool MDAudioPXTone::openRead(SDL_RWops *file)
         return false;
     }
 
-    m_spec.m_channels = 2;
-    m_spec.m_sample_format = AUDIO_S16SYS;
-    m_spec.m_sample_rate = 44100;
+    m_spec.m_channels = m_specWanted.getChannels(2, 2);
+    m_spec.m_sample_format = m_specWanted.getSampleFormat(AUDIO_S16SYS);
+    m_spec.m_sample_rate = m_specWanted.getSampleRate(44100);
 
     /* LOAD MUSIC DATA */
     ret = pxtn->read(file);
@@ -135,10 +135,10 @@ bool MDAudioPXTone::readRewind()
 
 size_t MDAudioPXTone::readChunk(uint8_t *out, size_t outSize, bool *spec_changed)
 {
-
+    return 0;
 }
 
 size_t MDAudioPXTone::writeChunk(uint8_t *in, size_t inSize)
 {
-
+    return 0;
 }
