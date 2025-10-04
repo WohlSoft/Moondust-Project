@@ -18,7 +18,26 @@
  */
 
 #include <SDL2/SDL_stdinc.h>
+#include <SDL2/SDL_audio.h>
 #include "audio_file.h"
+
+
+int MDAudioFileSpecWanted::getChannels(int def, int max) const
+{
+    int ret = (m_channels > 0) ? m_channels : def;
+    return ret <= max ? ret : max;
+}
+
+int MDAudioFileSpecWanted::getSampleRate(int def) const
+{
+    return (m_sample_rate > 0) ? m_sample_rate : def;
+}
+
+int MDAudioFileSpecWanted::getSampleFormat(int def) const
+{
+    return (m_sample_format != 0) ? m_sample_format : def;
+}
+
 
 bool MDAudioFile::isLoopTag(const char *tag)
 {
@@ -154,6 +173,30 @@ std::string MDAudioFile::getArgS(const std::string &key, const std::string def)
     return v->second;
 }
 
+void MDAudioFile::copyGained(float gain, uint8_t *buf_in, uint8_t *buf_out, size_t buf_size)
+{
+    switch(m_spec.m_sample_format)
+    {
+    case AUDIO_U8:
+        SDL_memset(buf_out, 0x80, buf_size);
+        break;
+    case AUDIO_U16:
+    {
+        uint16_t *buf_u = (uint16_t*)buf_out;
+        uint16_t *buf_u_end = (uint16_t*)(buf_out + buf_size);
+
+        for( ; buf_u < buf_u_end; ++buf_u)
+            *buf_u = 0x8000;
+
+        break;
+    }
+    default:
+        SDL_memset(buf_out, 0, buf_size);
+        break;
+    }
+
+    SDL_MixAudioFormat(buf_out, buf_in, m_spec.m_sample_format, (Uint32)buf_size, (int)(SDL_MIX_MAXVOLUME * gain));
+}
 
 MDAudioFile::MDAudioFile() {}
 
@@ -207,6 +250,11 @@ void MDAudioFile::setArgs(const std::string &args)
 
         m_args.insert({key, value});
     }
+}
+
+void MDAudioFile::setWantedSpec(const MDAudioFileSpecWanted &spec)
+{
+    m_specWanted = spec;
 }
 
 const MDAudioFileSpec &MDAudioFile::getSpec() const
