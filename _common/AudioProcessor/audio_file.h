@@ -25,6 +25,8 @@
 #include <vector>
 #include <map>
 
+#include "music_args.h"
+
 struct SDL_RWops;
 
 struct MDAudioFileSpec
@@ -71,9 +73,7 @@ protected:
     MDAudioFileSpec m_spec;
     MDAudioFileSpecWanted m_specWanted;
     std::string     m_lastError;
-    int             m_argTrack = 0; //!< GME only track number
-    typedef std::map<std::string, std::string> ArgsMap;
-    ArgsMap m_args;
+    MusicArgs       m_args;
 
     // Optional: for formats that supposed to use gaining
     std::vector<uint8_t> m_read_buffer;
@@ -81,12 +81,6 @@ protected:
     static bool isLoopTag(const char* tag);
     static int64_t parseTime(char *time, long samplerate_hz);
     static std::string parseidiMetaTag(const char *src);
-
-    int getArgI(const std::string &key, int def);
-    bool getArgB(const std::string &key, bool def);
-    float getArgF(const std::string &key, float def);
-    double getArgD(const std::string &key, double def);
-    std::string getArgS(const std::string &key, const std::string def);
 
     void copyGained(float gain, uint8_t *buf_in, uint8_t *buf_out, size_t buf_size);
 
@@ -118,7 +112,7 @@ public:
 
     std::string getLastError();
 
-    void setArgs(const std::string &args);
+    void setArgs(const MusicArgs &args);
 
     virtual bool openRead(SDL_RWops *file) = 0;
     virtual bool openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec) = 0;
