@@ -77,9 +77,10 @@ const MDAudioFileSpec &MoondustAudioProcessor::getInSpec() const
     return m_in_file->getSpec();
 }
 
-bool MoondustAudioProcessor::openInFile(const std::string &file, int *detectedFormat)
+bool MoondustAudioProcessor::openInFile(const std::string &file, const std::string &argsString, int *detectedFormat)
 {
     AudioFormats format = FORMAT_UNKNOWN;
+    MusicArgs args(argsString);
     std::string err;
 
     if(m_rw_in)
@@ -182,6 +183,8 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, int *detectedFo
         m_rw_in = nullptr;
         return false;
     }
+
+    m_in_file->setArgs(args);
 
     if(!m_in_file->openRead(m_rw_in))
     {
