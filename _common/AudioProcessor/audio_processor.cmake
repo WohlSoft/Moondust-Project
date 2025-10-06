@@ -13,6 +13,9 @@ set(AUDIO_PROCESSOR_SRC
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_vorbis.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_vorbis.h
 
+    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_opus.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_opus.h
+
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_qoa.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_qoa.h
     ${CMAKE_CURRENT_LIST_DIR}/codec/qoa/qoa.h
@@ -21,6 +24,7 @@ set(AUDIO_PROCESSOR_SRC
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_adl.h
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_opn.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_opn.h
+    ${CMAKE_CURRENT_LIST_DIR}/codec/OPNMIDI/gm_opn_bank.h
 
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_pxtone.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_pxtone.h
