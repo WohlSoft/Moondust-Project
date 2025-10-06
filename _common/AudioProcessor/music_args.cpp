@@ -42,6 +42,8 @@ bool MusicArgs::setArgs(const std::string &args)
 
         chunk = args.substr(0, tail);
         m_argTrack = SDL_atoi(chunk.c_str());
+        // Continue at this point
+        pos = tail + 1;
     }
 
     while(pos < args.size())
