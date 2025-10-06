@@ -24,8 +24,11 @@
 #include "pxtone/pxtnError.h"
 
 
-MDAudioPXTone::MDAudioPXTone()
-{}
+MDAudioPXTone::MDAudioPXTone() :
+    MDAudioFile()
+{
+    m_read_buffer.resize(4096);
+}
 
 MDAudioPXTone::~MDAudioPXTone()
 {
@@ -64,6 +67,11 @@ static bool _pxtn_p(void* user, int32_t* p_pos)
 
 bool MDAudioPXTone::openRead(SDL_RWops *file)
 {
+    const char *name;
+    int32_t name_len;
+    const char *comment;
+    int32_t comment_len;
+    char *temp_string;
     pxtnERR ret;
     close();
 
@@ -73,7 +81,8 @@ bool MDAudioPXTone::openRead(SDL_RWops *file)
     pxtn = new pxtnService(_pxtn_r, _pxtn_w, _pxtn_s, _pxtn_p);
 
     ret = pxtn->init();
-    if (ret != pxtnOK) {
+    if(ret != pxtnOK)
+    {
         close();
         m_lastError = std::string("PXTONE: Failed to initialize the library: ") + pxtnError_get_string(ret);
         return false;
@@ -83,16 +92,71 @@ bool MDAudioPXTone::openRead(SDL_RWops *file)
     m_spec.m_sample_format = m_specWanted.getSampleFormat(AUDIO_S16SYS);
     m_spec.m_sample_rate = m_specWanted.getSampleRate(44100);
 
+    if(!pxtn->set_destination_quality(m_spec.m_channels, m_spec.m_sample_rate))
+    {
+        close();
+        m_lastError = std::string("PXTONE: Failed to set the destination quality");
+        return false;
+    }
+
     /* LOAD MUSIC DATA */
     ret = pxtn->read(file);
-    if (ret != pxtnOK) {
+    if(ret != pxtnOK)
+    {
         close();
         m_lastError = std::string("PXTONE: Failed to load a music data:") + pxtnError_get_string(ret);
         return false;
     }
 
-    // FIXME: Finish this!
+    ret = pxtn->tones_ready();
+    if(ret != pxtnOK)
+    {
+        close();
+        m_lastError = std::string("PXTONE: Failed to initialize tones: ") + pxtnError_get_string(ret);
+        return false;
+    }
 
+    evals_loaded = true;
+
+    /* PREPARATION PLAYING MUSIC */
+    pxtn->moo_get_total_sample();
+
+    pxtnVOMITPREPARATION prep;
+    SDL_memset(&prep, 0, sizeof(pxtnVOMITPREPARATION));
+    prep.flags = pxtnVOMITPREPFLAG_unit_mute;
+    prep.start_pos_float = 0;
+    prep.master_volume   = 1.0f;
+
+    if(!pxtn->moo_preparation(&prep, tempo))
+    {
+        close();
+        m_lastError = std::string("PXTONE: Failed to initialize the output (Moo)");
+        return false;
+    }
+
+    /* Attempt to load metadata */
+
+    name = pxtn->text->get_name_buf(&name_len);
+    if(name)
+    {
+        temp_string = SDL_iconv_string("UTF-8", "Shift-JIS", name, name_len + 1);
+        m_spec.m_meta_title = std::string(temp_string);
+        SDL_free(temp_string);
+    }
+
+    comment = pxtn->text->get_comment_buf(&comment_len);
+    if(comment)
+    {
+        temp_string = SDL_iconv_string("UTF-8", "Shift-JIS", comment, comment_len + 1);
+        m_spec.m_meta_copyright = std::string(temp_string);
+        SDL_free(temp_string);
+    }
+
+    m_spec.m_loop_start = pxtn->moo_get_sampling_repeat();
+    m_spec.m_loop_end = pxtn->moo_get_sampling_end();
+    m_spec.m_loop_len = (m_spec.m_loop_start >= 0 && m_spec.m_loop_end >= 0) ? (m_spec.m_loop_end - m_spec.m_loop_start) : 0;
+    int32_t duration = pxtn->moo_get_total_sample();
+    m_spec.m_total_length = duration > 0 ? duration / tempo: 0;
 
     return true;
 }
@@ -123,7 +187,7 @@ bool MDAudioPXTone::readRewind()
         return false;
 
     SDL_memset(&prep, 0, sizeof(pxtnVOMITPREPARATION));
-    prep.flags = flags;
+    prep.flags = pxtnVOMITPREPFLAG_unit_mute;
     prep.start_pos_sample = 0;
     prep.master_volume   = 1.0f;
 
@@ -135,7 +199,15 @@ bool MDAudioPXTone::readRewind()
 
 size_t MDAudioPXTone::readChunk(uint8_t *out, size_t outSize, bool *spec_changed)
 {
-    return 0;
+    if(outSize > m_read_buffer.size())
+        m_read_buffer.resize(outSize);
+
+    if(!pxtn->Moo(m_read_buffer.data(), outSize))
+        return 0;
+
+    copyGained(gain, m_read_buffer.data(), out, outSize);
+
+    return outSize;
 }
 
 size_t MDAudioPXTone::writeChunk(uint8_t *in, size_t inSize)

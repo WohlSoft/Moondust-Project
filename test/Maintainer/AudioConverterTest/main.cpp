@@ -28,6 +28,9 @@ int main(int argc, char *argv[])
     QApplication::setApplicationName("TEST: Audio Converter");
     QApplication a(argc, argv);
 
+    // Workaround: https://discourse.libsdl.org/t/26995
+    setlocale(LC_NUMERIC, "C");
+
     CoverterDialogue w;
     w.show();
 
