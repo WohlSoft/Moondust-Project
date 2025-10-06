@@ -81,9 +81,19 @@ void CoverterDialogue::on_runCvt_clicked()
 {
     m_cvt.setCutAtLoopEnd(ui->dstCutAtLoopEnd->isChecked());
 
-    if(!m_cvt.openInFile(ui->fileIn->text().toStdString()))
+    QString inPath = ui->fileIn->text();
+    QString inPathArgs;
+    int argsBegin = inPath.indexOf('|');
+
+    if(argsBegin >= 0)
     {
-        qWarning() << "Failed to open input file" << ui->fileIn->text() << QString::fromStdString(m_cvt.getLastError());
+        inPathArgs = inPath.mid(argsBegin + 1);
+        inPath.remove(argsBegin, inPath.size() - argsBegin);
+    }
+
+    if(!m_cvt.openInFile(inPath.toStdString(), inPathArgs.toStdString()))
+    {
+        qWarning() << "Failed to open input file" << inPath << QString::fromStdString(m_cvt.getLastError());
         return;
     }
 

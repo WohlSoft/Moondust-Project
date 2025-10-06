@@ -68,7 +68,7 @@ public:
 
     const MDAudioFileSpec &getInSpec() const;
 
-    bool openInFile(const std::string &file, int *detectedFormat = nullptr);
+    bool openInFile(const std::string &file, const std::string &args = std::string(), int *detectedFormat = nullptr);
     bool openOutFile(const std::string &file, int dstFormat, const MDAudioFileSpec &dstSpec);
 
     void close();
