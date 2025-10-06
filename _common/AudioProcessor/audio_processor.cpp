@@ -22,6 +22,7 @@
 #include "codec/audio_vorbis.h"
 #include "codec/audio_qoa.h"
 #include "codec/audio_midi_adl.h"
+#include "codec/audio_midi_opn.h"
 #include "codec/audio_pxtone.h"
 
 #include <SDL2/SDL.h>
@@ -154,6 +155,22 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, const std::stri
     case FORMAT_RIFF_MIDI:
     case FORMAT_XMI:
     case FORMAT_MUS:
+    {
+        int synth = args.getArgI("s", 0);
+        switch(synth)
+        {
+        default:
+        case 0:
+            m_in_file.reset(new MDAudioADLMIDI);
+            break;
+
+        case 3:
+            m_in_file.reset(new MDAudioOPNMIDI);
+            break;
+        }
+
+        break;
+    }
     case FORMAT_IMF:
     case FORMAT_MIDI_ADL:
         m_in_file.reset(new MDAudioADLMIDI);
