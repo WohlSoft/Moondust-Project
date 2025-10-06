@@ -47,7 +47,7 @@ else()
     endif()
 endif()
 
-target_include_directories(AudioConverterTest PRIVATE ${AUDIO_PROCESSOR_INCLUDES})
+target_include_directories(AudioConverterTest PRIVATE ${AUDIO_PROCESSOR_INCLUDES} /usr/include/opus)
 target_link_libraries(AudioConverterTest PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Concurrent ${AUDIO_PROCESSOR_LIBS})
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
