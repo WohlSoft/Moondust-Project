@@ -28,7 +28,6 @@ class MDAudioPXTone : public MDAudioFile
 {
     pxtnService *pxtn = nullptr;
     bool evals_loaded = false;
-    int flags = 0;
     double tempo = 1.0;
     float gain = 1.0f;
 
