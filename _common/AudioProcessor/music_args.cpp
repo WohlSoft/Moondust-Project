@@ -55,8 +55,8 @@ bool MusicArgs::setArgs(const std::string &args)
         if(args[pos] == '=')
             key.push_back(args[pos++]);
 
-        tail = args.find(';');
-        value = args.substr(pos, tail);
+        tail = args.find(';', pos);
+        value = args.substr(pos, tail - pos);
         pos += value.size() + 1;
 
         m_args.insert({key, value});
