@@ -22,6 +22,7 @@
 #include "codec/audio_vorbis.h"
 #include "codec/audio_qoa.h"
 #include "codec/audio_midi_adl.h"
+#include "codec/audio_pxtone.h"
 
 #include <SDL2/SDL.h>
 
@@ -162,6 +163,7 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, const std::stri
         break;
 
     case FORMAT_PXTONE:
+        m_in_file.reset(new MDAudioPXTone);
         break;
 
     case FORMAT_QOA:
