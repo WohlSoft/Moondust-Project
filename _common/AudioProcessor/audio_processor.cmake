@@ -19,6 +19,8 @@ set(AUDIO_PROCESSOR_SRC
 
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_adl.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_adl.h
+    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_opn.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_opn.h
 
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_pxtone.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_pxtone.h
