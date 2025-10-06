@@ -134,7 +134,7 @@ bool MDAudioADLMIDI::openRead(SDL_RWops *file)
 
     m_spec.m_channels = 2;
     m_spec.m_sample_format = m_specWanted.getSampleFormat(AUDIO_S16SYS);
-    m_spec.m_sample_rate = m_specWanted.getSampleRate(ADL_CHIP_SAMPLE_RATE);
+    m_spec.m_sample_rate = m_specWanted.getSampleRate(48000);
     m_spec.m_total_length = (int64_t)(adl_totalTimeLength(m_synth) * m_spec.m_sample_rate);
 
     if(!reCreateSynth())
@@ -159,9 +159,6 @@ bool MDAudioADLMIDI::openRead(SDL_RWops *file)
         close();
         return false;
     }
-
-    m_spec.m_loop_start = (int64_t)(adl_loopStartTime(m_synth) * m_spec.m_sample_rate);
-    m_spec.m_loop_end = (int64_t)(adl_loopEndTime(m_synth) * m_spec.m_sample_rate);
 
     switch (m_spec.m_sample_format)
     {
@@ -204,6 +201,10 @@ bool MDAudioADLMIDI::openRead(SDL_RWops *file)
         m_sample_format.sampleOffset = sizeof(float) * 2;
         m_spec.m_sample_format = AUDIO_F32SYS;
     }
+
+    m_spec.m_loop_start = (int64_t)(adl_loopStartTime(m_synth) * m_spec.m_sample_rate) / tempo;
+    m_spec.m_loop_end = (int64_t)(adl_loopEndTime(m_synth) * m_spec.m_sample_rate) / tempo;
+    m_spec.m_total_length = (adl_totalTimeLength(m_synth) * m_spec.m_sample_rate) / tempo;
 
     if(m_spec.m_loop_start >= 0 && m_spec.m_loop_end >= 0)
     {

@@ -23,7 +23,6 @@
 #include <vector>
 
 #include "../audio_file.h"
-#include "qoa/qoa.h"
 
 struct ADL_MIDIPlayer;
 
