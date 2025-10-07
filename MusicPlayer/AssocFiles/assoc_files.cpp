@@ -51,6 +51,7 @@ AssocFiles::AssocFiles(QWidget *parent) :
     formats << tentry{"vgz",  "VGZ - Video Game Music (GZ Compressed)", tr("Video Game Music (GZ-compressed)", "File Type Name")};
     formats << tentry{"imf",  "IMF - Imago Orpheus/Id Music File", tr("Imago Orpheus/Id Music File", "File Type Name")};
     formats << tentry{"wlf",  "WLF - Id Music File (Wolfenstein)", tr("Id Music File (Wolfenstein)", "File Type Name")};
+    formats << tentry{"klm",  "KLM - Wacky Wheels KLM music file", tr("Wacky Wheels KLM music file", "File Type Name")};
 
     formats << tentry{"669",  "669 - Composer 669, Unis 669", tr("Composer 669, Unis 669", "File Type Name")};
     formats << tentry{"amf",  "AMF - ASYLUM Music Format V1.0/DSMI Advanced Module Format", tr("ASYLUM Music Format", "File Type Name")};
