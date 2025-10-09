@@ -3,8 +3,16 @@
 
 #include "../audio_file.h"
 
+typedef struct OggOpusFile  OggOpusFile;
+typedef struct OpusHead     OpusHead;
+
 class MDAudioOpus : public MDAudioFile
 {
+    // Opus Read
+    OggOpusFile *m_of = nullptr;
+    const OpusHead *m_op_info = nullptr;
+    int m_section = -1;
+
     bool m_write = false;
 
     int set_op_error(const char *function, int error);
