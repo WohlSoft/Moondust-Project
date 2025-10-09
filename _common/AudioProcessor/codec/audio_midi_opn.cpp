@@ -188,6 +188,9 @@ bool MDAudioOPNMIDI::openRead(SDL_RWops *file)
         m_spec.m_loop_len = 0;
     }
 
+    m_spec.m_meta_title = opn2_metaMusicTitle(m_synth);
+    m_spec.m_meta_copyright = opn2_metaMusicCopyright(m_synth);
+
     return true;
 }
 

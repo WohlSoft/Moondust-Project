@@ -20,6 +20,7 @@
 #include "audio_processor.h"
 #include "audio_detect.h"
 #include "codec/audio_vorbis.h"
+#include "codec/audio_opus.h"
 #include "codec/audio_qoa.h"
 #include "codec/audio_midi_adl.h"
 #include "codec/audio_midi_opn.h"
@@ -132,7 +133,7 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, const std::stri
         break;
 
     case FORMAT_OPUS:
-        // m_in_file.reset(new MDAudioOpus);
+        m_in_file.reset(new MDAudioOpus);
         break;
 
     case FORMAT_FLAC:
