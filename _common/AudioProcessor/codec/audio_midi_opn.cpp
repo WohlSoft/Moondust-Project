@@ -70,7 +70,7 @@ bool MDAudioOPNMIDI::reOpenFile()
 MDAudioOPNMIDI::MDAudioOPNMIDI() :
     MDAudioFile()
 {
-    m_read_buffer.resize(4096);
+    m_io_buffer.resize(4096);
 }
 
 MDAudioOPNMIDI::~MDAudioOPNMIDI()
@@ -240,19 +240,19 @@ size_t MDAudioOPNMIDI::readChunk(uint8_t *out, size_t outSize, bool *spec_change
     if(opn2_atEnd(m_synth))
         return 0;
 
-    if(outSize > m_read_buffer.size())
-        m_read_buffer.resize(outSize);
+    if(outSize > m_io_buffer.size())
+        m_io_buffer.resize(outSize);
 
     sample_format.type = (OPNMIDI_SampleType)m_sample_format.type;
     sample_format.sampleOffset = m_sample_format.sampleOffset;
     sample_format.containerSize = m_sample_format.containerSize;
 
     ret = opn2_playFormat(m_synth, outSize / sample_format.containerSize,
-                          m_read_buffer.data(),
-                          m_read_buffer.data() + sample_format.containerSize,
+                          m_io_buffer.data(),
+                          m_io_buffer.data() + sample_format.containerSize,
                           &sample_format);
 
-    copyGained(gain, m_read_buffer.data(), out, outSize);
+    copyGained(gain, m_io_buffer.data(), out, outSize);
 
     return ret * sample_format.containerSize;
 }

@@ -27,7 +27,7 @@
 MDAudioPXTone::MDAudioPXTone() :
     MDAudioFile()
 {
-    m_read_buffer.resize(4096);
+    m_io_buffer.resize(4096);
 }
 
 MDAudioPXTone::~MDAudioPXTone()
@@ -199,13 +199,13 @@ bool MDAudioPXTone::readRewind()
 
 size_t MDAudioPXTone::readChunk(uint8_t *out, size_t outSize, bool *spec_changed)
 {
-    if(outSize > m_read_buffer.size())
-        m_read_buffer.resize(outSize);
+    if(outSize > m_io_buffer.size())
+        m_io_buffer.resize(outSize);
 
-    if(!pxtn->Moo(m_read_buffer.data(), outSize))
+    if(!pxtn->Moo(m_io_buffer.data(), outSize))
         return 0;
 
-    copyGained(gain, m_read_buffer.data(), out, outSize);
+    copyGained(gain, m_io_buffer.data(), out, outSize);
 
     return outSize;
 }
