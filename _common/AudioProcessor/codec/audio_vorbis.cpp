@@ -2,9 +2,26 @@
 #include <time.h>
 #include <SDL2/SDL_rwops.h>
 #include <SDL2/SDL_audio.h>
-
 #include "audio_vorbis.h"
 
+#include <vorbis/vorbisfile.h>
+#include <vorbis/vorbisenc.h>
+
+struct MDAudioVorbis_private
+{
+    // Vorbis Read
+    OggVorbis_File m_vf;
+    vorbis_info m_vi;
+    int m_section = -1;
+
+    // Vorbis Write
+    ogg_stream_state m_os;    //!< take physical pages, weld into a logical stream of packets
+    ogg_page         m_og;    //!< one Ogg bitstream page.  Vorbis packets are inside
+    ogg_packet       m_op;    //!< one raw packet of data for decode
+    vorbis_comment   m_vc;    //!< struct that stores all the user comments
+    vorbis_dsp_state m_vd;    //!< central working state for the packet->PCM decoder
+    vorbis_block     m_vb;    //!< local working space for packet->PCM decode
+};
 
 int MDAudioVorbis::set_ov_error(const char *function, int error)
 {
@@ -36,20 +53,20 @@ bool MDAudioVorbis::updateSection()
 {
     vorbis_info *vi;
 
-    vi = ov_info(&m_vf, -1);
+    vi = ov_info(&p->m_vf, -1);
     if(!vi)
     {
         m_lastError = "ov_info returned NULL";
         return false;
     }
 
-    if(vi->channels == m_vi.channels && vi->rate == m_vi.rate)
+    if(vi->channels == p->m_vi.channels && vi->rate == p->m_vi.rate)
         return true;
 
-    SDL_memcpy(&m_vi, vi, sizeof(*vi));
+    SDL_memcpy(&p->m_vi, vi, sizeof(*vi));
 
-    m_spec.m_sample_rate = m_vi.rate;
-    m_spec.m_channels = m_vi.channels;
+    m_spec.m_sample_rate = p->m_vi.rate;
+    m_spec.m_channels = p->m_vi.channels;
 
     return true;
 }
@@ -58,42 +75,45 @@ void MDAudioVorbis::writeFlush()
 {
     int eos = 0;
 
-    while(vorbis_analysis_blockout(&m_vd, &m_vb) == 1)
+    while(vorbis_analysis_blockout(&p->m_vd, &p->m_vb) == 1)
     {
         /* analysis, assume we want to use bitrate management */
-        vorbis_analysis(&m_vb, nullptr);
-        vorbis_bitrate_addblock(&m_vb);
+        vorbis_analysis(&p->m_vb, nullptr);
+        vorbis_bitrate_addblock(&p->m_vb);
 
-        while(vorbis_bitrate_flushpacket(&m_vd, &m_op))
+        while(vorbis_bitrate_flushpacket(&p->m_vd, &p->m_op))
         {
             /* weld the packet into the bitstream */
-            ogg_stream_packetin(&m_os, &m_op);
+            ogg_stream_packetin(&p->m_os, &p->m_op);
 
             /* write out pages (if any) */
             while(!eos)
             {
-                int result = ogg_stream_pageout(&m_os, &m_og);
+                int result = ogg_stream_pageout(&p->m_os, &p->m_og);
                 if(result == 0)
                     break;
 
-                SDL_RWwrite(m_file, m_og.header, 1, m_og.header_len);
-                SDL_RWwrite(m_file, m_og.body, 1, m_og.body_len);
+                SDL_RWwrite(m_file, p->m_og.header, 1, p->m_og.header_len);
+                SDL_RWwrite(m_file, p->m_og.body, 1, p->m_og.body_len);
 
                 /* this could be set above, but for illustrative purposes, I do
                    it here (to show that vorbis does know where the stream ends) */
-                if(ogg_page_eos(&m_og))
+                if(ogg_page_eos(&p->m_og))
                     eos = 1;
             }
         }
     }
 }
 
-MDAudioVorbis::MDAudioVorbis() : MDAudioFile()
+MDAudioVorbis::MDAudioVorbis() :
+    MDAudioFile(),
+    p(new MDAudioVorbis_private)
 {}
 
 MDAudioVorbis::~MDAudioVorbis()
 {
     MDAudioVorbis::close();
+    delete p;
 }
 
 uint32_t MDAudioVorbis::getCodecSpec() const
@@ -133,16 +153,16 @@ bool MDAudioVorbis::openRead(SDL_RWops *file)
     m_write = false;
     m_file = file;
 
-    m_section = -1;
-    memset(&m_vf, 0, sizeof(m_vf));
-    memset(&m_vi, 0, sizeof(m_vi));
+    p->m_section = -1;
+    memset(&p->m_vf, 0, sizeof(p->m_vf));
+    memset(&p->m_vi, 0, sizeof(p->m_vi));
 
     callbacks.read_func = sdl_read_func;
     callbacks.seek_func = sdl_seek_func;
     callbacks.close_func = sdl_close_func;
     callbacks.tell_func = sdl_tell_func;
 
-    if(ov_open_callbacks(m_file, &m_vf, nullptr, 0, callbacks) < 0)
+    if(ov_open_callbacks(m_file, &p->m_vf, nullptr, 0, callbacks) < 0)
     {
         m_lastError = "Not an Ogg Vorbis audio stream";
         close();
@@ -155,9 +175,12 @@ bool MDAudioVorbis::openRead(SDL_RWops *file)
         return false;
     }
 
-    m_spec.m_sample_format = AUDIO_S16SYS;
+    m_spec.m_sample_format = m_specWanted.getSampleFormat(AUDIO_F32SYS);
 
-    vc = ov_comment(&m_vf, -1);
+    if(m_spec.m_sample_format != AUDIO_S16SYS && m_spec.m_sample_format != AUDIO_F32SYS)
+        m_spec.m_sample_format = AUDIO_F32SYS;
+
+    vc = ov_comment(&p->m_vf, -1);
     if(vc != nullptr)
     {
         for(int i = 0; i < vc->comments; i++)
@@ -214,7 +237,7 @@ bool MDAudioVorbis::openRead(SDL_RWops *file)
         }
     }
 
-    m_spec.m_total_length = ov_pcm_total(&m_vf, -1);
+    m_spec.m_total_length = ov_pcm_total(&p->m_vf, -1);
 
     return readRewind();
 }
@@ -231,14 +254,19 @@ bool MDAudioVorbis::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
 
     m_spec = dstSpec;
 
-    vorbis_info_init(&m_vi);
+    vorbis_info_init(&p->m_vi);
 
-    m_spec.m_sample_format = AUDIO_S16SYS; // Can only work with the PCM16
+#ifdef OGG_USE_TREMOR
+    m_spec.m_sample_format = AUDIO_S16SYS;
+#else
+    if(m_spec.m_sample_format != AUDIO_S16SYS && m_spec.m_sample_format != AUDIO_F32SYS)
+        m_spec.m_sample_format = AUDIO_F32SYS;
+#endif
 
     if(m_spec.vbr)
-        ret = vorbis_encode_init_vbr(&m_vi, m_spec.m_channels, m_spec.m_sample_rate, m_spec.quality / 10.0);
+        ret = vorbis_encode_init_vbr(&p->m_vi, m_spec.m_channels, m_spec.m_sample_rate, m_spec.quality / 10.0);
     else
-        ret = vorbis_encode_init(&m_vi, m_spec.m_channels, m_spec.m_sample_rate, -1, m_spec.bitrate, -1);
+        ret = vorbis_encode_init(&p->m_vi, m_spec.m_channels, m_spec.m_sample_rate, -1, m_spec.bitrate, -1);
 
     if(ret)
     {
@@ -247,57 +275,57 @@ bool MDAudioVorbis::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         return false;
     }
 
-    vorbis_comment_init(&m_vc);
-    vorbis_comment_add_tag(&m_vc, "ENCODER", "Moondust Audio Converter");
+    vorbis_comment_init(&p->m_vc);
+    vorbis_comment_add_tag(&p->m_vc, "ENCODER", "Moondust Audio Converter");
 
     if(!m_spec.m_meta_title.empty())
-        vorbis_comment_add_tag(&m_vc, "TITLE", m_spec.m_meta_title.c_str());
+        vorbis_comment_add_tag(&p->m_vc, "TITLE", m_spec.m_meta_title.c_str());
 
     if(!m_spec.m_meta_artist.empty())
-        vorbis_comment_add_tag(&m_vc, "ARTIST", m_spec.m_meta_artist.c_str());
+        vorbis_comment_add_tag(&p->m_vc, "ARTIST", m_spec.m_meta_artist.c_str());
 
     if(!m_spec.m_meta_album.empty())
-        vorbis_comment_add_tag(&m_vc, "ALBUM", m_spec.m_meta_album.c_str());
+        vorbis_comment_add_tag(&p->m_vc, "ALBUM", m_spec.m_meta_album.c_str());
 
     if(!m_spec.m_meta_copyright.empty())
-        vorbis_comment_add_tag(&m_vc, "COPYRIGHT", m_spec.m_meta_copyright.c_str());
+        vorbis_comment_add_tag(&p->m_vc, "COPYRIGHT", m_spec.m_meta_copyright.c_str());
 
     if(m_spec.m_loop_end > 0 && m_spec.m_loop_end > m_spec.m_loop_start)
     {
         from_num = std::to_string(m_spec.m_loop_start);
-        vorbis_comment_add_tag(&m_vc, "LOOPSTART", from_num.c_str());
+        vorbis_comment_add_tag(&p->m_vc, "LOOPSTART", from_num.c_str());
 
         from_num = std::to_string(m_spec.m_loop_end);
-        vorbis_comment_add_tag(&m_vc, "LOOPEND", from_num.c_str());
+        vorbis_comment_add_tag(&p->m_vc, "LOOPEND", from_num.c_str());
     }
 
-    vorbis_analysis_init(&m_vd, &m_vi);
-    vorbis_block_init(&m_vd, &m_vb);
+    vorbis_analysis_init(&p->m_vd, &p->m_vi);
+    vorbis_block_init(&p->m_vd, &p->m_vb);
 
     srand(time(nullptr));
-    ogg_stream_init(&m_os, rand());
+    ogg_stream_init(&p->m_os, rand());
 
 
     ogg_packet header;
     ogg_packet header_comm;
     ogg_packet header_code;
 
-    vorbis_analysis_headerout(&m_vd, &m_vc, &header, &header_comm, &header_code);
-    ogg_stream_packetin(&m_os, &header); /* automatically placed in its own page */
-    ogg_stream_packetin(&m_os, &header_comm);
-    ogg_stream_packetin(&m_os, &header_code);
+    vorbis_analysis_headerout(&p->m_vd, &p->m_vc, &header, &header_comm, &header_code);
+    ogg_stream_packetin(&p->m_os, &header); /* automatically placed in its own page */
+    ogg_stream_packetin(&p->m_os, &header_comm);
+    ogg_stream_packetin(&p->m_os, &header_code);
 
     /* This ensures the actual
      * audio data will start on a new page, as per spec
      */
     while(!eos)
     {
-        int result = ogg_stream_flush(&m_os, &m_og);
+        int result = ogg_stream_flush(&p->m_os, &p->m_og);
         if(result == 0)
             break;
 
-        SDL_RWwrite(m_file, m_og.header, 1, m_og.header_len);
-        SDL_RWwrite(m_file, m_og.body, 1, m_og.body_len);
+        SDL_RWwrite(m_file, p->m_og.header, 1, p->m_og.header_len);
+        SDL_RWwrite(m_file, p->m_og.body, 1, p->m_og.body_len);
     }
 
     return true;
@@ -309,21 +337,21 @@ bool MDAudioVorbis::close()
     {
         if(m_file)
         {
-            vorbis_analysis_wrote(&m_vd, 0);
+            vorbis_analysis_wrote(&p->m_vd, 0);
             writeFlush();
 
-            ogg_stream_clear(&m_os);
-            vorbis_block_clear(&m_vb);
-            vorbis_dsp_clear(&m_vd);
-            vorbis_comment_clear(&m_vc);
-            vorbis_info_clear(&m_vi);
+            ogg_stream_clear(&p->m_os);
+            vorbis_block_clear(&p->m_vb);
+            vorbis_dsp_clear(&p->m_vd);
+            vorbis_comment_clear(&p->m_vc);
+            vorbis_info_clear(&p->m_vi);
         }
 
         m_file = nullptr;
     }
     else if(m_file)
     {
-        ov_clear(&m_vf);
+        ov_clear(&p->m_vf);
         m_file = nullptr;
     }
 
@@ -343,9 +371,9 @@ bool MDAudioVorbis::readRewind()
     int result;
 
 #ifdef OGG_USE_TREMOR
-    result = ov_time_seek(&m_vf, 0);
+    result = ov_time_seek(&p->m_vf, 0);
 #else
-    result = ov_time_seek(&m_vf, 0.0);
+    result = ov_time_seek(&p->m_vf, 0.0);
 #endif
 
     if(result)
@@ -359,15 +387,41 @@ bool MDAudioVorbis::readRewind()
 
 size_t MDAudioVorbis::readChunk(uint8_t *out, size_t outSize, bool *spec_changed)
 {
-    int amount = 0, cur_section = m_section;
+    int amount = 0, cur_section = p->m_section;
+#ifndef OGG_USE_TREMOR
+    float **in_buffer;
+    long in_buffer_samples;
+#endif
 
     if(spec_changed)
         *spec_changed = false;
 
 #ifdef OGG_USE_TREMOR
-    amount = (int)ov_read(&m_vf, (char*)out, outSize, &cur_section);
+    amount = (int)ov_read(&p->m_vf, (char*)out, outSize, &cur_section);
 #else
-    amount = (int)ov_read(&m_vf, (char*)out, outSize, SDL_BYTEORDER == SDL_BIG_ENDIAN, 2, 1, &cur_section);
+    if(m_spec.m_sample_format == AUDIO_F32SYS)
+    {
+        int sample_size = sizeof(float) * m_spec.m_channels;
+
+        in_buffer_samples = ov_read_float(&p->m_vf, &in_buffer, outSize / sample_size, &cur_section);
+
+        if(in_buffer_samples < 0)
+            amount = (int)in_buffer_samples;
+        else
+        {
+            float *out_s = (float*)out;
+
+            for(int i = 0; i < in_buffer_samples; ++i)
+            {
+                for(int c = 0; c < m_spec.m_channels; ++c)
+                    *(out_s++) = in_buffer[c][i];
+            }
+
+            amount = (int)(in_buffer_samples * sample_size);
+        }
+    }
+    else
+        amount = (int)ov_read(&p->m_vf, (char*)out, outSize, SDL_BYTEORDER == SDL_BIG_ENDIAN, 2, 1, &cur_section);
 #endif
 
     if(amount < 0)
@@ -376,9 +430,9 @@ size_t MDAudioVorbis::readChunk(uint8_t *out, size_t outSize, bool *spec_changed
         return ~(size_t)0;
     }
 
-    if(cur_section != m_section)
+    if(cur_section != p->m_section)
     {
-        m_section = cur_section;
+        p->m_section = cur_section;
 
         if(spec_changed)
             *spec_changed = true;
@@ -394,22 +448,37 @@ size_t MDAudioVorbis::writeChunk(uint8_t *in, size_t inSize)
 {
     long i;
     size_t written = 0;
-    int sample_size = m_spec.m_channels * sizeof(short);
+    int sample_size;
     /* expose the buffer to submit data */
 
-    float **buffer = vorbis_analysis_buffer(&m_vd, inSize);
+    float **buffer = vorbis_analysis_buffer(&p->m_vd, inSize);
 
     /* uninterleave samples */
-    int16_t *in_s = (int16_t*)in;
-
-    for(i = 0; i < inSize / sample_size; i++)
+    if(m_spec.m_sample_format == AUDIO_F32SYS)
     {
-        for(int c = 0; c < m_spec.m_channels; ++c)
-            buffer[c][i] = *(in_s++) / 32768.f;
+        float *in_s = (float*)in;
+        sample_size = m_spec.m_channels * sizeof(float);
+
+        for(i = 0; i < inSize / sample_size; i++)
+        {
+            for(int c = 0; c < m_spec.m_channels; ++c)
+                buffer[c][i] = *(in_s++);
+        }
+    }
+    else
+    {
+        int16_t *in_s = (int16_t*)in;
+        sample_size = m_spec.m_channels * sizeof(int16_t);
+
+        for(i = 0; i < inSize / sample_size; i++)
+        {
+            for(int c = 0; c < m_spec.m_channels; ++c)
+                buffer[c][i] = *(in_s++) / 32768.f;
+        }
     }
 
     written += i * sample_size;
-    vorbis_analysis_wrote(&m_vd, i);
+    vorbis_analysis_wrote(&p->m_vd, i);
 
     writeFlush();
 
