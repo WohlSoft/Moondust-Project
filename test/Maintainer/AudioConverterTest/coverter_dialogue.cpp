@@ -56,6 +56,48 @@ CoverterDialogue::CoverterDialogue(QWidget *parent)
         m_setup.sync();
     });
 
+    QObject::connect(ui->dstFormat, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+    this, [this](int idx)->void
+    {
+        m_setup.beginGroup("files");
+        m_setup.setValue("dst-format", idx);
+        m_setup.endGroup();
+        m_setup.sync();
+
+        QString outFile = ui->fileOut->text();
+        int dot = outFile.lastIndexOf('.');
+        if(dot >= 0)
+        {
+            switch(idx)
+            {
+            case 0:
+                outFile.replace(dot + 1, outFile.size() - (dot - 1), "ogg");
+                ui->fileOut->setText(outFile);
+                break;
+            case 1:
+                outFile.replace(dot + 1, outFile.size() - (dot - 1), "qoa");
+                ui->fileOut->setText(outFile);
+                break;
+            case 2:
+                outFile.replace(dot + 1, outFile.size() - (dot - 1), "xqoa");
+                ui->fileOut->setText(outFile);
+                break;
+            case 3:
+                outFile.replace(dot + 1, outFile.size() - (dot - 1), "opus");
+                ui->fileOut->setText(outFile);
+                break;
+            }
+        }
+    });
+
+    ui->dstFormat->blockSignals(true);
+    ui->dstFormat->addItem("OGG Vorbis", (int)FORMAT_OGG_VORBIS);
+    ui->dstFormat->addItem("QOA (Plain QOA)", (int)FORMAT_QOA);
+    ui->dstFormat->addItem("XQOA (Extended QOA)", (int)FORMAT_XQOA);
+    ui->dstFormat->addItem("OPUS", (int)FORMAT_OPUS);
+    ui->dstFormat->setCurrentIndex(0);
+    ui->dstFormat->blockSignals(false);
+
     m_setup.beginGroup("files");
     ui->fileIn->blockSignals(true);
     ui->fileIn->setText(m_setup.value("file-in").toString());
@@ -63,12 +105,10 @@ CoverterDialogue::CoverterDialogue(QWidget *parent)
     ui->fileOut->blockSignals(true);
     ui->fileOut->setText(m_setup.value("file-out").toString());
     ui->fileOut->blockSignals(false);
+    ui->dstFormat->blockSignals(true);
+    ui->dstFormat->setCurrentIndex(m_setup.value("dst-format").toInt());
+    ui->dstFormat->blockSignals(false);
     m_setup.endGroup();
-
-    ui->dstFormat->addItem("OGG Vorbis", (int)FORMAT_OGG_VORBIS);
-    ui->dstFormat->addItem("QOA (Plain QOA)", (int)FORMAT_QOA);
-    ui->dstFormat->addItem("XQOA (Extended QOA)", (int)FORMAT_XQOA);
-    ui->dstFormat->setCurrentIndex(0);
 }
 
 CoverterDialogue::~CoverterDialogue()
@@ -99,7 +139,7 @@ void CoverterDialogue::on_runCvt_clicked()
 
     m_dstSpec = m_cvt.getInSpec();
 
-    m_dstSpec.vbr = true;
+    m_dstSpec.vbr = ui->quality->isChecked();
     m_dstSpec.bitrate = 128000;
     m_dstSpec.quality = 5;
     m_dstSpec.profile = -1;
@@ -111,8 +151,19 @@ void CoverterDialogue::on_runCvt_clicked()
     if(ui->quality->isChecked())
         m_dstSpec.quality = ui->dstQuality->value();
 
+    if(ui->bitrate->isChecked())
+        m_dstSpec.bitrate = ui->dstBitRate->value() * 1000;
+
     if(ui->rate->isChecked())
         m_dstSpec.m_sample_rate = ui->dstRate->value();
+
+    if(!m_cvt.openOutFile(ui->fileOut->text().toStdString(), ui->dstFormat->currentData().toInt(), m_dstSpec))
+    {
+        qWarning() << "Failed to open output file" << ui->fileOut->text() << QString::fromStdString(m_cvt.getLastError());
+        return;
+    }
+
+    m_dstSpec = m_cvt.getOutSpec();
 
     if(m_dstSpec.m_sample_rate != oldRate &&
        m_dstSpec.m_loop_start != 0 && m_dstSpec.m_loop_end != 0 &&
@@ -124,12 +175,6 @@ void CoverterDialogue::on_runCvt_clicked()
     else // Otherwise, just write down as-is
     {
         m_phase = PHASE_CONVERSION;
-    }
-
-    if(!m_cvt.openOutFile(ui->fileOut->text().toStdString(), ui->dstFormat->currentData().toInt(), m_dstSpec))
-    {
-        qWarning() << "Failed to open output file" << ui->fileOut->text() << QString::fromStdString(m_cvt.getLastError());
-        return;
     }
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -174,7 +219,7 @@ void CoverterDialogue::runner()
             case PHASE_LENGHT_MEASURE:
                 if(!m_cvt.runChunk(true))
                 {
-                    qWarning() << "Conversion failed: (Phase Measure) can't read source file";
+                    qWarning() << "Conversion failed: (Phase Measure):" << QString::fromStdString(m_cvt.getLastError());
                     emit workFinished();
                     return;
                 }
@@ -215,7 +260,7 @@ void CoverterDialogue::runner()
             case PHASE_CONVERSION:
                 if(!m_cvt.runChunk(false))
                 {
-                    qWarning() << "Conversion failed: (Phase Conversion) can't read source file";
+                    qWarning() << "Conversion failed: (Phase Conversion):" << QString::fromStdString(m_cvt.getLastError());
                     emit workFinished();
                     return;
                 }
@@ -234,7 +279,7 @@ void CoverterDialogue::runner()
         {
             if(!m_cvt.runChunk())
             {
-                qWarning() << "Conversion failed: can't read source file";
+                qWarning() << "Conversion failed:" << QString::fromStdString(m_cvt.getLastError());
                 emit workFinished();
                 return;
             }

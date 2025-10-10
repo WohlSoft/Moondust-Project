@@ -2,23 +2,13 @@
 #define AUDIO_VORBIS_H
 
 #include "../audio_file.h"
-#include <vorbis/vorbisfile.h>
-#include <vorbis/vorbisenc.h>
+
+struct MDAudioVorbis_private;
 
 class MDAudioVorbis : public MDAudioFile
 {
-    // Vorbis Read
-    OggVorbis_File m_vf;
-    vorbis_info m_vi;
-    int m_section = -1;
-
-    // Vorbis Write
-    ogg_stream_state m_os;    //!< take physical pages, weld into a logical stream of packets
-    ogg_page         m_og;    //!< one Ogg bitstream page.  Vorbis packets are inside
-    ogg_packet       m_op;    //!< one raw packet of data for decode
-    vorbis_comment   m_vc;    //!< struct that stores all the user comments
-    vorbis_dsp_state m_vd;    //!< central working state for the packet->PCM decoder
-    vorbis_block     m_vb;    //!< local working space for packet->PCM decode
+    // internals
+    MDAudioVorbis_private *p = nullptr;
 
     bool m_write = false;
 

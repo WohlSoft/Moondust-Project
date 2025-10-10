@@ -3,8 +3,10 @@
 
 #include "../audio_file.h"
 
-typedef struct OggOpusFile  OggOpusFile;
-typedef struct OpusHead     OpusHead;
+typedef struct OggOpusFile      OggOpusFile;
+typedef struct OpusHead         OpusHead;
+typedef struct OggOpusEnc       OggOpusEnc;
+typedef struct OggOpusComments  OggOpusComments;
 
 class MDAudioOpus : public MDAudioFile
 {
@@ -13,13 +15,16 @@ class MDAudioOpus : public MDAudioFile
     const OpusHead *m_op_info = nullptr;
     int m_section = -1;
 
+    // Opus write
+    OggOpusEnc *m_enc = nullptr;
+    OggOpusComments *m_out_comments = nullptr;
+    size_t m_written = 0;
+
     bool m_write = false;
 
     int set_op_error(const char *function, int error);
 
     bool updateSection();
-    void writeFlush();
-
 public:
     MDAudioOpus();
     virtual ~MDAudioOpus();

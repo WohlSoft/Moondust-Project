@@ -20,7 +20,7 @@
 #include <string.h>
 #include <SDL2/SDL_rwops.h>
 #include <SDL2/SDL_audio.h>
-
+#include "qoa/qoa.h"
 #include "audio_qoa.h"
 
 #include <SDL2/SDL_stdinc.h>

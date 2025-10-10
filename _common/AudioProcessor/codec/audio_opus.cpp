@@ -3,6 +3,7 @@
 #include "audio_opus.h"
 
 #include <opus/opusfile.h>
+#include <opus/opusenc.h>
 
 int MDAudioOpus::set_op_error(const char *function, int error)
 {
@@ -53,11 +54,6 @@ bool MDAudioOpus::updateSection()
     return true;
 }
 
-void MDAudioOpus::writeFlush()
-{
-
-}
-
 MDAudioOpus::MDAudioOpus() :
     MDAudioFile()
 {}
@@ -86,6 +82,19 @@ static opus_int64 sdl_tell_func(void *datasource)
 {
     return SDL_RWtell((SDL_RWops*)datasource);
 }
+
+static int sdl_write_func(void *datasource, const unsigned char *ptr, opus_int32 len)
+{
+    int ret = SDL_RWwrite((SDL_RWops*)datasource, ptr, 1, len);
+    return ret == len  ? 0 : 1;
+}
+
+static int sdl_write_close(void *datasource)
+{
+    (void)datasource; // Do nothing!
+    return 0;
+}
+
 
 bool MDAudioOpus::openRead(SDL_RWops *file)
 {
@@ -197,14 +206,115 @@ bool MDAudioOpus::openRead(SDL_RWops *file)
 
 bool MDAudioOpus::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
 {
-    return false;
+    OpusEncCallbacks callbacks;
+    std::string from_num;
+    int err;
+
+    close();
+
+    m_write = true;
+    m_file = file;
+
+    m_spec = dstSpec;
+
+    if(m_spec.m_sample_format != AUDIO_S16SYS && m_spec.m_sample_format != AUDIO_F32SYS)
+        m_spec.m_sample_format = AUDIO_S16SYS;
+
+    m_spec.m_sample_rate = 48000;
+
+    SDL_zero(callbacks);
+    callbacks.write = sdl_write_func;
+    callbacks.close = sdl_write_close;
+
+    m_out_comments = ope_comments_create();
+
+    if(!m_spec.m_meta_title.empty())
+        ope_comments_add(m_out_comments, "TITLE", m_spec.m_meta_title.c_str());
+
+    if(!m_spec.m_meta_artist.empty())
+        ope_comments_add(m_out_comments, "ARTIST", m_spec.m_meta_artist.c_str());
+
+    if(!m_spec.m_meta_album.empty())
+        ope_comments_add(m_out_comments, "ALBUM", m_spec.m_meta_album.c_str());
+
+    if(!m_spec.m_meta_copyright.empty())
+        ope_comments_add(m_out_comments, "COPYRIGHT", m_spec.m_meta_copyright.c_str());
+
+    if(m_spec.m_loop_end > 0 && m_spec.m_loop_end > m_spec.m_loop_start)
+    {
+        from_num = std::to_string(m_spec.m_loop_start);
+        ope_comments_add(m_out_comments, "LOOPSTART", from_num.c_str());
+
+        from_num = std::to_string(m_spec.m_loop_end);
+        ope_comments_add(m_out_comments, "LOOPEND", from_num.c_str());
+    }
+
+    m_enc = ope_encoder_create_callbacks(&callbacks, m_file, m_out_comments,
+                                         m_spec.m_sample_rate, m_spec.m_channels, m_spec.m_channels > 2 ? 1 : 0, &err);
+    if(!m_enc)
+    {
+        m_lastError = "Can't create Opus ecnoding context:";
+        m_lastError += ope_strerror(err);
+        ope_comments_destroy(m_out_comments);
+        return false;
+    }
+
+    if(m_spec.quality >= 0)
+    {
+        if(m_spec.quality >= 0 && m_spec.quality<= 2)
+            ope_encoder_ctl(m_enc, OPUS_SET_BANDWIDTH(OPUS_BANDWIDTH_NARROWBAND));
+        else if(m_spec.quality >= 3 && m_spec.quality<= 4)
+            ope_encoder_ctl(m_enc, OPUS_SET_BANDWIDTH(OPUS_BANDWIDTH_MEDIUMBAND));
+        else if(m_spec.quality >= 5 && m_spec.quality<= 6)
+            ope_encoder_ctl(m_enc, OPUS_SET_BANDWIDTH(OPUS_BANDWIDTH_WIDEBAND));
+        else if(m_spec.quality >= 7 && m_spec.quality<= 8)
+            ope_encoder_ctl(m_enc, OPUS_SET_BANDWIDTH(OPUS_BANDWIDTH_SUPERWIDEBAND));
+        else if(m_spec.quality >= 9)
+            ope_encoder_ctl(m_enc, OPUS_SET_BANDWIDTH(OPUS_BANDWIDTH_FULLBAND));
+    }
+
+    if(m_spec.vbr)
+    {
+        ope_encoder_ctl(m_enc, OPUS_SET_VBR(1));
+        ope_encoder_ctl(m_enc, OPUS_SET_VBR_CONSTRAINT(1));
+    }
+    else
+        ope_encoder_ctl(m_enc, OPUS_SET_VBR(0));
+
+    if(m_spec.bitrate > 0)
+        ope_encoder_ctl(m_enc, OPUS_SET_BITRATE(m_spec.bitrate));
+
+    if(m_spec.complexity >= 0)
+        ope_encoder_ctl(m_enc, OPUS_SET_COMPLEXITY(m_spec.complexity));
+
+    ope_encoder_ctl(m_enc, OPUS_SET_DTX(0));
+    ope_encoder_ctl(m_enc, OPUS_SET_PACKET_LOSS_PERC(0));
+
+    ope_encoder_ctl(m_enc, OPUS_SET_EXPERT_FRAME_DURATION(OPUS_FRAMESIZE_10_MS));
+
+    return true;
 }
 
 bool MDAudioOpus::close()
 {
     if(m_write)
     {
+        if(m_file)
+        {
+            if(m_enc)
+            {
+                if(m_written > 0)
+                    ope_encoder_drain(m_enc);
+                ope_encoder_destroy(m_enc);
+            }
 
+            if(m_out_comments)
+                ope_comments_destroy(m_out_comments);
+        }
+
+        m_enc = nullptr;
+        m_out_comments = nullptr;
+        m_file = nullptr;
     }
     else
     {
@@ -270,5 +380,34 @@ size_t MDAudioOpus::readChunk(uint8_t *out, size_t outSize, bool *spec_changed)
 
 size_t MDAudioOpus::writeChunk(uint8_t *in, size_t inSize)
 {
-    return 0;
+    if(m_spec.m_sample_format == AUDIO_F32SYS)
+    {
+        size_t frame_size = sizeof(float) * m_spec.m_channels;
+        int ret = ope_encoder_write_float(m_enc, reinterpret_cast<float*>(in), inSize / frame_size);
+
+        if(ret != OPE_OK)
+        {
+            m_lastError = "Failed to encode: ";
+            m_lastError += ope_strerror(ret);
+        }
+        else
+            m_written += inSize;
+
+        return (ret == OPE_OK) ? inSize : 0;
+    }
+    else
+    {
+        size_t frame_size = sizeof(opus_int16) * m_spec.m_channels;
+        int ret = ope_encoder_write(m_enc, reinterpret_cast<opus_int16*>(in), inSize / frame_size);
+
+        if(ret != OPE_OK)
+        {
+            m_lastError = "Failed to encode: ";
+            m_lastError += ope_strerror(ret);
+        }
+        else
+            m_written += inSize;
+
+        return (ret == OPE_OK) ? inSize : 0;
+    }
 }
