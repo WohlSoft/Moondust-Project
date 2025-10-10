@@ -18,6 +18,8 @@
  */
 
 #include "coverter_dialogue.h"
+#include "audio_format.h"
+
 #include "./ui_coverter_dialogue.h"
 #include <QtConcurrent/QtConcurrent>
 #include <QtDebug>

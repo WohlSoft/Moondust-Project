@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5...3.10)
 
-project(AudioConverterTest VERSION 0.1 LANGUAGES CXX)
+project(AudioConverterTest VERSION 0.1 LANGUAGES CXX C)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)

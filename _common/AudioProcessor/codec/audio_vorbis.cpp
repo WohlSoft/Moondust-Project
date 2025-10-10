@@ -118,7 +118,7 @@ MDAudioVorbis::~MDAudioVorbis()
 
 uint32_t MDAudioVorbis::getCodecSpec() const
 {
-    return SPEC_READ | SPEC_WRITE | SPEC_LOOP_POINTS | SPEC_META_TAGS;
+    return SPEC_READ | SPEC_WRITE | SPEC_LOOP_POINTS | SPEC_META_TAGS | SPEC_MULTI_TRACK;
 }
 
 static size_t sdl_read_func(void *ptr, size_t size, size_t nmemb, void *datasource)

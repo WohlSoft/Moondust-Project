@@ -37,7 +37,7 @@ MDAudioPXTone::~MDAudioPXTone()
 
 uint32_t MDAudioPXTone::getCodecSpec() const
 {
-    return SPEC_READ | SPEC_SOURCE_ANY_RATE | SPEC_LOOP_POINTS | SPEC_META_TAGS;
+    return SPEC_READ | SPEC_SOURCE_ANY_RATE | SPEC_SOURCE_ANY_CHANNELS | SPEC_LOOP_POINTS | SPEC_META_TAGS;
 }
 
 static bool _pxtn_r(void* user, void* p_dst, Sint32 size, Sint32 num)
