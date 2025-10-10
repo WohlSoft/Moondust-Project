@@ -254,6 +254,9 @@ bool MoondustAudioProcessor::openOutFile(const std::string &file, int dstFormat,
     case FORMAT_OPUS:
         m_out_file.reset(new MDAudioOpus);
         break;
+    case FORMAT_MP3:
+        m_out_file.reset(new MDAudioMP3);
+        break;
     default:
         m_lastError = "Incorrect or unsupported destination format";
         return false;
