@@ -75,7 +75,7 @@ set(AUDIO_PROCESSOR_SRC
 set(AUDIO_PROCESSOR_LIBS
     SDL2 SDL2main
     ogg
-    opus opusfile
+    opus opusfile opusenc
     FLAC
     vorbis vorbisfile vorbisenc
     mpg123 mp3lame

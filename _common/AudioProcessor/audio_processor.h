@@ -66,7 +66,17 @@ public:
 
     std::string getLastError() const;
 
+    /*!
+     * \brief Get the obtained decode output format
+     * \return Spec structure
+     */
     const MDAudioFileSpec &getInSpec() const;
+
+    /*!
+     * \brief Get the supported encode input format
+     * \return Spec structure
+     */
+    const MDAudioFileSpec &getOutSpec() const;
 
     bool openInFile(const std::string &file, const std::string &args = std::string(), int *detectedFormat = nullptr);
     bool openOutFile(const std::string &file, int dstFormat, const MDAudioFileSpec &dstSpec);
