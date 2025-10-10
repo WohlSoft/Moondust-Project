@@ -24,7 +24,6 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "audio_format.h"
 #include "audio_file.h"
 
 struct SDL_RWops;

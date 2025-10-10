@@ -109,7 +109,11 @@ public:
         //! Codec can generate output with any desired sample rate
         SPEC_SOURCE_ANY_RATE = 0x40,
         //! Codec can generate output with any desired sample format
-        SPEC_SOURCE_ANY_FORMAT = 0x80
+        SPEC_SOURCE_ANY_FORMAT = 0x80,
+        //! Codec can generate output with any desired number of channels
+        SPEC_SOURCE_ANY_CHANNELS = 0x100,
+        //! Codec supports only one of allowed channels number
+        SPEC_FIXED_CHANNELS = 0x200,
     };
 
     virtual uint32_t getCodecSpec() const = 0;

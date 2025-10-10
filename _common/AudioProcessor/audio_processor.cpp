@@ -21,6 +21,7 @@
 #include "audio_detect.h"
 #include "codec/audio_vorbis.h"
 #include "codec/audio_opus.h"
+#include "codec/audio_mp3.h"
 #include "codec/audio_qoa.h"
 #include "codec/audio_midi_adl.h"
 #include "codec/audio_midi_opn.h"
@@ -146,6 +147,7 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, const std::stri
         break;
 
     case FORMAT_MP3:
+        m_in_file.reset(new MDAudioMP3);
         break;
 
     case FORMAT_WAVPACK:

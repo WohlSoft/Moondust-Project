@@ -421,7 +421,7 @@ AudioFormats audio_detect_format(SDL_RWops *src, std::string &error)
 {
     Uint8 magic[100];
     Sint64 start = SDL_RWtell(src);
-    Uint8 submagic[4];
+    Uint8 submagic[4] = {0, 0, 0, 0};
     long id3len = 0;
     size_t readlen = 0;
 
