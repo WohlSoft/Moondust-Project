@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>434</width>
+    <width>640</width>
     <height>277</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>411</width>
+     <width>621</width>
      <height>221</height>
     </rect>
    </property>
@@ -30,7 +30,7 @@
      <rect>
       <x>60</x>
       <y>30</y>
-      <width>341</width>
+      <width>551</width>
       <height>22</height>
      </rect>
     </property>
@@ -66,7 +66,7 @@
      <rect>
       <x>60</x>
       <y>60</y>
-      <width>341</width>
+      <width>551</width>
       <height>22</height>
      </rect>
     </property>
@@ -74,14 +74,14 @@
    <widget class="QGroupBox" name="quality">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>110</y>
-      <width>81</width>
+      <x>130</x>
+      <y>100</y>
+      <width>111</width>
       <height>61</height>
      </rect>
     </property>
     <property name="title">
-     <string>Set quality</string>
+     <string>Set VBR quality</string>
     </property>
     <property name="checkable">
      <bool>true</bool>
@@ -106,9 +106,9 @@
    <widget class="QGroupBox" name="rate">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>110</y>
-      <width>81</width>
+      <x>250</x>
+      <y>100</y>
+      <width>121</width>
       <height>61</height>
      </rect>
     </property>
@@ -144,7 +144,7 @@
    <widget class="QPushButton" name="runCvt">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>260</x>
       <y>180</y>
       <width>91</width>
       <height>23</height>
@@ -157,8 +157,8 @@
    <widget class="QGroupBox" name="channels">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>110</y>
+      <x>380</x>
+      <y>100</y>
       <width>81</width>
       <height>61</height>
      </rect>
@@ -195,9 +195,9 @@
    <widget class="QComboBox" name="dstFormat">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>130</y>
-      <width>121</width>
+      <x>470</x>
+      <y>120</y>
+      <width>141</width>
       <height>23</height>
      </rect>
     </property>
@@ -205,9 +205,9 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>110</y>
-      <width>121</width>
+      <x>470</x>
+      <y>100</y>
+      <width>141</width>
       <height>16</height>
      </rect>
     </property>
@@ -218,15 +218,47 @@
    <widget class="QCheckBox" name="dstCutAtLoopEnd">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>160</y>
-      <width>121</width>
+      <x>470</x>
+      <y>150</y>
+      <width>141</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
      <string>Cut at loop-end</string>
     </property>
+   </widget>
+   <widget class="QGroupBox" name="bitrate">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>100</y>
+      <width>111</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Set CBR bitrate</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <widget class="QSpinBox" name="dstBitRate">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>42</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>500</number>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QProgressBar" name="cvtProgress">
@@ -237,7 +269,7 @@
     <rect>
      <x>10</x>
      <y>240</y>
-     <width>411</width>
+     <width>621</width>
      <height>23</height>
     </rect>
    </property>

@@ -89,7 +89,7 @@ bool MDAudioPXTone::openRead(SDL_RWops *file)
     }
 
     m_spec.m_channels = m_specWanted.getChannels(2, 2);
-    m_spec.m_sample_format = m_specWanted.getSampleFormat(AUDIO_S16SYS);
+    m_spec.m_sample_format = AUDIO_S16SYS;
     m_spec.m_sample_rate = m_specWanted.getSampleRate(44100);
 
     if(!pxtn->set_destination_quality(m_spec.m_channels, m_spec.m_sample_rate))

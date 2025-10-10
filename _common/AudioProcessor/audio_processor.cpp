@@ -80,6 +80,11 @@ const MDAudioFileSpec &MoondustAudioProcessor::getInSpec() const
     return m_in_file->getSpec();
 }
 
+const MDAudioFileSpec &MoondustAudioProcessor::getOutSpec() const
+{
+    return m_out_file->getSpec();
+}
+
 bool MoondustAudioProcessor::openInFile(const std::string &file, const std::string &argsString, int *detectedFormat)
 {
     AudioFormats format = FORMAT_UNKNOWN;
@@ -244,6 +249,9 @@ bool MoondustAudioProcessor::openOutFile(const std::string &file, int dstFormat,
     case FORMAT_XQOA:
         m_out_file.reset(new MDAudioQOA(true));
         break;
+    case FORMAT_OPUS:
+        m_out_file.reset(new MDAudioOpus);
+        break;
     default:
         m_lastError = "Incorrect or unsupported destination format";
         return false;
@@ -390,7 +398,11 @@ bool MoondustAudioProcessor::runChunk(bool dry)
         if(filled != 0)
         {
             if(filled < 0)
+            {
+                m_lastError = "Failed to extract input buffer from the conversion stream";
+                m_lastError += SDL_GetError();
                 return false;
+            }
             break;
         }
 
@@ -398,12 +410,19 @@ bool MoondustAudioProcessor::runChunk(bool dry)
             amount = m_in_file->readChunk(m_in_buffer.data(), m_in_buffer.size(), &spec_changed);
 
         if(amount == ~(size_t)0)
+        {
+            m_lastError = "Failed to read source chank:" + m_in_file->getLastError();
             return false;
+        }
 
         if(spec_changed) // Re-Init streamer
         {
             if(!init_cvt_stream())
+            {
+                m_lastError = "Failed to initialize the conversion stream";
+                m_lastError += SDL_GetError();
                 return false;
+            }
         }
 
         if(amount > 0)
@@ -422,7 +441,11 @@ bool MoondustAudioProcessor::runChunk(bool dry)
             m_stat_read += amount;
             m_curChunk += amount / (double)MD_AUDIO_CHUNK_SIZE;
             if(SDL_AudioStreamPut(m_cvt_stream, m_in_buffer.data(), amount) < 0)
+            {
+                m_lastError = "Failed to enque the chunk to the conversion stream";
+                m_lastError += SDL_GetError();
                 return false;
+            }
         }
         else
         {
@@ -443,7 +466,10 @@ bool MoondustAudioProcessor::runChunk(bool dry)
         written = m_out_file->writeChunk(m_out_buffer.data(), filled);
 
     if(written == 0)
+    {
+        m_lastError = "Failed to write the chunk: " + m_out_file->getLastError();
         return false;
+    }
 
     m_stat_write += written;
 
