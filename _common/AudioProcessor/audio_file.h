@@ -80,7 +80,7 @@ protected:
     MusicArgs       m_args;
 
     // Optional: for formats that supposed to use gaining
-    std::vector<uint8_t> m_read_buffer;
+    std::vector<uint8_t> m_io_buffer;
 
     static bool isLoopTag(const char* tag);
     static int64_t parseTime(char *time, long samplerate_hz);

@@ -88,6 +88,10 @@ CoverterDialogue::CoverterDialogue(QWidget *parent)
                 outFile.replace(dot + 1, outFile.size() - (dot - 1), "opus");
                 ui->fileOut->setText(outFile);
                 break;
+            case 4:
+                outFile.replace(dot + 1, outFile.size() - (dot - 1), "mp3");
+                ui->fileOut->setText(outFile);
+                break;
             }
         }
     });
@@ -97,6 +101,7 @@ CoverterDialogue::CoverterDialogue(QWidget *parent)
     ui->dstFormat->addItem("QOA (Plain QOA)", (int)FORMAT_QOA);
     ui->dstFormat->addItem("XQOA (Extended QOA)", (int)FORMAT_XQOA);
     ui->dstFormat->addItem("OPUS", (int)FORMAT_OPUS);
+    ui->dstFormat->addItem("MP3", (int)FORMAT_MP3);
     ui->dstFormat->setCurrentIndex(0);
     ui->dstFormat->blockSignals(false);
 
