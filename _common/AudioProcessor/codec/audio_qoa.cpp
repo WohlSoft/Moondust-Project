@@ -104,7 +104,7 @@ uint32_t MDAudioQOA::getCodecSpec() const
     uint32_t ret = SPEC_READ | SPEC_WRITE;
 
     if(m_encodeXQOA)
-        ret |= SPEC_LOOP_POINTS | SPEC_META_TAGS;
+        ret |= SPEC_LOOP_POINTS | SPEC_META_TAGS | SPEC_MULTI_TRACK;
 
     return ret;
 }
