@@ -191,14 +191,124 @@ bool MDAudioMP3::openRead(SDL_RWops *file)
 
 bool MDAudioMP3::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
 {
-    return false;
+    const int allowed_rate[9] =
+    {
+        8000,
+        11025,
+        12000,
+        16000,
+        22050,
+        24000,
+        32000,
+        44100,
+        48000
+    };
+    int ret;
+
+    close();
+
+    m_write = true;
+    m_file = file;
+    m_written = 0;
+
+    m_spec = dstSpec;
+
+    m_io_buffer.resize(8192);
+
+    switch(m_spec.m_sample_format)
+    {
+    case AUDIO_S16SYS:
+    case AUDIO_S32SYS:
+    case AUDIO_F32SYS:
+        // Allowed
+        break;
+    default:
+        m_spec.m_sample_format = AUDIO_S16SYS;
+        break;
+    }
+
+    if(m_spec.m_channels > 2)
+        m_spec.m_channels = 2; // MP3 supports only mono or stereo
+
+    if(m_spec.m_sample_rate <= 8000)
+        m_spec.m_sample_rate = 8000;
+    else if(m_spec.m_sample_rate >= 48000)
+        m_spec.m_sample_rate = 48000;
+    else for(size_t i = 0; i < 8; ++i)
+    {
+        int s1 = allowed_rate[i], s2 = allowed_rate[i + 1];
+        if(m_spec.m_sample_rate > s1 && m_spec.m_sample_rate <= s2)
+        {
+            // Set the nearest sample rate value to the desired
+            m_spec.m_sample_rate = ((m_spec.m_sample_rate - s1) < ((s2 - s1) / 2)) ? s1 : s2;
+            break;
+        }
+    }
+
+    m_lame = lame_init();
+
+    lame_set_in_samplerate(m_lame, m_spec.m_sample_rate);
+    lame_set_num_channels(m_lame, m_spec.m_channels);
+    lame_set_mode(m_lame, m_spec.m_channels == 2 ? STEREO : MONO);
+
+    lame_set_VBR(m_lame, m_spec.vbr ? vbr_default : vbr_off);
+
+    if(m_spec.vbr)
+    {
+        if(m_spec.quality > 9)
+            m_spec.quality = 9;
+        lame_set_VBR_q(m_lame, (9 - m_spec.quality));
+    }
+    else
+        lame_set_brate(m_lame, m_spec.bitrate / 1000);
+
+    if(!m_spec.m_meta_title.empty() || !m_spec.m_meta_artist.empty() || !m_spec.m_meta_album.empty() || !m_spec.m_meta_copyright.empty())
+    {
+        id3tag_init(m_lame);
+        id3tag_add_v2(m_lame);
+
+        if(!m_spec.m_meta_title.empty())
+            id3tag_set_title(m_lame, m_spec.m_meta_title.c_str());
+
+        if(!m_spec.m_meta_artist.empty())
+            id3tag_set_artist(m_lame, m_spec.m_meta_artist.c_str());
+
+        if(!m_spec.m_meta_album.empty())
+            id3tag_set_album(m_lame, m_spec.m_meta_album.c_str());
+
+        if(!m_spec.m_meta_copyright.empty())
+            id3tag_set_comment(m_lame, m_spec.m_meta_copyright.c_str());
+
+        lame_set_write_id3tag_automatic(m_lame, 1);
+    }
+
+    ret = lame_init_params(m_lame);
+    if(ret < 0)
+    {
+        m_lastError = "Failed to initialize LAME: " + std::to_string(ret);
+        close();
+        return false;
+    }
+
+    return true;
 }
 
 bool MDAudioMP3::close()
 {
     if(m_write)
     {
+        if(m_lame)
+        {
+            if(m_written > 0)
+            {
+                int ret = lame_encode_flush(m_lame, m_io_buffer.data(), m_io_buffer.size());
+                SDL_RWwrite(m_file, m_io_buffer.data(), 1, ret);
+            }
 
+            lame_close(m_lame);
+        }
+        m_lame = nullptr;
+        m_write = false;
     }
     else if(m_handle)
     {
@@ -207,6 +317,8 @@ bool MDAudioMP3::close()
         m_handle = nullptr;
         mpg123_exit();
     }
+
+    m_file = nullptr;
 
     return true;
 }
@@ -283,5 +395,54 @@ retry:
 
 size_t MDAudioMP3::writeChunk(uint8_t *in, size_t inSize)
 {
-    return 0;
+    int ret, frame_size;
+
+    switch(m_spec.m_sample_format)
+    {
+    case AUDIO_S16SYS:
+        frame_size = sizeof(int16_t) * m_spec.m_channels;
+
+        if(m_spec.m_channels == 1)
+            ret = lame_encode_buffer(m_lame, (short*)in, nullptr, inSize / frame_size, m_io_buffer.data(), m_io_buffer.size());
+        else
+            ret = lame_encode_buffer_interleaved(m_lame, (short*)in, inSize / frame_size, m_io_buffer.data(), m_io_buffer.size());
+        break;
+
+    case AUDIO_S32SYS:
+        frame_size = sizeof(int) * m_spec.m_channels;
+
+        if(m_spec.m_channels == 1)
+            ret = lame_encode_buffer_int(m_lame, (int*)in, nullptr, inSize / frame_size, m_io_buffer.data(), m_io_buffer.size());
+        else
+            ret = lame_encode_buffer_interleaved_int(m_lame, (int*)in, inSize / frame_size, m_io_buffer.data(), m_io_buffer.size());
+        break;
+
+    case AUDIO_F32SYS:
+        frame_size = sizeof(float) * m_spec.m_channels;
+
+        if(m_spec.m_channels == 1)
+            ret = lame_encode_buffer_ieee_float(m_lame, (float*)in, nullptr, inSize / frame_size, m_io_buffer.data(), m_io_buffer.size());
+        else
+            ret = lame_encode_buffer_interleaved_ieee_float(m_lame, (float*)in, inSize / frame_size, m_io_buffer.data(), m_io_buffer.size());
+        break;
+
+    default:
+        m_lastError = "Unsupported write sample format";
+        return 0;
+    }
+
+    if(ret)
+    {
+        size_t written = SDL_RWwrite(m_file, m_io_buffer.data(), 1, ret);
+        if(written < (size_t)ret)
+        {
+            m_lastError = "Failed to write the stream: ";
+            m_lastError += SDL_GetError();
+            return 0;
+        }
+
+        m_written += written;
+    }
+
+    return inSize;
 }
