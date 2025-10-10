@@ -23,7 +23,30 @@
 #include <vector>
 
 #include "../audio_file.h"
-#include "qoa/qoa.h"
+
+#ifndef QOA_H
+#   define QOA_MAX_CHANNELS 8
+#   define QOA_LMS_LEN 4
+#   define QOA_FRAME_SIZE(channels, slices) \
+        (8 + QOA_LMS_LEN * 4 * channels + 8 * slices * channels)
+
+typedef struct
+{
+    int history[QOA_LMS_LEN];
+    int weights[QOA_LMS_LEN];
+} qoa_lms_t;
+
+typedef struct
+{
+    unsigned int channels;
+    unsigned int samplerate;
+    unsigned int samples;
+    qoa_lms_t lms[QOA_MAX_CHANNELS];
+#ifdef QOA_RECORD_TOTAL_ERROR
+    double error;
+#endif
+} qoa_desc;
+#endif
 
 class MDAudioQOA : public MDAudioFile
 {

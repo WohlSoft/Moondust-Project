@@ -23,7 +23,6 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
-#include <map>
 
 #include "music_args.h"
 
@@ -50,9 +49,14 @@ struct MDAudioFileSpec
 
     // Encoding settings
     bool vbr = false;
+    //! VBR encode quality from 0 to 10
     int quality = -1;
+    //! Encode Bitrate in bits
     int bitrate = -1;
+    //! Encode profile index (may vary across encoders)
     int profile = -1;
+    //! Encoder's complexity (may vary across encoders)
+    int complexity = -1;
 };
 
 struct MDAudioFileSpecWanted
