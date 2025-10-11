@@ -21,6 +21,10 @@ set(AUDIO_PROCESSOR_SRC
     ${CMAKE_CURRENT_LIST_DIR}/codec/mp3/mp3utils.c
     ${CMAKE_CURRENT_LIST_DIR}/codec/mp3/mp3utils.h
 
+    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_wav.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_wav.h
+    ${CMAKE_CURRENT_LIST_DIR}/codec/wav/dr_wav.h
+
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_qoa.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_qoa.h
     ${CMAKE_CURRENT_LIST_DIR}/codec/qoa/qoa.h

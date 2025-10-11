@@ -23,6 +23,7 @@
 #include "codec/audio_opus.h"
 #include "codec/audio_mp3.h"
 #include "codec/audio_qoa.h"
+#include "codec/audio_wav.h"
 #include "codec/audio_midi_adl.h"
 #include "codec/audio_midi_opn.h"
 #include "codec/audio_pxtone.h"
@@ -32,14 +33,14 @@
 
 bool MoondustAudioProcessor::init_cvt_stream()
 {
-    const auto &source = m_in_file->getSpec();
-    const auto &obtained = m_out_file->getSpec();
+    const auto &spec_src = m_in_file->getSpec();
+    const auto &spec_dst = m_out_file->getSpec();
 
     if(m_cvt_stream)
         SDL_FreeAudioStream(m_cvt_stream);
 
-    m_cvt_stream = SDL_NewAudioStream(source.m_sample_format, source.m_channels, source.m_sample_rate,
-                                      obtained.m_sample_format, obtained.m_channels, obtained.m_sample_rate);
+    m_cvt_stream = SDL_NewAudioStream(spec_src.m_sample_format, spec_src.m_channels, spec_src.m_sample_rate,
+                                      spec_dst.m_sample_format, spec_dst.m_channels, spec_dst.m_sample_rate);
     if(!m_cvt_stream)
     {
         m_lastError = "Failed to initialize SDL Audio Stream: " + std::string(SDL_GetError());
@@ -47,20 +48,35 @@ bool MoondustAudioProcessor::init_cvt_stream()
         return false;
     }
 
-    size_t sample_in = (SDL_AUDIO_BITSIZE(source.m_sample_format) / 8) * source.m_channels;
-    size_t sample_out = (SDL_AUDIO_BITSIZE(obtained.m_sample_format) / 8) * obtained.m_channels;
+    size_t sample_in = (SDL_AUDIO_BITSIZE(spec_src.m_sample_format) / 8) * spec_src.m_channels;
+    size_t sample_out = (SDL_AUDIO_BITSIZE(spec_dst.m_sample_format) / 8) * spec_dst.m_channels;
 
     m_in_buffer.resize(MD_AUDIO_CHUNK_SIZE * sample_in);
     m_out_buffer.resize(MD_AUDIO_CHUNK_SIZE * sample_out);
 
-    m_numChunks = (source.m_total_length * sample_in) / (double)MD_AUDIO_CHUNK_SIZE;
+    m_numChunks = (spec_src.m_total_length * sample_in) / (double)MD_AUDIO_CHUNK_SIZE;
 
-    if(m_cutAtLoopEnd && source.m_loop_end > 0)
-        m_numChunks = ((source.m_loop_end * sample_in) + sample_in) / (double)MD_AUDIO_CHUNK_SIZE;
+    if(m_cutAtLoopEnd && spec_src.m_loop_end > 0)
+        m_numChunks = ((spec_src.m_loop_end * sample_in) + sample_in) / (double)MD_AUDIO_CHUNK_SIZE;
 
     m_curChunk = 0;
 
     return true;
+}
+
+void MoondustAudioProcessor::closeRWops()
+{
+    if(m_rw_out)
+    {
+        SDL_RWclose(m_rw_out);
+        m_rw_out = nullptr;
+    }
+
+    if(m_rw_in)
+    {
+        SDL_RWclose(m_rw_in);
+        m_rw_in = nullptr;
+    }
 }
 
 MoondustAudioProcessor::MoondustAudioProcessor()
@@ -132,6 +148,7 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, const std::stri
     {
     case FORMAT_WAV:
     case FORMAT_AIFF:
+        m_in_file.reset(new MDAudioWAV);
         break;
 
     case FORMAT_OGG_VORBIS:
@@ -257,6 +274,15 @@ bool MoondustAudioProcessor::openOutFile(const std::string &file, int dstFormat,
     case FORMAT_MP3:
         m_out_file.reset(new MDAudioMP3);
         break;
+    case FORMAT_WAV:
+        m_out_file.reset(new MDAudioWAV);
+        break;
+    case FORMAT_WAV_F64:
+        m_out_file.reset(new MDAudioWAV(MDAudioWAV::CONTAINER_RIFF, MDAudioWAV::ENCODE_FLOAT64));
+        break;
+    case FORMAT_AIFF:
+        m_out_file.reset(new MDAudioWAV(MDAudioWAV::CONTAINER_AIFF));
+        break;
     default:
         m_lastError = "Incorrect or unsupported destination format";
         return false;
@@ -279,16 +305,16 @@ bool MoondustAudioProcessor::openOutFile(const std::string &file, int dstFormat,
     {
         m_lastError = m_out_file->getLastError();
         m_out_file.reset(nullptr);
-        SDL_RWclose(m_rw_in);
-        m_rw_in = nullptr;
+        SDL_RWclose(m_rw_out);
+        m_rw_out = nullptr;
         return false;
     }
 
     if(!init_cvt_stream())
     {
         m_out_file.reset(nullptr);
-        SDL_RWclose(m_rw_in);
-        m_rw_in = nullptr;
+        SDL_RWclose(m_rw_out);
+        m_rw_out = nullptr;
         return false;
     }
 
@@ -304,17 +330,15 @@ void MoondustAudioProcessor::close()
     {
         m_out_file->close();
         m_out_file.reset(nullptr);
-        SDL_RWclose(m_rw_out);
-        m_rw_out = nullptr;
     }
 
     if(m_in_file.get())
     {
         m_in_file->close();
         m_in_file.reset(nullptr);
-        SDL_RWclose(m_rw_in);
-        m_rw_in = nullptr;
     }
+
+    closeRWops();
 
     if(m_cvt_stream)
     {
@@ -447,7 +471,7 @@ bool MoondustAudioProcessor::runChunk(bool dry)
             m_curChunk += amount / (double)MD_AUDIO_CHUNK_SIZE;
             if(SDL_AudioStreamPut(m_cvt_stream, m_in_buffer.data(), amount) < 0)
             {
-                m_lastError = "Failed to enque the chunk to the conversion stream";
+                m_lastError = "Failed to enque the chunk to the conversion stream: ";
                 m_lastError += SDL_GetError();
                 return false;
             }

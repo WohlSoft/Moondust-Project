@@ -59,6 +59,8 @@ class MoondustAudioProcessor
     int64_t m_stat_read = 0;
     int64_t m_stat_write = 0;
 
+    void closeRWops();
+
 public:
     MoondustAudioProcessor();
     ~MoondustAudioProcessor();
