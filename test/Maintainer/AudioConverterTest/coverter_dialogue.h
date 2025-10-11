@@ -59,8 +59,10 @@ signals:
     void updateProgress(int value);
     void workStarted();
     void workFinished();
+    void sendError(const QString &err);
 
 private slots:
+    void onError(const QString &errString);
     void on_runCvt_clicked();
     void workStartedRun();
     void workFinishedRun();

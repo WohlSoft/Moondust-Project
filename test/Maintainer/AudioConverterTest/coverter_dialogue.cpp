@@ -17,11 +17,12 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 
+#include <cmath>
 #include "coverter_dialogue.h"
 #include "audio_format.h"
 
 #include "./ui_coverter_dialogue.h"
-#include <QtConcurrent/QtConcurrent>
+#include <QtConcurrentRun>
 #include <QtDebug>
 
 CoverterDialogue::CoverterDialogue(QWidget *parent)
@@ -41,6 +42,10 @@ CoverterDialogue::CoverterDialogue(QWidget *parent)
 
     QObject::connect(this, &CoverterDialogue::workFinished,
                      this, &CoverterDialogue::workFinishedRun, Qt::BlockingQueuedConnection);
+
+    QObject::connect(this, &CoverterDialogue::sendError,
+                     this, &CoverterDialogue::onError, Qt::QueuedConnection);
+
 
     QObject::connect(ui->fileIn, &QLineEdit::editingFinished, this, [this]()->void
     {
@@ -92,6 +97,14 @@ CoverterDialogue::CoverterDialogue(QWidget *parent)
                 outFile.replace(dot + 1, outFile.size() - (dot - 1), "mp3");
                 ui->fileOut->setText(outFile);
                 break;
+            case 5:
+                outFile.replace(dot + 1, outFile.size() - (dot - 1), "wav");
+                ui->fileOut->setText(outFile);
+                break;
+            case 6:
+                outFile.replace(dot + 1, outFile.size() - (dot - 1), "wav");
+                ui->fileOut->setText(outFile);
+                break;
             }
         }
     });
@@ -102,6 +115,8 @@ CoverterDialogue::CoverterDialogue(QWidget *parent)
     ui->dstFormat->addItem("XQOA (Extended QOA)", (int)FORMAT_XQOA);
     ui->dstFormat->addItem("OPUS", (int)FORMAT_OPUS);
     ui->dstFormat->addItem("MP3", (int)FORMAT_MP3);
+    ui->dstFormat->addItem("WAV", (int)FORMAT_WAV);
+    ui->dstFormat->addItem("WAV float64", (int)FORMAT_WAV_F64);
     ui->dstFormat->setCurrentIndex(0);
     ui->dstFormat->blockSignals(false);
 
@@ -124,8 +139,14 @@ CoverterDialogue::~CoverterDialogue()
     delete ui;
 }
 
+void CoverterDialogue::onError(const QString &errString)
+{
+    ui->error->setText(errString);
+}
+
 void CoverterDialogue::on_runCvt_clicked()
 {
+    ui->error->clear();
     m_cvt.setCutAtLoopEnd(ui->dstCutAtLoopEnd->isChecked());
 
     QString inPath = ui->fileIn->text();
@@ -140,7 +161,10 @@ void CoverterDialogue::on_runCvt_clicked()
 
     if(!m_cvt.openInFile(inPath.toStdString(), inPathArgs.toStdString()))
     {
-        qWarning() << "Failed to open input file" << inPath << QString::fromStdString(m_cvt.getLastError());
+        auto err = QString("Failed to open input file %1: %2").arg(inPath, QString::fromStdString(m_cvt.getLastError()));
+        qWarning() << err;
+        emit sendError(err);
+        m_cvt.close();
         return;
     }
 
@@ -166,7 +190,10 @@ void CoverterDialogue::on_runCvt_clicked()
 
     if(!m_cvt.openOutFile(ui->fileOut->text().toStdString(), ui->dstFormat->currentData().toInt(), m_dstSpec))
     {
-        qWarning() << "Failed to open output file" << ui->fileOut->text() << QString::fromStdString(m_cvt.getLastError());
+        auto err = QString("Failed to open output file %1: %2").arg(ui->fileOut->text(), QString::fromStdString(m_cvt.getLastError()));
+        qWarning() << err;
+        emit sendError(err);
+        m_cvt.close();
         return;
     }
 
@@ -226,7 +253,9 @@ void CoverterDialogue::runner()
             case PHASE_LENGHT_MEASURE:
                 if(!m_cvt.runChunk(true))
                 {
-                    qWarning() << "Conversion failed: (Phase Measure):" << QString::fromStdString(m_cvt.getLastError());
+                    auto err = QString("Conversion failed (Phase Measure): %1").arg(QString::fromStdString(m_cvt.getLastError()));
+                    qWarning() << err;
+                    emit sendError(err);
                     emit workFinished();
                     return;
                 }
@@ -245,8 +274,8 @@ void CoverterDialogue::runner()
 
                     double rateFactor = totalWrite / (double)totalRead;
                     m_dstSpec.m_total_length = totalWrite;
-                    m_dstSpec.m_loop_start = floor(m_dstSpec.m_loop_start * rateFactor);
-                    m_dstSpec.m_loop_end = floor(m_dstSpec.m_loop_end * rateFactor);
+                    m_dstSpec.m_loop_start = std::floor(m_dstSpec.m_loop_start * rateFactor);
+                    m_dstSpec.m_loop_end = std::floor(m_dstSpec.m_loop_end * rateFactor);
                     if(m_dstSpec.m_loop_end > m_dstSpec.m_total_length)
                         m_dstSpec.m_loop_end = m_dstSpec.m_total_length;
                     m_dstSpec.m_loop_len = m_dstSpec.m_loop_end - m_dstSpec.m_loop_start;
@@ -255,7 +284,9 @@ void CoverterDialogue::runner()
 
                     if(!m_cvt.openOutFile(ui->fileOut->text().toStdString(), ui->dstFormat->currentData().toInt(), m_dstSpec))
                     {
-                        qWarning() << "Failed to open output file" << ui->fileOut->text();
+                        auto err = QString("Failed to open output file %1: %2").arg(ui->fileOut->text(), QString::fromStdString(m_cvt.getLastError()));
+                        qWarning() << err;
+                        emit sendError(err);
                         emit workFinished();
                         return;
                     }
@@ -267,7 +298,9 @@ void CoverterDialogue::runner()
             case PHASE_CONVERSION:
                 if(!m_cvt.runChunk(false))
                 {
-                    qWarning() << "Conversion failed: (Phase Conversion):" << QString::fromStdString(m_cvt.getLastError());
+                    auto err = QString("Conversion failed (Phase Conversion): %1").arg(QString::fromStdString(m_cvt.getLastError()));
+                    qWarning() << err;
+                    emit sendError(err);
                     emit workFinished();
                     return;
                 }
@@ -286,7 +319,9 @@ void CoverterDialogue::runner()
         {
             if(!m_cvt.runChunk())
             {
-                qWarning() << "Conversion failed:" << QString::fromStdString(m_cvt.getLastError());
+                auto err = QString("Conversion failed: %1").arg(QString::fromStdString(m_cvt.getLastError()));
+                qWarning() << err;
+                emit sendError(err);
                 emit workFinished();
                 return;
             }
@@ -295,5 +330,6 @@ void CoverterDialogue::runner()
         }
     }
 
+    emit sendError("Success!");
     emit workFinished();
 }
