@@ -16,11 +16,33 @@ struct MDAudioVorbis_private
 
     // Vorbis Write
     ogg_stream_state m_os;    //!< take physical pages, weld into a logical stream of packets
+    bool             m_os_init = false;
     ogg_page         m_og;    //!< one Ogg bitstream page.  Vorbis packets are inside
     ogg_packet       m_op;    //!< one raw packet of data for decode
     vorbis_comment   m_vc;    //!< struct that stores all the user comments
+    bool             m_vc_init = false;
     vorbis_dsp_state m_vd;    //!< central working state for the packet->PCM decoder
+    bool             m_vd_init = false;
     vorbis_block     m_vb;    //!< local working space for packet->PCM decode
+    bool             m_vb_init = false;
+
+    void zeroAll()
+    {
+        SDL_zero(m_vf);
+        SDL_zero(m_vi);
+        m_section = -1;
+
+        SDL_zero(m_os);
+        m_os_init = false;
+        SDL_zero(m_og);
+        SDL_zero(m_op);
+        SDL_zero(m_vc);
+        m_vc_init = false;
+        SDL_zero(m_vd);
+        m_vd_init = false;
+        SDL_zero(m_vb);
+        m_vb_init = false;
+    }
 };
 
 int MDAudioVorbis::set_ov_error(const char *function, int error)
@@ -74,6 +96,9 @@ bool MDAudioVorbis::updateSection()
 void MDAudioVorbis::writeFlush()
 {
     int eos = 0;
+
+    if(!p->m_vd_init || !p->m_vb_init || !p->m_os_init)
+        return;
 
     while(vorbis_analysis_blockout(&p->m_vd, &p->m_vb) == 1)
     {
@@ -153,9 +178,7 @@ bool MDAudioVorbis::openRead(SDL_RWops *file)
     m_write = false;
     m_file = file;
 
-    p->m_section = -1;
-    memset(&p->m_vf, 0, sizeof(p->m_vf));
-    memset(&p->m_vi, 0, sizeof(p->m_vi));
+    p->zeroAll();
 
     callbacks.read_func = sdl_read_func;
     callbacks.seek_func = sdl_seek_func;
@@ -246,6 +269,7 @@ bool MDAudioVorbis::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
 {
     std::string from_num;
     int ret, eos = 0;
+    bool isVbr = false;
 
     close();
 
@@ -253,6 +277,8 @@ bool MDAudioVorbis::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     m_file = file;
 
     m_spec = dstSpec;
+
+    p->zeroAll();
 
     vorbis_info_init(&p->m_vi);
 
@@ -264,9 +290,24 @@ bool MDAudioVorbis::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
 #endif
 
     if(m_spec.vbr)
-        ret = vorbis_encode_init_vbr(&p->m_vi, m_spec.m_channels, m_spec.m_sample_rate, m_spec.quality / 10.0);
+    {
+        ret = vorbis_encode_setup_vbr(&p->m_vi, m_spec.m_channels, m_spec.m_sample_rate, m_spec.quality / 10.0);
+        isVbr = true;
+    }
     else
-        ret = vorbis_encode_init(&p->m_vi, m_spec.m_channels, m_spec.m_sample_rate, -1, m_spec.bitrate, -1);
+    {
+        ret = vorbis_encode_setup_managed(&p->m_vi, m_spec.m_channels, m_spec.m_sample_rate,
+                                          m_spec.bitrate_min > 0 ? m_spec.bitrate_min : -1,
+                                          m_spec.bitrate,
+                                          m_spec.bitrate_max > 0 ? m_spec.bitrate_max : -1);
+        if(ret == OV_EIMPL)
+        {
+            vorbis_info_clear(&p->m_vi);
+            vorbis_info_init(&p->m_vi);
+            ret = vorbis_encode_setup_vbr(&p->m_vi, m_spec.m_channels, m_spec.m_sample_rate, m_spec.bitrate / 350000.0);
+            isVbr = true;
+        }
+    }
 
     if(ret)
     {
@@ -275,7 +316,57 @@ bool MDAudioVorbis::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         return false;
     }
 
+    if(isVbr)
+    {
+        long bitrate;
+        struct ovectl_ratemanage2_arg ai;
+        vorbis_info vi2;
+
+        vorbis_encode_ctl(&p->m_vi, OV_ECTL_RATEMANAGE2_GET, &ai);
+
+        /* libvorbis 1.1 (and current svn) doesn't actually fill this in,
+           which looks like a bug. It'll then reject it when we call the
+           SET version below. So, fill it in with the values that libvorbis
+           would have used to fill in this structure if we were using the
+           bitrate-oriented setup functions. Unfortunately, some of those
+           values are dependent on the bitrate, and libvorbis has no way to
+           get a nominal bitrate from a quality value. Well, except by doing
+           a full setup... So, we do that.
+           Also, note that this won't work correctly unless you have
+           version 1.1.1 or later of libvorbis.
+         */
+        vorbis_info_init(&vi2);
+        vorbis_encode_setup_vbr(&vi2, m_spec.m_channels, m_spec.m_sample_format, m_spec.quality / 10.0);
+        vorbis_encode_setup_init(&vi2);
+        bitrate = vi2.bitrate_nominal;
+        vorbis_info_clear(&vi2);
+
+        ai.bitrate_average_kbps = bitrate / 1000;
+        ai.bitrate_average_damping = 1.5;
+        ai.bitrate_limit_reservoir_bits = bitrate * 2;
+        ai.bitrate_limit_reservoir_bias = 0.1;
+
+        /* And now the ones we actually wanted to set */
+        ai.bitrate_limit_min_kbps = m_spec.bitrate_min / 1000;
+        ai.bitrate_limit_max_kbps = m_spec.bitrate_max / 1000;
+        ai.management_active = 1;
+
+        if(vorbis_encode_ctl(&p->m_vi, OV_ECTL_RATEMANAGE2_SET, &ai) != 0)
+        {
+            m_lastError = "Vorbis: Failed to set bitrate min/max in quality mode";
+            close();
+            return false;
+        }
+    }
+
+#ifdef OV_ECTL_RATEMANAGE2_SET
+    vorbis_encode_ctl(&p->m_vi, OV_ECTL_RATEMANAGE2_SET, NULL);
+#endif
+
+    vorbis_encode_setup_init(&p->m_vi);
+
     vorbis_comment_init(&p->m_vc);
+    p->m_vc_init = true;
     vorbis_comment_add_tag(&p->m_vc, "ENCODER", "Moondust Audio Converter");
 
     if(!m_spec.m_meta_title.empty())
@@ -300,10 +391,13 @@ bool MDAudioVorbis::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     }
 
     vorbis_analysis_init(&p->m_vd, &p->m_vi);
+    p->m_vd_init = true;
     vorbis_block_init(&p->m_vd, &p->m_vb);
+    p->m_vb_init = true;
 
     srand(time(nullptr));
     ogg_stream_init(&p->m_os, rand());
+    p->m_os_init = true;
 
 
     ogg_packet header;
@@ -337,13 +431,35 @@ bool MDAudioVorbis::close()
     {
         if(m_file)
         {
-            vorbis_analysis_wrote(&p->m_vd, 0);
+            if(p->m_vd_init)
+                vorbis_analysis_wrote(&p->m_vd, 0);
+
             writeFlush();
 
-            ogg_stream_clear(&p->m_os);
-            vorbis_block_clear(&p->m_vb);
-            vorbis_dsp_clear(&p->m_vd);
-            vorbis_comment_clear(&p->m_vc);
+            if(p->m_os_init)
+            {
+                ogg_stream_clear(&p->m_os);
+                p->m_os_init = false;
+            }
+
+            if(p->m_vb_init)
+            {
+                vorbis_block_clear(&p->m_vb);
+                p->m_vb_init = false;
+            }
+
+            if(p->m_vd_init)
+            {
+                vorbis_dsp_clear(&p->m_vd);
+                p->m_vd_init = false;
+            }
+
+            if(p->m_vc_init)
+            {
+                vorbis_comment_clear(&p->m_vc);
+                p->m_vc_init = false;
+            }
+
             vorbis_info_clear(&p->m_vi);
         }
 
@@ -448,9 +564,9 @@ size_t MDAudioVorbis::writeChunk(uint8_t *in, size_t inSize)
 {
     long i;
     size_t written = 0;
-    int sample_size;
-    /* expose the buffer to submit data */
+    int sample_size, c;
 
+    /* expose the buffer to submit data */
     float **buffer = vorbis_analysis_buffer(&p->m_vd, inSize);
 
     /* uninterleave samples */
@@ -461,7 +577,7 @@ size_t MDAudioVorbis::writeChunk(uint8_t *in, size_t inSize)
 
         for(i = 0; i < inSize / sample_size; i++)
         {
-            for(int c = 0; c < m_spec.m_channels; ++c)
+            for(c = 0; c < m_spec.m_channels; ++c)
                 buffer[c][i] = *(in_s++);
         }
     }
@@ -472,7 +588,7 @@ size_t MDAudioVorbis::writeChunk(uint8_t *in, size_t inSize)
 
         for(i = 0; i < inSize / sample_size; i++)
         {
-            for(int c = 0; c < m_spec.m_channels; ++c)
+            for(c = 0; c < m_spec.m_channels; ++c)
                 buffer[c][i] = *(in_s++) / 32768.f;
         }
     }

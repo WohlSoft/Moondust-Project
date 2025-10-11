@@ -24,6 +24,7 @@ enum AudioFormats
 {
     FORMAT_UNKNOWN = 0,
     FORMAT_WAV,
+    FORMAT_WAV_F64,
     FORMAT_AIFF,
     FORMAT_OGG_VORBIS,
     FORMAT_OPUS,
