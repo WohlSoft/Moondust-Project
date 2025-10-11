@@ -42,6 +42,9 @@ struct MDAudioFileSpec
     int      m_sample_format = 0;
     int      m_sample_rate = 0;
 
+    //! Channels layout map for some encoders
+    std::vector<int> m_channels_permute;
+
     std::string m_meta_title;
     std::string m_meta_artist;
     std::string m_meta_album;
@@ -53,6 +56,10 @@ struct MDAudioFileSpec
     int quality = -1;
     //! Encode Bitrate in bits
     int bitrate = -1;
+    //! Minimum bitrate in bits
+    int bitrate_min = -1;
+    //! Maximum bitrate in bits
+    int bitrate_max = -1;
     //! Encode profile index (may vary across encoders)
     int profile = -1;
     //! Encoder's complexity (may vary across encoders)
