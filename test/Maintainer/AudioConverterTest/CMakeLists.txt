@@ -12,6 +12,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Concurrent)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Concurrent)
 
+option(ENABLE_ADDRESS_SANITIZER "Enable the Address Sanitizer GCC feature" OFF)
+
 include(../../../_common/AudioProcessor/audio_processor.cmake)
 
 set(PROJECT_SOURCES
@@ -47,8 +49,14 @@ else()
     endif()
 endif()
 
+if(ENABLE_ADDRESS_SANITIZER)
+    target_compile_options(AudioConverterTest PRIVATE -fsanitize=address)
+    target_link_libraries(AudioConverterTest PRIVATE asan)
+endif()
+
 target_include_directories(AudioConverterTest PRIVATE ${AUDIO_PROCESSOR_INCLUDES} /usr/include/opus)
 target_link_libraries(AudioConverterTest PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Concurrent ${AUDIO_PROCESSOR_LIBS})
+
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
