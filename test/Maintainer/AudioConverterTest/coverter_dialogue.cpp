@@ -201,7 +201,8 @@ void CoverterDialogue::on_runCvt_clicked()
 
     if(m_dstSpec.m_sample_rate != oldRate &&
        m_dstSpec.m_loop_start != 0 && m_dstSpec.m_loop_end != 0 &&
-       m_dstSpec.m_loop_start < m_dstSpec.m_loop_end) // If sample rate is different and valid loop points are set
+       m_dstSpec.m_loop_start < m_dstSpec.m_loop_end &&
+       m_dstSpec.m_loop_end <= m_dstSpec.m_total_length) // If sample rate is different and valid loop points are set
     {
         // Perform a dry run to figure the valid loop points data
         m_phase = PHASE_LENGHT_MEASURE;
