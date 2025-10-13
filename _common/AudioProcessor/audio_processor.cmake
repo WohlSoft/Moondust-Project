@@ -16,6 +16,9 @@ set(AUDIO_PROCESSOR_SRC
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_opus.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_opus.h
 
+    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_flac.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_flac.h
+
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_mp3.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_mp3.h
     ${CMAKE_CURRENT_LIST_DIR}/codec/mp3/mp3utils.c
