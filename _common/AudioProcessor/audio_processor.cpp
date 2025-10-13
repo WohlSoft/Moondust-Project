@@ -24,6 +24,7 @@
 #include "codec/audio_mp3.h"
 #include "codec/audio_qoa.h"
 #include "codec/audio_wav.h"
+#include "codec/audio_flac.h"
 #include "codec/audio_midi_adl.h"
 #include "codec/audio_midi_opn.h"
 #include "codec/audio_pxtone.h"
@@ -160,7 +161,7 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, const std::stri
         break;
 
     case FORMAT_FLAC:
-        // m_in_file.reset(new MDAudioFLAC);
+        m_in_file.reset(new MDAudioFLAC);
         break;
 
     case FORMAT_MP3:

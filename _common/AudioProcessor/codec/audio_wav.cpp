@@ -82,8 +82,8 @@ struct waveEncodeMeta
         m_smpl.push_back(smpl);
 
         add_string(spec.m_meta_title, drwav_metadata_type_list_info_title);
-        add_string(spec.m_meta_album, drwav_metadata_type_list_info_album);
         add_string(spec.m_meta_artist, drwav_metadata_type_list_info_artist);
+        add_string(spec.m_meta_album, drwav_metadata_type_list_info_album);
         add_string(spec.m_meta_copyright, drwav_metadata_type_list_info_copyright);
 
         for(auto &c : m_cue)
