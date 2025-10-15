@@ -128,6 +128,11 @@ std::string MDAudioFile::parseidiMetaTag(const char *src)
     return ret;
 }
 
+static int s_makeGainedVolume(int volume, float gain)
+{
+    return (int)SDL_floorf(((float)(volume) * (gain)) + 0.5f);
+}
+
 void MDAudioFile::copyGained(float gain, uint8_t *buf_in, uint8_t *buf_out, size_t buf_size)
 {
     switch(m_spec.m_sample_format)
@@ -135,14 +140,26 @@ void MDAudioFile::copyGained(float gain, uint8_t *buf_in, uint8_t *buf_out, size
     case AUDIO_U8:
         SDL_memset(buf_out, 0x80, buf_size);
         break;
-    case AUDIO_U16:
+    case AUDIO_U16MSB:
+    case AUDIO_U16LSB:
     {
         uint16_t *buf_u = (uint16_t*)buf_out;
         uint16_t *buf_u_end = (uint16_t*)(buf_out + buf_size);
 
         for( ; buf_u < buf_u_end; ++buf_u)
-            *buf_u = 0x8000;
-
+        {
+            uint8_t *n = (uint8_t *)buf_u;
+            if(m_spec.m_sample_format == AUDIO_U16LSB)
+            {
+                n[0] = 0x00;
+                n[1] = 0x80;
+            }
+            else
+            {
+                n[0] = 0x80;
+                n[1] = 0x00;
+            }
+        }
         break;
     }
     default:
@@ -150,7 +167,7 @@ void MDAudioFile::copyGained(float gain, uint8_t *buf_in, uint8_t *buf_out, size
         break;
     }
 
-    SDL_MixAudioFormat(buf_out, buf_in, m_spec.m_sample_format, (Uint32)buf_size, (int)(SDL_MIX_MAXVOLUME * gain));
+    SDL_MixAudioFormat(buf_out, buf_in, m_spec.m_sample_format, (Uint32)buf_size, s_makeGainedVolume(SDL_MIX_MAXVOLUME, gain));
 }
 
 MDAudioFile::MDAudioFile() {}
