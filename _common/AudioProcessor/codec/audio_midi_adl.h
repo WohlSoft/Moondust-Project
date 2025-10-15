@@ -20,8 +20,6 @@
 #ifndef AUDIO_MIDI_ADL_H
 #define AUDIO_MIDI_ADL_H
 
-#include <vector>
-
 #include "../audio_file.h"
 
 struct ADL_MIDIPlayer;
