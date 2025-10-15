@@ -350,7 +350,7 @@ bool MDAudioOpus::readRewind()
 
 size_t MDAudioOpus::readChunk(uint8_t *out, size_t outSize, bool *spec_changed)
 {
-    int filled, samples, section;
+    int samples, section;
 
     if(spec_changed)
         *spec_changed = false;

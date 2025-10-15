@@ -328,7 +328,7 @@ bool MDAudioWAV::openRead(SDL_RWops *file)
     drwav_uint16 format = drwav_fmt_get_format(&wav->fmt);
     bool isAiff = wav->container == drwav_container_aiff;
     bool isBE = isAiff ? !wav->aiff.isLE : false;
-    bool isUnsigned8 = isAiff && wav->aiff.isUnsigned || !isAiff;
+    bool isUnsigned8 = (isAiff && wav->aiff.isUnsigned) || !isAiff;
 
     initChPermute();
 
@@ -569,7 +569,7 @@ bool MDAudioWAV::readRewind()
     return drwav_seek_to_pcm_frame(M_WAV, 0);
 }
 
-size_t MDAudioWAV::readChunk(uint8_t *out, size_t outSize, bool *spec_changed)
+size_t MDAudioWAV::readChunk(uint8_t *out, size_t outSize, bool */*spec_changed*/)
 {
     size_t ret;
     drwav_uint64 frame_size;

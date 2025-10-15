@@ -13,6 +13,7 @@ class MusicArgs
 public:
     explicit MusicArgs(const std::string &args = std::string());
     MusicArgs(const MusicArgs &o);
+    MusicArgs &operator=(const MusicArgs &o) = default;
 
     int getTrackNumber() const;
 
