@@ -197,7 +197,7 @@ bool MDAudioPXTone::readRewind()
     return true;
 }
 
-size_t MDAudioPXTone::readChunk(uint8_t *out, size_t outSize, bool *spec_changed)
+size_t MDAudioPXTone::readChunk(uint8_t *out, size_t outSize, bool */*spec_changed*/)
 {
     if(outSize > m_io_buffer.size())
         m_io_buffer.resize(outSize);
@@ -210,7 +210,7 @@ size_t MDAudioPXTone::readChunk(uint8_t *out, size_t outSize, bool *spec_changed
     return outSize;
 }
 
-size_t MDAudioPXTone::writeChunk(uint8_t *in, size_t inSize)
+size_t MDAudioPXTone::writeChunk(uint8_t */*in*/, size_t /*inSize*/)
 {
     return 0;
 }
