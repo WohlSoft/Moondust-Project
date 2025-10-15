@@ -832,7 +832,7 @@ px_FORCE_INLINE void swapEndian( _x4x_EVENTSTRUCT &evnt)
 // write event.
 pxtnERR pxtnEvelist::io_Unit_Read_x4x_EVENT( void* desc, bool bTailAbsolute, bool bCheckRRR )
 {
-	_x4x_EVENTSTRUCT evnt     ={0};
+	_x4x_EVENTSTRUCT evnt     ={0, 0, 0, 0, 0};
 	int32_t          clock    = 0;
 	int32_t          value    = 0;
 	int32_t          absolute = 0;
@@ -868,7 +868,7 @@ pxtnERR pxtnEvelist::io_Read_x4x_EventNum( void* desc, int32_t* p_num ) const
 {
 	if( !desc || !p_num ) return pxtnERR_param;
 
-	_x4x_EVENTSTRUCT evnt = {0};
+	_x4x_EVENTSTRUCT evnt = {0, 0, 0, 0, 0};
 	int32_t          work =  0 ;
 	int32_t          e    =  0 ;
 	int32_t          size =  0 ;

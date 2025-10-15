@@ -276,6 +276,8 @@ void pxtnWoice::_UpdateWavePTV( pxtnVOICEUNIT* p_vc, pxtnVOICEINSTANCE* p_vi, in
 	int32_t pan_volume[ 2 ] = {64, 64};
 	bool    b_ovt;
 
+	(void)sps;
+
 	pxtnPulse_Oscillator osci( _io_read, _io_write, _io_seek, _io_pos );
 
 	if( ch == 2 )
