@@ -27,6 +27,7 @@
 #include "codec/audio_flac.h"
 #include "codec/audio_midi_adl.h"
 #include "codec/audio_midi_opn.h"
+#include "codec/audio_midi_edmidi.h"
 #include "codec/audio_pxtone.h"
 
 #include <SDL2/SDL.h>
@@ -192,6 +193,10 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, const std::stri
 
         case 3:
             m_in_file.reset(new MDAudioOPNMIDI);
+            break;
+
+        case 5:
+            m_in_file.reset(new MDAudioEDMIDI);
             break;
         }
 
