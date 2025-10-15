@@ -543,7 +543,7 @@ size_t MDAudioVorbis::readChunk(uint8_t *out, size_t outSize, bool *spec_changed
     if(amount < 0)
     {
         set_ov_error("ov_read", amount);
-        return ~(size_t)0;
+        return MDAudioFile::r_error;
     }
 
     if(cur_section != p->m_section)
@@ -575,7 +575,7 @@ size_t MDAudioVorbis::writeChunk(uint8_t *in, size_t inSize)
         float *in_s = (float*)in;
         sample_size = m_spec.m_channels * sizeof(float);
 
-        for(i = 0; i < inSize / sample_size; i++)
+        for(i = 0; i < (long)inSize / sample_size; i++)
         {
             for(c = 0; c < m_spec.m_channels; ++c)
                 buffer[c][i] = *(in_s++);
@@ -586,7 +586,7 @@ size_t MDAudioVorbis::writeChunk(uint8_t *in, size_t inSize)
         int16_t *in_s = (int16_t*)in;
         sample_size = m_spec.m_channels * sizeof(int16_t);
 
-        for(i = 0; i < inSize / sample_size; i++)
+        for(i = 0; i < (long)inSize / sample_size; i++)
         {
             for(c = 0; c < m_spec.m_channels; ++c)
                 buffer[c][i] = *(in_s++) / 32768.f;

@@ -339,7 +339,7 @@ bool MDAudioMP3::readRewind()
 
 size_t MDAudioMP3::readChunk(uint8_t *out, size_t outSize, bool *spec_changed)
 {
-    int filled, result;
+    int result;
     size_t amount = 0;
     long rate;
     int channels, encoding, format;
@@ -364,7 +364,7 @@ retry:
         {
             m_lastError = "mpg123_getformat: ";
             m_lastError += mpg_err(m_handle, result);
-            return (size_t)~0;
+            return MDAudioFile::r_error;
         }
 
         format = mpg123_format_to_sdl(encoding);
@@ -372,7 +372,7 @@ retry:
         {
             m_lastError = "encoding has unspported value: ";
             m_lastError += std::to_string(encoding);
-            return (size_t)~0;
+            return MDAudioFile::r_error;
         }
 
         m_spec.m_channels = channels;
@@ -387,7 +387,7 @@ retry:
     default:
         m_lastError = "mpg123_read: ";
         m_lastError += mpg_err(m_handle, result);
-        return (size_t)~0;
+        return MDAudioFile::r_error;
     }
 
     return 0;
