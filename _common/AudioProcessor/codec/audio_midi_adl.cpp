@@ -235,7 +235,9 @@ bool MDAudioADLMIDI::close()
             adl_close(m_synth);
             m_synth = nullptr;
         }
+
         m_file = nullptr;
+        m_in_file.clear();
     }
 
     m_spec = MDAudioFileSpec();

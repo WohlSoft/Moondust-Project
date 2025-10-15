@@ -54,6 +54,10 @@ bool MusicArgs::setArgs(const std::string &args)
 
         key.push_back(args[pos++]);
 
+        // A secodn letter of key (for two-letter keys)
+        if(args[pos] >= 'a' && args[pos] < 'z')
+            key.push_back(args[pos++]);
+
         if(args[pos] == '=')
             key.push_back(args[pos++]);
 
