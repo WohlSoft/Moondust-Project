@@ -57,8 +57,8 @@ pxNOISEDESIGN_UNIT;
 class pxtnPulse_Noise: public pxtnData
 {
 private:
-	void operator = (const pxtnPulse_Noise& src){}
-	pxtnPulse_Noise (const pxtnPulse_Noise& src){}
+	void operator = (const pxtnPulse_Noise& src){ (void)src; }
+	pxtnPulse_Noise (const pxtnPulse_Noise& src) : pxtnData() { (void)src; }
 
 	int32_t             _smp_num_44k;
 	int32_t             _unit_num   ;

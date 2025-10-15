@@ -176,7 +176,7 @@ px_FORCE_INLINE void swapEndian( _x4x_MASTER &mast)
 // read( project )
 pxtnERR pxtnMaster::io_r_x4x( void* desc )
 {
-	_x4x_MASTER mast     ={0};
+	_x4x_MASTER mast     ={0, 0, 0};
 	int32_t     size     = 0;
 	int32_t     e        = 0;
 	int32_t     status   = 0;
