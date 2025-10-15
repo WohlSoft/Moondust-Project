@@ -17,6 +17,7 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef AUDIO_PXTONE_H
 #define AUDIO_PXTONE_H
 
