@@ -131,7 +131,10 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, const std::stri
         return false;
     }
 
-    format = audio_detect_format(m_rw_in, err);
+    // Retrieve MIDI synth by argument
+    int midiplayer_current = args.getArgI("s", 0);
+
+    format = audio_detect_format(m_rw_in, midiplayer_current, err);
 
     SDL_RWseek(m_rw_in, 0, RW_SEEK_SET);
 

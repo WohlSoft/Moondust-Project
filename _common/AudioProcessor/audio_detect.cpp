@@ -21,9 +21,7 @@
 #include <SDL2/SDL_endian.h>
 #include "audio_detect.h"
 
-int midiplayer_current = MIDI_ANY;
-
-static AudioFormats xmi_compatible_midi_player()
+static AudioFormats xmi_compatible_midi_player(int midiplayer_current)
 {
     int is_compatible = 0;
 
@@ -354,6 +352,139 @@ static int detect_imf(SDL_RWops *in, Sint64 start)
     return (sum1 > sum2);
 }
 
+static int detect_klm(SDL_RWops *in, Sint64 start)
+{
+    size_t song_offset, file_size, num_instruments;
+    Uint8 head[5], cmd, chan, data[2];
+
+    if(!in)
+        return 0;
+
+    file_size = SDL_RWsize(in);
+    SDL_RWseek(in, start, RW_SEEK_SET);
+
+    if(SDL_RWread(in, &head, 1, 5) != 5)
+    {
+        SDL_RWseek(in, start, RW_SEEK_SET);
+        return 0;
+    }
+
+    if(head[2] != 0x01)
+    {
+        SDL_RWseek(in, start, RW_SEEK_SET);
+        return 0;
+    }
+
+    song_offset = SDL_SwapLE16(*(Uint16*)(head + 3));
+
+    if(song_offset > file_size)
+    {
+        SDL_RWseek(in, start, RW_SEEK_SET);
+        return 0;
+    }
+
+    if(file_size > 524288)
+    {
+        /* File is so large, better to refuse it */
+        SDL_RWseek(in, start, RW_SEEK_SET);
+        return 0;
+    }
+
+    if((song_offset - 5) % 11 != 0)
+    {
+        /* Invalid offset */
+        SDL_RWseek(in, start, RW_SEEK_SET);
+        return 0;
+    }
+
+    num_instruments = (song_offset - 5) / 11;
+
+    /* Validate song data */
+    SDL_RWseek(in, start + song_offset, RW_SEEK_SET);
+
+    while(SDL_RWread(in, &cmd, 1, 1) == 1)
+    {
+        chan = cmd & 0x0F;
+
+        if((cmd & 0xF0) != 0xF0 && chan >= 11)
+        {
+            /* Channel out of range */
+            SDL_RWseek(in, start, RW_SEEK_SET);
+            return 0;
+        }
+
+        switch(cmd & 0xF0)
+        {
+        case 0x00: /* Note Off, 0 data bytes */
+        case 0x40: /* Note On with no frequency */
+            break;
+
+        case 0x10: /* Note On, 2 data bytes if channel 0-6, and 0 data bytes if bigger */
+            if(chan <= 6 && SDL_RWread(in, data, 1, 2) != 2)
+            {
+                SDL_RWseek(in, start, RW_SEEK_SET);
+                return 0;
+            }
+            break;
+        case 0x20: /* Volume 1 byte */
+            if(SDL_RWread(in, data, 1, 1) != 1)
+            {
+                SDL_RWseek(in, start, RW_SEEK_SET);
+                return 0;
+            }
+            break;
+        case 0x30: /* Set instrument 1 byte */
+            if(SDL_RWread(in, data, 1, 1) != 1)
+            {
+                SDL_RWseek(in, start, RW_SEEK_SET);
+                return 0;
+            }
+
+            if(data[0] >= num_instruments)
+            {
+                SDL_RWseek(in, start, RW_SEEK_SET);
+                return 0;
+            }
+            break;
+
+        case 0xF0:
+            switch (cmd)
+            {
+            case 0xFD:
+                if(SDL_RWread(in, data, 1, 1) != 1)
+                {
+                    SDL_RWseek(in, start, RW_SEEK_SET);
+                    return 0;
+                }
+                break;
+            case 0xFE:
+                if(SDL_RWread(in, data, 1, 2) != 2)
+                {
+                    SDL_RWseek(in, start, RW_SEEK_SET);
+                    return 0;
+                }
+                break;
+            case 0xFF:
+                break;
+            default:
+                /* Illegal value */
+                SDL_RWseek(in, start, RW_SEEK_SET);
+                return 0;
+            }
+            break;
+
+        default:
+            /* Illegal value */
+            SDL_RWseek(in, start, RW_SEEK_SET);
+            return 0;
+        }
+    }
+
+    SDL_RWseek(in, start, RW_SEEK_SET);
+
+    return 1;
+}
+
 static int detect_ea_rsxx(SDL_RWops *in, Sint64 start, Uint8 magic_byte)
 {
     int res = SDL_FALSE;
@@ -417,7 +548,7 @@ fail:
 }
 
 
-AudioFormats audio_detect_format(SDL_RWops *src, std::string &error)
+AudioFormats audio_detect_format(SDL_RWops *src, int midiplayer_current, std::string &error)
 {
     Uint8 magic[100];
     Sint64 start = SDL_RWtell(src);
@@ -474,12 +605,12 @@ AudioFormats audio_detect_format(SDL_RWops *src, std::string &error)
 
     if(SDL_memcmp(magic, "MUS\x1A", 4) == 0)
     {
-        return xmi_compatible_midi_player();
+        return xmi_compatible_midi_player(midiplayer_current);
     }
 
     if((SDL_memcmp(magic, "FORM", 4) == 0) && (SDL_memcmp(magic + 8, "XDIR", 4) == 0))
     {
-        return xmi_compatible_midi_player();
+        return xmi_compatible_midi_player(midiplayer_current);
     }
 
     /* WAVE files have the magic four bytes "RIFF"
@@ -651,6 +782,10 @@ AudioFormats audio_detect_format(SDL_RWops *src, std::string &error)
     /* Detect MP3 format by frame header [needs scanning of bigger part of the file] */
     if(detect_mp3(submagic, src, start, id3len))
         return FORMAT_MP3;
+
+    /* Detect Wacky Wheels KLM Format file */
+    if(detect_klm(src, start))
+        return FORMAT_MIDI_ADL;
 
     /* Detect id Software Music Format file */
     if(detect_imf(src, start))
