@@ -17,7 +17,6 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 
-#include <string.h>
 #include <SDL2/SDL_rwops.h>
 #include <SDL2/SDL_audio.h>
 
@@ -135,7 +134,6 @@ bool MDAudioADLMIDI::openRead(SDL_RWops *file)
     m_spec.m_channels = 2;
     m_spec.m_sample_format = m_specWanted.getSampleFormat(AUDIO_S16SYS);
     m_spec.m_sample_rate = m_specWanted.getSampleRate(48000);
-    m_spec.m_total_length = (int64_t)(adl_totalTimeLength(m_synth) * m_spec.m_sample_rate);
 
     if(!reCreateSynth())
     {
@@ -160,7 +158,7 @@ bool MDAudioADLMIDI::openRead(SDL_RWops *file)
         return false;
     }
 
-    switch (m_spec.m_sample_format)
+    switch(m_spec.m_sample_format)
     {
     case AUDIO_U8:
         m_sample_format.type = ADLMIDI_SampleType_U8;
