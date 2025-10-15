@@ -99,6 +99,11 @@ public:
     MDAudioFile();
     virtual ~MDAudioFile();
 
+    /**
+     * @brief Special constant used to indicate the error of the decoding instead of the output buffer size
+     */
+    static const size_t r_error = ~(size_t)0;
+
     enum CodecSpec
     {
         //! Codec can only read
@@ -123,24 +128,82 @@ public:
         SPEC_FIXED_CHANNELS = 0x200,
     };
 
+    /**
+     * @brief Obtain properties of the codec: what this codec can do
+     * @return Bitwise-mixed spec of the codec using values of CodecSpec.
+     */
     virtual uint32_t getCodecSpec() const = 0;
 
+    /**
+     * @brief Get the string that describes the last ocurred error
+     * @return string message
+     */
     std::string getLastError();
 
+    /**
+     * @brief Set the music arguments to configure the decoder properties
+     * @param args Pre-parsed arguments structure
+     *
+     * This function must be called before calling the openRead()
+     */
     void setArgs(const MusicArgs &args);
 
+    /**
+     * @brief Open file for decode
+     * @param file The pointer to opened file using SDL RWops API (required setup "rb")
+     * @return true on success, false on any errors. Use getLastError() to learn details.
+     */
     virtual bool openRead(SDL_RWops *file) = 0;
+
+    /**
+     * @brief Open file for encode
+     * @param file The pointer to opened file using SDL RWops API (requires setup "rwb")
+     * @param dstSpec
+     * @return
+     */
     virtual bool openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec) = 0;
 
+    /**
+     * @brief Close the input/output stream
+     * @return true on success
+     */
     virtual bool close() = 0;
 
+    /**
+     * @brief Rewind the read to begin of the stream
+     * @return true on success, false if any error occurred. Use getLastError() to learn details.
+     */
     virtual bool readRewind() = 0;
 
+    /**
+     * @brief Read the decoded audio chunk
+     * @param out Output buffer
+     * @param outSize Size of buffer in bytes
+     * @param spec_changed [out] Pointer to boolean where the fact of spec change gets documented
+     * @return size of read data or value of MDAudioFile::r_error constant on any error. Use getLastError() to learn details.
+     */
     virtual size_t readChunk(uint8_t *out, size_t outSize, bool *spec_changed = nullptr) = 0;
+
+    /**
+     * @brief Write the audio chunk to encode
+     * @param in Input buffer
+     * @param inSize Size of buffer in bytes
+     * @return Size of written data or 0 if any error occurred. Use getLastError() to learn details.
+     */
     virtual size_t writeChunk(uint8_t *in, size_t inSize) = 0;
 
+    /**
+     * @brief Set the desired decode spec for decoders/generators that supports different outputs
+     * @param spec The spec of desired audio format
+     *
+     * This function must be called before calling the openRead()
+     */
     void setWantedSpec(const MDAudioFileSpecWanted &spec);
 
+    /**
+     * @brief Get the obtained decoding or allowed encoding audio format spec
+     * @return Audio format spec structure
+     */
     const MDAudioFileSpec &getSpec() const;
 };
 
