@@ -292,7 +292,7 @@ bool MoondustAudioProcessor::openOutFile(const std::string &file, int dstFormat,
     if(m_rw_out)
         SDL_RWclose(m_rw_out);
 
-    m_rw_out = SDL_RWFromFile(file.c_str(), "wb");
+    m_rw_out = SDL_RWFromFile(file.c_str(), "w+b");
     if(!m_rw_out)
     {
         m_lastError = "Failed to open output file by SDL_RWFromFile for write.";
@@ -418,7 +418,8 @@ bool MoondustAudioProcessor::rewindRead()
 
 bool MoondustAudioProcessor::runChunk(bool dry)
 {
-    int filled = 0, amount = 0, written = 0, attempts = 10;
+    int filled = 0, written = 0, attempts = 10;
+    size_t amount = 0;
     bool spec_changed = false;
     const auto &src_spec = m_in_file->getSpec();
 
@@ -439,7 +440,7 @@ bool MoondustAudioProcessor::runChunk(bool dry)
         if(!m_cuttedAtLoop)
             amount = m_in_file->readChunk(m_in_buffer.data(), m_in_buffer.size(), &spec_changed);
 
-        if(amount == ~(size_t)0)
+        if(amount == MDAudioFile::r_error)
         {
             m_lastError = "Failed to read source chank:" + m_in_file->getLastError();
             return false;
