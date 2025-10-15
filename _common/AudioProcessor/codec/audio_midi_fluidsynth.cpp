@@ -362,7 +362,6 @@ bool MDAudioFluidSynth::readRewind()
 {
     midi_seq_rewind(m_player);
     MDAudioFluidSynthCallbacks::all_notes_mute(m_synth);
-    fluid_synth_set_gain(m_synth, gain);
     return true;
 }
 
