@@ -8,8 +8,8 @@
 class pxtnPulse_NoiseBuilder: public pxtnData
 {
 private:
-	void operator =       (const pxtnPulse_NoiseBuilder& src){}
-	pxtnPulse_NoiseBuilder(const pxtnPulse_NoiseBuilder& src){}
+	void operator =       (const pxtnPulse_NoiseBuilder& src){ (void)src; }
+	pxtnPulse_NoiseBuilder(const pxtnPulse_NoiseBuilder& src) : pxtnData() { (void)src; }
 
 	bool    _b_init;
 	short*  _p_tables[ pxWAVETYPE_num ];

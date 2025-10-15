@@ -92,7 +92,7 @@ pxtnERR pxtnPulse_PCM::read( void* desc )
 	pxtnERR        res       = pxtnERR_VOID;
 	char            buf[ 16 ] = { 0 };
 	uint32_t        size      =   0  ;
-	WAVEFORMATCHUNK format    = { 0 };
+	WAVEFORMATCHUNK format    = { 0, 0, 0, 0, 0, 0, 0 };
 
 	_p_smp = NULL;
 
