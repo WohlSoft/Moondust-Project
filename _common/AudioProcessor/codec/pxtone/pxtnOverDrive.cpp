@@ -85,7 +85,7 @@ bool pxtnOverDrive::Write( void* desc ) const
 
 pxtnERR pxtnOverDrive::Read( void* desc )
 {
-	_OVERDRIVESTRUCT over = {0};
+	_OVERDRIVESTRUCT over = {0, 0, 0.0f, 0.0f, 0.0f};
 	int32_t          size =  0 ;
 
 	memset( &over, 0, sizeof(_OVERDRIVESTRUCT) );
