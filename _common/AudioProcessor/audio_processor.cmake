@@ -32,6 +32,9 @@ set(AUDIO_PROCESSOR_SRC
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_qoa.h
     ${CMAKE_CURRENT_LIST_DIR}/codec/qoa/qoa.h
 
+    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_gme.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_gme.h
+
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_adl.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_adl.h
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_opn.cpp
