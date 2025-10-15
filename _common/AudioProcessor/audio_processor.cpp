@@ -284,6 +284,9 @@ bool MoondustAudioProcessor::openOutFile(const std::string &file, int dstFormat,
     case FORMAT_AIFF:
         m_out_file.reset(new MDAudioWAV(MDAudioWAV::CONTAINER_AIFF));
         break;
+    case FORMAT_FLAC:
+        m_out_file.reset(new MDAudioFLAC());
+        break;
     default:
         m_lastError = "Incorrect or unsupported destination format";
         return false;

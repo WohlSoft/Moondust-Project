@@ -20,10 +20,20 @@ class MDAudioFLAC : public MDAudioFile
 
     // Encode
     void *m_flac_enc = nullptr;
+    void *m_flac_enc_metadata[2] = {nullptr, nullptr};
     bool m_write = false;
 
 public:
-    MDAudioFLAC();
+    enum EncodeContainer
+    {
+        ENCODE_FLAC_NATIVE = 0,
+        ENCODE_FLAC_OGG
+    };
+private:
+    EncodeContainer m_container = ENCODE_FLAC_NATIVE;
+
+public:
+    MDAudioFLAC(EncodeContainer container = ENCODE_FLAC_NATIVE);
     virtual ~MDAudioFLAC();
 
     uint32_t getCodecSpec() const override;

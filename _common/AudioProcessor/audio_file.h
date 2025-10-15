@@ -54,6 +54,8 @@ struct MDAudioFileSpec
     bool vbr = false;
     //! VBR encode quality from 0 to 10
     int quality = -1;
+    //! Compression level for lossless codecs
+    int compression = -1;
     //! Encode Bitrate in bits
     int bitrate = -1;
     //! Minimum bitrate in bits
