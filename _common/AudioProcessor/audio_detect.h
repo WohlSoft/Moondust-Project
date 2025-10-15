@@ -27,21 +27,20 @@
 
 typedef enum Mix_MIDI_Player
 {
-    MIDI_ADLMIDI,
-    MIDI_Native,
-    MIDI_Timidity,
-    MIDI_OPNMIDI,
-    MIDI_Fluidsynth,
-    MIDI_EDMIDI,
+    MIDI_ADLMIDI    = 0,
+    MIDI_Native     = 1,
+    MIDI_Timidity   = 2,
+    MIDI_OPNMIDI    = 3,
+    MIDI_Fluidsynth = 4,
+    MIDI_EDMIDI     = 5,
+
     MIDI_ANY,
     MIDI_KnownPlayers, /* Count of MIDI player types */
     MIDI_KnownDevices = MIDI_KnownPlayers /* Backward compatibility */
 } Mix_MIDI_Player;
 
-extern int midiplayer_current;
-
 typedef struct SDL_RWops SDL_RWops;
 
-AudioFormats audio_detect_format(SDL_RWops *src, std::string &error);
+AudioFormats audio_detect_format(SDL_RWops *src, int midiplayer_current, std::string &error);
 
 #endif // AUDIO_DETECT_H
