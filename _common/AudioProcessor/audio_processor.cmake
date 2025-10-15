@@ -39,6 +39,17 @@ set(AUDIO_PROCESSOR_SRC
     ${CMAKE_CURRENT_LIST_DIR}/codec/OPNMIDI/gm_opn_bank.h
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_edmidi.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_edmidi.h
+    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_fluidsynth.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_fluidsynth.h
+    ${CMAKE_CURRENT_LIST_DIR}/codec/midi_seq/cvt_mus2mid.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/codec/midi_seq/cvt_xmi2mid.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/codec/midi_seq/file_reader.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/codec/midi_seq/fraction.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/codec/midi_seq/midi_sequencer.h
+    ${CMAKE_CURRENT_LIST_DIR}/codec/midi_seq/midi_sequencer.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/codec/midi_seq/midi_sequencer_impl.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/codec/midi_seq/mix_midi_seq.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/codec/midi_seq/mix_midi_seq.h
 
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_pxtone.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_pxtone.h
@@ -94,6 +105,6 @@ set(AUDIO_PROCESSOR_LIBS
     vorbis vorbisfile vorbisenc
     mpg123 mp3lame
     xmp
-    ADLMIDI OPNMIDI EDMIDI gme
+    ADLMIDI OPNMIDI EDMIDI fluidsynth gme
 )
 set(AUDIO_PROCESSOR_INCLUDES ${CMAKE_CURRENT_LIST_DIR})
