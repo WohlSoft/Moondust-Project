@@ -6,8 +6,8 @@
 class pxtnPulse_Frequency: public pxtnData
 {
 private:
-	void operator =    (const pxtnPulse_Frequency& src){}
-	pxtnPulse_Frequency(const pxtnPulse_Frequency& src){}
+	void operator =    (const pxtnPulse_Frequency& src){ (void)src; }
+	pxtnPulse_Frequency(const pxtnPulse_Frequency& src) : pxtnData() { (void)src; }
 
 	float* _freq_table;
 	double _GetDivideOctaveRate( int32_t divi );

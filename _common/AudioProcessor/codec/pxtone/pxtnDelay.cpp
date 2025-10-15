@@ -148,7 +148,7 @@ bool pxtnDelay::Write( void* desc ) const
 
 pxtnERR pxtnDelay::Read( void* desc )
 {
-	_DELAYSTRUCT dela = {0};
+	_DELAYSTRUCT dela = {0, 0, 0.0f, 0.0f};
 	int32_t      size =  0 ;
 
 	if( !_io_read_le32( desc, &size                     ) ) return pxtnERR_desc_r     ;

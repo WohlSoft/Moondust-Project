@@ -357,7 +357,7 @@ px_FORCE_INLINE void swapEndian( _x3x_UNIT &unit)
 
 pxtnERR pxtnUnit::Read_v3x( void* desc, int32_t *p_group )
 {
-	_x3x_UNIT unit = {0};
+	_x3x_UNIT unit = {0, 0};
 	int32_t   size =  0 ;
 
 	if( !_io_read_le32( desc, &size                    ) ) return pxtnERR_desc_r;

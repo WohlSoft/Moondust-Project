@@ -74,7 +74,7 @@ bool pxtnWoice::io_matePCM_w( void* desc ) const
 pxtnERR pxtnWoice::io_matePCM_r( void* desc )
 {
 	pxtnERR             res  = pxtnERR_VOID;
-	_MATERIALSTRUCT_PCM pcm  = {0};
+	_MATERIALSTRUCT_PCM pcm  = {0, 0, 0, 0, 0, 0, 0.0f, 0};
 	int32_t             size =  0 ;
 
 	if( !_io_read_le32( desc, &size                              ) ) return pxtnERR_desc_r;
@@ -183,7 +183,7 @@ bool pxtnWoice::io_matePTN_w( void* desc ) const
 pxtnERR pxtnWoice::io_matePTN_r( void* desc )
 {
 	pxtnERR             res  = pxtnERR_VOID;
-	_MATERIALSTRUCT_PTN ptn  = {0};
+	_MATERIALSTRUCT_PTN ptn  = {0, 0, 0, 0.0f, 0};
 	int32_t             size =  0 ;
 
 	if( !_io_read_le32( desc, &size                            ) ) return pxtnERR_desc_r;
@@ -278,7 +278,7 @@ bool pxtnWoice::io_matePTV_w( void* desc ) const
 pxtnERR pxtnWoice::io_matePTV_r( void* desc )
 {
 	pxtnERR             res  = pxtnERR_VOID;
-	_MATERIALSTRUCT_PTV ptv  = {0};
+	_MATERIALSTRUCT_PTV ptv  = {0, 0, 0.0f, 0};
 	int32_t             size =  0 ;
 
 	if( !_io_read_le32( desc, &size                              ) ) return pxtnERR_desc_r;
