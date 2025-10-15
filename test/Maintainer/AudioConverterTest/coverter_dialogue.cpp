@@ -105,7 +105,13 @@ CoverterDialogue::CoverterDialogue(QWidget *parent)
                 outFile.replace(dot + 1, outFile.size() - (dot - 1), "wav");
                 ui->fileOut->setText(outFile);
                 break;
+            case 7:
+                outFile.replace(dot + 1, outFile.size() - (dot - 1), "flac");
+                ui->fileOut->setText(outFile);
+                break;
             }
+
+            emit ui->fileOut->editingFinished();
         }
     });
 
@@ -117,6 +123,7 @@ CoverterDialogue::CoverterDialogue(QWidget *parent)
     ui->dstFormat->addItem("MP3", (int)FORMAT_MP3);
     ui->dstFormat->addItem("WAV", (int)FORMAT_WAV);
     ui->dstFormat->addItem("WAV float64", (int)FORMAT_WAV_F64);
+    ui->dstFormat->addItem("FLAC", (int)FORMAT_FLAC);
     ui->dstFormat->setCurrentIndex(0);
     ui->dstFormat->blockSignals(false);
 
