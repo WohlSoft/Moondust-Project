@@ -17,6 +17,7 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #ifndef AUDIO_FILE_H
 #define AUDIO_FILE_H
 
