@@ -49,6 +49,8 @@ else()
     endif()
 endif()
 
+target_compile_options(AudioConverterTest PRIVATE -Wall -Wextra)
+
 if(ENABLE_ADDRESS_SANITIZER)
     target_compile_options(AudioConverterTest PRIVATE -fsanitize=address)
     target_link_libraries(AudioConverterTest PRIVATE asan)
