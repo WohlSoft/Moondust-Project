@@ -26,6 +26,7 @@
 #include "codec/audio_wav.h"
 #include "codec/audio_gme.h"
 #include "codec/audio_flac.h"
+#include "codec/audio_ffmpeg.h"
 #include "codec/audio_midi_adl.h"
 #include "codec/audio_midi_opn.h"
 #include "codec/audio_midi_edmidi.h"
@@ -181,6 +182,7 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, const std::stri
         break;
 
     case FORMAT_FFMPEG:
+        m_in_file.reset(new MDAudioFFMPEG);
         break;
 
     case FORMAT_MIDI:
