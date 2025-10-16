@@ -885,7 +885,7 @@ retry:
         if(!FLAC__stream_decoder_process_single(M_DEC))
         {
             m_lastError = "FLAC__stream_decoder_process_single() failed";
-            return 0;
+            return MDAudioFile::r_error;
         }
     }
 
