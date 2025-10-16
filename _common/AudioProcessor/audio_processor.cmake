@@ -35,6 +35,9 @@ set(AUDIO_PROCESSOR_SRC
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_gme.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_gme.h
 
+    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_ffmpeg.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_ffmpeg.h
+
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_adl.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_adl.h
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_opn.cpp
@@ -102,6 +105,7 @@ set(AUDIO_PROCESSOR_SRC
 
 set(AUDIO_PROCESSOR_LIBS
     SDL2 SDL2main
+    swresample avformat avcodec avutil
     ogg
     opus opusfile opusenc
     FLAC
