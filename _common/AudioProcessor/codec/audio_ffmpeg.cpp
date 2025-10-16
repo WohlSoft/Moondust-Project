@@ -114,7 +114,7 @@ struct MDAudioFFMPEG_private
     size_t in_buffer_size = 0;
 };
 
-bool MDAudioFFMPEG::updateStream()
+bool MDAudioFFMPEG::updateStream(bool *spec_changed)
 {
     SDL_assert(p->audio_stream->codecpar);
     enum AVSampleFormat sfmt = (enum AVSampleFormat)p->audio_stream->codecpar->format;
@@ -252,6 +252,9 @@ bool MDAudioFFMPEG::updateStream()
         m_spec.m_channels = channels;
         m_spec.m_sample_format = fmt;
         m_spec.m_sample_rate = srate;
+
+        if(spec_changed)
+            *spec_changed = true;
     }
 
     return true;
@@ -293,7 +296,7 @@ int64_t MDAudioFFMPEG::_rw_seek(void *opaque, int64_t offset, int whence)
     return SDL_RWseek(music->m_file, offset, rw_whence);
 }
 
-int MDAudioFFMPEG::decode_packet(const AVPacket *pkt, bool *got_some)
+int MDAudioFFMPEG::decode_packet(const AVPacket *pkt, bool *got_some, bool *spec_changed)
 {
     int ret = 0;
     size_t unpadded_linesize;
@@ -328,7 +331,7 @@ int MDAudioFFMPEG::decode_packet(const AVPacket *pkt, bool *got_some)
             return ret;
         }
 
-        updateStream();
+        updateStream(spec_changed);
 
         if(p->planar)
         {
@@ -656,6 +659,9 @@ size_t MDAudioFFMPEG::readChunk(uint8_t *out, size_t outSize, bool *spec_changed
     bool got_some = false;
     int ret = 0;
 
+    if(spec_changed)
+        *spec_changed = false;
+
 retry:
     if(m_buffer_left == 0)
     {
@@ -665,7 +671,7 @@ retry:
             /* check if the packet belongs to a stream we are interested in, otherwise */
             /* skip it */
             if(p->pkt->stream_index == p->stream_index)
-                ret = decode_packet(p->pkt, &got_some);
+                ret = decode_packet(p->pkt, &got_some, spec_changed);
 
             av_packet_unref(p->pkt);
 
