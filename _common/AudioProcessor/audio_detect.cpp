@@ -754,6 +754,8 @@ AudioFormats audio_detect_format(SDL_RWops *src, int midiplayer_current, std::st
         return FORMAT_FFMPEG;
     if(SDL_memcmp(magic + 4, "\x66\x74\x79\x70\x6D\x70\x34\x32", 8) == 0) /* AAC */
         return FORMAT_FFMPEG;
+    if(SDL_memcmp(magic + 4, "\x66\x74\x79\x70\x64\x61\x73\x68", 8) == 0) /* AAC */
+        return FORMAT_FFMPEG;
     if(SDL_memcmp(magic + 4, "ftypM4A ", 8) == 0) /* AAC */
         return FORMAT_FFMPEG;
 
