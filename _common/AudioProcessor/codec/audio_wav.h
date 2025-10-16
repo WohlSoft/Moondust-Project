@@ -56,8 +56,8 @@ public:
     };
 
 private:
-    EncodeTarget m_target;
-    EncodeContainer m_container;
+    const EncodeTarget m_target;
+    const EncodeContainer m_container;
 
 public:
     MDAudioWAV(EncodeContainer container = CONTAINER_RIFF, EncodeTarget target = ENCODE_DEFAULT);
