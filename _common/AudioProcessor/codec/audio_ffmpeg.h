@@ -32,14 +32,14 @@ class MDAudioFFMPEG : public MDAudioFile
     size_t m_buffer_left = 0;
     size_t m_buffer_pos = 0;
 
-    bool updateStream();
+    bool updateStream(bool *spec_changed = nullptr);
 
     bool m_write = false;
 
     static int _rw_read_buffer(void *opaque, uint8_t *buf, int buf_size);
     static int64_t _rw_seek(void *opaque, int64_t offset, int whence);
 
-    int decode_packet(const AVPacket *pkt, bool *got_some);
+    int decode_packet(const AVPacket *pkt, bool *got_some, bool *spec_changed);
 
 public:
     enum EncodeTarget
