@@ -383,6 +383,9 @@ void XTConvertUI::on_browse_content_clicked()
 
 void XTConvertUI::on_browse_output_clicked()
 {
+    const QString needs_ext_filter_ep(tr("TheXTech game assets pack (%1)", "XTConvert target name"));
+    const QString needs_ext_filter_gp(tr("TheXTech episode (%1)", "XTConvert target name"));
+
     QString needs_ext;
 
     if(m_target_platform == XTConvert::TargetPlatform::TPL)
@@ -407,21 +410,17 @@ void XTConvertUI::on_browse_output_clicked()
             needs_ext += ".xte";
     }
 
-    QString filter;
-    if(m_target_asset_pack)
-        filter = "TheXTech asset pack (*";
-    else
-        filter = "TheXTech episode (*";
-
-    filter += needs_ext;
-    filter += ")";
+    QString filter = m_target_asset_pack ?
+                        needs_ext_filter_gp.arg(QStringLiteral("*") + needs_ext) :
+                        needs_ext_filter_ep.arg(QStringLiteral("*") + needs_ext);
 
     if(m_recent_output_path.isEmpty())
         m_recent_output_path = m_recent_content_path;
 
-    QFileDialog dialog(this, tr("Save a package file"),
-                  m_recent_output_path,
-                  filter);
+    QFileDialog dialog(this,
+                       tr("Save a package file"),
+                       m_recent_output_path,
+                       filter);
 
     dialog.setDefaultSuffix(needs_ext);
     dialog.setAcceptMode(QFileDialog::AcceptSave);
@@ -431,7 +430,12 @@ void XTConvertUI::on_browse_output_clicked()
         return;
 
     QString out = dialog.selectedFiles().front();
-    if(out.isEmpty()) return;
+
+    if(out.isEmpty())
+        return;
+
+    if(!out.endsWith(needs_ext))
+        out.append(needs_ext); // Ensure the extension is valid
 
     QFileInfo fi(out);
     m_recent_output_path = fi.absolutePath();
