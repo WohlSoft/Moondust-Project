@@ -1320,6 +1320,7 @@ public:
             m_episode_info.playstyle_classic = true;
 
         // set character block
+        head.charactersToS64();
         m_episode_info.char_block = "00000";
 
         if(head.nocharacter1)
