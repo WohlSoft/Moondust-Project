@@ -383,8 +383,8 @@ void XTConvertUI::on_browse_content_clicked()
 
 void XTConvertUI::on_browse_output_clicked()
 {
-    const QString needs_ext_filter_ep(tr("TheXTech game assets pack (%1)", "XTConvert target name"));
-    const QString needs_ext_filter_gp(tr("TheXTech episode (%1)", "XTConvert target name"));
+    const QString needs_ext_filter_gp(tr("TheXTech game assets pack (%1)", "XTConvert target name"));
+    const QString needs_ext_filter_ep(tr("TheXTech episode (%1)", "XTConvert target name"));
 
     QString needs_ext;
 
