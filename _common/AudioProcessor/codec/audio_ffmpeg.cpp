@@ -42,6 +42,12 @@ extern "C"
 #include <libswresample/swresample.h>
 }
 
+#if LIBAVFORMAT_VERSION_MAJOR >= 61
+typedef const uint8_t av8write_buf;
+#else
+typedef uint8_t av8write_buf;
+#endif
+
 #define AUDIO_INBUF_SIZE 4096
 
 #if LIBAVCODEC_VERSION_INT >= AV_VERSION_INT(59, 24, 100)
@@ -84,6 +90,7 @@ static inline std::string mix_av_make_error_string(int errnum)
 
 struct MDAudioFFMPEG_private
 {
+    // DEcoding
     Sint64 src_start = 0;
     AVFormatContext *fmt_ctx = nullptr;
     AVIOContext     *avio_in = nullptr;
@@ -112,6 +119,241 @@ struct MDAudioFFMPEG_private
 
     Uint8 *in_buffer = nullptr;
     size_t in_buffer_size = 0;
+
+    // ENcoding
+    AVCodecContext *audio_enc_ctx = nullptr;
+    uint64_t src_ch_layout = 0;
+    uint64_t dst_ch_layout = 0;
+    int dst_channels = 0;
+    AVFrame *encode_frame = nullptr;
+    AVIOContext *avio_out = nullptr;
+
+    void find_supported_fmt()
+    {
+        const enum AVSampleFormat *cur = codec->sample_fmts;
+
+        // First, check if desired sample format is okay
+        while(*cur != AV_SAMPLE_FMT_NONE)
+        {
+            if(*cur == dst_sample_fmt)
+                return; // Found! Keep as-is
+            ++cur;
+        }
+
+        // Then, find closest one across supported
+        cur = codec->sample_fmts;
+        while(*cur != AV_SAMPLE_FMT_NONE)
+        {
+            switch(dst_sample_fmt)
+            {
+            case AV_SAMPLE_FMT_U8:
+                if(*cur == AV_SAMPLE_FMT_U8 || *cur == AV_SAMPLE_FMT_U8P)
+                {
+                    dst_sample_fmt = *cur;
+                    return;
+                }
+                break;
+
+            case AV_SAMPLE_FMT_S16:
+                if(*cur == AV_SAMPLE_FMT_S16 || *cur == AV_SAMPLE_FMT_S16P)
+                {
+                    dst_sample_fmt = *cur;
+                    return;
+                }
+                break;
+            case AV_SAMPLE_FMT_S32:
+                if(*cur == AV_SAMPLE_FMT_S32 || *cur == AV_SAMPLE_FMT_S32P)
+                {
+                    dst_sample_fmt = *cur;
+                    return;
+                }
+                break;
+            case AV_SAMPLE_FMT_FLT:
+                if(*cur == AV_SAMPLE_FMT_FLT || *cur == AV_SAMPLE_FMT_FLTP ||
+                   *cur == AV_SAMPLE_FMT_DBL || *cur == AV_SAMPLE_FMT_DBLP)
+                {
+                    dst_sample_fmt = *cur;
+                    return;
+                }
+                break;
+            default:
+                break;
+            }
+            ++cur;
+        }
+    }
+
+    void find_supported_rate()
+    {
+        const int *p;
+        int found_rate = 0;
+        int rate_diff = 0;
+        int rate_diff_cur = 0;
+
+        if(!codec->supported_samplerates)
+            return; // Any rates supported
+
+        p = codec->supported_samplerates;
+        while(*p)
+        {
+            found_rate = FFMAX(*p, found_rate);
+            rate_diff_cur = SDL_abs(found_rate - srate);
+
+            if(rate_diff == 0)
+                rate_diff = rate_diff_cur;
+            else if(rate_diff > rate_diff_cur)
+            {
+                rate_diff = rate_diff_cur;
+                if(rate_diff == 0)
+                {
+                    srate = found_rate;
+                    return;
+                }
+            }
+
+            p++;
+        }
+
+        srate = found_rate;
+    }
+
+
+    void select_chgannel_layout()
+    {
+#if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
+        const AVChannelLayout *p;
+#else
+        const uint64_t *p;
+#endif
+
+        switch(schannels)
+        {
+        case 0:
+        case 1:
+            src_ch_layout = AV_CH_LAYOUT_MONO;
+            break;
+        case 2:
+            src_ch_layout = AV_CH_LAYOUT_STEREO;
+            break;
+        case 3:
+            src_ch_layout = AV_CH_LAYOUT_2_1;
+            break;
+        case 4:
+            src_ch_layout = AV_CH_LAYOUT_QUAD;
+            break;
+        case 5:
+            src_ch_layout = AV_CH_LAYOUT_4POINT1;
+            break;
+        case 6:
+            src_ch_layout = AV_CH_LAYOUT_5POINT1;
+            break;
+        case 7:
+            src_ch_layout = AV_CH_LAYOUT_7POINT0;
+            break;
+        case 8:
+            src_ch_layout = AV_CH_LAYOUT_7POINT1;
+            break;
+        default:
+            src_ch_layout = AV_CH_LAYOUT_SURROUND;
+            break;
+        }
+
+#if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
+        p = codec->ch_layouts;
+#else
+        p = codec->channel_layouts;
+#endif
+        dst_ch_layout = 0;
+        dst_channels = schannels;
+
+        if(!p)
+            dst_ch_layout = src_ch_layout;
+        else
+        {
+#if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
+            while(p)
+#else
+            while(*p)
+#endif
+            {
+#if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
+                if(p->u.mask == src_ch_layout)
+#else
+                if(*p == src_ch_layout)
+#endif
+                {
+                    dst_ch_layout = src_ch_layout;
+                    break;
+                }
+
+#if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
+                int nb_channels = p->nb_channels;
+#else
+                int nb_channels = av_get_channel_layout_nb_channels(*p);
+#endif
+                if(nb_channels == dst_channels)
+                {
+#if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
+                    dst_ch_layout = p->u.mask;
+#else
+                    dst_ch_layout = *p;
+#endif
+                    break;
+                }
+
+                p++;
+            }
+
+            if(dst_ch_layout == 0) // Found nothing!
+            {
+                int best_channels = 0;
+                uint64_t last_dst = 0;
+                int last_ch = 0;
+
+#if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
+                p = codec->ch_layouts;
+#else
+                p = codec->channel_layouts;
+#endif
+
+#if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
+                while(p)
+#else
+                while(*p)
+#endif
+                {
+#if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
+                    last_ch = p->nb_channels;
+                    last_dst = p->u.mask;
+#else
+                    last_ch = av_get_channel_layout_nb_channels(*p);
+                    last_dst = *p;
+#endif
+
+                    if(last_ch > best_channels)
+                        best_channels = last_ch;
+
+                    if(best_channels >= dst_channels)
+                    {
+#if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
+                        dst_ch_layout = p->u.mask;
+#else
+                        dst_ch_layout = *p;
+#endif
+                        break;
+                    }
+
+                    p++;
+                }
+
+                if(dst_ch_layout == 0)
+                {
+                    dst_channels = last_ch;
+                    dst_ch_layout = last_dst;
+                }
+            }
+        }
+    }
 };
 
 bool MDAudioFFMPEG::updateStream(bool *spec_changed)
@@ -208,8 +450,20 @@ bool MDAudioFFMPEG::updateStream(bool *spec_changed)
                 layout.order = AV_CHANNEL_ORDER_NATIVE;
                 layout.nb_channels = channels;
 
-                if(channels > 2)
+                if(channels > 8)
                     layout.u.mask = AV_CH_LAYOUT_SURROUND;
+                else if(channels == 8)
+                    layout.u.mask = AV_CH_LAYOUT_7POINT1;
+                else if(channels == 7)
+                    layout.u.mask = AV_CH_LAYOUT_7POINT0;
+                else if(channels == 6)
+                    layout.u.mask = AV_CH_LAYOUT_5POINT1;
+                else if(channels == 5)
+                    layout.u.mask = AV_CH_LAYOUT_4POINT1;
+                else if(channels == 4)
+                    layout.u.mask = AV_CH_LAYOUT_QUAD;
+                else if(channels == 3)
+                    layout.u.mask = AV_CH_LAYOUT_2_1;
                 else if(channels == 2)
                     layout.u.mask = AV_CH_LAYOUT_STEREO;
                 else if(channels == 1)
@@ -221,8 +475,20 @@ bool MDAudioFFMPEG::updateStream(bool *spec_changed)
 #else
             if(layout == 0)
             {
-                if(channels > 2)
+                if(channels > 8)
                     layout = AV_CH_LAYOUT_SURROUND;
+                else if(channels == 8)
+                    layout = AV_CH_LAYOUT_7POINT1;
+                else if(channels == 7)
+                    layout = AV_CH_LAYOUT_7POINT0;
+                else if(channels == 6)
+                    layout = AV_CH_LAYOUT_5POINT1;
+                else if(channels == 5)
+                    layout = AV_CH_LAYOUT_4POINT1;
+                else if(channels == 4)
+                    layout = AV_CH_LAYOUT_QUAD;
+                else if(channels == 3)
+                    layout = AV_CH_LAYOUT_2_1;
                 else if(channels == 2)
                     layout = AV_CH_LAYOUT_STEREO;
                 else if(channels == 1)
@@ -294,6 +560,12 @@ int64_t MDAudioFFMPEG::_rw_seek(void *opaque, int64_t offset, int whence)
     }
 
     return SDL_RWseek(music->m_file, offset, rw_whence);
+}
+
+int md_audio_ffmpeg_rw_write_cb(void *opaque, av8write_buf *data, int size)
+{
+    MDAudioFFMPEG *music = reinterpret_cast<MDAudioFFMPEG*>(opaque);
+    return (int)SDL_RWwrite(music->m_file, data, 1, size);
 }
 
 int MDAudioFFMPEG::decode_packet(const AVPacket *pkt, bool *got_some, bool *spec_changed)
@@ -594,11 +866,187 @@ bool MDAudioFFMPEG::openRead(SDL_RWops *file)
 
 bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
 {
+    AVCodecID tCodec = AV_CODEC_ID_NONE;
+    close();
+
+    m_write = true;
+    m_file = file;
+
+    m_spec = dstSpec;
+
+    switch(m_target)
+    {
+    default:
+    case ENCODE_UNDEFINED:
+        m_lastError = "FFMPEG: Encoding is not configured!";
+        return false;
+    case ENCODE_WMAv1:
+        tCodec = AV_CODEC_ID_WMAV1;
+        break;
+    case ENCODE_WMAv2:
+        tCodec = AV_CODEC_ID_WMAV2;
+        break;
+    case ENCODE_WAV_MULAW:
+        tCodec = AV_CODEC_ID_PCM_MULAW;
+        break;
+    case ENCODE_WAV_ALAW:
+        tCodec = AV_CODEC_ID_PCM_ALAW;
+        break;
+    case ENCODE_WAV_ADPCM_MS:
+        tCodec = AV_CODEC_ID_ADPCM_MS;
+        break;
+    case ENCODE_WAV_ADPCM_IMA:
+        tCodec = AV_CODEC_ID_ADPCM_IMA_WAV;
+        break;
+    case ENCODE_AIFF:
+        break;
+    }
+
+    p->codec = avcodec_find_encoder(tCodec);
+    if(!p->codec)
+    {
+        m_lastError = "Can't find a codec: ";
+        m_lastError += avcodec_get_name(tCodec);
+        return false;
+    }
+
+    p->audio_enc_ctx = avcodec_alloc_context3(p->codec);
+    if(!p->audio_enc_ctx)
+    {
+        m_lastError = "FFMPEG: Can't allocate audio codec context";
+        close();
+        return false;
+    }
+
+    // Input sample format
+    switch(m_spec.m_sample_format)
+    {
+    case AUDIO_U8:
+        p->sfmt = AV_SAMPLE_FMT_U8;
+        break;
+    case AUDIO_S8:
+        m_spec.m_sample_format = AUDIO_U8; // Can't S8
+        p->sfmt = AV_SAMPLE_FMT_U8;
+        break;
+    case AUDIO_U16MSB:
+    case AUDIO_U16LSB:
+    case AUDIO_S16MSB:
+    case AUDIO_S16LSB:
+        m_spec.m_sample_format = AUDIO_S16SYS; // Only S16 system endianess
+        p->sfmt = AV_SAMPLE_FMT_S16;
+        break;
+    case AUDIO_S32MSB:
+    case AUDIO_S32LSB:
+        m_spec.m_sample_format = AUDIO_S32SYS; // Only S32 system endianess
+        p->sfmt = AV_SAMPLE_FMT_S32;
+        break;
+    case AUDIO_F32MSB:
+    case AUDIO_F32LSB:
+        m_spec.m_sample_format = AUDIO_F32SYS; // Only F32 system endianess
+        p->sfmt = AV_SAMPLE_FMT_FLT;
+        break;
+    }
+
+    p->schannels = m_spec.m_channels;
+    p->select_chgannel_layout();
+
+    p->dst_sample_fmt = p->sfmt;
+    p->audio_enc_ctx->bit_rate = m_spec.bitrate > 0 ? m_spec.bitrate : 128000;
+
+    p->find_supported_fmt();
+    p->audio_enc_ctx->sample_fmt = p->dst_sample_fmt; // Target sample format, if mismatches, then conversion is required
+
+    p->srate = m_spec.m_sample_rate;
+    p->find_supported_rate();
+
+    if(p->srate != m_spec.m_sample_rate)
+        m_spec.m_sample_rate = p->srate;
+
+    p->audio_enc_ctx->sample_rate = p->srate;
+#if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
+    p->audio_enc_ctx->ch_layout.nb_channels = p->dst_channels;
+    p->audio_enc_ctx->ch_layout.u.mask = p->dst_ch_layout;
+#else
+    p->audio_enc_ctx->channels = p->dst_channels;
+    p->audio_enc_ctx->channel_layout = p->dst_ch_layout;
+#endif
+
+    if(avcodec_open2(p->audio_enc_ctx, p->codec, nullptr) < 0)
+    {
+        m_lastError = "FFMPEG: Could not open codec";
+        close();
+        return false;
+    }
+
+    int buffer_size = av_samples_get_buffer_size(NULL,
+                                                 p->dst_channels,
+                                                 p->audio_enc_ctx->frame_size,
+                                                 p->audio_enc_ctx->sample_fmt, 0);
+    if(buffer_size < 0)
+    {
+        m_lastError = "FFMPEG: Failed to calculate buffer size";
+        close();
+        return false;
+    }
+
+    m_io_buffer.resize(buffer_size);
+
+    p->avio_out = avio_alloc_context(m_io_buffer.data(),
+                                     m_io_buffer.size(),
+                                     AVIO_FLAG_READ_WRITE,
+                                     this,
+                                     _rw_read_buffer,
+                                     md_audio_ffmpeg_rw_write_cb,
+                                     _rw_seek);
+
+    if(!p->avio_out)
+    {
+        m_lastError = "FFMPEG: Failed to initialize AVIO interface";
+        close();
+        return false;
+    }
+
+
+
+    // Init resampler
+    if(p->src_ch_layout != p->dst_ch_layout || p->schannels != p->dst_channels || p->sfmt != p->dst_sample_fmt)
+    {
+#if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
+        AVChannelLayout layout;
+#else
+        int layout;
+#endif
+        p->swr_ctx = swr_alloc();
+        p->merge_buffer.clear();
+    }
+
+
+
     return false;
 }
 
 bool MDAudioFFMPEG::close()
 {
+    if(p->encode_frame)
+    {
+        av_frame_free(&p->encode_frame);
+        p->encode_frame = nullptr;
+    }
+
+    if(p->avio_out)
+    {
+        avio_context_free(&p->avio_out);
+        if(p->fmt_ctx)
+            p->fmt_ctx->pb = nullptr;
+        p->avio_out = nullptr;
+    }
+
+    if(p->audio_enc_ctx)
+    {
+        avcodec_close(p->audio_enc_ctx);
+        p->audio_enc_ctx = nullptr;
+    }
+
     if(p->audio_dec_ctx)
     {
         avcodec_free_context(&p->audio_dec_ctx);
