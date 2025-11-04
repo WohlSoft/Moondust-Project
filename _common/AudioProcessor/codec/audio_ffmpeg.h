@@ -39,6 +39,9 @@ class MDAudioFFMPEG : public MDAudioFile
     static int _rw_read_buffer(void *opaque, uint8_t *buf, int buf_size);
     static int64_t _rw_seek(void *opaque, int64_t offset, int whence);
 
+    friend int md_audio_ffmpeg_rw_write_cb(void *opaque, uint8_t *data, int size);
+    friend int md_audio_ffmpeg_rw_write_cb(void *opaque, const uint8_t *data, int size);
+
     int decode_packet(const AVPacket *pkt, bool *got_some, bool *spec_changed);
 
 public:
@@ -48,7 +51,7 @@ public:
         ENCODE_WMAv1,
         ENCODE_WMAv2,
         ENCODE_WAV_MULAW,
-        ENCODE_WAV_ULAW,
+        ENCODE_WAV_ALAW,
         ENCODE_WAV_ADPCM_MS,
         ENCODE_WAV_ADPCM_IMA,
         ENCODE_AIFF
