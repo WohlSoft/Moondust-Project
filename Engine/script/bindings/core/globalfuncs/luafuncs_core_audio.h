@@ -20,7 +20,7 @@
 #ifndef BINDING_CORE_GLOBALFUNCS_AUDIO_H
 #define BINDING_CORE_GLOBALFUNCS_AUDIO_H
 
-
+#include <stddef.h>
 #include <luabind/luabind.hpp>
 #include <lua_includes/lua.hpp>
 
