@@ -20,6 +20,7 @@
 #ifndef BINDING_TITLE_RENDERER_H
 #define BINDING_TITLE_RENDERER_H
 
+#include <stdint.h>
 #include <script/lua_global.h>
 
 #include <luabind/luabind.hpp>

@@ -20,6 +20,7 @@
 #ifndef BINDING_CORE_GLOBALFUNCS_PATHS_H
 #define BINDING_CORE_GLOBALFUNCS_PATHS_H
 
+#include <string>
 #include <luabind/luabind.hpp>
 #include <lua_includes/lua.hpp>
 
