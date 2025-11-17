@@ -22,10 +22,17 @@ class CalibrationMain;
 class Matrix;
 class QStatusBar;
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 inline uint qHash(const QColor &key, uint seed)
 {
     return qHash(key.rgba(), seed);
 }
+#else
+inline size_t qHash(const QColor &key, size_t seed)
+{
+    return qHash(key.rgba(), seed);
+}
+#endif
 
 class ImageCalibrator : public QDialog
 {

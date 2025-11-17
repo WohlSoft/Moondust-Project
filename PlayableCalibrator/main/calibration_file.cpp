@@ -75,7 +75,7 @@ void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration
         if(mk.hasMatch())
             animations.insert(mk.captured(1));
         else if(fk.hasMatch())
-            framesKeys.insert({mk.captured(1).toInt(), mk.captured(2).toInt()});
+            framesKeys.insert({fk.captured(1).toInt(), fk.captured(2).toInt()});
 #else
         if(aniKey.Q_QRegExpMatch(gn))
             animations.insert(aniKey.cap(1));
