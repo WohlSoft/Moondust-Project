@@ -2021,7 +2021,11 @@ public:
             soundbank_ini_file.open(QIODevice::ReadOnly | QIODevice::Text);
 
             QTextStream soundbank_ini(&soundbank_ini_file);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
             soundbank_ini.setCodec("UTF-8");
+#else
+            soundbank_ini.setEncoding(QStringConverter::Utf8);
+#endif
 
             bool in_samples = false;
             std::map<QString, int> resolved_modules;
