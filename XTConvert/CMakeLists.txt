@@ -75,7 +75,7 @@ endif()
 set(ZLIB_INCLUDE_DIR ${ZLIB_INCLUDE_DIRS})
 set(ZLIB_LIBRARY ${libZLib_A_Lib})
 
-qt5_add_resources(LIBXTCONVERT_RES "${CMAKE_CURRENT_SOURCE_DIR}/_resources/libxtconvert.qrc")
+pge_qt_add_resources(LIBXTCONVERT_RES "${CMAKE_CURRENT_SOURCE_DIR}/_resources/libxtconvert.qrc")
 
 add_library(libxtconvert
     src/libxtconvert.cpp
