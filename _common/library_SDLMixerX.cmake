@@ -58,6 +58,7 @@ ExternalProject_Add(
         "-DUSE_OGG_VORBIS_STB=ON"
         "-DUSE_MP3_MPG123=OFF"
         "-DUSE_WAVPACK=OFF"
+        "-DMIXERX_DISABLE_SO_VERSION=ON"
         ${ANDROID_CMAKE_FLAGS}
         ${APPLE_CMAKE_FLAGS}
         ${MIXERX_WIN32_CMAKE_FLAGS}
