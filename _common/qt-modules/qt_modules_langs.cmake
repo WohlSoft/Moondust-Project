@@ -1,4 +1,8 @@
-find_package(Qt5LinguistTools REQUIRED)
+if(NOT PGE_FORCE_QT5 OR Qt6_FOUND)
+    find_package(Qt6LinguistTools REQUIRED)
+else()
+    find_package(Qt5LinguistTools REQUIRED)
+endif()
 
 set(MOONDUST_QT_LANG_OUTPUT_DIR "${CMAKE_BINARY_DIR}/bin/languages")
 FILE(GLOB MOONDUST_QT_LANG_ICON_FILES "${CMAKE_CURRENT_LIST_DIR}/languages-icons/*.png")
@@ -11,7 +15,7 @@ file(GLOB MOONDUST_QT_LANG_SRC_FILES
 set_source_files_properties(${MOONDUST_QT_LANG_SRC_FILES} PROPERTIES OUTPUT_LOCATION ${MOONDUST_QT_LANG_OUTPUT_DIR})
 
 set(MOONDUST_QT_LANG_BIN_FILES)
-qt5_add_translation(MOONDUST_QT_LANG_BIN_FILES ${MOONDUST_QT_LANG_SRC_FILES})
+pge_qt_add_translation(MOONDUST_QT_LANG_BIN_FILES ${MOONDUST_QT_LANG_SRC_FILES})
 add_custom_target(moondust_translations ALL DEPENDS ${MOONDUST_QT_LANG_BIN_FILES})
 
 if(NOT APPLE)

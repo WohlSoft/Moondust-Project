@@ -36,15 +36,25 @@ if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
         option(PGE_ENABLE_QT "Enable build of Qt-dependent components" ${PGE_ENABLE_QT_ENABLED_BY_DEFAULT})
         option(PGE_ENABLE_STATIC_QT "Use static library deployment of Qt (Set this flag when you are using static build of Qt!)" OFF)
         message("== Qt has been found in ${QT_ANY_DIR}")
-        get_filename_component(QT5_BINARY_DIR "${QT_ANY_DIR}/../../bin" ABSOLUTE)
+        if(Qt6_FOUND)
+            get_filename_component(QT6_BINARY_DIRS "${QT_ANY_DIR}/../../bin" ABSOLUTE)
+            if(UNIX AND NOT APPLE)
+                list(APPEND QT6_BINARY_DIRS "/usr/lib/qt6/bin")
+            endif()
+        else()
+            get_filename_component(QT5_BINARY_DIRS "${QT_ANY_DIR}/../../bin" ABSOLUTE)
+            if(UNIX AND NOT APPLE)
+                list(APPEND QT5_BINARY_DIRS "/usr/lib/qt5/bin")
+            endif()
+        endif()
 
 
         # Tools
 
         if(Qt6_FOUND)
-            find_program(_QT_LRELEASE_PROGRAM NAMES lrelease lrelease-qt6 PATHS ${QT5_BINARY_DIR}/bin/)
+            find_program(_QT_LRELEASE_PROGRAM NAMES lrelease lrelease-qt6 PATHS ${QT6_BINARY_DIRS})
         else()
-            find_program(_QT_LRELEASE_PROGRAM NAMES lrelease lrelease-qt5 PATHS ${QT5_BINARY_DIR}/bin/)
+            find_program(_QT_LRELEASE_PROGRAM NAMES lrelease lrelease-qt5 PATHS ${QT5_BINARY_DIRS})
         endif()
 
         if(_QT_LRELEASE_PROGRAM)
@@ -55,9 +65,9 @@ if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
 
 
         if(Qt6_FOUND)
-            find_program(_QT_LUPDATE_PROGRAM NAMES lupdate lupdate-qt6 PATHS ${QT5_BINARY_DIR}/bin/)
+            find_program(_QT_LUPDATE_PROGRAM NAMES lupdate lupdate-qt6 PATHS ${QT6_BINARY_DIRS})
         else()
-            find_program(_QT_LUPDATE_PROGRAM NAMES lupdate lupdate-qt5 PATHS ${QT5_BINARY_DIR}/bin/)
+            find_program(_QT_LUPDATE_PROGRAM NAMES lupdate lupdate-qt5 PATHS ${QT5_BINARY_DIRS})
         endif()
 
         if(_QT_LUPDATE_PROGRAM)
