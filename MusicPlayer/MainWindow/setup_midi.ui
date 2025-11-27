@@ -460,6 +460,21 @@
           <string>HMI Sound Operating System (Old)</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string notr="true">MS AdLib (Win3x)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">IMF Creator</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>FM Synth by Jammie O'Connel</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item row="7" column="0" colspan="2">
