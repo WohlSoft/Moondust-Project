@@ -37,6 +37,9 @@ AssocFiles::AssocFiles(QWidget *parent) :
     formats << tentry{"xmi",  "XMI - AIL eXtended MIDI file", tr("AIL eXtended MIDI File", "File Type Name")};
     formats << tentry{"mus",  "MUS - DMX MIDI Music file", tr("DMX MIDI File", "File Type Name")};
     formats << tentry{"cmf",  "CMF - Creative Music File (mixed MIDI and OPL2 synth)", tr("Creative MIDI+OPL2 File", "File Type Name")};
+    formats << tentry{"hmi",  "HMI - HMI Sound Operating System's MIDI File", tr("HMI-SOS MIDI File", "File Type Name")};
+    formats << tentry{"hmp",  "HMP - HMI Sound Operating System's MIDI File (old format)", tr("HMI-SOS MIDI File (old format)", "File Type Name")};
+    formats << tentry{"hmq",  "HMQ - HMI Sound Operating System's MIDI File (old format)", tr("HMI-SOS MIDI File (old format)", "File Type Name")};
 
     formats << tentry{"ay",   "AY - ZX Spectrum/Amstrad CPC", tr("ZX Spectrum/Amstrad Music", "File Type Name")};
     formats << tentry{"gbs",  "GBS - Nintendo Game Boy", tr("Nintendo Game Boy Music", "File Type Name")};
