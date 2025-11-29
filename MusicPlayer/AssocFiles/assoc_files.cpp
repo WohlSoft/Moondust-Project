@@ -101,6 +101,9 @@ void AssocFiles::on_reset_clicked()
     defaultFormats["xmi"] = true;
     defaultFormats["mus"] = true;
     defaultFormats["cmf"] = true;
+    defaultFormats["hmi"] = true;
+    defaultFormats["hmp"] = true;
+    defaultFormats["hmq"] = true;
 
     defaultFormats["voc"] = true;
     defaultFormats["ay"]  = true;
@@ -330,6 +333,24 @@ void AssocFiles::on_AssocFiles_accepted()
             "pttune",
             "        <magic priority=\"60\">\n"
             "            <match type=\"string\" offset=\"0\" value=\"PTTUNE\"/>\n"
+            "        </magic>\n"
+        },
+        {
+            "hmi",
+            "        <magic priority=\"60\">\n"
+            "            <match type=\"string\" offset=\"0\" value=\"HMI-MIDISONG061595\"/>\n"
+            "        </magic>\n"
+        },
+        {
+            "hmp",
+            "        <magic priority=\"60\">\n"
+            "            <match type=\"string\" offset=\"0\" value=\"HMIMIDIP\"/>\n"
+            "        </magic>\n"
+        },
+        {
+            "hmq",
+            "        <magic priority=\"60\">\n"
+            "            <match type=\"string\" offset=\"0\" value=\"HMIMIDIP\"/>\n"
             "        </magic>\n"
         }
     };
