@@ -8,7 +8,7 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>wav</string>
-                <string>aiff</string>
+				<string>aiff</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>file_musplay.icns</string>
@@ -68,14 +68,83 @@
 				<string>midi</string>
 				<string>kar</string>
 				<string>rmi</string>
-				<string>cmf</string>
-				<string>xmi</string>
-				<string>mus</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>file_musplay.icns</string>
 			<key>CFBundleTypeName</key>
 			<string>Music Instrument Digital Interface, commands list</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>mus</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>file_musplay.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>DMX Music file</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>xmi</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>file_musplay.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>XMIDI music file for AIL/MSS</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>cmf</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>file_musplay.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Creative Music File for OPL2</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>klm</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>file_musplay.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>KLM OPL2 music file</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>hmi</string>
+				<string>hmp</string>
+				<string>hmq</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>file_musplay.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>HMI S.O.S. MIDI file</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
