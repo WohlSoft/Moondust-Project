@@ -3659,7 +3659,7 @@ Do you want to continue?</source>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation>旧版场景强制卷轴设置，用于旧版 SMBX64 关卡文件，或从旧格式转换为新格式的关卡文件。请在面向 SMBX64 或更早的引擎制作的关卡文件使用该设置。该设置同样适用于现代引擎（例如 TheXTech、月尘引擎等）。另外，在 SMBX64 或更早的引擎下，该设置仅对“Level - Start”事件及场景 0 生效。如果您的关卡使用了新版强制卷轴设置，该设置将被忽略；如果您保存为 SMBX-38A 格式，该设置将会丢失。您可以通过“场景设置”标签中查找“更改强制卷轴速度”来设置新版强制卷轴。</translation>
+        <translation>旧版场景强制卷轴设置，用于旧版 SMBX64 关卡文件，或从旧格式转换为新格式的关卡文件。请在面向 SMBX64 或更早的引擎制作的关卡文件使用该设置。该设置同样适用于现代引擎（例如 TheXTech、月尘引擎等）。另外，在 SMBX64 或更早的引擎下，场景编号必须与给定事件的索引编号相同才能使旧版强制卷轴生效。如果您的关卡使用了新版强制卷轴设置，该设置将被忽略；如果您保存为 SMBX-38A 格式，该设置将会丢失。您可以通过“场景设置”标签中查找“更改强制卷轴速度”来设置新版强制卷轴。</translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
