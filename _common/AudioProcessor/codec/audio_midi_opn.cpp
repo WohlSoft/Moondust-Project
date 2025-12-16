@@ -30,7 +30,7 @@
 
 bool MDAudioOPNMIDI::reCreateSynth()
 {
-    if(!m_synth)
+    if(m_synth)
         opn2_close(m_synth);
 
     m_synth = opn2_init(m_spec.m_sample_rate);
@@ -219,14 +219,16 @@ bool MDAudioOPNMIDI::openWrite(SDL_RWops */*file*/, const MDAudioFileSpec &/*dst
 
 bool MDAudioOPNMIDI::close()
 {
+    if(m_synth)
+    {
+        opn2_close(m_synth);
+        m_synth = nullptr;
+    }
+
     if(m_file)
     {
-        if(m_synth)
-        {
-            opn2_close(m_synth);
-            m_synth = nullptr;
-        }
         m_file = nullptr;
+        m_in_file.clear();
     }
 
     m_spec = MDAudioFileSpec();
