@@ -55,6 +55,15 @@ private slots:
     void on_adl_autoArpeggio_clicked();
     void on_opn_autoArpeggio_clicked();
 
+    void on_adlSoftPan_clicked();
+    void on_opnSoftPan_clicked();
+
+    void on_adlLowQuality_clicked();
+    void on_opnLowQuality_clicked();
+
+    void on_adlRunAtPcmRate_clicked();
+    void on_opnRunAtPcmRate_clicked();
+
     void on_opnNumChips_editingFinished();
     void on_adlNumChips_editingFinished();
 
