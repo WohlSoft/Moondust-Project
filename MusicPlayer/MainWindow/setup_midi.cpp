@@ -73,6 +73,9 @@ void SetupMidi::loadSetup()
     ui->adl_autoArpeggio->setCheckState((Qt::CheckState)setup.value("ADLMIDI-AutoArpeggio", Qt::Checked).toInt());
     ui->adl_bank->setText(setup.value("ADLMIDI-Bank", QString()).toString());
     ui->adl_use_custom->setChecked(setup.value("ADLMIDI-Bank-UseCustom", true).toBool());
+    ui->adlSoftPan->setChecked(setup.value("ADLMIDI-SoftPan", true).toBool());
+    ui->adlRunAtPcmRate->setChecked(setup.value("ADLMIDI-RunAtPcmRate", false).toBool());
+    ui->adlLowQuality->setChecked(setup.value("ADLMIDI-LowQuality", false).toBool());
 
     ui->opnEmulator->setCurrentIndex(setup.value("OPNMIDI-Emulator", 0).toInt());
     ui->opnNumChips->setValue(setup.value("OPNMIDI-NumChips", 8).toInt());
@@ -81,6 +84,10 @@ void SetupMidi::loadSetup()
     ui->opn_autoArpeggio->setCheckState((Qt::CheckState)setup.value("OPNMIDI-AutoArpeggio", Qt::Checked).toInt());
     ui->opn_bank->setText(setup.value("OPNMIDI-Bank", QString()).toString());
     ui->opn_use_custom->setChecked(setup.value("OPNMIDI-Bank-UseCustom", true).toBool());
+    ui->opnSoftPan->setChecked(setup.value("OPNMIDI-SoftPan", true).toBool());
+    ui->opnRunAtPcmRate->setChecked(setup.value("OPNMIDI-RunAtPcmRate", false).toBool());
+    ui->opnLowQuality->setChecked(setup.value("OPNMIDI-LowQuality", false).toBool());
+
     ui->timidityCfgPath->setText(setup.value("Timidity-Config-Path", QString()).toString());
     ui->fluidSynthSF2Paths->setText(setup.value("FluidSynth-SoundFonts", QString()).toString());
 
@@ -109,6 +116,9 @@ void SetupMidi::saveSetup()
     setup.setValue("ADLMIDI-Vibrato", ui->adl_vibrato->checkState());
     setup.setValue("ADLMIDI-Scalable-Modulation", ui->adl_scalableModulation->checkState());
     setup.setValue("ADLMIDI-AutoArpeggio", ui->adl_autoArpeggio->checkState());
+    setup.setValue("ADLMIDI-SoftPan", ui->adlSoftPan->checkState());
+    setup.setValue("ADLMIDI-RunAtPcmRate", ui->adlRunAtPcmRate->checkState());
+    setup.setValue("ADLMIDI-LowQuality", ui->adlLowQuality->checkState());
 
     setup.setValue("ADLMIDI-Bank", ui->adl_bank->text());
     setup.setValue("ADLMIDI-Bank-UseCustom", ui->adl_use_custom->isChecked());
@@ -118,6 +128,9 @@ void SetupMidi::saveSetup()
     setup.setValue("OPNMIDI-VolumeModel", ui->opnVolumeModel->currentIndex());
     setup.setValue("OPNMIDI-ChanAlloc", ui->opnChanAlloc->currentIndex());
     setup.setValue("OPNMIDI-AutoArpeggio", ui->opn_autoArpeggio->checkState());
+    setup.setValue("OPNMIDI-SoftPan", ui->opnSoftPan->checkState());
+    setup.setValue("OPNMIDI-RunAtPcmRate", ui->opnRunAtPcmRate->checkState());
+    setup.setValue("OPNMIDI-LowQuality", ui->opnLowQuality->checkState());
 
     setup.setValue("OPNMIDI-Bank", ui->opn_bank->text());
     setup.setValue("OPNMIDI-Bank-UseCustom", ui->opn_use_custom->isChecked());
@@ -142,6 +155,9 @@ void SetupMidi::sendSetup()
     Mix_ADLMIDI_setVibrato(tristateToInt(ui->adl_vibrato->checkState()));
     Mix_ADLMIDI_setScaleMod(tristateToInt(ui->adl_scalableModulation->checkState()));
     Mix_ADLMIDI_setAutoArpeggio(tristateToInt(ui->adl_autoArpeggio->checkState()));
+    Mix_ADLMIDI_setFullPanStereo(ui->adlSoftPan->isChecked());
+    Mix_ADLMIDI_setRunAtPcmRate(ui->adlRunAtPcmRate->isChecked());
+    Mix_ADLMIDI_setLowQualityMode(ui->adlLowQuality->isChecked());
 
     ui->adl_bank->setModified(true);
     on_adl_bank_editingFinished();
@@ -151,6 +167,7 @@ void SetupMidi::sendSetup()
     Mix_OPNMIDI_setVolumeModel(ui->opnVolumeModel->currentIndex());
     Mix_OPNMIDI_setChannelAllocMode(ui->opnChanAlloc->currentIndex() - 1);
     Mix_OPNMIDI_setAutoArpeggio(tristateToInt(ui->opn_autoArpeggio->checkState()));
+    Mix_OPNMIDI_setFullPanStereo(ui->opnSoftPan->isChecked());
 
     ui->opn_bank->setModified(true);
     on_opn_bank_editingFinished();
@@ -556,7 +573,6 @@ void SetupMidi::on_opn_autoArpeggio_clicked()
 #endif
 }
 
-
 void SetupMidi::on_adl_autoArpeggio_clicked()
 {
 #ifdef SDL_MIXER_X
@@ -567,6 +583,73 @@ void SetupMidi::on_adl_autoArpeggio_clicked()
     updateAutoArgs();
 #endif
 }
+
+void SetupMidi::on_adlSoftPan_clicked()
+{
+#ifdef SDL_MIXER_X
+    if(m_setupLock)
+        return;
+    Mix_ADLMIDI_setFullPanStereo(ui->adlSoftPan->isChecked());
+    restartForAdl();
+    updateAutoArgs();
+#endif
+}
+
+void SetupMidi::on_opnSoftPan_clicked()
+{
+#ifdef SDL_MIXER_X
+    if(m_setupLock)
+        return;
+    Mix_OPNMIDI_setFullPanStereo(ui->opnSoftPan->isChecked());
+    restartForOpn();
+    updateAutoArgs();
+#endif
+}
+
+void SetupMidi::on_adlLowQuality_clicked()
+{
+#ifdef SDL_MIXER_X
+    if(m_setupLock)
+        return;
+    Mix_ADLMIDI_setLowQualityMode(ui->adlLowQuality->isChecked());
+    restartForAdl();
+    updateAutoArgs();
+#endif
+}
+
+void SetupMidi::on_opnLowQuality_clicked()
+{
+#ifdef SDL_MIXER_X
+    if(m_setupLock)
+        return;
+    Mix_OPNMIDI_setLowQualityMode(ui->opnLowQuality->isChecked());
+    restartForOpn();
+    updateAutoArgs();
+#endif
+}
+
+void SetupMidi::on_adlRunAtPcmRate_clicked()
+{
+#ifdef SDL_MIXER_X
+    if(m_setupLock)
+        return;
+    Mix_ADLMIDI_setRunAtPcmRate(ui->adlRunAtPcmRate->isChecked());
+    restartForAdl();
+    updateAutoArgs();
+#endif
+}
+
+void SetupMidi::on_opnRunAtPcmRate_clicked()
+{
+#ifdef SDL_MIXER_X
+    if(m_setupLock)
+        return;
+    Mix_OPNMIDI_setRunAtPcmRate(ui->opnRunAtPcmRate->isChecked());
+    restartForOpn();
+    updateAutoArgs();
+#endif
+}
+
 
 void SetupMidi::on_timidityCfgPathBrowse_clicked()
 {
@@ -666,6 +749,9 @@ void SetupMidi::on_resetDefaultADLMIDI_clicked()
     ui->adl_autoArpeggio->setChecked(true);
     ui->adlEmulator->setCurrentIndex(0);
     ui->adlNumChips->setValue(4);
+    ui->adlSoftPan->setChecked(true);
+    ui->adlRunAtPcmRate->setChecked(false);
+    ui->adlLowQuality->setChecked(false);
     Mix_ADLMIDI_setTremolo(tristateToInt(ui->adl_tremolo->checkState()));
     Mix_ADLMIDI_setVibrato(tristateToInt(ui->adl_vibrato->checkState()));
     Mix_ADLMIDI_setScaleMod(tristateToInt(ui->adl_scalableModulation->checkState()));
@@ -673,6 +759,9 @@ void SetupMidi::on_resetDefaultADLMIDI_clicked()
     Mix_ADLMIDI_setBankID(ui->adl_bankId->currentIndex());
     Mix_ADLMIDI_setEmulator(ui->adlEmulator->currentIndex());
     Mix_ADLMIDI_setChipsCount(ui->adlNumChips->value());
+    Mix_ADLMIDI_setFullPanStereo(ui->adlSoftPan->isChecked());
+    Mix_ADLMIDI_setRunAtPcmRate(ui->adlRunAtPcmRate->isChecked());
+    Mix_ADLMIDI_setLowQualityMode(ui->adlLowQuality->isChecked());
     m_setupLock = false;
     updateAutoArgs();
     restartForAdl();
