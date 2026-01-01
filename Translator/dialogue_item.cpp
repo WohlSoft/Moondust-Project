@@ -1,7 +1,7 @@
 /*
  * Moondust Translator, a free tool for internationalisation of levels and episodes
  * This is a part of the Moondust Project, a free platform for game making
- * Copyright (c) 2023-2025 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2023-2026 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
