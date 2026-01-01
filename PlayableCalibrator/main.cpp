@@ -1,7 +1,7 @@
 /*
  * Playble Character Calibrator, a free tool for playable character sprite setup tune
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017-2025 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2026 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
