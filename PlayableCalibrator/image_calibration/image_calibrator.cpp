@@ -628,7 +628,7 @@ void ImageCalibrator::toolMirrorSMBXAction(int dir)
         return;
     }
 
-    for(int i = 0; i <= 49; ++i)
+    for(int i = 1; i <= 49; ++i)
     {
         int src = i * dir;
         int dst = src * -1;
