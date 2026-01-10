@@ -736,12 +736,13 @@ void LvlSectionProps::on_LVLPropsMusicCustom_editingFinished()//_textChanged(con
         LevelEdit *edit = mw()->activeLvlEditWin();
         if(!edit) return;
         QString arg1 = ui->LVLPropsMusicCustom->text();
+        arg1 = arg1.trimmed().remove('\"');
 
         QList<QVariant> cusMusicData;
         cusMusicData.push_back(edit->LvlData.sections[edit->LvlData.CurSection].music_file);
-        cusMusicData.push_back(arg1.simplified().remove('\"'));
+        cusMusicData.push_back(arg1);
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECCUSTOMMUSIC, QVariant(cusMusicData));
-        edit->LvlData.sections[edit->LvlData.CurSection].music_file = arg1.simplified().remove('\"');
+        edit->LvlData.sections[edit->LvlData.CurSection].music_file = arg1;
         edit->LvlData.meta.modified = true;
     }
 
