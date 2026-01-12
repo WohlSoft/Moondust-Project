@@ -558,6 +558,23 @@ file(GLOB MOONDUST_EDITOR_HEADS_SRC
     editing/edit_npc/*.h
 )
 
+# Don't auto-moc on files with the fake Q_OBJECT
+set_source_files_properties(
+    editing/_scenes/level/items/item_bgo.h
+    editing/_scenes/level/items/item_block.h
+    editing/_scenes/level/items/item_door.h
+    editing/_scenes/level/items/item_npc.h
+    editing/_scenes/level/items/item_playerpoint.h
+    editing/_scenes/level/items/item_water.h
+    editing/_scenes/world/items/item_level.h
+    editing/_scenes/world/items/item_music.h
+    editing/_scenes/world/items/item_path.h
+    editing/_scenes/world/items/item_scene.h
+    editing/_scenes/world/items/item_tile.h
+PROPERTIES
+    SKIP_AUTOMOC ON
+)
+
 list(APPEND PGE_EDITOR_SRCS ${MOONDUST_EDITOR_HEADS_SRC})
 
 if(NOT WIN32) # Wine setup dialog
