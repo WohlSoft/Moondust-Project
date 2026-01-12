@@ -909,7 +909,7 @@ void LvlSectionProps::on_musicNotice_clicked()
 
     case MUSIC_VANILLA_INVALID:
         message = tr("Your music file \"%1\" seems incompatible to the original SMBX Engine. "
-                     "You see this warning since you edit your level file of the legacy formnat. "
+                     "You see this warning since you edit your level file of the legacy format. "
                      "If you don't target to the original engine, you can ignore this warning. "
                      "Original SMBX Engine supports only <b>MP3</b>, <b>WAV</b>, <b>WMA</b>, and <b>MID</b> without "
                      "arguments string.",

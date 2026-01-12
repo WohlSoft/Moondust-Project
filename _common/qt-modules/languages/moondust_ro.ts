@@ -265,7 +265,7 @@
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="745"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="735"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="745"/>
         <source>Chiptune</source>
         <translation type="unfinished"></translation>
     </message>
@@ -306,96 +306,96 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="733"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="743"/>
         <source>MIDI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="985"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1036"/>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="986"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1037"/>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="987"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1038"/>
         <source>Timidity (needed a bank)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="988"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1039"/>
         <source>Native MIDI (Not recommended, buggy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="989"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1040"/>
         <source>FluidSynth (needed an SF2-bank)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="990"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1041"/>
         <source>libEDMIDI (OPLL, SCC, PSG)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="995"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1003"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1011"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1027"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1046"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1054"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1062"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1078"/>
         <source>[Auto]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="996"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1004"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1047"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1055"/>
         <source>Sounding off delay based</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="997"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1005"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1048"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1056"/>
         <source>Same instrument</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="998"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1006"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1049"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1057"/>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1012"/>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1028"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1063"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1079"/>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1013"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1064"/>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1029"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1080"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1037"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1088"/>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1038"/>
+        <location filename="../custom_music_setup/custom_music_setup.cpp" line="1089"/>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>
