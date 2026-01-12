@@ -57,6 +57,7 @@ beta2
 - Fixed the incorrect refreshing of selected layers and events in some toolboxes when switching between opened files
 - Added "Health" and "Reserved item" per-player test settings
 - Fixed an inability to select a music file that contains multiple repeating spaces
+- Added the custom music file validation with notices showing for not existing files, legacy, or heavy formats
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

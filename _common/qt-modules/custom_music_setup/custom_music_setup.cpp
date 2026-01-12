@@ -63,6 +63,22 @@ typedef enum {
 static void setCurrentData(QComboBox*b, int d);
 static Qt::CheckState intToCheckstate(int v);
 
+/**
+ * @brief Get the music path without arguments string
+ * @param music Music path including arguments string
+ * @return Clear music filepath
+ */
+static QString getMusicPath(const QString &music)
+{
+    QString ret;
+
+    if(music.contains('|'))
+        ret = music.split('|').front();
+    else
+        ret = music;
+
+    return ret.replace('\\', '/');
+}
 
 CustomMusicSetup::MusicType CustomMusicSetup::detectType(const QString &music)
 {
@@ -86,22 +102,16 @@ CustomMusicSetup::MusicType CustomMusicSetup::detectType(const QString &music)
         "pttune", "ptcop"
     };
 
-    QString fName;
-    if(music.contains('|'))
-        fName = music.split('|').front();
-    else
-        fName = music;
-
-    QFileInfo f(fName);
+    QFileInfo f(getMusicPath(music));
     QString suffix = f.suffix().toLower();
 
-    if(midiSuffix.contains(suffix))
+    if(midiSuffix.contains(suffix, Qt::CaseInsensitive))
         return MIDI;
-    else if(adlSuffix.contains(suffix))
+    else if(adlSuffix.contains(suffix, Qt::CaseInsensitive))
         return ADLMIDI;
-    else if(gmeSuffix.contains(suffix))
+    else if(gmeSuffix.contains(suffix, Qt::CaseInsensitive))
         return GME;
-    else if(pxtoneSuffix.contains(suffix))
+    else if(pxtoneSuffix.contains(suffix, Qt::CaseInsensitive))
         return PXTONE;
     else
         return Unsupported;
@@ -953,6 +963,47 @@ bool CustomMusicSetup::settingsNeeded()
 bool CustomMusicSetup::settingsNeeded(const QString &music)
 {
     return detectType(music) != Unsupported;
+}
+
+bool CustomMusicSetup::isDeprecated(const QString &music)
+{
+    const QStringList deprecatedSuffix =
+    {
+        "mp3", "mpeg", "wma"
+    };
+
+    QFileInfo f(getMusicPath(music));
+    QString suffix = f.suffix().toLower();
+
+    return deprecatedSuffix.contains(suffix, Qt::CaseInsensitive);
+}
+
+bool CustomMusicSetup::isVanillaCompatible(const QString &music)
+{
+    const QStringList vanillaCompatible =
+    {
+        "mp3", "mpeg", "wav", "wma", "mid", "rmi"
+    };
+
+    if(music.contains('|'))
+        return false; // Vanilla engine does NOT supports arguments string!
+
+    QFileInfo f(getMusicPath(music));
+    QString suffix = f.suffix().toLower();
+
+    return vanillaCompatible.contains(suffix, Qt::CaseInsensitive);
+}
+
+bool CustomMusicSetup::musicFileExists(const QString &root, const QString &music)
+{
+    QString fPath = getMusicPath(music);
+    return QFile::exists(root + "/" + fPath);
+}
+
+bool CustomMusicSetup::musicFileIsHeavy(const QString &root, const QString &music)
+{
+    QFileInfo f(root + "/" + getMusicPath(music));
+    return f.size() > 10 * 1024 * 1024; // Warn if more than 10 megabytes for single music file
 }
 
 QString CustomMusicSetup::musicPath()

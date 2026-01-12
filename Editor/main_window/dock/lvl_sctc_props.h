@@ -48,6 +48,7 @@ public slots:
     void switchResizeMode(bool mode);
 
     void loadMusic();
+    void verifyMusic();
 
 private slots:
     void on_LVLPropsWrapHorizontal_clicked(bool checked);
@@ -60,6 +61,7 @@ private slots:
     void on_LVLPropsMusicCustomEn_toggled(bool checked);
     void on_LVLPropsMusicCustomBrowse_clicked();
     void on_musicSetup_clicked();
+    void on_musicNotice_clicked();
 
 protected:
     virtual void focusInEvent(QFocusEvent * ev);
@@ -67,6 +69,15 @@ protected:
 private:
     void updateExtraSettingsWidget();
     void onExtraSettingsChanged();
+
+    enum MusicCheckRes
+    {
+        MUSIC_OK,
+        MUSIC_NOT_EXISTS,
+        MUSIC_DEPRECATED,
+        MUSIC_VANILLA_INVALID,
+        MUSIC_HEAVY,
+    } m_music_valid = MUSIC_OK;
 
     QMutex m_mutex;
     std::unique_ptr<JsonSettingsWidget> m_extraSettings;

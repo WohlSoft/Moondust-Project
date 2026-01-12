@@ -90,6 +90,7 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
     QObject::connect(ui->imageSelector, &ImageSelector::currentItemChanged, this, &LvlSectionProps::backgroundImageChanged);
 
     ui->musicSetup->setVisible(false); // Hide music setup button by default
+    ui->musicNotice->setVisible(false);
 
     m_lastVisibilityState = isVisible();
     mw()->docks_level.addState(this, &m_lastVisibilityState);
@@ -369,7 +370,7 @@ void LvlSectionProps::refreshFileData()
         QString musFile = edit->LvlData.sections[edit->LvlData.CurSection].music_file;
         ui->LVLPropsMusicCustom->setText(musFile);
         ui->LVLPropsMusicCustomEn->setChecked((edit->LvlData.sections[edit->LvlData.CurSection].music_id == mw()->configs.music_custom_id));
-        ui->musicSetup->setVisible(CustomMusicSetup::settingsNeeded(musFile));
+        verifyMusic();
 
         updateExtraSettingsWidget();
 
@@ -600,6 +601,59 @@ void LvlSectionProps::loadMusic()
     mw()->setMusic();
 }
 
+void LvlSectionProps::verifyMusic()
+{
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    const QString &musText = ui->LVLPropsMusicCustom->text();
+    const QString styleWarn = "color: red; background-color: #fcfbb1;";
+    const QString styleFail = "color: red; background-color: #ffaaaa;";
+
+    ui->musicSetup->setVisible(CustomMusicSetup::settingsNeeded(musText));
+
+    ui->musicNotice->setVisible(false);
+    ui->LVLPropsMusicCustom->setStyleSheet(QString());
+    ui->LVLPropsMusicCustom->setToolTip(QString());
+
+    m_music_valid = MUSIC_OK;
+
+    if(!edit)
+        return;
+
+    if(!musText.isEmpty())
+    {
+        const QString &root = edit->LvlData.meta.path;
+
+        if(!CustomMusicSetup::musicFileExists(root, musText))
+        {
+            ui->musicNotice->setVisible(true);
+            ui->LVLPropsMusicCustom->setStyleSheet(styleFail);
+            ui->LVLPropsMusicCustom->setToolTip(tr("Music file does not exists.", "Tooltip music notice"));
+            m_music_valid = MUSIC_NOT_EXISTS;
+        }
+        else if(CustomMusicSetup::musicFileIsHeavy(root, musText))
+        {
+            ui->musicNotice->setVisible(true);
+            ui->LVLPropsMusicCustom->setStyleSheet(styleWarn);
+            ui->LVLPropsMusicCustom->setToolTip(tr("Notice: Music file is too heavy.", "Tooltip music notice"));
+            m_music_valid = MUSIC_HEAVY;
+        }
+        else if(edit->LvlData.meta.smbx64strict && !CustomMusicSetup::isVanillaCompatible(musText))
+        {
+            ui->musicNotice->setVisible(true);
+            ui->LVLPropsMusicCustom->setStyleSheet(styleWarn);
+            ui->LVLPropsMusicCustom->setToolTip(tr("Notice: incompatible with vanilla engine.", "Tooltip music notice"));
+            m_music_valid = MUSIC_VANILLA_INVALID;
+        }
+        else if(!edit->LvlData.meta.smbx64strict && CustomMusicSetup::isDeprecated(musText))
+        {
+            ui->musicNotice->setVisible(true);
+            ui->LVLPropsMusicCustom->setStyleSheet(styleWarn);
+            ui->LVLPropsMusicCustom->setToolTip(tr("Notice: deprecated format", "Tooltip music notice"));
+            m_music_valid = MUSIC_DEPRECATED;
+        }
+    }
+}
+
 
 void LvlSectionProps::on_LVLPropsMusicNumber_currentIndexChanged(int index)
 {
@@ -728,8 +782,7 @@ void LvlSectionProps::on_LVLPropsMusicCustom_editingFinished()//_textChanged(con
         return;
 
     ui->LVLPropsMusicCustom->setModified(false);
-
-    ui->musicSetup->setVisible(CustomMusicSetup::settingsNeeded(ui->LVLPropsMusicCustom->text()));
+    verifyMusic();
 
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -815,4 +868,80 @@ void LvlSectionProps::on_musicSetup_clicked()
         // Restore current music state
         LvlMusPlay::previewReset(mw());
     }
+}
+
+void LvlSectionProps::on_musicNotice_clicked()
+{
+    const QString &musText = ui->LVLPropsMusicCustom->text();
+    const QString title = tr("Custom music notice details", "Custom music notice dialogue title");
+    const QString &loopMusicUrl = "https://wohlsoft.ru/pgewiki/How_To:_Looping_music_files";
+    const QString &formatsUrl = "https://wohlsoft.ru/pgewiki/SDL_Mixer_X";
+    QString message;
+
+    switch(m_music_valid)
+    {
+    default:
+        return; // Invalid setup
+
+    case MUSIC_NOT_EXISTS:
+        message = tr("Music file \"%1\" does not exists. Please check the correctness of the file path. "
+                     "You can use the built-in file picker via \"...\" button to choose the correct file path.",
+                     "Custom music notice dialogue message").arg(musText);
+        break;
+
+    case MUSIC_HEAVY:
+        message = tr("Music file size of \"%1\" seems too large. "
+                     "Please don't use so called \"extended versions\" of the game music and don't "
+                     "use uncompressed formats such as WAV or AIFF, otherwise you making your levels "
+                     "and episode unfairly bloated. Please don't waste disk space that might be limited "
+                     "at end users. Please convert your music into FLAC or OGG Vorbis, and consider to "
+                     "use loop tags to set the song area that will loop infinitely. Or even better, "
+                     "consider to compose or find the chiptune version in the original format such "
+                     "as NSF, VGM, KSM, HES, GBS, etc. or use the MIDI file with one of built-in MIDI "
+                     "synthesisers. You can play it in chiptune style using libADLMIDI, libOPNMIDI or "
+                     "libEDMIDI, or play it using SoundFont wavetable banks with the FluidSynth "
+                     "synthesiser as you would like.\n"
+                     "<br/><br/>\n"
+                     "- Learn how to make looping music of different formats: <a href=\"%2\">%2</a><br/>"
+                     "- List of supported music formats and other documentation can be found here: <a href=\"%3\">%3</a>",
+                     "Custom music notice dialogue message").arg(musText).arg(loopMusicUrl).arg(formatsUrl);
+        break;
+
+    case MUSIC_VANILLA_INVALID:
+        message = tr("Your music file \"%1\" seems incompatible to the original SMBX Engine. "
+                     "You see this warning since you edit your level file of the legacy formnat. "
+                     "If you don't target to the original engine, you can ignore this warning. "
+                     "Original SMBX Engine supports only <b>MP3</b>, <b>WAV</b>, <b>WMA</b>, and <b>MID</b> without "
+                     "arguments string.",
+                     "Custom music notice dialogue message").arg(musText);
+        break;
+
+    case MUSIC_DEPRECATED:
+        message = tr("Your music file \"%1\" seems uses one of deprecated formats. These formats "
+                     "often result bad sounding quality, bloated package sizes, or lack of several "
+                     "features like looping tags. Please consider to use the music of the different format. "
+                     "For digital audio the best suggested format is the "
+                     "<b>OGG Vorbis</b> which allows much better quality on strong compression levels "
+                     "and allows using looping tags to set the part of the song that will loop infinitely. "
+                     "Additionally, you can use chiptune (NSF, HES, VGM, HES, GBS, etc.) or "
+                     "tracker formats (MOD, IT, XM, S3M, etc.) natively. Additionally, you can use MIDI files "
+                     "with the customised sounding using chiptune style with libADLMIDI, libOPNMIDI, "
+                     "or libEDMIDI synthesisers, or with the wavetable style using SoundFont banks with "
+                     "the FluidSynth synthesiser."
+                     "<br/><br/>\n"
+                     "- Learn how to make looping music of different formats: <a href=\"%2\">%2</a><br/>"
+                     "- List of supported music formats and other documentation can be found here: <a href=\"%3\">%3</a>",
+                     "Custom music notice dialogue message").arg(musText).arg(loopMusicUrl).arg(formatsUrl);
+        break;
+    }
+
+    QMessageBox box(mw());
+    box.setTextFormat(Qt::RichText);
+    box.setIcon(QMessageBox::Information);
+    box.setWindowTitle(title);
+    box.setText(message);
+    box.setStandardButtons(QMessageBox::Ok);
+    box.setWindowModality(Qt::WindowModal);
+
+    box.exec();
 }
