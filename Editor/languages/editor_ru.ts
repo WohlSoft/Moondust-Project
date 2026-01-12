@@ -4623,39 +4623,42 @@ Physical env. zones:	%6
     <message>
         <source>Music file does not exists.</source>
         <comment>Tooltip music notice</comment>
-        <translation type="unfinished"></translation>
+        <translation>Файл музыки не существует.</translation>
     </message>
     <message>
         <source>Notice: Music file is too heavy.</source>
         <comment>Tooltip music notice</comment>
-        <translation type="unfinished"></translation>
+        <translation>Замечание: Файл музыки слишком большой.</translation>
     </message>
     <message>
         <source>Notice: incompatible with vanilla engine.</source>
         <comment>Tooltip music notice</comment>
-        <translation type="unfinished"></translation>
+        <translation>Замечание: файл не совместимый с &quot;ванильным&quot; движком.</translation>
     </message>
     <message>
         <source>Notice: deprecated format</source>
         <comment>Tooltip music notice</comment>
-        <translation type="unfinished"></translation>
+        <translation>Замечание: устаревший формат</translation>
     </message>
     <message>
         <source>Custom music notice details</source>
         <comment>Custom music notice dialogue title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Замечание к пользовательской музыке</translation>
     </message>
     <message>
         <source>Music file &quot;%1&quot; does not exists. Please check the correctness of the file path. You can use the built-in file picker via &quot;...&quot; button to choose the correct file path.</source>
         <comment>Custom music notice dialogue message</comment>
-        <translation type="unfinished"></translation>
+        <translation>Файл музыки &quot;%1&quot; не существует. Пожалуйста, проверьте правильность пути к файлу. Вы можете использовать встроенный диалог выбора файлов с помощью кнопки &quot;...&quot; и выбрать корректный путь.</translation>
     </message>
     <message>
         <source>Music file size of &quot;%1&quot; seems too large. Please don&apos;t use so called &quot;extended versions&quot; of the game music and don&apos;t use uncompressed formats such as WAV or AIFF, otherwise you making your levels and episode unfairly bloated. Please don&apos;t waste disk space that might be limited at end users. Please convert your music into FLAC or OGG Vorbis, and consider to use loop tags to set the song area that will loop infinitely. Or even better, consider to compose or find the chiptune version in the original format such as NSF, VGM, KSM, HES, GBS, etc. or use the MIDI file with one of built-in MIDI synthesisers. You can play it in chiptune style using libADLMIDI, libOPNMIDI or libEDMIDI, or play it using SoundFont wavetable banks with the FluidSynth synthesiser as you would like.
 &lt;br/&gt;&lt;br/&gt;
 - Learn how to make looping music of different formats: &lt;a href=&quot;%2&quot;&gt;%2&lt;/a&gt;&lt;br/&gt;- List of supported music formats and other documentation can be found here: &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;</source>
         <comment>Custom music notice dialogue message</comment>
-        <translation type="unfinished"></translation>
+        <translation>Размер музыкальнго файла &quot;%1&quot; слишком большой. Пожалуйста, не используйте т.н. &quot;расширенные версии&quot; игровой музыки и не используйте несжатые форматы, такие как WAV или AIFF, иначе вы делаете свои уровни и эпизод несправедливо раздутыми. Не тратьте в пустую место на диске, какое может быть ограничено у пользователей. Пожалуйста, преобразуйте Вашу музыку во FLAC или в OGG Vorbis, а также начните исползовать точки цикла, чтобы бесконечно зациклить выбранную область в мелодии. Или даже лучше, если вы создадите или найдёте чиптюновую версию в исходном формате, например NSF, VGM, KSM, HES, GBS и т.п. Вы также можете использовать музыку в формате MIDI с помощью одного из встроенных MIDI-синтезаторов. Вы можете играть музыкаку как в стиле чиптюна, используя libADLMIDI, libOPNMIDI или libEDMIDI, или играть с помощью волновых банков формата SoundFont с помощью синтезатора FluidSynth по вашему желанию.
+&lt;br/&gt;&lt;br/&gt;
+- Узнать о том, как создавать зацикленную музыку в разных форматах: &lt;a href=&quot;%2&quot;&gt;%2&lt;/a&gt;&lt;br/&gt;
+- Список поддерживаемых форматов и связанная документация: &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Your music file &quot;%1&quot; seems uses one of deprecated formats. These formats often result bad sounding quality, bloated package sizes, or lack of several features like looping tags. Please consider to use the music of the different format. For digital audio the best suggested format is the &lt;b&gt;OGG Vorbis&lt;/b&gt; which allows much better quality on strong compression levels and allows using looping tags to set the part of the song that will loop infinitely. Additionally, you can use chiptune (NSF, HES, VGM, HES, GBS, etc.) or tracker formats (MOD, IT, XM, S3M, etc.) natively. Additionally, you can use MIDI files with the customised sounding using chiptune style with libADLMIDI, libOPNMIDI, or libEDMIDI synthesisers, or with the wavetable style using SoundFont banks with the FluidSynth synthesiser.&lt;br/&gt;&lt;br/&gt;
@@ -4666,7 +4669,7 @@ Physical env. zones:	%6
     <message>
         <source>Your music file &quot;%1&quot; seems incompatible to the original SMBX Engine. You see this warning since you edit your level file of the legacy format. If you don&apos;t target to the original engine, you can ignore this warning. Original SMBX Engine supports only &lt;b&gt;MP3&lt;/b&gt;, &lt;b&gt;WAV&lt;/b&gt;, &lt;b&gt;WMA&lt;/b&gt;, and &lt;b&gt;MID&lt;/b&gt; without arguments string.</source>
         <comment>Custom music notice dialogue message</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ваш музыкальный файл &quot;%1&quot;, вероятно, не совместим с исходным SMBX-движком. Вы видите данное преждупреждение потому, что редактируете файл устаревшего формата. Если вы не целитесь на исходный движок, вы можете проигнорировать данное предупреждение. Исходный SMBX-движок поддерживает только &lt;b&gt;MP3&lt;/b&gt;, &lt;b&gt;WAV&lt;/b&gt;, &lt;b&gt;WMA&lt;/b&gt; и &lt;b&gt;MID&lt;/b&gt; без строки аргументов.</translation>
     </message>
 </context>
 <context>
