@@ -51,7 +51,7 @@ void WldPointSelector::setPoint(QPoint p)
         itemPtr->setData(ITEM_TYPE, "POINT");
         itemPtr->setZValue(6000);
         //A small trick to avoid non-null pointer if object destroyed
-        itemPtr->connect(itemPtr,
+        QObject::connect(itemPtr,
                          &ItemPoint::destroyed,
                          [this]()->void{ m_pointItem = nullptr; });
     }

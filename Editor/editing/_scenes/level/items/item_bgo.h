@@ -27,6 +27,10 @@
 
 class ItemBGO : public LvlBaseItem
 {
+#if 0 // Workaround to trick the lupdate
+    Q_OBJECT
+#endif
+
     void construct();
 
     static inline QString tr(const char *sourceText, const char *disambiguation = nullptr, int n = -1)

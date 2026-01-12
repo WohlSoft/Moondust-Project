@@ -3437,7 +3437,7 @@ So, please break these words to avoid this.&lt;/li&gt;
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="121"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="711"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="709"/>
         <source>Level title: </source>
         <translation>Niveau titel: </translation>
     </message>
@@ -3560,14 +3560,14 @@ version code must be less or equal specific code)</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="707"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="705"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; werd gewijzigd.
 Wilt u uw wijzigingen opslaan?</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="709"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="707"/>
         <source> not saved</source>
         <translation> is niet opgeslagen</translation>
     </message>
@@ -5087,7 +5087,7 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="630"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1347"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1780"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2147"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2160"/>
         <source>[empty]</source>
         <translation>[leeg]</translation>
     </message>
@@ -5103,7 +5103,7 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="637"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2035"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2046"/>
         <source>[none]</source>
         <translation>[geen]</translation>
     </message>
@@ -5139,150 +5139,150 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
         <translation>Vergrendelen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="785"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="838"/>
         <source>Layers merge</source>
         <translation>Lagen samenvoegen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="786"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="839"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
         <translation>Laag met de naam &apos;%1&apos; bestaat al, wilt u de lagen samenvoegen?</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="870"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="923"/>
         <source>New Layer %1</source>
         <translation>Nieuwe Laag %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="944"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1181"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1189"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1001"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1240"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1248"/>
         <source>Remove layer</source>
         <translation>Laag verwijderen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="945"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1002"/>
         <source>Are you sure you want to remove this layer?
 All objects on this layer will be moved to the &apos;Default&apos; layer.</source>
         <translation>Bent u zeker dat u deze laag wilt verwijderen?
 Alle voorwerpen in de laag zullen naar de basislaag verplaatst worden.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="979"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1036"/>
         <source>Select all items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="984"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1041"/>
         <source>Show layer statistics...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="993"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1050"/>
         <source>Remove Layer and keep items</source>
         <translation>Laag verwijderen en voorwerpen behouden</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1102"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1159"/>
         <source>Layer &quot;%1&quot; statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1104"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1161"/>
         <source>Total members</source>
         <comment>Layer statistics field</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1105"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1162"/>
         <source>Blocks</source>
         <comment>Layer statistics field</comment>
         <translation type="unfinished">Blokken</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1106"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1163"/>
         <source>Background objects</source>
         <comment>Layer statistics field</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1107"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1164"/>
         <source>NPC</source>
         <comment>Layer statistics field</comment>
         <translation type="unfinished">NPC</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1108"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1165"/>
         <source>Warps</source>
         <comment>Layer statistics field</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1109"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1166"/>
         <source>Physical environments</source>
         <comment>Layer statistics field</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1112"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1169"/>
         <source>Usage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1114"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1171"/>
         <source>Attaches to NPCs</source>
         <comment>Layer statistics field</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1115"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1172"/>
         <source>Referred in events</source>
         <comment>Layer statistics field</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1119"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1176"/>
         <source>&lt;h2&gt;Layer &quot;%1&quot; statistics:&lt;/h2&gt;
 &lt;center&gt;&amp;lt;This is an unused layer with no members&amp;gt;&lt;/center&gt;
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1124"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1181"/>
         <source>Referred in events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1134"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1191"/>
         <source>Remove this layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1137"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1194"/>
         <source>Layer statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1182"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1241"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
         <translation>Bent u zeker dat u deze laag wilt verwijderen?
 Alle voorwerpen in de laag zullen naar de basislaag verplaatst worden!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1190"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1249"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
         <translation>Bent u zeker dat u deze laag wilt verwijderen?
 Alle voorwerpen zullen verdwijnen!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="977"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1034"/>
         <source>Rename layer</source>
         <translation>Laag hernoemen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="992"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="1049"/>
         <source>Remove layer with items</source>
         <translation>Laag samen met voorwerpen verwijderen</translation>
     </message>
@@ -5658,17 +5658,17 @@ Fysieke omgevingszones:	%6
     <name>LvlSectionProps</name>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="30"/>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="440"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="454"/>
         <source>Section Settings</source>
         <translation>Sectie Instellingen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="449"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="463"/>
         <source>Leaving for the screen, the player enters the screen on the other side</source>
         <translation>Bij het verlaten van het scherm, zal de speler aan de andere kant verschijnen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="469"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="483"/>
         <source>Off screen exit</source>
         <translation>Schermgrens uitgang</translation>
     </message>
@@ -5688,24 +5688,24 @@ Fysieke omgevingszones:	%6
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="479"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="493"/>
         <source>No turn back (disable moving to left)</source>
         <comment>Please, translate as &quot;One way scrolling&quot;</comment>
         <translation>Éénrichtingscamera (geen terugkering)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="489"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="503"/>
         <source>Underwater</source>
         <translation>Onderwater</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="452"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="466"/>
         <source>Wrap horizontaly</source>
         <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
         <translation>Horizontale schermgrens aansluiting</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="462"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="476"/>
         <source>Wrap vertically</source>
         <translation>Verticale schermgrens aansluiting</translation>
     </message>
@@ -5761,67 +5761,124 @@ Fysieke omgevingszones:	%6
         <translation>Muziekbestand:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="184"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="185"/>
         <source>Error in the file %1:
 %2</source>
         <translation>Fout in het bestand %1:
 %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="269"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="271"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="270"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="272"/>
         <source>[No image]</source>
         <translation>[Geen afbeelding]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="273"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="274"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="275"/>
         <source>[Silence]</source>
         <translation>[Stilte]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="524"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="664"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="525"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="718"/>
         <source>Please, save file</source>
         <translation>Gelieve het bestand op te slaan</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="524"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="525"/>
         <source>Please, save file first, if you want to manage custom background config files.</source>
         <translation>Gelieve het bestand eerst op te slaan, zodat u uw eigen achtergondsconfiguaratie bestanden kan wijzigen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="532"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="533"/>
         <source>Choose a background first</source>
         <translation>Kies eerst een achtergrond</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="533"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="534"/>
         <source>Please, choose the background image first.</source>
         <translation>Gelieve eerst een achtergrondsafbeelding te kiezen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="560"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="561"/>
         <source>Name that will appear in the editor</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>Naam dat in het programma zal verschijnen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="564"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="565"/>
         <source>Backdrop fill color</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>Achtergrond vulkleur</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="569"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="570"/>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>Voeg hier lagen toe, bijvoorbeeld:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="664"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="630"/>
+        <source>Music file does not exists.</source>
+        <comment>Tooltip music notice</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="637"/>
+        <source>Notice: Music file is too heavy.</source>
+        <comment>Tooltip music notice</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="644"/>
+        <source>Notice: incompatible with vanilla engine.</source>
+        <comment>Tooltip music notice</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="651"/>
+        <source>Notice: deprecated format</source>
+        <comment>Tooltip music notice</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="718"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>U moet eerst het bestand opslaan voordat u uw eigen muziekbestanden kan selecteren.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="876"/>
+        <source>Custom music notice details</source>
+        <comment>Custom music notice dialogue title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="887"/>
+        <source>Music file &quot;%1&quot; does not exists. Please check the correctness of the file path. You can use the built-in file picker via &quot;...&quot; button to choose the correct file path.</source>
+        <comment>Custom music notice dialogue message</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="893"/>
+        <source>Music file size of &quot;%1&quot; seems too large. Please don&apos;t use so called &quot;extended versions&quot; of the game music and don&apos;t use uncompressed formats such as WAV or AIFF, otherwise you making your levels and episode unfairly bloated. Please don&apos;t waste disk space that might be limited at end users. Please convert your music into FLAC or OGG Vorbis, and consider to use loop tags to set the song area that will loop infinitely. Or even better, consider to compose or find the chiptune version in the original format such as NSF, VGM, KSM, HES, GBS, etc. or use the MIDI file with one of built-in MIDI synthesisers. You can play it in chiptune style using libADLMIDI, libOPNMIDI or libEDMIDI, or play it using SoundFont wavetable banks with the FluidSynth synthesiser as you would like.
+&lt;br/&gt;&lt;br/&gt;
+- Learn how to make looping music of different formats: &lt;a href=&quot;%2&quot;&gt;%2&lt;/a&gt;&lt;br/&gt;- List of supported music formats and other documentation can be found here: &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;</source>
+        <comment>Custom music notice dialogue message</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="911"/>
+        <source>Your music file &quot;%1&quot; seems incompatible to the original SMBX Engine. You see this warning since you edit your level file of the legacy format. If you don&apos;t target to the original engine, you can ignore this warning. Original SMBX Engine supports only &lt;b&gt;MP3&lt;/b&gt;, &lt;b&gt;WAV&lt;/b&gt;, &lt;b&gt;WMA&lt;/b&gt;, and &lt;b&gt;MID&lt;/b&gt; without arguments string.</source>
+        <comment>Custom music notice dialogue message</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="920"/>
+        <source>Your music file &quot;%1&quot; seems uses one of deprecated formats. These formats often result bad sounding quality, bloated package sizes, or lack of several features like looping tags. Please consider to use the music of the different format. For digital audio the best suggested format is the &lt;b&gt;OGG Vorbis&lt;/b&gt; which allows much better quality on strong compression levels and allows using looping tags to set the part of the song that will loop infinitely. Additionally, you can use chiptune (NSF, HES, VGM, HES, GBS, etc.) or tracker formats (MOD, IT, XM, S3M, etc.) natively. Additionally, you can use MIDI files with the customised sounding using chiptune style with libADLMIDI, libOPNMIDI, or libEDMIDI synthesisers, or with the wavetable style using SoundFont banks with the FluidSynth synthesiser.&lt;br/&gt;&lt;br/&gt;
+- Learn how to make looping music of different formats: &lt;a href=&quot;%2&quot;&gt;%2&lt;/a&gt;&lt;br/&gt;- List of supported music formats and other documentation can be found here: &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;</source>
+        <comment>Custom music notice dialogue message</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6290,27 +6347,27 @@ Deze status is definieerd door het actieve configuratiepakket.</translation>
         <translation>Huidig portaal verwijderen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="859"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="861"/>
         <source>Apply to all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="870"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="872"/>
         <source>Apply to all entries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="871"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="873"/>
         <source>Do you really want to apply this setting to all objects?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1154"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1156"/>
         <source>World map files not found</source>
         <translation>Wereldkaart bestanden niet gevonden</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1155"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1157"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
@@ -6319,34 +6376,34 @@ Gelieve een wereldkaart bestand te plaatsen of the maken in hetzelfde map as het
 Bestandspad: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1168"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1170"/>
         <source>Select world map file</source>
         <translation>Selecteer een wereldkaart bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1169"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1171"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation>Meer dan één wereldkaartbestand gevonden.
 Selecteer de wereldkaart die u wilt gebruiken:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1186"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1188"/>
         <source>File open error</source>
         <translation>Fout bij openen van het bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1187"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1189"/>
         <source>Can&apos;t open the file!</source>
         <translation>Kan het niveau bestand niet openen!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1370"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1372"/>
         <source>Please save the file</source>
         <translation>Gelieve het bestand op te slaan</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1371"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1373"/>
         <source>Please save the file before selecting levels.</source>
         <translation>Gelieve het bestand op te slaan alvorens niveaus te selecteren.</translation>
     </message>

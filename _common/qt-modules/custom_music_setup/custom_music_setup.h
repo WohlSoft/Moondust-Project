@@ -92,7 +92,27 @@ public:
     void setMusicPath(const QString &music);
     void setMusicPlayState(bool checked);
     bool settingsNeeded();
+
+    /**
+     * @brief Checks does music supports extra settings or not
+     * @param music Music path including arguments string
+     * @return true if extra settings supported by format
+     */
     static bool settingsNeeded(const QString &music);
+
+    /**
+     * @brief Checks whatever format is not recommended for modern usage
+     * @param music Music path including arguments string
+     * @return true if format is not recommended for use (i.e. MP3, WAV, or WMA)
+     */
+    static bool isDeprecated(const QString &music);
+
+    static bool isVanillaCompatible(const QString &music);
+
+    static bool musicFileExists(const QString &root, const QString &music);
+
+    static bool musicFileIsHeavy(const QString &root, const QString &music);
+
     QString musicPath();
 
 signals:
