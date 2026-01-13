@@ -4644,7 +4644,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
 &lt;br/&gt;&lt;br/&gt;
 - Learn how to make looping music of different formats: &lt;a href=&quot;%2&quot;&gt;%2&lt;/a&gt;&lt;br/&gt;- List of supported music formats and other documentation can be found here: &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;</source>
         <comment>Custom music notice dialogue message</comment>
-        <translation>音乐文件&quot;%1&quot;过大，请不要使用加长版本的音乐，也不要使用未压缩的音频格式（例如WAV、AIFF等），否则会为您的关卡或地图的文件大小增加负担。请勿占用大量的存储空间，这对用户来说是非常不友好的。请将音频格式转换为FLAC（无损压缩）或OGG（有损压缩）格式，并考虑使用循环标签（LOOPSTART和LOOPEND）添加循环点。当然，您也可以按芯片音乐格式创作或查找音乐，例如NSF、VGM、KSS、HES、GBS等，或者使用MIDI文件并选用其中一种MIDI合成器进行播放。可以选择libADLMIDI、libOPNMIDI或libEDMIDI（FM音源），或通过FluidSynth加载SF2音源播放。
+        <translation type="unfinished">音乐文件&quot;%1&quot;过大，请不要使用加长版本的音乐，也不要使用未压缩的音频格式（例如WAV、AIFF等），否则会为您的关卡或地图的文件大小增加负担。请勿占用大量的存储空间，这对用户来说是非常不友好的。请将音频格式转换为FLAC（无损压缩）或OGG（有损压缩）格式，并考虑使用循环标签（LOOPSTART和LOOPEND）添加循环点。当然，您也可以按芯片音乐格式创作或查找音乐，例如NSF、VGM、KSS、HES、GBS等，或者使用MIDI文件并选用其中一种MIDI合成器进行播放。可以选择libADLMIDI、libOPNMIDI或libEDMIDI（FM音源），或通过FluidSynth加载SF2音源播放。
 &lt;br&gt;&lt;br&gt;
 - 要查阅循环点的信息，参见：&lt;a href=&quot;%2&quot;&gt;%2&lt;/a&gt;&lt;br&gt;
 - 要查阅支持的音频格式和其他信息，参见：&lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;</translation>
@@ -4653,7 +4653,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <source>Your music file &quot;%1&quot; seems uses one of deprecated formats. These formats often result bad sounding quality, bloated package sizes, or lack of several features like looping tags. Please consider to use the music of the different format. For digital audio the best suggested format is the &lt;b&gt;OGG Vorbis&lt;/b&gt; which allows much better quality on strong compression levels and allows using looping tags to set the part of the song that will loop infinitely. Additionally, you can use chiptune (NSF, HES, VGM, HES, GBS, etc.) or tracker formats (MOD, IT, XM, S3M, etc.) natively. Additionally, you can use MIDI files with the customised sounding using chiptune style with libADLMIDI, libOPNMIDI, or libEDMIDI synthesisers, or with the wavetable style using SoundFont banks with the FluidSynth synthesiser.&lt;br/&gt;&lt;br/&gt;
 - Learn how to make looping music of different formats: &lt;a href=&quot;%2&quot;&gt;%2&lt;/a&gt;&lt;br/&gt;- List of supported music formats and other documentation can be found here: &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;</source>
         <comment>Custom music notice dialogue message</comment>
-        <translation>音乐文件&quot;%1&quot;是不建议使用的格式，这些格式一般来说，压缩造成的损失大、文件大，且缺乏部分功能（例如循环标签等），请选择其他格式。对于流式音频来说，可以转换为&lt;b&gt;OGG格式&lt;/b&gt;，减少损失，并支持循环点。另外，您也可以使用芯片音乐（例如NSF、VGM、KSS、HES、GBS等）或者Tracker音乐（例如MOD、IT、XM、S3M等），或者使用MIDI文件并选用其中一种MIDI合成器进行播放。可以选择libADLMIDI、libOPNMIDI或libEDMIDI（FM音源），或通过FluidSynth加载SF2音源播放。
+        <translation type="unfinished">音乐文件&quot;%1&quot;是不建议使用的格式，这些格式一般来说，压缩造成的损失大、文件大，且缺乏部分功能（例如循环标签等），请选择其他格式。对于流式音频来说，可以转换为&lt;b&gt;OGG格式&lt;/b&gt;，减少损失，并支持循环点。另外，您也可以使用芯片音乐（例如NSF、VGM、KSS、HES、GBS等）或者Tracker音乐（例如MOD、IT、XM、S3M等），或者使用MIDI文件并选用其中一种MIDI合成器进行播放。可以选择libADLMIDI、libOPNMIDI或libEDMIDI（FM音源），或通过FluidSynth加载SF2音源播放。
 &lt;br&gt;&lt;br&gt;
 - 要查阅循环点的信息，参见：&lt;a href=&quot;%2&quot;&gt;%2&lt;/a&gt;&lt;br&gt;
 - 要查阅支持的音频格式和其他信息，参见：&lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;</translation>
