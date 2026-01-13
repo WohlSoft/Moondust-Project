@@ -395,7 +395,7 @@
     <message>
         <source>Test SFX</source>
         <comment>Preview selected sound file</comment>
-        <translation>测试音效</translation>
+        <translation>测试播放音效</translation>
     </message>
     <message>
         <source>Music play/stop</source>
