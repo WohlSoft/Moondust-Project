@@ -18,8 +18,16 @@
 
 #include "graphicsworkspace.h"
 #include "logger.h"
+#include <cmath>
 #include <QElapsedTimer>
 #include <QRubberBand>
+#include <QGesture>
+#include <QGestureEvent>
+#include <QPanGesture>
+#include <QPinchGesture>
+#ifdef __APPLE__
+#include <QNativeGestureEvent>
+#endif
 
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/world/wld_scene.h>
@@ -88,6 +96,13 @@ GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     rubberBandSelectionMode = Qt::IntersectsItemShape;
     this->setMouseTracking(true);
     this->setRubberBandSelectionMode(Qt::IntersectsItemShape);
+#ifdef __APPLE__
+    this->setAttribute(Qt::WA_AcceptTouchEvents, true);
+#endif
+    this->grabGesture(Qt::PanGesture);
+#ifndef __APPLE__
+    this->grabGesture(Qt::PinchGesture);
+#endif
 
     movement = MOVE_IDLE;
 
@@ -102,11 +117,17 @@ GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     scaleMin = 0.01;
     scaleMax = 20.0;
 
+    scaleGestureFactor = 1.0;
+
     connect(&Mover, SIGNAL(timeout()), this, SLOT(doMove()));
     connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(replayLastMouseEvent(int)));
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(replayLastMouseEvent(int)));
 
     setTransformationAnchor(QGraphicsView::AnchorViewCenter);
+
+#ifdef __APPLE__
+    installEventFilter(this);
+#endif
 }
 
 GraphicsWorkspace::~GraphicsWorkspace()
@@ -183,10 +204,13 @@ void GraphicsWorkspace::doMove()
 {
     if((movement & MOVE_LEFT) != 0)
         moveLeft();
+
     if((movement & MOVE_RIGHT) != 0)
         moveRight();
+
     if((movement & MOVE_UP) != 0)
         moveUp();
+
     if((movement & MOVE_DOWN) != 0)
         moveDown();
 }
@@ -291,6 +315,7 @@ void GraphicsWorkspace::focusOutEvent(QFocusEvent *event)
 void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
 {
     int modS = 128;
+    float modX, modY;
     // int modS_h = modS;
     // bool rtl = (qApp->layoutDirection() == Qt::RightToLeft);
 
@@ -307,34 +332,18 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
     int deltaX = delta.x();
     int deltaY = delta.y();
 
+    modX = std::abs(modS * ((deltaX / 8.0f) / 15.0f));
+    modY = std::abs(modS * ((deltaY / 8.0f) / 15.0f));
+
     if((event->modifiers() & Qt::ControlModifier) != 0)
     {
-        // Scale the view / do the zoom
-        if(deltaY > 0)
-        {
-            if(zoomValue * scaleFactor >= scaleMax) return;
-            // Zoom in
-            zoomValue *= scaleFactor;
-            scale(scaleFactor, scaleFactor);
-            emit zoomValueChanged(qRound(zoomValue * 100));
-            emit zoomValueChanged(QString::number(qRound(zoomValue * 100)));
-        }
-        else if(deltaY < 0)
-        {
-            if(zoomValue * scaleFactor <= scaleMin) return;
-            // Zooming out
-            zoomValue *= 1.0 / scaleFactor;
-            scale(1.0 / scaleFactor, 1.0 / scaleFactor);
-            emit zoomValueChanged(qRound(zoomValue * 100));
-            emit zoomValueChanged(QString::number(qRound(zoomValue * 100)));
-        }
+        modY = 1.0 + std::abs(0.15 * ((deltaY / 8.0f) / 15.0f));
+        // qDebug() << "Zoom factor: " << modY << scaleFactor << deltaY;
+        eventZoom(deltaY, modY);
 
         replayLastMouseEvent();
         return;
     }
-
-    auto *hBar = horizontalScrollBar();
-    auto *vBar = verticalScrollBar();
 
     if((event->modifiers() & Qt::AltModifier) != 0)
     {
@@ -343,24 +352,126 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
         {
             deltaY = delta.x();
             deltaX = delta.y();
+            modY = std::abs(modS * ((deltaX / 8.0f) / 15.0f));
+            modX = std::abs(modS * ((deltaY / 8.0f) / 15.0f));
         }
     }
 
-    if(deltaX > 0)
-        hBar->setValue(hBar->value() - modS);
-    else if(deltaX < 0)
-        hBar->setValue(hBar->value() + modS);
+    // qDebug() << "Wheel Delta: " << deltaX << deltaY;
 
-    if(deltaY > 0)
-        vBar->setValue(vBar->value() - modS);
-    else if(deltaY < 0)
-        vBar->setValue(vBar->value() + modS);
+    eventScroll(deltaX, modX, deltaY, modY);
 
     //event->accept();
     replayLastMouseEvent();
 
     if(scene())
         scene()->update();
+}
+
+bool GraphicsWorkspace::event(QEvent *event)
+{
+    if(event->type() == QEvent::Gesture)
+        return gestureEvent(static_cast<QGestureEvent*>(event));
+
+    return QGraphicsView::event(event);
+}
+
+#ifdef __APPLE__
+bool GraphicsWorkspace::eventFilter(QObject *obj, QEvent *event)
+{
+    if(event->type() == QEvent::NativeGesture)
+    {
+        // Handle double-tap on Magic Mouse on macOS when "smart zoom" option is activated
+        QNativeGestureEvent *gesture = static_cast<QNativeGestureEvent*>(event);
+        Q_ASSERT(gesture);
+
+        if(gesture->gestureType() == Qt::NativeGestureType::SmartZoomNativeGesture)
+        {
+            if(qRound(zoomValue * 100) == 100)
+                setZoom(2.5);
+            else
+                setZoom(1.0);
+            return true;
+        }
+    }
+
+    return QGraphicsView::eventFilter(obj, event);
+}
+#endif
+
+bool GraphicsWorkspace::gestureEvent(QGestureEvent *event)
+{
+    if(QGesture *pan = event->gesture(Qt::PanGesture))
+        gesturePan(static_cast<QPanGesture *>(pan));
+    else if(QGesture *pinch = event->gesture(Qt::PinchGesture))
+        gesturePinch(static_cast<QPinchGesture *>(pinch));
+
+    return true;
+}
+
+void GraphicsWorkspace::gesturePan(QPanGesture *gesture)
+{
+    QPointF delta = gesture->delta();
+    eventScroll(delta.x(), std::abs(delta.x()), delta.y(), std::abs(delta.y()));
+}
+
+void GraphicsWorkspace::gesturePinch(QPinchGesture *gesture)
+{
+    QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
+
+    if(changeFlags & QPinchGesture::ScaleFactorChanged)
+    {
+        scaleGestureFactor = gesture->totalScaleFactor();
+        qDebug() << "gesturePinch(): zoom by" << gesture->scaleFactor() << "->" << scaleGestureFactor;
+    }
+
+    if(gesture->state() == Qt::GestureFinished)
+    {
+        zoomValue *= gesture->scaleFactor();
+        scale(scaleGestureFactor, scaleGestureFactor);
+        emit zoomValueChanged(qRound(zoomValue * 100));
+        emit zoomValueChanged(QString::number(qRound(zoomValue * 100)));
+        scaleGestureFactor = 1.0;
+    }
+}
+
+void GraphicsWorkspace::eventScroll(int dirx, int x, int diry, int y)
+{
+    auto *hBar = horizontalScrollBar();
+    auto *vBar = verticalScrollBar();
+
+    if(dirx > 0)
+        hBar->setValue(hBar->value() - x);
+    else if(dirx < 0)
+        hBar->setValue(hBar->value() + x);
+
+    if(diry > 0)
+        vBar->setValue(vBar->value() - y);
+    else if(diry < 0)
+        vBar->setValue(vBar->value() + y);
+}
+
+void GraphicsWorkspace::eventZoom(int dir, float delta)
+{
+    // Scale the view / do the zoom
+    if(dir > 0)
+    {
+        if(zoomValue * delta >= scaleMax) return;
+        // Zoom in
+        zoomValue *= delta;
+        scale(delta, delta);
+        emit zoomValueChanged(qRound(zoomValue * 100));
+        emit zoomValueChanged(QString::number(qRound(zoomValue * 100)));
+    }
+    else if(dir < 0)
+    {
+        if(zoomValue * delta <= scaleMin) return;
+        // Zooming out
+        zoomValue *= 1.0 / delta;
+        scale(1.0 / delta, 1.0 / delta);
+        emit zoomValueChanged(qRound(zoomValue * 100));
+        emit zoomValueChanged(QString::number(qRound(zoomValue * 100)));
+    }
 }
 
 

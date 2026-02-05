@@ -178,7 +178,7 @@ therefore you can use same link to get updated version.</source>
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
-        <translation>由于段落错误，引擎已停止运行。
+        <translation>发生段错误，引擎已停止运行。
 请使用内置调试器进行调试并对最近的操作
 进行重试以获得更多的详细信息。</translation>
     </message>

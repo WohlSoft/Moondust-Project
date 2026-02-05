@@ -20,6 +20,10 @@
 #include <QStyleHintReturnMask>
 #include <QStyleOptionRubberBand>
 
+class QGestureEvent;
+class QPanGesture;
+class QPinchGesture;
+
 
 // Internal replacement for QMouseEvent which is impossible to copy at Qt6
 class PGEMouseEvent
@@ -104,12 +108,13 @@ private slots:
 
 private:
     QTimer Mover;
-    enum Movements{
-        MOVE_IDLE=0,
-        MOVE_LEFT=1,
-        MOVE_UP=2,
-        MOVE_DOWN=4,
-        MOVE_RIGHT=8
+    enum Movements
+    {
+        MOVE_IDLE = 0,
+        MOVE_LEFT = 1,
+        MOVE_UP = 2,
+        MOVE_DOWN = 4,
+        MOVE_RIGHT = 8
     };
     int movement;
     int step;
@@ -120,21 +125,36 @@ private:
     double scaleMin;
     double scaleMax;
 
+    qreal scaleGestureFactor;
+
 protected:
-    virtual void 	focusOutEvent ( QFocusEvent * event );
+    virtual void focusOutEvent(QFocusEvent *event) override;
 
-    virtual void 	keyPressEvent ( QKeyEvent * event );
-    virtual void 	keyReleaseEvent ( QKeyEvent * event );
-    virtual void 	wheelEvent ( QWheelEvent * event );
+    virtual void keyPressEvent(QKeyEvent *event) override;
+    virtual void keyReleaseEvent(QKeyEvent *event) override;
+    virtual void wheelEvent(QWheelEvent *event) override;
 
+    virtual bool event(QEvent *event) override;
+#ifdef __APPLE__
+    virtual bool eventFilter(QObject *obj, QEvent *event) override;
+#endif
+private:
+    bool gestureEvent(QGestureEvent *event);
 
+    void gesturePan(QPanGesture *gesture);
+    void gesturePinch(QPinchGesture *gesture);
+
+    void eventScroll(int dirx, int x, int diry, int y);
+    void eventZoom(int dir, float delta);
+
+protected:
     ///
     /// My Crazy "Bycicle" :P
     ///
-    virtual void mousePressEvent( QMouseEvent *event );
-    virtual void mouseMoveEvent( QMouseEvent * event);
-    virtual void mouseReleaseEvent( QMouseEvent * event);
-    virtual void mouseDoubleClickEvent(QMouseEvent *event);
+    virtual void mousePressEvent(QMouseEvent *event) override;
+    virtual void mouseMoveEvent(QMouseEvent *event) override;
+    virtual void mouseReleaseEvent(QMouseEvent *event) override;
+    virtual void mouseDoubleClickEvent(QMouseEvent *event) override;
 
     void mouseMoveEventHandler(PGEMouseEvent &event);
     void storeMouseEvent(const PGEMouseEvent &event);
@@ -176,8 +196,7 @@ protected:
     QRubberBand *rubberBandX;
 
 protected slots:
-    void replayLastMouseEvent(int x=0);
-
+    void replayLastMouseEvent(int x = 0);
 };
 
 #endif // GRAPHICSWORKSPACE_H
