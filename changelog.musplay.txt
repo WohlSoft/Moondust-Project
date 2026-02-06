@@ -6,7 +6,7 @@
 * Reworked the reverb effect (taken latest Freeverb3 sources instead of bisqwit's)
 * Added an ability to copy and paste effect settings
 * Polished the SPC Echo effect
-* Added the ability to adjust the gaining factor on the fly
+* The loops time setting will be saved and restured on the application restart
 
 1.4.4
 - Fixed the incorrect working of the effects applying at the SFX tester

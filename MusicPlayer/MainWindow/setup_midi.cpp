@@ -9,6 +9,11 @@
 #include <QMimeData>
 #include <QSettings>
 
+#ifdef SDL_MIXER_X
+static int toOpnEmu(int index);
+static int toOplEmu(int index);
+#endif
+
 
 static int tristateToInt(Qt::CheckState state)
 {
@@ -149,7 +154,7 @@ void SetupMidi::sendSetup()
     Mix_ADLMIDI_setBankID(ui->adl_bankId->currentIndex());
     Mix_ADLMIDI_setVolumeModel(ui->adlVolumeModel->currentIndex());
     Mix_ADLMIDI_setChannelAllocMode(ui->adlChanAlloc->currentIndex() - 1);
-    Mix_ADLMIDI_setEmulator(ui->adlEmulator->currentIndex());
+    Mix_ADLMIDI_setEmulator(toOplEmu(ui->adlEmulator->currentIndex()));
     Mix_ADLMIDI_setChipsCount(ui->adlNumChips->value());
     Mix_ADLMIDI_setTremolo(tristateToInt(ui->adl_tremolo->checkState()));
     Mix_ADLMIDI_setVibrato(tristateToInt(ui->adl_vibrato->checkState()));
@@ -162,7 +167,7 @@ void SetupMidi::sendSetup()
     ui->adl_bank->setModified(true);
     on_adl_bank_editingFinished();
 
-    Mix_OPNMIDI_setEmulator(ui->opnEmulator->currentIndex());
+    Mix_OPNMIDI_setEmulator(toOpnEmu(ui->opnEmulator->currentIndex()));
     Mix_OPNMIDI_setChipsCount(ui->opnNumChips->value());
     Mix_OPNMIDI_setVolumeModel(ui->opnVolumeModel->currentIndex());
     Mix_OPNMIDI_setChannelAllocMode(ui->opnChanAlloc->currentIndex() - 1);
@@ -298,6 +303,50 @@ static int toOpnEmu(int index)
         break;
     case 7:
         index = OPNMIDI_OPN2_EMU_NUKED_YM2612;
+        break;
+    }
+    return index;
+}
+
+static int toOplEmu(int index)
+{
+    switch(index)
+    {
+    case 0:
+        index = ADLMIDI_OPL3_EMU_NUKED;
+        break;
+    case 1:
+        index = ADLMIDI_OPL3_EMU_NUKED_1_7_4;
+        break;
+    case 2:
+        index = ADLMIDI_OPL3_EMU_DOSBOX;
+        break;
+    case 3:
+        index = ADLMIDI_OPL3_EMU_OPAL;
+        break;
+    case 4:
+        index = ADLMIDI_OPL3_EMU_JAVA;
+        break;
+    case 5:
+        index = ADLMIDI_OPL3_EMU_ESFMu;
+        break;
+    case 6:
+        index = ADLMIDI_OPL3_EMU_MAME_OPL2;
+        break;
+    case 7:
+        index = ADLMIDI_OPL3_EMU_YMFM_OPL2;
+        break;
+    case 8:
+        index = ADLMIDI_OPL3_EMU_YMFM_OPL3;
+        break;
+    // case 9:
+    //     index = ADLMIDI_OPL3_EMU_NUKED_OPL2LLE;
+    //     break;
+    // case 10:
+    //     index = ADLMIDI_OPL3_EMU_NUKED_OPL3LLE;
+        break;
+    case 9:
+        index = ADLMIDI_OPL3_EMU_NUKED_OPL2_LITE;
         break;
     }
     return index;
@@ -465,7 +514,7 @@ void SetupMidi::on_adlEmulator_currentIndexChanged(int index)
 #ifdef SDL_MIXER_X
     if(m_setupLock)
         return;
-    Mix_ADLMIDI_setEmulator(index);
+    Mix_ADLMIDI_setEmulator(toOplEmu(index));
     restartForAdl();
     updateAutoArgs();
 #else

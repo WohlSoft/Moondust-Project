@@ -29,3 +29,4 @@ cp -av $src/*.c .
 cp -av $src/*.cpp .
 
 cp -av $src/sources.cmake sources.cmake
+cp -av $src/changelog.musplay.txt ../changelog.musplay.txt
