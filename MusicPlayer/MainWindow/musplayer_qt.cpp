@@ -145,6 +145,31 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     ui->speedFrame->setEnabled(false);
     ui->pitchFrame->setEnabled(false);
 
+    int loopsNum = setup.value("Loops", -1).toInt();
+    cleanLoopChecks();
+
+    switch(loopsNum)
+    {
+    default:
+    case -1:
+        ui->actionLoopForever->setChecked(true);
+        PGE_MusicPlayer::setMusicLoops(-1);
+        break;
+    case 0:
+    case 1:
+        ui->actionPlay1Time->setChecked(true);
+        PGE_MusicPlayer::setMusicLoops(0);
+        break;
+    case 2:
+        ui->actionPlay2Times->setChecked(true);
+        PGE_MusicPlayer::setMusicLoops(2);
+        break;
+    case 3:
+        ui->actionPlay3Times->setChecked(true);
+        PGE_MusicPlayer::setMusicLoops(3);
+        break;
+    }
+
     m_currentMusic = setup.value("RecentMusic", "").toString();
     restoreGeometry(setup.value("Window-Geometry").toByteArray());
     layout()->activate();
@@ -169,6 +194,16 @@ MusPlayer_Qt::~MusPlayer_Qt()
     setup.setValue("Window-Geometry", saveGeometry());
     setup.setValue("Volume", ui->volume->value());
     setup.setValue("RecentMusic", m_currentMusic);
+
+    if(ui->actionPlay1Time->isChecked())
+        setup.setValue("Loops", 0);
+    else if(ui->actionPlay2Times->isChecked())
+        setup.setValue("Loops", 2);
+    else if(ui->actionPlay3Times->isChecked())
+        setup.setValue("Loops", 3);
+    else
+        setup.setValue("Loops", -1);
+
     setup.sync();
 
     delete ui;
