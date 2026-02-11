@@ -62,7 +62,7 @@ QString PGE_JS_File::configSettingFile()
 
 QString PGE_JS_File::appPath()
 {
-    return ApplicationPath;
+    return AppPathManager::dataDir();
 }
 
 QString PGE_JS_File::getOpenFilePath(QString caption, QString dir, QString filter)

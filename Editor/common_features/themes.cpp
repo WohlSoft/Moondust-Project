@@ -266,7 +266,7 @@ void Themes::init()
 ///
 QStringList Themes::availableThemes()
 {
-    QString themesPath(ApplicationPath + "/themes/");
+    QString themesPath(AppPathManager::dataDir() + "/themes/");
     QDir themesDir(themesPath);
     QStringList allThemes = themesDir.entryList(QDir::AllDirs);
 
@@ -307,11 +307,12 @@ void Themes::loadTheme(const QString &themeDir)
 {
     init();
 
-    QString themesPath(ApplicationPath + "/themes/");
+    QString themesPath(AppPathManager::dataDir() + "/themes/");
     theme_dir = themesPath + themeDir + "/";
 
     QString gui_ini = theme_dir + "theme.ini";
-    if(!QFileInfo(gui_ini).exists()) return;
+    if(!QFile::exists(gui_ini))
+        return;
 
     QSettings guiset(gui_ini, QSettings::IniFormat);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)

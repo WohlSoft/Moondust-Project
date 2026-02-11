@@ -378,7 +378,7 @@ QString SanBaEiRuntimeEngine::getBridgePath()
     QDir exePath(QApplication::applicationDirPath());
     return exePath.absoluteFilePath("../Resources/ipc/38a_ipc_bridge.exe");
 #else
-    return ApplicationPath + "/ipc/38a_ipc_bridge.exe";
+    return AppPathManager::libExecDir() + "/ipc/38a_ipc_bridge.exe";
 #endif
 }
 

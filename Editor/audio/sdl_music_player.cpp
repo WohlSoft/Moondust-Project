@@ -50,7 +50,7 @@ void MixerX::initAudio(int frequency, Uint16 format, int channels, int chunksize
         LogWarning(QString("Can't allocate channels: %1").arg(Mix_GetError()));
 
     // TODO: Implement an ability to choose a timidity config
-    Mix_SetTimidityCfg(QString(ApplicationPath + "/timidity/").toLocal8Bit().data());
+    Mix_SetTimidityCfg(QString(AppPathManager::dataDir() + "/timidity/").toLocal8Bit().data());
 }
 
 int MixerX::sampleRate()

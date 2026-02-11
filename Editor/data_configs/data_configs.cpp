@@ -317,7 +317,7 @@ bool DataConfig::loadBasics()
         return false;
 
     if(guiset.value("application-dir", false).toBool())
-        data_dir = arg_config_app_dir.isEmpty() ? ApplicationPath + "/" : arg_config_app_dir;
+        data_dir = arg_config_app_dir.isEmpty() ? AppPathManager::dataDir() + "/" : arg_config_app_dir;
     else
         data_dir = config_dir + "data/";
 
@@ -406,7 +406,7 @@ bool DataConfig::loadFullConfig()
     IniProcessing mainSet(main_ini);
 
     // PreSetup
-    QString preSetup_customAppPath = ApplicationPath;
+    QString preSetup_customAppPath = AppPathManager::dataDir();
     bool    preSetup_lookAppDir = false;
     QString preSetup_worlds;
     QString preSetup_music;
@@ -425,7 +425,7 @@ bool DataConfig::loadFullConfig()
         return false;
     }
     {
-        mainSet.read("application-path", preSetup_customAppPath, ApplicationPath);
+        mainSet.read("application-path", preSetup_customAppPath, AppPathManager::dataDir());
         preSetup_customAppPath.replace('\\', '/');
         preSetup_lookAppDir = mainSet.value("application-dir", false).toBool();
 
@@ -517,7 +517,7 @@ bool DataConfig::loadFullConfig()
     }
 
     // ================ Apply pre-Setup ================
-    QString appPath = arg_config_app_dir.isEmpty() ? ApplicationPath : arg_config_app_dir;
+    QString appPath = arg_config_app_dir.isEmpty() ? AppPathManager::dataDir() : arg_config_app_dir;
     data_dir = (preSetup_lookAppDir ? preSetup_customAppPath + "/" : config_dir + "data/");
 
     if(QDir(appPath + "/" + data_dir).exists()) //Check as relative

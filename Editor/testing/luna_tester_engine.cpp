@@ -996,7 +996,7 @@ QString LunaTesterEngine::getBridgePath()
         QDir exePath(QApplication::applicationDirPath());
         return exePath.absoluteFilePath("../Resources/ipc/LunaLoader-exec.exe");
 #   else
-        return ApplicationPath + "/ipc/LunaLoader-exec.exe";
+        return AppPathManager::libExecDir() + "/ipc/LunaLoader-exec.exe";
 #   endif
     }
 }
@@ -1009,7 +1009,7 @@ QString LunaTesterEngine::getHwndShowBridgePath()
     QDir exePath(QApplication::applicationDirPath());
     return exePath.absoluteFilePath("../Resources/ipc/luna_hwnd_show.exe");
 #   else
-    return ApplicationPath + "/ipc/luna_hwnd_show.exe";
+    return AppPathManager::libExecDir() + "/ipc/luna_hwnd_show.exe";
 #   endif
 }
 #endif // _WIN32

@@ -122,7 +122,7 @@ void MainWindow::on_actionModern_GUI_triggered()
 
 void MainWindow::on_actionChange_log_triggered()
 {
-    QDesktopServices::openUrl(QUrl::fromLocalFile(ApplicationPath + "/changelog.editor.txt"));
+    QDesktopServices::openUrl(QUrl::fromLocalFile(AppPathManager::dataDir() + "/changelog.editor.txt"));
 }
 
 

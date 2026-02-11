@@ -41,7 +41,7 @@ static PGE_MusPlayer MusPlayer;
 
 void MainWindow::setDefaults()
 {
-    GlobalSettings::tools_sox_bin_path = ApplicationPath + GlobalSettings::tools_sox_bin_path;
+    GlobalSettings::tools_sox_bin_path = AppPathManager::libExecDir() + GlobalSettings::tools_sox_bin_path;
 
     GlobalSettings::LvlItemDefaults.LockedItemOpacity               = 0.3;
 

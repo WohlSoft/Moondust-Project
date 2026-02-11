@@ -27,16 +27,22 @@
 #include <QUrl>
 #endif
 
+#ifdef __ANDROID__
 #include "dir_copy.h"
+#endif
 #include "app_path.h"
 #include "../version.h"
 
 QString ApplicationPath;
 QString ApplicationPath_x;
 
+bool AppPathManager::m_isPortable = false;
 QString AppPathManager::m_settingsPath;
 QString AppPathManager::m_userPath;
+QString AppPathManager::m_dataPath;
+QString AppPathManager::m_libExecPath;
 
+#define SHARE_DATA_DIR "moondust-project"
 #if defined(__ANDROID__) || defined(__APPLE__) || defined(__HAIKU__)
 #   define UserDirName "/PGE Project"
 #else
@@ -72,6 +78,7 @@ void AppPathManager::initAppPath(const char *argv0)
 #else
     ApplicationPath = QFileInfo(QString::fromUtf8(argv0)).absoluteDir().absolutePath();
 #endif
+
     ApplicationPath_x = ApplicationPath;
 
     QApplication::addLibraryPath(".");
@@ -103,7 +110,9 @@ void AppPathManager::initAppPath(const char *argv0)
     }
 #endif
 
-    if(isPortable())
+    initIsPortable();
+
+    if(m_isPortable)
         return;
 
 #if defined(__ANDROID__) || defined(__APPLE__)
@@ -126,14 +135,19 @@ void AppPathManager::initAppPath(const char *argv0)
 #endif
         m_userPath = appDir.absolutePath();
         initSettingsPath();
+        initDataPath();
+        initLibExecPath();
     }
     else
         goto defaultSettingsPath;
 
     return;
+
 defaultSettingsPath:
     m_userPath = ApplicationPath;
     initSettingsPath();
+    initDataPath();
+    initLibExecPath();
 }
 
 QString AppPathManager::settingsFile()
@@ -151,10 +165,21 @@ QString AppPathManager::userAppDir()
     return m_userPath;
 }
 
+QString AppPathManager::dataDir()
+{
+    return m_dataPath;
+}
+
+QString AppPathManager::libExecDir()
+{
+    return m_libExecPath;
+}
+
+
 QString AppPathManager::languagesDir()
 {
 #ifndef Q_OS_MAC
-    return ApplicationPath + "/languages";
+    return m_dataPath + "/languages";
 #else
     CFURLRef appUrlRef;
     appUrlRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("languages"), NULL, NULL);
@@ -181,9 +206,11 @@ void AppPathManager::install()
 #else
     QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
+
     if(!path.isEmpty())
     {
         QDir appDir(path + UserDirName);
+
         if(!appDir.exists())
             appDir.mkpath(path + UserDirName);
     }
@@ -191,11 +218,89 @@ void AppPathManager::install()
 
 bool AppPathManager::isPortable()
 {
+    return m_isPortable;
+}
+
+bool AppPathManager::userDirIsAvailable()
+{
+    return !m_isPortable;
+}
+
+void AppPathManager::initSettingsPath()
+{
+    m_settingsPath = m_userPath + "/settings";
+
+    if(QFileInfo(m_settingsPath).isFile())
+        QFile::remove(m_settingsPath);//Just in case, avoid mad jokes with making same-named file as settings folder
+
+    QDir st(m_settingsPath);
+
+    if(!st.exists())
+        st.mkpath(m_settingsPath);
+}
+
+void AppPathManager::initDataPath()
+{
+#ifndef __APPLE__
+    QDir dataPath(ApplicationPath);
+    m_dataPath = ApplicationPath;
+
+    dataPath.cdUp();
+
+    if(!dataPath.exists("share"))
+        return;
+
+    dataPath.cd("share");
+
+    if(dataPath.exists(SHARE_DATA_DIR))
+        m_dataPath = dataPath.absoluteFilePath(SHARE_DATA_DIR);
+
+#else
+    m_dataPath = ApplicationPath;
+#endif
+}
+
+void AppPathManager::initLibExecPath()
+{
+#ifndef __APPLE__
+    QDir dataPath(ApplicationPath);
+    m_libExecPath = m_dataPath;
+
+    dataPath.cdUp();
+
+    if(!dataPath.exists("libexec"))
+        return;
+
+    dataPath.cd("libexec");
+
+    if(dataPath.exists(SHARE_DATA_DIR))
+        m_libExecPath = dataPath.absoluteFilePath(SHARE_DATA_DIR);
+
+#else
+    m_libExecPath = m_dataPath;
+#endif
+}
+
+void AppPathManager::initIsPortable()
+{
     if(m_settingsPath.isNull())
         m_settingsPath = ApplicationPath;
+
     if(m_userPath.isNull())
         m_userPath = ApplicationPath;
-    if(!QFile(settingsFile()).exists()) return false;
+
+    if(m_dataPath.isNull())
+        m_dataPath = ApplicationPath;
+
+    if(m_libExecPath.isNull())
+        m_libExecPath = ApplicationPath;
+
+    if(!QFile::exists(settingsFile()))
+    {
+        m_isPortable = false;
+        return;
+    }
+
     bool forcePortable = false;
     QSettings checkForPort(settingsFile(), QSettings::IniFormat);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -209,21 +314,5 @@ bool AppPathManager::isPortable()
     if(forcePortable)
         initSettingsPath();
 
-    return forcePortable;
+    m_isPortable = forcePortable;
 }
-
-bool AppPathManager::userDirIsAvailable()
-{
-    return (m_userPath != ApplicationPath);
-}
-
-void AppPathManager::initSettingsPath()
-{
-    m_settingsPath = m_userPath + "/settings";
-    if(QFileInfo(m_settingsPath).isFile())
-        QFile::remove(m_settingsPath);//Just in case, avoid mad jokes with making same-named file as settings folder
-    QDir st(m_settingsPath);
-    if(!st.exists())
-        st.mkpath(m_settingsPath);
-}
-

@@ -405,7 +405,7 @@ void PgeEngineIpcClient::sendLevelBuffer()
                    .arg(m_levelTestBuffer.meta.filename + ".lvl" + x);
     else
         sendLvlx = QString("SEND_LVLX: %1/%2%3\n")
-                   .arg(ApplicationPath)
+                   .arg(AppPathManager::dataDir())
                    .arg("_untitled.lvl").arg(x);
 
     if(m_levelTestBufferRaw.size() <= 0)
@@ -446,7 +446,7 @@ void PgeEngineIpcClient::sendLevelBufferMultipart()
                        .arg(m_levelTestBuffer.meta.filename + ".lvl" + x);
     else
         sendLvlx = QString("SEND_LVLX_PARTS: %1/%2%3\n")
-                       .arg(ApplicationPath)
+                       .arg(AppPathManager::dataDir())
                        .arg("_untitled.lvl").arg(x);
 
     if(m_levelTestBufferRaw.size() <= 0)

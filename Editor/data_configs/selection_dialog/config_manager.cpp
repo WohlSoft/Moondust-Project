@@ -279,7 +279,7 @@ void ConfigManager::loadConfigPackList()
     QListWidgetItem *item;
 
     //! Stuff PGE config dir
-    QString     configPath      = ApplicationPath + "/configs/";
+    QString     configPath      = AppPathManager::dataDir() + "/configs/";
     //! User profile PGE config dir
     QString     configPath_user = AppPathManager::userAppDir() + "/configs/";
 
@@ -360,7 +360,7 @@ void ConfigManager::loadConfigPackList()
 
         guiset.beginGroup("main");
         data_dir = (guiset.value("application-dir", "0").toBool() ?
-                    ApplicationPath + "/" :
+                    AppPathManager::dataDir() + "/" :
                     cpFullDirPath + "data/");
 
         configName =    guiset.value("config_name", QDir(cpFullDirPath).dirName()).toString();
