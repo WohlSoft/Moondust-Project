@@ -6,7 +6,7 @@
 #include <QEventLoop>
 #include <QCryptographicHash>
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 
 // Returns empty QByteArray() on failure.
 static QByteArray fileChecksum(const QString &fileName, QCryptographicHash::Algorithm hashAlgorithm)

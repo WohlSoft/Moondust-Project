@@ -33,6 +33,13 @@ include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
 
+set(PGE_APP_PATH_MODULE_NAME "Moondust Calibrator")
+set(PGE_APP_PATH_SETUP_FILE_NAME "pge_translator.ini")
+set(PGE_APP_PATH_VERSION_HEADER "../../Translator/version.h")
+set(PGE_APP_PATH_HAS_THEMES FALSE)
+set(PGE_APP_PATH_TARGET_SUFFIX Translator)
+include(../_common/qt-modules/app_path_qt/app_path.cmake)
+
 include(../_common/translator-qt/translator.cmake)
 include(../_common/qt-modules/compat/pge_qt_compat.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
@@ -110,7 +117,6 @@ list(APPEND PGE_TRANSLATOR_SRCS
     translator_main.h translator_main.cpp
     translate_field.h translate_field.cpp
     dialogue_item.h dialogue_item.cpp
-    common_features/app_path.h common_features/app_path.cpp
     common_features/logger.h common_features/logger_sets.h common_features/logger.cpp
     common_features/growing_text_edit.h common_features/growing_text_edit.cpp
     ${UTF8MAIN_SRCS}
@@ -199,7 +205,7 @@ list(APPEND PGE_TRANSLATOR_INSTALLS
     pge_translator
 )
 
-list(APPEND PGE_TRANSLATOR_LINK_LIBS PGE_Translator_QtLibs)
+list(APPEND PGE_TRANSLATOR_LINK_LIBS PGE_AppPathTranslatorQt PGE_Translator_QtLibs)
 
 if(WIN32)
     list(APPEND PGE_TRANSLATOR_LINK_LIBS

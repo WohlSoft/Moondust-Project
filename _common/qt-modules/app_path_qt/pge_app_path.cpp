@@ -233,7 +233,7 @@ void AppPathManager::initSettingsPath()
     m_settingsPath = m_userPath + "/settings";
 
     if(QFileInfo(m_settingsPath).isFile())
-        QFile::remove(m_settingsPath);//Just in case, avoid mad jokes with making same-named file as settings folder
+        QFile::remove(m_settingsPath);  // Just in case, avoid mad jokes with making same-named file as settings folder
 
     QDir st(m_settingsPath);
 
@@ -305,7 +305,7 @@ void AppPathManager::initIsPortable()
 
     bool forcePortable = false;
     QSettings checkForPort(settingsFile(), QSettings::IniFormat);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0) // In Qt6, INI files are always UTF-8
     checkForPort.setIniCodec("UTF-8");
 #endif
 

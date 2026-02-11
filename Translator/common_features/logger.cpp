@@ -24,7 +24,7 @@
 #include <QDateTime>
 #include <QtDebug>
 
-#include "app_path.h"
+#include <pge_app_path.h>
 #include "logger_sets.h"
 
 QString     LogWriter::DebugLogFile;

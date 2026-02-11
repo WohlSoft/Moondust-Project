@@ -26,15 +26,20 @@
 
 #include "calibration_main.h"
 #include "ui_calibration_main.h"
-#include "main/app_path.h"
+#include <pge_app_path.h>
 
 #include "qfile_dialogs_default_options.hpp"
 
 
 void CalibrationMain::createDirs()
 {
-    if(!QDir(ApplicationPath + "/calibrator/spriteconf").exists())
-        QDir().mkpath(ApplicationPath + "/calibrator/spriteconf");
+    if(!AppPathManager::isPortable())
+        return;
+
+    QDir sprite(AppPathManager::dataDir() + "/calibrator/spriteconf");
+
+    if(!sprite.exists())
+        sprite.mkpath(".");
 }
 
 void CalibrationMain::loadAppSettings()

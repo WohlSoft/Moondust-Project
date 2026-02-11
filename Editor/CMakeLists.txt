@@ -45,6 +45,7 @@ set(PGE_APP_PATH_MODULE_NAME "PGE Editor")
 set(PGE_APP_PATH_SETUP_FILE_NAME "pge_editor.ini")
 set(PGE_APP_PATH_VERSION_HEADER "../../Editor/version.h")
 set(PGE_APP_PATH_HAS_THEMES TRUE)
+set(PGE_APP_PATH_TARGET_SUFFIX Editor)
 include(../_common/qt-modules/app_path_qt/app_path.cmake)
 
 # include shared code modules
@@ -771,7 +772,7 @@ list(APPEND PGE_EDITOR_INSTALLS
 
 list(APPEND PGE_EDITOR_LINK_LIBS
     ${UTILS_LIBS}
-    PGE_AppPathQt
+    PGE_AppPathEditorQt
     PGE_QtLibs
     PGE_FreeImage
 )

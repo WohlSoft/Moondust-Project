@@ -7,7 +7,7 @@
 #include <QCloseEvent>
 #include <QtConcurrent>
 #include <QtConcurrentRun>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 
 #include <QDebug>
 
@@ -991,7 +991,7 @@ void EpisodeConverter::on_DoMadJob_clicked()
 void EpisodeConverter::on_browse_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open target episode path"),
-                  (ui->episodePath->text().isEmpty() ? ApplicationPath : ui->episodePath->text()),
+                  (ui->episodePath->text().isEmpty() ? AppPathManager::userAppDir() : ui->episodePath->text()),
                   c_dirDialogOptions);
     if(dir.isEmpty())
         return;

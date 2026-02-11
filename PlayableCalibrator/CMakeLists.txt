@@ -33,6 +33,13 @@ include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
 
+set(PGE_APP_PATH_MODULE_NAME "PGE Calibrator")
+set(PGE_APP_PATH_SETUP_FILE_NAME "pge_calibrator.ini")
+set(PGE_APP_PATH_VERSION_HEADER "../../PlayableCalibrator/version.h")
+set(PGE_APP_PATH_HAS_THEMES FALSE)
+set(PGE_APP_PATH_TARGET_SUFFIX Calibrator)
+include(../_common/qt-modules/app_path_qt/app_path.cmake)
+
 include(../_common/translator-qt/translator.cmake)
 include(../_common/qt-modules/compat/pge_qt_compat.cmake)
 
@@ -132,7 +139,6 @@ list(APPEND PGE_CALIBRATOR_SRCS
     main/files_io.cpp
     main/graphics.cpp
     main/settings.cpp
-    main/app_path.cpp
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
     ${QT_PLUGINS_CPP}
@@ -206,6 +212,7 @@ list(APPEND PGE_CALIBRATOR_INSTALLS
 
 list(APPEND PGE_CALIBRATOR_LINK_LIBS
     ${UTILS_LIBS}
+    PGE_AppPathCalibratorQt
     PGE_Calibrator_QtLibs
     PGE_FreeImage
 )
