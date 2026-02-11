@@ -20,7 +20,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <mainwindow.h>
 #include <common_features/logger.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <networking/engine_intproc.h>
 #include <cstring>
 

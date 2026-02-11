@@ -41,6 +41,12 @@ include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
 
+set(PGE_APP_PATH_MODULE_NAME "PGE Editor")
+set(PGE_APP_PATH_SETUP_FILE_NAME "pge_editor.ini")
+set(PGE_APP_PATH_VERSION_HEADER "../../Editor/version.h")
+set(PGE_APP_PATH_HAS_THEMES TRUE)
+include(../_common/qt-modules/app_path_qt/app_path.cmake)
+
 # include shared code modules
 include(../_common/ConfigPackManager/PGE_ConfigPackManager.cmake)
 include(../_Libs/DirManager/dirman.cmake)
@@ -226,7 +232,6 @@ list(APPEND PGE_EDITOR_SRCS
     audio/sdl_music_player.cpp
     ../_common/data_functions/smbx64_validation_messages.cpp
     common_features/animation_timer.cpp
-    common_features/app_path.cpp
     common_features/bool_reseter.cpp
     common_features/crashhandler.cpp
     common_features/dir_copy.cpp
@@ -766,6 +771,7 @@ list(APPEND PGE_EDITOR_INSTALLS
 
 list(APPEND PGE_EDITOR_LINK_LIBS
     ${UTILS_LIBS}
+    PGE_AppPathQt
     PGE_QtLibs
     PGE_FreeImage
 )

@@ -36,9 +36,9 @@
 #include <locale.h>
 #include "version.h"
 
+#include <pge_app_path.h>
 #include <common_features/logger.h>
 #include <common_features/proxystyle.h>
-#include <common_features/app_path.h>
 #include <common_features/installer.h>
 #include <common_features/themes.h>
 #include <common_features/crashhandler.h>

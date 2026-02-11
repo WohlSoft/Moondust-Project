@@ -29,7 +29,7 @@
 
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/version_cmp.h>
 #include <main_window/global_settings.h>
 #include "../version.h"

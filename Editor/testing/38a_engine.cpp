@@ -38,7 +38,7 @@
 #include <mainwindow.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/pge_file_lib_private.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <dev_console/devconsole.h>
 
 #include "qfile_dialogs_default_options.hpp"

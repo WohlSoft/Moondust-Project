@@ -32,7 +32,7 @@
 
 #include "crashhandler.h"
 
-#include "app_path.h"
+#include <pge_app_path.h>
 #include "logger_sets.h"
 
 #ifdef DEBUG_BUILD

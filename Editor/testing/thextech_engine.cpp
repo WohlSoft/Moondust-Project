@@ -29,7 +29,7 @@
 #include "thextech_engine.h"
 
 #include <mainwindow.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 
 #include "qfile_dialogs_default_options.hpp"
 

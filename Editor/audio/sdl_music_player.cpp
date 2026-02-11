@@ -20,7 +20,7 @@
 
 #include "sdl_music_player.h"
 #include <common_features/logger.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 
 
 Mix_Music *PGE_MusPlayer::play_mus =    nullptr;

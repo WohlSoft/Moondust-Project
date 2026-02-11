@@ -61,7 +61,7 @@
 #include <mainwindow.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <data_functions/smbx64_validation_messages.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/logger.h>
 #include <dev_console/devconsole.h>
 #include <main_window/global_settings.h>

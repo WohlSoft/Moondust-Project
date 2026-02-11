@@ -30,7 +30,7 @@
 
 #include <PGE_File_Formats/file_formats.h>
 
-#include "app_path.h"
+#include <pge_app_path.h>
 #include "installer.h"
 
 Installer::Installer(QObject *parent):

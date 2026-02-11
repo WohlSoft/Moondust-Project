@@ -21,7 +21,7 @@
 #include <QFile>
 #include <QDir>
 #include <QFileDialog>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <mainwindow.h>
 
 #include "qfile_dialogs_default_options.hpp"

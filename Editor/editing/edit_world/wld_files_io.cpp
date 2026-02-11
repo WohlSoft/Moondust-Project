@@ -28,7 +28,7 @@
 #include <common_features/util.h>
 #include <common_features/main_window_ptr.h>
 #include <common_features/file_keeper.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <editing/_scenes/world/wld_scene.h>
 #include <editing/_dialogs/savingnotificationdialog.h>
 #include <main_window/global_settings.h>

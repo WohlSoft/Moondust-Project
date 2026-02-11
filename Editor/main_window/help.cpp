@@ -17,7 +17,7 @@
  */
 
 #include <QDesktopServices>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/util.h>
 #include <common_features/themes.h>
 #include <main_window/about_dialog/aboutdialog.h>

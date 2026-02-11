@@ -29,7 +29,7 @@
 #include <utility>
 #include <stdexcept>
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/themes.h>
 #include <common_features/spash_screen.h>
 #include <main_window/dock/toolboxes.h>

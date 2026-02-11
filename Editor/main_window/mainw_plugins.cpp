@@ -2,7 +2,7 @@
 
 #include <ui_mainwindow.h>
 #include <common_features/logger.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 
 #include "plugins/pge_editorplugininfo.h"
 

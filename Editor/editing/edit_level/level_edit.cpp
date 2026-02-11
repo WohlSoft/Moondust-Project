@@ -27,7 +27,7 @@
 //#include <QGLWidget>
 #include <QDebug>
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/logger.h>
 #include <editing/_scenes/level/lvl_scene.h>
 #include <main_window/file/lvl_export_image.h>

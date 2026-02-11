@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <tools/smart_import/smartimporter.h>
 
 #include <ui_mainwindow.h>

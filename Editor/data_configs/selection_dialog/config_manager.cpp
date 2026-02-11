@@ -23,7 +23,7 @@
 #include <QSysInfo>
 #endif
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/util.h>
 #include <common_features/graphics_funcs.h>
 #include <main_window/global_settings.h>

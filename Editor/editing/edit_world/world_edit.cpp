@@ -22,7 +22,7 @@
 #include "world_edit.h"
 #include <ui_world_edit.h>
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <tools/smart_import/smartimporter.h>
 
 WorldEdit::WorldEdit(MainWindow *mw, QWidget *parent) :

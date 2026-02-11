@@ -22,7 +22,7 @@
 #include <QInputDialog>
 #include <QKeyEvent>
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/util.h>
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/world/wld_scene.h>

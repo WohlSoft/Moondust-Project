@@ -18,7 +18,7 @@
 
 #include <QStandardPaths>
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/util.h>
 #include <common_features/main_window_ptr.h>
 #include <editing/edit_world/world_edit.h>
