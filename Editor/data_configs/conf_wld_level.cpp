@@ -25,9 +25,9 @@
 
 bool DataConfig::loadWorldLevel(obj_w_level &slevel, QString section, obj_w_level *merge_with, QString iniFile, IniProcessing *setup)
 {
-    bool valid = true;
     bool internal = !setup;
     PGEString errStr;
+
     if(internal)
         setup = new IniProcessing(iniFile);
 
@@ -43,11 +43,15 @@ bool DataConfig::loadWorldLevel(obj_w_level &slevel, QString section, obj_w_leve
         addError(errStr);
         slevel.isValid = false;
     }
+
     slevel.m_itemType = ItemTypes::WLD_Level;
+
     closeSection(setup);
+
     if(internal)
         delete setup;
-    return valid;
+
+    return slevel.isValid;
 }
 
 void DataConfig::loadWorldLevels()
@@ -56,6 +60,7 @@ void DataConfig::loadWorldLevels()
 
     obj_w_level slevel;
     unsigned long levels_total = 0;
+    unsigned long soft_limit = 0;
     bool useDirectory = false;
 
     QString level_ini = getFullIniPath("wld_levels.ini");
@@ -70,13 +75,15 @@ void DataConfig::loadWorldLevels()
     if(!openSection(&setup, "levels-main"))
         return;
     {
-        levels_total        = setup.value("total", 0).toUInt();
-        defaultGrid.levels = setup.value("grid", defaultGrid.levels).toUInt();
-        marker_wlvl.path    = setup.value("path", 0).toUInt();
-        marker_wlvl.bigpath = setup.value("bigpath", 0).toUInt();
+        setup.read("total", levels_total, 0);
+        setup.read("soft-limit", soft_limit, 0);
+        setup.read("grid", defaultGrid.levels, defaultGrid.levels);
+        setup.read("path", marker_wlvl.path, 0);
+        setup.read("bigpath", marker_wlvl.bigpath, 0);
         total_data += levels_total;
         setup.read("config-dir", folderWldLevelPoints.items, "");
         setup.read("extra-settings", folderWldLevelPoints.extraSettings, folderWldLevelPoints.items);
+
         if(!folderWldLevelPoints.items.isEmpty())
         {
             folderWldLevelPoints.items = config_dir + folderWldLevelPoints.items;
@@ -127,6 +134,21 @@ void DataConfig::loadWorldLevels()
                                        slevel.setup.icon_n,
                                        slevel.icon);
         }
+        else if(soft_limit > 0 && i > soft_limit)
+        {
+            // If resource after soft-limit is invalid, consider previous is the total number:
+            --i;
+            total_data -= levels_total;
+            total_data += i;
+            levels_total = i;
+            ConfStatus::total_wlvl = signed(levels_total);
+            main_wlevels.shrinkTo(i);
+            // Remove last error
+            errorsList[ERR_GLOBAL].pop_back();
+            emit progressMax(int(i));
+            break;
+        }
+
         /***************Load image*end***************/
         slevel.setup.id = i;
         main_wlevels.storeElement(int(i), slevel, valid);

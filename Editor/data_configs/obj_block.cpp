@@ -51,7 +51,6 @@ void obj_block::copyTo(obj_block &block)
  */
 bool DataConfig::loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with, QString iniFile, IniProcessing *setup)
 {
-    bool valid = true;
     bool internal = !setup;
     QString errStr;
     if(internal)
@@ -73,7 +72,8 @@ bool DataConfig::loadLevelBlock(obj_block &sblock, QString section, obj_block *m
     closeSection(setup);
     if(internal)
         delete setup;
-    return valid;
+
+    return sblock.isValid;
 }
 
 
@@ -83,6 +83,7 @@ void DataConfig::loadLevelBlocks()
 
     obj_block sblock;
     unsigned long block_total = 0;
+    unsigned long soft_limit = 0;
     bool useDirectory = false;
 
     QString block_ini = getFullIniPath("lvl_blocks.ini");
@@ -99,6 +100,7 @@ void DataConfig::loadLevelBlocks()
         return;
     {
         setup.read("total", block_total, 0);
+        setup.read("soft-limit", soft_limit, 0);
         setup.read("grid", defaultGrid.block, defaultGrid.block);
         setup.read("default-sizable-border-width", defaultBlock.sizable_block_border_size, -1);
         total_data += block_total;
@@ -158,6 +160,21 @@ void DataConfig::loadLevelBlocks()
                                        sblock.icon);
         }
         /***************Load image*end***************/
+        else if(soft_limit > 0 && i > soft_limit)
+        {
+            // If resource after soft-limit is invalid, consider previous is the total number:
+            --i;
+            total_data -= block_total;
+            total_data += i;
+            block_total = i;
+            ConfStatus::total_blocks = signed(block_total);
+            main_block.shrinkTo(i);
+            // Remove last error
+            errorsList[ERR_GLOBAL].pop_back();
+            emit progressMax(int(i));
+            break;
+        }
+
         sblock.setup.id = i;
         main_block.storeElement(int(i), sblock, valid);
 

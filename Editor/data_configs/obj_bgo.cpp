@@ -51,7 +51,6 @@ void obj_bgo::copyTo(obj_bgo &bgo)
  */
 bool DataConfig::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with, QString iniFile, IniProcessing *setup)
 {
-    bool valid = true;
     bool internal = !setup;
     QString errStr;
     if(internal)
@@ -73,7 +72,8 @@ bool DataConfig::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wit
     closeSection(setup);
     if(internal)
         delete setup;
-    return valid;
+
+    return sbgo.isValid;
 }
 
 
@@ -83,6 +83,7 @@ void DataConfig::loadLevelBGO()
 
     obj_bgo sbgo;
     unsigned long bgo_total = 0;
+    unsigned long soft_limit = 0;
     bool useDirectory = false;
 
     QString bgo_ini = getFullIniPath("lvl_bgo.ini");
@@ -98,6 +99,7 @@ void DataConfig::loadLevelBGO()
         return;
     {
         setup.read("total", bgo_total, 0);
+        setup.read("soft-limit", soft_limit, 0);
         setup.read("grid",  defaultGrid.bgo, defaultGrid.bgo);
         total_data += bgo_total;
         setup.read("config-dir", folderLvlBgo.items, "");
@@ -155,6 +157,21 @@ void DataConfig::loadLevelBGO()
                                        sbgo.icon);
         }
         /***************Load image*end***************/
+        else if(soft_limit > 0 && i > soft_limit)
+        {
+            // If resource after soft-limit is invalid, consider previous is the total number:
+            --i;
+            total_data -= bgo_total;
+            total_data += i;
+            bgo_total = i;
+            ConfStatus::total_bgo = signed(bgo_total);
+            main_bgo.shrinkTo(i);
+            // Remove last error
+            errorsList[ERR_GLOBAL].pop_back();
+            emit progressMax(int(i));
+            break;
+        }
+
         sbgo.setup.id = i;
         main_bgo.storeElement(static_cast<int>(i), sbgo, valid);
 

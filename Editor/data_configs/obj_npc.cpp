@@ -81,6 +81,7 @@ void DataConfig::loadLevelNPC()
     unsigned long i;
     obj_npc snpc;
     unsigned long npc_total = 0;
+    unsigned long soft_limit = 0;
     bool useDirectory = false;
     QString npc_ini = getFullIniPath("lvl_npc.ini");
 
@@ -96,6 +97,7 @@ void DataConfig::loadLevelNPC()
         return;
     {
         setup.read("total", npc_total, 0);
+        setup.read("soft-limit", soft_limit, 0);
         setup.read("grid", defaultGrid.npc, defaultGrid.npc);
         total_data += npc_total;
 
@@ -151,8 +153,22 @@ void DataConfig::loadLevelNPC()
                                        snpc.setup.icon_n,
                                        snpc.icon);
         }
-
         /***************Load image*end***************/
+        else if(soft_limit > 0 && i > soft_limit)
+        {
+            // If resource after soft-limit is invalid, consider previous is the total number:
+            --i;
+            total_data -= npc_total;
+            total_data += i;
+            npc_total = i;
+            ConfStatus::total_npc = signed(npc_total);
+            main_npc.shrinkTo(i);
+            // Remove last error
+            errorsList[ERR_GLOBAL].pop_back();
+            emit progressMax(int(i));
+            break;
+        }
+
         snpc.setup.id = i;
         main_npc.storeElement(static_cast<int>(i), snpc, valid);
 

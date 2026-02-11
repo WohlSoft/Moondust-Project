@@ -59,6 +59,7 @@ beta2
 - Fixed an inability to select a music file that contains multiple repeating spaces
 - Added the custom music file validation with notices showing for not existing files, legacy, or heavy formats
 - Improved the behaviour of the wheel/touchpad scrolling events handling, especially on macOS with the Magic Mouse's touchpad
+- Added the support for "soft-limit" field for integration configuration packages to allow some amount of items being disabled due to missing graphics
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings
