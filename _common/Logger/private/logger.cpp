@@ -116,17 +116,17 @@ void LoadLogSettings(bool disableStdOut, bool verboseLogs)
     std::string logFileName = fmt::format_ne(MOONDUST_LOGGER_FILENAME_PREFIX "_log_{0}.txt", return_current_time_and_date());
 #endif
 
-    std::string mainIniFile = AppPathManager::settingsFileSTD();
+    std::string mainIniFile = EnginePathMan::settingsFileSTD();
     IniProcessing logSettings(mainIniFile);
 
 #if !defined(NO_FILE_LOGGING)
-    std::string logPath = AppPathManager::logsDir();
+    std::string logPath = EnginePathMan::logsDir();
     DirMan defLogDir(logPath);
 
     if(!defLogDir.exists())
     {
         if(!defLogDir.mkpath())
-            defLogDir.setPath(AppPathManager::userAppDirSTD());
+            defLogDir.setPath(EnginePathMan::userAppDirSTD());
     }
 #endif
 
