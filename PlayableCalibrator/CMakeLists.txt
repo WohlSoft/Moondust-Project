@@ -12,9 +12,6 @@ set(CMAKE_AUTOMOC ON)
 # to always look for includes there:
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_INSTALL_RPATH ".")
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
@@ -86,7 +83,7 @@ endif()
 
 # =============== Translations ===============
 set(_LANGAUGES_TEMP_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/languages")
-set(PGE_LANG_OUTPUT_DIR "${CMAKE_BINARY_DIR}/bin/languages")
+set(PGE_LANG_OUTPUT_DIR "${PGE_DEBUG_DATA}/languages")
 
 file(GLOB PGE_LANG_SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.ts")
 
@@ -96,7 +93,7 @@ pge_qt_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
 add_custom_target(calibrator_translations DEPENDS ${PGE_LANG_BIN_FILES})
 
 if(NOT APPLE AND NOT EMSCRIPTEN)
-    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
+    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DATA}/languages")
 endif()
 # ===========================================
 
@@ -273,14 +270,14 @@ target_link_libraries(pge_calibrator
 )
 
 install(TARGETS ${PGE_CALIBRATOR_INSTALLS}
-    RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}"
-    BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}"
+    RUNTIME DESTINATION "${PGE_INSTALL_BIN}"
+    BUNDLE DESTINATION "${PGE_INSTALL_BIN}"
 )
 
 # Calibrator's default properties
-file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/calibrator" DESTINATION "${CMAKE_BINARY_DIR}/bin")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/calibrator" DESTINATION "${PGE_DEBUG_DATA}")
 
 # Calibrator's stuff
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/calibrator"
-    DESTINATION "${PGE_INSTALL_DIRECTORY}"
+    DESTINATION "${PGE_INSTALL_DATA}"
 )

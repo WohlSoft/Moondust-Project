@@ -12,9 +12,6 @@ set(CMAKE_AUTOMOC ON)
 # to always look for includes there:
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_INSTALL_RPATH ".")
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
@@ -218,6 +215,6 @@ target_link_libraries(pge_musplay
 pge_set_nopie(pge_musplay)
 
 install(TARGETS ${PGE_MUSPLAY_INSTALLS}
-    RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}"
-    BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}"
+    RUNTIME DESTINATION "${PGE_INSTALL_BIN}"
+    BUNDLE DESTINATION "${PGE_INSTALL_BIN}"
 )

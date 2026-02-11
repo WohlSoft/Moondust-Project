@@ -12,9 +12,6 @@ set(CMAKE_AUTOMOC ON)
 # to always look for includes there:
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_INSTALL_RPATH ".")
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-
 set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 include_directories(
@@ -122,7 +119,7 @@ endif()
 
 # =============== Translations ===============
 set(_LANGAUGES_TEMP_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/languages")
-set(PGE_LANG_OUTPUT_DIR "${CMAKE_BINARY_DIR}/bin/languages")
+set(PGE_LANG_OUTPUT_DIR "${PGE_DEBUG_DATA}/languages")
 
 FILE(GLOB PGE_LANG_SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.ts")
 
@@ -132,7 +129,7 @@ pge_qt_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
 add_custom_target(editor_translations ALL DEPENDS ${PGE_LANG_BIN_FILES})
 
 if(NOT APPLE AND NOT EMSCRIPTEN)
-    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
+    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DATA}/languages")
 endif()
 # ===========================================
 
@@ -620,18 +617,17 @@ list(APPEND PGE_EDITOR_SRCS
 
 if(NOT HAIKU)
     # Generic folder for IPC bridge executables
-    if(NOT EXISTS ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc)
-        make_directory(${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc)
+    if(NOT EXISTS ${PGE_DEBUG_LIBEXEC}/ipc)
+        make_directory(${PGE_DEBUG_LIBEXEC}/ipc)
     endif()
 
-
     # 38A IPC bridge
-    set(38A_IPC_BRIDGE_BIN "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/38a_ipc_bridge.exe")
+    set(38A_IPC_BRIDGE_BIN "${PGE_DEBUG_LIBEXEC}/ipc/38a_ipc_bridge.exe")
 
     add_custom_target(38a_ipc_bridge_bin ALL
         COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/38a_ipc_bridge.tar.gz"
         DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/38a_ipc_bridge.tar.gz
-        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc"
+        WORKING_DIRECTORY "${PGE_DEBUG_LIBEXEC}/ipc"
         COMMENT "Unpacking 38a_ipc_bridge.exe"
         VERBATIM
         BYPRODUCTS "${38A_IPC_BRIDGE_BIN}"
@@ -642,18 +638,18 @@ if(NOT HAIKU)
         set_source_files_properties(${38A_IPC_BRIDGE_BIN} PROPERTIES GENERATED TRUE)
     else()
         install(FILES "${38A_IPC_BRIDGE_BIN}"
-            DESTINATION "${PGE_INSTALL_DIRECTORY}/ipc"
+            DESTINATION "${PGE_INSTALL_LIBEXEC}/ipc"
         )
     endif()
 
 
     # LunaTester IPC bridge
-    set(LUNATESTER_BRIDGE_BIN "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/LunaLoader-exec.exe")
+    set(LUNATESTER_BRIDGE_BIN "${PGE_DEBUG_LIBEXEC}/ipc/LunaLoader-exec.exe")
 
     add_custom_target(lunatester_bridge_bin ALL
         COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/LunaLoader-exec.tar.gz"
         DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/LunaLoader-exec.tar.gz
-        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc"
+        WORKING_DIRECTORY "${PGE_DEBUG_LIBEXEC}/ipc"
         COMMENT "Unpacking LunaLoader-exec.exe"
         VERBATIM
         BYPRODUCTS "${LUNATESTER_BRIDGE_BIN}"
@@ -664,36 +660,34 @@ if(NOT HAIKU)
         set_source_files_properties(${LUNATESTER_BRIDGE_BIN} PROPERTIES GENERATED TRUE)
     else()
         install(FILES "${LUNATESTER_BRIDGE_BIN}"
-            DESTINATION "${PGE_INSTALL_DIRECTORY}/ipc"
+            DESTINATION "${PGE_INSTALL_LIBEXEC}/ipc"
         )
     endif()
 
-endif()
+    if(NOT WIN32)
+        set(LUNA_HWND_SHOW_BRIDGE_BIN "${PGE_DEBUG_LIBEXEC}/ipc/luna_hwnd_show.exe")
 
-if(NOT WIN32 AND NOT HAIKU)
-
-    set(LUNA_HWND_SHOW_BRIDGE_BIN "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/luna_hwnd_show.exe")
-
-    # LunaTester Wine helper
-    add_custom_target(luna_hwnd_show_bin ALL
-        COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/luna_hwnd_show.tar.gz"
-        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/luna_hwnd_show.tar.gz
-        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc"
-        COMMENT "Unpacking luna_hwnd_show.exe"
-        VERBATIM
-        BYPRODUCTS "${LUNA_HWND_SHOW_BRIDGE_BIN}"
-    )
-
-    if(APPLE) # Embed into the bundle
-        list(APPEND PGE_EDITOR_SRCS "${LUNA_HWND_SHOW_BRIDGE_BIN}")
-        set_source_files_properties(${LUNA_HWND_SHOW_BRIDGE_BIN} PROPERTIES GENERATED TRUE)
-    else()
-        install(FILES "${LUNA_HWND_SHOW_BRIDGE_BIN}"
-            DESTINATION "${PGE_INSTALL_DIRECTORY}/ipc"
+        # LunaTester Wine helper
+        add_custom_target(luna_hwnd_show_bin ALL
+            COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/luna_hwnd_show.tar.gz"
+            DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/luna_hwnd_show.tar.gz
+            WORKING_DIRECTORY "${PGE_DEBUG_LIBEXEC}/ipc"
+            COMMENT "Unpacking luna_hwnd_show.exe"
+            VERBATIM
+            BYPRODUCTS "${LUNA_HWND_SHOW_BRIDGE_BIN}"
         )
-    endif()
 
+        if(APPLE) # Embed into the bundle
+            list(APPEND PGE_EDITOR_SRCS "${LUNA_HWND_SHOW_BRIDGE_BIN}")
+            set_source_files_properties(${LUNA_HWND_SHOW_BRIDGE_BIN} PROPERTIES GENERATED TRUE)
+        else()
+            install(FILES "${LUNA_HWND_SHOW_BRIDGE_BIN}"
+                DESTINATION "${PGE_INSTALL_LIBEXEC}/ipc"
+            )
+        endif()
+    endif()
 endif()
+
 
 add_executable(pge_editor
     ${PGE_EDITOR_SRCS}
@@ -833,13 +827,13 @@ target_link_libraries(pge_editor PUBLIC
 pge_set_nopie(pge_editor)
 
 install(TARGETS ${PGE_EDITOR_INSTALLS}
-    RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}/"
-    BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}/"
+    RUNTIME DESTINATION "${PGE_INSTALL_BIN}/"
+    BUNDLE DESTINATION "${PGE_INSTALL_BIN}/"
 )
 
 # Editor themes
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/themes"
-    DESTINATION "${PGE_INSTALL_DIRECTORY}"
+    DESTINATION "${PGE_INSTALL_DATA}"
     PATTERN "*.zip" EXCLUDE
     PATTERN "*.xcf" EXCLUDE
     PATTERN "test" EXCLUDE
@@ -848,7 +842,7 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/themes"
 
 # Standalone help
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/help"
-    DESTINATION "${PGE_INSTALL_DIRECTORY}"
+    DESTINATION "${PGE_INSTALL_DOCS}"
     PATTERN ".git" EXCLUDE
     PATTERN ".pdn" EXCLUDE
     PATTERN ".xcf" EXCLUDE
