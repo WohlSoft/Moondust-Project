@@ -295,6 +295,35 @@ target_link_libraries(pge_maintainer
 
 pge_set_nopie(pge_maintainer)
 
+if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
+    # application launcher
+    if(NOT EXISTS "${CMAKE_BINARY_DIR}/share/applications")
+        file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/share/applications")
+    endif()
+
+    set(PGE_COMPONENT_EXECUTABLE_NAME "pge_maintainer")
+    set(DESKTOP_EXEC ${PGE_COMPONENT_EXECUTABLE_NAME})
+    set(DESKTOP_ICON ${PGE_COMPONENT_EXECUTABLE_NAME})
+    set(DESKTOP_WMCLASS ${PGE_COMPONENT_EXECUTABLE_NAME})
+
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon.desktop.in"
+                   "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop")
+    install(FILES "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop"
+            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications)
+
+    # application icons
+    set(PGE_DESKTOP_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon")
+
+    install(FILES "${PGE_DESKTOP_ICON_PATH}/maintainer16.png"
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/16x16/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+    install(FILES "${PGE_DESKTOP_ICON_PATH}/maintainer32.png"
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/32x32/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+    install(FILES "${PGE_DESKTOP_ICON_PATH}/maintainer48.png"
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/48x48/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+    install(FILES "${PGE_DESKTOP_ICON_PATH}/maintainer256.png"
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/256x256/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+endif()
+
 install(TARGETS ${PGE_MAINTAINER_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_BIN}"
     BUNDLE DESTINATION "${PGE_INSTALL_BIN}"

@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Moondust Music Player
+Name[ru]=Moondust - Музыкальный проигрыватель
+GenericName=Moondust Music Player
+Comment=A simple music player to preview music files compatible with the Moondust Project
+Comment[ru]=Простой музыкльный проигрыватель для предпросмотра музыкальных файлов, совместимых с Проектом Moondust
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Icon=@DESKTOP_ICON@
+Exec=@DESKTOP_EXEC@ @F
+X-Purism-FormFactor=Workstation;Mobile;
+Categories=AudioVideo;Audio;Music;
+StartupWMClass=@DESKTOP_WMCLASS@

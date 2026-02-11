@@ -538,6 +538,37 @@ target_link_libraries(pge_engine
     ${PGE_ENGINE_LINK_LIBS}
 )
 
+if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
+    # application launcher
+    if(NOT EXISTS "${CMAKE_BINARY_DIR}/share/applications")
+        file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/share/applications")
+    endif()
+
+    set(PGE_COMPONENT_EXECUTABLE_NAME "pge_engine")
+    set(DESKTOP_EXEC ${PGE_COMPONENT_EXECUTABLE_NAME})
+    set(DESKTOP_ICON ${PGE_COMPONENT_EXECUTABLE_NAME})
+    set(DESKTOP_WMCLASS ${PGE_COMPONENT_EXECUTABLE_NAME})
+
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon.desktop.in"
+                   "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop")
+    install(FILES "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop"
+            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications)
+
+    # application icons
+    set(PGE_DESKTOP_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon")
+
+    install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_16.png"
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/16x16/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+    install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_32.png"
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/32x32/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+    install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_48.png"
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/48x48/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+    install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_128.png"
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/128x128/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+    install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_256.png"
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/256x256/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+endif()
+
 install(TARGETS ${PGE_ENGINE_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_BIN}/"
     LIBRARY DESTINATION "${PGE_INSTALL_LIB}/"

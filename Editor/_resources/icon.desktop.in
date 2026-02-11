@@ -1,0 +1,22 @@
+[Desktop Entry]
+Name=Moondust Editor
+Name[ru]=Moondust - Редактор
+GenericName=Moondust Editor
+Comment=Level and World map Editor for the Moondust Project
+Comment[ru]=Редактор уровней и карт мира для Проекта Moondust
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Icon=@DESKTOP_ICON@
+Exec=@DESKTOP_EXEC@ @F
+X-Purism-FormFactor=Workstation;Mobile;
+Categories=Development;IDE;Building;
+StartupWMClass=@DESKTOP_WMCLASS@
+Actions=ForceRun;
+MimeType=text/x-pgex-level;text/x-pgex-world;text/x-smbx64-level;text/x-smbx64-world;
+
+[Desktop Action ForceRun]
+Name=Start the second copy of Editor
+Name[ru]=Запустить вторую копию редактора
+Exec=@DESKTOP_EXEC@ --force-run @F

@@ -826,6 +826,61 @@ target_link_libraries(pge_editor PUBLIC
 
 pge_set_nopie(pge_editor)
 
+if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
+    # application launcher
+    if(NOT EXISTS "${CMAKE_BINARY_DIR}/share/applications")
+        file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/share/applications")
+    endif()
+
+    set(PGE_COMPONENT_EXECUTABLE_NAME "pge_editor")
+    set(DESKTOP_EXEC ${PGE_COMPONENT_EXECUTABLE_NAME})
+    set(DESKTOP_ICON ${PGE_COMPONENT_EXECUTABLE_NAME})
+    set(DESKTOP_WMCLASS ${PGE_COMPONENT_EXECUTABLE_NAME})
+
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon.desktop.in"
+                   "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop")
+    install(FILES "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop"
+            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications)
+
+    # application icons
+    set(PGE_DESKTOP_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/_resources/appicon")
+
+    install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_builder_16.png"
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/16x16/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+    install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_builder_32.png"
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/32x32/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+    install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_builder_48.png"
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/48x48/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+    install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_builder_128.png"
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/128x128/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+    install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_builder_256.png"
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/256x256/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+
+    # File Assocs
+    if(NOT EXISTS "${CMAKE_BINARY_DIR}/share/mime/packages")
+        file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/share/mime/packages")
+    endif()
+
+    install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/_resources/mime-moondust.xml"
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/mime/packages" RENAME "moondust-files.xml")
+
+    macro(xCopyFileIcon ICONPATH FILEBASE MIMETYPE)
+        install(FILES "${ICONPATH}/${FILEBASE}_16.png"
+                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/16x16/mimetypes/" RENAME "${MIMETYPE}.png")
+        install(FILES "${ICONPATH}/${FILEBASE}_32.png"
+                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/32x32/mimetypes/" RENAME "${MIMETYPE}.png")
+        install(FILES "${ICONPATH}/${FILEBASE}_48.png"
+                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/48x48/mimetypes/" RENAME "${MIMETYPE}.png")
+        install(FILES "${ICONPATH}/${FILEBASE}_256.png"
+                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/256x256/mimetypes/" RENAME "${MIMETYPE}.png")
+    endmacro()
+
+    xCopyFileIcon("${CMAKE_CURRENT_SOURCE_DIR}/_resources/files/lvl" "file_lvl" "x-application-smbx64-level")
+    xCopyFileIcon("${CMAKE_CURRENT_SOURCE_DIR}/_resources/files/wld" "file_wld" "x-application-smbx64-world")
+    xCopyFileIcon("${CMAKE_CURRENT_SOURCE_DIR}/_resources/files/lvlx" "file_lvlx" "x-application-pgex-level")
+    xCopyFileIcon("${CMAKE_CURRENT_SOURCE_DIR}/_resources/files/wldx" "file_wldx" "x-application-pgex-world")
+endif()
+
 install(TARGETS ${PGE_EDITOR_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_BIN}/"
     BUNDLE DESTINATION "${PGE_INSTALL_BIN}/"

@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Moondust Runtime
+Name[ru]=Moondust - Запуск игр
+GenericName=Moondust Engine
+Comment=Runtine engine to play games made with the Moondust Project
+Comment[ru]=Исполняющий движок для воспроизведения игр, созданны с помощью Проекта Moondust
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Icon=@DESKTOP_ICON@
+Exec=@DESKTOP_EXEC@ @F
+X-Purism-FormFactor=Workstation;Mobile;
+Categories=Game;ArcadeGame;
+StartupWMClass=@DESKTOP_WMCLASS@

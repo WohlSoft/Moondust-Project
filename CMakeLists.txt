@@ -24,6 +24,8 @@ if(APPLE OR ANDROID OR WIN32 OR EMSCRIPTEN)
     set(PGE_INSTALL_UNIX_TREE_DEFAULT OFF)
 else()
     set(PGE_INSTALL_UNIX_TREE_DEFAULT ON)
+    # Install .desktop files and PNG icons
+    set(PGE_INSTALL_UNIX_DESKTOP ON)
 endif()
 
 option(PGE_INSTALL_UNIX_TREE "Perform installation using the UNIX-style tree" ${PGE_INSTALL_UNIX_TREE_DEFAULT})
@@ -38,7 +40,7 @@ if(PGE_INSTALL_UNIX_TREE)
     set(PGE_INSTALL_LICS ${CMAKE_INSTALL_DATAROOTDIR}/moondust-project/licenses)
 
     if(NOT CMAKE_INSTALL_RPATH)
-        set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_LIB};.")
+        set(CMAKE_INSTALL_RPATH "../${PGE_INSTALL_LIB};.")
     endif()
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE)
 
