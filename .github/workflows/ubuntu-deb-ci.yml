@@ -37,6 +37,19 @@ jobs:
             deps_cmdline: "echo 'Ubuntu 24 x86_64, everything pre-installed'"
           }
         - {
+            name: "Ubuntu 24.04 Qt6 x86_64",
+            os: ubuntu-latest,
+            container: "ghcr.io/wohlsoft/wohlsoft-ci-ubuntu2404-qt6:latest",
+            generator: "Ninja",
+            build_type: "Release",
+            upload_directory: "www/ubuntu-24-04/moondust-qt6-amd64/",
+            package_filename_suffix: "ubuntu-24-04",
+
+            extra_options: "-DCMAKE_INSTALL_PREFIX=/usr -DPGE_FORCE_QT5=OFF -DCPACK_DEBIAN_PACKAGE_RELEASE=${GITHUB_RUN_NUMBER}",
+
+            deps_cmdline: "echo 'Ubuntu 24 x86_64, everything pre-installed'"
+          }
+        - {
             name: "Debian 13 Trixie Qt5 x86_64",
             os: ubuntu-latest,
             container: "ghcr.io/wohlsoft/wohlsoft-ci-debian13-qt5:latest",
@@ -47,8 +60,22 @@ jobs:
 
             extra_options: "-DCMAKE_INSTALL_PREFIX=/usr -DPGE_FORCE_QT5=ON -DCPACK_DEBIAN_PACKAGE_RELEASE=${GITHUB_RUN_NUMBER}",
 
-            deps_cmdline: "echo 'Ubuntu 24 x86_64, everything pre-installed'"
+            deps_cmdline: "echo 'Debian 13 x86_64, everything pre-installed'"
           }
+        - {
+            name: "Debian 13 Trixie Qt6 x86_64",
+            os: ubuntu-latest,
+            container: "ghcr.io/wohlsoft/wohlsoft-ci-debian13-qt6:latest",
+            generator: "Ninja",
+            build_type: "Release",
+            upload_directory: "www/debian-13/moondust-qt6-amd64/",
+            package_filename_suffix: "debian-13-trixie",
+
+            extra_options: "-DCMAKE_INSTALL_PREFIX=/usr -DPGE_FORCE_QT5=OFF -DCPACK_DEBIAN_PACKAGE_RELEASE=${GITHUB_RUN_NUMBER}",
+
+            deps_cmdline: "echo 'Debian 13 x86_64, everything pre-installed'"
+          }
+
 
     steps:
     - name: Check for the upload support
