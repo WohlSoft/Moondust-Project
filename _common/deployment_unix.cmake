@@ -63,6 +63,7 @@ if(NOT EMSCRIPTEN)
 
     set(CPACK_DEBIAN_MOONDUSTMAINTAINER_PACKAGE_NAME "moondust-maintainer")
     set(CPACK_DEBIAN_MOONDUSTMAINTAINER_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_VERSION_STRING});moondust-common (= ${PGE_TOOLCHAIN_VERSION_STRING});moondust-tool-gifs2png;moondust-tool-lazyfixtool;moondust-tool-palletefilter;moondust-tool-png2gifs")
+    set(CPACK_DEBIAN_MOONDUSTMAINTAINER_PACKAGE_RECOMMENDS "ffmpeg, sox, libsox-fmt-mp3")
 
     set(CPACK_DEBIAN_MOONDUSTMUSICPLAYER_PACKAGE_NAME "moondust-musplay")
     set(CPACK_DEBIAN_MOONDUSTMUSICPLAYER_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_VERSION_STRING});moondust-common (= ${PGE_TOOLCHAIN_VERSION_STRING})")
