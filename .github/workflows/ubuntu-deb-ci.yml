@@ -35,7 +35,7 @@ jobs:
             extra_options: "-DCMAKE_INSTALL_PREFIX=/usr -DPGE_FORCE_QT5=ON -DCPACK_DEBIAN_PACKAGE_RELEASE=${GITHUB_RUN_NUMBER}",
 
             deps_cmdline: "echo 'Ubuntu 24 x86_64, everything pre-installed'"
-          },
+          }
         - {
             name: "Debian 13 Trixie Qt5 x86_64",
             os: ubuntu-latest,
