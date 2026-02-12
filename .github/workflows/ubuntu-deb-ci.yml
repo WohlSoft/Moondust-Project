@@ -1,0 +1,165 @@
+name: DEB CI
+
+on:
+  push:
+    branches:
+      - master
+      - stable
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: "${{ matrix.config.name }} | ${{ matrix.config.build_type }}"
+    runs-on: ${{ matrix.config.os }}
+    container: ${{ matrix.config.container }}
+    strategy:
+      fail-fast: true
+      matrix:
+        config:
+        - {
+            name: "Ubuntu 24.04 Qt5 x86_64",
+            os: ubuntu-latest,
+            container: "ghcr.io/wohlsoft/wohlsoft-ci-ubuntu2404-qt5:latest",
+            generator: "Ninja",
+            build_type: "Release",
+            upload_directory: "www/ubuntu-24-04/moondust-qt5-amd64/",
+            package_filename_suffix: "ubuntu-24-04",
+
+            extra_options: "-DCMAKE_INSTALL_PREFIX=/usr -DPGE_FORCE_QT5=ON -DCPACK_DEBIAN_PACKAGE_RELEASE=${GITHUB_RUN_NUMBER}",
+
+            deps_cmdline: "echo 'Ubuntu 24 x86_64, everything pre-installed'"
+          },
+        - {
+            name: "Debian 13 Trixie Qt5 x86_64",
+            os: ubuntu-latest,
+            container: "ghcr.io/wohlsoft/wohlsoft-ci-debian13-qt5:latest",
+            generator: "Ninja",
+            build_type: "Release",
+            upload_directory: "www/debian-13/moondust-qt5-amd64/",
+            package_filename_suffix: "debian-13-trixie",
+
+            extra_options: "-DCMAKE_INSTALL_PREFIX=/usr -DPGE_FORCE_QT5=ON -DCPACK_DEBIAN_PACKAGE_RELEASE=${GITHUB_RUN_NUMBER}",
+
+            deps_cmdline: "echo 'Ubuntu 24 x86_64, everything pre-installed'"
+          }
+
+    steps:
+    - name: Check for the upload support
+      id: upload-check
+      shell: bash
+      run: |
+        if [[ "${{ secrets.builds_login }}" != '' && \
+              "${{ secrets.builds_password }}" != '' && \
+              "${{ secrets.builds_host }}" != '' ]]; then
+          echo "available=true" >> $GITHUB_OUTPUT;
+        else
+          echo "available=false" >> $GITHUB_OUTPUT;
+        fi
+
+    - name: Install Dependencies
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.deps_cmdline }}" ]]; then
+          eval ${{ matrix.config.deps_cmdline }}
+        fi
+        g++ --version
+        cmake --version
+
+    - uses: WohlSoft/checkout@v0.1
+
+    - uses: WohlSoft/branch-name@v0.1
+
+    - name: Pull submodules
+      shell: bash
+      run: |
+        git submodule init
+        git submodule update
+
+    - name: Check if a pull request
+      id: event-check
+      shell: bash
+      run: |
+        if [[ "${BRANCH_NAME}" == *"merge"* ]]; then
+          echo "--- This build is a pull-request ---"
+          echo "is_pull_request=true" >> $GITHUB_OUTPUT;
+        else
+          echo "--- This build is a normal branch build ---"
+          echo "is_pull_request=false" >> $GITHUB_OUTPUT;
+        fi
+
+    - name: Configure
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+          export PATH=${{ matrix.config.extra_path }}:${PATH}
+          echo "PATH environment: ${PATH}"
+        fi
+
+        cmake -B build -G "${{ matrix.config.generator }}" -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} -DPGE_INSTALL_UNIX_TREE=ON -DUSE_SYSTEM_LIBC=ON -DUSE_SYSTEM_LIBFREETYPE=ON -DUSE_SYSTEM_LIBPNG=ON -DUSE_SYSTEM_LIBJPEG=ON -DUSE_SYSTEM_SDL2=ON -DPGE_STATIC_SDLMIXER=OFF -DUSE_SHARED_FREEIMAGE=ON ${{ matrix.config.extra_options }} .
+
+    - name: Build
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+          export PATH=${{ matrix.config.extra_path }}:${PATH}
+        fi
+        export MAKEFLAGS=--keep-going
+        cmake --build build --config ${{ matrix.config.build_type }} --parallel 3
+
+    - name: Pack
+      shell: bash
+      id: create_package
+      if: success()
+      run: |
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+          export PATH=${{ matrix.config.extra_path }}:${PATH}
+        fi
+        cd build
+        cpack -G DEB
+        cd _packages
+        rename -v -n 's/(\w+\-\w+_).*(_\w+\d*).deb/\1${{ matrix.config.package_filename_suffix }}-${BRANCH_NAME}\2.deb/' *.deb
+        cd ../..
+
+    - name: Upload artifact
+      if: success()
+      uses: actions/upload-artifact@v4
+      continue-on-error: true
+      with:
+        path: build/_packages/*.deb
+        name: Moondust Project ${{ matrix.config.name }} ${{ matrix.config.build_type }}
+
+    - name: Deploy to builds.wohlsoft.ru
+      if: success() && github.event_name != 'pull_request' && steps.event-check.outputs.is_pull_request == 'false' && steps.upload-check.outputs.available == 'true'
+      shell: bash
+      continue-on-error: true
+      run: |
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+            export PATH=${{ matrix.config.extra_path }}:${PATH}
+        fi
+
+        if [[ "${BRANCH_NAME}" == *"merge"* ]]; then
+            BRANCH_NAME_RES="pull-request"
+            echo "-- Pull-request detected!"
+        else
+            BRANCH_NAME_RES=${BRANCH_NAME}
+        fi
+
+        UPLOAD_LIST="set ssl:verify-certificate no;"
+        for q in ./build/_packages/*.deb; do
+            UPLOAD_LIST="${UPLOAD_LIST} put -O ${{ matrix.config.upload_directory }} $q;"
+        done
+        lftp -e "${UPLOAD_LIST} exit" -u ${{ secrets.builds_login }},${{ secrets.builds_password }} ${{ secrets.builds_host }}
+
+    - name: List Build Directory
+      if: always()
+      shell: bash
+      run: |
+        git status
+        ls -lR build
