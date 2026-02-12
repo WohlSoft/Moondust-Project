@@ -27,7 +27,7 @@
 #include "calibration_main.h"
 #include <ui_calibration_main.h>
 
-#include "main/app_path.h"
+#include <pge_app_path.h>
 
 #include "about/about.h"
 #include "frame_matrix/matrix.h"
@@ -35,7 +35,6 @@
 #include "image_calibration/image_calibrator.h"
 
 #include "main/graphics.h"
-#include "main/app_path.h"
 #include "main/calibration.h"
 #include "main/mouse_scene.h"
 
@@ -1014,7 +1013,7 @@ void CalibrationMain::on_actionResetFrameSettings_triggered()
     if(ret == QDialog::Accepted)
     {
         QFileInfo ourFile(m_currentFile);
-        QString ini_default = ApplicationPath + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
+        QString ini_default = AppPathManager::dataDir() + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
 
         Calibration default_conf;
         loadConfig(default_conf, ini_default);

@@ -71,7 +71,7 @@ int PGE_Audio::init(Uint32 sampleRate,
     Mix_AllocateChannels(int(allocateChannels));
 
     // TODO: Implement an ability to choose a timidity config
-    Mix_SetTimidityCfg(std::string(ApplicationPathSTD + "timidity/").c_str());
+    Mix_SetTimidityCfg(std::string(EnginePathMan::dataDir() + "timidity/").c_str());
 
     // Reset the audio sample count and set the post mix callback
     if(p_audioState.sampleCountMutex == nullptr)

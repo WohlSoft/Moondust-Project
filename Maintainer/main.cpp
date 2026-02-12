@@ -1,7 +1,7 @@
 #include "main_window.h"
 #include <QApplication>
 #include <common_features/logger.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <Utf8Main/utf8main.h>
 
 // Windows available for open

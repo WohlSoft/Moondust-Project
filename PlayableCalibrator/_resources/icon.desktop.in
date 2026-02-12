@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Moondust Player Calibrator
+Name[ru]=Moondust - Калибратор игровых персонажей
+GenericName=Moondust Calibrator
+Comment=A tool to edit and setup settings of playable characters for Moondust Project based games
+Comment[ru]=Утилита для редактирования и настройки игровых персонажей для игр на основе Проекта Moondust
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Icon=@DESKTOP_ICON@
+Exec=@DESKTOP_EXEC@ %F
+X-Purism-FormFactor=Workstation;Mobile;
+Categories=Development;
+StartupWMClass=@DESKTOP_WMCLASS@

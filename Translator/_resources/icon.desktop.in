@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Moondust Translation Editor
+Name[ru]=Moondust - Редактор переводов
+GenericName=Moondust Translator
+Comment=A tool create and edit translations for levels and episodes for Moondust Project
+Comment[ru]=Утилита для создания и редактирования переводов уровней и эпизодов для Проекта Moondust
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Icon=@DESKTOP_ICON@
+Exec=@DESKTOP_EXEC@ %F
+X-Purism-FormFactor=Workstation;Mobile;
+Categories=Development;TextEditor;
+StartupWMClass=@DESKTOP_WMCLASS@

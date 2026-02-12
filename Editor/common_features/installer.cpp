@@ -30,7 +30,7 @@
 
 #include <PGE_File_Formats/file_formats.h>
 
-#include "app_path.h"
+#include <pge_app_path.h>
 #include "installer.h"
 
 Installer::Installer(QObject *parent):
@@ -42,15 +42,16 @@ Installer::~Installer()
 
 void Installer::moveFromAppToUser()
 {
-    if(AppPathManager::userAppDir() == ApplicationPath) return;
+    if(AppPathManager::isPortable())
+        return;
 
-    QDir app(ApplicationPath);
+    QDir app(AppPathManager::dataDir());
     QStringList find;
     find << "pge_editor.ini" << "*counters.ini";
     QStringList files = app.entryList(find);
 
     for(QString &f : files)
-        QFile::copy(ApplicationPath + "/" + f, AppPathManager::userAppDir() + "/" + f);
+        QFile::copy(AppPathManager::dataDir() + "/" + f, AppPathManager::userAppDir() + "/" + f);
     QSettings setup(AppPathManager::settingsFile(), QSettings::IniFormat);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     setup.setIniCodec("UTF-8");
@@ -61,7 +62,7 @@ void Installer::moveFromAppToUser()
     setup.endGroup();
 
     for(QString &f : files)
-        QFile(ApplicationPath + "/" + f).remove();
+        QFile(AppPathManager::dataDir() + "/" + f).remove();
 }
 
 #if defined(__linux__)

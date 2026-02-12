@@ -105,7 +105,7 @@ bool ConfigManager::loadBasics()
     guiset.beginGroup("main");
     {
         data_dirSTD = (guiset.value("application-dir", false).toBool() ?
-                        ApplicationPathSTD : config_dirSTD + "data/");
+                        EnginePathMan::dataDir() : config_dirSTD + "data/");
     }
     guiset.endGroup();
     errorsList.clear();
@@ -135,17 +135,17 @@ bool ConfigManager::loadBasics()
 
     IniProcessing mainset(main_ini);
 
-    std::string customAppPath = ApplicationPathSTD;
+    std::string customAppPath = EnginePathMan::dataDir();
     mainset.beginGroup("main");
     {
         config_name = mainset.value("config_name").toString();
-        customAppPath = mainset.value("application-path", ApplicationPathSTD).toString();
+        customAppPath = mainset.value("application-path", EnginePathMan::dataDir()).toString();
         std::replace(customAppPath.begin(), customAppPath.end(), '\\', '/');
         bool appDir = mainset.value("application-dir", false).toBool();
         data_dirSTD = (appDir ? customAppPath + "/" : config_dirSTD + "data/");
 
-        if(DirMan::exists(ApplicationPathSTD + data_dirSTD)) //Check as relative
-            data_dirSTD = ApplicationPathSTD + data_dirSTD;
+        if(DirMan::exists(EnginePathMan::dataDir() + data_dirSTD)) //Check as relative
+            data_dirSTD = EnginePathMan::dataDir() + data_dirSTD;
         else if(!DirMan::exists(data_dirSTD)) //Check as absolute
         {
             //% "Missing config pack data directory"
@@ -200,7 +200,7 @@ bool ConfigManager::loadBasics()
 
         dirs.worldsProgram = customAppPath + "/" + mainset.value("worlds", config_idSTD + "_worlds").toString() + "/";
 #if !defined(__APPLE__)
-        if(AppPathManager::isPortable())
+        if(EnginePathMan::isPortable())
         {
             if(!DirMan::exists(dirs.worldsProgram)) // Portable program directory is writeable
                 DirMan::mkAbsPath(dirs.worldsProgram);
@@ -208,7 +208,7 @@ bool ConfigManager::loadBasics()
         else // Non-portable directory is read-only
 #endif
         {
-            dirs.worldsUser = AppPathManager::userAppDirSTD() + "/" + mainset.value("worlds", config_idSTD + "_worlds").toString() + "/";
+            dirs.worldsUser = EnginePathMan::userAppDirSTD() + mainset.value("worlds", config_idSTD + "_worlds").toString() + "/";
             if(!DirMan::exists(dirs.worldsUser))
                 DirMan::mkAbsPath(dirs.worldsUser);
         }

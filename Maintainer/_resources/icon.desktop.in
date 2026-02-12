@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Moondust Maintainer
+Name[ru]=Moondust - Инструменты
+GenericName=Moondust Maintainer
+Comment=A set of tool to process/repair resources for the Moondust Project
+Comment[ru]=Набор инструментов для обработки/восстановления ресурсов для Проекта Moondust
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Icon=@DESKTOP_ICON@
+Exec=@DESKTOP_EXEC@ %F
+X-Purism-FormFactor=Workstation;Mobile;
+Categories=Development;Building;
+StartupWMClass=@DESKTOP_WMCLASS@

@@ -3,7 +3,7 @@
 function(InstallTextFile)
     cmake_parse_arguments(_installfile
         ""
-        "FILE;DESTINATION;RENAME"
+        "FILE;DESTINATION;RENAME;COMPONENT"
         ""
         ${ARGN}
     )
@@ -23,7 +23,10 @@ function(InstallTextFile)
             set(UNIX2DOS_LIST "${UNIX2DOS_ELEMENT}" PARENT_SCOPE)
         endif()
     else()
-        install(FILES "${_installfile_FILE}" RENAME "${_installfile_RENAME}" DESTINATION "${_installfile_DESTINATION}")
+        install(FILES "${_installfile_FILE}"
+                RENAME "${_installfile_RENAME}"
+                DESTINATION "${_installfile_DESTINATION}"
+                COMPONENT "${_installfile_COMPONENT}")
     endif()
 endfunction()
 

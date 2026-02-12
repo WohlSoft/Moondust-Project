@@ -20,7 +20,58 @@ include(FindBacktrace)
 include(TestBigEndian)
 include(CheckIncludeFile)
 
+if(APPLE OR ANDROID OR WIN32 OR EMSCRIPTEN)
+    set(PGE_INSTALL_UNIX_TREE_DEFAULT OFF)
+else()
+    set(PGE_INSTALL_UNIX_TREE_DEFAULT ON)
+    # Install .desktop files and PNG icons
+    set(PGE_INSTALL_UNIX_DESKTOP ON)
+endif()
+
+option(PGE_INSTALL_UNIX_TREE "Perform installation using the UNIX-style tree" ${PGE_INSTALL_UNIX_TREE_DEFAULT})
 set(PGE_INSTALL_DIRECTORY "Moondust" CACHE STRING "Name of directory where all binary and data files are will be installed")
+set(DEPENDENCIES_INSTALL_DIR ${CMAKE_BINARY_DIR})
+
+if(PGE_INSTALL_UNIX_TREE)
+    set(PGE_INSTALL_ALLOW_PIE_EXECUTABLES ON)
+    set(PGE_INSTALL_BIN ${CMAKE_INSTALL_BINDIR})
+    set(PGE_INSTALL_LIB ${CMAKE_INSTALL_LIBDIR}/moondust-project)
+    set(PGE_INSTALL_LIBEXEC ${CMAKE_INSTALL_LIBEXECDIR}/moondust-project)
+    set(PGE_INSTALL_DATA ${CMAKE_INSTALL_DATAROOTDIR}/moondust-project)
+    set(PGE_INSTALL_DOCS ${CMAKE_INSTALL_DATAROOTDIR}/moondust-project/docs)
+    set(PGE_INSTALL_LICS ${CMAKE_INSTALL_DATAROOTDIR}/moondust-project/licenses)
+
+    if(NOT CMAKE_INSTALL_RPATH)
+        set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_LIB};../${PGE_INSTALL_LIB};.")
+    endif()
+    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE)
+
+    set(PGE_DEBUG_LIBEXEC "${CMAKE_BINARY_DIR}/${PGE_INSTALL_LIBEXEC}")
+    if(NOT EXISTS ${PGE_DEBUG_LIBEXEC})
+        make_directory(${PGE_DEBUG_LIBEXEC})
+    endif()
+
+    set(PGE_DEBUG_DATA "${CMAKE_BINARY_DIR}/${PGE_INSTALL_DATA}")
+    if(NOT EXISTS ${PGE_DEBUG_DATA})
+        make_directory(${PGE_DEBUG_DATA})
+    endif()
+
+else()
+    set(PGE_INSTALL_BIN ${PGE_INSTALL_DIRECTORY})
+    set(PGE_INSTALL_LIB ${PGE_INSTALL_DIRECTORY})
+    set(PGE_INSTALL_LIBEXEC ${PGE_INSTALL_DIRECTORY})
+    set(PGE_INSTALL_DATA ${PGE_INSTALL_DIRECTORY})
+    set(PGE_INSTALL_DOCS ${PGE_INSTALL_DIRECTORY})
+    set(PGE_INSTALL_LICS ${PGE_INSTALL_DIRECTORY}/licenses)
+
+    if(NOT CMAKE_INSTALL_RPATH)
+        set(CMAKE_INSTALL_RPATH ".")
+    endif()
+    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+    set(PGE_DEBUG_LIBEXEC "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}")
+    set(PGE_DEBUG_DATA "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}")
+endif()
 
 include(_common/git_info.cmake)
 message("== Current GIT hash [${GIT_COMMIT_HASH}], branch [${GIT_BRANCH}], package [${PACKAGE_SUFFIX}] ==")
@@ -106,36 +157,36 @@ option(PGE_BUILD_ENGINE "Build the Runtime Engine component" ON)
 if(PGE_BUILD_ENGINE)
     add_subdirectory(Engine)
     # Append changelog file
-    InstallTextFile(FILE "${Moondust_SOURCE_DIR}/changelog.engine.txt" RENAME "changelog.engine.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+    InstallTextFile(FILE "${Moondust_SOURCE_DIR}/changelog.engine.txt" RENAME "changelog.engine.txt" DESTINATION "${PGE_INSTALL_DOCS}" COMPONENT "MoondustRuntime")
     # Append license files
-    InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Engine/LICENSE.mit" RENAME "pge_engine.license.mit.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
-    InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Engine/LICENSE.gpl3" RENAME "pge_engine.license.gpl3.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
-    InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/Engine.Readme.txt" RENAME "pge_engine.readme.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+    InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Engine/LICENSE.mit" RENAME "pge_engine.license.mit.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustRuntime")
+    InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Engine/LICENSE.gpl3" RENAME "pge_engine.license.gpl3.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustRuntime")
+    InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/Engine.Readme.txt" RENAME "pge_engine.readme.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustRuntime")
 endif()
 
 if(NOT EMSCRIPTEN AND NOT ANDROID)
     option(PGE_BUILD_GIFS2PNG "Build the GIFs2PNG utility component" ON)
     if(PGE_BUILD_GIFS2PNG)
         add_subdirectory(GIFs2PNG)
-        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/GIFs2PNG_Readme.txt" RENAME "GIFs2PNG.readme.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/GIFs2PNG_Readme.txt" RENAME "GIFs2PNG.readme.txt" DESTINATION "${PGE_INSTALL_DOCS}" COMPONENT "MoondustGifs2PNG")
     endif()
 
     option(PGE_BUILD_PNG2GIFS "Build the GIFs2PNG utility component" ON)
     if(PGE_BUILD_PNG2GIFS)
         add_subdirectory(PNG2GIFs)
-        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/PNG2GIFs_Readme.txt" RENAME "PNG2GIFs.readme.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/PNG2GIFs_Readme.txt" RENAME "PNG2GIFs.readme.txt" DESTINATION "${PGE_INSTALL_DOCS}" COMPONENT "MoondustPNG2GIFs")
     endif()
 
     option(PGE_BUILD_LAZYFIXTOOL "Build the LazyFixTool utility component" ON)
     if(PGE_BUILD_LAZYFIXTOOL)
         add_subdirectory(LazyFixTool)
-        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/LazyFixTool_Readme.txt" RENAME "LazyFixTool.readme.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/LazyFixTool_Readme.txt" RENAME "LazyFixTool.readme.txt" DESTINATION "${PGE_INSTALL_DOCS}" COMPONENT "MoondustLazyFixTool")
     endif()
 
     option(PGE_BUILD_PALETTEFILTER "Build the PaletteFilter utility component" ON)
     if(PGE_BUILD_PALETTEFILTER)
         add_subdirectory(PaletteFilter)
-        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/PaletteFilter_Readme.txt" RENAME "PaletteFilter.readme.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/PaletteFilter_Readme.txt" RENAME "PaletteFilter.readme.txt" DESTINATION "${PGE_INSTALL_DOCS}" COMPONENT "MoondustPalleteFilter")
     endif()
 endif()
 
@@ -146,7 +197,7 @@ if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)
     if(PGE_BUILD_EDITOR)
         add_subdirectory(Editor)
         # Append changelog file
-        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/changelog.editor.txt" RENAME "changelog.editor.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/changelog.editor.txt" RENAME "changelog.editor.txt" DESTINATION "${PGE_INSTALL_DOCS}" COMPONENT "MoondustEditor")
         # Deployment list
         qtDeployAdd(pge_editor)
     endif()
@@ -155,7 +206,7 @@ if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)
     if(PGE_BUILD_PLAYERCALIBRATOR)
         add_subdirectory(PlayableCalibrator)
         # Append changelog file
-        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/changelog.calibrator.txt" RENAME "changelog.calibrator.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/changelog.calibrator.txt" RENAME "changelog.calibrator.txt" DESTINATION "${PGE_INSTALL_DOCS}" COMPONENT "MoondustCalibrator")
         # Deployment list
         qtDeployAdd(pge_calibrator)
     endif()
@@ -164,7 +215,7 @@ if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)
     if(PGE_BUILD_MUSICPLAYER)
         add_subdirectory(MusicPlayer)
         # Append changelog file
-        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/changelog.musplay.txt" RENAME "changelog.musplay.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/changelog.musplay.txt" RENAME "changelog.musplay.txt" DESTINATION "${PGE_INSTALL_DOCS}" COMPONENT "MoondustMusicPlayer")
         # Deployment list
         qtDeployAdd(pge_musplay)
     endif()
@@ -185,10 +236,10 @@ if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)
 endif()
 
 # Common changelog file
-InstallTextFile(FILE "${Moondust_SOURCE_DIR}/changelog.common.txt" RENAME "changelog.common.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+InstallTextFile(FILE "${Moondust_SOURCE_DIR}/changelog.common.txt" RENAME "changelog.common.txt" DESTINATION "${PGE_INSTALL_DOCS}" COMPONENT "MoondustCommon")
 
 # Append Project License file
-InstallTextFile(FILE "${Moondust_SOURCE_DIR}/LICENSE" RENAME "LICENSE.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+InstallTextFile(FILE "${Moondust_SOURCE_DIR}/LICENSE" RENAME "LICENSE.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustCommon")
 
 # Process UNIX2DOS if needed
 InstallTextFiles()
@@ -197,3 +248,13 @@ InstallTextFiles()
 include(_common/deployment_macos.cmake)
 include(_common/deployment_unix.cmake)
 include(_common/deployment_windows.cmake)
+
+message(STATUS "==============================================")
+message(STATUS "Install directories:")
+message(STATUS "==============================================")
+message(STATUS "Binary directory  = ${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_BIN}")
+message(STATUS "Library directory = ${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_LIB}")
+message(STATUS "LibEXEC directory = ${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_LIBEXEC}")
+message(STATUS "Data directory    = ${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DATA}")
+message(STATUS "Components to pack: ${CPACK_COMPONENTS_ALL}")
+message(STATUS "==============================================")

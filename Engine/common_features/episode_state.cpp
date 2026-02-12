@@ -322,11 +322,11 @@ void EpisodeState::reset()
 
 static std::string makeGameSavePath(std::string world, std::string saveFile)
 {
-    std::string gameSaveDir = AppPathManager::gameSaveRootDir() + "/"+ Files::basename(Files::dirname(world));
+    std::string gameSaveDir = EnginePathMan::gameSaveRootDir() + Files::basename(Files::dirname(world));
     if(!DirMan::exists(gameSaveDir))
         DirMan::mkAbsPath(gameSaveDir);
 
-    return gameSaveDir + "/"+ Files::basename(world) + "-" + saveFile;
+    return gameSaveDir + "/" + Files::basename(world) + "-" + saveFile;
 }
 
 bool EpisodeState::load()
@@ -371,7 +371,7 @@ bool EpisodeState::save()
     bool ret = FileFormats::WriteExtendedSaveFileF(file, m_gameSave);
     pLogDebug("Game has been saved: %s", file.c_str());
 #ifdef __EMSCRIPTEN__
-    AppPathManager::syncFs();
+    EnginePathMan::syncFs();
 #endif
     return ret;
 }

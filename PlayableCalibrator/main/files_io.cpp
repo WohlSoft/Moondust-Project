@@ -19,10 +19,11 @@
 
 #include <QFileInfo>
 
+#include <pge_app_path.h>
+
 #include "../calibration_main.h"
 #include "ui_calibration_main.h"
 #include "graphics.h"
-#include "app_path.h"
 #include "animator/animator.h"
 #include "../frame_matrix/matrix.h"
 
@@ -50,7 +51,7 @@ void CalibrationMain::openFile(QString fileName)
         return;
     }
 
-    QString ini_default = ApplicationPath + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
+    QString ini_default = AppPathManager::dataDir() + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
     QString ini_custom = ourFile.absoluteDir().path() + "/" + ourFile.baseName() + ".ini";
 
     m_calibrationDefault = Calibration();

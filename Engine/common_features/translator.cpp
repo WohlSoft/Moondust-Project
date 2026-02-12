@@ -106,7 +106,7 @@ void PGE_Translator::init()
     }
 #endif
 
-    m_langPath = AppPathManager::languagesDir();
+    m_langPath = EnginePathMan::languagesDir();
     pLogDebug("Initializing translator in the path: %s", m_langPath.c_str());
     toggleLanguage(defaultLocale, defaultRegion);
     pLogDebug("Locale detected: %s %s", m_currLang.c_str(), m_currRegion.c_str());

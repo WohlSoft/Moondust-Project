@@ -18,7 +18,7 @@
 
 #include <QSettings>
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/util.h>
 #include <main_window/global_settings.h>
 #include <tools/debugger/custom_counter_gui.h>

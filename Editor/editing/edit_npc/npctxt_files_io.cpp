@@ -18,7 +18,7 @@
 
 #include <common_features/main_window_ptr.h>
 #include <common_features/file_keeper.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <main_window/global_settings.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/pge_x.h>

@@ -104,9 +104,12 @@ static void saveCustomState()
 
 std::string  ApplicationPathSTD;
 
-std::string AppPathManager::m_settingsPath;
-std::string AppPathManager::m_userPath;
+bool EnginePathMan::m_isPortable = false;
+std::string EnginePathMan::m_settingsPath;
+std::string EnginePathMan::m_userPath;
+std::string EnginePathMan::m_dataPath;
 
+#define SHARE_DATA_DIR "moondust-project"
 #if defined(__ANDROID__) || defined(__APPLE__) || defined(__HAIKU__)
 #define UserDirName "/PGE Project"
 #else
@@ -131,6 +134,18 @@ Java_ru_wohlsoft_moondust_moondustActivity_setSdCardPath(
     env->ReleaseStringUTFChars(sdcardPath_j, sdcardPath);
 }
 #endif
+
+static void appendSlash(std::string &path)
+{
+#if defined(__EMSCRIPTEN__)
+    // fix emscripten bug of duplicated worlds
+    if(path.empty() || path.back() != '/')
+        path.push_back('/');
+#else
+    if(!path.empty() && path.back() != '/')
+        path.push_back('/');
+#endif
+}
 
 /**
  * @brief Retreive User Home directory with appending of the PGE user data directory
@@ -178,7 +193,7 @@ static std::string getPgeUserDirectory()
 }
 
 
-void AppPathManager::initAppPath()
+void EnginePathMan::initAppPath()
 {
 #ifdef __APPLE__
     {
@@ -215,11 +230,15 @@ void AppPathManager::initAppPath()
     SDL_free(path);
 #endif
 
+    appendSlash(ApplicationPathSTD);
+
 #ifdef __EMSCRIPTEN__
     loadCustomState();
 #endif
 
-    if(isPortable())
+    initIsPortable();
+
+    if(m_isPortable)
         return;
 
     std::string userDirPath = getPgeUserDirectory();
@@ -247,8 +266,9 @@ void AppPathManager::initAppPath()
         }
 #endif
         m_userPath = appDir.absolutePath();
-        m_userPath.push_back('/');
+        appendSlash(m_userPath);
         initSettingsPath();
+        initDataPath();
     }
     else
     {
@@ -258,7 +278,9 @@ void AppPathManager::initAppPath()
     return;
 defaultSettingsPath:
     m_userPath = ApplicationPathSTD;
+    appendSlash(m_userPath);
     initSettingsPath();
+    initDataPath();
 #ifdef __EMSCRIPTEN__
     printf("== App Path is %s\n", ApplicationPathSTD.c_str());
     printf("== User Path is %s\n", m_userPath.c_str());
@@ -266,17 +288,22 @@ defaultSettingsPath:
 #endif
 }
 
-std::string AppPathManager::settingsFileSTD()
+std::string EnginePathMan::settingsFileSTD()
 {
     return m_settingsPath + "pge_engine.ini";
 }
 
-std::string AppPathManager::userAppDirSTD()
+std::string EnginePathMan::userAppDirSTD()
 {
     return m_userPath;
 }
 
-std::string AppPathManager::languagesDir()
+std::string EnginePathMan::dataDir()
+{
+    return m_dataPath;
+}
+
+std::string EnginePathMan::languagesDir()
 {
 #if defined(__APPLE__)
     CFURLRef appUrlRef;
@@ -285,26 +312,30 @@ std::string AppPathManager::languagesDir()
     char temporaryCString[PATH_MAX];
     bzero(temporaryCString, PATH_MAX);
     CFStringGetCString(filePathRef, temporaryCString, PATH_MAX, kCFStringEncodingUTF8);
+
     std::string path = PGE_URLDEC(std::string(temporaryCString));
+
     if(path.compare(0, 7, "file://") == 0)
         path.erase(0, 7);
+
+    appendSlash(path);
     return path;
 #elif defined(__ANDROID__)
-    return "languages";
+    return "languages/";
 #else
-    return ApplicationPathSTD + "languages";
+    return m_dataPath + "languages/";
 #endif
 }
 
-std::string AppPathManager::logsDir()
+std::string EnginePathMan::logsDir()
 {
-    return ApplicationPathSTD + "logs";
+    return m_userPath + "logs/";
 }
 
-std::string AppPathManager::screenshotsDir()
+std::string EnginePathMan::screenshotsDir()
 {
 #ifndef __APPLE__
-    return m_userPath + "screenshots";
+    return m_userPath + "screenshots/";
 #else
     std::string path = m_userPath;
     char *base_path = getScreenCaptureDir();
@@ -313,16 +344,16 @@ std::string AppPathManager::screenshotsDir()
         path = base_path;
         SDL_free(base_path);
     }
-    return path + "/Moondust Game Screenshots";
+    return path + "/Moondust Game Screenshots/";
 #endif
 }
 
-std::string AppPathManager::gameSaveRootDir()
+std::string EnginePathMan::gameSaveRootDir()
 {
-    return m_settingsPath + "gamesaves";
+    return m_settingsPath + "gamesaves/";
 }
 
-void AppPathManager::install()
+void EnginePathMan::install()
 {
     std::string path = getPgeUserDirectory();
 
@@ -334,44 +365,25 @@ void AppPathManager::install()
     }
 }
 
-bool AppPathManager::isPortable()
+bool EnginePathMan::isPortable()
 {
-    if(m_settingsPath.empty())
-        m_settingsPath = ApplicationPathSTD;
-
-    if(m_userPath.empty())
-        m_userPath = ApplicationPathSTD;
-
-    if(!Files::fileExists(settingsFileSTD()))
-        return false;
-
-    bool forcePortable = false;
-
-    IniProcessing checkForPort(settingsFileSTD());
-    checkForPort.beginGroup("Main");
-    forcePortable = checkForPort.value("force-portable", false).toBool();
-    checkForPort.endGroup();
-
-    if(forcePortable)
-        initSettingsPath();
-
-    return forcePortable;
+    return m_isPortable;
 }
 
-bool AppPathManager::userDirIsAvailable()
+bool EnginePathMan::userDirIsAvailable()
 {
-    return (m_userPath != ApplicationPathSTD);
+    return !m_isPortable;
 }
 
 #ifdef __EMSCRIPTEN__
-void AppPathManager::syncFs()
+void EnginePathMan::syncFs()
 {
     saveCustomState();
 }
 #endif
 
 
-void AppPathManager::initSettingsPath()
+void EnginePathMan::initSettingsPath()
 {
     m_settingsPath = m_userPath + "settings/";
 
@@ -384,4 +396,54 @@ void AppPathManager::initSettingsPath()
     // Also make the gamesaves root folder to be exist
     if(!DirMan::exists(gameSaveRootDir()))
         DirMan::mkAbsPath(gameSaveRootDir());
+
+    appendSlash(m_settingsPath);
+}
+
+void EnginePathMan::initDataPath()
+{
+#ifndef __APPLE__
+    m_dataPath = ApplicationPathSTD;
+    std::string dataPath = ApplicationPathSTD + "../share/" + SHARE_DATA_DIR;
+
+    if(!DirMan::exists(ApplicationPathSTD + "../share/"))
+        return;
+
+    if(DirMan::exists(dataPath))
+        m_dataPath = dataPath;
+
+    appendSlash(m_dataPath);
+
+#else
+    m_dataPath = ApplicationPathSTD;
+#endif
+}
+
+void EnginePathMan::initIsPortable()
+{
+    m_isPortable = false;
+
+    if(m_settingsPath.empty())
+        m_settingsPath = ApplicationPathSTD;
+
+    if(m_userPath.empty())
+        m_userPath = ApplicationPathSTD;
+
+    if(m_dataPath.empty())
+        m_dataPath = ApplicationPathSTD;
+
+    if(!Files::fileExists(settingsFileSTD()))
+        return;
+
+    bool forcePortable = false;
+
+    IniProcessing checkForPort(settingsFileSTD());
+    checkForPort.beginGroup("Main");
+    forcePortable = checkForPort.value("force-portable", false).toBool();
+    checkForPort.endGroup();
+
+    if(forcePortable)
+        initSettingsPath();
+
+    m_isPortable = forcePortable;
 }

@@ -12,9 +12,6 @@ set(CMAKE_AUTOMOC ON)
 # to always look for includes there:
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_INSTALL_RPATH ".")
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
@@ -215,9 +212,41 @@ target_link_libraries(pge_musplay
     ${PGE_MUSPLAY_LINK_LIBS}
 )
 
-pge_set_nopie(pge_musplay)
+if(NOT PGE_INSTALL_ALLOW_PIE_EXECUTABLES)
+    pge_set_nopie(pge_musplay)
+endif()
+
+if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
+    # application launcher
+    if(NOT EXISTS "${CMAKE_BINARY_DIR}/share/applications")
+        file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/share/applications")
+    endif()
+
+    set(PGE_COMPONENT_EXECUTABLE_NAME "pge_musplay")
+    set(DESKTOP_EXEC ${PGE_COMPONENT_EXECUTABLE_NAME})
+    set(DESKTOP_ICON ${PGE_COMPONENT_EXECUTABLE_NAME})
+    set(DESKTOP_WMCLASS ${PGE_COMPONENT_EXECUTABLE_NAME})
+
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon.desktop.in"
+                   "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop")
+    install(FILES "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop"
+            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications
+            COMPONENT "MoondustMusicPlayer")
+
+    # application icons
+    set(PGE_DESKTOP_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/_resources/cat_musplay")
+
+    foreach(FOR_ICON_SIZE 16;32;48;256)
+        install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_musplay_${FOR_ICON_SIZE}x${FOR_ICON_SIZE}.png"
+                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/${FOR_ICON_SIZE}x${FOR_ICON_SIZE}/apps/"
+                RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png"
+                COMPONENT "MoondustMusicPlayer")
+    endforeach()
+endif()
 
 install(TARGETS ${PGE_MUSPLAY_INSTALLS}
-    RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}"
-    BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}"
+    COMPONENT "MoondustMusicPlayer"
+    RUNTIME DESTINATION "${PGE_INSTALL_BIN}"
+    BUNDLE DESTINATION "${PGE_INSTALL_BIN}"
 )
+

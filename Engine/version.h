@@ -18,7 +18,8 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 
-#include "../pge_version.h" //Global Project version file
+//Global Project version file
+#include "../pge_version.h" // IWYU pragma: export
 
 #ifndef ENGINE_VERSION_H
 #define ENGINE_VERSION_H

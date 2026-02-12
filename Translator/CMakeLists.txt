@@ -12,9 +12,6 @@ set(CMAKE_AUTOMOC ON)
 # to always look for includes there:
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_INSTALL_RPATH ".")
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
@@ -32,6 +29,13 @@ include(../_common/build_props.cmake)
 include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
+
+set(PGE_APP_PATH_MODULE_NAME "Moondust Calibrator")
+set(PGE_APP_PATH_SETUP_FILE_NAME "pge_translator.ini")
+set(PGE_APP_PATH_VERSION_HEADER "../../Translator/version.h")
+set(PGE_APP_PATH_HAS_THEMES FALSE)
+set(PGE_APP_PATH_TARGET_SUFFIX Translator)
+include(../_common/qt-modules/app_path_qt/app_path.cmake)
 
 include(../_common/translator-qt/translator.cmake)
 include(../_common/qt-modules/compat/pge_qt_compat.cmake)
@@ -54,7 +58,7 @@ endif()
 
 # =============== Translations ===============
 set(_LANGAUGES_TEMP_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/languages")
-set(PGE_LANG_OUTPUT_DIR "${CMAKE_BINARY_DIR}/bin/languages")
+set(PGE_LANG_OUTPUT_DIR "${PGE_DEBUG_DATA}/languages")
 
 file(GLOB PGE_LANG_SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.ts")
 
@@ -64,7 +68,7 @@ pge_qt_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
 add_custom_target(translator_translations DEPENDS ${PGE_LANG_BIN_FILES})
 
 if(NOT APPLE AND NOT EMSCRIPTEN)
-    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
+    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DATA}/languages" COMPONENT "MoondustTranslator")
 endif()
 # ===========================================
 
@@ -110,7 +114,6 @@ list(APPEND PGE_TRANSLATOR_SRCS
     translator_main.h translator_main.cpp
     translate_field.h translate_field.cpp
     dialogue_item.h dialogue_item.cpp
-    common_features/app_path.h common_features/app_path.cpp
     common_features/logger.h common_features/logger_sets.h common_features/logger.cpp
     common_features/growing_text_edit.h common_features/growing_text_edit.cpp
     ${UTF8MAIN_SRCS}
@@ -199,7 +202,7 @@ list(APPEND PGE_TRANSLATOR_INSTALLS
     pge_translator
 )
 
-list(APPEND PGE_TRANSLATOR_LINK_LIBS PGE_Translator_QtLibs)
+list(APPEND PGE_TRANSLATOR_LINK_LIBS PGE_AppPathTranslatorQt PGE_Translator_QtLibs)
 
 if(WIN32)
     list(APPEND PGE_TRANSLATOR_LINK_LIBS
@@ -256,9 +259,40 @@ if(ENABLE_ADDRESS_SANITIZER)
     target_link_options(pge_translator PRIVATE -fsanitize=address)
 endif()
 
-pge_set_nopie(pge_translator)
+if(NOT PGE_INSTALL_ALLOW_PIE_EXECUTABLES)
+    pge_set_nopie(pge_translator)
+endif()
+
+if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
+    # application launcher
+    if(NOT EXISTS "${CMAKE_BINARY_DIR}/share/applications")
+        file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/share/applications")
+    endif()
+
+    set(PGE_COMPONENT_EXECUTABLE_NAME "pge_translator")
+    set(DESKTOP_EXEC ${PGE_COMPONENT_EXECUTABLE_NAME})
+    set(DESKTOP_ICON ${PGE_COMPONENT_EXECUTABLE_NAME})
+    set(DESKTOP_WMCLASS ${PGE_COMPONENT_EXECUTABLE_NAME})
+
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon.desktop.in"
+                   "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop")
+    install(FILES "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop"
+            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications
+            COMPONENT "MoondustTranslator")
+
+    # application icons
+    set(PGE_DESKTOP_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon")
+
+    foreach(FOR_ICON_SIZE 16;32;48;256)
+        install(FILES "${PGE_DESKTOP_ICON_PATH}/translator${FOR_ICON_SIZE}.png"
+                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/${FOR_ICON_SIZE}x${FOR_ICON_SIZE}/apps/"
+                RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png"
+                COMPONENT "MoondustTranslator")
+    endforeach()
+endif()
 
 install(TARGETS ${PGE_TRANSLATOR_INSTALLS}
-    RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}"
-    BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}"
+    COMPONENT "MoondustTranslator"
+    RUNTIME DESTINATION "${PGE_INSTALL_BIN}"
+    BUNDLE DESTINATION "${PGE_INSTALL_BIN}"
 )

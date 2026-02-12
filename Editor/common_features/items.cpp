@@ -22,9 +22,10 @@
 #include <Utils/maths.h>
 
 #include <main_window/dock/item_tooltip_make.hpp>
+#include <pge_app_path.h>
 
 #include "items.h"
-#include "app_path.h"
+
 
 void Items::getItemGFX(const obj_npc *inObj, QPixmap &outImg, bool whole, QSize targetSize)
 {

@@ -21,7 +21,7 @@
 #include <QFile>
 #include <QDir>
 #include <QFileDialog>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <mainwindow.h>
 
 #include "qfile_dialogs_default_options.hpp"
@@ -62,7 +62,7 @@ QString PGE_JS_File::configSettingFile()
 
 QString PGE_JS_File::appPath()
 {
-    return ApplicationPath;
+    return AppPathManager::dataDir();
 }
 
 QString PGE_JS_File::getOpenFilePath(QString caption, QString dir, QString filter)

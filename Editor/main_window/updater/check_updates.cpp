@@ -22,8 +22,8 @@
 #include <QFile>
 #include <pge_qt_compat.h>
 
-#include <version.h>
-#include <common_features/app_path.h>
+#include "../version.h"
+#include <pge_app_path.h>
 #include <common_features/version_cmp.h>
 
 #include <QDateTime>

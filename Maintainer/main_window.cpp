@@ -8,7 +8,7 @@
 #include <Graphics/palette_filter.h>
 #include <EpisodeCvt/episode_converter.h>
 #include <EpisodeCvt/case_fixer.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <QMessageBox>
 
 void MaintainerMain::showWIP()

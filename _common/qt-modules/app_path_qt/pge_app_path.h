@@ -54,6 +54,20 @@ public:
     static QString userAppDir();
 
     /**
+     * @brief Default read-only path to hold general data files for Moondust aplications
+     * @return Path to read-only data path
+     *
+     * There are files such as translations, helper resources, and other stuff. On some platforms it might match to the application path.
+     */
+    static QString dataDir();
+
+    /**
+     * @brief Directory that contains utility executables used by the devkit directly
+     * @return Path to the libexec directory
+     */
+    static QString libExecDir();
+
+    /**
      * @brief Path to UI translation files
      * @return Path to UI translation files
      */
@@ -83,9 +97,17 @@ private:
      * @brief Makes settings path if not exists
      */
     static void initSettingsPath();
+    static void initDataPath();
+    static void initLibExecPath();
+    static void initIsPortable();
+
+    static bool m_isPortable;
     //! Full path to settings INI file
     static QString m_settingsPath;
     static QString m_userPath;
+    //! Path to read-only resources directory (on UNIX-like systems it might appear around the /usr/share/moondust-project/ directory)
+    static QString m_dataPath;
+    static QString m_libExecPath;
 };
 
 #endif // APP_PATH_H

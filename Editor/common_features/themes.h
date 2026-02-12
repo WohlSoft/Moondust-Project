@@ -31,7 +31,7 @@
 #include <QSettings>
 #include <QPalette>
 
-#include "app_path.h"
+#include <pge_app_path.h>
 
 
 class Themes

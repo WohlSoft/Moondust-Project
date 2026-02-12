@@ -27,7 +27,7 @@
 #include <QSysInfo>
 #endif
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/installer.h>
 #include <common_features/logger_sets.h>
 #include <common_features/logger.h>
