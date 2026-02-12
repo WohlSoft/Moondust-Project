@@ -93,7 +93,7 @@ pge_qt_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
 add_custom_target(calibrator_translations DEPENDS ${PGE_LANG_BIN_FILES})
 
 if(NOT APPLE AND NOT EMSCRIPTEN)
-    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DATA}/languages")
+    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DATA}/languages" COMPONENT "MoondustCalibrator")
 endif()
 # ===========================================
 
@@ -214,7 +214,9 @@ list(APPEND PGE_CALIBRATOR_LINK_LIBS
     PGE_FreeImage
 )
 
-pge_set_nopie(pge_calibrator)
+if(NOT PGE_INSTALL_ALLOW_PIE_EXECUTABLES)
+    pge_set_nopie(pge_calibrator)
+endif()
 
 if(WIN32)
     list(APPEND PGE_CALIBRATOR_LINK_LIBS
@@ -283,24 +285,24 @@ if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
     configure_file("${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon.desktop.in"
                    "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop")
     install(FILES "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop"
-            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications)
+            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications
+            COMPONENT "MoondustCalibrator")
 
     # application icons
     set(PGE_DESKTOP_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon")
 
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/calibrator_16.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/16x16/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/calibrator_32.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/32x32/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/calibrator_48.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/48x48/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/calibrator_256.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/256x256/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+    foreach(FOR_ICON_SIZE 16;32;48;256)
+        install(FILES "${PGE_DESKTOP_ICON_PATH}/calibrator_${FOR_ICON_SIZE}.png"
+                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/${FOR_ICON_SIZE}x${FOR_ICON_SIZE}/apps/"
+                RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png"
+                COMPONENT "MoondustCalibrator")
+    endforeach()
 endif()
 
 install(TARGETS ${PGE_CALIBRATOR_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_BIN}"
     BUNDLE DESTINATION "${PGE_INSTALL_BIN}"
+    COMPONENT "MoondustCalibrator"
 )
 
 # Calibrator's default properties
@@ -309,4 +311,5 @@ file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/calibrator" DESTINATION "${PGE
 # Calibrator's stuff
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/calibrator"
     DESTINATION "${PGE_INSTALL_DATA}"
+    COMPONENT "MoondustCalibrator"
 )

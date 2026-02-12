@@ -101,6 +101,7 @@ function(pgeSetupQtDeploymet _is_static_qt _is_shared_mixer)
         install(FILES
             ${MINGW_DLLS}
             DESTINATION "${PGE_INSTALL_BIN}/"
+            COMPONENT "MoondustLibs"
         )
 #        file(COPY ${MINGW_DLLS} DESTINATION "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/")
         add_custom_target(copy_mingw_dlls DEPENDS pge_windeploy)

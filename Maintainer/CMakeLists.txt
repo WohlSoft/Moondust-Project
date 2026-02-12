@@ -94,7 +94,7 @@ pge_qt_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
 add_custom_target(maintainer_translations DEPENDS ${PGE_LANG_BIN_FILES})
 
 if(NOT APPLE AND NOT EMSCRIPTEN)
-    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DATA}/languages")
+    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DATA}/languages" COMPONENT "MoondustMaintainer")
 endif()
 # ===========================================
 
@@ -293,7 +293,9 @@ target_link_libraries(pge_maintainer
     ${PGE_MAINTAINER_LINK_LIBS}
 )
 
-pge_set_nopie(pge_maintainer)
+if(NOT PGE_INSTALL_ALLOW_PIE_EXECUTABLES)
+    pge_set_nopie(pge_maintainer)
+endif()
 
 if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
     # application launcher
@@ -309,22 +311,22 @@ if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
     configure_file("${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon.desktop.in"
                    "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop")
     install(FILES "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop"
-            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications)
+            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications
+            COMPONENT "MoondustMaintainer")
 
     # application icons
     set(PGE_DESKTOP_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon")
 
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/maintainer16.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/16x16/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/maintainer32.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/32x32/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/maintainer48.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/48x48/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/maintainer256.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/256x256/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+    foreach(FOR_ICON_SIZE 16;32;48;256)
+        install(FILES "${PGE_DESKTOP_ICON_PATH}/maintainer${FOR_ICON_SIZE}.png"
+                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/${FOR_ICON_SIZE}x${FOR_ICON_SIZE}/apps/"
+                RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png"
+                COMPONENT "MoondustMaintainer")
+    endforeach()
 endif()
 
 install(TARGETS ${PGE_MAINTAINER_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_BIN}"
     BUNDLE DESTINATION "${PGE_INSTALL_BIN}"
+    COMPONENT "MoondustMaintainer"
 )

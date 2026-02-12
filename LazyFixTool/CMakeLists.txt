@@ -107,8 +107,11 @@ target_link_libraries(LazyFixTool
     ${LazyFixTool_LINK_LIBS}
 )
 
-pge_set_nopie(LazyFixTool)
+if(NOT PGE_INSTALL_ALLOW_PIE_EXECUTABLES)
+    pge_set_nopie(LazyFixTool)
+endif()
 
 install(TARGETS ${LazyFixTool_INSTALLS}
         RUNTIME DESTINATION "${PGE_INSTALL_BIN}/"
+        COMPONENT "MoondustLazyFixTool"
 )

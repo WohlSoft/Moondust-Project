@@ -68,7 +68,7 @@ pge_qt_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
 add_custom_target(translator_translations DEPENDS ${PGE_LANG_BIN_FILES})
 
 if(NOT APPLE AND NOT EMSCRIPTEN)
-    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DATA}/languages")
+    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DATA}/languages" COMPONENT "MoondustTranslator")
 endif()
 # ===========================================
 
@@ -259,7 +259,9 @@ if(ENABLE_ADDRESS_SANITIZER)
     target_link_options(pge_translator PRIVATE -fsanitize=address)
 endif()
 
-pge_set_nopie(pge_translator)
+if(NOT PGE_INSTALL_ALLOW_PIE_EXECUTABLES)
+    pge_set_nopie(pge_translator)
+endif()
 
 if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
     # application launcher
@@ -275,22 +277,22 @@ if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
     configure_file("${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon.desktop.in"
                    "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop")
     install(FILES "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop"
-            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications)
+            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications
+            COMPONENT "MoondustTranslator")
 
     # application icons
     set(PGE_DESKTOP_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon")
 
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/translator16.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/16x16/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/translator32.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/32x32/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/translator48.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/48x48/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/translator256.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/256x256/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+    foreach(FOR_ICON_SIZE 16;32;48;256)
+        install(FILES "${PGE_DESKTOP_ICON_PATH}/translator${FOR_ICON_SIZE}.png"
+                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/${FOR_ICON_SIZE}x${FOR_ICON_SIZE}/apps/"
+                RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png"
+                COMPONENT "MoondustTranslator")
+    endforeach()
 endif()
 
 install(TARGETS ${PGE_TRANSLATOR_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_BIN}"
     BUNDLE DESTINATION "${PGE_INSTALL_BIN}"
+    COMPONENT "MoondustTranslator"
 )

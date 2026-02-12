@@ -107,8 +107,11 @@ target_link_libraries(PNG2GIFs
     ${PNG2GIFs_LINK_LIBS}
 )
 
-pge_set_nopie(PNG2GIFs)
+if(NOT PGE_INSTALL_ALLOW_PIE_EXECUTABLES)
+    pge_set_nopie(PNG2GIFs)
+endif()
 
 install(TARGETS ${PNG2GIFs_INSTALLS}
         RUNTIME DESTINATION "${PGE_INSTALL_BIN}/"
+        COMPONENT "MoondustPNG2GIFs"
 )

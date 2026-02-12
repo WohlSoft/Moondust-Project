@@ -57,5 +57,9 @@ target_link_libraries(PGE_FreeImage INTERFACE
 )
 
 if(USE_SHARED_FREEIMAGE AND NOT WIN32)
-    install(FILES ${libFreeImage_Libs} DESTINATION ${PGE_INSTALL_LIB})
+    install(FILES ${libFreeImage_Libs} DESTINATION ${PGE_INSTALL_LIB} COMPONENT "MoondustLibs")
 endif()
+
+# https://freeimage.sourceforge.io/license.html There are three licenses, and one of them can be choosen: GPLv2, GPLv3, and FIPL
+# Append licenses of libraries (In the scope of THIS project, use FreeImage under GNU GPLv3)
+InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/FreeImage/license-gplv3.txt" RENAME "License.FreeImageLite.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")

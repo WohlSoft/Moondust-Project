@@ -129,7 +129,7 @@ pge_qt_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
 add_custom_target(editor_translations ALL DEPENDS ${PGE_LANG_BIN_FILES})
 
 if(NOT APPLE AND NOT EMSCRIPTEN)
-    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DATA}/languages")
+    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DATA}/languages" COMPONENT "MoondustEditor")
 endif()
 # ===========================================
 
@@ -639,6 +639,7 @@ if(NOT HAIKU)
     else()
         install(FILES "${38A_IPC_BRIDGE_BIN}"
             DESTINATION "${PGE_INSTALL_LIBEXEC}/ipc"
+            COMPONENT "MoondustEditor"
         )
     endif()
 
@@ -661,6 +662,7 @@ if(NOT HAIKU)
     else()
         install(FILES "${LUNATESTER_BRIDGE_BIN}"
             DESTINATION "${PGE_INSTALL_LIBEXEC}/ipc"
+            COMPONENT "MoondustEditor"
         )
     endif()
 
@@ -683,6 +685,7 @@ if(NOT HAIKU)
         else()
             install(FILES "${LUNA_HWND_SHOW_BRIDGE_BIN}"
                 DESTINATION "${PGE_INSTALL_LIBEXEC}/ipc"
+                COMPONENT "MoondustEditor"
             )
         endif()
     endif()
@@ -824,7 +827,9 @@ target_link_libraries(pge_editor PUBLIC
     ${PGE_EDITOR_LINK_LIBS}
 )
 
-pge_set_nopie(pge_editor)
+if(NOT PGE_INSTALL_ALLOW_PIE_EXECUTABLES)
+    pge_set_nopie(pge_editor)
+endif()
 
 if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
     # application launcher
@@ -840,21 +845,18 @@ if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
     configure_file("${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon.desktop.in"
                    "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop")
     install(FILES "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop"
-            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications)
+            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications
+            COMPONENT "MoondustEditor")
 
     # application icons
     set(PGE_DESKTOP_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/_resources/appicon")
 
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_builder_16.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/16x16/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_builder_32.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/32x32/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_builder_48.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/48x48/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_builder_128.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/128x128/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
-    install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_builder_256.png"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/256x256/apps/" RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png")
+    foreach(FOR_ICON_SIZE 16;32;48;128;256)
+        install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_builder_${FOR_ICON_SIZE}.png"
+                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/${FOR_ICON_SIZE}x${FOR_ICON_SIZE}/apps/"
+                RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png"
+                COMPONENT "MoondustEditor")
+    endforeach()
 
     # File Assocs
     if(NOT EXISTS "${CMAKE_BINARY_DIR}/share/mime/packages")
@@ -862,17 +864,17 @@ if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
     endif()
 
     install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/_resources/mime-moondust.xml"
-            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/mime/packages" RENAME "moondust-files.xml")
+            DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/mime/packages"
+            RENAME "moondust-files.xml"
+            COMPONENT "MoondustEditor")
 
     macro(xCopyFileIcon ICONPATH FILEBASE MIMETYPE)
-        install(FILES "${ICONPATH}/${FILEBASE}_16.png"
-                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/16x16/mimetypes/" RENAME "${MIMETYPE}.png")
-        install(FILES "${ICONPATH}/${FILEBASE}_32.png"
-                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/32x32/mimetypes/" RENAME "${MIMETYPE}.png")
-        install(FILES "${ICONPATH}/${FILEBASE}_48.png"
-                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/48x48/mimetypes/" RENAME "${MIMETYPE}.png")
-        install(FILES "${ICONPATH}/${FILEBASE}_256.png"
-                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/256x256/mimetypes/" RENAME "${MIMETYPE}.png")
+        foreach(FOR_ICON_SIZE 16;32;48;256)
+            install(FILES "${ICONPATH}/${FILEBASE}_${FOR_ICON_SIZE}.png"
+                    DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/${FOR_ICON_SIZE}x${FOR_ICON_SIZE}/mimetypes/"
+                    RENAME "${MIMETYPE}.png"
+                    COMPONENT "MoondustEditor")
+        endforeach()
     endmacro()
 
     xCopyFileIcon("${CMAKE_CURRENT_SOURCE_DIR}/_resources/files/lvl" "file_lvl" "x-application-smbx64-level")
@@ -889,6 +891,7 @@ install(TARGETS ${PGE_EDITOR_INSTALLS}
 # Editor themes
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/themes"
     DESTINATION "${PGE_INSTALL_DATA}"
+    COMPONENT "MoondustEditorThemes"
     PATTERN "*.zip" EXCLUDE
     PATTERN "*.xcf" EXCLUDE
     PATTERN "test" EXCLUDE
@@ -898,6 +901,7 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/themes"
 # Standalone help
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/help"
     DESTINATION "${PGE_INSTALL_DOCS}"
+    COMPONENT "MoondustDocs"
     PATTERN ".git" EXCLUDE
     PATTERN ".pdn" EXCLUDE
     PATTERN ".xcf" EXCLUDE

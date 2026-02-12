@@ -107,8 +107,11 @@ target_link_libraries(PaletteFilter
     ${PaletteFilter_LINK_LIBS}
 )
 
-pge_set_nopie(PaletteFilter)
+if(NOT PGE_INSTALL_ALLOW_PIE_EXECUTABLES)
+    pge_set_nopie(PaletteFilter)
+endif()
 
 install(TARGETS ${PaletteFilter_INSTALLS}
         RUNTIME DESTINATION "${PGE_INSTALL_BIN}/"
+        COMPONENT "MoondustPalleteFilter"
 )
