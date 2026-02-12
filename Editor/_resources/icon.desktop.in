@@ -9,7 +9,7 @@ Version=1.0
 Type=Application
 Terminal=false
 Icon=@DESKTOP_ICON@
-Exec=@DESKTOP_EXEC@ @F
+Exec=@DESKTOP_EXEC@ %F
 X-Purism-FormFactor=Workstation;Mobile;
 Categories=Development;IDE;Building;
 StartupWMClass=@DESKTOP_WMCLASS@
@@ -19,4 +19,4 @@ MimeType=text/x-pgex-level;text/x-pgex-world;text/x-smbx64-level;text/x-smbx64-w
 [Desktop Action ForceRun]
 Name=Start the second copy of Editor
 Name[ru]=Запустить вторую копию редактора
-Exec=@DESKTOP_EXEC@ --force-run @F
+Exec=@DESKTOP_EXEC@ --force-run %F

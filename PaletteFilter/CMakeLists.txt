@@ -112,6 +112,7 @@ if(NOT PGE_INSTALL_ALLOW_PIE_EXECUTABLES)
 endif()
 
 install(TARGETS ${PaletteFilter_INSTALLS}
-        RUNTIME DESTINATION "${PGE_INSTALL_BIN}/"
-        COMPONENT "MoondustPalleteFilter"
+    COMPONENT "MoondustPalleteFilter"
+    RUNTIME DESTINATION "${PGE_INSTALL_BIN}/"
 )
+

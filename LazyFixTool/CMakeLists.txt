@@ -112,6 +112,6 @@ if(NOT PGE_INSTALL_ALLOW_PIE_EXECUTABLES)
 endif()
 
 install(TARGETS ${LazyFixTool_INSTALLS}
-        RUNTIME DESTINATION "${PGE_INSTALL_BIN}/"
-        COMPONENT "MoondustLazyFixTool"
+    COMPONENT "MoondustLazyFixTool"
+    RUNTIME DESTINATION "${PGE_INSTALL_BIN}/"
 )

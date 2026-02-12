@@ -300,9 +300,9 @@ if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
 endif()
 
 install(TARGETS ${PGE_CALIBRATOR_INSTALLS}
+    COMPONENT "MoondustCalibrator"
     RUNTIME DESTINATION "${PGE_INSTALL_BIN}"
     BUNDLE DESTINATION "${PGE_INSTALL_BIN}"
-    COMPONENT "MoondustCalibrator"
 )
 
 # Calibrator's default properties
