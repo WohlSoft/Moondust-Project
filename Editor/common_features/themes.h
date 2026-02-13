@@ -197,6 +197,8 @@ public:
         section_21_selected,
         section_21_default,
 
+        section_init_new_sign,
+
         blocks_free,
         blocks_locked,
         bgo_free,
@@ -243,6 +245,7 @@ public:
 
     static QIcon icon(Icons icn);
     static QPixmap Image(Images img);
+    static QPixmap ImageCombiRB(Images img, Images overlay, QSize minSize = QSize(24, 24));
     static int Integer(Images intval);
     static QCursor Cursor(Images intval);
 

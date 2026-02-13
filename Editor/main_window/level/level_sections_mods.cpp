@@ -366,6 +366,8 @@ void MainWindow::deleteLevelSection(LevelEdit *edit, int section, long margin)
     edit->scene->ChangeSectionBG(0, section);
     edit->scene->drawSpace();
     edit->LvlData.meta.modified = true;
+
+    applyThemeSectionUnused(section);
 }
 
 

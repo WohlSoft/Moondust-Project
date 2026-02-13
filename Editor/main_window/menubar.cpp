@@ -117,6 +117,9 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
 
     GlobalSettings::lastWinType =   winType;
 
+    // Set default section icons
+    applyThemeSections();
+
     if(winType == WND_Level)
     {
         emit setSMBX64Strict(lvlWin->LvlData.meta.smbx64strict);
@@ -155,7 +158,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
 
         if(lvlWin->sceneCreated)
         {
-            LvlScene * scn = lvlWin->scene;
+            LvlScene *scn = lvlWin->scene;
             ui->actionLockBlocks->setChecked(scn->m_lockBlock);
             ui->actionLockBGO->setChecked(scn->m_lockBgo);
             ui->actionLockNPC->setChecked(scn->m_lockNpc);
@@ -174,8 +177,9 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
 
             scn->Debugger_updateItemList();
         }
-        ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
-        ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
+
+        ui->actionAnimation->setChecked(GlobalSettings::LvlOpts.animationEnabled);
+        ui->actionCollisions->setChecked(GlobalSettings::LvlOpts.collisionsEnabled);
     }
     else
     if(winType==WND_World)

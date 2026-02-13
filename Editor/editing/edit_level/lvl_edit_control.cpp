@@ -237,9 +237,12 @@ void LevelEdit::setCurrentSection(int scId)
                         qRound(qreal(ui->graphicsView->horizontalScrollBar()->value()) / zoom),
                         qRound(qreal(ui->graphicsView->verticalScrollBar()->value()) / zoom)
                     );
+
+    LevelSection &oldSection = LvlData.sections[LvlData.CurSection];
+
     //Save currentPosition on Section
-    LvlData.sections[LvlData.CurSection].PositionX = target.x();
-    LvlData.sections[LvlData.CurSection].PositionY = target.y();
+    oldSection.PositionX = target.x();
+    oldSection.PositionY = target.y();
 
     //Change Current Section
     while(LvlData.sections.size() <= scId)
@@ -251,13 +254,11 @@ void LevelEdit::setCurrentSection(int scId)
 
     LvlData.CurSection = scId;
 
+    LevelSection &newSection = LvlData.sections[LvlData.CurSection];
+
     //allocate new section zone if empty
-    if(
-        (LvlData.sections[LvlData.CurSection].size_left == 0) &&
-        (LvlData.sections[LvlData.CurSection].size_top == 0) &&
-        (LvlData.sections[LvlData.CurSection].size_bottom == 0) &&
-        (LvlData.sections[LvlData.CurSection].size_right == 0)
-    )
+    if((newSection.size_left == 0) && (newSection.size_top == 0) &&
+       (newSection.size_bottom == 0) && (newSection.size_right == 0))
     {
         scene->InitSection(LvlData.CurSection);
         sIsNew = true;
@@ -270,14 +271,10 @@ void LevelEdit::setCurrentSection(int scId)
     if(sIsNew)
     {
         ui->graphicsView->centerOn(center);
-        goTo(LvlData.sections[LvlData.CurSection].size_left,
-             LvlData.sections[LvlData.CurSection].size_top);
+        goTo(newSection.size_left, newSection.size_top);
     }
     else
-    {
-        goTo(LvlData.sections[LvlData.CurSection].PositionX,
-             LvlData.sections[LvlData.CurSection].PositionY);
-    }
+        goTo(newSection.PositionX, newSection.PositionY);
 
     LogDebug(QString("Call to Draw intersection space"));
     scene->update();
@@ -285,7 +282,10 @@ void LevelEdit::setCurrentSection(int scId)
     update();
 
     if(sIsNew)
+    {
         m_mw->on_actionGotoLeftBottom_triggered();
+        m_mw->applyThemeSectionResetIcon(LvlData.CurSection);
+    }
 }
 
 int LevelEdit::getCurrentSection()

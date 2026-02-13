@@ -118,27 +118,35 @@ void MainWindow::setUiDefults()
     tabifyDockWidget(dock_LvlItemBox, dock_WldItemBox);
     tabifyDockWidget(dock_WldItemBox, dock_WldMusicBoxes);
 
-    m_sectionButtons[0] = ui->actionSection_1;
-    m_sectionButtons[1] = ui->actionSection_2;
-    m_sectionButtons[2] = ui->actionSection_3;
-    m_sectionButtons[3] = ui->actionSection_4;
-    m_sectionButtons[4] = ui->actionSection_5;
-    m_sectionButtons[5] = ui->actionSection_6;
-    m_sectionButtons[6] = ui->actionSection_7;
-    m_sectionButtons[7] = ui->actionSection_8;
-    m_sectionButtons[8] = ui->actionSection_9;
-    m_sectionButtons[9] = ui->actionSection_10;
-    m_sectionButtons[10] = ui->actionSection_11;
-    m_sectionButtons[11] = ui->actionSection_12;
-    m_sectionButtons[12] = ui->actionSection_13;
-    m_sectionButtons[13] = ui->actionSection_14;
-    m_sectionButtons[14] = ui->actionSection_15;
-    m_sectionButtons[15] = ui->actionSection_16;
-    m_sectionButtons[16] = ui->actionSection_17;
-    m_sectionButtons[17] = ui->actionSection_18;
-    m_sectionButtons[18] = ui->actionSection_19;
-    m_sectionButtons[19] = ui->actionSection_20;
-    m_sectionButtons[20] = ui->actionSection_21;
+#define SECTION_BTN(x, y) \
+    m_sectionButtons[x] = ui->actionSection_##y; \
+    m_sectionButtonsOnIcon[x] = Themes::section_##x##_selected; \
+    m_sectionButtonsOffIcon[x] = Themes::section_##x##_default; \
+
+    SECTION_BTN(0, 1)
+    SECTION_BTN(1, 2)
+    SECTION_BTN(2, 3)
+    SECTION_BTN(3, 4)
+    SECTION_BTN(4, 5)
+    SECTION_BTN(5, 6)
+    SECTION_BTN(6, 7)
+    SECTION_BTN(7, 8)
+    SECTION_BTN(8, 9)
+    SECTION_BTN(9, 10)
+    SECTION_BTN(10, 11)
+    SECTION_BTN(11, 12)
+    SECTION_BTN(12, 13)
+    SECTION_BTN(13, 14)
+    SECTION_BTN(14, 15)
+    SECTION_BTN(15, 16)
+    SECTION_BTN(16, 17)
+    SECTION_BTN(17, 18)
+    SECTION_BTN(18, 19)
+    SECTION_BTN(19, 20)
+    SECTION_BTN(20, 21)
+
+#undef SECTION_BTN
+
 
     //#ifndef Q_OS_WIN
     //tabifyDockWidget(dock_LvlWarpProps, dock_LvlSectionProps);

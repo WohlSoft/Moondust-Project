@@ -17,6 +17,8 @@
  */
 
 #include <QApplication>
+#include <QPainter>
+
 #include "themes.h"
 
 bool Themes::isLoaded = false;
@@ -190,6 +192,7 @@ void Themes::init()
     images_map_dark[section_20_default]  = QPixmap(":/sections/20_dark.png");
     //images_map[section_21_selected] = QPixmap(":/sections/21.png");
     //images_map[section_21_default] = QPixmap(":/sections/21_n.png");
+    images_map[section_init_new_sign] = QPixmap(":/sections/init_new_sign.png");
 
     icons_map[section_goto_left_bottom] = QIcon(":/toolbar/goto/left_bottom.png");
     icons_map[section_goto_left_top] = QIcon(":/toolbar/goto/left_top.png");
@@ -279,7 +282,9 @@ QStringList Themes::availableThemes()
 
         QString gui_ini = theme_dir + "theme.ini";
 
-        if(!QFileInfo(gui_ini).exists()) continue; //Skip if it is not a config
+        if(!QFileInfo::exists(gui_ini))
+            continue; //Skip if it is not a config
+
         QSettings guiset(gui_ini, QSettings::IniFormat);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         guiset.setIniCodec("UTF-8");
@@ -496,6 +501,7 @@ void Themes::loadTheme(const QString &themeDir)
     loadImage(guiset, "section-19-default", section_19_default);
     loadImage(guiset, "section-20-selected", section_20_selected);
     loadImage(guiset, "section-20-default", section_20_default);
+    loadImage(guiset, "section-init-new-sign", section_init_new_sign);
     //loadImage(guiset, "section-21-selected", section_21_selected);
     //loadImage(guiset, "section-21-default", section_21_default);
     loadIcon(guiset, "section-reset-pos", section_goto_left_bottom);
@@ -707,6 +713,32 @@ QPixmap Themes::Image(Themes::Images img)
         x.fill(Qt::gray);
         return x;
     }
+}
+
+QPixmap Themes::ImageCombiRB(Images img, Images overlay, QSize minSize)
+{
+    QPixmap output;
+    QPixmap base = Themes::Image(img);
+    QPixmap over = Themes::Image(overlay);
+
+    if(base.width() < minSize.width() || base.height() < minSize.height())
+        output = QPixmap(qMax(base.width(), minSize.width()), qMax(base.height(), minSize.height()));
+    else
+        output = QPixmap(base.size());
+
+    output.fill(Qt::transparent);
+
+    QPainter p(&output);
+    p.drawPixmap(output.width() / 2 - base.width() / 2, output.height() / 2 - base.height() / 2, base);
+    p.setCompositionMode(QPainter::CompositionMode_SourceAtop);
+    p.setOpacity(0.7);
+    p.fillRect(0, 0, output.width(), output.height(), qApp->palette().mid());
+    p.setOpacity(1.0);
+    p.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    p.drawPixmap(output.width() - over.width(), output.height() - over.height(), over);
+    p.end();
+
+    return output;
 }
 
 int Themes::Integer(Themes::Images intval)

@@ -178,6 +178,13 @@ public:
          */
         void applyTheme(QString themeDir = QString());
 
+        /*!
+         * \brief Restore default section button icons
+         */
+        void applyThemeSections();
+        void applyThemeSectionResetIcon(size_t id);
+        void applyThemeSectionUnused(size_t id);
+
         //! Is everything has been successfuly initialized
         bool m_isAppInited;
 
@@ -902,6 +909,8 @@ public:
     public:
         const size_t m_sectionButtonsCount = 21;
         QAction *m_sectionButtons[21] = {0};
+        int m_sectionButtonsOnIcon[21] = {0};
+        int m_sectionButtonsOffIcon[21] = {0};
 
     public slots:
         //Switch section
