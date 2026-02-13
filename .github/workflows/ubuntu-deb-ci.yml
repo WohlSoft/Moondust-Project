@@ -164,7 +164,7 @@ jobs:
         cd build
         cpack -G DEB
         cd _packages
-        rename -v -n 's/(\w+\-\w+_).*(_\w+\d*).deb/\1${{ matrix.config.package_filename_suffix }}-${BRANCH_NAME}\2.deb/' *.deb
+        rename -v "s/(\w+\-\w+_).*(_\w+\d*).deb/\1${{ matrix.config.package_filename_suffix }}-${BRANCH_NAME}\2.deb/" *.deb
         cd ../..
 
     - name: Upload artifact
