@@ -29,6 +29,8 @@ if(NOT EMSCRIPTEN)
         set(CPACK_DEBIAN_PACKAGE_RELEASE 1)
     endif()
 
+    set(PGE_TOOLCHAIN_DEB_VERSION "${PGE_TOOLCHAIN_VERSION_STRING}-${CPACK_DEBIAN_PACKAGE_RELEASE}")
+
     set(CPACK_PACKAGE_CONTACT "admin@wohlnet,ru")
     set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Vitaliy Novichkov")
 
@@ -53,7 +55,7 @@ if(NOT EMSCRIPTEN)
     set(CPACK_DEBIAN_MOONDUSTCOMMON_DESCRIPTION "Set of shared resources for Moondust Project components")
 
     set(CPACK_DEBIAN_MOONDUSTEDITOR_PACKAGE_NAME "moondust-editor")
-    set(CPACK_DEBIAN_MOONDUSTEDITOR_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_VERSION_STRING});moondust-common (= ${PGE_TOOLCHAIN_VERSION_STRING})")
+    set(CPACK_DEBIAN_MOONDUSTEDITOR_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_DEB_VERSION});moondust-common (= ${PGE_TOOLCHAIN_DEB_VERSION})")
     set(CPACK_DEBIAN_MOONDUSTEDITOR_PACKAGE_SECTION editors)
     set(CPACK_DEBIAN_MOONDUSTEDITOR_DESCRIPTION "Levels and world maps editor for Moondust Project based games")
 
@@ -70,48 +72,48 @@ if(NOT EMSCRIPTEN)
     set(CPACK_DEBIAN_MOONDUSTDOCS_DESCRIPTION "HTML documentation collection for Moondust Project")
 
     set(CPACK_DEBIAN_MOONDUSTRUNTIME_PACKAGE_NAME "moondust-runtime")
-    set(CPACK_DEBIAN_MOONDUSTRUNTIME_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_VERSION_STRING})")
+    set(CPACK_DEBIAN_MOONDUSTRUNTIME_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_DEB_VERSION})")
     set(CPACK_DEBIAN_MOONDUSTRUNTIME_PACKAGE_SECTION games)
     set(CPACK_DEBIAN_MOONDUSTRUNTIME_DESCRIPTION "Runtime engine to play Moondust Project based games")
 
     set(CPACK_DEBIAN_MOONDUSTGIFS2PNG_PACKAGE_NAME "moondust-tool-gifs2png")
-    set(CPACK_DEBIAN_MOONDUSTGIFS2PNG_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_VERSION_STRING})")
+    set(CPACK_DEBIAN_MOONDUSTGIFS2PNG_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_DEB_VERSION})")
     set(CPACK_DEBIAN_MOONDUSTGIFS2PNG_PACKAGE_SECTION utils)
     set(CPACK_DEBIAN_MOONDUSTGIFS2PNG_DESCRIPTION "Utility to convert pair of GIF files for bitmask render (Legacy SMBX format) into alpha-channel based PNG graphics (Moondust Project native format)")
 
     set(CPACK_DEBIAN_MOONDUSTLAZYFIXTOOL_PACKAGE_NAME "moondust-tool-lazyfixtool")
-    set(CPACK_DEBIAN_MOONDUSTLAZYFIXTOOL_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_VERSION_STRING})")
+    set(CPACK_DEBIAN_MOONDUSTLAZYFIXTOOL_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_DEB_VERSION})")
     set(CPACK_DEBIAN_MOONDUSTLAZYFIXTOOL_PACKAGE_SECTION utils)
     set(CPACK_DEBIAN_MOONDUSTLAZYFIXTOOL_DESCRIPTION "A small tool to fix improperly created bitmask based graphics into valid format.")
 
     set(CPACK_DEBIAN_MOONDUSTMAINTAINER_PACKAGE_NAME "moondust-maintainer")
-    set(CPACK_DEBIAN_MOONDUSTMAINTAINER_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_VERSION_STRING});moondust-common (= ${PGE_TOOLCHAIN_VERSION_STRING});moondust-tool-gifs2png;moondust-tool-lazyfixtool;moondust-tool-palletefilter;moondust-tool-png2gifs")
+    set(CPACK_DEBIAN_MOONDUSTMAINTAINER_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_DEB_VERSION});moondust-common (= ${PGE_TOOLCHAIN_DEB_VERSION});moondust-tool-gifs2png;moondust-tool-lazyfixtool;moondust-tool-palletefilter;moondust-tool-png2gifs")
     set(CPACK_DEBIAN_MOONDUSTMAINTAINER_PACKAGE_RECOMMENDS "ffmpeg, sox, libsox-fmt-mp3")
     set(CPACK_DEBIAN_MOONDUSTMAINTAINER_PACKAGE_SECTION utils)
     set(CPACK_DEBIAN_MOONDUSTMAINTAINER_DESCRIPTION "A multi-functional utility to process and/or restore data and resources for Moondust Project based games.")
 
     set(CPACK_DEBIAN_MOONDUSTMUSICPLAYER_PACKAGE_NAME "moondust-musplay")
-    set(CPACK_DEBIAN_MOONDUSTMUSICPLAYER_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_VERSION_STRING});moondust-common (= ${PGE_TOOLCHAIN_VERSION_STRING})")
+    set(CPACK_DEBIAN_MOONDUSTMUSICPLAYER_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_DEB_VERSION});moondust-common (= ${PGE_TOOLCHAIN_DEB_VERSION})")
     set(CPACK_DEBIAN_MOONDUSTMUSICPLAYER_PACKAGE_SECTION sound)
     set(CPACK_DEBIAN_MOONDUSTMUSICPLAYER_DESCRIPTION "A simple music player based on the MixerX sound library.")
 
     set(CPACK_DEBIAN_MOONDUSTPALLETEFILTER_PACKAGE_NAME "moondust-tool-palletefilter")
-    set(CPACK_DEBIAN_MOONDUSTPALLETEFILTER_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_VERSION_STRING})")
+    set(CPACK_DEBIAN_MOONDUSTPALLETEFILTER_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_DEB_VERSION})")
     set(CPACK_DEBIAN_MOONDUSTPALLETEFILTER_PACKAGE_SECTION utils)
     set(CPACK_DEBIAN_MOONDUSTPALLETEFILTER_DESCRIPTION "A simple utility to filter pallete of grahics using reference image.")
 
     set(CPACK_DEBIAN_MOONDUSTCALIBRATOR_PACKAGE_NAME "moondust-calibrator")
-    set(CPACK_DEBIAN_MOONDUSTCALIBRATOR_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_VERSION_STRING});moondust-common (= ${PGE_TOOLCHAIN_VERSION_STRING})")
+    set(CPACK_DEBIAN_MOONDUSTCALIBRATOR_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_DEB_VERSION});moondust-common (= ${PGE_TOOLCHAIN_DEB_VERSION})")
     set(CPACK_DEBIAN_MOONDUSTCALIBRATOR_PACKAGE_SECTION utils)
     set(CPACK_DEBIAN_MOONDUSTCALIBRATOR_DESCRIPTION "A tool to create and adjust settings for playable characters using in the Moondust Project based games.")
 
     set(CPACK_DEBIAN_MOONDUSTPNG2GIFS_PACKAGE_NAME "moondust-tool-png2gifs")
-    set(CPACK_DEBIAN_MOONDUSTPNG2GIFS_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_VERSION_STRING})")
+    set(CPACK_DEBIAN_MOONDUSTPNG2GIFS_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_DEB_VERSION})")
     set(CPACK_DEBIAN_MOONDUSTPNG2GIFS_PACKAGE_SECTION utils)
     set(CPACK_DEBIAN_MOONDUSTPNG2GIFS_DESCRIPTION "Utility to create valid pair of GIF files for bitmask render (Legacy SMBX format) from alha-channel based PNG graphics.")
 
     set(CPACK_DEBIAN_MOONDUSTTRANSLATOR_PACKAGE_NAME "moondust-translator")
-    set(CPACK_DEBIAN_MOONDUSTTRANSLATOR_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_VERSION_STRING});moondust-common (= ${PGE_TOOLCHAIN_VERSION_STRING})")
+    set(CPACK_DEBIAN_MOONDUSTTRANSLATOR_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_DEB_VERSION});moondust-common (= ${PGE_TOOLCHAIN_DEB_VERSION})")
     set(CPACK_DEBIAN_MOONDUSTTRANSLATOR_PACKAGE_SECTION localization)
     set(CPACK_DEBIAN_MOONDUSTTRANSLATOR_DESCRIPTION "A tool to create and edit translations for Moondust Project compatible levels and episodes.")
 
