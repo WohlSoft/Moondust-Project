@@ -50,6 +50,19 @@ jobs:
             deps_cmdline: "echo 'Ubuntu 24 x86_64, everything pre-installed'"
           }
         - {
+            name: "Ubuntu 22.04 Qt5 x86_64",
+            os: ubuntu-latest,
+            container: "ghcr.io/wohlsoft/wohlsoft-ci-ubuntu2204-qt5:latest",
+            generator: "Ninja",
+            build_type: "Release",
+            upload_directory: "www/ubuntu-22-04/moondust-amd64/",
+            package_filename_suffix: "ubuntu-22-04",
+
+            extra_options: "-DCMAKE_INSTALL_PREFIX=/usr -DPGE_FORCE_QT5=ON -DCPACK_DEBIAN_PACKAGE_RELEASE=${GITHUB_RUN_NUMBER}",
+
+            deps_cmdline: "echo 'Ubuntu 22 x86_64, everything pre-installed'"
+          }
+        - {
             name: "Debian 13 Trixie Qt5 x86_64",
             os: ubuntu-latest,
             container: "ghcr.io/wohlsoft/wohlsoft-ci-debian13-qt5:latest",
