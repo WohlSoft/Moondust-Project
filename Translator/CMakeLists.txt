@@ -30,7 +30,7 @@ include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
 
-set(PGE_APP_PATH_MODULE_NAME "Moondust Calibrator")
+set(PGE_APP_PATH_MODULE_NAME "Moondust Translator")
 set(PGE_APP_PATH_SETUP_FILE_NAME "pge_translator.ini")
 set(PGE_APP_PATH_VERSION_HEADER "../../Translator/version.h")
 set(PGE_APP_PATH_HAS_THEMES FALSE)
