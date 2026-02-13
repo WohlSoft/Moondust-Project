@@ -17,6 +17,7 @@
  */
 
 #include <QApplication>
+#include <QMouseEvent>
 #include <common_features/items.h>
 #include <common_features/graphics_funcs.h>
 
@@ -111,17 +112,27 @@ void TilesetItemButton::paintEvent(QPaintEvent *ev)
     QFrame::paintEvent(ev);
 }
 
-void TilesetItemButton::mousePressEvent(QMouseEvent *)
+void TilesetItemButton::mousePressEvent(QMouseEvent *event)
 {
-    if(isItemSet())
-        emit clicked(static_cast<int>(m_itemType), (unsigned long)m_id);
-
-    setFrameStyle(QFrame::Panel | QFrame::Sunken);
+    if(event->button() == Qt::LeftButton)
+        setFrameStyle(QFrame::Panel | QFrame::Sunken);
 }
 
-void TilesetItemButton::mouseReleaseEvent(QMouseEvent *)
+void TilesetItemButton::mouseReleaseEvent(QMouseEvent *event)
 {
-    setFrameStyle(QFrame::Panel | QFrame::Raised);
+    if(event->button() == Qt::RightButton)
+    {
+        if(isItemSet())
+            emit contextMenuRequest(event->globalPos(), this);
+    }
+
+    else if(event->button() == Qt::LeftButton)
+    {
+        setFrameStyle(QFrame::Panel | QFrame::Raised);
+
+        if(isItemSet())
+            emit clicked(static_cast<int>(m_itemType), (unsigned long)m_id);
+    }
 }
 
 unsigned int TilesetItemButton::id() const

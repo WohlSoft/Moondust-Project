@@ -754,7 +754,8 @@ public:
 
 // //////////////// Placing tools /////////////////////////
     public slots:
-        void SwitchPlacingItem(int itemType, unsigned long itemID, bool dont_reset_props=false);
+        void SwitchPlacingItem(int itemType, unsigned long itemID);
+        void SwitchPlacingItem(int itemType, unsigned long itemID, bool dont_reset_props);
         void on_actionRectFill_triggered(bool checked);
         void on_actionCircleFill_triggered(bool checked);
         void on_actionLine_triggered(bool checked);

@@ -59,7 +59,7 @@ TilesetItemBox::TilesetItemBox(QWidget *parent) :
     setVisible(false);
     setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
-    connect(ui->customTilesetSearchEdit, SIGNAL(textChanged(QString)), this, SLOT(makeCurrentTileset()));
+    QObject::connect(ui->customTilesetSearchEdit, &QLineEdit::textChanged, this, &TilesetItemBox::makeCurrentTileset);
     ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
 
     this->setFocusPolicy(Qt::ClickFocus);
@@ -70,7 +70,7 @@ TilesetItemBox::TilesetItemBox(QWidget *parent) :
     int GOffset = 240;
 
     mw()->addDockWidget(Qt::BottomDockWidgetArea, this);
-    connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    QObject::connect(mw(), &MainWindow::languageSwitched, this, &TilesetItemBox::re_translate);
     setFloating(true);
     setGeometry(
         dg.x() + GOffset,
@@ -146,8 +146,10 @@ void TilesetItemBox::on_tilesetGroup_currentIndexChanged(int index)
 #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "TilesetBox -> change combobox's index");
 #endif
+
     if(m_lockSettings)
         return;
+
     makeCurrentTileset();
 }
 
@@ -188,11 +190,6 @@ void TilesetItemBox::on_newTileset_clicked()
 
     mw()->configs.loadTilesets();
     setTileSetBox();
-}
-
-void TilesetItemBox::setTabPosition(QTabWidget::TabPosition pos)
-{
-    ui->TileSetsCategories->setTabPosition(pos);
 }
 
 void TilesetItemBox::editSelectedTileset()
@@ -245,6 +242,150 @@ void TilesetItemBox::editSelectedTileset()
 
     mw()->configs.loadTilesets();
     setTileSetBox();
+}
+
+void TilesetItemBox::contextMenuRequest(const QPoint &pos, TilesetItemButton *button)
+{
+    bool isUntitled;
+    int winType = mw()->activeChildWindow();
+    QString episodeDir;
+    QString customDir;
+    QString newImg;
+    const QPixmap *orig = nullptr;
+
+    switch(winType)
+    {
+    case MainWindow::WND_Level:
+    {
+        LevelEdit *edit = mw()->activeLvlEditWin();
+        if(!edit)
+            return;
+
+        isUntitled = edit->isUntitled();
+        episodeDir = edit->LvlData.meta.path;
+        customDir  = edit->LvlData.meta.path + "/" + edit->LvlData.meta.filename;
+        break;
+    }
+
+    case MainWindow::WND_World:
+    {
+        WorldEdit *edit = mw()->activeWldEditWin();
+        if(!edit)
+            return;
+
+        isUntitled = edit->isUntitled();
+        episodeDir = edit->WldData.meta.path;
+        customDir  = edit->WldData.meta.path + "/" + edit->WldData.meta.filename;
+        break;
+    }
+
+    default:
+    case 0:
+        return;
+    }
+
+    switch(button->itemType())
+    {
+    case ItemTypes::LVL_Block:
+    {
+        obj_block &item = mw()->configs.main_block[button->id()];
+        newImg = item.setup.image_n;
+        orig = &item.image;
+        break;
+    }
+
+    case ItemTypes::LVL_BGO:
+    {
+        obj_bgo &item = mw()->configs.main_bgo[button->id()];
+        newImg = item.setup.image_n;
+        orig = &item.image;
+        break;
+    }
+
+    case ItemTypes::LVL_NPC:
+    {
+        obj_npc &item = mw()->configs.main_npc[button->id()];
+        newImg = item.setup.image_n;
+        orig = &item.image;
+        break;
+    }
+
+    case ItemTypes::WLD_Level:
+    {
+        obj_w_level &item = mw()->configs.main_wlevels[button->id()];
+        newImg = item.setup.image_n;
+        orig = &item.image;
+        break;
+    }
+
+    case ItemTypes::WLD_Scenery:
+    {
+        obj_w_scenery &item = mw()->configs.main_wscene[button->id()];
+        newImg = item.setup.image_n;
+        orig = &item.image;
+        break;
+    }
+
+    case ItemTypes::WLD_Tile:
+    {
+        obj_w_tile &item = mw()->configs.main_wtiles[button->id()];
+        newImg = item.setup.image_n;
+        orig = &item.image;
+        break;
+    }
+
+    case ItemTypes::WLD_Path:
+    {
+        obj_w_path &item = mw()->configs.main_wpaths[button->id()];
+        newImg = item.setup.image_n;
+        orig = &item.image;
+        break;
+    }
+
+    default:
+        return;
+    }
+
+    if(!orig)
+        return;
+
+    if(newImg.endsWith(".gif", Qt::CaseInsensitive))
+        newImg.replace(newImg.size() - 4, 4, ".png");
+
+    QMenu itemMenu(this);
+
+    if(isUntitled)
+    {
+        QAction *nothing = itemMenu.addAction(tr("<Save file first>"));
+        nothing->setEnabled(false);
+        itemMenu.exec(pos);
+        return;
+    }
+
+    QAction *copyToC = itemMenu.addAction(tr("Copy graphic to custom folder"));
+    QAction *copyToE = itemMenu.addAction(tr("Copy graphic to episode folder"));
+    QAction *reply = itemMenu.exec(pos);
+
+    if(reply == copyToC)
+    {
+        QDir cDir(customDir);
+
+        if(!cDir.exists())
+            cDir.mkpath(customDir);
+
+        if(!QFile::exists(customDir + "/" + newImg))
+            orig->save(customDir + "/" + newImg, "PNG");
+    }
+    else if(reply == copyToE)
+    {
+        if(!QFile::exists(episodeDir + "/" + newImg))
+            orig->save(episodeDir + "/" + newImg, "PNG");
+    }
+}
+
+void TilesetItemBox::setTabPosition(QTabWidget::TabPosition pos)
+{
+    ui->TileSetsCategories->setTabPosition(pos);
 }
 
 QScrollArea *TilesetItemBox::getFrameTilesetOfTab(QWidget *catTab)
@@ -385,7 +526,7 @@ void TilesetItemBox::prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups
     }
     //c->model()->sort(0);
     c->setCurrentIndex(0);
-    c->connect(c, SIGNAL(currentChanged(int)), this, SLOT(on_tilesetGroup_currentIndexChanged(int)));
+    QObject::connect(c, &QTabBar::currentChanged, this, &TilesetItemBox::on_tilesetGroup_currentIndexChanged);
 }
 
 void TilesetItemBox::clearTilesetGroups()
@@ -487,6 +628,7 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
                             auto *tsLayout = new QGridLayout(tileSetNameWrapper);
                             tsLayout->setContentsMargins(4, 4, 4, 4);
                             tsLayout->setSpacing(2);
+
                             for(int k = 0; k < tileSet.items.size(); k++)
                             {
                                 SimpleTilesetItem &item = tileSet.items[k];
@@ -494,7 +636,11 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
                                 tButton->applySize(32, 32);
                                 tButton->applyItem(item.type >= 0 ? item.type : tileSet.type, item.id);
                                 tsLayout->addWidget(tButton, item.row, item.col);
-                                connect(tButton, SIGNAL(clicked(int, ulong)), mw(), SLOT(SwitchPlacingItem(int, ulong)));
+
+                                QObject::connect(tButton, &TilesetItemButton::clicked,
+                                                mw(), static_cast<void (MainWindow::*)(int, unsigned long)>(&MainWindow::SwitchPlacingItem));
+                                QObject::connect(tButton, &TilesetItemButton::contextMenuRequest,
+                                                this, &TilesetItemBox::contextMenuRequest);
                             }
                             break;
                         }
@@ -544,6 +690,7 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
                 auto *l = new QGridLayout(tilesetNameWrapper);
                 l->setContentsMargins(4, 4, 4, 4);
                 l->setSpacing(2);
+
                 for(int k = 0; k < ts.items.size(); k++)
                 {
                     SimpleTilesetItem &item = ts.items[k];
@@ -551,16 +698,23 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
                     tButton->applySize(32, 32);
                     tButton->applyItem(item.type >= 0 ? item.type : ts.type, (int)item.id);
                     l->addWidget(tButton, (int)item.row, (int)item.col);
+
                     if(item.col >= mostRighter)
                         mostRighter = item.col + 1;
-                    connect(tButton, SIGNAL(clicked(int, ulong)), mw(), SLOT(SwitchPlacingItem(int, ulong)));
+
+                    QObject::connect(tButton, &TilesetItemButton::clicked,
+                                    mw(), static_cast<void (MainWindow::*)(int, unsigned long)>(&MainWindow::SwitchPlacingItem));
+                    QObject::connect(tButton, &TilesetItemButton::contextMenuRequest,
+                                    this, &TilesetItemBox::contextMenuRequest);
                 }
+
                 QPushButton *b = new QPushButton(Themes::icon(Themes::pencil), "", tilesetNameWrapper);
                 b->setProperty("tileset-file-name", ts.fileName);
                 b->setMaximumSize(32, 32);
                 b->setFlat(true);
                 l->addWidget(b, 0, (int)mostRighter);
-                connect(b, SIGNAL(clicked()), this, SLOT(editSelectedTileset()));
+                QObject::connect(b, static_cast<void (QPushButton::*)(bool)>(&QPushButton::clicked),
+                                 this, &TilesetItemBox::editSelectedTileset);
             }
         }
     }
@@ -613,9 +767,10 @@ QVector<SimpleTileset> TilesetItemBox::loadCustomTilesets()
     return ctsets;
 }
 
-void TilesetItemBox::makeCurrentTileset()
+void TilesetItemBox::makeCurrentTileset(const QString &)
 {
-    if(m_lockSettings) return;
+    if(m_lockSettings)
+        return;
 
     QTabWidget *cat = ui->TileSetsCategories;
     makeSelectedTileset(cat->currentIndex());
@@ -623,7 +778,8 @@ void TilesetItemBox::makeCurrentTileset()
 
 void TilesetItemBox::makeAllTilesets()
 {
-    if(m_lockSettings) return;
+    if(m_lockSettings)
+        return;
 
     using namespace pge_tilesetbox;
     QTabWidget *cat = ui->TileSetsCategories;

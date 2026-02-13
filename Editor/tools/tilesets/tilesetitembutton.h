@@ -44,6 +44,8 @@ public:
 
 signals:
     void clicked(int itemType, unsigned long id);
+    void contextMenuRequest(const QPoint &pos, TilesetItemButton *button);
+
 public slots:
 
 protected:

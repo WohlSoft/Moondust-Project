@@ -127,6 +127,10 @@ void MainWindow::on_actionDrawSand_triggered()
     }
 }
 
+void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
+{
+    SwitchPlacingItem(itemType, itemID, false);
+}
 
 void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont_reset_props)
 {
