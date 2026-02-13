@@ -59,7 +59,7 @@ public:
     void removeFromArray();
 
     void returnBack();
-    QPoint sourcePos();
+    QPoint sourcePos() const;
 
     WorldTerrainTile m_data;
     obj_w_tile m_localProps;

@@ -230,8 +230,8 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     //Applay move into main array
                     historySourceBuffer.tiles.push_back(((ItemTile *)(*it))->m_data);
-                    ((ItemTile *)(*it))->m_data.x = (long)(*it)->scenePos().x();
-                    ((ItemTile *)(*it))->m_data.y = (long)(*it)->scenePos().y();
+                    // ((ItemTile *)(*it))->m_data.x = (long)(*it)->scenePos().x();
+                    // ((ItemTile *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                     ((ItemTile *)(*it))->arrayApply();
                     historyBuffer.tiles.push_back(((ItemTile *)(*it))->m_data);
                     s->m_data->meta.modified = true;
@@ -240,8 +240,8 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     //Applay move into main array
                     historySourceBuffer.scenery.push_back(((ItemScene *)(*it))->m_data);
-                    ((ItemScene *)(*it))->m_data.x = (long)(*it)->scenePos().x();
-                    ((ItemScene *)(*it))->m_data.y = (long)(*it)->scenePos().y();
+                    // ((ItemScene *)(*it))->m_data.x = (long)(*it)->scenePos().x();
+                    // ((ItemScene *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                     ((ItemScene *)(*it))->arrayApply();
                     historyBuffer.scenery.push_back(((ItemScene *)(*it))->m_data);
                     s->m_data->meta.modified = true;
@@ -250,8 +250,8 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     //Applay move into main array
                     historySourceBuffer.paths.push_back(((ItemPath *)(*it))->m_data);
-                    ((ItemPath *)(*it))->m_data.x = (long)(*it)->scenePos().x();
-                    ((ItemPath *)(*it))->m_data.y = (long)(*it)->scenePos().y();
+                    // ((ItemPath *)(*it))->m_data.x = (long)(*it)->scenePos().x();
+                    // ((ItemPath *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                     ((ItemPath *)(*it))->arrayApply();
                     historyBuffer.paths.push_back(((ItemPath *)(*it))->m_data);
                     s->m_data->meta.modified = true;
@@ -260,8 +260,8 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     //Applay move into main array
                     historySourceBuffer.levels.push_back(((ItemLevel *)(*it))->m_data);
-                    ((ItemLevel *)(*it))->m_data.x = (long)(*it)->scenePos().x();
-                    ((ItemLevel *)(*it))->m_data.y = (long)(*it)->scenePos().y();
+                    // ((ItemLevel *)(*it))->m_data.x = (long)(*it)->scenePos().x();
+                    // ((ItemLevel *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                     ((ItemLevel *)(*it))->arrayApply();
                     historyBuffer.levels.push_back(((ItemLevel *)(*it))->m_data);
                     s->m_data->meta.modified = true;
@@ -270,8 +270,8 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     //Applay move into main array
                     historySourceBuffer.music.push_back(((ItemMusic *)(*it))->m_data);
-                    ((ItemMusic *)(*it))->m_data.x = (long)(*it)->scenePos().x();
-                    ((ItemMusic *)(*it))->m_data.y = (long)(*it)->scenePos().y();
+                    // ((ItemMusic *)(*it))->m_data.x = (long)(*it)->scenePos().x();
+                    // ((ItemMusic *)(*it))->m_data.y = (long)(*it)->scenePos().y();
                     ((ItemMusic *)(*it))->arrayApply();
                     historyBuffer.music.push_back(((ItemMusic *)(*it))->m_data);
                     s->m_data->meta.modified = true;

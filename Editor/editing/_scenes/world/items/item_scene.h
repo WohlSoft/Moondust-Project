@@ -59,7 +59,7 @@ public:
     void removeFromArray();
 
     void returnBack();
-    QPoint sourcePos();
+    QPoint sourcePos() const;
 
     WorldScenery  m_data;
     obj_w_scenery m_localProps;

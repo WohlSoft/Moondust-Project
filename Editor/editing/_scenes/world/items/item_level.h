@@ -38,6 +38,12 @@ class ItemLevel : public WldBaseItem
         return QCoreApplication::translate("ItemLevel", sourceText, disambiguation, n);
     }
 
+    void updateNotices();
+
+protected:
+    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
+    virtual void hoverMoveEvent(QGraphicsSceneHoverEvent* event) override;
+
 public:
     ItemLevel(QGraphicsItem *parent = nullptr);
     ItemLevel(WldScene *parentScene, QGraphicsItem *parent = nullptr);
@@ -47,8 +53,8 @@ public:
                       long *animator_id = nullptr, long *path_id = nullptr,
                       long *bPath_id = nullptr);
 
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
     //////Animation////////
     void setAnimator(long aniID, long path = 0, long bPath = 0);
@@ -57,11 +63,11 @@ public:
 
     void transformTo(long target_id);
 
-    void arrayApply();
-    void removeFromArray();
+    void arrayApply() override;
+    void removeFromArray() override;
 
-    void   returnBack();
-    QPoint sourcePos();
+    void   returnBack() override;
+    QPoint sourcePos() const override;
 
     void setShowSmallPathBG(bool p);
     void setShowBigPathBG(bool p);
@@ -71,8 +77,10 @@ public:
     WorldLevelTile m_data;
     obj_w_level m_localProps;
 
-    bool itemTypeIsLocked();
-    void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
+    bool itemTypeIsLocked() override;
+    void contextMenu(QGraphicsSceneMouseEvent *mouseEvent) override;
+
+    void markAsOverPath(bool mark);
 
 private:
     //! Offset X of renderable image of a "small path background"
@@ -97,6 +105,10 @@ private:
     long    m_bPathID = 0;
     //! Size of a "big path background" renderable image
     QRectF  m_imageSizeBP;
+
+    bool    m_itemIsOverPath = false;
+
+    void showPathOverTip(const QPoint &pos);
 };
 
 #endif // ItemLevel_H

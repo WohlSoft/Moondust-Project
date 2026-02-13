@@ -325,7 +325,7 @@ void ItemMusic::returnBack()
     setPos(m_data.x, m_data.y);
 }
 
-QPoint ItemMusic::sourcePos()
+QPoint ItemMusic::sourcePos() const
 {
     return QPoint(m_data.x, m_data.y);
 }

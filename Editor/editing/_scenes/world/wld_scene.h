@@ -342,7 +342,7 @@ public:
     typedef RTree<QGraphicsItem *, double, 2, double > IndexTree;
     typedef double RPoint[2];
     IndexTree tree;
-    void queryItems(QRectF &zone, PGE_ItemList *resultList);
+    void queryItems(const QRectF &zone, PGE_ItemList *resultList);
     void queryItems(double x, double y, PGE_ItemList *resultList);
     void registerElement(QGraphicsItem *item);
     void unregisterElement(QGraphicsItem *item);

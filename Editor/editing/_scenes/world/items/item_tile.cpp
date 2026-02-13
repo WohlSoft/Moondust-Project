@@ -303,7 +303,7 @@ void ItemTile::returnBack()
     setPos(m_data.x, m_data.y);
 }
 
-QPoint ItemTile::sourcePos()
+QPoint ItemTile::sourcePos() const
 {
     return QPoint(m_data.x, m_data.y);
 }

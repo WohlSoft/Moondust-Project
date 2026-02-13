@@ -88,7 +88,7 @@ QPoint WldBaseItem::gridOffset()
     return QPoint(m_gridOffsetX, m_gridOffsetY);
 }
 
-QPoint WldBaseItem::sourcePos()
+QPoint WldBaseItem::sourcePos() const
 {
     return QPoint(0, 0);
 }
@@ -114,6 +114,26 @@ void WldBaseItem::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 bool WldBaseItem::itemTypeIsLocked()
 {
     return false;
+}
+
+bool WldBaseItem::collidesWith(const WldBaseItem *other) const
+{
+    if(!other)
+        return false;
+
+    QRect me(sourcePos(), boundingRect().size().toSize());
+    QRect o(other->sourcePos(), other->boundingRect().size().toSize());
+
+    if(me.left() > o.right())
+        return false;
+    else if(me.right() < o.left())
+        return false;
+    else if(me.top() > o.bottom())
+        return false;
+    else if(me.bottom() < o.top())
+        return false;
+
+    return true;
 }
 
 void WldBaseItem::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)

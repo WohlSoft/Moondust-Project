@@ -47,6 +47,41 @@ void ItemPath::construct()
     setData(ITEM_TYPE, "PATH");
 }
 
+void ItemPath::updateNoticesClear()
+{
+    WldScene::PGE_ItemList collides;
+
+    m_scene->queryItems(QRectF(m_data.x, m_data.y, m_imageSize.width(), m_imageSize.height()), &collides);
+
+    for(auto *it : collides)
+    {
+        if(it == this)
+            continue; // Don't collide to self!
+
+        ItemLevel *l = qgraphicsitem_cast<ItemLevel*>(it);
+        if(l && l->collidesWith(this))
+            l->markAsOverPath(false);
+    }
+}
+
+void ItemPath::updateNoticesSet()
+{
+    WldScene::PGE_ItemList collides;
+
+    m_scene->queryItems(QRectF(m_data.x, m_data.y, m_imageSize.width(), m_imageSize.height()), &collides);
+
+    for(auto *it : collides)
+    {
+        if(it == this)
+            continue; // Don't collide to self!
+
+        ItemLevel *l = qgraphicsitem_cast<ItemLevel*>(it);
+        if(l && l->collidesWith(this))
+            l->markAsOverPath(true);
+    }
+}
+
+
 ItemPath::~ItemPath()
 {
     m_scene->unregisterElement(this);
@@ -237,8 +272,12 @@ void ItemPath::arrayApply()
 {
     bool found = false;
 
+    updateNoticesClear();
+
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
+
+    updateNoticesSet();
 
     if(m_data.meta.index < (unsigned int)m_scene->m_data->paths.size())
     {
@@ -275,6 +314,9 @@ void ItemPath::arrayApply()
 void ItemPath::removeFromArray()
 {
     bool found = false;
+
+    updateNoticesClear();
+
     if(m_data.meta.index < (unsigned int)m_scene->m_data->paths.size())
     {
         //Check index
@@ -303,7 +345,7 @@ void ItemPath::returnBack()
     setPos(m_data.x, m_data.y);
 }
 
-QPoint ItemPath::sourcePos()
+QPoint ItemPath::sourcePos() const
 {
     return QPoint(m_data.x, m_data.y);
 }
@@ -332,6 +374,8 @@ void ItemPath::setPathData(WorldPathTile inD, obj_w_path *mergedSet, long *anima
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+
+    updateNoticesSet();
 }
 
 

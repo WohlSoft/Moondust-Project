@@ -317,7 +317,7 @@ void ItemScene::returnBack()
     setPos(m_data.x, m_data.y);
 }
 
-QPoint ItemScene::sourcePos()
+QPoint ItemScene::sourcePos() const
 {
     return QPoint(m_data.x, m_data.y);
 }

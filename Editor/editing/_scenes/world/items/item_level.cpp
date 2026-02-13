@@ -17,7 +17,7 @@
  */
 
 #include <QClipboard>
-
+#include <QToolTip>
 #include <editing/_dialogs/itemselectdialog.h>
 #include <common_features/util.h>
 #include <common_features/logger.h>
@@ -46,6 +46,42 @@ ItemLevel::ItemLevel(WldScene *parentScene, QGraphicsItem *parent)
 void ItemLevel::construct()
 {
     setData(ITEM_TYPE, "LEVEL");
+    setAcceptHoverEvents(true);
+}
+
+void ItemLevel::updateNotices()
+{
+    WldScene::PGE_ItemList collides;
+    m_itemIsOverPath = false;
+
+    m_scene->queryItems(QRectF(m_data.x, m_data.y, m_imageSize.width(), m_imageSize.height()), &collides);
+
+    for(auto *it : collides)
+    {
+        if(it == this)
+            continue; // Don't collide to self!
+
+        ItemPath *l = qgraphicsitem_cast<ItemPath*>(it);
+        if(l)
+        {
+            if(l->collidesWith(this))
+                m_itemIsOverPath = true;
+
+            break;
+        }
+    }
+}
+
+void ItemLevel::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+    if(m_itemIsOverPath)
+        showPathOverTip(event->screenPos());
+}
+
+void ItemLevel::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
+{
+    if(m_itemIsOverPath)
+        showPathOverTip(event->screenPos());
 }
 
 ItemLevel::~ItemLevel()
@@ -289,6 +325,19 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         m_scene->openProps();
 }
 
+void ItemLevel::markAsOverPath(bool mark)
+{
+    m_itemIsOverPath = mark;
+}
+
+void ItemLevel::showPathOverTip(const QPoint &pos)
+{
+    QToolTip::showText(pos, tr("Placing a path cell at the same position as the\n"
+                               "level entry point may cause an inability to\n"
+                               "stop on this level entry point on some engines.\n"
+                               "Ignore this notice if this was done intentionally."), m_scene->m_subWindow);
+}
+
 
 bool ItemLevel::itemTypeIsLocked()
 {
@@ -365,6 +414,8 @@ void ItemLevel::arrayApply()
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+
+    updateNotices();
 }
 
 void ItemLevel::removeFromArray()
@@ -401,7 +452,7 @@ void ItemLevel::returnBack()
     setPos(m_data.x, m_data.y);
 }
 
-QPoint ItemLevel::sourcePos()
+QPoint ItemLevel::sourcePos() const
 {
     return QPoint(m_data.x, m_data.y);
 }
@@ -465,6 +516,8 @@ void ItemLevel::setLevelData(WorldLevelTile inD, obj_w_level *mergedSet,
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+
+    updateNotices();
 }
 
 
@@ -508,6 +561,9 @@ void ItemLevel::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
                             m_scene->m_animatorsLevels[m_animatorID]->frameRect());
     else
         painter->drawRect(QRect(0, 0, 32, 32));
+
+    if(m_itemIsOverPath)
+        painter->fillRect(QRect(m_imgOffsetX + m_imageSize.width() - 8, m_imgOffsetY, 8, 8), QBrush(Qt::red));
 
     if(this->isSelected())
     {

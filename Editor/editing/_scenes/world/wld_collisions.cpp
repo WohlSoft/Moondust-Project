@@ -272,7 +272,7 @@ namespace WorldScene_space
     }
 }
 
-void WldScene::queryItems(QRectF &zone, PGE_ItemList *resultList)
+void WldScene::queryItems(const QRectF &zone, PGE_ItemList *resultList)
 {
     RPoint lt = {zone.left(), zone.top()};
     RPoint rb = {zone.right() + 1, zone.bottom() + 1};
