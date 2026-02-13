@@ -19,6 +19,7 @@
 #include <QPainter>
 #include <QPaintEvent>
 #include <QMimeData>
+#include <QFileInfo>
 #include <QDrag>
 
 #include <common_features/graphics_funcs.h>
@@ -374,16 +375,20 @@ bool tileset::OpenSimpleTileset(const QString &path, SimpleTileset &tileset)
 
     QStringList groups = simpleTilesetINI.childGroups();
     int tilesetindex;
+
     if((tilesetindex = groups.indexOf("tileset")) != -1)
     {
+        QFileInfo pathInfo(path);
         simpleTilesetINI.beginGroup("tileset");
         tileset.rows = (unsigned int)simpleTilesetINI.value("rows", 3).toInt();
         tileset.cols = (unsigned int)simpleTilesetINI.value("cols", 3).toInt();
         tileset.type = simpleTilesetINI.value("type", 0).toInt();
         tileset.tileSetName = simpleTilesetINI.value("name", "").toString();
-        tileset.fileName = QFileInfo(path).fileName();
+        tileset.fileName = pathInfo.fileName();
         simpleTilesetINI.endGroup();
+
         groups.removeAt(tilesetindex);
+
         for(int i = 0; i < groups.size(); ++i)
         {
             QString gr = groups[i];

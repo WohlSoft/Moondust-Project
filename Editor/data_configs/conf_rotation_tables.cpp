@@ -16,8 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QFile>
 #include <common_features/items.h>
 #include "data_configs.h"
+
 
 void DataConfig::loadRotationTable()
 {

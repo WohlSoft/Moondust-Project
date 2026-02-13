@@ -18,10 +18,11 @@
 
 #include <QIcon>
 #include <QMimeData>
-#include <functional>
 
 #include <common_features/graphics_funcs.h>
 #include <common_features/items.h>
+#include <editing/_scenes/level/lvl_scene.h>
+#include <editing/_scenes/world/wld_scene.h>
 
 #include "piecesmodel.h"
 

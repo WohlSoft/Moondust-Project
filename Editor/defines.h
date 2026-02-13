@@ -51,9 +51,11 @@ public:
 
 };
 
-class HistorySettings{
+class HistorySettings
+{
 public:
-    enum WorldSettingSubType{
+    enum WorldSettingSubType
+    {
         SETTING_HUB = 0,
         SETTING_RESTARTAFTERFAIL,
         SETTING_TOTALSTARS,
@@ -77,7 +79,8 @@ public:
         SETTING_WLD_CUSTOM
     };
 
-    enum LevelSettingSubType{
+    enum LevelSettingSubType
+    {
         SETTING_INVISIBLE = 0,      //extraData: bool [Activated?]
         SETTING_SLIPPERY,           //extraData: bool [Activated?]
         SETTING_Z_LAYER,            //extraData: int  [ZLayerID]
@@ -177,7 +180,8 @@ public:
 
     static QString settingToString(const HistorySettings::LevelSettingSubType &modLevelSetting)
     {
-        switch (modLevelSetting) {
+        switch (modLevelSetting)
+        {
         case SETTING_INVISIBLE: return QObject::tr("Invizible");
         case SETTING_SLIPPERY: return QObject::tr("Slippery");
         case SETTING_Z_LAYER: return QObject::tr("Z-Layer");
@@ -275,7 +279,8 @@ public:
 
     static QString settingToString(const HistorySettings::WorldSettingSubType &modWorldSetting)
     {
-        switch (modWorldSetting) {
+        switch (modWorldSetting)
+        {
         case SETTING_ALWAYSVISIBLE: return QObject::tr("Always Visible");
         case SETTING_BIGPATHBACKGROUND: return QObject::tr("Big Path Background");
         case SETTING_CHARACTER: return QObject::tr("Character");
@@ -302,15 +307,16 @@ public:
     }
 };
 
-class Script{
-public:
-    enum CompilerType{
-        COMPILER_AUTOCODE = 0,
-        COMPILER_LUNALUA,
-        COMPILER_PGELUA
-    };
+namespace Script
+{
 
+enum CompilerType
+{
+    COMPILER_AUTOCODE = 0,
+    COMPILER_LUNALUA,
+    COMPILER_PGELUA
 };
 
+}
 
 #endif // PGE_EDITOR_DEFINES_H

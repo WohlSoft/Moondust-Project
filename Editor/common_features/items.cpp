@@ -16,12 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QGraphicsScene>
 #include <common_features/main_window_ptr.h>
 #include <common_features/themes.h>
 #include <common_features/graphics_funcs.h>
 #include <Utils/maths.h>
 
+#include "../mainwindow.h"
 #include <main_window/dock/item_tooltip_make.hpp>
+#include <data_configs/obj_block.h>
+#include <data_configs/obj_bgo.h>
+#include <data_configs/obj_npc.h>
+#include <data_configs/obj_wld_items.h>
 #include <pge_app_path.h>
 
 #include "items.h"
