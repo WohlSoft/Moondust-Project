@@ -17,30 +17,19 @@
  */
 
 #pragma once
-#ifndef OBJ_BG_H
-#define OBJ_BG_H
+#ifndef OBJ_BASE_ITEM_H
+#define OBJ_BASE_ITEM_H
 
-#include <QString>
 #include <QPixmap>
-#include <ConfigPackManager/level/config_bg.h>
 
-#include "obj_base_item.h"
-
-
-struct obj_BG : obj_base_item
+struct obj_base_item
 {
-    QPixmap *cur_image_second = nullptr;
-    QPixmap second_image;
-    QColor  fill_color;
-
-    /*!
-     * \brief Quickly copies all properties except images
-     * \param Target bgo configuration body
-     */
-    void copyTo(obj_BG &bg);
-
-    BgSetup setup;
+    bool isValid = false;
+    size_t animator_id = 0;
+    QPixmap *cur_image = nullptr;
+    QPixmap *cur_icon = nullptr;
+    QPixmap image;
+    QPixmap icon;
 };
 
-#endif // OBJ_BG_H
-
+#endif //OBJ_BASE_ITEM_H

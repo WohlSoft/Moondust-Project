@@ -21,10 +21,11 @@
 
 #include <IniProcessor/ini_processing.h>
 #include <Utils/maths.h>
-#include "../image_size.h"
 #include "../../number_limiter.h"
 
 #include <assert.h>
+
+BgoSetup::BgoSetup() : ConfigBaseSetup() {}
 
 bool BgoSetup::parse(IniProcessing *setup,
                      PGEString bgoImgPath,
@@ -36,79 +37,16 @@ bool BgoSetup::parse(IniProcessing *setup,
 #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
 #define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
 
-    int errCode = PGE_ImageInfo::ERR_OK;
-    PGEString section;
     /*************Buffers*********************/
-    uint32_t    w = 0,
-                h = 0;
+    uint32_t    w = 0, h = 0;
     /*************Buffers*********************/
-    if(!setup)
-    {
-        if(error)
-            *error = "setup IniProcessing is null!";
+
+    if(!parseBase(setup, bgoImgPath, defaultGrid, w, h, merge_with, error))
         return false;
-    }
 
-    section = StdToPGEString(setup->group());
-    setup->read("name", name, pMerge(name, section));
-
-    if(name.size() == 0)
-    {
-        if(error)
-            *error = section + ": item name isn't defined";
-        return false;
-    }
-
-    setup->read("group",    group, pMergeMe(group));
-    setup->read("category", category, pMergeMe(category));
-    setup->read("description", description, pMerge(description, ""));
-    setup->read("extra-settings", extra_settings, pMerge(extra_settings, ""));
-    setup->read("is-meta-object", is_meta_object, pMerge(is_meta_object, false));
-    pAlias("hide-on-exported-images", is_meta_object);//Alias
-    setup->read("grid",     grid, pMerge(grid, defaultGrid));
-    setup->read("grid-offset-x", grid_offset_x, pMerge(grid_offset_x, 0));
-    setup->read("grid-offset-y", grid_offset_y, pMerge(grid_offset_y, 0));
-    setup->read("offset-x", grid_offset_x, pMergeMe(grid_offset_x));//DEPRECATED
-    setup->read("offset-y", grid_offset_y, pMergeMe(grid_offset_y));//DEPRECATED
-
-    setup->read("image",    image_n, pMerge(image_n, ""));
-#ifdef PGE_EDITOR // alternative image for Editor
-    pAlias("editor-image", image_n);
-#endif
-
-    if(!merge_with && !PGE_ImageInfo::getImageSize(bgoImgPath + image_n, &w, &h, &errCode))
-    {
-        if(error)
-        {
-            switch(errCode)
-            {
-            case PGE_ImageInfo::ERR_UNSUPPORTED_FILETYPE:
-                *error = "Unsupported or corrupted file format: " + bgoImgPath + image_n;
-                break;
-
-            case PGE_ImageInfo::ERR_NOT_EXISTS:
-                *error = "image file is not exist: " + bgoImgPath + image_n;
-                break;
-
-            case PGE_ImageInfo::ERR_CANT_OPEN:
-                *error = "Can't open image file: " + bgoImgPath + image_n;
-                break;
-            }
-        }
-
-        return false;
-    }
-
-    if(!merge_with && ((w == 0)||(h == 0)))
-    {
-        if(error)
-            *error = "Width or height of image has zero or negative value in image " + bgoImgPath + image_n;
-        return false;
-    }
-
-    mask_n = PGE_ImageInfo::getMaskName(image_n);
-
-    setup->read("icon", icon_n, pMerge(icon_n, ""));
+    // ALIAS for deprecated grid offset x and y values
+    setup->read("offset-x", grid_offset_x, pMergeMe(grid_offset_x));
+    setup->read("offset-y", grid_offset_y, pMergeMe(grid_offset_y));
 
     {
         IniProcessing::StrEnumMap zLayers = {

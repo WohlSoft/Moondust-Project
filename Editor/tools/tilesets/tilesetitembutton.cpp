@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QApplication>
 #include <common_features/items.h>
 #include <common_features/graphics_funcs.h>
 
@@ -64,6 +65,7 @@ void TilesetItemButton::applyItem(const int &type_i, const int &id, const int &w
         setToolTip(QString("<h2>%1</h2>%2").arg(tr("Unavailable item")).arg(tr("This item can not be used in this time.")));
         s_drawRedCross(wid, hei, m_drawItem);
         setEnabled(false);
+        setFrameStyle(QFrame::Panel | QFrame::Plain);
         return;
     }
 
@@ -80,19 +82,20 @@ void TilesetItemButton::applyItem(const int &type_i, const int &id, const int &w
     m_id = (unsigned int)id;
     m_itemType = static_cast<ItemTypes::itemTypes>(type_i);
     setEnabled(true);
+    setFrameStyle(QFrame::Panel | QFrame::Raised);
 }
 
 void TilesetItemButton::applySize(const int &width, const int &height)
 {
-    setMinimumSize(width+lineWidth()*2,height+lineWidth()*2);
-    setMaximumSize(width+lineWidth()*2,height+lineWidth()*2);
+    setMinimumSize(width + lineWidth() * 2, height + lineWidth() * 2);
+    setMaximumSize(width + lineWidth() * 2, height + lineWidth() * 2);
 }
 
 void TilesetItemButton::paintEvent(QPaintEvent *ev)
 {
     QPainter painter;
     painter.begin(this);
-    painter.fillRect(contentsRect(), Qt::darkGray);
+    painter.fillRect(contentsRect(), qApp->palette().mid());
 
     if(!m_drawItem.isNull())
         painter.drawPixmap(contentsRect(), m_drawItem,m_drawItem.rect());
@@ -112,6 +115,7 @@ void TilesetItemButton::mousePressEvent(QMouseEvent *)
 {
     if(isItemSet())
         emit clicked(static_cast<int>(m_itemType), (unsigned long)m_id);
+
     setFrameStyle(QFrame::Panel | QFrame::Sunken);
 }
 
@@ -119,6 +123,7 @@ void TilesetItemButton::mouseReleaseEvent(QMouseEvent *)
 {
     setFrameStyle(QFrame::Panel | QFrame::Raised);
 }
+
 unsigned int TilesetItemButton::id() const
 {
     return m_id;
@@ -126,12 +131,10 @@ unsigned int TilesetItemButton::id() const
 
 bool TilesetItemButton::isItemSet()
 {
-    return !m_drawItem.isNull() && m_id!=0;
+    return !m_drawItem.isNull() && m_id != 0;
 }
 
 ItemTypes::itemTypes TilesetItemButton::itemType() const
 {
     return m_itemType;
 }
-
-

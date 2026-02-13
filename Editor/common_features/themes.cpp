@@ -779,6 +779,8 @@ void Themes::togglePallete(Themes::Palettes pallete)
         darkPalette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(85, 100, 125));
         darkPalette.setColor(QPalette::BrightText, Qt::red);
         darkPalette.setColor(QPalette::Link, QColor(0, 100, 150));
+        darkPalette.setColor(QPalette::Light, QColor(150, 175, 200));
+        darkPalette.setColor(QPalette::Mid, QColor(50, 70, 100));
         darkPalette.setColor(QPalette::Highlight, QColor(0, 100, 150));
         darkPalette.setColor(QPalette::Disabled, QPalette::Highlight, QColor(40, 60, 80));
         darkPalette.setColor(QPalette::HighlightedText, QColor(150, 175, 200));

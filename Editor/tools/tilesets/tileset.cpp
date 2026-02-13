@@ -398,13 +398,16 @@ bool tileset::OpenSimpleTileset(const QString &path, SimpleTileset &tileset)
                 if(spData.size() == 3)
                 {
                     bool succ = false;
+
                     SimpleTilesetItem i;
                     i.col = spData[1].toInt(&succ);
                     if(!succ)
                         return false;
+
                     i.row = spData[2].toInt(&succ);
                     if(!succ)
                         return false;
+
                     simpleTilesetINI.beginGroup(gr);
                     i.id = (unsigned int)simpleTilesetINI.value("id", 0).toInt();
                     simpleTilesetINI.endGroup();

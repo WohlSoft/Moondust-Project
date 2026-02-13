@@ -24,20 +24,15 @@
 #include <QPixmap>
 #include <ConfigPackManager/level/config_npc.h>
 
+#include "obj_base_item.h"
+
 // //Defines:// //
 //  obj_npc     //
 //  npc_Markers //
 // //////////// //
 
-struct obj_npc
+struct obj_npc : obj_base_item
 {
-    bool            isValid = false;
-    unsigned long   animator_id = 0;
-    QPixmap        *cur_image = nullptr;
-    QPixmap        *cur_icon = nullptr;
-    QPixmap         image;
-    QPixmap         icon;
-
     /*!
      * \brief Quickly copies all properties except images
      * \param Target bgo configuration body

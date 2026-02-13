@@ -24,16 +24,11 @@
 #include <QPixmap>
 #include <ConfigPackManager/world/config_wld_generic.h>
 
-////////////////////World map items///////////////////////////
-struct obj_wld_generic
-{
-    bool isValid = false;
-    unsigned long animator_id = 0;
-    QPixmap *cur_image = nullptr;
-    QPixmap *cur_icon = nullptr;
-    QPixmap image;
-    QPixmap icon;
+#include "obj_base_item.h"
 
+////////////////////World map items///////////////////////////
+struct obj_wld_generic : obj_base_item
+{
     int m_itemType = 0;
 
     /*!
