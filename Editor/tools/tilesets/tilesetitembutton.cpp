@@ -42,21 +42,44 @@ void TilesetItemButton::setConfig(DataConfig *config)
     m_config = config;
 }
 
+static void s_drawRedCross(int w, int h, QPixmap &pix)
+{
+    pix = QPixmap(w, h);
+    QPainter p(&pix);
+    p.fillRect(0, 0, w, h, Qt::black);
+    p.setPen(QPen(Qt::red, 4));
+    p.drawLine(0, 0, w, h);
+    p.drawLine(w, 0, 0, h);
+    p.end();
+}
+
 void TilesetItemButton::applyItem(const int &type_i, const int &id, const int &width, const int &height)
 {
     int wid = (width == -1 ? contentsRect().width() : width);
     int hei = (height == -1 ? contentsRect().height() : height);
     QPixmap p;
-    Items::getItemGFX(type_i, id, p, scn, false, QSize(wid, hei));
-    setToolTip(Items::getTilesetToolTip(type_i, id, scn));
-    if(p.isNull())
+
+    if(!Items::isValid(type_i, id))
     {
-        m_drawItem = QPixmap(wid, hei);
+        setToolTip(QString("<h2>%1</h2>%2").arg(tr("Unavailable item")).arg(tr("This item can not be used in this time.")));
+        s_drawRedCross(wid, hei, m_drawItem);
+        setEnabled(false);
         return;
     }
+
+    Items::getItemGFX(type_i, id, p, scn, false, QSize(wid, hei));
+    setToolTip(Items::getTilesetToolTip(type_i, id, scn));
+
+    if(p.isNull())
+    {
+        s_drawRedCross(wid, hei, m_drawItem);
+        return;
+    }
+
     m_drawItem = p;
     m_id = (unsigned int)id;
     m_itemType = static_cast<ItemTypes::itemTypes>(type_i);
+    setEnabled(true);
 }
 
 void TilesetItemButton::applySize(const int &width, const int &height)
@@ -72,7 +95,13 @@ void TilesetItemButton::paintEvent(QPaintEvent *ev)
     painter.fillRect(contentsRect(), Qt::darkGray);
 
     if(!m_drawItem.isNull())
-        painter.drawPixmap(contentsRect(),m_drawItem,m_drawItem.rect());
+        painter.drawPixmap(contentsRect(), m_drawItem,m_drawItem.rect());
+
+    if(!isEnabled())
+    {
+        painter.setOpacity(0.5);
+        painter.fillRect(contentsRect(), Qt::gray);
+    }
 
     painter.end();
 

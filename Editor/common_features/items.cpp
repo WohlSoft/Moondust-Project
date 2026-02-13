@@ -122,6 +122,41 @@ void Items::getItemGFX(const obj_wld_generic *inObj, QPixmap &outImg, bool whole
     TPL_getItemGFX(inObj, outImg, whole, targetSize, imgType);
 }
 
+bool Items::isValid(int itemType, unsigned long ItemID)
+{
+    DataConfig &config = MainWinConnect::pMainWin->configs;
+
+    if(ItemID == 0)
+        return false;
+
+    switch(itemType)
+    {
+    case ItemTypes::LVL_Block:
+        return ItemID <= (unsigned long)config.main_block.stored();
+
+    case ItemTypes::LVL_BGO:
+        return ItemID <= (unsigned long)config.main_bgo.stored();
+
+    case ItemTypes::LVL_NPC:
+        return ItemID <= (unsigned long)config.main_npc.stored();
+
+    case ItemTypes::WLD_Tile:
+        return ItemID <= (unsigned long)config.main_wtiles.stored();
+
+    case ItemTypes::WLD_Scenery:
+        return ItemID <= (unsigned long)config.main_wscene.stored();
+
+    case ItemTypes::WLD_Path:
+        return ItemID <= (unsigned long)config.main_wpaths.stored();
+
+    case ItemTypes::WLD_Level:
+        return ItemID <= (unsigned long)config.main_wlevels.stored();
+
+    default:
+        return false;
+    }
+}
+
 void Items::getItemGFXCW(int itemType, unsigned long ItemID, QPixmap &outImg, bool whole, QSize targetSize)
 {
     LevelEdit *l_edit = MainWinConnect::pMainWin->activeLvlEditWin();
