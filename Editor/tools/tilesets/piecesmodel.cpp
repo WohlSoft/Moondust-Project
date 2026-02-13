@@ -254,7 +254,7 @@ void ElementsListModel::setSort(int sortType, bool backward)
 
 QString ElementsListModel::getMimeType() const
 {
-    switch (m_type)
+    switch(m_type)
     {
         case LEVELPIECE_BLOCK:      return QString("text/x-pge-piece-block");
         case LEVELPIECE_BGO:        return QString("text/x-pge-piece-bgo");
@@ -265,6 +265,7 @@ QString ElementsListModel::getMimeType() const
         case WORLDPIECE_LEVEL:      return QString("text/x-pge-piece-level");
         default: break;
     }
+
     return QString("image/x-pge-piece");
 }
 
@@ -272,6 +273,7 @@ void ElementsListModel::updateVisibilityMap()
 {
     m_elementsVisibleMap.clear();
     m_elementsVisibleMap.reserve(m_elements.size());
+
     for(int i = 0; i < m_elements.size(); ++i)
     {
         if(m_elements[i].isVisible)
@@ -350,10 +352,13 @@ QMimeData *ElementsListModel::mimeData(const QModelIndexList &indexes) const
 
     QDataStream stream(&encodedData, QIODevice::WriteOnly);
 
-    foreach (QModelIndex index, indexes) {
-        if (index.isValid()) {
-            int id = data(index, Qt::UserRole+1).toInt();
+    foreach(QModelIndex index, indexes)
+    {
+        if (index.isValid())
+        {
+            int id = data(index, Qt::UserRole + 1).toInt();
             stream << id;
+            stream << m_type;
         }
     }
 

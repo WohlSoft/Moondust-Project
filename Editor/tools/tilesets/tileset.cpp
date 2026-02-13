@@ -26,6 +26,7 @@
 #include <common_features/items.h>
 #include <pge_qt_compat.h>
 
+#include "../../defines.h"
 #include "tileset.h"
 
 
@@ -34,6 +35,7 @@ tileset::tileset(DataConfig *conf, int type, QWidget *parent, int baseSize, int 
 {
     mode = GFX_Staff;
     scn = scene;
+
     if(scene != nullptr)
     {
         if(QString(scn->metaObject()->className()) == "LvlScene") mode = GFX_Level;
@@ -51,11 +53,8 @@ tileset::tileset(DataConfig *conf, int type, QWidget *parent, int baseSize, int 
 
 void tileset::clear()
 {
-    piecePixmaps.clear();
-    pieceRects.clear();
-    pieceID.clear();
+    pieces.clear();
     highlightedRect = QRect();
-    inPlace = 0;
     update();
 }
 
@@ -91,9 +90,10 @@ void tileset::paintEvent(QPaintEvent *ev)
         painter.drawRect(highlightedRect.adjusted(0, 0, -1, -1));
     }
 
-    if(pieceRects.isEmpty())
+    if(pieces.isEmpty())
     {
         painter.setPen(QPen(QBrush(Qt::black), 1));
+
         if(highlightedRect.isEmpty())
         {
             painter.drawText(QRect(0, 0, m_cols * 32, m_rows * 32),
@@ -103,8 +103,8 @@ void tileset::paintEvent(QPaintEvent *ev)
     }
     else
     {
-        for(int i = 0; i < pieceRects.size(); ++i)
-            painter.drawPixmap(QRect(pieceRects[i].x(), pieceRects[i].y(), piecePixmaps[i].width(), piecePixmaps[i].height()), piecePixmaps[i]);
+        for(int i = 0; i < pieces.size(); ++i)
+            painter.drawPixmap(pieces[i].rect, pieces[i].pixmap);
     }
 
     painter.end();
@@ -112,10 +112,12 @@ void tileset::paintEvent(QPaintEvent *ev)
 
 void tileset::dragEnterEvent(QDragEnterEvent *event)
 {
-    if(event->mimeData()->hasFormat(getMimeType()))
-        event->accept();
-    else
+    QString fmt = isSupportedFormat(event->mimeData()->formats());
+
+    if(fmt.isEmpty())
         event->ignore();
+    else
+        event->accept();
 }
 
 void tileset::dragLeaveEvent(QDragLeaveEvent *event)
@@ -127,10 +129,10 @@ void tileset::dragLeaveEvent(QDragLeaveEvent *event)
 
 void tileset::dragMoveEvent(QDragMoveEvent *event)
 {
-    if(event->mimeData()->hasFormat(getMimeType())
-       && findPiece(targetSquare(event->Q_EventPos())) == -1)
-    {
+    QString fmt = isSupportedFormat(event->mimeData()->formats());
 
+    if(!fmt.isEmpty() && findPiece(targetSquare(event->Q_EventPos())) == -1)
+    {
         highlightedRect = targetSquare(event->Q_EventPos());
         event->setDropAction(Qt::MoveAction);
         event->accept();
@@ -146,29 +148,29 @@ void tileset::dragMoveEvent(QDragMoveEvent *event)
 
 void tileset::dropEvent(QDropEvent *event)
 {
-    if(event->mimeData()->hasFormat(getMimeType())
-       && findPiece(targetSquare(event->Q_EventPos())) == -1)
-    {
+    QString fmt = isSupportedFormat(event->mimeData()->formats());
 
-        QByteArray pieceData = event->mimeData()->data(getMimeType());
+    if(!fmt.isEmpty() && findPiece(targetSquare(event->Q_EventPos())) == -1)
+    {
+        QByteArray pieceData = event->mimeData()->data(fmt);
         QDataStream stream(&pieceData, QIODevice::ReadOnly);
         QRect square = targetSquare(event->Q_EventPos());
-        int objID;
+        int objID, objType;
         stream >> objID;
+        stream >> objType;
 
-        QPixmap scaledPix;
-        Items::getItemGFX(m_type, (unsigned long)objID, scaledPix, scn, false, QSize(m_baseSize, m_baseSize));
-
-        piecePixmaps.append(scaledPix);
-        pieceRects.append(square);
-        pieceID.append(objID);
+        Piece p;
+        Items::getItemGFX(objType, (unsigned long)objID, p.pixmap, scn, false, QSize(m_baseSize, m_baseSize));
+        p.rect = square;
+        p.id = objID;
+        p.type = objType;
+        pieces.append(p);
 
         highlightedRect = QRect();
         update();
 
         event->setDropAction(Qt::MoveAction);
         event->accept();
-
     }
     else
     {
@@ -183,12 +185,12 @@ void tileset::mousePressEvent(QMouseEvent *event)
     {
         if(m_editMode)
         {
-            piecePixmaps.removeAt(findPiece(targetSquare(event->pos())));
-            pieceID.removeAt(findPiece(targetSquare(event->pos())));
-            pieceRects.removeAt(findPiece(targetSquare(event->pos())));
+            auto item = findPiece(targetSquare(event->pos()));
+            pieces.removeAt(item);
             update();
             return;
         }
+
         return;
     }
 
@@ -200,46 +202,43 @@ void tileset::mousePressEvent(QMouseEvent *event)
 
     if(!m_editMode)
     {
-        emit clickedItem(m_type, pieceID[found]);
+        emit clickedItem(pieces[found].type >= 0 ? pieces[found].type : m_type, pieces[found].id);
         return;
     }
 
-    QPixmap pixmap = piecePixmaps[found];
-    long objID = pieceID[found];
-    piecePixmaps.removeAt(found);
-    pieceRects.removeAt(found);
-    pieceID.removeAt(found);
+    Piece p = pieces[found];
+    pieces.removeAt(found);
     update();
 
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
 
-    dataStream << (int)objID;
+    dataStream << (int)p.id;
+    dataStream << (int)p.type;
 
     QMimeData *mimeData = new QMimeData;
-    mimeData->setData(getMimeType(), itemData);
+    mimeData->setData(getMimeType(p.type), itemData);
 
     QDrag *drag = new QDrag(this);
     drag->setMimeData(mimeData);
     drag->setHotSpot(event->pos() - square.topLeft());
-    drag->setPixmap(pixmap);
+    drag->setPixmap(p.pixmap);
 
     if(drag->exec(Qt::MoveAction) == 0)
     {
-        piecePixmaps.insert(found, pixmap);
-        pieceRects.insert(found, square);
-        pieceID.insert(found, objID);
+        pieces.insert(found, p);
         update();
     }
 }
 
 int tileset::findPiece(const QRect &pieceRect) const
 {
-    for(int i = 0; i < pieceRects.size(); ++i)
+    for(int i = 0; i < pieces.size(); ++i)
     {
-        if(pieceRect == pieceRects[i])
+        if(pieceRect == pieces[i].rect)
             return i;
     }
+
     return -1;
 }
 
@@ -248,9 +247,30 @@ const QRect tileset::targetSquare(const QPoint &position) const
     return QRect(position.x() / getBaseSize() * getBaseSize(), position.y() / getBaseSize() * getBaseSize(), getBaseSize(), getBaseSize());
 }
 
-QString tileset::getMimeType()
+QString tileset::isSupportedFormat(const QStringList &formats)
 {
-    switch(m_type)
+    QSet<QString> fmts;
+    fmts << QString("text/x-pge-piece-block")
+         << QString("text/x-pge-piece-bgo")
+         << QString("text/x-pge-piece-npc")
+         << QString("text/x-pge-piece-tile")
+         << QString("text/x-pge-piece-path")
+         << QString("text/x-pge-piece-scenery")
+         << QString("text/x-pge-piece-level")
+         << QString("text/x-pge-piece");
+
+    foreach(const QString &q, formats)
+    {
+        if(fmts.contains(q))
+            return q;
+    }
+
+    return QString();
+}
+
+QString tileset::getMimeType(int type)
+{
+    switch(type)
     {
     case ItemTypes::LVL_Block:
         return QString("text/x-pge-piece-block");
@@ -269,8 +289,10 @@ QString tileset::getMimeType()
     default:
         break;
     }
+
     return QString("image/x-pge-piece");
 }
+
 QString tileset::name() const
 {
     return m_name;
@@ -314,14 +336,24 @@ SimpleTileset tileset::toSimpleTileset()
     s.cols = m_cols;
     s.type = m_type;
     s.tileSetName = m_name;
-    for(int i = 0; i < pieceRects.size(); ++i)
+
+    QRect scope(0, 0, m_baseSize * m_cols, m_baseSize * m_rows);
+
+    for(int i = 0; i < pieces.size(); ++i)
     {
+        Piece &p = pieces[i];
         SimpleTilesetItem it;
-        it.col = pieceRects[i].x() / m_baseSize;
-        it.row = pieceRects[i].y() / m_baseSize;
-        it.id = pieceID[i];
+
+        if(!((scope + QMargins(1, 1, 1, 1)).contains(p.rect, true)))
+            continue; // Don't include out of scope items!
+
+        it.col = p.rect.x() / m_baseSize;
+        it.row = p.rect.y() / m_baseSize;
+        it.id = p.id;
+        it.type = p.type;
         s.items << it;
     }
+
     return s;
 }
 
@@ -332,21 +364,26 @@ void tileset::loadSimpleTileset(const SimpleTileset &tileset)
     setCols(tileset.cols);
     setType(tileset.type);
     setName(tileset.tileSetName);
+
     for(int i = 0; i < tileset.items.size(); ++i)
     {
-        QPixmap scaledPix;
-        Items::getItemGFX(m_type, tileset.items[i].id, scaledPix, scn, false, QSize(m_baseSize, m_baseSize));
-        piecePixmaps.append(scaledPix);
-        pieceRects.append(QRect(tileset.items[i].col * m_baseSize, tileset.items[i].row * m_baseSize, m_baseSize, m_baseSize));
-        pieceID.append(tileset.items[i].id);
+        auto &item = tileset.items[i];
+        Piece p;
+
+        p.type = item.type >= 0 ? item.type : m_type;
+        Items::getItemGFX(p.type, item.id, p.pixmap, scn, false, QSize(m_baseSize, m_baseSize));
+        p.rect = QRect(item.col * m_baseSize, item.row * m_baseSize, m_baseSize, m_baseSize);
+        p.id = item.id;
+
+        pieces.append(p);
     }
 }
 
 void tileset::SaveSimpleTileset(const QString &path, const SimpleTileset &tileset)
 {
-    QString modifiedPath;
-    modifiedPath = path;
+    QString modifiedPath = path;
     QSettings simpleTilesetINI(modifiedPath, QSettings::IniFormat);
+
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     simpleTilesetINI.setIniCodec("UTF-8");
 #endif
@@ -358,10 +395,19 @@ void tileset::SaveSimpleTileset(const QString &path, const SimpleTileset &tilese
     simpleTilesetINI.setValue("name", tileset.tileSetName);
     simpleTilesetINI.setValue("type", static_cast<int>(tileset.type));
     simpleTilesetINI.endGroup();
+
     for(int i = 0; i < tileset.items.size(); ++i)
     {
-        simpleTilesetINI.beginGroup(QString("item-%1-%2").arg(tileset.items[i].col).arg(tileset.items[i].row));
-        simpleTilesetINI.setValue("id", tileset.items[i].id);
+        auto &item = tileset.items[i];
+
+        simpleTilesetINI.beginGroup(QString("item-%1-%2").arg(item.col).arg(item.row));
+        simpleTilesetINI.setValue("id", item.id);
+
+        if(item.type >= 0)
+            simpleTilesetINI.setValue("type", item.type);
+        else
+            simpleTilesetINI.remove("type");
+
         simpleTilesetINI.endGroup();
     }
 }
@@ -376,52 +422,49 @@ bool tileset::OpenSimpleTileset(const QString &path, SimpleTileset &tileset)
     QStringList groups = simpleTilesetINI.childGroups();
     int tilesetindex;
 
-    if((tilesetindex = groups.indexOf("tileset")) != -1)
-    {
-        QFileInfo pathInfo(path);
-        simpleTilesetINI.beginGroup("tileset");
-        tileset.rows = (unsigned int)simpleTilesetINI.value("rows", 3).toInt();
-        tileset.cols = (unsigned int)simpleTilesetINI.value("cols", 3).toInt();
-        tileset.type = simpleTilesetINI.value("type", 0).toInt();
-        tileset.tileSetName = simpleTilesetINI.value("name", "").toString();
-        tileset.fileName = pathInfo.fileName();
-        simpleTilesetINI.endGroup();
-
-        groups.removeAt(tilesetindex);
-
-        for(int i = 0; i < groups.size(); ++i)
-        {
-            QString gr = groups[i];
-            if(gr.startsWith("item-"))
-            {
-                QStringList spData = gr.split("-");
-                if(spData.size() == 3)
-                {
-                    bool succ = false;
-
-                    SimpleTilesetItem i;
-                    i.col = spData[1].toInt(&succ);
-                    if(!succ)
-                        return false;
-
-                    i.row = spData[2].toInt(&succ);
-                    if(!succ)
-                        return false;
-
-                    simpleTilesetINI.beginGroup(gr);
-                    i.id = (unsigned int)simpleTilesetINI.value("id", 0).toInt();
-                    simpleTilesetINI.endGroup();
-                    tileset.items << i;
-                }
-                else
-                    return false;
-            }
-            else
-                return false;
-        }
-    }
-    else
+    if((tilesetindex = groups.indexOf("tileset")) < 0)
         return false;
+
+    QFileInfo pathInfo(path);
+    simpleTilesetINI.beginGroup("tileset");
+    tileset.rows = (unsigned int)simpleTilesetINI.value("rows", 3).toInt();
+    tileset.cols = (unsigned int)simpleTilesetINI.value("cols", 3).toInt();
+    tileset.type = simpleTilesetINI.value("type", 0).toInt();
+    tileset.tileSetName = simpleTilesetINI.value("name", "").toString();
+    tileset.fileName = pathInfo.fileName();
+    simpleTilesetINI.endGroup();
+
+    groups.removeAt(tilesetindex);
+
+    for(int i = 0; i < groups.size(); ++i)
+    {
+        QString gr = groups[i];
+        if(!gr.startsWith("item-"))
+            return false;
+
+        QStringList spData = gr.split("-");
+
+        if(spData.size() != 3)
+            return false;
+
+        bool succ = false;
+
+        SimpleTilesetItem it;
+        it.col = spData[1].toInt(&succ);
+        if(!succ)
+            return false;
+
+        it.row = spData[2].toInt(&succ);
+        if(!succ)
+            return false;
+
+        simpleTilesetINI.beginGroup(gr);
+        it.id = simpleTilesetINI.value("id", 0).toUInt();
+        it.type = simpleTilesetINI.value("type", -1).toInt();
+        simpleTilesetINI.endGroup();
+        tileset.items << it;
+    }
+
     return true;
 }
 
@@ -437,36 +480,20 @@ void tileset::updateSize()
 {
     setMaximumSize(QSize(m_baseSize * m_cols, m_baseSize * m_rows));
     setMinimumSize(QSize(m_baseSize * m_cols, m_baseSize * m_rows));
-    removeOuterItems(QRect(0, 0, m_baseSize * m_cols, m_baseSize * m_rows));
 }
 
-void tileset::removeOuterItems(QRect updatedRect)
-{
-    if(pieceRects.size() == 0)
-        return;
+// void tileset::removeOuterItems(QRect updatedRect)
+// {
+//     if(pieces.size() == 0)
+//         return;
 
-    QList<QRect> rmRects;
-    QList<QPixmap> rmPixm;
-    QList<int> rmId;
+//     for(int i = 0; i < pieces.size(); ++i)
+//     {
+//         if(!((updatedRect + QMargins(1, 1, 1, 1)).contains(pieces[i].rect, true)))
+//             pieces.removeAt(i--);
+//     }
+// }
 
-    for(int i = 0; i < pieceRects.size(); ++i)
-    {
-        if(!((updatedRect + QMargins(1, 1, 1, 1)).contains(pieceRects[i], true)))
-        {
-            rmRects << pieceRects[i];
-            rmPixm << piecePixmaps[i];
-            rmId << pieceID[i];
-        }
-    }
-
-    for(int i = 0; i < rmRects.size(); ++i)
-    {
-        int l = pieceRects.indexOf(rmRects[i]);
-        pieceRects.removeAt(l);
-        piecePixmaps.removeAt(l);
-        pieceID.removeAt(l);
-    }
-}
 int tileset::cols() const
 {
     return m_cols;

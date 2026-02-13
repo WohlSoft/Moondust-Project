@@ -62,6 +62,8 @@ beta2
 - Added the support for "soft-limit" field for integration configuration packages to allow some amount of items being disabled due to missing graphics
 - Added an explicit indication of unused/uninitialised level sections
 - Added a small notice when placing level entry point and the path tile at the same cell on the world map
+- Added an ability to store mixed types in tilesets
+- Resizing tileset will no longer remove out of scope items immediately: instead, they gets removed on tileset save only
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

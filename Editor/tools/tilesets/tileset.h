@@ -25,8 +25,6 @@
 
 #include <data_configs/data_configs.h>
 
-#include "../../defines.h"
-
 class tileset : public QWidget
 {
     Q_OBJECT
@@ -79,16 +77,21 @@ protected:
 private:
     int findPiece(const QRect &pieceRect) const;
     const QRect targetSquare(const QPoint &position) const;
-    QString getMimeType();
+    QString isSupportedFormat(const QStringList &formats);
+    QString getMimeType(int type);
 
     GFXMode mode;
     QGraphicsScene *scn;
 
-    QList<QPixmap> piecePixmaps;
-    QList<QRect> pieceRects;
-    QList<long> pieceID;
+    struct Piece
+    {
+        QPixmap pixmap;
+        QRect rect;
+        long id = 0;
+        int type = 0;
+    };
+    QList<Piece> pieces;
     QRect highlightedRect;
-    int inPlace;
 
     int m_rows;
     int m_cols;
@@ -99,7 +102,7 @@ private:
     bool m_editMode;
 
     void updateSize();
-    void removeOuterItems(QRect updatedRect);
+    // void removeOuterItems(QRect updatedRect);
 };
 
 #endif // TILESET_H

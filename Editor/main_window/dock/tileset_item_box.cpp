@@ -492,7 +492,7 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
                                 SimpleTilesetItem &item = tileSet.items[k];
                                 auto *tButton = new TilesetItemButton(&mw()->configs, scene, tileSetNameWrapper);
                                 tButton->applySize(32, 32);
-                                tButton->applyItem(tileSet.type, item.id);
+                                tButton->applyItem(item.type >= 0 ? item.type : tileSet.type, item.id);
                                 tsLayout->addWidget(tButton, item.row, item.col);
                                 connect(tButton, SIGNAL(clicked(int, ulong)), mw(), SLOT(SwitchPlacingItem(int, ulong)));
                             }
@@ -549,7 +549,7 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
                     SimpleTilesetItem &item = ts.items[k];
                     auto *tButton = new TilesetItemButton(&mw()->configs, scene, tilesetNameWrapper);
                     tButton->applySize(32, 32);
-                    tButton->applyItem(ts.type, (int)item.id);
+                    tButton->applyItem(item.type >= 0 ? item.type : ts.type, (int)item.id);
                     l->addWidget(tButton, (int)item.row, (int)item.col);
                     if(item.col >= mostRighter)
                         mostRighter = item.col + 1;
