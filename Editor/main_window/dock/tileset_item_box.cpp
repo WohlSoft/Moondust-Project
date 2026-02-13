@@ -539,7 +539,7 @@ void TilesetItemBox::clearTilesetGroups()
     while(f > i)
     {
         //include custom tab
-        if(cat->tabText(i) == "Custom")
+        if(cat->widget(i) == ui->custom_cat)
         {
             ++i;
             continue;
@@ -569,7 +569,8 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
         scene = wldEdit->scene;
 
     QTabWidget *cat = ui->TileSetsCategories;
-    if(!(cat->tabText(tabIndex) == "Custom"))
+
+    if(cat->widget(tabIndex) != ui->custom_cat)
     {
         QWidget *current = cat->widget(tabIndex);
         if(!current)
