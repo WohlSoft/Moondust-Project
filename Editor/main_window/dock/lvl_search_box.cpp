@@ -596,7 +596,7 @@ void LvlSearchBox::resetNPCSearch()
 
 bool LvlSearchBox::checkBlockCriteria(QGraphicsItem *gri)
 {
-    if(gri->data(ITEM_TYPE).toString() != "Block")
+    if(gri->data(LvlScene::ITEM_TYPE_INT).toInt() != ItemTypes::LVL_Block)
         return false;
 
     auto *it = qgraphicsitem_cast<ItemBlock *>(gri);
@@ -633,7 +633,7 @@ bool LvlSearchBox::checkBlockCriteria(QGraphicsItem *gri)
 
 bool LvlSearchBox::checkBgoCriteria(QGraphicsItem *gri)
 {
-    if(gri->data(ITEM_TYPE).toString() != "BGO")
+    if(gri->data(LvlScene::ITEM_TYPE_INT).toInt() != ItemTypes::LVL_BGO)
         return false;
 
     auto *it = qgraphicsitem_cast<ItemBGO *>(gri);
@@ -655,7 +655,7 @@ bool LvlSearchBox::checkBgoCriteria(QGraphicsItem *gri)
 
 bool LvlSearchBox::checkNpcCriteria(QGraphicsItem *gri)
 {
-    if(gri->data(ITEM_TYPE).toString() != "NPC")
+    if(gri->data(LvlScene::ITEM_TYPE_INT).toInt() != ItemTypes::LVL_NPC)
         return false;
 
     bool toBeFound = true;

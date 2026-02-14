@@ -38,6 +38,8 @@ class ItemLevel : public WldBaseItem
         return QCoreApplication::translate("ItemLevel", sourceText, disambiguation, n);
     }
 
+    friend class ItemPath;
+
     void updateNotices();
 
 protected:

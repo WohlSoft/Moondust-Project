@@ -160,7 +160,8 @@ void LvlScene::ChangeSectionBG(int BG_Id, int SectionID, bool forceTiled)
             WriteToLog(QtDebugMsg, QString("Remove items " + findBG->data(ITEM_TYPE).toString() + " by id=" + QString::number(sctID) + " by SctID=" + QString::number(LvlData->sections[sctID].id)));
 #endif
             removeItem(findBG);
-            if(findBG) delete findBG;
+            if(findBG)
+                delete findBG;
         }
     }
 
@@ -270,6 +271,7 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
         if(itemRect != nullptr)
         {
             itemRect->setData(ITEM_TYPE, QString("BackGround%1").arg(section.id));
+            itemRect->setData(ITEM_TYPE_INT, ItemTypes::LVL_META_Background);
             itemRect->setZValue(Z_backImage);
         }
 
@@ -374,6 +376,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
 
         item = addRect(0, 0, sctW, R1H - R1Hc, Qt::NoPen, QBrush(srcimg.copy(0, R1Ho, R1W, R1H - R1Hc)));
         item->setData(ITEM_TYPE, QString("BackGround%1").arg(sctID));
+        item->setData(ITEM_TYPE_INT, ItemTypes::LVL_META_Background);
         item->setPos(x, y + toY);
         item->setZValue(Z_backImage);
 
@@ -381,6 +384,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         {
             item = addRect(0, 0, sctW, sctH - R1H, Qt::NoPen, QBrush(FillColor));
             item->setData(ITEM_TYPE, QString("BackGround%1").arg(sctID));
+            item->setData(ITEM_TYPE_INT, ItemTypes::LVL_META_Background);
             item->setPos(x, y + RectPlus);
             item->setZValue(Z_backImage);
         }
@@ -417,6 +421,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
             // /////////////////////Draw first row//////////////////
             item = addRect(0, 0, sctW, R1H - R1Hc, Qt::NoPen, QBrush(srcimg.copy(0, R1Ho, R1W, R1H - R1Hc)));
             item->setData(ITEM_TYPE, QString("BackGround%1").arg(sctID));
+            item->setData(ITEM_TYPE_INT, ItemTypes::LVL_META_Background);
             item->setPos(x, y + toY);
             item->setZValue(Z_backImage);
             // /////////////////////Draw first row//////////////////
@@ -449,6 +454,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
                 // /////////////////////Draw second row//////////////////
                 item = addRect(0, 0, sctW, R2H - R2Hc, Qt::NoPen, QBrush(srcimg2.copy(0, R2Ho, R2W, R2H - R2Hc)));
                 item->setData(ITEM_TYPE, QString("BackGround%1").arg(sctID));
+                item->setData(ITEM_TYPE_INT, ItemTypes::LVL_META_Background);
                 item->setPos(x, y + toY);
                 item->setZValue(Z_backImage + 0.0000000001);
                 // /////////////////////Draw second row//////////////////
@@ -462,6 +468,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
             {
                 item = addRect(0, 0, sctW, sctH - R1H - RectPlus, Qt::NoPen, QBrush(FillColor));
                 item->setData(ITEM_TYPE, QString("BackGround%1").arg(sctID));
+                item->setData(ITEM_TYPE_INT, ItemTypes::LVL_META_Background);
                 item->setPos(x, y);
                 item->setZValue(Z_backImage);
             }
@@ -491,6 +498,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
                                QBrush(srcimg.copy(0, R1H - RectPlus, R1W, RectPlus))
                               );
                 item->setData(ITEM_TYPE, QString("BackGround%1").arg(sctID));
+                item->setData(ITEM_TYPE_INT, ItemTypes::LVL_META_Background);
                 item->setPos(x, y);
                 item->setZValue(Z_backImage);
 
@@ -498,6 +506,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
                 {
                     item = addRect(0, 0, sctW, sctH - RectPlus, Qt::NoPen, QBrush(srcimg));
                     item->setData(ITEM_TYPE, "BackGround" + QString::number(sctID));
+                    item->setData(ITEM_TYPE_INT, ItemTypes::LVL_META_Background);
                     item->setPos(x, y + RectPlus);
                     item->setZValue(Z_backImage);
                 }
@@ -508,6 +517,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
                 //Attached to Top
                 item = addRect(0, 0, sctW, sctH, Qt::NoPen, QBrush(srcimg));
                 item->setData(ITEM_TYPE, QString("BackGround%1").arg(sctID));
+                item->setData(ITEM_TYPE_INT, ItemTypes::LVL_META_Background);
                 item->setPos(x, y);
                 item->setZValue(Z_backImage);
             }
@@ -533,13 +543,15 @@ void LvlScene::drawSpace()
 #endif
     foreach(QGraphicsItem *spaceItem, items())
     {
-        if(spaceItem->data(ITEM_TYPE).toString() == "Space")
+        int objType = spaceItem->data(ITEM_TYPE_INT).toInt();
+
+        if(objType == ItemTypes::META_Space)
         {
             removeItem(spaceItem);
             delete spaceItem;
             continue;
         }
-        if(spaceItem->data(ITEM_TYPE).toString() == "SectionBorder")
+        else if(objType == ItemTypes::META_SectionBorder)
         {
             removeItem(spaceItem);
             delete spaceItem;
@@ -560,6 +572,7 @@ void LvlScene::drawSpace()
     WriteToLog(QtDebugMsg, QString("Draw intersection space-> Find minimal"));
 #endif
     j = 0;
+
     do
     {
         l = m_data->sections[j].size_left;
@@ -587,10 +600,13 @@ void LvlScene::drawSpace()
 
         if(m_data->sections[i].size_left < l)
             l = m_data->sections[i].size_left;
+
         if(m_data->sections[i].size_right > r)
             r = m_data->sections[i].size_right;
+
         if(m_data->sections[i].size_top < t)
             t = m_data->sections[i].size_top;
+
         if(m_data->sections[i].size_bottom > b)
             b = m_data->sections[i].size_bottom;
     }
@@ -637,5 +653,7 @@ void LvlScene::drawSpace()
     item2->setZValue(Z_sys_sctBorder);
     item->setOpacity(qreal(0.4));
     item->setData(ITEM_TYPE, "Space");
+    item->setData(ITEM_TYPE_INT, ItemTypes::META_Space);
     item2->setData(ITEM_TYPE, "SectionBorder");
+    item2->setData(ITEM_TYPE_INT, ItemTypes::META_SectionBorder);
 }

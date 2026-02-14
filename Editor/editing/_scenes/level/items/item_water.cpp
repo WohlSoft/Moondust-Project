@@ -61,10 +61,11 @@ void ItemPhysEnv::construct()
     m_data.y = qRound(this->pos().y());
     m_data.env_type = LevelPhysEnv::ENV_WATER;
 
-    setData(ITEM_TYPE, "Water");
-    setData(ITEM_BLOCK_IS_SIZABLE, "sizable");
-    setData(ITEM_WIDTH, static_cast<int>(m_data.w));
-    setData(ITEM_HEIGHT, static_cast<int>(m_data.h));
+    setData(LvlScene::ITEM_TYPE, "Water");
+    setData(LvlScene::ITEM_TYPE_INT, ItemTypes::LVL_PhysEnv);
+    setData(LvlScene::ITEM_BLOCK_IS_SIZABLE, true);
+    setData(LvlScene::ITEM_WIDTH, static_cast<int>(m_data.w));
+    setData(LvlScene::ITEM_HEIGHT, static_cast<int>(m_data.h));
 }
 
 ItemPhysEnv::~ItemPhysEnv()
@@ -233,7 +234,7 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                     LevelData modData;
                     for(QGraphicsItem *selItem : m_scene->selectedItems())
                     {
-                        if(selItem->data(ITEM_TYPE).toString() == "Water")
+                        if(selItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_PhysEnv)
                         {
                             ItemPhysEnv *pe = qgraphicsitem_cast<ItemPhysEnv *>(selItem);
                             Q_ASSERT(pe);
@@ -264,8 +265,8 @@ QPainterPath ItemPhysEnv::shape() const
     {
         0.0,
         0.0,
-        this->data(ITEM_WIDTH).toReal(),
-        this->data(ITEM_HEIGHT).toReal()
+        this->data(LvlScene::ITEM_WIDTH).toReal(),
+        this->data(LvlScene::ITEM_HEIGHT).toReal()
     };
 
     const int BORDERWIDTH = 12;
@@ -317,8 +318,8 @@ void ItemPhysEnv::arrayApply()
 
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
-    this->setData(ITEM_WIDTH, (int)m_data.w);
-    this->setData(ITEM_HEIGHT, (int)m_data.h);
+    this->setData(LvlScene::ITEM_WIDTH, (int)m_data.w);
+    this->setData(LvlScene::ITEM_HEIGHT, (int)m_data.h);
 
     if(m_data.meta.index < (unsigned int)m_scene->m_data->physez.size())
     {
@@ -513,8 +514,8 @@ void ItemPhysEnv::setPhysEnvData(LevelPhysEnv inD)
     m_data = inD;
     m_waterSize = QSize((int)m_data.w, (int)m_data.h);
     setPos(m_data.x, m_data.y);
-    setData(ITEM_ID, QString::number(0));
-    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id));
+    setData(LvlScene::ITEM_ID, 0ull);
+    setData(LvlScene::ITEM_ARRAY_ID, m_data.meta.array_id);
     updateColor();
     refreshItemSize();
     m_scene->unregisterElement(this);
@@ -523,8 +524,8 @@ void ItemPhysEnv::setPhysEnvData(LevelPhysEnv inD)
 
 void ItemPhysEnv::refreshItemSize()
 {
-    setData(ITEM_WIDTH, (int)m_data.w);
-    setData(ITEM_HEIGHT, (int)m_data.h);
+    setData(LvlScene::ITEM_WIDTH, (int)m_data.w);
+    setData(LvlScene::ITEM_HEIGHT, (int)m_data.h);
 }
 
 QRectF ItemPhysEnv::boundingRect() const

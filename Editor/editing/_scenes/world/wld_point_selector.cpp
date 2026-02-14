@@ -48,7 +48,8 @@ void WldPointSelector::setPoint(QPoint p)
         m_pointItem = itemPtr;
         itemPtr->setGridSize(m_scene->m_configs->defaultGrid.general);
         m_scene->addItem(itemPtr);
-        itemPtr->setData(ITEM_TYPE, "POINT");
+        itemPtr->setData(WldScene::ITEM_TYPE, "POINT");
+        itemPtr->setData(WldScene::ITEM_TYPE_INT, ItemTypes::META_Point);
         itemPtr->setZValue(6000);
         //A small trick to avoid non-null pointer if object destroyed
         QObject::connect(itemPtr,

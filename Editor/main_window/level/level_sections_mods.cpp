@@ -138,23 +138,23 @@ void MainWindow::on_actionCloneSectionTo_triggered()
 
             for(QGraphicsItem *x : itemsToClone)
             {
-                QString t = x->data(ITEM_TYPE).toString();
-                if(t == "Block")
+                int t = x->data(LvlScene::ITEM_TYPE_INT).toInt();
+                if(t == ItemTypes::LVL_Block)
                 {
                     ItemBlock *sourceBlock = (ItemBlock *)(x);
                     buffer.blocks.push_back(sourceBlock->m_data);
                 }
-                else if(t == "BGO")
+                else if(t == ItemTypes::LVL_BGO)
                 {
                     ItemBGO *sourceBGO = (ItemBGO *)(x);
                     buffer.bgo.push_back(sourceBGO->m_data);
                 }
-                else if(t == "NPC")
+                else if(t == ItemTypes::LVL_NPC)
                 {
                     ItemNPC *sourceNPC = (ItemNPC *)(x);
                     buffer.npc.push_back(sourceNPC->m_data);
                 }
-                else if(t == "Water")
+                else if(t == ItemTypes::LVL_PhysEnv)
                 {
                     ItemPhysEnv *sourcePEZ = (ItemPhysEnv *)(x);
                     buffer.physez.push_back(sourcePEZ->m_data);
@@ -350,7 +350,7 @@ void MainWindow::deleteLevelSection(LevelEdit *edit, int section, long margin)
 
     for(auto x = itemsToRemove.begin(); x != itemsToRemove.end(); )
     {
-        if((*x)->data(ITEM_IS_ITEM).isNull())
+        if((*x)->data(LvlScene::ITEM_IS_ITEM).isNull())
             x = itemsToRemove.erase(x);
         else
             ++x;
@@ -395,7 +395,7 @@ void MainWindow::on_actionSCT_RotateLeft_triggered()
 
         for(auto x = itemsToModify.begin(); x != itemsToModify.end(); )
         {
-            if((*x)->data(ITEM_IS_ITEM).isNull())
+            if((*x)->data(LvlScene::ITEM_IS_ITEM).isNull())
                 x = itemsToModify.erase(x);
             else
                 ++x;
@@ -429,7 +429,7 @@ void MainWindow::on_actionSCT_RotateRight_triggered()
 
         for(auto x = itemsToModify.begin(); x != itemsToModify.end(); )
         {
-            if((*x)->data(ITEM_IS_ITEM).isNull())
+            if((*x)->data(LvlScene::ITEM_IS_ITEM).isNull())
                 x = itemsToModify.erase(x);
             else
                 ++x;
@@ -463,7 +463,7 @@ void MainWindow::on_actionSCT_FlipHorizontal_triggered()
 
         for(auto x = itemsToModify.begin(); x != itemsToModify.end(); )
         {
-            if((*x)->data(ITEM_IS_ITEM).isNull())
+            if((*x)->data(LvlScene::ITEM_IS_ITEM).isNull())
                 x = itemsToModify.erase(x);
             else
                 ++x;
@@ -497,7 +497,7 @@ void MainWindow::on_actionSCT_FlipVertical_triggered()
 
         for(auto x = itemsToModify.begin(); x != itemsToModify.end(); )
         {
-            if((*x)->data(ITEM_IS_ITEM).isNull())
+            if((*x)->data(LvlScene::ITEM_IS_ITEM).isNull())
                 x = itemsToModify.erase(x);
             else
                 ++x;

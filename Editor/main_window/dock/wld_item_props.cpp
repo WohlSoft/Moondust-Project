@@ -339,7 +339,7 @@ void WLD_ItemProps::on_WLD_PROPS_PathBG_clicked(bool checked)
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "LEVEL")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
             {
                 selData.levels.push_back(((ItemLevel *) item)->m_data);
                 ((ItemLevel *)item)->setShowSmallPathBG(checked);
@@ -363,7 +363,7 @@ void WLD_ItemProps::on_WLD_PROPS_BigPathBG_clicked(bool checked)
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "LEVEL")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
             {
                 selData.levels.push_back(((ItemLevel *) item)->m_data);
                 ((ItemLevel *)item)->setShowBigPathBG(checked);
@@ -388,7 +388,7 @@ void WLD_ItemProps::on_WLD_PROPS_AlwaysVis_clicked(bool checked)
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "LEVEL")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
             {
                 selData.levels.push_back(((ItemLevel *) item)->m_data);
                 ((ItemLevel *)item)->alwaysVisible(checked);
@@ -413,7 +413,7 @@ void WLD_ItemProps::on_WLD_PROPS_GameStart_clicked(bool checked)
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "LEVEL")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
             {
                 selData.levels.push_back(((ItemLevel *) item)->m_data);
                 ((ItemLevel *)item)->m_data.gamestart = checked;
@@ -442,7 +442,7 @@ void WLD_ItemProps::on_WLD_PROPS_LVLFile_editingFinished()
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "LEVEL")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
             {
                 selData.levels.push_back(((ItemLevel *) item)->m_data);
                 ((ItemLevel *)item)->m_data.lvlfile = ui->WLD_PROPS_LVLFile->text();
@@ -471,7 +471,7 @@ void WLD_ItemProps::on_WLD_PROPS_LVLTitle_editingFinished()
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "LEVEL")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
             {
                 selData.levels.push_back(((ItemLevel *) item)->m_data);
                 ((ItemLevel *)item)->m_data.title = ui->WLD_PROPS_LVLTitle->text();
@@ -496,7 +496,7 @@ void WLD_ItemProps::on_WLD_PROPS_EnterTo_valueChanged(int arg1)
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "LEVEL")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
             {
                 selData.levels.push_back(((ItemLevel *) item)->m_data);
                 ((ItemLevel *)item)->m_data.entertowarp = arg1;
@@ -644,7 +644,7 @@ void WLD_ItemProps::levelExitCodeSelected(QAction *exitCode)
 
         for(QGraphicsItem *item : items)
         {
-            if(item->data(ITEM_TYPE).toString() == "LEVEL")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
             {
                 ItemLevel *l = qgraphicsitem_cast<ItemLevel*>(item);
                 Q_ASSERT(l);
@@ -696,7 +696,7 @@ void WLD_ItemProps::on_WLD_PROPS_GotoX_editingFinished()
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "LEVEL")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
             {
                 selData.levels.push_back(((ItemLevel *) item)->m_data);
                 ((ItemLevel *)item)->m_data.gotox = (ui->WLD_PROPS_GotoX->text().isEmpty()) ? -1 : ui->WLD_PROPS_GotoX->text().toInt();
@@ -726,7 +726,7 @@ void WLD_ItemProps::on_WLD_PROPS_GotoY_editingFinished()
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "LEVEL")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
             {
                 selData.levels.push_back(((ItemLevel *) item)->m_data);
                 ((ItemLevel *)item)->m_data.gotoy = (ui->WLD_PROPS_GotoY->text().isEmpty()) ? -1 : ui->WLD_PROPS_GotoY->text().toInt();

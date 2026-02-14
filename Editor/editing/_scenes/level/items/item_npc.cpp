@@ -82,7 +82,8 @@ void ItemNPC::construct()
 
     _internal_animator = nullptr;
 
-    setData(ITEM_TYPE, "NPC");
+    setData(LvlScene::ITEM_TYPE, "NPC");
+    setData(LvlScene::ITEM_TYPE_INT, ItemTypes::LVL_NPC);
 }
 
 
@@ -269,7 +270,7 @@ void ItemNPC::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
             for(QGraphicsItem *SelItem : our_items)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "NPC")
+                if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
                 {
                     ItemNPC *sItem = qgraphicsitem_cast<ItemNPC *>(SelItem);
                     Q_ASSERT(sItem);
@@ -308,7 +309,7 @@ cancelTransform:
 
             for(QGraphicsItem *SelItem : m_scene->selectedItems())
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "NPC")
+                if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
                 {
                     ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
                     Q_ASSERT(n);
@@ -385,7 +386,7 @@ cancelTransform:
         LevelData selData;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "NPC")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
                 Q_ASSERT(n);
@@ -401,7 +402,7 @@ cancelTransform:
         LevelData selData;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "NPC")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
                 Q_ASSERT(n);
@@ -423,7 +424,7 @@ cancelTransform:
             //apply to all selected items.
             for(QGraphicsItem *SelItem : m_scene->selectedItems())
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "NPC")
+                if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
                 {
                     ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
                     Q_ASSERT(n);
@@ -443,7 +444,7 @@ cancelTransform:
         LevelData selData;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "NPC")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
                 Q_ASSERT(n);
@@ -458,7 +459,7 @@ cancelTransform:
         LevelData selData;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "NPC")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
                 Q_ASSERT(n);
@@ -473,7 +474,7 @@ cancelTransform:
         LevelData selData;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "NPC")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
                 Q_ASSERT(n);
@@ -488,7 +489,7 @@ cancelTransform:
         LevelData selData;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "NPC")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
                 Q_ASSERT(n);
@@ -526,7 +527,7 @@ cancelTransform:
 
         for(QGraphicsItem *SelItem : our_items)
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "NPC")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 ItemNPC *n = qgraphicsitem_cast<ItemNPC *>(SelItem);
                 if(n->m_data.id == oldID)
@@ -552,7 +553,7 @@ cancelRemoveSSS:
             QString ch = d.getText();
             foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "NPC")
+                if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
                 {
                     selData.npc.push_back(((ItemNPC *)SelItem)->m_data);
                     ((ItemNPC *) SelItem)->m_data.meta.custom_params = ch;
@@ -1089,16 +1090,16 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bo
                  m_data.generator_direct,
                  m_data.generator_type, true);
 
-    setData(ITEM_ID, QString::number(m_data.id));
-    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id));
+    setData(LvlScene::ITEM_ID, (unsigned long long)m_data.id);
+    setData(LvlScene::ITEM_ARRAY_ID, m_data.meta.array_id);
 
-    setData(ITEM_NPC_BLOCK_COLLISION,  QString::number((int)m_localProps.setup.collision_with_blocks));
-    setData(ITEM_NPC_NO_NPC_COLLISION, QString::number((int)m_localProps.setup.no_npc_collisions));
+    setData(LvlScene::ITEM_NPC_BLOCK_COLLISION, (int)m_localProps.setup.collision_with_blocks);
+    setData(LvlScene::ITEM_NPC_NO_NPC_COLLISION, (int)m_localProps.setup.no_npc_collisions);
 
-    setData(ITEM_WIDTH,  QString::number(m_localProps.setup.width));  //width
-    setData(ITEM_HEIGHT, QString::number(m_localProps.setup.height));  //height
+    setData(LvlScene::ITEM_WIDTH,  (int)m_localProps.setup.width);  //width
+    setData(LvlScene::ITEM_HEIGHT, (int)m_localProps.setup.height);  //height
 
-    setData(ITEM_IS_META, m_localProps.setup.is_meta_object);
+    setData(LvlScene::ITEM_IS_META, m_localProps.setup.is_meta_object);
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
@@ -1116,8 +1117,8 @@ QRectF ItemNPC::boundingRect() const
 
     xP = -5.0;
     yP = -5.0;
-    rP = xP + data(ITEM_WIDTH).toReal() + 10.0;
-    bP = yP + data(ITEM_HEIGHT).toReal() + 10.0;
+    rP = xP + data(LvlScene::ITEM_WIDTH).toReal() + 10.0;
+    bP = yP + data(LvlScene::ITEM_HEIGHT).toReal() + 10.0;
 
     x = std::min(x, xP);
     y = std::min(y, yP);

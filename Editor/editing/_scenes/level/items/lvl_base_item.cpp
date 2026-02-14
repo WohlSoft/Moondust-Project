@@ -50,7 +50,7 @@ void LvlBaseItem::construct()
     m_mouseMid = false;
     m_mouseRight = false;
 
-    setData(ITEM_IS_ITEM, 1);
+    setData(LvlScene::ITEM_IS_ITEM, true);
 }
 
 void LvlBaseItem::arrayApply()
@@ -91,8 +91,8 @@ QPainterPath LvlBaseItem::shape() const
 {
     QPainterPath path;
     path.addRect(QRectF(0.0, 0.0,
-                        this->data(ITEM_WIDTH).toReal(),
-                        this->data(ITEM_HEIGHT).toReal()));
+                        this->data(LvlScene::ITEM_WIDTH).toReal(),
+                        this->data(LvlScene::ITEM_HEIGHT).toReal()));
     return path;
 }
 

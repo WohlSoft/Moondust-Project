@@ -235,32 +235,37 @@ public:
     qlonglong m_lastLevelArrayID = 0;
     qlonglong m_lastMusicBoxArrayID = 0;
 
-    //Defining indexes for data values of items
-#define ITEM_TYPE                    0 //String
-    // ID of item
-#define ITEM_ID                      1 //int
-    // in-array UID
-#define ITEM_ARRAY_ID                2 //int
-    // Is it's a block item which is sizable
-#define ITEM_BLOCK_IS_SIZABLE        3 //bool
-    // Is it's NPC which should collide blocks
-#define ITEM_NPC_BLOCK_COLLISION     7 //bool
-    // NPC that shoudn't collide other NPCs
-#define ITEM_NPC_NO_NPC_COLLISION    8 //bool
-    // Width of element
-#define ITEM_WIDTH                   9 //int
-    // Height of element
-#define ITEM_HEIGHT                  10 //int
-    // Is it's a scene object
-#define ITEM_IS_ITEM                 24 //bool
-    // Is it's a cursor object
-#define ITEM_IS_CURSOR               25 //bool
-    // Last remembered position before commit
-#define ITEM_LAST_POS                26 //QPointF
-    // Last remembered size before commit
-#define ITEM_LAST_SIZE               27 //QSizeF
-    //Never seen in game or on exported images
-#define ITEM_IS_META                 28 //bool
+    enum ItemDataField
+    {
+        // Defining indexes for data values of items
+        ITEM_TYPE =                  0, //String
+        // ID of item
+        ITEM_ID =                    1, //int
+        // in-array UID
+        ITEM_ARRAY_ID =              2, //int
+        // Is it's a block item which is sizable
+        ITEM_BLOCK_IS_SIZABLE =      3, //bool
+        // Is it's NPC which should collide blocks
+        ITEM_NPC_BLOCK_COLLISION =   7, //bool
+        // NPC that shoudn't collide other NPCs
+        ITEM_NPC_NO_NPC_COLLISION =  8, //bool
+        // Width of element
+        ITEM_WIDTH =                 9, //int
+        // Height of element
+        ITEM_HEIGHT =                10, //int
+        // Is it's a scene object
+        ITEM_IS_ITEM =               24, //bool
+        // Is it's a cursor object
+        ITEM_IS_CURSOR =             25, //bool
+        // Last remembered position before commit
+        ITEM_LAST_POS =              26, //QPointF
+        // Last remembered size before commit
+        ITEM_LAST_SIZE =             27, //QSizeF
+        //Never seen in game or on exported images
+        ITEM_IS_META =               28, //bool
+        // Item type
+        ITEM_TYPE_INT =              29, //Int
+    };
 
     void placeTile(WorldTerrainTile &tile, bool toGrid = false);
     void placeScenery(WorldScenery &scenery, bool toGrid = false);

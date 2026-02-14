@@ -115,7 +115,7 @@ void WldScene::hideMusicBoxes(bool visible)
 {
     foreach(QGraphicsItem *i, items())
     {
-        if(i->data(0).toString() == "MUSICBOX")
+        if(i->data(ITEM_TYPE_INT).toInt() == ItemTypes::WLD_MusicBox)
             i->setVisible(visible);
     }
 }
@@ -124,9 +124,10 @@ void WldScene::setSemiTransparentPaths(bool semiTransparent)
 {
     foreach(QGraphicsItem *i, items())
     {
-        if(i->data(0).toString() == "PATH")
+        if(i->data(ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Path)
             i->setOpacity(semiTransparent ? 0.5 : 1);
     }
+
     update();
 }
 
@@ -134,9 +135,11 @@ void WldScene::hidePathAndLevels(bool visible)
 {
     foreach(QGraphicsItem *i, items())
     {
-        if(i->data(0).toString() == "PATH")
+        int objType = i->data(ITEM_TYPE_INT).toInt();
+
+        if(objType == ItemTypes::WLD_Path)
             i->setVisible(visible);
-        else if(i->data(0).toString() == "LEVEL")
+        else if(objType == ItemTypes::WLD_Level)
         {
             i->setVisible(visible ||
                           ((ItemLevel *)i)->m_data.gamestart ||
@@ -173,10 +176,12 @@ void WldScene::setLocked(int type, bool lock)
 
     for(QList<QGraphicsItem *>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
+        int objType = (*it)->data(ITEM_TYPE_INT).toInt();
+
         switch(type)
         {
         case 1://Tile
-            if((*it)->data(0).toString() == "TILE")
+            if(objType == ItemTypes::WLD_Tile)
             {
                 ItemTile *gi = qgraphicsitem_cast<ItemTile *>(*it);
                 if(!gi)continue;
@@ -185,7 +190,7 @@ void WldScene::setLocked(int type, bool lock)
             }
             break;
         case 2://Scenery
-            if((*it)->data(0).toString() == "SCENERY")
+            if(objType == ItemTypes::WLD_Scenery)
             {
                 ItemScene *gi = qgraphicsitem_cast<ItemScene *>(*it);
                 if(!gi)continue;
@@ -194,7 +199,7 @@ void WldScene::setLocked(int type, bool lock)
             }
             break;
         case 3://Paths
-            if((*it)->data(0).toString() == "PATH")
+            if(objType == ItemTypes::WLD_Path)
             {
                 ItemPath *gi = qgraphicsitem_cast<ItemPath *>(*it);
                 if(!gi)continue;
@@ -203,7 +208,7 @@ void WldScene::setLocked(int type, bool lock)
             }
             break;
         case 4://Levels
-            if((*it)->data(0).toString() == "LEVEL")
+            if(objType == ItemTypes::WLD_Level)
             {
                 ItemLevel *gi = qgraphicsitem_cast<ItemLevel *>(*it);
                 if(!gi)continue;
@@ -212,7 +217,7 @@ void WldScene::setLocked(int type, bool lock)
             }
             break;
         case 5://Musicboxes
-            if((*it)->data(0).toString() == "MUSICBOX")
+            if(objType == ItemTypes::WLD_MusicBox)
             {
                 ItemMusic *gi = qgraphicsitem_cast<ItemMusic *>(*it);
                 if(!gi)continue;

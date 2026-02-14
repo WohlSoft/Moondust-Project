@@ -58,7 +58,8 @@ ItemBlock::ItemBlock(LvlScene *parentScene, QGraphicsItem *parent)
 void ItemBlock::construct()
 {
     m_gridSize = 32;
-    setData(ITEM_TYPE, "Block");
+    setData(LvlScene::ITEM_TYPE, "Block");
+    setData(LvlScene::ITEM_TYPE_INT, ItemTypes::LVL_Block);
     m_includedNPC = nullptr;
     m_coinCounter = nullptr;
     m_slipperyShade = nullptr;
@@ -122,7 +123,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     slipp->setChecked(m_data.slippery);
 
     QAction *resize =          ItemMenu.addAction(tr("Resize"));
-    resize->setVisible((this->data(ITEM_BLOCK_IS_SIZABLE).toString() == "sizable"));
+    resize->setVisible(this->data(LvlScene::ITEM_BLOCK_IS_SIZABLE).toBool());
     ItemMenu.addSeparator();
 
     QAction *chNPC =           ItemMenu.addAction(tr("Change included NPC..."));
@@ -263,7 +264,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 for(QGraphicsItem *SelItem : our_items)
                 {
-                    if(SelItem->data(ITEM_TYPE).toString() == "Block")
+                    if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
                     {
                         ItemBlock *item = qgraphicsitem_cast<ItemBlock*>(SelItem);
                         Q_ASSERT(item);
@@ -281,7 +282,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 for(QGraphicsItem *SelItem : our_items)
                 {
-                    if(SelItem->data(ITEM_TYPE).toString() == "Block")
+                    if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
                     {
                         ItemBlock *item = qgraphicsitem_cast<ItemBlock*>(SelItem);
                         Q_ASSERT(item);
@@ -381,7 +382,7 @@ typeEventAgain:
         LevelData selData;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "Block")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
             {
                 ItemBlock *b = qgraphicsitem_cast<ItemBlock*>(SelItem);
                 Q_ASSERT(b);
@@ -397,7 +398,7 @@ typeEventAgain:
         LevelData selData;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "Block")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
             {
                 ItemBlock *b = qgraphicsitem_cast<ItemBlock*>(SelItem);
                 Q_ASSERT(b);
@@ -432,7 +433,7 @@ typeEventAgain:
 
             foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "Block")
+                if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
                 {
                     ItemBlock *b = qgraphicsitem_cast<ItemBlock*>(SelItem);
                     Q_ASSERT(b);
@@ -474,7 +475,7 @@ typeEventAgain:
 
         for(QGraphicsItem *SelItem : our_items)
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "Block")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
             {
                 ItemBlock *b = qgraphicsitem_cast<ItemBlock*>(SelItem);
                 Q_ASSERT(b);
@@ -502,7 +503,7 @@ cancelRemoveSSS:
             QString ch = d.getText();
             foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "Block")
+                if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
                 {
                     ItemBlock *b = qgraphicsitem_cast<ItemBlock*>(SelItem);
                     Q_ASSERT(b);
@@ -689,8 +690,10 @@ void ItemBlock::arrayApply()
     bool found = false;
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
-    if(this->data(ITEM_BLOCK_IS_SIZABLE).toString() == "sizable")
+
+    if(this->data(LvlScene::ITEM_BLOCK_IS_SIZABLE).toBool())
         this->setZValue(m_scene->Z_blockSizable + sizableBlockZ(m_data));
+
     if(m_data.meta.index < (unsigned int)m_scene->m_data->blocks.size())
     {
         //Check index
@@ -855,8 +858,8 @@ void ItemBlock::setBlockSize(QRect rect)
         this->setPos(m_data.x, m_data.y);
     }
     m_imageSize = QRectF(0, 0, m_data.w, m_data.h);
-    this->setData(ITEM_WIDTH, QVariant((int)m_data.w));
-    this->setData(ITEM_HEIGHT, QVariant((int)m_data.h));
+    this->setData(LvlScene::ITEM_WIDTH, (int)m_data.w);
+    this->setData(LvlScene::ITEM_HEIGHT, (int)m_data.h);
     setIncludedNPC(m_data.npc_id);
     arrayApply();
     m_scene->update();
@@ -880,7 +883,7 @@ void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animato
         if(m_localProps.setup.sizable)
         {
             setZValue(m_scene->Z_blockSizable + sizableBlockZ(m_data));  // applay sizable block Z
-            setData(ITEM_BLOCK_IS_SIZABLE, "sizable");
+            setData(LvlScene::ITEM_BLOCK_IS_SIZABLE, true);
         }
         else
         {
@@ -889,10 +892,11 @@ void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animato
             else
                 setZValue(m_scene->Z_Block); // applay standart block Z
 
-            setData(ITEM_BLOCK_IS_SIZABLE, "standart");
+            setData(LvlScene::ITEM_BLOCK_IS_SIZABLE, false);
         }
-        setData(ITEM_BLOCK_SHAPE, m_localProps.setup.phys_shape);
-        setData(ITEM_IS_META, m_localProps.setup.is_meta_object);
+
+        setData(LvlScene::ITEM_BLOCK_SHAPE, m_localProps.setup.phys_shape);
+        setData(LvlScene::ITEM_IS_META, m_localProps.setup.is_meta_object);
     }
 
     if(animator)
@@ -908,10 +912,10 @@ void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animato
 
     m_imageSize = QRectF(0, 0, m_data.w, m_data.h);
 
-    setData(ITEM_ID, QString::number(m_data.id));
-    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id));
-    setData(ITEM_WIDTH, QString::number(m_data.w));  //width
-    setData(ITEM_HEIGHT, QString::number(m_data.h));  //height
+    setData(LvlScene::ITEM_ID, (unsigned long long)m_data.id);
+    setData(LvlScene::ITEM_ARRAY_ID, m_data.meta.array_id);
+    setData(LvlScene::ITEM_WIDTH, (int)m_data.w);  //width
+    setData(LvlScene::ITEM_HEIGHT, (int)m_data.h);  //height
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
@@ -1025,13 +1029,15 @@ void ItemBlock::setAnimator(long aniID)
         m_sizablePrevFrame = m_scene->m_animatorsBlocks[aniID]->frame();
         m_imageSize = QRectF(0, 0, frameRect.width(), frameRect.height());
     }
+
     if(!m_sizable)
     {
         m_data.w = qRound(m_imageSize.width()); //width
         m_data.h = qRound(m_imageSize.height()); //height
-        setData(ITEM_WIDTH, QVariant((int)m_data.w));
-        setData(ITEM_HEIGHT, QVariant((int)m_data.h));
+        setData(LvlScene::ITEM_WIDTH, (int)m_data.w);
+        setData(LvlScene::ITEM_HEIGHT, (int)m_data.h);
     }
+
     m_animatorID = aniID;
     setMainPixmap();
 }

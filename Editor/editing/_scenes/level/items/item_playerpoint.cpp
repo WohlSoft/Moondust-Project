@@ -40,7 +40,8 @@ void ItemPlayerPoint::construct()
     m_gridSize = 16;
     m_offset_x = 0;
     m_offset_y = 0;
-    setData(ITEM_TYPE, "playerPoint");
+    setData(LvlScene::ITEM_TYPE, "playerPoint");
+    setData(LvlScene::ITEM_TYPE_INT, ItemTypes::LVL_Player);
 }
 
 QRectF ItemPlayerPoint::boundingRect() const
@@ -115,7 +116,7 @@ void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         //LevelData selData;
         foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "playerPoint")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Player)
             {
                 ItemPlayerPoint *p = qgraphicsitem_cast<ItemPlayerPoint*>(SelItem);
                 Q_ASSERT(p);
@@ -129,7 +130,7 @@ void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         //LevelData selData;
         foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "playerPoint")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Player)
             {
                 ItemPlayerPoint *p = qgraphicsitem_cast<ItemPlayerPoint*>(SelItem);
                 Q_ASSERT(p);
@@ -188,7 +189,7 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
 
     this->setPos(m_data.x, m_data.y);
     this->setZValue(m_scene->Z_Player);
-    this->setData(ITEM_ARRAY_ID, QString::number(m_data.id));
+    this->setData(LvlScene::ITEM_ARRAY_ID, m_data.id);
     this->setFlag(QGraphicsItem::ItemIsSelectable, true);
     this->setFlag(QGraphicsItem::ItemIsMovable, true);
 
@@ -208,8 +209,8 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
     m_offset_x = qRound(qreal(pnt.w - m_currentImage.width()) / 2.0);
     m_offset_y = pnt.h - m_currentImage.height();
 
-    this->setData(ITEM_WIDTH, (int)pnt.w);
-    this->setData(ITEM_HEIGHT, (int)pnt.h);
+    this->setData(LvlScene::ITEM_WIDTH, (int)pnt.w);
+    this->setData(LvlScene::ITEM_HEIGHT, (int)pnt.h);
 
     //Apply new image
     changeDirection(m_data.direction);

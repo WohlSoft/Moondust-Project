@@ -161,7 +161,7 @@ void LvlEventsBox::setEventsBox()
             if((event.name != "Level - Start") && (event.name != "P Switch - Start") && (event.name != "P Switch - End"))
                 item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
-            item->setData(Qt::UserRole, QString::number(event.meta.array_id));
+            item->setData(Qt::UserRole, event.meta.array_id);
             ui->LVLEvents_List->addItem(item);
         }
 
@@ -1024,11 +1024,11 @@ void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
 
     for(QList<QGraphicsItem *>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
-        if((*it)->data(ITEM_IS_CURSOR).toString() == "CURSOR") continue; //skip cursor item
+        if((*it)->data(LvlScene::ITEM_IS_CURSOR).toBool()) continue; //skip cursor item
 
-        QString iType = (*it)->data(ITEM_TYPE).toString();
+        int iType = (*it)->data(LvlScene::ITEM_TYPE_INT).toInt();
 
-        if(iType == "Block")
+        if(iType == ItemTypes::LVL_Block)
         {
             bool isMod = false;
             ItemBlock  *block = (ItemBlock *)(*it);
@@ -1054,7 +1054,7 @@ void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
             if(isMod)
                 block->arrayApply();
         }
-        else if(iType == "NPC")
+        else if(iType == ItemTypes::LVL_NPC)
         {
             bool isMod = false;
             ItemNPC *npc = (ItemNPC *)(*it);
@@ -1086,7 +1086,7 @@ void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
             if(isMod)
                 npc->arrayApply();
         }
-        else if(iType == "Door_enter" || iType == "Door_exit")
+        else if(iType == ItemTypes::LVL_META_DoorEnter || iType == ItemTypes::LVL_META_DoorExit)
         {
             ItemDoor *door = (ItemDoor *)(*it);
 

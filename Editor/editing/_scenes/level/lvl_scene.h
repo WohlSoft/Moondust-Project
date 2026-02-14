@@ -276,19 +276,24 @@ public:
     qlonglong m_lastNpcArrayID;
 
     //Defining indexes for data values of items
-#define ITEM_TYPE                    0 //String
-#define ITEM_ID                      1 //int
-#define ITEM_ARRAY_ID                2 //int
-#define ITEM_BLOCK_IS_SIZABLE        3 //bool
-#define ITEM_BLOCK_SHAPE             5 //int
-#define ITEM_NPC_BLOCK_COLLISION     7 //bool
-#define ITEM_NPC_NO_NPC_COLLISION    8 //bool
-#define ITEM_WIDTH                   9 //int
-#define ITEM_HEIGHT                  10 //int
-#define ITEM_IS_ITEM                 24 //bool
-#define ITEM_IS_CURSOR               25 //bool
-#define ITEM_LAST_POS                26 //QPointF
-#define ITEM_LAST_SIZE               27 //QSizeF
+    enum ItemDataField
+    {
+        ITEM_TYPE                  = 0,  //String
+        ITEM_ID                    = 1,  //int
+        ITEM_ARRAY_ID              = 2,  //int
+        ITEM_BLOCK_IS_SIZABLE      = 3,  //bool
+        ITEM_BLOCK_SHAPE           = 4,  //int
+        ITEM_NPC_BLOCK_COLLISION   = 5,  //bool
+        ITEM_NPC_NO_NPC_COLLISION  = 6,  //bool
+        ITEM_WIDTH                 = 7,  //int
+        ITEM_HEIGHT                = 8, //int
+        ITEM_IS_ITEM               = 24, //bool
+        ITEM_IS_CURSOR             = 25, //bool
+        ITEM_LAST_POS              = 26, //QPointF
+        ITEM_LAST_SIZE             = 27, //QSizeF
+        ITEM_IS_META =               28, //bool
+        ITEM_TYPE_INT              = 29, //Int
+    };
 
     long m_IncrementingNpcSpecialSpin;
 

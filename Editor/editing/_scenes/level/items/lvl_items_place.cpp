@@ -139,16 +139,18 @@ ItemPlayerPoint *LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 {
     ItemPlayerPoint *player = nullptr;
     bool found = false;
+
     if(!init)
     {
         foreach(QGraphicsItem *plrt, this->items())
         {
-            if(
-                (plrt->data(ITEM_TYPE).toString() == "playerPoint") &&
-                ((unsigned int)plrt->data(ITEM_ARRAY_ID).toInt() == plr.id)
-            )
+            int objType = plrt->data(ITEM_TYPE_INT).toInt();
+            unsigned int arrId = plrt->data(ITEM_ARRAY_ID).toUInt();
+
+            if(objType == ItemTypes::LVL_Player && arrId == plr.id)
             {
                 player = dynamic_cast<ItemPlayerPoint *>(plrt);
+                Q_ASSERT(player);
                 found = true;
                 break;
             }
@@ -161,14 +163,12 @@ ItemPlayerPoint *LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
         player->setPos(plr.x, plr.y);
         player->arrayApply();
     }
-    else
+    else if(plr.h != 0 || plr.w != 0 || plr.x != 0 || plr.y != 0)
     {
-        if((plr.h != 0) || (plr.w != 0) || (plr.x != 0) || (plr.y != 0))
-        {
-            player = new ItemPlayerPoint(this);
-            player->setPointData(plr, init);
-        }
+        player = new ItemPlayerPoint(this);
+        player->setPointData(plr, init);
     }
+
 
     return player;
 }
@@ -176,10 +176,10 @@ ItemPlayerPoint *LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 
 void LvlScene::placeDoor(LevelDoor &door, bool toGrid)
 {
-    if(((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_o) && (!door.lvl_i)))
+    if((!door.lvl_o && !door.lvl_i) || (door.lvl_o && !door.lvl_i))
         placeDoorEnter(door, toGrid, true);
 
-    if(((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_i)))
+    if((!door.lvl_o && !door.lvl_i) || door.lvl_i)
         placeDoorExit(door, toGrid, true);
 }
 

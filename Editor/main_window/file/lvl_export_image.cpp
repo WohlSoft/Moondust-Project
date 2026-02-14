@@ -164,49 +164,53 @@ void LevelEdit::ExportingReady() //slot
 
     qApp->processEvents();
     scene->stopAnimation(); //Reset animation to 0 frame
+
     if(imageExportDialog.hideWatersAndWarps())
         scene->hideWarpsAndDoors(false);
+
     if(imageExportDialog.hideMetaSigns())
         scene->setMetaSignsVisibility(false);
+
     if(forceTiled)
         scene->setTiledBackground(true);
+
     QList<QGraphicsItem*> invisibleBlocks;
     if(imageExportDialog.hideInvisibleBlocks())
     {
         QList<QGraphicsItem*> allBlocks = scene->items();
         for(QGraphicsItem* it : allBlocks)
         {
-            if(it->data(ITEM_TYPE).toString() != "Block" &&
-               it->data(ITEM_TYPE).toString() != "BGO" &&
-               it->data(ITEM_TYPE).toString() != "NPC")
+            int objType = it->data(LvlScene::ITEM_TYPE_INT).toInt();
+
+            if(objType != ItemTypes::LVL_Block && objType != ItemTypes::LVL_BGO && objType != ItemTypes::LVL_NPC)
                 continue;
 
             //Exclude already hidden elements
             if(!it->isVisible())
                 continue;
 
-            if(it->data(ITEM_TYPE).toString() == "Block")
+            if(objType == ItemTypes::LVL_Block)
             {
                 auto *blk = dynamic_cast<ItemBlock*>(it);
-                if(blk && (blk->m_data.invisible || blk->data(ITEM_IS_META).toBool()))
+                if(blk && (blk->m_data.invisible || blk->data(LvlScene::ITEM_IS_META).toBool()))
                 {
                     it->setVisible(false);
                     invisibleBlocks.push_back(it);
                 }
             }
-            else if(it->data(ITEM_TYPE).toString() == "BGO")
+            else if(objType == ItemTypes::LVL_BGO)
             {
                 auto *blk = dynamic_cast<ItemBGO*>(it);
-                if(blk && blk->data(ITEM_IS_META).toBool())
+                if(blk && blk->data(LvlScene::ITEM_IS_META).toBool())
                 {
                     it->setVisible(false);
                     invisibleBlocks.push_back(it);
                 }
             }
-            else if(it->data(ITEM_TYPE).toString() == "NPC")
+            else if(objType == ItemTypes::LVL_NPC)
             {
                 auto *blk = dynamic_cast<ItemNPC*>(it);
-                if(blk && blk->data(ITEM_IS_META).toBool())
+                if(blk && blk->data(LvlScene::ITEM_IS_META).toBool())
                 {
                     it->setVisible(false);
                     invisibleBlocks.push_back(it);
@@ -214,6 +218,7 @@ void LevelEdit::ExportingReady() //slot
             }
         }
     }
+
     if(imageExportDialog.hideGrid())
     {
         gridWasShown = scene->m_opts.grid_show;
@@ -259,19 +264,25 @@ void LevelEdit::ExportingReady() //slot
     qApp->processEvents();
     if(scene->m_opts.animationEnabled)
         scene->startAnimation(); // Restart animation
+
     if(imageExportDialog.hideWatersAndWarps())
         scene->hideWarpsAndDoors(true);
+
     if(imageExportDialog.hideMetaSigns())
         scene->setMetaSignsVisibility(true);
+
     if(forceTiled)
         scene->setTiledBackground(false);
+
     if(gridWasShown)
         scene->m_opts.grid_show = true;
+
     if(imageExportDialog.hideInvisibleBlocks())
     {
         for(QGraphicsItem *it : invisibleBlocks)
             it->setVisible(true);
     }
+
     scene->invalidate();
     scene->update();
 

@@ -45,7 +45,8 @@ ItemLevel::ItemLevel(WldScene *parentScene, QGraphicsItem *parent)
 
 void ItemLevel::construct()
 {
-    setData(ITEM_TYPE, "LEVEL");
+    setData(WldScene::ITEM_TYPE, "LEVEL");
+    setData(WldScene::ITEM_TYPE_INT, ItemTypes::WLD_Level);
     setAcceptHoverEvents(true);
 }
 
@@ -54,19 +55,23 @@ void ItemLevel::updateNotices()
     WldScene::PGE_ItemList collides;
     m_itemIsOverPath = false;
 
-    m_scene->queryItems(QRectF(m_data.x, m_data.y, m_imageSize.width(), m_imageSize.height()), &collides);
+    m_scene->queryItems(QRectF(m_data.x, m_data.y, m_gridSize, m_gridSize), &collides);
 
-    for(auto *it : collides)
+    foreach(auto *it, collides)
     {
         if(it == this)
             continue; // Don't collide to self!
 
-        ItemPath *l = qgraphicsitem_cast<ItemPath*>(it);
-        if(l)
-        {
-            if(l->collidesWith(this))
-                m_itemIsOverPath = true;
+        if(!it->data(WldScene::ITEM_IS_ITEM).toBool())
+            continue;
 
+        if(it->data(WldScene::ITEM_TYPE_INT).toInt() != ItemTypes::WLD_Path)
+            continue;
+
+        ItemPath *l = qgraphicsitem_cast<ItemPath*>(it);
+        if(l && l->collidesWith(this))
+        {
+            m_itemIsOverPath = true;
             break;
         }
     }
@@ -168,7 +173,7 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         WorldData selData;
         foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "LEVEL")
+            if(SelItem->data(WldScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
             {
                 selData.levels << ((ItemLevel *)SelItem)->m_data;
                 ((ItemLevel *)SelItem)->setShowSmallPathBG(setPathBG->isChecked());
@@ -182,7 +187,7 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         WorldData selData;
         foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "LEVEL")
+            if(SelItem->data(WldScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
             {
                 selData.levels << ((ItemLevel *)SelItem)->m_data;
                 ((ItemLevel *)SelItem)->setShowBigPathBG(setBigPathBG->isChecked());
@@ -196,7 +201,7 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         WorldData selData;
         foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "LEVEL")
+            if(SelItem->data(WldScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
             {
                 selData.levels << ((ItemLevel *)SelItem)->m_data;
                 ((ItemLevel *)SelItem)->alwaysVisible(setAlVis->isChecked());
@@ -242,7 +247,7 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
             foreach(QGraphicsItem *SelItem, our_items)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "LEVEL")
+                if(SelItem->data(WldScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
                 {
                     if((!sameID) || (((ItemLevel *) SelItem)->m_data.id == oldID))
                     {
@@ -309,12 +314,13 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
         foreach(QGraphicsItem *SelItem, our_items)
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "LEVEL")
+            if(SelItem->data(WldScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
             {
                 if(((ItemLevel *) SelItem)->m_data.id == oldID)
                     selectedList.push_back(SelItem);
             }
         }
+
         if(!selectedList.isEmpty())
         {
             m_scene->removeWldItems(selectedList);
@@ -501,14 +507,14 @@ void ItemLevel::setLevelData(WorldLevelTile inD, obj_w_level *mergedSet,
 
     setPos(m_data.x, m_data.y);
 
-    setData(ITEM_ID, QString::number(m_data.id));
-    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id));
+    setData(WldScene::ITEM_ID, (unsigned long long)m_data.id);
+    setData(WldScene::ITEM_ARRAY_ID, m_data.meta.array_id);
 
     if(mergedSet)
     {
         m_localProps = *mergedSet;
         m_gridSize = m_localProps.setup.grid;
-        setData(ITEM_IS_META, m_localProps.setup.is_meta_object);
+        setData(WldScene::ITEM_IS_META, m_localProps.setup.is_meta_object);
     }
 
     if(animator_id && path_id && bPath_id)
@@ -617,8 +623,8 @@ void ItemLevel::setAnimator(long aniID, long path, long bPath)
             m_imageSizeTarget.setBottom(m_imageSizeBP.bottom());
     }
 
-    this->setData(ITEM_WIDTH, QString::number(m_gridSize));    //width
-    this->setData(ITEM_HEIGHT, QString::number(m_gridSize));    //height
+    this->setData(WldScene::ITEM_WIDTH, m_gridSize);    //width
+    this->setData(WldScene::ITEM_HEIGHT, m_gridSize);    //height
     //WriteToLog(QtDebugMsg, QString("Tile Animator ID: %1").arg(aniID));
 
     m_pathID = path;

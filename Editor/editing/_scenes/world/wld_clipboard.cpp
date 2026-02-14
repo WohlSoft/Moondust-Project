@@ -260,7 +260,7 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
     auto s = selectedItems();
     applyGroupGrid(s, true);
 
-    QString objType;
+    int objType;
     newData.tiles.clear();
     newData.scenery.clear();
     newData.paths.clear();
@@ -268,31 +268,34 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
     newData.music.clear();
 
     // Get an actual set of items after grid aligning
-    for(QGraphicsItem *it : s)
+    foreach(QGraphicsItem *it, s)
     {
-        if(!it) continue;
-        objType = it->data(ITEM_TYPE).toString();
-        if(objType == "TILE")
+        if(!it)
+            continue;
+
+        objType = it->data(ITEM_TYPE_INT).toInt();
+
+        if(objType == ItemTypes::WLD_Tile)
         {
             ItemTile *item = dynamic_cast<ItemTile *>(it);
             newData.tiles.push_back(item->m_data);
         }
-        else if(objType == "SCENERY")
+        else if(objType == ItemTypes::WLD_Scenery)
         {
             ItemScene *item = dynamic_cast<ItemScene *>(it);
             newData.scenery.push_back(item->m_data);
         }
-        else if(objType == "PATH")
+        else if(objType == ItemTypes::WLD_Path)
         {
             ItemPath *item = dynamic_cast<ItemPath *>(it);
             newData.paths.push_back(item->m_data);
         }
-        else if(objType == "LEVEL")
+        else if(objType == ItemTypes::WLD_Level)
         {
             ItemLevel *item = dynamic_cast<ItemLevel *>(it);
             newData.levels.push_back(item->m_data);
         }
-        else if(objType == "MUSICBOX")
+        else if(objType == ItemTypes::WLD_MusicBox)
         {
             ItemMusic *item = dynamic_cast<ItemMusic *>(it);
             newData.music.push_back(item->m_data);

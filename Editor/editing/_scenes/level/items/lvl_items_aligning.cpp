@@ -48,31 +48,33 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
     int gridSize = 0, gridSizeMax = 0, offsetX = 0, offsetY = 0, offsetXMax = 0, offsetYMax = 0; //, gridX, gridY, i=0;
     QGraphicsItem *lead = nullptr;
     //QGraphicsItemGroup *tmp = NULL;
-    QString objType;
+    int objType;
 
-    for(QGraphicsItem *it : items)
+    foreach(QGraphicsItem *it, items)
     {
         if(!it) continue;
         offsetX = 0;
         offsetY = 0;
-        objType = it->data(ITEM_TYPE).toString();
-        if(objType == "NPC")
+        objType = it->data(ITEM_TYPE_INT).toInt();
+
+        if(objType == ItemTypes::LVL_NPC)
         {
-            ItemNPC *item = dynamic_cast<ItemNPC *>(it);
+            ItemNPC *item = static_cast<ItemNPC *>(it);
+            Q_ASSERT(item);
             sourcePos = QPoint(item->m_data.x, item->m_data.y);
             gridSize = item->m_gridSize;
             offsetX =  item->m_localProps.setup.grid_offset_x;
             offsetY =  item->m_localProps.setup.grid_offset_y;
         }
-        else if(objType == "Block")
+        else if(objType == ItemTypes::LVL_Block)
         {
-            ItemBlock *item = dynamic_cast<ItemBlock *>(it);
+            ItemBlock *item = static_cast<ItemBlock *>(it);
             sourcePos = QPoint(item->m_data.x, item->m_data.y);
             gridSize  = item->m_gridSize;
             offsetX =  item->m_gridOffsetX;
             offsetY =  item->m_gridOffsetY;
         }
-        else if(objType == "BGO")
+        else if(objType == ItemTypes::LVL_BGO)
         {
             ItemBGO *item = dynamic_cast<ItemBGO *>(it);
             sourcePos = QPoint(item->m_data.x, item->m_data.y);
@@ -80,25 +82,25 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
             offsetX =  item->m_gridOffsetX;
             offsetY =  item->m_gridOffsetY;
         }
-        else if(objType == "Water")
+        else if(objType == ItemTypes::LVL_PhysEnv)
         {
             ItemPhysEnv *item = dynamic_cast<ItemPhysEnv *>(it);
             sourcePos = QPoint(item->m_data.x, item->m_data.y);
             gridSize  = item->m_gridSize;
         }
-        else if(objType == "Door_enter")
+        else if(objType == ItemTypes::LVL_META_DoorEnter)
         {
             ItemDoor *item = dynamic_cast<ItemDoor *>(it);
             sourcePos = QPoint(item->m_data.ix, item->m_data.iy);
             gridSize  = item->m_gridSize;
         }
-        else if(objType == "Door_exit")
+        else if(objType == ItemTypes::LVL_META_DoorExit)
         {
             ItemDoor *item = dynamic_cast<ItemDoor *>(it);
             sourcePos = QPoint(item->m_data.ox, item->m_data.oy);
             gridSize  = item->m_gridSize;
         }
-        else if(objType == "playerPoint")
+        else if(objType == ItemTypes::LVL_Player)
         {
             ItemPlayerPoint *item = dynamic_cast<ItemPlayerPoint *>(it);
             gridSize  = item->m_gridSize;
@@ -154,15 +156,16 @@ void LvlScene::applyGridToEach(QList<QGraphicsItem *> items)
 
     QPoint sourcePos = QPoint(0, 0);
     int gridSize = 0, offsetX = 0, offsetY = 0; //, gridX, gridY, i=0;
-    QString ObjType;
+    int ObjType;
 
     for(QGraphicsItem *it : items)
     {
         if(!it) continue;
         offsetX = 0;
         offsetY = 0;
-        ObjType = it->data(ITEM_TYPE).toString();
-        if(ObjType == "NPC")
+        ObjType = it->data(ITEM_TYPE_INT).toInt();
+
+        if(ObjType == ItemTypes::LVL_NPC)
         {
             ItemNPC *item = dynamic_cast<ItemNPC *>(it);
             sourcePos = QPoint(item->m_data.x, item->m_data.y);
@@ -170,13 +173,13 @@ void LvlScene::applyGridToEach(QList<QGraphicsItem *> items)
             offsetX =  item->m_localProps.setup.grid_offset_x;
             offsetY =  item->m_localProps.setup.grid_offset_y;
         }
-        else if(ObjType == "Block")
+        else if(ObjType == ItemTypes::LVL_Block)
         {
             ItemBlock *item = dynamic_cast<ItemBlock *>(it);
             sourcePos = QPoint(item->m_data.x, item->m_data.y);
             gridSize  = item->m_gridSize;
         }
-        else if(ObjType == "BGO")
+        else if(ObjType == ItemTypes::LVL_BGO)
         {
             ItemBGO *item = dynamic_cast<ItemBGO *>(it);
             sourcePos = QPoint(item->m_data.x, item->m_data.y);
@@ -184,25 +187,25 @@ void LvlScene::applyGridToEach(QList<QGraphicsItem *> items)
             offsetX =  item->m_gridOffsetX;
             offsetY =  item->m_gridOffsetY;
         }
-        else if(ObjType == "Water")
+        else if(ObjType == ItemTypes::LVL_PhysEnv)
         {
             ItemPhysEnv *item = dynamic_cast<ItemPhysEnv *>(it);
             sourcePos = QPoint(item->m_data.x, item->m_data.y);
             gridSize  = item->m_gridSize;
         }
-        else if(ObjType == "Door_enter")
+        else if(ObjType == ItemTypes::LVL_META_DoorEnter)
         {
             ItemDoor *item = dynamic_cast<ItemDoor *>(it);
             sourcePos = QPoint(item->m_data.ix, item->m_data.iy);
             gridSize  = item->m_gridSize;
         }
-        else if(ObjType == "Door_exit")
+        else if(ObjType == ItemTypes::LVL_META_DoorExit)
         {
             ItemDoor *item = dynamic_cast<ItemDoor *>(it);
             sourcePos = QPoint(item->m_data.ox, item->m_data.oy);
             gridSize  = item->m_gridSize;
         }
-        else if(ObjType == "playerPoint")
+        else if(ObjType == ItemTypes::LVL_Player)
         {
             ItemPlayerPoint *item = dynamic_cast<ItemPlayerPoint *>(it);
             gridSize  = item->m_gridSize;
@@ -255,7 +258,7 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
     }
     else
     {
-        for(QGraphicsItem *item : items)
+        foreach(QGraphicsItem *item, items)
         {
             if(item->data(ITEM_IS_ITEM).isNull())
                 continue;
@@ -273,7 +276,7 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
     }
 
     //Apply flipping formula to each item
-    for(QGraphicsItem *item : items)
+    foreach(QGraphicsItem *item, items)
     {
         if(vertical)
         {
@@ -293,6 +296,8 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
         {
             qreal w2;//Opposit width (between right side of item and right side of zone)
             int item_r = (item->scenePos().x() + item->data(ITEM_WIDTH).toInt());
+            int objType = item->data(ITEM_TYPE_INT).toInt();
+
             if(item_r < zone.right())
                 w2 = qFabs(item_r - zone.right());
             else
@@ -303,17 +308,25 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
             item->setX(zone.left() + w2);
 
             //Flip NPC direction
-            if(item->data(ITEM_TYPE) == "NPC")
-                dynamic_cast<ItemNPC * >(item)->changeDirection(
-                    -dynamic_cast<ItemNPC * >(item)->m_data.direct
-                );
-            else //Flip Player point direction
-                if(item->data(ITEM_TYPE) == "playerPoint")
-                    dynamic_cast<ItemPlayerPoint * >(item)->changeDirection(
-                        -dynamic_cast<ItemPlayerPoint * >(item)->m_data.direction
-                    );
+            if(objType == ItemTypes::LVL_NPC)
+            {
+                auto *p = dynamic_cast<ItemNPC *>(item);
+                Q_ASSERT(p);
+                if(p)
+                    p->changeDirection(-p->m_data.direct);
+            }
+            //Flip Player point direction
+            else if(objType == ItemTypes::LVL_Player)
+            {
+                auto *p = dynamic_cast<ItemPlayerPoint *>(item);
+                Q_ASSERT(p);
+                if(p)
+                    p->changeDirection(-p->m_data.direction);
+            }
         }
+
         applyArrayForItem(item);
+
         if(recordHistory)
             collectDataFromItem(flippedData, item);
     }
@@ -360,7 +373,7 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
     }
     else
     {
-        for(QGraphicsItem *item : items)
+        foreach(QGraphicsItem *item, items)
         {
             if(item->data(ITEM_IS_ITEM).isNull())
                 continue;
@@ -378,7 +391,7 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
     }
 
     //Apply rotate formula to each item
-    for(QGraphicsItem *item : items)
+    foreach(QGraphicsItem *item, items)
     {
         itemZone.setX(qRound(item->scenePos().x()));
         itemZone.setWidth(item->data(ITEM_WIDTH).toInt() + 1);
@@ -413,14 +426,14 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
         //If item located in one of quouters of zone rectangle
         if(byClockwise)
         {
-            if(item->data(ITEM_BLOCK_IS_SIZABLE).toString() != "sizable")
+            if(!item->data(ITEM_BLOCK_IS_SIZABLE).toBool())
                 applyRotationTable(item, RT_RotateRight);
             targetRect.setX(zone.left() + dist_b);
             targetRect.setY(zone.top() + dist_l);
         }
         else
         {
-            if(item->data(ITEM_BLOCK_IS_SIZABLE).toString() != "sizable")
+            if(!item->data(ITEM_BLOCK_IS_SIZABLE).toBool())
                 applyRotationTable(item, RT_RotateLeft);
             targetRect.setX(zone.left() + dist_t);
             targetRect.setY(zone.top() + dist_r);
@@ -428,18 +441,29 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
 
         item->setPos(targetRect.x(), targetRect.y());
 
-        if(item->data(ITEM_BLOCK_IS_SIZABLE).toString() == "sizable")
+        if(item->data(ITEM_BLOCK_IS_SIZABLE).toBool())
         {
             //Rotate width and height
+            int objType = item->data(ITEM_TYPE_INT).toInt();
             targetRect.setWidth(itemZone.height() - 1);
             targetRect.setHeight(itemZone.width() - 1);
-            if(item->data(ITEM_TYPE) == "Block")
-                dynamic_cast<ItemBlock *>(item)->setBlockSize(targetRect);
-            else if(item->data(ITEM_TYPE) == "Water")
-                dynamic_cast<ItemPhysEnv *>(item)->setRectSize(targetRect);
+
+            if(objType == ItemTypes::LVL_Block)
+            {
+                auto *p = dynamic_cast<ItemBlock *>(item);
+                Q_ASSERT(p);
+                p->setBlockSize(targetRect);
+            }
+            else if(objType == ItemTypes::LVL_PhysEnv)
+            {
+                auto *p = dynamic_cast<ItemPhysEnv *>(item);
+                Q_ASSERT(p);
+                p->setRectSize(targetRect);
+            }
         }
 
         applyArrayForItem(item);
+
         if(recordHistory)
             collectDataFromItem(rotatedData, item);
     }
@@ -478,10 +502,10 @@ void LvlScene::applyRotationTable(QGraphicsItem *item, LvlScene::rotateActions a
     if(!item) return;
     if(item->data(ITEM_IS_ITEM).isNull()) return;
 
-    QString itemType = item->data(ITEM_TYPE).toString();
-    long itemID = item->data(ITEM_ID).toInt();
+    int itemType = item->data(ITEM_TYPE_INT).toInt();
+    long itemID = (long)item->data(ITEM_ID).toULongLong();
 
-    if(itemType == "Block")
+    if(itemType == ItemTypes::LVL_Block)
     {
         if(local_rotation_table_blocks.contains(itemID))
         {
@@ -505,7 +529,7 @@ void LvlScene::applyRotationTable(QGraphicsItem *item, LvlScene::rotateActions a
                 dynamic_cast<ItemBlock *>(item)->transformTo(target);
         }
     }
-    else if(itemType == "BGO")
+    else if(itemType == ItemTypes::LVL_BGO)
     {
         if(local_rotation_table_bgo.contains(itemID))
         {
@@ -529,7 +553,7 @@ void LvlScene::applyRotationTable(QGraphicsItem *item, LvlScene::rotateActions a
                 dynamic_cast<ItemBGO *>(item)->transformTo(target);
         }
     }
-    else if(itemType == "NPC")
+    else if(itemType == ItemTypes::LVL_NPC)
     {
         if(local_rotation_table_npc.contains(itemID))
         {

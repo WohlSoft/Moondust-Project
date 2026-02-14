@@ -48,19 +48,23 @@ void WldScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
     QPoint offsetMax(0, 0);
     int gridSize = 0, gridSizeMax = 0; //, gridX, gridY, i=0;
     QGraphicsItem *lead = nullptr;
-    QString objType;
+    int objType;
 
     for(QGraphicsItem *it : items)
     {
-        if(!it) continue;
+        if(!it)
+            continue;
+
         offset.setX(0);
         offset.setY(0);
-        objType = it->data(ITEM_TYPE).toString();
-        if(objType == "TILE" ||
-           objType == "SCENERY" ||
-           objType == "PATH" ||
-           objType == "LEVEL" ||
-           objType == "MUSICBOX")
+
+        objType = it->data(ITEM_TYPE_INT).toInt();
+
+        if(objType == ItemTypes::WLD_Tile ||
+           objType == ItemTypes::WLD_Scenery ||
+           objType == ItemTypes::WLD_Path ||
+           objType == ItemTypes::WLD_Level ||
+           objType == ItemTypes::WLD_MusicBox)
         {
             WldBaseItem *item = dynamic_cast<WldBaseItem *>(it);
             offset    = item->gridOffset();
@@ -115,19 +119,22 @@ void WldScene::applyGridToEach(QList<QGraphicsItem *> items)
     QPoint sourcePos = QPoint(0, 0);
     QPoint offset;
     int gridSize = 0; //, gridX, gridY, i=0;
-    QString objType;
+    int objType;
 
     for(QGraphicsItem *it : items)
     {
-        if(!it) continue;
+        if(!it)
+            continue;
+
         offset.setX(0);
         offset.setY(0);
-        objType = it->data(ITEM_TYPE).toString();
-        if(objType == "TILE" ||
-           objType == "SCENERY" ||
-           objType == "PATH" ||
-           objType == "LEVEL" ||
-           objType == "MUSICBOX")
+        objType = it->data(ITEM_TYPE_INT).toInt();
+
+        if(objType == ItemTypes::WLD_Tile ||
+           objType == ItemTypes::WLD_Scenery ||
+           objType == ItemTypes::WLD_Path ||
+           objType == ItemTypes::WLD_Level ||
+           objType == ItemTypes::WLD_MusicBox)
         {
             WldBaseItem *item = dynamic_cast<WldBaseItem *>(it);
             offset    = item->gridOffset();
@@ -136,6 +143,7 @@ void WldScene::applyGridToEach(QList<QGraphicsItem *> items)
         }
 
         it->setPos(QPointF(Grid::applyGrid(it->pos().toPoint(), gridSize, QPoint(offset.x(), offset.y()))));
+
         if(sourcePos != it->scenePos())
             applyArrayForItem(it);
     }
@@ -290,10 +298,10 @@ void WldScene::applyRotationTable(QGraphicsItem *item, WldScene::rotateActions a
     if(!item) return;
     if(item->data(ITEM_IS_ITEM).isNull()) return;
 
-    QString itemType = item->data(ITEM_TYPE).toString();
+    int itemType = item->data(ITEM_TYPE_INT).toInt();
     long itemID = item->data(ITEM_ID).toInt();
 
-    if(itemType == "TILE")
+    if(itemType == ItemTypes::WLD_Tile)
     {
         if(local_rotation_table_tiles.contains(itemID))
         {
@@ -313,11 +321,12 @@ void WldScene::applyRotationTable(QGraphicsItem *item, WldScene::rotateActions a
                 target = local_rotation_table_tiles[itemID].flip_v;
                 break;
             }
+
             if(target > 0)
                 dynamic_cast<ItemTile *>(item)->transformTo(target);
         }
     }
-    else if(itemType == "SCENERY")
+    else if(itemType == ItemTypes::WLD_Scenery)
     {
         if(local_rotation_table_sceneries.contains(itemID))
         {
@@ -337,11 +346,12 @@ void WldScene::applyRotationTable(QGraphicsItem *item, WldScene::rotateActions a
                 target = local_rotation_table_sceneries[itemID].flip_v;
                 break;
             }
+
             if(target > 0)
                 dynamic_cast<ItemScene *>(item)->transformTo(target);
         }
     }
-    else if(itemType == "PATH")
+    else if(itemType == ItemTypes::WLD_Path)
     {
         if(local_rotation_table_paths.contains(itemID))
         {
@@ -361,11 +371,12 @@ void WldScene::applyRotationTable(QGraphicsItem *item, WldScene::rotateActions a
                 target = local_rotation_table_paths[itemID].flip_v;
                 break;
             }
+
             if(target > 0)
                 dynamic_cast<ItemPath *>(item)->transformTo(target);
         }
     }
-    else if(itemType == "LEVEL")
+    else if(itemType == ItemTypes::WLD_Level)
     {
         if(local_rotation_table_levels.contains(itemID))
         {
@@ -385,6 +396,7 @@ void WldScene::applyRotationTable(QGraphicsItem *item, WldScene::rotateActions a
                 target = local_rotation_table_levels[itemID].flip_v;
                 break;
             }
+
             if(target > 0)
                 dynamic_cast<ItemLevel *>(item)->transformTo(target);
         }

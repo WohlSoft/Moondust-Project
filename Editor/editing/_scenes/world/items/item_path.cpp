@@ -44,40 +44,32 @@ ItemPath::ItemPath(WldScene *parentScene, QGraphicsItem *parent)
 
 void ItemPath::construct()
 {
-    setData(ITEM_TYPE, "PATH");
+    setData(WldScene::ITEM_TYPE, "PATH");
+    setData(WldScene::ITEM_TYPE_INT, ItemTypes::WLD_Path);
 }
 
-void ItemPath::updateNoticesClear()
+void ItemPath::updateNearObjects(QPoint oldPos, QPoint newPos)
 {
-    WldScene::PGE_ItemList collides;
+    WldScene::PGE_ItemList levelCollides;
+    QSize objSize(data(WldScene::ITEM_WIDTH).toInt(), data(WldScene::ITEM_HEIGHT).toInt());
+    bool isUpdate = oldPos != newPos;
 
-    m_scene->queryItems(QRectF(m_data.x, m_data.y, m_imageSize.width(), m_imageSize.height()), &collides);
+    m_scene->queryItems(QRectF(oldPos, objSize), &levelCollides);
 
-    for(auto *it : collides)
+    if(isUpdate)
+        m_scene->queryItems(QRectF(newPos, objSize), &levelCollides);
+
+    foreach(auto *it, levelCollides)
     {
-        if(it == this)
-            continue; // Don't collide to self!
+        if(!it->data(WldScene::ITEM_IS_ITEM).toBool())
+            continue;
+
+        if(it->data(WldScene::ITEM_TYPE_INT).toInt() != ItemTypes::WLD_Level)
+            continue;
 
         ItemLevel *l = qgraphicsitem_cast<ItemLevel*>(it);
-        if(l && l->collidesWith(this))
-            l->markAsOverPath(false);
-    }
-}
-
-void ItemPath::updateNoticesSet()
-{
-    WldScene::PGE_ItemList collides;
-
-    m_scene->queryItems(QRectF(m_data.x, m_data.y, m_imageSize.width(), m_imageSize.height()), &collides);
-
-    for(auto *it : collides)
-    {
-        if(it == this)
-            continue; // Don't collide to self!
-
-        ItemLevel *l = qgraphicsitem_cast<ItemLevel*>(it);
-        if(l && l->collidesWith(this))
-            l->markAsOverPath(true);
+        if(l)
+            l->updateNotices();
     }
 }
 
@@ -193,7 +185,7 @@ void ItemPath::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
             foreach(QGraphicsItem *SelItem, our_items)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "PATH")
+                if(SelItem->data(WldScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Path)
                 {
                     if((!sameID) || (((ItemPath *) SelItem)->m_data.id == oldID))
                     {
@@ -204,7 +196,9 @@ void ItemPath::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 }
             }
         }
+
         delete itemList;
+
         if(!newData.paths.isEmpty())
             m_scene->m_history->addTransformHistory(newData, oldData);
     }
@@ -219,7 +213,7 @@ void ItemPath::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
         foreach(QGraphicsItem *SelItem, our_items)
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "PATH")
+            if(SelItem->data(WldScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Path)
             {
                 if(((ItemPath *) SelItem)->m_data.id == oldID)
                     selectedList.push_back(SelItem);
@@ -271,13 +265,10 @@ void ItemPath::transformTo(long target_id)
 void ItemPath::arrayApply()
 {
     bool found = false;
-
-    updateNoticesClear();
+    QPoint oldPos = sourcePos();
 
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
-
-    updateNoticesSet();
 
     if(m_data.meta.index < (unsigned int)m_scene->m_data->paths.size())
     {
@@ -309,13 +300,14 @@ void ItemPath::arrayApply()
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+
+    updateNearObjects(oldPos, sourcePos());
 }
 
 void ItemPath::removeFromArray()
 {
     bool found = false;
-
-    updateNoticesClear();
+    QPoint oldPos(m_data.x, m_data.y);
 
     if(m_data.meta.index < (unsigned int)m_scene->m_data->paths.size())
     {
@@ -330,6 +322,7 @@ void ItemPath::removeFromArray()
         m_scene->m_data->paths.removeAt(m_data.meta.index);
     }
     else
+    {
         for(int i = 0; i < m_scene->m_data->paths.size(); i++)
         {
             if(m_scene->m_data->paths[i].meta.array_id == m_data.meta.array_id)
@@ -338,6 +331,11 @@ void ItemPath::removeFromArray()
                 break;
             }
         }
+    }
+
+    // Mark as "dead"
+    setData(WldScene::ITEM_IS_ITEM, false);
+    updateNearObjects(oldPos, oldPos);
 }
 
 void ItemPath::returnBack()
@@ -360,14 +358,14 @@ void ItemPath::setPathData(WorldPathTile inD, obj_w_path *mergedSet, long *anima
     m_data = inD;
     setPos(m_data.x, m_data.y);
 
-    setData(ITEM_ID, QString::number(m_data.id));
-    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id));
+    setData(WldScene::ITEM_ID, (unsigned long long)m_data.id);
+    setData(WldScene::ITEM_ARRAY_ID, m_data.meta.array_id);
 
     if(mergedSet)
     {
         m_localProps = *mergedSet;
         m_gridSize = m_localProps.setup.grid;
-        setData(ITEM_IS_META, m_localProps.setup.is_meta_object);
+        setData(WldScene::ITEM_IS_META, m_localProps.setup.is_meta_object);
     }
     if(animator_id)
         setAnimator(*animator_id);
@@ -375,7 +373,7 @@ void ItemPath::setPathData(WorldPathTile inD, obj_w_path *mergedSet, long *anima
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
 
-    updateNoticesSet();
+    updateNearObjects(sourcePos(), sourcePos());
 }
 
 
@@ -417,8 +415,8 @@ void ItemPath::setAnimator(long aniID)
         m_imageSize = QRectF(0, 0, frameRect.width(), frameRect.height());
     }
 
-    this->setData(ITEM_WIDTH, QString::number(qRound(m_imageSize.width())));  //width
-    this->setData(ITEM_HEIGHT, QString::number(qRound(m_imageSize.height())));  //height
+    this->setData(WldScene::ITEM_WIDTH, qRound(m_imageSize.width()));  //width
+    this->setData(WldScene::ITEM_HEIGHT, qRound(m_imageSize.height()));  //height
     //WriteToLog(QtDebugMsg, QString("Tile Animator ID: %1").arg(aniID));
 
     m_animatorID = aniID;

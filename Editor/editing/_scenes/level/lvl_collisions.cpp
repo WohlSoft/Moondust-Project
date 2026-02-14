@@ -36,11 +36,13 @@ void LvlScene::prepareCollisionBuffer()
     for(int i = 0; i < collisionCheckBuffer.size(); i++)
     {
         bool removeIt = false;
-        if(collisionCheckBuffer[i] == nullptr)
+        auto &it = collisionCheckBuffer[i];
+
+        if(it == nullptr)
             removeIt = true;
-        else if(collisionCheckBuffer[i]->data(ITEM_IS_ITEM).isNull())
+        else if(it->data(ITEM_IS_ITEM).isNull())
             removeIt = true;
-        else if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString() == "playerPoint")
+        else if(it->data(ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Player)
             removeIt = true;
 
         if(removeIt)
@@ -123,17 +125,27 @@ QGraphicsItem *LvlScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *ite
     qreal topA, topB;
     qreal bottomA, bottomB;
 
+    int objType1, objType2, shape1, shape2;
+    bool sizable1, sizable2, collNoNpc1, collNoNpc2, collNoBlock1, collNoBlock2;
+    unsigned long itemId1, itemId2;
+
     if(item == nullptr)
         return nullptr;
 
-    if(item->data(ITEM_TYPE).toString() == "YellowRectangle")
+    objType1 = item->data(ITEM_TYPE_INT).toInt();
+
+    if(objType1 == ItemTypes::META_YellowRect ||
+       objType1 == ItemTypes::LVL_PhysEnv ||
+       objType1 == ItemTypes::LVL_META_DoorEnter ||
+       objType1 == ItemTypes::LVL_META_DoorExit)
         return nullptr;
-    if(item->data(ITEM_TYPE).toString() == "Water")
-        return nullptr;
-    if(item->data(ITEM_TYPE).toString() == "Door_exit")
-        return nullptr;
-    if(item->data(ITEM_TYPE).toString() == "Door_enter")
-        return nullptr;
+
+    shape1 = item->data(ITEM_BLOCK_SHAPE).toInt();
+    sizable1 = item->data(ITEM_NPC_NO_NPC_COLLISION).toBool();
+    itemId1 = (unsigned long)item->data(ITEM_ID).toULongLong();
+    collNoBlock1 = !item->data(ITEM_NPC_BLOCK_COLLISION).toBool();
+    collNoNpc1 = item->data(ITEM_NPC_NO_NPC_COLLISION).toBool();
+
 
     PGE_ItemList collisions;
 
@@ -149,7 +161,7 @@ QGraphicsItem *LvlScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *ite
     if(collisions.isEmpty())
         return nullptr;
 
-    for(auto *it : collisions)
+    foreach(auto *it, collisions)
     {
         if(it == item)
             continue;
@@ -157,84 +169,82 @@ QGraphicsItem *LvlScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *ite
             continue;
         if(!it->isVisible())
             continue;
-        if(it->data(ITEM_TYPE).isNull())
+        if(it->data(ITEM_TYPE_INT).isNull())
             continue;
-        if(it->data(ITEM_IS_ITEM).isNull())
-            continue;
-        if(it->data(ITEM_TYPE).toString() == "PlayerPoint")
+        if(it->data(ITEM_IS_ITEM).isNull() || !it->data(ITEM_IS_ITEM).toBool())
             continue;
 
-        if(
-            (it->data(ITEM_TYPE).toString() != "Block") &&
-            (it->data(ITEM_TYPE).toString() != "BGO") &&
-            (it->data(ITEM_TYPE).toString() != "NPC")
-        ) continue;
+        objType2 = it->data(ITEM_TYPE_INT).toInt();
+        shape2 = it->data(ITEM_BLOCK_SHAPE).toInt();
+        sizable2 = it->data(ITEM_NPC_NO_NPC_COLLISION).toBool();
+        itemId2 = (unsigned long)it->data(ITEM_ID).toULongLong();
+        collNoBlock2 = !it->data(ITEM_NPC_BLOCK_COLLISION).toBool();
+        collNoNpc2 = it->data(ITEM_NPC_NO_NPC_COLLISION).toBool();
 
-        if(item->data(ITEM_TYPE).toString() == "NPC")
+        // if(objType2 == ItemTypes::LVL_Player)
+        //     continue; //
+
+        if((objType2 != ItemTypes::LVL_Block) &&
+           (objType2 != ItemTypes::LVL_BGO) &&
+           (objType2 != ItemTypes::LVL_NPC))
+           continue;
+
+        if(objType1 == ItemTypes::LVL_NPC)
         {
-            if(item->data(ITEM_NPC_NO_NPC_COLLISION).toBool())   // Disabled collisions with other NPCs
+            if(collNoNpc1)   // Disabled collisions with other NPCs
             {
-                if(item->data(ITEM_ID).toInt() != it->data(ITEM_ID).toInt()) continue;
+                if(itemId1 != itemId2)
+                    continue;
             }
             else
             {
                 if(
-                    (
-                        (it->data(ITEM_TYPE).toString() == "Block")
-                        && (!item->data(ITEM_NPC_BLOCK_COLLISION).toBool()) //BlockCollision
-                    )
+                    (objType2 == ItemTypes::LVL_Block && collNoBlock1)  //BlockCollision
                     ||
                     (
-                        (it->data(ITEM_TYPE).toString() == "Block") //Don't collide NPC's with triangle blocks
+                        (objType2 == ItemTypes::LVL_Block) //Don't collide NPC's with triangle blocks
                         &&
                         (
-                            (it->data(ITEM_BLOCK_SHAPE).toInt() == (int)BlockSetup::SHAPE_triangle_right_top) ||
-                            (it->data(ITEM_BLOCK_SHAPE).toInt() == (int)BlockSetup::SHAPE_triangle_left_bottom) ||
-                            (it->data(ITEM_BLOCK_SHAPE).toInt() == (int)BlockSetup::SHAPE_triangle_right_bottom) ||
-                            (it->data(ITEM_BLOCK_SHAPE).toInt() == (int)BlockSetup::SHAPE_triangle_left_top)
+                            (shape2 == (int)BlockSetup::SHAPE_triangle_right_top) ||
+                            (shape2 == (int)BlockSetup::SHAPE_triangle_left_bottom) ||
+                            (shape2 == (int)BlockSetup::SHAPE_triangle_right_bottom) ||
+                            (shape2 == (int)BlockSetup::SHAPE_triangle_left_top)
                         )
                     )
                     ||
-                    (
-                        (it->data(ITEM_TYPE).toString() == "NPC")
-                        && (it->data(ITEM_NPC_NO_NPC_COLLISION).toBool()) //NpcCollision
-                    )
+                    (objType2 == ItemTypes::LVL_NPC && collNoNpc2) //NpcCollision
                     ||
-                    ((it->data(ITEM_TYPE).toString() != "NPC")
-                     && (it->data(ITEM_TYPE).toString() != "Block"))
+                    ((objType2 != ItemTypes::LVL_NPC) && (objType2 != ItemTypes::LVL_Block))
                 )
                     continue;
             }
 
         }
-        else if(item->data(ITEM_TYPE).toString() == "Block")
+        else if(objType1 == ItemTypes::LVL_Block)
         {
             if(
+                (objType2 == ItemTypes::LVL_NPC && collNoBlock2) //BlockCollision
+                ||
+                (objType2 != ItemTypes::LVL_NPC && objType2 != ItemTypes::LVL_Block) //Don't collide non-block and non-NPC items
+                ||
                 (
-                    (it->data(ITEM_TYPE).toString() == "NPC")
-                    && (!it->data(ITEM_NPC_BLOCK_COLLISION).toBool()) //BlockCollision
-                ) ||
-                (
-                    (it->data(ITEM_TYPE).toString() != "NPC") //Don't collide non-block and non-NPC items
-                    && (it->data(ITEM_TYPE).toString() != "Block")
-                ) ||
-                (
-                    (it->data(ITEM_TYPE).toString() == "NPC") //Don't collide NPC's with triangle blocks
+                    (objType2 == ItemTypes::LVL_NPC) //Don't collide NPC's with triangle blocks
                     &&
                     (
-                        (item->data(ITEM_BLOCK_SHAPE).toInt() == (int)BlockSetup::SHAPE_triangle_right_top) ||
-                        (item->data(ITEM_BLOCK_SHAPE).toInt() == (int)BlockSetup::SHAPE_triangle_left_top) ||
-                        (item->data(ITEM_BLOCK_SHAPE).toInt() == (int)BlockSetup::SHAPE_triangle_right_bottom) ||
-                        (item->data(ITEM_BLOCK_SHAPE).toInt() == (int)BlockSetup::SHAPE_triangle_left_bottom)
+                        (shape1 == (int)BlockSetup::SHAPE_triangle_right_top) ||
+                        (shape1 == (int)BlockSetup::SHAPE_triangle_left_top) ||
+                        (shape1 == (int)BlockSetup::SHAPE_triangle_right_bottom) ||
+                        (shape1 == (int)BlockSetup::SHAPE_triangle_left_bottom)
                     )
                 )
             )
                 continue;
 
         }
-        else if(item->data(ITEM_TYPE).toString() != it->data(ITEM_TYPE).toString()) continue;
+        else if(objType1 != objType2)
+            continue;
 
-        if(item->data(ITEM_BLOCK_IS_SIZABLE).toString() == "sizable")
+        if(sizable1 || sizable2)
         {
             // Don't collide with sizable block
 #ifdef _DEBUG_
@@ -243,10 +253,11 @@ QGraphicsItem *LvlScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *ite
             continue;
         }
 
-        if(it->data(ITEM_BLOCK_IS_SIZABLE).toString() == "sizable") continue; // Don't collide with sizable block
-
-        if(item->data(ITEM_TYPE).toString() == "BGO")
-            if((m_editMode != MODE_Fill) && (item->data(ITEM_ID).toInt() != it->data(ITEM_ID).toInt())) continue;
+        if(objType1 == ItemTypes::LVL_BGO)
+        {
+            if(m_editMode != MODE_Fill && itemId1 != itemId2)
+                continue;
+        }
 
         leftA = item->scenePos().x();
         rightA = item->scenePos().x() + item->data(ITEM_WIDTH).toReal();
@@ -322,49 +333,48 @@ QGraphicsItem *LvlScene::itemCollidesCursor(QGraphicsItem *item)
     QRectF findZoneR(x, y, w, h);
     queryItems(findZoneR, &collisions);
 
-    for(auto *it : collisions)
+    foreach(auto *it, collisions)
     {
         if(it == item || !it->isVisible())
             continue;
 
-        QString type = it->data(ITEM_TYPE).toString();
+        int type = it->data(ITEM_TYPE_INT).toInt();
 
         //skip locked items
-        if(type == "Block")
+        if(type == ItemTypes::LVL_Block)
         {
             if(m_lockBlock || dynamic_cast<ItemBlock *>(it)->m_locked)
                 continue;
         }
-        else if(type == "BGO")
+        else if(type == ItemTypes::LVL_BGO)
         {
             if(m_lockBgo || dynamic_cast<ItemBGO *>(it)->m_locked)
                 continue;
         }
-        else if(type == "NPC")
+        else if(type == ItemTypes::LVL_NPC)
         {
             if(m_lockNpc || dynamic_cast<ItemNPC *>(it)->m_locked)
                 continue;
         }
-        else if(type == "Water")
+        else if(type == ItemTypes::LVL_PhysEnv)
         {
             if(m_lockPhysenv || dynamic_cast<ItemPhysEnv *>(it)->m_locked)
                 continue;
         }
-        else if(type == "Door_enter" || type == "Door_exit")
+        else if(type == ItemTypes::LVL_META_DoorEnter || type == ItemTypes::LVL_META_DoorExit)
         {
             if(m_lockDoor || dynamic_cast<ItemDoor *>(it)->m_locked)
                 continue;
         }
 
         if(
-            (type == "Block") ||
-            (type == "BGO") ||
-            (type == "NPC") ||
-            (type == "Door_exit") ||
-            (type == "Door_enter") ||
-            (type == "Water") ||
-            (type == "player1") ||
-            (type == "player2")
+            (type == ItemTypes::LVL_Block) ||
+            (type == ItemTypes::LVL_BGO) ||
+            (type == ItemTypes::LVL_NPC) ||
+            (type == ItemTypes::LVL_META_DoorEnter) ||
+            (type == ItemTypes::LVL_META_DoorExit) ||
+            (type == ItemTypes::LVL_PhysEnv) ||
+            (type == ItemTypes::LVL_Player)
         )
             return it;
     }
@@ -405,6 +415,7 @@ void LvlScene::registerElement(QGraphicsItem *item)
     QSize pz(item->data(ITEM_WIDTH).toInt(), item->data(ITEM_HEIGHT).toInt());
     RPoint lt = {(int64_t)pt.x(), (int64_t)pt.y()};
     RPoint rb = {(int64_t)pt.x() + (int64_t)pz.width(), (int64_t)pt.y() + (int64_t)pz.height()};
+
     if(pz.width() <= 0)
     {
         rb[0] = pt.x() + 1;
@@ -415,6 +426,7 @@ void LvlScene::registerElement(QGraphicsItem *item)
         rb[1] = pt.y() + 1;
         pz.setHeight(1);
     }
+
     tree.Insert(lt, rb, item);
     item->setData(ITEM_LAST_POS, pt);
     item->setData(ITEM_LAST_SIZE, pz);
@@ -424,15 +436,20 @@ void LvlScene::unregisterElement(QGraphicsItem *item)
 {
     if(!item->data(ITEM_LAST_POS).isValid())
         return;
+
     if(item->data(ITEM_LAST_SIZE).isNull())
         return;
+
     QPoint pt = item->data(ITEM_LAST_POS).toPoint();
     QSize  pz = item->data(ITEM_LAST_SIZE).toSize();
     RPoint lt = {(int64_t)pt.x(), (int64_t)pt.y()};
     RPoint rb = {(int64_t)pt.x() + (int64_t)pz.width(), (int64_t)pt.y() + (int64_t)pz.height()};
+
     if(pz.width() <= 0)
         rb[0] = pt.x() + 1;
+
     if(pz.height() <= 0)
         rb[1] = pt.y() + 1;
+
     tree.Remove(lt, rb, item);
 }

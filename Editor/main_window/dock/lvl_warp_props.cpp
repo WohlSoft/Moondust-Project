@@ -483,9 +483,9 @@ void LvlWarpBox::on_WarpSetEntrance_clicked()
         edit->scene->clearSelection();
         for(QGraphicsItem *item : edit->scene->items())
         {
-            if(item->data(ITEM_TYPE).toString() == "Door_enter")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_META_DoorEnter)
             {
-                if(item->data(ITEM_ARRAY_ID).toUInt() == array_id)
+                if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() == array_id)
                 {
                     LogDebugQD("Warp: Select the warp entry");
                     item->setSelected(true);
@@ -539,9 +539,9 @@ void LvlWarpBox::on_WarpSetExit_clicked()
         edit->scene->clearSelection();
         for(QGraphicsItem *item : edit->scene->items())
         {
-            if(item->data(ITEM_TYPE).toString() == "Door_exit")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_META_DoorExit)
             {
-                if(item->data(ITEM_ARRAY_ID).toUInt() == array_id)
+                if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() == array_id)
                 {
                     LogDebugQD("Warp: Select the warp entry");
                     item->setSelected(true);

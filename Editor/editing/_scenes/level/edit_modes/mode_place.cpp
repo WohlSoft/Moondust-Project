@@ -127,6 +127,7 @@ void LVL_ModePlace::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
                                            LvlPlacingItems::gridOffset)));
         s->m_cursorItemImg->show();
     }
+
     if((mouseEvent->buttons() & Qt::LeftButton) && (s->m_placingItemType != LvlScene::PLC_PlayerPoint))
     {
         s->placeItemUnderCursor();

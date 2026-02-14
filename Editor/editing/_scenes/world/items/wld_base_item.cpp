@@ -36,7 +36,7 @@ void WldBaseItem::construct()
     m_mouseMidPressed = false;
     m_mouseRightPressed = false;
 
-    setData(ITEM_IS_ITEM, 1);
+    setData(WldScene::ITEM_IS_ITEM, true);
 }
 
 WldBaseItem::WldBaseItem(QGraphicsItem *parent) :
@@ -121,16 +121,16 @@ bool WldBaseItem::collidesWith(const WldBaseItem *other) const
     if(!other)
         return false;
 
-    QRect me(sourcePos(), boundingRect().size().toSize());
-    QRect o(other->sourcePos(), other->boundingRect().size().toSize());
+    QRect me(sourcePos(), QSize(data(WldScene::ITEM_WIDTH).toInt(), data(WldScene::ITEM_HEIGHT).toInt()));
+    QRect o(other->sourcePos(), QSize(other->data(WldScene::ITEM_WIDTH).toInt(), other->data(WldScene::ITEM_HEIGHT).toInt()));
 
-    if(me.left() > o.right())
+    if(me.left() + 1 > o.right())
         return false;
-    else if(me.right() < o.left())
+    else if(me.right() < o.left() + 1)
         return false;
-    else if(me.top() > o.bottom())
+    else if(me.top() + 1 > o.bottom())
         return false;
-    else if(me.bottom() < o.top())
+    else if(me.bottom() < o.top() + 1)
         return false;
 
     return true;

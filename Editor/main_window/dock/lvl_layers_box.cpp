@@ -302,9 +302,12 @@ void LvlLayersBox::removeLayerItems(QString layerName)
 
     for(QList<QGraphicsItem *>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
-        if((*it)->data(ITEM_IS_CURSOR).toString() == "CURSOR") continue; //skip cursor item
+        int objType = (*it)->data(LvlScene::ITEM_TYPE_INT).toInt();
 
-        if((*it)->data(ITEM_TYPE).toString() == "Block")
+        if((*it)->data(LvlScene::ITEM_IS_CURSOR).toBool())
+            continue; //skip cursor item
+
+        if(objType == ItemTypes::LVL_Block)
         {
             auto *b = qgraphicsitem_cast<ItemBlock *>(*it);
             Q_ASSERT(b);
@@ -318,7 +321,7 @@ void LvlLayersBox::removeLayerItems(QString layerName)
             }
 
         }
-        else if((*it)->data(ITEM_TYPE).toString() == "BGO")
+        else if(objType == ItemTypes::LVL_BGO)
         {
             auto *b = qgraphicsitem_cast<ItemBGO *>(*it);
             Q_ASSERT(b);
@@ -331,7 +334,7 @@ void LvlLayersBox::removeLayerItems(QString layerName)
                 //activeLvlEditWin()->scene->removeItem((*it));
             }
         }
-        else if((*it)->data(ITEM_TYPE).toString() == "NPC")
+        else if(objType == ItemTypes::LVL_NPC)
         {
             auto *b = qgraphicsitem_cast<ItemNPC *>(*it);
             Q_ASSERT(b);
@@ -344,7 +347,7 @@ void LvlLayersBox::removeLayerItems(QString layerName)
                 //activeLvlEditWin()->scene->removeItem((*it));
             }
         }
-        else if((*it)->data(ITEM_TYPE).toString() == "Water")
+        else if(objType == ItemTypes::LVL_PhysEnv)
         {
             auto *b = qgraphicsitem_cast<ItemPhysEnv *>(*it);
             Q_ASSERT(b);
@@ -357,21 +360,21 @@ void LvlLayersBox::removeLayerItems(QString layerName)
                 //activeLvlEditWin()->scene->removeItem((*it));
             }
         }
-        else if(((*it)->data(ITEM_TYPE).toString() == "Door_enter") || ((*it)->data(ITEM_TYPE).toString() == "Door_exit"))
+        else if(objType == ItemTypes::LVL_META_DoorEnter || objType == ItemTypes::LVL_META_DoorExit)
         {
             auto *b = qgraphicsitem_cast<ItemDoor *>(*it);
             Q_ASSERT(b);
 
             if(b->m_data.layer == layerName)
             {
-                if(b->data(ITEM_TYPE).toString() == "Door_enter")
+                if(objType == ItemTypes::LVL_META_DoorEnter)
                 {
                     LevelDoor tData = ((ItemDoor *)(*it))->m_data;
                     tData.isSetIn = true;
                     tData.isSetOut = false;
                     delData.doors.push_back(tData);
                 }
-                else if(b->data(ITEM_TYPE).toString() == "Door_exit")
+                else if(objType == ItemTypes::LVL_META_DoorExit)
                 {
                     LevelDoor tData = ((ItemDoor *)(*it))->m_data;
                     tData.isSetIn = false;
@@ -446,10 +449,12 @@ void LvlLayersBox::modifyLayer(QString layerName, bool visible)
     {
         QGraphicsItem *item = *it;
 
-        if(item->data(ITEM_IS_CURSOR).toString() == QStringLiteral("CURSOR"))
+        if(item->data(LvlScene::ITEM_IS_CURSOR).toBool())
             continue; //skip cursor item
 
-        if(item->data(ITEM_TYPE).toString() == QStringLiteral("Block"))
+        int objType = item->data(LvlScene::ITEM_TYPE_INT).toInt();
+
+        if(objType == ItemTypes::LVL_Block)
         {
             ItemBlock *sItem = qgraphicsitem_cast<ItemBlock *>(item);
             Q_ASSERT(sItem);
@@ -458,7 +463,7 @@ void LvlLayersBox::modifyLayer(QString layerName, bool visible)
                 sItem->setVisible(visible);
 
         }
-        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("BGO"))
+        else if(objType == ItemTypes::LVL_BGO)
         {
             ItemBGO *sItem = qgraphicsitem_cast<ItemBGO *>(item);
             Q_ASSERT(sItem);
@@ -466,7 +471,7 @@ void LvlLayersBox::modifyLayer(QString layerName, bool visible)
             if(sItem->m_data.layer == layerName)
                 sItem->setVisible(visible);
         }
-        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("NPC"))
+        else if(objType == ItemTypes::LVL_NPC)
         {
             ItemNPC *sItem = qgraphicsitem_cast<ItemNPC *>(item);
             Q_ASSERT(sItem);
@@ -474,7 +479,7 @@ void LvlLayersBox::modifyLayer(QString layerName, bool visible)
             if(sItem->m_data.layer == layerName)
                 sItem->setVisible(visible);
         }
-        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("Water"))
+        else if(objType == ItemTypes::LVL_PhysEnv)
         {
             ItemPhysEnv *sItem = qgraphicsitem_cast<ItemPhysEnv *>(item);
             Q_ASSERT(sItem);
@@ -482,7 +487,7 @@ void LvlLayersBox::modifyLayer(QString layerName, bool visible)
             if(sItem->m_data.layer == layerName)
                 sItem->setVisible(visible);
         }
-        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("Door_enter") || item->data(ITEM_TYPE).toString() == QStringLiteral("Door_exit"))
+        else if(objType == ItemTypes::LVL_META_DoorEnter || objType == ItemTypes::LVL_META_DoorExit)
         {
             ItemDoor *sItem = qgraphicsitem_cast<ItemDoor *>(item);
             Q_ASSERT(sItem);
@@ -507,10 +512,12 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName)
     {
         QGraphicsItem *item = *it;
 
-        if(item->data(ITEM_IS_CURSOR).toString() == QStringLiteral("CURSOR"))
+        if(item->data(LvlScene::ITEM_IS_CURSOR).toBool())
             continue; //skip cursor item
 
-        if(item->data(ITEM_TYPE).toString() == QStringLiteral("Block"))
+        int objType = item->data(LvlScene::ITEM_TYPE_INT).toInt();
+
+        if(objType == ItemTypes::LVL_Block)
         {
             ItemBlock *sItem = qgraphicsitem_cast<ItemBlock *>(item);
             Q_ASSERT(sItem);
@@ -521,7 +528,7 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName)
                 sItem->arrayApply();
             }
         }
-        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("BGO"))
+        else if(objType == ItemTypes::LVL_BGO)
         {
             ItemBGO *sItem = qgraphicsitem_cast<ItemBGO *>(item);
             Q_ASSERT(sItem);
@@ -532,7 +539,7 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName)
                 sItem->arrayApply();
             }
         }
-        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("NPC"))
+        else if(objType == ItemTypes::LVL_NPC)
         {
             ItemNPC *sItem = qgraphicsitem_cast<ItemNPC *>(item);
             Q_ASSERT(sItem);
@@ -543,7 +550,7 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName)
                 sItem->arrayApply();
             }
         }
-        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("Water"))
+        else if(objType == ItemTypes::LVL_PhysEnv)
         {
             ItemPhysEnv *sItem = qgraphicsitem_cast<ItemPhysEnv *>(item);
             Q_ASSERT(sItem);
@@ -554,7 +561,7 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName)
                 sItem->arrayApply();
             }
         }
-        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("Door_enter") || item->data(ITEM_TYPE).toString() == QStringLiteral("Door_exit"))
+        else if(objType == ItemTypes::LVL_META_DoorEnter || objType == ItemTypes::LVL_META_DoorExit)
         {
             ItemDoor *sItem = qgraphicsitem_cast<ItemDoor *>(item);
             Q_ASSERT(sItem);
@@ -610,10 +617,12 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName, bool vis
     {
         QGraphicsItem *item = *it;
 
-        if(item->data(ITEM_IS_CURSOR).toString() == QStringLiteral("CURSOR"))
+        if(item->data(LvlScene::ITEM_IS_CURSOR).toBool())
             continue; //skip cursor item
 
-        if(item->data(ITEM_TYPE).toString() == QStringLiteral("Block"))
+        int itemType = item->data(LvlScene::ITEM_TYPE_INT).toInt();
+
+        if(itemType == ItemTypes::LVL_Block)
         {
             ItemBlock *sItem = qgraphicsitem_cast<ItemBlock *>(item);
             Q_ASSERT(sItem);
@@ -627,7 +636,7 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName, bool vis
             }
 
         }
-        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("BGO"))
+        else if(itemType == ItemTypes::LVL_BGO)
         {
             ItemBGO *sItem = qgraphicsitem_cast<ItemBGO *>(item);
             Q_ASSERT(sItem);
@@ -640,7 +649,7 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName, bool vis
                 sItem->arrayApply();
             }
         }
-        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("NPC"))
+        else if(itemType == ItemTypes::LVL_NPC)
         {
             ItemNPC *sItem = qgraphicsitem_cast<ItemNPC *>(item);
             Q_ASSERT(sItem);
@@ -653,7 +662,7 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName, bool vis
                 sItem->arrayApply();
             }
         }
-        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("Water"))
+        else if(itemType == ItemTypes::LVL_PhysEnv)
         {
             ItemPhysEnv *sItem = qgraphicsitem_cast<ItemPhysEnv *>(item);
             Q_ASSERT(sItem);
@@ -666,21 +675,21 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName, bool vis
                 sItem->arrayApply();
             }
         }
-        else if(item->data(ITEM_TYPE).toString() == QStringLiteral("Door_enter") || item->data(ITEM_TYPE).toString() == QStringLiteral("Door_exit"))
+        else if(itemType == ItemTypes::LVL_META_DoorEnter || itemType == ItemTypes::LVL_META_DoorExit)
         {
             ItemDoor *sItem = qgraphicsitem_cast<ItemDoor *>(item);
             Q_ASSERT(sItem);
 
             if(sItem->m_data.layer == layerName)
             {
-                if(sItem->data(ITEM_TYPE).toString() == QStringLiteral("Door_enter"))
+                if(itemType == ItemTypes::LVL_META_DoorEnter)
                 {
                     LevelDoor tData = sItem->m_data;
                     tData.isSetIn = true;
                     tData.isSetOut = false;
                     modData.doors.push_back(tData);
                 }
-                else if(sItem->data(ITEM_TYPE).toString() == QStringLiteral("Door_exit"))
+                else if(itemType == ItemTypes::LVL_META_DoorExit)
                 {
                     LevelDoor tData = sItem->m_data;
                     tData.isSetIn = false;
@@ -1224,7 +1233,7 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
         {
             QGraphicsItem *it = *itr;
 
-            if(it->data(ITEM_IS_ITEM).toInt() != 1)
+            if(!it->data(LvlScene::ITEM_IS_ITEM).toBool())
                 continue;
 
             LvlBaseItem* item = dynamic_cast<LvlBaseItem *>(it);

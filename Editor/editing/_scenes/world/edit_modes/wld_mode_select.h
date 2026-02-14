@@ -40,7 +40,7 @@ private:
     int gridSize;
     int offsetX;
     int offsetY;//, gridX, gridY, i=0;
-    void setItemSourceData(QGraphicsItem *it, QString ObjType);
+    void setItemSourceData(QGraphicsItem *it, int ObjType);
 };
 
 #endif // WLD_MODE_SELECT_H

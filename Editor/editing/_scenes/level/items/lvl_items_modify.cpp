@@ -98,13 +98,17 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
     if(!doorExist) return;
 
     //get ItemList
-    QList<QGraphicsItem * > items = this->items();
+    QList<QGraphicsItem *> items = this->items();
 
-    for(QGraphicsItem *item : items)
+    foreach(QGraphicsItem *item, items)
     {
-        if((!m_data->doors[i].isSetIn) && (!m_data->doors[i].isSetOut)) break;   //Don't sync door points if not placed
+        if((!m_data->doors[i].isSetIn) && (!m_data->doors[i].isSetOut))
+            break;   //Don't sync door points if not placed
 
-        if((item->data(ITEM_TYPE).toString() == "Door_enter") && (item->data(ITEM_ARRAY_ID).toInt() == arrayID))
+        int objType = item->data(ITEM_TYPE_INT).toInt();
+        unsigned int arrayId = item->data(ITEM_ARRAY_ID).toUInt();
+
+        if(objType == ItemTypes::LVL_META_DoorEnter && arrayId == arrayID)
         {
             if((!(((!m_data->doors[i].lvl_o) && (!m_data->doors[i].lvl_i)) ||
                   ((m_data->doors[i].lvl_o) && (!m_data->doors[i].lvl_i)))
@@ -126,8 +130,7 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
                 doorEntranceSynced = true;
             }
         }
-
-        if((item->data(ITEM_TYPE).toString() == "Door_exit") && (item->data(ITEM_ARRAY_ID).toInt() == arrayID))
+        else if(objType == ItemTypes::LVL_META_DoorExit && arrayId == arrayID)
         {
             if((!(((!m_data->doors[i].lvl_o) && (!m_data->doors[i].lvl_i)) ||
                   (m_data->doors[i].lvl_i))
@@ -148,7 +151,9 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
                 doorExitSynced = true;
             }
         }
-        if((doorEntranceSynced) && (doorExitSynced)) break; // stop fetch, because door points was synced
+
+        if(doorEntranceSynced && doorExitSynced)
+            break; // stop fetch, because door points was synced
     }
 }
 
@@ -161,21 +166,35 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
 ///
 void LvlScene::collectDataFromItem(LevelData &dataToStore, QGraphicsItem *item)
 {
-    if(!item) return;
+    if(!item)
+        return;
 
-    QString ObjType = item->data(ITEM_TYPE).toString();
-    if(ObjType == "NPC")
+    int ObjType = item->data(ITEM_TYPE_INT).toInt();
+
+    switch(ObjType)
+    {
+    case ItemTypes::LVL_NPC:
         dataToStore.npc << dynamic_cast<ItemNPC *>(item)->m_data;
-    else if(ObjType == "Block")
+        break;
+    case ItemTypes::LVL_Block:
         dataToStore.blocks << dynamic_cast<ItemBlock *>(item)->m_data;
-    else if(ObjType == "BGO")
+        break;
+    case ItemTypes::LVL_BGO:
         dataToStore.bgo << dynamic_cast<ItemBGO *>(item)->m_data;
-    else if(ObjType == "Water")
+        break;
+    case ItemTypes::LVL_PhysEnv:
         dataToStore.physez << dynamic_cast<ItemPhysEnv *>(item)->m_data;
-    else if((ObjType == "Door_enter") || (ObjType == "Door_exit"))
+        break;
+    case ItemTypes::LVL_META_DoorEnter:
+    case ItemTypes::LVL_META_DoorExit:
         dataToStore.doors << dynamic_cast<ItemDoor *>(item)->m_data;
-    else if(ObjType == "playerPoint")
+        break;
+    case ItemTypes::LVL_Player:
         dataToStore.players << dynamic_cast<ItemPlayerPoint *>(item)->m_data;
+        break;
+    default:
+        break;
+    }
 }
 
 void LvlScene::collectDataFromItems(LevelData &dataToStore, QList<QGraphicsItem *> items)
@@ -333,7 +352,7 @@ void LvlScene::placeItemUnderCursor()
         while((xxx = itemCollidesWith(m_cursorItemImg)) != nullptr)
         {
             bool removed = false;
-            if(xxx->data(ITEM_TYPE).toString() == "Block")
+            if(xxx->data(ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastBlockArrayID) break;
                 m_overwritedItems.blocks.push_back(dynamic_cast<ItemBlock *>(xxx)->m_data);
@@ -341,7 +360,7 @@ void LvlScene::placeItemUnderCursor()
                 delete xxx;
                 removed = true;
             }
-            else if(xxx->data(ITEM_TYPE).toString() == "BGO")
+            else if(xxx->data(ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastBgoArrayID) break;
                 m_overwritedItems.bgo.push_back(dynamic_cast<ItemBGO *>(xxx)->m_data);
@@ -349,7 +368,7 @@ void LvlScene::placeItemUnderCursor()
                 delete xxx;
                 removed = true;
             }
-            else if(xxx->data(ITEM_TYPE).toString() == "NPC")
+            else if(xxx->data(ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastNpcArrayID) break;
                 m_overwritedItems.npc.push_back(dynamic_cast<ItemNPC *>(xxx)->m_data);
@@ -378,17 +397,17 @@ void LvlScene::placeItemUnderCursor()
 
         for(auto *xxx : foundItems)
         {
-            if(xxx->data(ITEM_TYPE).toString() == "Block")
+            if(xxx->data(ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastBlockArrayID)
                     newItems.push_back(xxx);
             }
-            else if(xxx->data(ITEM_TYPE).toString() == "BGO")
+            else if(xxx->data(ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastBgoArrayID)
                     newItems.push_back(xxx);
             }
-            else if(xxx->data(ITEM_TYPE).toString() == "NPC")
+            else if(xxx->data(ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastNpcArrayID)
                     newItems.push_back(xxx);
@@ -621,20 +640,20 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory,
 {
     LevelData historyBuffer;
     bool deleted = false;
-    QString objType;
+    int objType;
 
     for(QList<QGraphicsItem *>::iterator it = items.begin(); it != items.end(); it++)
     {
         QGraphicsItem *i = *it;
         Q_ASSERT(i);
 
-        objType = i->data(ITEM_TYPE).toString();
+        objType = i->data(ITEM_TYPE_INT).toInt();
 
         if(!forceInvis && !i->isVisible())
             continue;  //Invisible items can't be deleted
 
         //remove data from main array before deletion item from scene
-        if(objType == "Block")
+        if(objType == ItemTypes::LVL_Block)
         {
             auto *b = qgraphicsitem_cast<ItemBlock *>(i);
             Q_ASSERT(b);
@@ -647,7 +666,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory,
             delete i;
             deleted = true;
         }
-        else if(objType == "BGO")
+        else if(objType == ItemTypes::LVL_BGO)
         {
             auto *b = qgraphicsitem_cast<ItemBGO *>(i);
             Q_ASSERT(b);
@@ -660,7 +679,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory,
             delete i;
             deleted = true;
         }
-        else if(objType == "NPC")
+        else if(objType == ItemTypes::LVL_NPC)
         {
             auto *b = qgraphicsitem_cast<ItemNPC *>(i);
             Q_ASSERT(b);
@@ -673,7 +692,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory,
             delete i;
             deleted = true;
         }
-        else if(objType == "Water")
+        else if(objType == ItemTypes::LVL_PhysEnv)
         {
             auto *b = qgraphicsitem_cast<ItemPhysEnv *>(i);
             Q_ASSERT(b);
@@ -686,7 +705,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory,
             delete i;
             deleted = true;
         }
-        else if((objType == "Door_enter") || (objType == "Door_exit"))
+        else if((objType == ItemTypes::LVL_META_DoorEnter) || (objType == ItemTypes::LVL_META_DoorExit))
         {
             auto *b = qgraphicsitem_cast<ItemDoor *>(i);
             Q_ASSERT(b);
@@ -694,7 +713,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory,
             if(m_lockDoor || b->m_locked)
                 continue;
 
-            bool isEntrance = (objType == "Door_enter");
+            bool isEntrance = (objType == ItemTypes::LVL_META_DoorEnter);
 
             LevelDoor doorData = b->m_data;
             if(isEntrance)
@@ -714,7 +733,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory,
             m_mw->dock_LvlWarpProps->setDoorData(-2);
             deleted = true;
         }
-        else if(objType == "playerPoint")
+        else if(objType == ItemTypes::LVL_Player)
         {
             auto *b = qgraphicsitem_cast<ItemPlayerPoint *>(i);
             Q_ASSERT(b);

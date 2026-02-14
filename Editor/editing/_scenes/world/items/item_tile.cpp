@@ -44,7 +44,8 @@ ItemTile::ItemTile(WldScene *parentScene, QGraphicsItem *parent)
 
 void ItemTile::construct()
 {
-    setData(ITEM_TYPE, "TILE");
+    setData(WldScene::ITEM_TYPE, "TILE");
+    setData(WldScene::ITEM_TYPE_INT, ItemTypes::WLD_Tile);
 }
 
 ItemTile::~ItemTile()
@@ -157,7 +158,7 @@ void ItemTile::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
             foreach(QGraphicsItem *SelItem, our_items)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "TILE")
+                if(SelItem->data(WldScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Tile)
                 {
                     if((!sameID) || (((ItemTile *) SelItem)->m_data.id == oldID))
                     {
@@ -168,7 +169,9 @@ void ItemTile::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 }
             }
         }
+
         delete itemList;
+
         if(!newData.tiles.isEmpty())
             m_scene->m_history->addTransformHistory(newData, oldData);
     }
@@ -183,12 +186,13 @@ void ItemTile::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
         foreach(QGraphicsItem *SelItem, our_items)
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "TILE")
+            if(SelItem->data(WldScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Tile)
             {
                 if(((ItemTile *) SelItem)->m_data.id == oldID)
                     selectedList.push_back(SelItem);
             }
         }
+
         if(!selectedList.isEmpty())
         {
             m_scene->removeWldItems(selectedList);
@@ -323,14 +327,14 @@ void ItemTile::setTileData(WorldTerrainTile inD, obj_w_tile *mergedSet, long *an
     {
         m_localProps = *mergedSet;
         m_gridSize = m_localProps.setup.grid;
-        setData(ITEM_IS_META, m_localProps.setup.is_meta_object);
+        setData(WldScene::ITEM_IS_META, m_localProps.setup.is_meta_object);
     }
 
     if(animator_id)
         setAnimator(*animator_id);
 
-    setData(ITEM_ID, QString::number(m_data.id));
-    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id));
+    setData(WldScene::ITEM_ID, (unsigned long long)m_data.id);
+    setData(WldScene::ITEM_ARRAY_ID, m_data.meta.array_id);
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
@@ -375,8 +379,8 @@ void ItemTile::setAnimator(long aniID)
         m_imageSize = QRectF(0, 0, frameRect.width(), frameRect.height());
     }
 
-    setData(ITEM_WIDTH, QString::number(qRound(m_imageSize.width())));  //width
-    setData(ITEM_HEIGHT, QString::number(qRound(m_imageSize.height())));  //height
+    setData(WldScene::ITEM_WIDTH, qRound(m_imageSize.width()));  //width
+    setData(WldScene::ITEM_HEIGHT, qRound(m_imageSize.height()));  //height
     //WriteToLog(QtDebugMsg, QString("Tile Animator ID: %1").arg(aniID));
 
     m_animatorID = aniID;

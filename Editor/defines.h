@@ -24,11 +24,25 @@ public:
         LVL_PhysEnv     = 8,
         LVL_Door        = 9,
         LVL_Player      = 10,
+        LVL_META_DoorEnter = 11,
+        LVL_META_DoorExit  = 12,
+        LVL_META_Background = 13,
+
         WLD_Tile        = 3,
         WLD_Scenery     = 4,
         WLD_Path        = 5,
         WLD_Level       = 6,
-        WLD_MusicBox    = 7
+        WLD_MusicBox    = 7,
+
+        META_Point      = 20,
+        META_Rectangle  = 21,
+        META_Circle     = 22,
+        META_Line       = 23,
+        META_LineDrawer = 24,
+        META_WLD_Point  = 25,
+        META_Space      = 26,
+        META_SectionBorder = 27,
+        META_YellowRect = 28,
     };
 
     //Multiselectable

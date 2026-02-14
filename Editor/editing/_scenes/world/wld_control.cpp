@@ -208,12 +208,14 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         isLeftMouse = true;
         LogDebug(QString("Left mouse button released [edit mode: %1]").arg(m_editMode));
     }
+
     if(mouseEvent->button() == Qt::MiddleButton)
     {
         m_mouseMidPressed = false;
         isMiddleMouse = true;
         LogDebug(QString("Middle mouse button released [edit mode: %1]").arg(m_editMode));
     }
+
     if(mouseEvent->button() == Qt::RightButton)
     {
         m_mouseRightPressed = false;
@@ -229,6 +231,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
 
     m_contextMenuIsOpened = false;
+
     if(!isLeftMouse)
     {
         if(m_pastingMode && GlobalSettings::MidMouse_allowDuplicate && isMiddleMouse &&
@@ -292,13 +295,13 @@ void WldScene::Debugger_updateItemList()
 void WldScene::openProps()
 {
     QList<QGraphicsItem * > items = this->selectedItems();
+
     if(!items.isEmpty())
     {
-        if(items.first()->data(ITEM_TYPE).toString() == "LEVEL")
+        if(items.first()->data(ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
         {
-            MainWinConnect::pMainWin->dock_WldItemProps->openPropertiesFor(0,
-                    ((ItemLevel *)items.first())->m_data,
-                    false);
+            ItemLevel *l = dynamic_cast<ItemLevel *>(items.first());
+            MainWinConnect::pMainWin->dock_WldItemProps->openPropertiesFor(0, l->m_data, false);
         }
         else
             MainWinConnect::pMainWin->dock_WldItemProps->hideToolbox();

@@ -930,6 +930,7 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
                     ui->extraSettings->setStyleSheet("*{background-color: #FF0000;}");
                     hasError = true;
                 }
+
                 auto *widget = m_extraGlobalSettings->getWidget();
                 if(widget)
                 {
@@ -989,6 +990,7 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
                                                   .arg(m_extraSettings->errorString()));
                     ui->extraSettings->setStyleSheet("*{background-color: #FF0000;}");
                 }
+
                 auto *widget = m_extraSettings->getWidget();
                 if(widget)
                 {
@@ -1056,9 +1058,10 @@ void LvlItemProperties::onExtraSettingsBlockChanged()
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "Block")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
             {
                 ItemBlock *n = qgraphicsitem_cast<ItemBlock*>(item);
                 Q_ASSERT(n);
@@ -1067,6 +1070,7 @@ void LvlItemProperties::onExtraSettingsBlockChanged()
                 n->arrayApply();
             }
         }
+
         edit->scene->m_history->addChangeSettings(selData, new BlockHistory_UserData(), custom_params);
     }
 }
@@ -1087,7 +1091,7 @@ void LvlItemProperties::onExtraSettingsBGOChanged()
         edit->LvlData.meta.modified = true;
         for(auto *item : items)
         {
-            if(item->data(ITEM_TYPE).toString() == "BGO")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
             {
                 ItemBGO *n = qgraphicsitem_cast<ItemBGO*>(item);
                 Q_ASSERT(n);
@@ -1114,9 +1118,10 @@ void LvlItemProperties::onExtraSettingsNPCChanged()
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "NPC")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 ItemNPC *n = qgraphicsitem_cast<ItemNPC*>(item);
                 Q_ASSERT(n);
@@ -1125,6 +1130,7 @@ void LvlItemProperties::onExtraSettingsNPCChanged()
                 n->arrayApply();
             }
         }
+
         edit->scene->m_history->addChangeSettings(selData, new NPCHistory_UserData(), custom_params);
     }
 }
@@ -1144,17 +1150,15 @@ void LvlItemProperties::on_PROPS_BlockResize_clicked()
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         QList<QGraphicsItem *> items = mw()->activeLvlEditWin()->scene->selectedItems();
-        for(auto *item : items)
+        foreach(auto *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "Block") && ((item->data(ITEM_ARRAY_ID).toInt() == m_currentBlockArrayId)))
+            if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block) && ((item->data(LvlScene::ITEM_ARRAY_ID).toInt() == m_currentBlockArrayId)))
             {
                 mw()->activeLvlEditWin()->scene->setBlockResizer(item, true);
                 break;
             }
         }
-
     }
-
 }
 
 
@@ -1170,9 +1174,10 @@ void LvlItemProperties::on_BLOCK_Width_editingFinished()
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "Block")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
             {
                 ItemBlock *blk = ((ItemBlock *)item);
                 if(blk->isSizable())
@@ -1210,9 +1215,10 @@ void LvlItemProperties::on_BLOCK_Height_editingFinished()
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "Block")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
             {
                 ItemBlock *blk = qgraphicsitem_cast<ItemBlock *>(item);
                 if(blk->isSizable())
@@ -1256,14 +1262,16 @@ void LvlItemProperties::on_PROPS_BlockInvis_clicked(bool checked)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "Block")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
             {
                 selData.blocks.push_back(((ItemBlock *) item)->m_data);
                 ((ItemBlock *)item)->setInvisible(checked);
             }
         }
+
         edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_INVISIBLE, QVariant(checked));
     }
 
@@ -1285,14 +1293,16 @@ void LvlItemProperties::on_PROPS_BlkSlippery_clicked(bool checked)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "Block")/*&&((item->data(2).toInt()==blockPtr))*/)
+            if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)/*&&((item->data(2).toInt()==blockPtr))*/)
             {
                 selData.blocks.push_back(((ItemBlock *) item)->m_data);
                 ((ItemBlock *)item)->setSlippery(checked);
             }
         }
+
         edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_SLIPPERY, QVariant(checked));
     }
 
@@ -1314,7 +1324,7 @@ void LvlItemProperties::on_PROPS_BlockIncludes_clicked()
         QList<QGraphicsItem *> items1 = mw()->activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem *targetItem, items1)
         {
-            if((targetItem->data(ITEM_TYPE).toString() == "Block") && ((targetItem->data(ITEM_ARRAY_ID).toInt() == m_currentBlockArrayId)))
+            if((targetItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block) && ((targetItem->data(LvlScene::ITEM_ARRAY_ID).toInt() == m_currentBlockArrayId)))
             {
                 npcID = ((ItemBlock *)targetItem)->m_data.npc_id;
                 break;
@@ -1357,14 +1367,16 @@ void LvlItemProperties::on_PROPS_BlockIncludes_clicked()
             LevelEdit *edit = mw()->activeLvlEditWin();
             QList<QGraphicsItem *> items = edit->scene->selectedItems();
             edit->LvlData.meta.modified = true;
-            for(auto *item : items)
+
+            foreach(auto *item, items)
             {
-                if(item->data(ITEM_TYPE).toString() == "Block")
+                if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
                 {
                     selData.blocks.push_back(((ItemBlock *) item)->m_data);
                     ((ItemBlock *)item)->setIncludedNPC(selected_npc);
                 }
             }
+
             edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_CHANGENPC, QVariant(selected_npc));
         }
 
@@ -1392,14 +1404,16 @@ void LvlItemProperties::on_PROPS_BlockLayer_currentIndexChanged(int arg1i)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "Block")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
             {
                 modData.blocks.push_back(((ItemBlock *)item)->m_data);
                 ((ItemBlock *)item)->setLayer(arg1);
             }
         }
+
         edit->scene->m_history->addChangedLayer(modData, arg1);
     }
 
@@ -1428,9 +1442,10 @@ void LvlItemProperties::on_PROPS_BlkEventDestroy_currentIndexChanged(int arg1i)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "Block")/*&&((item->data(2).toInt()==blockPtr))*/)
+            if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)/*&&((item->data(2).toInt()==blockPtr))*/)
             {
                 modData.blocks.push_back(((ItemBlock *)item)->m_data);
                 if(ui->PROPS_BlkEventDestroy->currentIndex() > 0)
@@ -1441,6 +1456,7 @@ void LvlItemProperties::on_PROPS_BlkEventDestroy_currentIndexChanged(int arg1i)
                 //break;
             }
         }
+
         if(ui->PROPS_BlkEventDestroy->currentIndex() > 0)
             edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_DESTROYED, QVariant(arg1));
         else
@@ -1471,9 +1487,10 @@ void LvlItemProperties::on_PROPS_BlkEventHited_currentIndexChanged(int arg1i)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "Block")/*&&((item->data(2).toInt()==blockPtr))*/)
+            if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)/*&&((item->data(2).toInt()==blockPtr))*/)
             {
                 modData.blocks.push_back(((ItemBlock *)item)->m_data);
                 if(ui->PROPS_BlkEventHited->currentIndex() > 0)
@@ -1484,6 +1501,7 @@ void LvlItemProperties::on_PROPS_BlkEventHited_currentIndexChanged(int arg1i)
                 //break;
             }
         }
+
         if(ui->PROPS_BlkEventHited->currentIndex() > 0)
             edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_HITED, QVariant(arg1));
         else
@@ -1515,9 +1533,10 @@ void LvlItemProperties::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(int arg1
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "Block")/*&&((item->data(2).toInt()==blockPtr))*/)
+            if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)/*&&((item->data(2).toInt()==blockPtr))*/)
             {
                 modData.blocks.push_back(((ItemBlock *)item)->m_data);
                 if(ui->PROPS_BlkEventLayerEmpty->currentIndex() > 0)
@@ -1528,6 +1547,7 @@ void LvlItemProperties::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(int arg1
                 //break;
             }
         }
+
         if(ui->PROPS_BlkEventLayerEmpty->currentIndex() > 0)
             edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_LAYER_EMP, QVariant(arg1));
         else
@@ -1561,15 +1581,17 @@ void LvlItemProperties::on_PROPS_BGOLayer_currentIndexChanged(int arg1i)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "BGO")/*&&((item->data(2).toInt()==bgoPtr))*/)
+            if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)/*&&((item->data(2).toInt()==bgoPtr))*/)
             {
                 modData.bgo.push_back(((ItemBGO *)item)->m_data);
                 ((ItemBGO *)item)->setLayer(arg1);
                 //break;
             }
         }
+
         edit->scene->m_history->addChangedLayer(modData, arg1);
     }
 
@@ -1612,9 +1634,10 @@ void LvlItemProperties::on_PROPS_BGO_Z_Layer_currentIndexChanged(int index)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "BGO")/*&&((item->data(2).toInt()==bgoPtr))*/)
+            if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)/*&&((item->data(2).toInt()==bgoPtr))*/)
             {
                 selData.bgo.push_back(((ItemBGO *)item)->m_data);
                 ((ItemBGO *)item)->setZMode(zMode, ((ItemBGO *)item)->m_data.z_offset);
@@ -1622,6 +1645,7 @@ void LvlItemProperties::on_PROPS_BGO_Z_Layer_currentIndexChanged(int index)
                 //break;
             }
         }
+
         edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_Z_LAYER, QVariant(zMode));
     }
 
@@ -1644,9 +1668,10 @@ void LvlItemProperties::on_PROPS_BGO_Z_Offset_valueChanged(double arg1)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "BGO")/*&&((item->data(2).toInt()==bgoPtr))*/)
+            if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)/*&&((item->data(2).toInt()==bgoPtr))*/)
             {
                 selData.bgo.push_back(((ItemBGO *)item)->m_data);
                 ((ItemBGO *)item)->setZMode(((ItemBGO *)item)->m_data.z_mode, arg1);
@@ -1654,6 +1679,7 @@ void LvlItemProperties::on_PROPS_BGO_Z_Offset_valueChanged(double arg1)
                 //break;
             }
         }
+
         edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_Z_OFFSET, QVariant(arg1));
     }
 }
@@ -1674,9 +1700,10 @@ void LvlItemProperties::on_PROPS_BGO_smbx64_sp_valueChanged(int arg1)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "BGO")/*&&((item->data(2).toInt()==bgoPtr))*/)
+            if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)/*&&((item->data(2).toInt()==bgoPtr))*/)
             {
                 selData.bgo.push_back(((ItemBGO *)item)->m_data);
                 ((ItemBGO *)item)->m_data.smbx64_sp = arg1;
@@ -1684,6 +1711,7 @@ void LvlItemProperties::on_PROPS_BGO_smbx64_sp_valueChanged(int arg1)
                 //break;
             }
         }
+
         edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_BGOSORTING, QVariant(arg1));
     }
 }
@@ -1804,9 +1832,10 @@ void LvlItemProperties::on_PROPS_NPCDirLeft_clicked()
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)/*&&((item->data(2).toInt()==npcPtr))*/)
             {
                 ItemNPC *npc = qgraphicsitem_cast<ItemNPC *>(item);
                 Q_ASSERT(npc);
@@ -1815,6 +1844,7 @@ void LvlItemProperties::on_PROPS_NPCDirLeft_clicked()
                 //break;
             }
         }
+
         edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_DIRECTION, QVariant(-1));
     }
 
@@ -1838,9 +1868,10 @@ void LvlItemProperties::on_PROPS_NPCDirRand_clicked()
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(QGraphicsItem *item : items)
+
+        foreach(auto *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)/*&&((item->data(2).toInt()==npcPtr))*/)
             {
                 ItemNPC *npc = qgraphicsitem_cast<ItemNPC *>(item);
                 Q_ASSERT(npc);
@@ -1849,6 +1880,7 @@ void LvlItemProperties::on_PROPS_NPCDirRand_clicked()
                 //break;
             }
         }
+
         edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_DIRECTION, QVariant(0));
     }
 }
@@ -1871,9 +1903,10 @@ void LvlItemProperties::on_PROPS_NPCDirRight_clicked()
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(QGraphicsItem *item : items)
+
+        foreach(auto *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)/*&&((item->data(2).toInt()==npcPtr))*/)
             {
                 ItemNPC *npc = qgraphicsitem_cast<ItemNPC *>(item);
                 Q_ASSERT(npc);
@@ -1882,6 +1915,7 @@ void LvlItemProperties::on_PROPS_NPCDirRight_clicked()
                 //break;
             }
         }
+
         edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_DIRECTION, QVariant(1));
     }
 }
@@ -1902,9 +1936,10 @@ void LvlItemProperties::on_PROPS_NpcFri_clicked(bool checked)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)/*&&((item->data(2).toInt()==npcPtr))*/)
             {
                 ItemNPC *npc = qgraphicsitem_cast<ItemNPC *>(item);
                 Q_ASSERT(npc);
@@ -1913,6 +1948,7 @@ void LvlItemProperties::on_PROPS_NpcFri_clicked(bool checked)
                 //break;
             }
         }
+
         edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_FRIENDLY, QVariant(checked));
     }
 
@@ -1934,9 +1970,10 @@ void LvlItemProperties::on_PROPS_NPCNoMove_clicked(bool checked)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)/*&&((item->data(2).toInt()==npcPtr))*/)
             {
                 ItemNPC *npc = qgraphicsitem_cast<ItemNPC *>(item);
                 Q_ASSERT(npc);
@@ -1945,6 +1982,7 @@ void LvlItemProperties::on_PROPS_NPCNoMove_clicked(bool checked)
                 //break;
             }
         }
+
         edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_NOMOVEABLE, QVariant(checked));
     }
 
@@ -1966,9 +2004,10 @@ void LvlItemProperties::on_PROPS_NpcBoss_clicked(bool checked)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)/*&&((item->data(2).toInt()==npcPtr))*/)
             {
                 ItemNPC *npc = qgraphicsitem_cast<ItemNPC *>(item);
                 Q_ASSERT(npc);
@@ -1977,6 +2016,7 @@ void LvlItemProperties::on_PROPS_NpcBoss_clicked(bool checked)
                 //break;
             }
         }
+
         edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_BOSS, QVariant(checked));
     }
 }
@@ -2004,7 +2044,7 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
         edit->LvlData.meta.modified = true;
         foreach(QGraphicsItem *SelItem, items)
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "NPC")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 message = ((ItemNPC *) SelItem)->m_data.msg;
                 friendly = ((ItemNPC *) SelItem)->m_data.friendly;
@@ -2032,7 +2072,7 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
             edit->LvlData.meta.modified = true;
             foreach(QGraphicsItem *SelItem, items)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "NPC")
+                if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
                 {
                     selData.npc.push_back(((ItemNPC *) SelItem)->m_data);
                     ((ItemNPC *) SelItem)->setMsg(msgBox->currentText);
@@ -2077,9 +2117,10 @@ void LvlItemProperties::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
     LevelEdit *edit = mw()->activeLvlEditWin();
     QList<QGraphicsItem *> items = edit->scene->selectedItems();
     edit->LvlData.meta.modified = true;
-    for(QGraphicsItem *item : items)
+
+    foreach(auto *item, items)
     {
-        if(item->data(ITEM_TYPE).toString() == "NPC")
+        if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
         {
             ItemNPC *npcI = qgraphicsitem_cast<ItemNPC *>(item);
             Q_ASSERT(npcI);
@@ -2099,6 +2140,7 @@ void LvlItemProperties::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
             npcI->arrayApply();
         }
     }
+
     edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_SPECIAL_DATA, QVariant(arg1 - m_npcSpecSpinOffset));
 }
 
@@ -2139,9 +2181,9 @@ void LvlItemProperties::processNpcContainerButton(QPushButton *btn)
     else if(isLevelWindow)
     {
         QList<QGraphicsItem *> items1 = edit->scene->selectedItems();
-        for(QGraphicsItem *targetItem : items1)
+        foreach(QGraphicsItem *targetItem, items1)
         {
-            if((targetItem->data(ITEM_TYPE).toString() == "NPC") && ((targetItem->data(ITEM_ARRAY_ID).toInt() == m_currentNpcArrayId)))
+            if((targetItem->data(LvlScene::ITEM_TYPE_INT).toString() == ItemTypes::LVL_NPC) && ((targetItem->data(LvlScene::ITEM_ARRAY_ID).toInt() == m_currentNpcArrayId)))
             {
                 npcID = ((ItemNPC *)targetItem)->m_data.contents;
                 break;
@@ -2184,9 +2226,9 @@ void LvlItemProperties::processNpcContainerButton(QPushButton *btn)
             QList<QGraphicsItem *> items = edit->scene->selectedItems();
             edit->LvlData.meta.modified = true;
 
-            for(auto *item : items)
+            foreach(auto *item, items)
             {
-                if((item->data(ITEM_TYPE).toString() == "NPC")/*&&((item->data(ITEM_ARRAY_ID).toInt()==blockPtr))*/)
+                if((item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)/*&&((item->data(ITEM_ARRAY_ID).toInt()==blockPtr))*/)
                 {
                     ItemNPC *npcI = qgraphicsitem_cast<ItemNPC*>(item);
                     Q_ASSERT(npcI);
@@ -2244,9 +2286,10 @@ void LvlItemProperties::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "NPC")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 ItemNPC *npcI = qgraphicsitem_cast<ItemNPC*>(item);
                 Q_ASSERT(npcI);
@@ -2263,6 +2306,7 @@ void LvlItemProperties::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
                 npcI->arrayApply();
             }
         }
+
         edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_SPECIAL_DATA, QVariant(index));
     }
 }
@@ -2279,6 +2323,7 @@ void LvlItemProperties::on_PROPS_NpcGenerator_clicked(bool checked)
             LvlPlacingItems::gridSz = 16;
         else
             LvlPlacingItems::gridSz = static_cast<int>(LvlPlacingItems::npcGrid);
+
         m_externalLock = true;
         ui->PROPS_NPCGenType->setCurrentIndex((LvlPlacingItems::npcSet.generator_type) - 1);
         ui->PROPS_NPCGenTime->setValue((double)(LvlPlacingItems::npcSet.generator_period) / 10);
@@ -2293,9 +2338,10 @@ void LvlItemProperties::on_PROPS_NpcGenerator_clicked(bool checked)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "NPC")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 auto *it = qgraphicsitem_cast<ItemNPC *>(item);
                 Q_ASSERT(it);
@@ -2308,6 +2354,7 @@ void LvlItemProperties::on_PROPS_NpcGenerator_clicked(bool checked)
                 m_externalLock = false;
             }
         }
+
         edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_GENACTIVATE, QVariant(checked));
     }
     ui->PROPS_NPCGenBox->setVisible(checked);
@@ -2329,9 +2376,10 @@ void LvlItemProperties::on_PROPS_NPCGenType_currentIndexChanged(int index)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(auto *item : items)
+
+        foreach(auto *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() == "NPC")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 ItemNPC *npc = qgraphicsitem_cast<ItemNPC*>(item);
                 Q_ASSERT(npc);
@@ -2342,6 +2390,7 @@ void LvlItemProperties::on_PROPS_NPCGenType_currentIndexChanged(int index)
                                                );
             }
         }
+
         edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_GENTYPE, QVariant(index + 1));
     }
 }
@@ -2362,16 +2411,19 @@ void LvlItemProperties::on_PROPS_NPCGenTime_valueChanged(double arg1)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(QGraphicsItem *item : items)
+
+        foreach(auto *item, items)
         {
-            if(item->data(ITEM_TYPE).toString() != "NPC")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() != ItemTypes::LVL_NPC)
                 continue;
+
             auto *it = qgraphicsitem_cast<ItemNPC*>(item);
             Q_ASSERT(it);
             modData.npc.push_back(it->m_data);
             it->m_data.generator_period = qRound(arg1 * 10);
             it->arrayApply();
         }
+
         edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_GENTIME, QVariant(qRound(arg1 * 10)));
     }
 }
@@ -2396,15 +2448,17 @@ void LvlItemProperties::npcGeneratorDirectionChange(int direction)
     QList<QGraphicsItem *> items = edit->scene->selectedItems();
     edit->LvlData.meta.modified = true;
 
-    for(QGraphicsItem *item : items)
+    foreach(auto *item, items)
     {
-        if(item->data(ITEM_TYPE).toString() != "NPC")
+        if(item->data(LvlScene::ITEM_TYPE_INT).toInt() != ItemTypes::LVL_NPC)
             continue;
+
         ItemNPC *it = qgraphicsitem_cast<ItemNPC*>(item);
         Q_ASSERT(it);
         modData.npc.push_back(it->m_data);
         it->setGenerator(it->m_data.generator, direction, it->m_data.generator_type);
     }
+
     edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_GENDIR, QVariant(direction));
 }
 
@@ -2427,15 +2481,17 @@ void LvlItemProperties::on_PROPS_NpcLayer_currentIndexChanged(int arg1i)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        for(QGraphicsItem *item : items)
+
+        foreach(auto *item, items)
         {
             ItemNPC *npc = qgraphicsitem_cast<ItemNPC *>(item);
-            if(item->data(ITEM_TYPE).toString() == "NPC")
+            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 modData.npc.push_back(npc->m_data);
                 npc->setLayer(arg1);
             }
         }
+
         edit->scene->m_history->addChangedLayer(modData, arg1);
     }
 
@@ -2465,9 +2521,10 @@ void LvlItemProperties::on_PROPS_NpcAttachLayer_currentIndexChanged(int arg1i)
     LevelEdit *edit = mw()->activeLvlEditWin();
     QList<QGraphicsItem *> items = edit->scene->selectedItems();
     edit->LvlData.meta.modified = true;
-    for(QGraphicsItem *item : items)
+
+    foreach(auto *item, items)
     {
-        if(item->data(ITEM_TYPE).toString() == "NPC")
+        if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
         {
             ItemNPC *npc = qgraphicsitem_cast<ItemNPC *>(item);
             modData.npc.push_back(npc->m_data);
@@ -2478,6 +2535,7 @@ void LvlItemProperties::on_PROPS_NpcAttachLayer_currentIndexChanged(int arg1i)
             npc->arrayApply();
         }
     }
+
     if(ui->PROPS_NpcAttachLayer->currentIndex() > 0)
         edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_ATTACHLAYER, QVariant(arg1));
     else
@@ -2509,9 +2567,10 @@ void LvlItemProperties::on_PROPS_NpcEventActivate_currentIndexChanged(int arg1i)
     LevelEdit *edit = mw()->activeLvlEditWin();
     QList<QGraphicsItem *> items = edit->scene->selectedItems();
     edit->LvlData.meta.modified = true;
-    for(QGraphicsItem *item : items)
+
+    foreach(auto *item, items)
     {
-        if(item->data(ITEM_TYPE).toString() == "NPC")
+        if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
         {
             ItemNPC *npc = qgraphicsitem_cast<ItemNPC *>(item);
             modData.npc.push_back(npc->m_data);
@@ -2522,6 +2581,7 @@ void LvlItemProperties::on_PROPS_NpcEventActivate_currentIndexChanged(int arg1i)
             npc->arrayApply();
         }
     }
+
     if(ui->PROPS_NpcEventActivate->currentIndex() > 0)
         edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_ACTIVATE, QVariant(arg1));
     else
@@ -2553,9 +2613,10 @@ void LvlItemProperties::on_PROPS_NpcEventDeath_currentIndexChanged(int arg1i)
     LevelEdit *edit = mw()->activeLvlEditWin();
     QList<QGraphicsItem *> items = edit->scene->selectedItems();
     edit->LvlData.meta.modified = true;
-    for(QGraphicsItem *item : items)
+
+    foreach(auto *item, items)
     {
-        if(item->data(ITEM_TYPE).toString() == "NPC")
+        if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
         {
             ItemNPC *npc = qgraphicsitem_cast<ItemNPC *>(item);
             Q_ASSERT(npc);
@@ -2567,6 +2628,7 @@ void LvlItemProperties::on_PROPS_NpcEventDeath_currentIndexChanged(int arg1i)
             npc->arrayApply();
         }
     }
+
     if(ui->PROPS_NpcEventDeath->currentIndex() > 0)
         edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_DEATH, QVariant(arg1));
     else
@@ -2598,9 +2660,10 @@ void LvlItemProperties::on_PROPS_NpcEventTalk_currentIndexChanged(int arg1i)
     LevelEdit *edit = mw()->activeLvlEditWin();
     QList<QGraphicsItem *> items = edit->scene->selectedItems();
     edit->LvlData.meta.modified = true;
-    for(QGraphicsItem *item : items)
+
+    foreach(auto *item, items)
     {
-        if(item->data(ITEM_TYPE).toString() == "NPC")
+        if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
         {
             ItemNPC *npc = qgraphicsitem_cast<ItemNPC*>(item);
             Q_ASSERT(npc);
@@ -2612,6 +2675,7 @@ void LvlItemProperties::on_PROPS_NpcEventTalk_currentIndexChanged(int arg1i)
             npc->arrayApply();
         }
     }
+
     if(ui->PROPS_NpcEventTalk->currentIndex() > 0)
         edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_TALK, QVariant(arg1));
     else
@@ -2643,9 +2707,10 @@ void LvlItemProperties::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(int arg1
     LevelEdit *edit = mw()->activeLvlEditWin();
     QList<QGraphicsItem *> items = edit->scene->selectedItems();
     edit->LvlData.meta.modified = true;
-    for(auto *item : items)
+
+    foreach(auto *item, items)
     {
-        if(item->data(ITEM_TYPE).toString() == "NPC")
+        if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
         {
             ItemNPC *npc = qgraphicsitem_cast<ItemNPC*>(item);
             Q_ASSERT(npc);
@@ -2657,6 +2722,7 @@ void LvlItemProperties::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(int arg1
             npc->arrayApply();
         }
     }
+
     if(ui->PROPS_NpcEventEmptyLayer->currentIndex() > 0)
         edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_LAYER_EMP, QVariant(arg1));
     else

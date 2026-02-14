@@ -38,8 +38,7 @@ class ItemPath : public WldBaseItem
         return QCoreApplication::translate("ItemPath", sourceText, disambiguation, n);
     }
 
-    void updateNoticesClear();
-    void updateNoticesSet();
+    void updateNearObjects(QPoint oldPos, QPoint newPos);
 
 public:
     ItemPath(QGraphicsItem *parent = nullptr);

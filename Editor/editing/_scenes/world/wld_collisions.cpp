@@ -121,10 +121,16 @@ QGraphicsItem *WldScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *ite
     qreal topA, topB;
     qreal bottomA, bottomB;
 
+    int objType1, objType2;
+    unsigned long itemId1, itemId2;
+
     if(item == nullptr)
         return nullptr;
 
-    if(item->data(ITEM_TYPE).toString() == "YellowRectangle")
+    objType1 = item->data(ITEM_TYPE_INT).toInt();
+    itemId1 = (unsigned long)item->data(ITEM_ID).toULongLong();
+
+    if(objType1 == ItemTypes::META_YellowRect)
         return nullptr;
 
     QList<QGraphicsItem *> collisions;
@@ -142,27 +148,27 @@ QGraphicsItem *WldScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *ite
         return nullptr;
 
     //collidingItems(item, Qt::IntersectsItemBoundingRect);
-    for(auto *it : collisions)
+    foreach(auto *it, collisions)
     {
         if(it == item)
             continue;
         if(it == nullptr)
             continue;
+
         if(!it->isVisible()) continue;
 
-        if(it->data(ITEM_TYPE).isNull())
+        if(it->data(ITEM_TYPE_INT).isNull())
             continue;
-        if(it->data(ITEM_IS_ITEM).isNull())
-            continue;
-        //if(it->data(ITEM_TYPE).toString()=="Space")
-        //    continue;
-        //if(it->data(ITEM_TYPE).toString()=="Square")
-        //    continue;
-        if(item->data(ITEM_TYPE).toString() != it->data(ITEM_TYPE).toString())
+        if(it->data(ITEM_IS_ITEM).isNull() || !it->data(ITEM_IS_ITEM).toBool())
             continue;
 
-        if(item->data(ITEM_TYPE).toString() == "SCENERY" &&
-           item->data(ITEM_ID).toInt() != it->data(ITEM_ID).toInt())
+        objType2 = it->data(ITEM_TYPE_INT).toInt();
+        itemId2 = (unsigned long)it->data(ITEM_ID).toULongLong();
+
+        if(objType1 != objType2)
+            continue;
+
+        if(objType1 == ItemTypes::WLD_Scenery && itemId1 != itemId2)
             continue;
 
         leftA = item->scenePos().x();
@@ -201,11 +207,13 @@ QGraphicsItem *WldScene::itemCollidesCursor(QGraphicsItem *item)
     double y = item->scenePos().y();
     double w = item->data(ITEM_WIDTH).toReal();
     double h = item->data(ITEM_HEIGHT).toReal();
+
     if(w < 8.0)
     {
         x -= 4;
         w += 8;
     }
+
     if(h < 8.0)
     {
         y -= 4;
@@ -215,62 +223,64 @@ QGraphicsItem *WldScene::itemCollidesCursor(QGraphicsItem *item)
     QRectF findZoneR(x, y, w, h);
     queryItems(findZoneR, &collisions);
 
-    for(auto *it : collisions)
+    foreach(auto *it, collisions)
     {
         if(it == item || !it->isVisible())
             continue;
 
-        QString type = it->data(ITEM_TYPE).toString();
-        if(type == "TILE")
+        int type = it->data(ITEM_TYPE_INT).toInt();
+
+        if(type == ItemTypes::WLD_Tile)
         {
             if(m_lockTerrain || dynamic_cast<ItemTile *>(it)->isLocked())
                 continue;
         }
-        else if(type == "SCENERY")
+        else if(type == ItemTypes::WLD_Scenery)
         {
             if(m_lockScenery || dynamic_cast<ItemScene *>(it)->isLocked())
                 continue;
         }
-        else if(type == "PATH")
+        else if(type == ItemTypes::WLD_Path)
         {
             if(m_lockPath || dynamic_cast<ItemPath *>(it)->isLocked())
                 continue;
         }
-        else if(type == "LEVEL")
+        else if(type == ItemTypes::WLD_Level)
         {
             if(m_lockLevel || dynamic_cast<ItemLevel *>(it)->isLocked())
                 continue;
         }
-        else if(type == "MUSICBOX")
+        else if(type == ItemTypes::WLD_MusicBox)
         {
             if(m_lockMusicBox || dynamic_cast<ItemMusic *>(it)->isLocked())
                 continue;
         }
 
         if(
-            (type == "TILE") ||
-            (type == "SCENERY") ||
-            (type == "PATH") ||
-            (type == "LEVEL") ||
-            (type == "MUSICBOX")
+            (type == ItemTypes::WLD_Tile) || (type == ItemTypes::WLD_Scenery) ||
+            (type == ItemTypes::WLD_Path) || (type == ItemTypes::WLD_Level) ||
+            (type == ItemTypes::WLD_MusicBox)
         )
             return it;
     }
+
     return nullptr;
 }
 
 namespace WorldScene_space
 {
-    bool _TreeSearchCallback(QGraphicsItem *item, void *arg)
-    {
-        WldScene::PGE_ItemList *list = static_cast<WldScene::PGE_ItemList * >(arg);
-        if(list)
-        {
-            if(item)(*list).push_back(item);
-        }
-        return true;
-    }
+
+bool _TreeSearchCallback(QGraphicsItem *item, void *arg)
+{
+    WldScene::PGE_ItemList *list = static_cast<WldScene::PGE_ItemList * >(arg);
+
+    if(list && item)
+        (*list).push_back(item);
+
+    return true;
 }
+
+} // WorldScene_space
 
 void WldScene::queryItems(const QRectF &zone, PGE_ItemList *resultList)
 {
@@ -291,10 +301,13 @@ void WldScene::registerElement(QGraphicsItem *item)
     QSizeF pz(item->data(ITEM_WIDTH).toInt(), item->data(ITEM_HEIGHT).toInt());
     RPoint lt = {pt.x(), pt.y()};
     RPoint rb = {pt.x() + pz.width(), pt.y() + pz.height()};
+
     if(pz.width() <= 0)
         rb[0] = pt.x() + 1;
+
     if(pz.height() <= 0)
         rb[1] = pt.y() + 1;
+
     tree.Insert(lt, rb, item);
     item->setData(ITEM_LAST_POS, pt);
     item->setData(ITEM_LAST_SIZE, pz);
@@ -309,9 +322,12 @@ void WldScene::unregisterElement(QGraphicsItem *item)
     QSizeF pz = item->data(ITEM_LAST_POS).toSizeF();
     RPoint lt = {pt.x(), pt.y()};
     RPoint rb = {pt.x() + pz.width(), pt.y() + pz.height()};
+
     if(pz.width() <= 0)
         rb[0] = pt.x() + 1;
+
     if(pz.height() <= 0)
         rb[1] = pt.y() + 1;
+
     tree.Remove(lt, rb, item);
 }

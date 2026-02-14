@@ -153,47 +153,47 @@ void WorldEdit::ExportingReady() //slot
         QList<QGraphicsItem*> allBlocks = scene->items();
         for(QGraphicsItem* it : allBlocks)
         {
-            if(it->data(ITEM_TYPE).toString() != "TILE" &&
-               it->data(ITEM_TYPE).toString() != "SCENERY" &&
-               it->data(ITEM_TYPE).toString() != "PATH" &&
-               it->data(ITEM_TYPE).toString() != "LEVEL")
+            int objType = it->data(WldScene::ITEM_TYPE_INT).toInt();
+
+            if(objType != ItemTypes::WLD_Tile && objType != ItemTypes::WLD_Scenery &&
+               objType != ItemTypes::WLD_Path && objType != ItemTypes::WLD_Level)
                 continue;
 
             //Exclude already hidden elements
             if(!it->isVisible())
                 continue;
 
-            if(it->data(ITEM_TYPE).toString() == "TILE")
+            if(objType == ItemTypes::WLD_Tile)
             {
                 auto *blk = dynamic_cast<ItemTile*>(it);
-                if(blk && blk->data(ITEM_IS_META).toBool())
+                if(blk && blk->data(WldScene::ITEM_IS_META).toBool())
                 {
                     it->setVisible(false);
                     invisibleMetas.push_back(it);
                 }
             }
-            else if(it->data(ITEM_TYPE).toString() == "SCENERY")
+            else if(objType == ItemTypes::WLD_Scenery)
             {
                 auto *blk = dynamic_cast<ItemScene*>(it);
-                if(blk && blk->data(ITEM_IS_META).toBool())
+                if(blk && blk->data(WldScene::ITEM_IS_META).toBool())
                 {
                     it->setVisible(false);
                     invisibleMetas.push_back(it);
                 }
             }
-            else if(it->data(ITEM_TYPE).toString() == "PATH")
+            else if(objType == ItemTypes::WLD_Path)
             {
                 auto *blk = dynamic_cast<ItemPath*>(it);
-                if(blk && blk->data(ITEM_IS_META).toBool())
+                if(blk && blk->data(WldScene::ITEM_IS_META).toBool())
                 {
                     it->setVisible(false);
                     invisibleMetas.push_back(it);
                 }
             }
-            else if(it->data(ITEM_TYPE).toString() == "LEVEL")
+            else if(objType == ItemTypes::WLD_Level)
             {
                 auto *blk = dynamic_cast<ItemLevel*>(it);
-                if(blk && blk->data(ITEM_IS_META).toBool())
+                if(blk && blk->data(WldScene::ITEM_IS_META).toBool())
                 {
                     it->setVisible(false);
                     invisibleMetas.push_back(it);

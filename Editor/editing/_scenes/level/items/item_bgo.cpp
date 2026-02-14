@@ -54,7 +54,8 @@ void ItemBGO::construct()
 {
     m_gridSize = 32;
     m_zLayer = LevelBGO::ZDefault;
-    setData(ITEM_TYPE, "BGO");
+    setData(LvlScene::ITEM_TYPE, "BGO");
+    setData(LvlScene::ITEM_TYPE_INT, ItemTypes::LVL_BGO);
 }
 
 
@@ -193,7 +194,7 @@ void ItemBGO::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         }
         foreach(QGraphicsItem *SelItem, our_items)
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "BGO")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
             {
                 ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
                 Q_ASSERT(b);
@@ -215,7 +216,7 @@ cancelRemoveSSS:
         LevelData selData;
         foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "BGO")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
             {
                 ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
                 Q_ASSERT(b);
@@ -230,7 +231,7 @@ cancelRemoveSSS:
         LevelData selData;
         foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "BGO")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
             {
                 ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
                 Q_ASSERT(b);
@@ -245,7 +246,7 @@ cancelRemoveSSS:
         LevelData selData;
         foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "BGO")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
             {
                 ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
                 Q_ASSERT(b);
@@ -260,7 +261,7 @@ cancelRemoveSSS:
         LevelData selData;
         foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "BGO")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
             {
                 ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
                 Q_ASSERT(b);
@@ -275,7 +276,7 @@ cancelRemoveSSS:
         LevelData selData;
         foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "BGO")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
             {
                 ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
                 Q_ASSERT(b);
@@ -297,7 +298,7 @@ cancelRemoveSSS:
             LevelData selData;
             foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "BGO")
+                if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
                 {
                     ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
                     Q_ASSERT(b);
@@ -363,7 +364,7 @@ cancelRemoveSSS:
             {
                 foreach(QGraphicsItem *SelItem, our_items)
                 {
-                    if(SelItem->data(ITEM_TYPE).toString() == "BGO")
+                    if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
                     {
                         ItemBGO *item = qgraphicsitem_cast<ItemBGO *>(SelItem);
                         Q_ASSERT(item);
@@ -381,7 +382,7 @@ cancelRemoveSSS:
             {
                 for(QGraphicsItem *SelItem : our_items)
                 {
-                    if(SelItem->data(ITEM_TYPE).toString() == "BGO")
+                    if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
                     {
                         ItemBGO *item = qgraphicsitem_cast<ItemBGO *>(SelItem);
                         Q_ASSERT(item);
@@ -463,9 +464,10 @@ cancelTransform:
         {
             LevelData selData;
             QString ch = d.getText();
+
             foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "BGO")
+                if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
                 {
                     ItemBGO *b = qgraphicsitem_cast<ItemBGO *>(SelItem);
                     Q_ASSERT(b);
@@ -474,6 +476,7 @@ cancelTransform:
                     b->arrayApply();
                 }
             }
+
             m_scene->m_history->addChangeSettings(selData, new BgoHistory_UserData(), ch);
         }
     }
@@ -617,7 +620,7 @@ void ItemBGO::setBGOData(LevelBGO inD, obj_bgo *mergedSet, long *animator_id)
         m_gridOffsetX = m_localProps.setup.grid_offset_x;
         m_gridOffsetY = m_localProps.setup.grid_offset_y;
         setZMode(m_data.z_mode, m_data.z_offset, true);
-        setData(ITEM_IS_META, m_localProps.setup.is_meta_object);
+        setData(LvlScene::ITEM_IS_META, m_localProps.setup.is_meta_object);
     }
 
     if(animator_id)
@@ -625,8 +628,8 @@ void ItemBGO::setBGOData(LevelBGO inD, obj_bgo *mergedSet, long *animator_id)
 
     setPos(m_data.x, m_data.y);
 
-    setData(ITEM_ID, QString::number(m_data.id));
-    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id));
+    setData(LvlScene::ITEM_ID, (unsigned long long)m_data.id);
+    setData(LvlScene::ITEM_ARRAY_ID, m_data.meta.array_id);
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
@@ -740,8 +743,8 @@ void ItemBGO::setAnimator(long aniID)
         m_imageSize = QRectF(0, 0, frameRect.width(), frameRect.height());
     }
 
-    this->setData(ITEM_WIDTH,  QString::number(qRound(m_imageSize.width())));  //width
-    this->setData(ITEM_HEIGHT, QString::number(qRound(m_imageSize.height())));  //height
+    this->setData(LvlScene::ITEM_WIDTH,  qRound(m_imageSize.width()));  //width
+    this->setData(LvlScene::ITEM_HEIGHT, qRound(m_imageSize.height()));  //height
 
     m_animatorID = aniID;
 }

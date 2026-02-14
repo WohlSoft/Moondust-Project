@@ -30,38 +30,34 @@ HistoryElementModification::~HistoryElementModification()
 
 QString HistoryElementModification::getHistoryName()
 {
-    if(m_customHistoryName.isEmpty()){
+    if(m_customHistoryName.isEmpty())
         return tr("Simple Modification History");
-    }
+
     return m_customHistoryName;
 }
 
 void HistoryElementModification::undo()
 {
-    LvlScene* lvlScene = 0;
-    WldScene* wldScene = 0;
     if(!m_scene)
         return;
-    if((lvlScene = qobject_cast<LvlScene*>(m_scene))){
+
+    if(qobject_cast<LvlScene*>(m_scene))
         processReplacement(m_newLvlData, m_oldLvlData);
-    }
-    if((wldScene = qobject_cast<WldScene*>(m_scene))){
+
+    if(qobject_cast<WldScene*>(m_scene))
         processReplacement(m_newWldData, m_oldWldData);
-    }
 }
 
 void HistoryElementModification::redo()
 {
-    LvlScene* lvlScene = 0;
-    WldScene* wldScene = 0;
     if(!m_scene)
         return;
-    if((lvlScene = qobject_cast<LvlScene*>(m_scene))){
+
+    if(qobject_cast<LvlScene*>(m_scene))
         processReplacement(m_oldLvlData, m_newLvlData);
-    }
-    if((wldScene = qobject_cast<WldScene*>(m_scene))){
-        processReplacement(m_oldWldData, m_newWldData);
-    }
+
+    if(qobject_cast<WldScene*>(m_scene))
+        processReplacement(m_oldWldData, m_newWldData);    
 }
 
 void HistoryElementModification::processReplacement(const LevelData &toRemoveData, const LevelData &toPlaceData)
@@ -69,21 +65,23 @@ void HistoryElementModification::processReplacement(const LevelData &toRemoveDat
     LvlScene* lvlScene = 0;
     if(!m_scene)
         return;
-    if((lvlScene = qobject_cast<LvlScene*>(m_scene))){
-        ItemSearcher lvlSearcher(static_cast<ItemTypes::itemTypesMultiSelectable>(ItemTypes::LVL_S_Block |
-                                 ItemTypes::LVL_S_BGO |
-                                 ItemTypes::LVL_S_NPC |
-                                 ItemTypes::LVL_S_Door |
-                                 ItemTypes::LVL_S_PhysEnv |
-                                 ItemTypes::LVL_S_Player));
+
+    if((lvlScene = qobject_cast<LvlScene*>(m_scene)))
+    {
+        ItemSearcher lvlSearcher(static_cast<uint32_t>(ItemTypes::LVL_S_Block |
+                                                       ItemTypes::LVL_S_BGO |
+                                                       ItemTypes::LVL_S_NPC |
+                                                       ItemTypes::LVL_S_Door |
+                                                       ItemTypes::LVL_S_PhysEnv |
+                                                       ItemTypes::LVL_S_Player));
 
         //connect to our remover functions
-        connect(&lvlSearcher, SIGNAL(foundBlock(LevelBlock,QGraphicsItem*)), this, SLOT(processBlock(LevelBlock,QGraphicsItem*)));
-        connect(&lvlSearcher, SIGNAL(foundBGO(LevelBGO,QGraphicsItem*)), this, SLOT(processBGO(LevelBGO,QGraphicsItem*)));
-        connect(&lvlSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(processNPC(LevelNPC,QGraphicsItem*)));
-        connect(&lvlSearcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)), this, SLOT(processPhysEnv(LevelPhysEnv,QGraphicsItem*)));
-        connect(&lvlSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(processDoor(LevelDoor,QGraphicsItem*)));
-        connect(&lvlSearcher, SIGNAL(foundPlayerPoint(PlayerPoint,QGraphicsItem*)), this, SLOT(processPlayerPoint(PlayerPoint,QGraphicsItem*)));
+        QObject::connect(&lvlSearcher, &ItemSearcher::foundBlock,       this, &HistoryElementModification::processBlock);
+        QObject::connect(&lvlSearcher, &ItemSearcher::foundBGO,         this, &HistoryElementModification::processBGO);
+        QObject::connect(&lvlSearcher, &ItemSearcher::foundNPC,         this, &HistoryElementModification::processNPC);
+        QObject::connect(&lvlSearcher, &ItemSearcher::foundPhysEnv,     this, &HistoryElementModification::processPhysEnv);
+        QObject::connect(&lvlSearcher, &ItemSearcher::foundDoor,        this, &HistoryElementModification::processDoor);
+        QObject::connect(&lvlSearcher, &ItemSearcher::foundPlayerPoint, this, &HistoryElementModification::processPlayerPoint);
 
         lvlSearcher.find(toRemoveData, m_scene->items()); //remove the new level Data
 
@@ -97,19 +95,21 @@ void HistoryElementModification::processReplacement(const WorldData &toRemoveDat
     WldScene* wldScene = nullptr;
     if(!m_scene)
         return;
-    if((wldScene = qobject_cast<WldScene*>(m_scene))){
-        ItemSearcher wldSearcher(static_cast<ItemTypes::itemTypesMultiSelectable>(ItemTypes::WLD_S_Tile |
-                                 ItemTypes::WLD_S_Scenery |
-                                 ItemTypes::WLD_S_Path |
-                                 ItemTypes::WLD_S_Level |
-                                 ItemTypes::WLD_S_MusicBox));
+
+    if((wldScene = qobject_cast<WldScene*>(m_scene)))
+    {
+        ItemSearcher wldSearcher(static_cast<uint32_t>(ItemTypes::WLD_S_Tile |
+                                                       ItemTypes::WLD_S_Scenery |
+                                                       ItemTypes::WLD_S_Path |
+                                                       ItemTypes::WLD_S_Level |
+                                                       ItemTypes::WLD_S_MusicBox));
 
         //connect to our remover functions
-        connect(&wldSearcher, SIGNAL(foundTile(WorldTerrainTile,QGraphicsItem*)), this, SLOT(processTile(WorldTerrainTile,QGraphicsItem*)));
-        connect(&wldSearcher, SIGNAL(foundScenery(WorldScenery,QGraphicsItem*)), this, SLOT(processScenery(WorldScenery,QGraphicsItem*)));
-        connect(&wldSearcher, SIGNAL(foundPath(WorldPathTile,QGraphicsItem*)), this, SLOT(processPath(WorldPathTile,QGraphicsItem*)));
-        connect(&wldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(processLevel(WorldLevelTile,QGraphicsItem*)));
-        connect(&wldSearcher, SIGNAL(foundMusicbox(WorldMusicBox,QGraphicsItem*)), this, SLOT(processMusicbox(WorldMusicBox,QGraphicsItem*)));
+        QObject::connect(&wldSearcher, &ItemSearcher::foundTile,    this, &HistoryElementModification::processTile);
+        QObject::connect(&wldSearcher, &ItemSearcher::foundScenery, this, &HistoryElementModification::processScenery);
+        QObject::connect(&wldSearcher, &ItemSearcher::foundPath,    this, &HistoryElementModification::processPath);
+        QObject::connect(&wldSearcher, &ItemSearcher::foundLevel,   this, &HistoryElementModification::processLevel);
+        QObject::connect(&wldSearcher, &ItemSearcher::foundMusicbox,this, &HistoryElementModification::processMusicbox);
 
         wldSearcher.find(toRemoveData, m_scene->items()); //remove the new level Data
 
@@ -168,7 +168,8 @@ void HistoryElementModification::processBlock(const LevelBlock &sourceBlock, QGr
 {
     Q_UNUSED(sourceBlock)
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);
-    if(scene){
+    if(scene)
+    {
         ((ItemBlock*)item)->removeFromArray();
         //scene->removeItem(item);
         delete item;
@@ -179,7 +180,8 @@ void HistoryElementModification::processBGO(const LevelBGO &sourceBGO, QGraphics
 {
     Q_UNUSED(sourceBGO)
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);
-    if(scene){
+    if(scene)
+    {
         ((ItemBGO*)item)->removeFromArray();
         //scene->removeItem(item);
         delete item;
@@ -190,7 +192,8 @@ void HistoryElementModification::processNPC(const LevelNPC &sourceNPC, QGraphics
 {
     Q_UNUSED(sourceNPC)
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);
-    if(scene){
+    if(scene)
+    {
         ((ItemNPC*)item)->removeFromArray();
         //scene->removeItem(item);
         delete item;
@@ -201,7 +204,8 @@ void HistoryElementModification::processPhysEnv(const LevelPhysEnv &sourcePhysEn
 {
     Q_UNUSED(sourcePhysEnv)
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);
-    if(scene){
+    if(scene)
+    {
         ((ItemPhysEnv*)item)->removeFromArray();
         //scene->removeItem(item);
         delete item;
@@ -212,7 +216,8 @@ void HistoryElementModification::processDoor(const LevelDoor &sourceDoor, QGraph
 {
     Q_UNUSED(sourceDoor)
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);
-    if(scene){
+    if(scene)
+    {
         ((ItemDoor*)item)->removeFromArray();
         //scene->removeItem(item);
         delete item;
@@ -223,7 +228,8 @@ void HistoryElementModification::processPlayerPoint(const PlayerPoint &sourcePay
 {
     Q_UNUSED(sourcePayerPoint)
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);
-    if(scene){
+    if(scene)
+    {
         ((ItemDoor*)item)->removeFromArray();
         //scene->removeItem(item);
         delete item;
@@ -234,7 +240,8 @@ void HistoryElementModification::processTile(const WorldTerrainTile &sourceTile,
 {
     Q_UNUSED(sourceTile)
     WldScene* scene = qobject_cast<WldScene*>(m_scene);
-    if(scene){
+    if(scene)
+    {
         ((ItemTile*)item)->removeFromArray();
         //scene->removeItem(item);
         delete item;
@@ -245,7 +252,8 @@ void HistoryElementModification::processScenery(const WorldScenery &sourceScener
 {
     Q_UNUSED(sourceScenery)
     WldScene* scene = qobject_cast<WldScene*>(m_scene);
-    if(scene){
+    if(scene)
+    {
         ((ItemScene*)item)->removeFromArray();
         //scene->removeItem(item);
         delete item;
@@ -256,7 +264,8 @@ void HistoryElementModification::processPath(const WorldPathTile &sourcePath, QG
 {
     Q_UNUSED(sourcePath)
     WldScene* scene = qobject_cast<WldScene*>(m_scene);
-    if(scene){
+    if(scene)
+    {
         ((ItemPath*)item)->removeFromArray();
         //scene->removeItem(item);
         delete item;
@@ -267,7 +276,8 @@ void HistoryElementModification::processLevel(const WorldLevelTile &sourceLevel,
 {
     Q_UNUSED(sourceLevel)
     WldScene* scene = qobject_cast<WldScene*>(m_scene);
-    if(scene){
+    if(scene)
+    {
         ((ItemLevel*)item)->removeFromArray();
         //scene->removeItem(item);
         delete item;
@@ -278,16 +288,10 @@ void HistoryElementModification::processMusicbox(const WorldMusicBox &sourceMusi
 {
     Q_UNUSED(sourceMusic)
     WldScene* scene = qobject_cast<WldScene*>(m_scene);
-    if(scene){
+    if(scene)
+    {
         ((ItemMusic*)item)->removeFromArray();
         //scene->removeItem(item);
         delete item;
     }
 }
-
-
-
-
-
-
-

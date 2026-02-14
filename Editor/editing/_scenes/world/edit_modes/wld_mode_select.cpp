@@ -87,36 +87,39 @@ void WLD_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         {
             if(s->selectedItems().size() == 1)
             {
-                QGraphicsItem *it = s->selectedItems().first();
-                QString itp = it->data(ITEM_TYPE).toString();
-                unsigned long itd = (unsigned long)it->data(ITEM_ID).toULongLong();
-                if(itp == "TILE")
+                const auto &ss = s->selectedItems();
+                QGraphicsItem *it = ss.first();
+                int itp = it->data(WldScene::ITEM_TYPE_INT).toInt();
+
+                unsigned long itd = (unsigned long)it->data(WldScene::ITEM_ID).toULongLong();
+                if(itp == ItemTypes::WLD_Tile)
                 {
                     MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_Tile, itd);
                     return;
                 }
-                else if(itp == "SCENERY")
+                else if(itp == ItemTypes::WLD_Scenery)
                 {
                     MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_Scenery, itd);
                     return;
                 }
-                else if(itp == "PATH")
+                else if(itp == ItemTypes::WLD_Path)
                 {
                     MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_Path, itd);
                     return;
                 }
-                else if(itp == "LEVEL")
+                else if(itp == ItemTypes::WLD_Level)
                 {
                     MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_Level, itd);
                     return;
                 }
-                else if(itp == "MUSICBOX")
+                else if(itp == ItemTypes::WLD_MusicBox)
                 {
                     MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_MusicBox, itd);
                     return;
                 }
             }
         }
+
         if(GlobalSettings::MidMouse_allowDuplicate)
         {
             if(!s->selectedItems().isEmpty())
@@ -153,7 +156,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
     //s->haveSelected = false;
 
-    QString ObjType;
+    int ObjType;
     bool collisionPassed = false;
 
     //History
@@ -174,9 +177,8 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     // check for grid snap
     if((!selectedList.isEmpty()) && (s->m_mouseIsMoved))
     {
-
         //Set Grid Size/Offset, sourcePosition
-        setItemSourceData(selectedList.first(), selectedList.first()->data(ITEM_TYPE).toString());
+        setItemSourceData(selectedList.first(), selectedList.first()->data(WldScene::ITEM_TYPE_INT).toInt());
         //Check first selected element is it was moved
         if((sourcePos == QPoint(
                 (long)(selectedList.first()->scenePos().x()),
@@ -208,15 +210,15 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         }
 
 
-        if((collisionPassed) || (!s->m_opts.collisionsEnabled))
-            for(QList<QGraphicsItem *>::iterator it = selectedList.begin();
-                it != selectedList.end(); it++)
+        if(collisionPassed || !s->m_opts.collisionsEnabled)
+        {
+            for(QList<QGraphicsItem *>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
             {
                 ////////////////////////SECOND FETCH///////////////////////
-                ObjType = (*it)->data(ITEM_TYPE).toString();
+                ObjType = (*it)->data(WldScene::ITEM_TYPE_INT).toInt();
 
                 /////////////////////////GET DATA///////////////
-                setItemSourceData((*it), (*it)->data(ITEM_TYPE).toString()); //Set Grid Size/Offset, sourcePosition
+                setItemSourceData((*it), ObjType); //Set Grid Size/Offset, sourcePosition
                 /////////////////////////GET DATA/////////////////////
 
                 //Check position
@@ -226,58 +228,69 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                     break; //break fetch when items is not moved
                 }
 
-                if(ObjType == "TILE")
+                if(ObjType == ItemTypes::WLD_Tile)
                 {
+                    auto *item = dynamic_cast<ItemTile *>(*it);
+                    Q_ASSERT(item);
                     //Applay move into main array
-                    historySourceBuffer.tiles.push_back(((ItemTile *)(*it))->m_data);
-                    // ((ItemTile *)(*it))->m_data.x = (long)(*it)->scenePos().x();
-                    // ((ItemTile *)(*it))->m_data.y = (long)(*it)->scenePos().y();
-                    ((ItemTile *)(*it))->arrayApply();
-                    historyBuffer.tiles.push_back(((ItemTile *)(*it))->m_data);
+                    historySourceBuffer.tiles.push_back(item->m_data);
+                    // item->m_data.x = (long)item->scenePos().x();
+                    // item->m_data.y = (long)item->scenePos().y();
+                    item->arrayApply();
+                    historyBuffer.tiles.push_back(item->m_data);
                     s->m_data->meta.modified = true;
                 }
-                else if(ObjType == "SCENERY")
+                else if(ObjType == ItemTypes::WLD_Scenery)
                 {
+                    auto *item = dynamic_cast<ItemScene *>(*it);
+                    Q_ASSERT(item);
                     //Applay move into main array
-                    historySourceBuffer.scenery.push_back(((ItemScene *)(*it))->m_data);
-                    // ((ItemScene *)(*it))->m_data.x = (long)(*it)->scenePos().x();
-                    // ((ItemScene *)(*it))->m_data.y = (long)(*it)->scenePos().y();
-                    ((ItemScene *)(*it))->arrayApply();
-                    historyBuffer.scenery.push_back(((ItemScene *)(*it))->m_data);
+                    historySourceBuffer.scenery.push_back(item->m_data);
+                    // item->m_data.x = (long)item->scenePos().x();
+                    // item->m_data.y = (long)item->scenePos().y();
+                    item->arrayApply();
+                    historyBuffer.scenery.push_back(item->m_data);
                     s->m_data->meta.modified = true;
                 }
-                else if(ObjType == "PATH")
+                else if(ObjType == ItemTypes::WLD_Path)
                 {
+                    auto *item = dynamic_cast<ItemPath *>(*it);
+                    Q_ASSERT(item);
                     //Applay move into main array
-                    historySourceBuffer.paths.push_back(((ItemPath *)(*it))->m_data);
-                    // ((ItemPath *)(*it))->m_data.x = (long)(*it)->scenePos().x();
-                    // ((ItemPath *)(*it))->m_data.y = (long)(*it)->scenePos().y();
-                    ((ItemPath *)(*it))->arrayApply();
-                    historyBuffer.paths.push_back(((ItemPath *)(*it))->m_data);
+                    historySourceBuffer.paths.push_back(item->m_data);
+                    // item->m_data.x = (long)item->scenePos().x();
+                    // item->m_data.y = (long)item->scenePos().y();
+                    item->arrayApply();
+                    historyBuffer.paths.push_back(item->m_data);
                     s->m_data->meta.modified = true;
                 }
-                else if(ObjType == "LEVEL")
+                else if(ObjType == ItemTypes::WLD_Level)
                 {
+                    auto *item = dynamic_cast<ItemLevel *>(*it);
+                    Q_ASSERT(item);
                     //Applay move into main array
-                    historySourceBuffer.levels.push_back(((ItemLevel *)(*it))->m_data);
-                    // ((ItemLevel *)(*it))->m_data.x = (long)(*it)->scenePos().x();
-                    // ((ItemLevel *)(*it))->m_data.y = (long)(*it)->scenePos().y();
-                    ((ItemLevel *)(*it))->arrayApply();
-                    historyBuffer.levels.push_back(((ItemLevel *)(*it))->m_data);
+                    historySourceBuffer.levels.push_back(item->m_data);
+                    // item->m_data.x = (long)item->scenePos().x();
+                    // item->m_data.y = (long)item->scenePos().y();
+                    item->arrayApply();
+                    historyBuffer.levels.push_back(item->m_data);
                     s->m_data->meta.modified = true;
                 }
-                else if(ObjType == "MUSICBOX")
+                else if(ObjType == ItemTypes::WLD_MusicBox)
                 {
+                    auto *item = dynamic_cast<ItemMusic *>(*it);
+                    Q_ASSERT(item);
                     //Applay move into main array
-                    historySourceBuffer.music.push_back(((ItemMusic *)(*it))->m_data);
-                    // ((ItemMusic *)(*it))->m_data.x = (long)(*it)->scenePos().x();
-                    // ((ItemMusic *)(*it))->m_data.y = (long)(*it)->scenePos().y();
-                    ((ItemMusic *)(*it))->arrayApply();
-                    historyBuffer.music.push_back(((ItemMusic *)(*it))->m_data);
+                    historySourceBuffer.music.push_back(item->m_data);
+                    // item->m_data.x = (long)item->scenePos().x();
+                    // item->m_data.y = (long)item->scenePos().y();
+                    item->arrayApply();
+                    historyBuffer.music.push_back(item->m_data);
                     s->m_data->meta.modified = true;
                 }
 
             }////////////////////////SECOND FETCH///////////////////////
+        }
 
         if(s->m_mouseIsMoved)
             s->m_history->addMoveHistory(historySourceBuffer, historyBuffer);
@@ -312,7 +325,7 @@ void WLD_ModeSelect::keyRelease(QKeyEvent *keyEvent)
 
 
 
-void WLD_ModeSelect::setItemSourceData(QGraphicsItem *it, QString ObjType)
+void WLD_ModeSelect::setItemSourceData(QGraphicsItem *it, int ObjType)
 {
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
@@ -321,11 +334,11 @@ void WLD_ModeSelect::setItemSourceData(QGraphicsItem *it, QString ObjType)
     offsetX = 0;
     offsetY = 0;
 
-    if(ObjType == "TILE" ||
-       ObjType == "SCENERY" ||
-       ObjType == "PATH" ||
-       ObjType == "LEVEL" ||
-       ObjType == "MUSICBOX")
+    if(ObjType == ItemTypes::WLD_Tile ||
+       ObjType == ItemTypes::WLD_Scenery ||
+       ObjType == ItemTypes::WLD_Path ||
+       ObjType == ItemTypes::WLD_Level ||
+       ObjType == ItemTypes::WLD_MusicBox)
     {
         sourcePos = ((WldBaseItem *)it)->sourcePos();
         gridSize = ((WldBaseItem *)it)->getGridSize();

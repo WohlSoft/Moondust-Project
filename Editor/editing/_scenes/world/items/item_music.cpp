@@ -43,8 +43,8 @@ ItemMusic::ItemMusic(WldScene *parentScene, QGraphicsItem *parent)
     this->setZValue(m_scene->Z_MusicBoxes);
     m_gridSize = m_scene->m_configs->defaultGrid.general;
     m_imageSize = QRectF(0, 0, m_gridSize, m_gridSize);
-    setData(ITEM_WIDTH,  QString::number(m_gridSize));    //width
-    setData(ITEM_HEIGHT, QString::number(m_gridSize));    //height
+    setData(WldScene::ITEM_WIDTH,  m_gridSize);    //width
+    setData(WldScene::ITEM_HEIGHT, m_gridSize);    //height
 }
 
 void ItemMusic::construct()
@@ -52,9 +52,10 @@ void ItemMusic::construct()
     m_musicTitle = "";
     m_imageSize = QRectF(0, 0, m_gridSize, m_gridSize);
 
-    setData(ITEM_TYPE, "MUSICBOX");
-    setData(ITEM_WIDTH, QString::number(m_gridSize));    //width
-    setData(ITEM_HEIGHT, QString::number(m_gridSize));    //height
+    setData(WldScene::ITEM_TYPE, "MUSICBOX");
+    setData(WldScene::ITEM_TYPE_INT, ItemTypes::WLD_MusicBox);
+    setData(WldScene::ITEM_WIDTH, m_gridSize);    //width
+    setData(WldScene::ITEM_HEIGHT, m_gridSize);    //height
 }
 
 ItemMusic::~ItemMusic()
@@ -197,7 +198,7 @@ void ItemMusic::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
             foreach(QGraphicsItem *SelItem, our_items)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "MUSICBOX")
+                if(SelItem->data(WldScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_MusicBox)
                 {
                     if((!sameID) || (((ItemMusic *) SelItem)->m_data.id == oldID))
                     {
@@ -223,7 +224,7 @@ void ItemMusic::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
         foreach(QGraphicsItem *SelItem, our_items)
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "MUSICBOX")
+            if(SelItem->data(WldScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_MusicBox)
             {
                 if(((ItemMusic *) SelItem)->m_data.id == oldID)
                     selectedList.push_back(SelItem);
@@ -339,8 +340,8 @@ void ItemMusic::setMusicData(WorldMusicBox inD)
 {
     m_data = inD;
     setPos(m_data.x, m_data.y);
-    setData(ITEM_ID, QString::number(m_data.id));
-    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id));
+    setData(WldScene::ITEM_ID, (unsigned long long)m_data.id);
+    setData(WldScene::ITEM_ARRAY_ID, m_data.meta.array_id);
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);

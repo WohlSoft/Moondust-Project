@@ -217,12 +217,14 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         isLeftMouse = true;
         LogDebug(QString("Left mouse button released [edit mode: %1]").arg(m_editMode));
     }
+
     if(mouseEvent->button() == Qt::MiddleButton)
     {
         m_mouseMidPressed = false;
         isMiddleMouse = true;
         LogDebug(QString("Middle mouse button released [edit mode: %1]").arg(m_editMode));
     }
+
     if(mouseEvent->button() == Qt::RightButton)
     {
         m_mouseRightPressed = false;
@@ -231,6 +233,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
 
     m_contextMenuIsOpened = false;
+
     if(!isLeftMouse)
     {
         if(m_pastingMode && GlobalSettings::MidMouse_allowDuplicate && isMiddleMouse &&
@@ -314,13 +317,16 @@ void LvlScene::Debugger_updateItemList()
 void LvlScene::openProps()
 {
     QList<QGraphicsItem * > items = this->selectedItems();
+
     if(!items.isEmpty())
     {
-        if(items.first()->data(ITEM_TYPE).toString() == "Block")
+        int itemType = items.first()->data(ITEM_TYPE_INT).toInt();
+
+        if(itemType == ItemTypes::LVL_Block)
             m_mw->dock_LvlItemProps->openBlockProps(dynamic_cast<ItemBlock *>(items.first())->m_data);
-        else if(items.first()->data(ITEM_TYPE).toString() == "BGO")
+        else if(itemType == ItemTypes::LVL_BGO)
             m_mw->dock_LvlItemProps->openBgoProps(dynamic_cast<ItemBGO *>(items.first())->m_data);
-        else if(items.first()->data(ITEM_TYPE).toString() == "NPC")
+        else if(itemType == ItemTypes::LVL_NPC)
             m_mw->dock_LvlItemProps->openNpcProps(dynamic_cast<ItemNPC *>(items.first())->m_data);
         else
             m_mw->dock_LvlItemProps->closeProps();
