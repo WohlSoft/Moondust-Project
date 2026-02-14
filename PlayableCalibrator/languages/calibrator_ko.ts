@@ -268,7 +268,7 @@
     </message>
     <message>
         <location filename="../calibration_main.ui" line="657"/>
-        <location filename="../calibration_main.cpp" line="988"/>
+        <location filename="../calibration_main.cpp" line="987"/>
         <source>Right direction</source>
         <translation>오른쪽</translation>
     </message>
@@ -329,7 +329,7 @@
     </message>
     <message>
         <location filename="../calibration_main.ui" line="644"/>
-        <location filename="../calibration_main.cpp" line="985"/>
+        <location filename="../calibration_main.cpp" line="984"/>
         <source>Is duck frame</source>
         <translation>캐릭터가 숙인 프레임인지</translation>
     </message>
@@ -459,7 +459,7 @@ Right button - Move the right-bottom crop edges.</source>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="670"/>
-        <location filename="../calibration_main.cpp" line="991"/>
+        <location filename="../calibration_main.cpp" line="990"/>
         <source>Show carried item</source>
         <translation>소유한 아이템을 보여줌</translation>
     </message>
@@ -566,7 +566,7 @@ Right button - Move the right-bottom crop edges.</source>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="680"/>
-        <location filename="../calibration_main.cpp" line="994"/>
+        <location filename="../calibration_main.cpp" line="993"/>
         <source>Mount riding</source>
         <translation type="unfinished"></translation>
     </message>
@@ -596,122 +596,122 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="142"/>
+        <location filename="../main/files_io.cpp" line="143"/>
         <source>Save hitbox map as image</source>
         <translation>히트박스 맵을 이미지로 저장</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="160"/>
+        <location filename="../main/files_io.cpp" line="161"/>
         <source>Hitbox map has been saved!</source>
         <translation>히트박스 맵이 저장되었습니다!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="682"/>
+        <location filename="../calibration_main.cpp" line="681"/>
         <source>Background color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="720"/>
+        <location filename="../calibration_main.cpp" line="719"/>
         <source>Open SMBX-38A level file</source>
         <translation>SMBX-38A 레벨 파일 열기</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="722"/>
+        <location filename="../calibration_main.cpp" line="721"/>
         <source>SMBX-38A level files</source>
         <comment>Type of file to open</comment>
         <translation>SMBX-38A 레벨 파일</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="723"/>
+        <location filename="../calibration_main.cpp" line="722"/>
         <source>All Files</source>
         <comment>Type of file to open</comment>
         <translation>모든 파일</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="733"/>
+        <location filename="../calibration_main.cpp" line="732"/>
         <source>File opening error</source>
         <translation>파일 열기 에러</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="734"/>
+        <location filename="../calibration_main.cpp" line="733"/>
         <source>Can&apos;t import calibration data from this file: the file doesn&apos;t contain calibration settings, or this file is not a valid SMBX-38A level file.</source>
         <translation>이 파일로부터 보정 값을 불러올 수 없습니다: 파일은 보정 설정을 포함하지 않거나, 이 파일은 유효한 SMBX-38A 레벨의 파일이 아닙니다.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="751"/>
+        <location filename="../calibration_main.cpp" line="750"/>
         <source>Export calibration settings into SMBX-38A level file</source>
         <translation>SMBX-38A 레벨 파일로 보정 설정 내보내기</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="762"/>
+        <location filename="../calibration_main.cpp" line="761"/>
         <source>File saving error</source>
         <translation>파일 저장 에러</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="763"/>
+        <location filename="../calibration_main.cpp" line="762"/>
         <source>Can&apos;t export calibration data into this file: this is not a valid SMBX-38A level file.</source>
         <translation>이 파일로 보정 값을 내보낼 수 없습니다 : 유효한 SMBX-38A 레벨 파일이 아닙니다.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="768"/>
+        <location filename="../calibration_main.cpp" line="767"/>
         <source>The level file has been patched!</source>
         <translation>레벨 파일이 패치되었습니다!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="844"/>
-        <location filename="../calibration_main.cpp" line="850"/>
-        <location filename="../calibration_main.cpp" line="856"/>
-        <location filename="../calibration_main.cpp" line="862"/>
-        <location filename="../calibration_main.cpp" line="868"/>
-        <location filename="../calibration_main.cpp" line="874"/>
+        <location filename="../calibration_main.cpp" line="843"/>
+        <location filename="../calibration_main.cpp" line="849"/>
+        <location filename="../calibration_main.cpp" line="855"/>
+        <location filename="../calibration_main.cpp" line="861"/>
+        <location filename="../calibration_main.cpp" line="867"/>
+        <location filename="../calibration_main.cpp" line="873"/>
         <source>Compat: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="844"/>
+        <location filename="../calibration_main.cpp" line="843"/>
         <source>Unspecified</source>
         <comment>Unspecified compatibility mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="979"/>
+        <location filename="../calibration_main.cpp" line="978"/>
         <source>Reset incorrect frame setup...</source>
         <comment>Reset frame properties</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="982"/>
+        <location filename="../calibration_main.cpp" line="981"/>
         <source>Select properties to reset if they were inproperly set:</source>
         <comment>Reset frame properties</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1004"/>
+        <location filename="../calibration_main.cpp" line="1003"/>
         <source>Reset at all frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1008"/>
+        <location filename="../calibration_main.cpp" line="1007"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1025"/>
+        <location filename="../calibration_main.cpp" line="1024"/>
         <source>Incompatible sprite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1026"/>
+        <location filename="../calibration_main.cpp" line="1025"/>
         <source>Can&apos;t perform the reset to incompatible sprite (the width and/or height of matrix are different).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1084"/>
+        <location filename="../calibration_main.cpp" line="1083"/>
         <source>Set direction by halves</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1085"/>
+        <location filename="../calibration_main.cpp" line="1084"/>
         <source>This action will set the &quot;Right direction&quot; option at all right frames on the matrix, and unset at all left frames. This action is supposed to be used with SMBX-compatible sprites. If your sprite is not based on SMBX standard, you will break it. Apply this action?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -751,114 +751,114 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="unfinished">SBMX-38A 레벨로 데이터 내보내기...</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="90"/>
+        <location filename="../main/files_io.cpp" line="91"/>
         <source>Open sprite file</source>
         <translation>스프라이트 파일 열기</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="91"/>
+        <location filename="../main/files_io.cpp" line="92"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>열 이미지 파일의 유형</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="92"/>
+        <location filename="../main/files_io.cpp" line="93"/>
         <source>GIF images</source>
         <comment>Type of image file to open</comment>
         <translation>GIF 이미지</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="93"/>
+        <location filename="../main/files_io.cpp" line="94"/>
         <source>PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>PNG 이미지</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="94"/>
+        <location filename="../main/files_io.cpp" line="95"/>
         <source>SMBX playble sprite</source>
         <comment>Type of image file to open</comment>
         <translation>SMBX 플레이 가능한 스프라이트</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="95"/>
+        <location filename="../main/files_io.cpp" line="96"/>
         <source>All Files</source>
         <comment>Type of image file to open</comment>
         <translation>모든 파일</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="810"/>
+        <location filename="../calibration_main.cpp" line="809"/>
         <source>Warning</source>
         <translation>경고</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="811"/>
+        <location filename="../calibration_main.cpp" line="810"/>
         <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
         <translation>이 작업은 현재 히트 박스의 설정을 다른 모든 프레임에 복사합니다. 다른 모든 프레임의 설정은 현재 프레임의 설정으로 덮어집니다. 계속 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="505"/>
+        <location filename="../calibration_main.cpp" line="504"/>
         <source>Calibration is not saved!</source>
         <translation>보정이 저장되지 않았습니다!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="401"/>
+        <location filename="../calibration_main.cpp" line="400"/>
         <source>None</source>
         <comment>Display wall</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="404"/>
+        <location filename="../calibration_main.cpp" line="403"/>
         <source>Floor</source>
         <comment>Display wall</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="406"/>
+        <location filename="../calibration_main.cpp" line="405"/>
         <source>Floor + left wall</source>
         <comment>Display wall</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="408"/>
+        <location filename="../calibration_main.cpp" line="407"/>
         <source>Floor + right wall</source>
         <comment>Display wall</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="411"/>
+        <location filename="../calibration_main.cpp" line="410"/>
         <source>Ceiling</source>
         <comment>Display wall</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="413"/>
+        <location filename="../calibration_main.cpp" line="412"/>
         <source>Ceiling + left wall</source>
         <comment>Display wall</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="415"/>
+        <location filename="../calibration_main.cpp" line="414"/>
         <source>Ceiling + right wall</source>
         <comment>Display wall</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="506"/>
+        <location filename="../calibration_main.cpp" line="505"/>
         <source>Configuration was modified and not saved. Do you want to save it?</source>
         <translation>구성이 수정된 후 저장되지 않았습니다. 저장하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="85"/>
+        <location filename="../main/settings.cpp" line="90"/>
         <source>Graphical editor is not specified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="86"/>
+        <location filename="../main/settings.cpp" line="91"/>
         <source>External graphics editor application is not specified. Do you want to select it now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="108"/>
+        <location filename="../main/settings.cpp" line="113"/>
         <source>Select a path to the graphical editor executable</source>
         <comment>File dialog title</comment>
         <translation type="unfinished"></translation>

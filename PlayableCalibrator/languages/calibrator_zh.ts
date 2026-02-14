@@ -459,7 +459,7 @@ Right button - Move the right-bottom crop edges.</source>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="657"/>
-        <location filename="../calibration_main.cpp" line="988"/>
+        <location filename="../calibration_main.cpp" line="987"/>
         <source>Right direction</source>
         <translation>右方向</translation>
     </message>
@@ -509,7 +509,7 @@ Right button - Move the right-bottom crop edges.</source>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="670"/>
-        <location filename="../calibration_main.cpp" line="991"/>
+        <location filename="../calibration_main.cpp" line="990"/>
         <source>Show carried item</source>
         <translation>显示搬运的物品</translation>
     </message>
@@ -520,7 +520,7 @@ Right button - Move the right-bottom crop edges.</source>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="644"/>
-        <location filename="../calibration_main.cpp" line="985"/>
+        <location filename="../calibration_main.cpp" line="984"/>
         <source>Is duck frame</source>
         <translation>蹲下时高度</translation>
     </message>
@@ -531,7 +531,7 @@ Right button - Move the right-bottom crop edges.</source>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="680"/>
-        <location filename="../calibration_main.cpp" line="994"/>
+        <location filename="../calibration_main.cpp" line="993"/>
         <source>Mount riding</source>
         <translation>坐骑</translation>
     </message>
@@ -618,7 +618,7 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>向上</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="142"/>
+        <location filename="../main/files_io.cpp" line="143"/>
         <source>Save hitbox map as image</source>
         <translation>将判定范围地图保存为图片</translation>
     </message>
@@ -642,7 +642,7 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>某些生成的值超出范围，可能造成 SMBX-38A 异常，操作已中断。</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="160"/>
+        <location filename="../main/files_io.cpp" line="161"/>
         <source>Hitbox map has been saved!</source>
         <translation>判定范围地图已保存！</translation>
     </message>
@@ -657,129 +657,129 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>另存为……</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="90"/>
+        <location filename="../main/files_io.cpp" line="91"/>
         <source>Open sprite file</source>
         <translation>打开图像文件</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="94"/>
+        <location filename="../main/files_io.cpp" line="95"/>
         <source>SMBX playble sprite</source>
         <comment>Type of image file to open</comment>
         <translation>SMBX 玩家图像</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="92"/>
+        <location filename="../main/files_io.cpp" line="93"/>
         <source>GIF images</source>
         <comment>Type of image file to open</comment>
         <translation>GIF 图像</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="682"/>
+        <location filename="../calibration_main.cpp" line="681"/>
         <source>Background color</source>
         <translation>背景颜色</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="720"/>
+        <location filename="../calibration_main.cpp" line="719"/>
         <source>Open SMBX-38A level file</source>
         <translation>打开 SMBX-38A 关卡文件</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="722"/>
+        <location filename="../calibration_main.cpp" line="721"/>
         <source>SMBX-38A level files</source>
         <comment>Type of file to open</comment>
         <translation>SMBX-38A 关卡文件</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="723"/>
+        <location filename="../calibration_main.cpp" line="722"/>
         <source>All Files</source>
         <comment>Type of file to open</comment>
         <translation>所有文件</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="733"/>
+        <location filename="../calibration_main.cpp" line="732"/>
         <source>File opening error</source>
         <translation>打开文件失败</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="734"/>
+        <location filename="../calibration_main.cpp" line="733"/>
         <source>Can&apos;t import calibration data from this file: the file doesn&apos;t contain calibration settings, or this file is not a valid SMBX-38A level file.</source>
         <translation>打开文件失败：该文件未包含校正设置，或者该文件不是有效的 SMBX-38A 关卡文件。</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="751"/>
+        <location filename="../calibration_main.cpp" line="750"/>
         <source>Export calibration settings into SMBX-38A level file</source>
         <translation>将设置导出到 SMBX-38A 关卡文件</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="762"/>
+        <location filename="../calibration_main.cpp" line="761"/>
         <source>File saving error</source>
         <translation>保存文件失败</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="763"/>
+        <location filename="../calibration_main.cpp" line="762"/>
         <source>Can&apos;t export calibration data into this file: this is not a valid SMBX-38A level file.</source>
         <translation>保存文件失败：不是有效的 SMBX-38A 关卡文件。</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="768"/>
+        <location filename="../calibration_main.cpp" line="767"/>
         <source>The level file has been patched!</source>
         <translation>补丁已打入关卡文件！</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="844"/>
-        <location filename="../calibration_main.cpp" line="850"/>
-        <location filename="../calibration_main.cpp" line="856"/>
-        <location filename="../calibration_main.cpp" line="862"/>
-        <location filename="../calibration_main.cpp" line="868"/>
-        <location filename="../calibration_main.cpp" line="874"/>
+        <location filename="../calibration_main.cpp" line="843"/>
+        <location filename="../calibration_main.cpp" line="849"/>
+        <location filename="../calibration_main.cpp" line="855"/>
+        <location filename="../calibration_main.cpp" line="861"/>
+        <location filename="../calibration_main.cpp" line="867"/>
+        <location filename="../calibration_main.cpp" line="873"/>
         <source>Compat: %1</source>
         <translation>兼容性：%1</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="844"/>
+        <location filename="../calibration_main.cpp" line="843"/>
         <source>Unspecified</source>
         <comment>Unspecified compatibility mode</comment>
         <translation>未设置</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="979"/>
+        <location filename="../calibration_main.cpp" line="978"/>
         <source>Reset incorrect frame setup...</source>
         <comment>Reset frame properties</comment>
         <translation>重置错误帧设置……</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="982"/>
+        <location filename="../calibration_main.cpp" line="981"/>
         <source>Select properties to reset if they were inproperly set:</source>
         <comment>Reset frame properties</comment>
         <translation>选择要重置的错误帧属性：</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1004"/>
+        <location filename="../calibration_main.cpp" line="1003"/>
         <source>Reset at all frames</source>
         <translation>重置全部帧</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1008"/>
+        <location filename="../calibration_main.cpp" line="1007"/>
         <source>Confirm</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1025"/>
+        <location filename="../calibration_main.cpp" line="1024"/>
         <source>Incompatible sprite</source>
         <translation>不兼容的图像</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1026"/>
+        <location filename="../calibration_main.cpp" line="1025"/>
         <source>Can&apos;t perform the reset to incompatible sprite (the width and/or height of matrix are different).</source>
         <translation>无法重置不兼容的图像，因为宽度和/或高度不同。</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1084"/>
+        <location filename="../calibration_main.cpp" line="1083"/>
         <source>Set direction by halves</source>
         <translation>一键设置玩家方向</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1085"/>
+        <location filename="../calibration_main.cpp" line="1084"/>
         <source>This action will set the &quot;Right direction&quot; option at all right frames on the matrix, and unset at all left frames. This action is supposed to be used with SMBX-compatible sprites. If your sprite is not based on SMBX standard, you will break it. Apply this action?</source>
         <translation>该操作会将所有右方向的帧上勾选“右方向”，并在所有左方向的帧上取消勾选“右方向”，目的是与SMBX兼容。如果您的图像不是SMBX标准，将无法正常运作。要继续吗？</translation>
     </message>
@@ -794,97 +794,97 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>从 SMBX-38A 关卡文件中导出数据……</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="91"/>
+        <location filename="../main/files_io.cpp" line="92"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>支持的类型</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="93"/>
+        <location filename="../main/files_io.cpp" line="94"/>
         <source>PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>PNG 图像</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="95"/>
+        <location filename="../main/files_io.cpp" line="96"/>
         <source>All Files</source>
         <comment>Type of image file to open</comment>
         <translation>所有文件</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="810"/>
+        <location filename="../calibration_main.cpp" line="809"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="811"/>
+        <location filename="../calibration_main.cpp" line="810"/>
         <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
         <translation>此操作将复制所有判定范围到其他帧，其他帧的设置将被当前设置覆盖，您要继续吗？</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="505"/>
+        <location filename="../calibration_main.cpp" line="504"/>
         <source>Calibration is not saved!</source>
         <translation>更改未保存！</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="401"/>
+        <location filename="../calibration_main.cpp" line="400"/>
         <source>None</source>
         <comment>Display wall</comment>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="404"/>
+        <location filename="../calibration_main.cpp" line="403"/>
         <source>Floor</source>
         <comment>Display wall</comment>
         <translation>地面</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="406"/>
+        <location filename="../calibration_main.cpp" line="405"/>
         <source>Floor + left wall</source>
         <comment>Display wall</comment>
         <translation>地面 + 墙左面</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="408"/>
+        <location filename="../calibration_main.cpp" line="407"/>
         <source>Floor + right wall</source>
         <comment>Display wall</comment>
         <translation>地面 + 墙右面</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="411"/>
+        <location filename="../calibration_main.cpp" line="410"/>
         <source>Ceiling</source>
         <comment>Display wall</comment>
         <translation>天花板</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="413"/>
+        <location filename="../calibration_main.cpp" line="412"/>
         <source>Ceiling + left wall</source>
         <comment>Display wall</comment>
         <translation>天花板 + 墙左面</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="415"/>
+        <location filename="../calibration_main.cpp" line="414"/>
         <source>Ceiling + right wall</source>
         <comment>Display wall</comment>
         <translation>天花板 + 墙右面</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="506"/>
+        <location filename="../calibration_main.cpp" line="505"/>
         <source>Configuration was modified and not saved. Do you want to save it?</source>
         <translation>设置已更改，但未保存，您要保存更改吗？</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="85"/>
+        <location filename="../main/settings.cpp" line="90"/>
         <source>Graphical editor is not specified</source>
         <translation>未设置图像编辑器</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="86"/>
+        <location filename="../main/settings.cpp" line="91"/>
         <source>External graphics editor application is not specified. Do you want to select it now?</source>
         <translation>未设置外部图像编辑器目录，您现在要设置吗？</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="108"/>
+        <location filename="../main/settings.cpp" line="113"/>
         <source>Select a path to the graphical editor executable</source>
         <comment>File dialog title</comment>
         <translation>选择图像编辑器所在的文件夹</translation>

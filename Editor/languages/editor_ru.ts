@@ -1950,6 +1950,17 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Array-ID: %1</source>
         <translation>ID в массиве: %1</translation>
     </message>
+    <message>
+        <source>Placing a path cell at the same position as the
+level entry point may cause an inability to
+stop on this level entry point on some engines.
+Ignore this notice if this was done intentionally.</source>
+        <translation>Размещение клетки пути на той же позиции, что
+и точка входа на уровень сделает невозможной
+остановку на ней на некоторых движках.
+Если это сделано намеренно, то проигнорируйте
+данное замечание.</translation>
+    </message>
 </context>
 <context>
     <name>ItemMsgBox</name>
@@ -8555,6 +8566,33 @@ Data may be corrupted!</source>
     <message>
         <source>Group:</source>
         <translation>Группа:</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Пользовательские</translation>
+    </message>
+    <message>
+        <source>&lt;Save file first&gt;</source>
+        <translation>&lt;Сначала сохраните файл&gt;</translation>
+    </message>
+    <message>
+        <source>Copy graphic to custom folder</source>
+        <translation>Скопировать картинку в польз. папку</translation>
+    </message>
+    <message>
+        <source>Copy graphic to episode folder</source>
+        <translation>Скопировать картинку в папку эпизода</translation>
+    </message>
+</context>
+<context>
+    <name>TilesetItemButton</name>
+    <message>
+        <source>Unavailable item</source>
+        <translation>Недоступный элемент</translation>
+    </message>
+    <message>
+        <source>This item can not be used in this time.</source>
+        <translation>Данный элемент на данный момент нельзя применить.</translation>
     </message>
 </context>
 <context>

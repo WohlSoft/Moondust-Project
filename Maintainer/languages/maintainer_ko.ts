@@ -685,7 +685,7 @@ Important: There are only level and world map files gets being converted. Any in
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
-        <location filename="../Graphics/gifs2png.cpp" line="291"/>
+        <location filename="../Graphics/gifs2png.cpp" line="292"/>
         <source>Start</source>
         <translation>스타트</translation>
     </message>
@@ -778,7 +778,7 @@ Important: There are only level and world map files gets being converted. Any in
         <translation>변환이 완료되었지만 오류가 있습니다. 자세한 정보는 출력 로그를 참조하십시오.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="289"/>
+        <location filename="../Graphics/gifs2png.cpp" line="290"/>
         <source>Stop</source>
         <translation>중지</translation>
     </message>

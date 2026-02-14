@@ -1918,6 +1918,13 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Placing a path cell at the same position as the
+level entry point may cause an inability to
+stop on this level entry point on some engines.
+Ignore this notice if this was done intentionally.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemMsgBox</name>
@@ -8370,6 +8377,33 @@ Os dados podem estar corrompidos!</translation>
     <message>
         <source>Group:</source>
         <translation>Grupo:</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished">Personalizada</translation>
+    </message>
+    <message>
+        <source>&lt;Save file first&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy graphic to custom folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy graphic to episode folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TilesetItemButton</name>
+    <message>
+        <source>Unavailable item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This item can not be used in this time.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1714,31 +1714,31 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>Installer</name>
     <message>
-        <location filename="../common_features/installer.cpp" line="199"/>
         <location filename="../common_features/installer.cpp" line="200"/>
+        <location filename="../common_features/installer.cpp" line="201"/>
         <source>Please wait...</source>
         <translation>잠시만 기다려주세요 ...</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="293"/>
+        <location filename="../common_features/installer.cpp" line="294"/>
         <source>PGE Level file</source>
         <comment>File Types</comment>
         <translation type="unfinished">PGE 레벨 파일</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="298"/>
+        <location filename="../common_features/installer.cpp" line="299"/>
         <source>PGE World Map</source>
         <comment>File Types</comment>
         <translation type="unfinished">PGE 세계지도</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="303"/>
+        <location filename="../common_features/installer.cpp" line="304"/>
         <source>SMBX Level file</source>
         <comment>File Types</comment>
         <translation>SMBX 레벨 파일</translation>
     </message>
     <message>
-        <location filename="../common_features/installer.cpp" line="308"/>
+        <location filename="../common_features/installer.cpp" line="309"/>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
         <translation>SMBX 세계지도</translation>
@@ -2295,98 +2295,106 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>ItemLevel</name>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="81"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="117"/>
         <source>Open target file: %1</source>
         <translation>대상 파일 열기 : % 1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="85"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="121"/>
         <source>Path background</source>
         <translation>배경 경로</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="89"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="125"/>
         <source>Big Path background</source>
         <translation>큰 배경 경로</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="93"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="129"/>
         <source>Always Visible</source>
         <translation>항상 표시</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="98"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="134"/>
         <source>Copy preferences</source>
         <translation>복사 환경 설정</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="100"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="136"/>
         <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="101"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="137"/>
         <source>Level-ID: %1</source>
         <translation>레벨 ID : % 1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="102"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="138"/>
         <source>Position: X, Y</source>
         <translation>위치 : X, Y</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="103"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="139"/>
         <source>Position: X, Y, Width, Height</source>
         <translation>위치 : X, Y, 너비, 높이</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="104"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="140"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation>위치 : 왼쪽, 위쪽, 오른쪽, 아래쪽</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="106"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="142"/>
         <source>Copy</source>
         <translation>부</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="107"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="143"/>
         <source>Cut</source>
         <translation>절단</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="109"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="145"/>
         <source>Transform into</source>
         <translation>변신</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="110"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="146"/>
         <source>Transform all %1 into</source>
         <translation>모든 % 1을 (를)</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="112"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="148"/>
         <source>Remove</source>
         <translation>풀다</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="113"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="149"/>
         <source>Remove all %1</source>
         <translation>모든 % 1 제거</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="115"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="151"/>
         <source>Properties...</source>
         <translation>속성 ...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="227"/>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="232"/>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="241"/>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="252"/>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="263"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="268"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="277"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="288"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="299"/>
         <source>Preferences have been copied: %1</source>
         <translation>기본 설정이 복사되었습니다 : % 1</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="335"/>
+        <source>Placing a path cell at the same position as the
+level entry point may cause an inability to
+stop on this level entry point on some engines.
+Ignore this notice if this was done intentionally.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2779,71 +2787,71 @@ So, please break these words to avoid this.&lt;/li&gt;
 <context>
     <name>ItemPath</name>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="68"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="103"/>
         <source>Copy preferences</source>
         <translation>복사 환경 설정</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="69"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="104"/>
         <source>Array-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="70"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="105"/>
         <source>Path-ID: %1</source>
         <translation>경로-ID:%1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="71"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="106"/>
         <source>Position: X, Y</source>
         <translation>위치:X,Y</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="72"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="107"/>
         <source>Position: X, Y, Width, Height</source>
         <translation>위치:X,Y,너비,높이</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="73"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="108"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation>위치:왼쪽,위,오른쪽,아래</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="75"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="110"/>
         <source>Copy</source>
         <translation>복사</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="76"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="111"/>
         <source>Cut</source>
         <translation>자르기</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="78"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="113"/>
         <source>Transform into</source>
         <translation>~로 변환</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="79"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="114"/>
         <source>Transform all %1 into</source>
         <translation>모든 %1를 ~로 변환</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="81"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="116"/>
         <source>Remove</source>
         <translation>제거</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="82"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="117"/>
         <source>Remove all %1</source>
         <translation>모든 %1을 제거</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="93"/>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="98"/>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="107"/>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="118"/>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="129"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="128"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="133"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="142"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="153"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="164"/>
         <source>Preferences have been copied: %1</source>
         <translation>환경설정이 복사되었습니다:%1</translation>
     </message>
@@ -7893,32 +7901,32 @@ Please reload current file to apply result.</source>
         <translation>[없음]</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="245"/>
+        <location filename="../main_window/menubar.cpp" line="249"/>
         <source>Sub-windows</source>
         <translation>하위 창</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="251"/>
+        <location filename="../main_window/menubar.cpp" line="255"/>
         <source>Tab Windows</source>
         <translation>탭 창</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="260"/>
+        <location filename="../main_window/menubar.cpp" line="264"/>
         <source>Close current</source>
         <translation>현재 파일 닫기</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="266"/>
+        <location filename="../main_window/menubar.cpp" line="270"/>
         <source>Cascade</source>
         <translation>종속</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="270"/>
+        <location filename="../main_window/menubar.cpp" line="274"/>
         <source>Tiled</source>
         <translation>바둑판 식</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="276"/>
+        <location filename="../main_window/menubar.cpp" line="280"/>
         <source>[No files open]</source>
         <translation>[열린 파일 없음]</translation>
     </message>
@@ -8174,10 +8182,10 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <location filename="../main_window/level/level_sections_mods.cpp" line="295"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="380"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="414"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="448"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="482"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="382"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="416"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="450"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="484"/>
         <source>Margin of section</source>
         <translation>섹션 여백</translation>
     </message>
@@ -8197,10 +8205,10 @@ Do you want to clone another section?</source>
         <translation>% 1 섹션이 성공적으로 삭제되었습니다!</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="381"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="415"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="449"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="483"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="383"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="417"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="451"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="485"/>
         <source>Please select how far items can rotate beyond the section boundaries (in pixels) before they are removed.</source>
         <translation>항목이 제거되기 전에 섹션 경계 (픽셀)를 넘어 회전 할 수있는 거리를 선택하십시오.</translation>
     </message>
@@ -8263,84 +8271,84 @@ Please save the file first.</source>
 먼저 파일을 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="232"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="240"/>
         <source>Default by item</source>
         <translation>항목 별 기본값</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="265"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="273"/>
         <source>Custom...</source>
         <translation>커스텀...</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="271"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="279"/>
         <source>Next grid size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="276"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="284"/>
         <source>Previous grid size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="288"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="290"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="296"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="298"/>
         <source>Select</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>고르다</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="301"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="303"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="309"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="311"/>
         <source>Erase</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>삭제</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="314"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="316"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="322"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="324"/>
         <source>Items</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>아이템</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="327"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="329"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="335"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="337"/>
         <source>Player</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>플레이어</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="343"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="345"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="351"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="353"/>
         <source>Section</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>부분</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="355"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="357"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="363"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="365"/>
         <source>World settings</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>세계 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="367"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="369"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="375"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="377"/>
         <source>Warps and Doors</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>워프 및 문</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="379"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="381"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="387"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="389"/>
         <source>Water</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>물</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="408"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="410"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="416"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="418"/>
         <source>Options</source>
         <translation>옵션</translation>
     </message>
@@ -8777,13 +8785,13 @@ Error description:
         <translation>디버그</translation>
     </message>
     <message>
-        <location filename="../common_features/themes.cpp" line="736"/>
+        <location filename="../common_features/themes.cpp" line="769"/>
         <source>Default</source>
         <comment>Name of pallete</comment>
         <translation>기본</translation>
     </message>
     <message>
-        <location filename="../common_features/themes.cpp" line="737"/>
+        <location filename="../common_features/themes.cpp" line="770"/>
         <source>Dark blue</source>
         <comment>Name of pallete</comment>
         <translation>진한 파란색</translation>
@@ -8890,576 +8898,576 @@ Reason: %1
         <translation>최소 크기 제한 비활성화</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="181"/>
+        <location filename="../defines.h" line="185"/>
         <source>Invizible</source>
         <translation>보이지 않음</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="182"/>
+        <location filename="../defines.h" line="186"/>
         <source>Slippery</source>
         <translation>미끄러운</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="183"/>
+        <location filename="../defines.h" line="187"/>
         <source>Z-Layer</source>
         <translation>Z 레이어</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="184"/>
+        <location filename="../defines.h" line="188"/>
         <source>Z-Offset</source>
         <translation>Z 오프셋</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="185"/>
+        <location filename="../defines.h" line="189"/>
         <source>Friendly</source>
         <translation>친한</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="186"/>
+        <location filename="../defines.h" line="190"/>
         <source>Boss</source>
         <translation>사장님</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="187"/>
+        <location filename="../defines.h" line="191"/>
         <source>Not Moveable</source>
         <translation>움직일 수 없음</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="188"/>
-        <location filename="../defines.h" line="245"/>
+        <location filename="../defines.h" line="192"/>
+        <location filename="../defines.h" line="249"/>
         <source>Message</source>
         <translation>메시지</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="189"/>
+        <location filename="../defines.h" line="193"/>
         <source>Direction</source>
         <translation>방향</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="190"/>
+        <location filename="../defines.h" line="194"/>
         <source>Included NPC</source>
         <translation>포함 된 NPC 변경</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="191"/>
+        <location filename="../defines.h" line="195"/>
         <source>Water Type</source>
         <translation>환경 유형</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="192"/>
+        <location filename="../defines.h" line="196"/>
         <source>Layer</source>
         <translation>층</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="193"/>
+        <location filename="../defines.h" line="197"/>
         <source>No Vehicles</source>
         <translation>차량 거부</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="194"/>
+        <location filename="../defines.h" line="198"/>
         <source>Two-way warp</source>
         <translation>양방향 워프</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="195"/>
+        <location filename="../defines.h" line="199"/>
         <source>Allow NPC</source>
         <translation>항목 허용</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="196"/>
+        <location filename="../defines.h" line="200"/>
         <source>Allow NPC inter level</source>
         <translation>레벨에서 항목 허용</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="197"/>
+        <location filename="../defines.h" line="201"/>
         <source>Locked</source>
         <translation>잠김</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="198"/>
+        <location filename="../defines.h" line="202"/>
         <source>Need a bomb</source>
         <translation>폭탄이 필요해</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="199"/>
+        <location filename="../defines.h" line="203"/>
         <source>Hide number of stars</source>
         <translation>별 수 숨기기</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="200"/>
+        <location filename="../defines.h" line="204"/>
         <source>Enable cannon exit</source>
         <translation>대포 출구 활성화</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="201"/>
+        <location filename="../defines.h" line="205"/>
         <source>Special state required</source>
         <translation>특수 상태 필요</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="202"/>
+        <location filename="../defines.h" line="206"/>
         <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="203"/>
+        <location filename="../defines.h" line="207"/>
         <source>Hide level entering scene</source>
         <translation>레벨 진입 장면 숨기기</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="204"/>
+        <location filename="../defines.h" line="208"/>
         <source>Warp Type</source>
         <translation>워프 유형</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="205"/>
+        <location filename="../defines.h" line="209"/>
         <source>Warp Transition Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="206"/>
+        <location filename="../defines.h" line="210"/>
         <source>Need Stars</source>
         <translation>별이 필요해</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="207"/>
+        <location filename="../defines.h" line="211"/>
         <source>Need Stars message</source>
         <translation>별 메시지 필요</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="208"/>
+        <location filename="../defines.h" line="212"/>
         <source>Cannon exit projectile speed</source>
         <translation>캐논 출구 발사체 속도</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="209"/>
+        <location filename="../defines.h" line="213"/>
         <source>Entrance Direction</source>
         <translation>입구 방향</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="210"/>
+        <location filename="../defines.h" line="214"/>
         <source>Exit Direction</source>
         <translation>출구 방향</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="211"/>
+        <location filename="../defines.h" line="215"/>
         <source>Set Level Exit</source>
         <translation>레벨 종료 설정</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="212"/>
+        <location filename="../defines.h" line="216"/>
         <source>Set Level Entrance</source>
         <translation>레벨 입구 설정</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="213"/>
+        <location filename="../defines.h" line="217"/>
         <source>Level Warp To</source>
         <translation>다른 레벨로 워프</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="214"/>
+        <location filename="../defines.h" line="218"/>
         <source>Activate Generator</source>
         <translation>생성기 활성화</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="215"/>
+        <location filename="../defines.h" line="219"/>
         <source>Generator Type</source>
         <translation>발전기 유형</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="216"/>
+        <location filename="../defines.h" line="220"/>
         <source>Generator Direction</source>
         <translation>발전기 방향</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="217"/>
+        <location filename="../defines.h" line="221"/>
         <source>Generator Time</source>
         <translation>발전기 시간</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="218"/>
+        <location filename="../defines.h" line="222"/>
         <source>Attach Layer</source>
         <translation>레이어 첨부</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="219"/>
+        <location filename="../defines.h" line="223"/>
         <source>Event Block Destroyed</source>
         <translation>이벤트 : 블록 파괴</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="220"/>
+        <location filename="../defines.h" line="224"/>
         <source>Event Block Hited</source>
         <translation>이벤트 : 블록 히트</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="221"/>
+        <location filename="../defines.h" line="225"/>
         <source>Event Layer Empty</source>
         <translation>이벤트 : 레이어가 비어 있습니다</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="222"/>
+        <location filename="../defines.h" line="226"/>
         <source>Event NPC Activate</source>
         <translation>이벤트 : NPC 활성화</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="223"/>
+        <location filename="../defines.h" line="227"/>
         <source>Event NPC Die</source>
         <translation>이벤트 : NPC 사망</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="224"/>
+        <location filename="../defines.h" line="228"/>
         <source>Event NPC Talk</source>
         <translation>이벤트 : NPC 토크</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="225"/>
+        <location filename="../defines.h" line="229"/>
         <source>Event Warp Enter</source>
         <translation>이벤트 : 워프 진입</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="226"/>
+        <location filename="../defines.h" line="230"/>
         <source>Event Warp Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="227"/>
+        <location filename="../defines.h" line="231"/>
         <source>NPC Special Data</source>
         <translation>NPC 추가 데이터</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="228"/>
+        <location filename="../defines.h" line="232"/>
         <source>Autostart</source>
         <translation>자동 시작</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="229"/>
+        <location filename="../defines.h" line="233"/>
         <source>Layer Smoke Effect</source>
         <translation>레이어 연기 효과</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="230"/>
+        <location filename="../defines.h" line="234"/>
         <source>Add Hide Layer</source>
         <translation>숨기기 목록에 레이어 추가</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="231"/>
+        <location filename="../defines.h" line="235"/>
         <source>Remove Hide Layer</source>
         <translation>숨기기 목록에서 레이어 제거</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="232"/>
+        <location filename="../defines.h" line="236"/>
         <source>Add Show Layer</source>
         <translation>쇼 목록에 레이어 추가</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="233"/>
+        <location filename="../defines.h" line="237"/>
         <source>Remove Show Layer</source>
         <translation>표시 목록에서 레이어 제거</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="234"/>
+        <location filename="../defines.h" line="238"/>
         <source>Add Toggle Layer</source>
         <translation>토글 목록에 레이어 추가</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="235"/>
+        <location filename="../defines.h" line="239"/>
         <source>Remove Toggle Layer</source>
         <translation>토글 목록에서 레이어 제거</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="236"/>
+        <location filename="../defines.h" line="240"/>
         <source>Moving Layer</source>
         <translation>레이어 이동</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="237"/>
+        <location filename="../defines.h" line="241"/>
         <source>Layer Speed Horizontal</source>
         <translation>수평 레이어 속도</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="238"/>
+        <location filename="../defines.h" line="242"/>
         <source>Layer Speed Vertical</source>
         <translation>수직 레이어 속도</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="239"/>
+        <location filename="../defines.h" line="243"/>
         <source>Autoscroll Layer</source>
         <translation>자동 스크롤 섹션</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="240"/>
+        <location filename="../defines.h" line="244"/>
         <source>Autoscroll Layer Speed Horizontal</source>
         <translation>수평 자동 스크롤 섹션 속도</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="241"/>
+        <location filename="../defines.h" line="245"/>
         <source>Autoscroll Layer Speed Vertical</source>
         <translation>수직 자동 스크롤 섹션 속도</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="242"/>
+        <location filename="../defines.h" line="246"/>
         <source>Section Size</source>
         <translation>섹션 크기</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="243"/>
+        <location filename="../defines.h" line="247"/>
         <source>Section Music</source>
         <translation>섹션 음악</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="244"/>
+        <location filename="../defines.h" line="248"/>
         <source>Section Background</source>
         <translation>섹션 배경</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="246"/>
+        <location filename="../defines.h" line="250"/>
         <source>Sound</source>
         <translation>소리</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="247"/>
+        <location filename="../defines.h" line="251"/>
         <source>End Game</source>
         <translation>최종 단계</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="248"/>
+        <location filename="../defines.h" line="252"/>
         <source>Up Key Activate</source>
         <translation>위로 버튼 활성화</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="249"/>
+        <location filename="../defines.h" line="253"/>
         <source>Down Key Activate</source>
         <translation>아래로 버튼 활성화</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="250"/>
+        <location filename="../defines.h" line="254"/>
         <source>Left Key Activate</source>
         <translation>왼쪽 버튼 활성화</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="251"/>
+        <location filename="../defines.h" line="255"/>
         <source>Right Key Activate</source>
         <translation>오른쪽 버튼 활성화</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="252"/>
+        <location filename="../defines.h" line="256"/>
         <source>Run Key Activate</source>
         <translation>실행 버튼 활성화</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="253"/>
+        <location filename="../defines.h" line="257"/>
         <source>Alt Run Key Activate</source>
         <translation>Alt 실행 버튼 활성화</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="254"/>
+        <location filename="../defines.h" line="258"/>
         <source>Jump Key Activate</source>
         <translation>점프 버튼 활성화</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="255"/>
+        <location filename="../defines.h" line="259"/>
         <source>Alt Jump Key Activate</source>
         <translation>Alt 점프 버튼 활성화</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="256"/>
+        <location filename="../defines.h" line="260"/>
         <source>Drop Key Activate</source>
         <translation>드롭 버튼 활성화</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="257"/>
+        <location filename="../defines.h" line="261"/>
         <source>Start Key Activate</source>
         <translation>시작 버튼 활성화</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="258"/>
+        <location filename="../defines.h" line="262"/>
         <source>Trigger Activate</source>
         <translation>트리거 활성화</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="259"/>
+        <location filename="../defines.h" line="263"/>
         <source>Trigger Delay</source>
         <translation>트리거 지연</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="260"/>
+        <location filename="../defines.h" line="264"/>
         <source>Is Warp</source>
         <translation>섹션이 가로로 줄 바꿈</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="261"/>
+        <location filename="../defines.h" line="265"/>
         <source>No Back</source>
         <translation>단방향 스크롤 (되돌리기 없음)</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="262"/>
+        <location filename="../defines.h" line="266"/>
         <source>Off Screen Exit</source>
         <translation>오프 스크린 레벨 종료</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="263"/>
+        <location filename="../defines.h" line="267"/>
         <source>Underwater</source>
         <translation>수중</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="264"/>
+        <location filename="../defines.h" line="268"/>
         <source>Background Image</source>
         <translation>배경 이미지</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="265"/>
+        <location filename="../defines.h" line="269"/>
         <source>Music</source>
         <translation>음악</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="266"/>
+        <location filename="../defines.h" line="270"/>
         <source>Custom Music</source>
         <translation>맞춤 음악</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="267"/>
+        <location filename="../defines.h" line="271"/>
         <source>Level Settings</source>
         <translation>레벨 설정</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="268"/>
+        <location filename="../defines.h" line="272"/>
         <source>Section extra settings</source>
         <translation>섹션 추가 설정</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="269"/>
+        <location filename="../defines.h" line="273"/>
         <source>BGO Sorting Priority</source>
         <translation>BGO 정렬 우선 순위</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="270"/>
-        <location filename="../defines.h" line="272"/>
-        <location filename="../defines.h" line="298"/>
-        <location filename="../defines.h" line="300"/>
+        <location filename="../defines.h" line="274"/>
+        <location filename="../defines.h" line="276"/>
+        <location filename="../defines.h" line="303"/>
+        <location filename="../defines.h" line="305"/>
         <source>Unknown</source>
         <translation>알 수 없는</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="279"/>
+        <location filename="../defines.h" line="284"/>
         <source>Always Visible</source>
         <translation>항상 표시</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="280"/>
+        <location filename="../defines.h" line="285"/>
         <source>Big Path Background</source>
         <translation>큰 경로 배경</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="281"/>
+        <location filename="../defines.h" line="286"/>
         <source>Character</source>
         <translation>캐릭터</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="282"/>
+        <location filename="../defines.h" line="287"/>
         <source>Door ID</source>
         <translation>문 ID</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="283"/>
+        <location filename="../defines.h" line="288"/>
         <source>Game start point</source>
         <translation>게임 시작 지점</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="284"/>
+        <location filename="../defines.h" line="289"/>
         <source>Goto X</source>
         <translation>고투X</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="285"/>
+        <location filename="../defines.h" line="290"/>
         <source>Goto Y</source>
         <translation>고투Y</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="286"/>
+        <location filename="../defines.h" line="291"/>
         <source>Hub styled world</source>
         <translation>허브 스타일의 세계</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="287"/>
+        <location filename="../defines.h" line="292"/>
         <source>Intro Level</source>
         <translation>소개 수준</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="288"/>
+        <location filename="../defines.h" line="293"/>
         <source>Level file</source>
         <translation>레벨 파일</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="289"/>
+        <location filename="../defines.h" line="294"/>
         <source>Level title</source>
         <translation>레벨 제목</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="290"/>
+        <location filename="../defines.h" line="295"/>
         <source>World map extra settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="291"/>
+        <location filename="../defines.h" line="296"/>
         <source>Path Background</source>
         <translation>배경 경로</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="292"/>
+        <location filename="../defines.h" line="297"/>
         <source>Exit at bottom</source>
         <translation>하단에서 종료</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="293"/>
+        <location filename="../defines.h" line="298"/>
         <source>Exit at left</source>
         <translation>왼쪽 출구</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="294"/>
+        <location filename="../defines.h" line="299"/>
         <source>Exit at right</source>
         <translation>오른쪽 출구</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="295"/>
+        <location filename="../defines.h" line="300"/>
         <source>Exit at top</source>
         <translation>상단에서 나가기</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="296"/>
+        <location filename="../defines.h" line="301"/>
         <source>Restart after fail</source>
         <translation>사망 후 현재 레벨 다시 시작</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="297"/>
+        <location filename="../defines.h" line="302"/>
         <source>Total stars</source>
         <translation>총 별</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_scene.cpp" line="90"/>
+        <location filename="../data_configs/conf_wld_scene.cpp" line="93"/>
         <source>Loading Sceneries...</source>
         <translation>풍경로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_block.cpp" line="119"/>
+        <location filename="../data_configs/obj_block.cpp" line="121"/>
         <source>Loading Blocks...</source>
         <translation>블록로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_npc.cpp" line="115"/>
+        <location filename="../data_configs/obj_npc.cpp" line="117"/>
         <source>Loading NPCs...</source>
         <translation>NPC로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_level.cpp" line="91"/>
+        <location filename="../data_configs/conf_wld_level.cpp" line="98"/>
         <source>Loading Level images...</source>
         <translation>레벨 이미지로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_path.cpp" line="90"/>
+        <location filename="../data_configs/conf_wld_path.cpp" line="93"/>
         <source>Loading Paths images...</source>
         <translation>경로 이미지로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_tile.cpp" line="89"/>
+        <location filename="../data_configs/conf_wld_tile.cpp" line="92"/>
         <source>Loading Tiles...</source>
         <translation>타일로드 중 ...</translation>
     </message>
@@ -9489,7 +9497,7 @@ Reason: %1
         <translation>사운드로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_bgo.cpp" line="116"/>
+        <location filename="../data_configs/obj_bgo.cpp" line="118"/>
         <source>Loading BGOs...</source>
         <translation>BGO로드 중 ...</translation>
     </message>
@@ -9499,7 +9507,7 @@ Reason: %1
         <translation>배경로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_rotation_tables.cpp" line="49"/>
+        <location filename="../data_configs/conf_rotation_tables.cpp" line="51"/>
         <source>Loading rotation rules table...</source>
         <translation>순환 규칙 표로드 중 ...</translation>
     </message>
@@ -10730,6 +10738,11 @@ Data may be corrupted!</source>
         <translation>타일셋 아이템 상자</translation>
     </message>
     <message>
+        <location filename="../main_window/dock/tileset_item_box.ui" line="122"/>
+        <source>Custom</source>
+        <translation type="unfinished">커스텀</translation>
+    </message>
+    <message>
         <location filename="../main_window/dock/tileset_item_box.ui" line="146"/>
         <source>Search: </source>
         <translation>검색: </translation>
@@ -10740,19 +10753,47 @@ Data may be corrupted!</source>
         <translation>새로운 타일셋</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/tileset_item_box.cpp" line="170"/>
+        <location filename="../main_window/dock/tileset_item_box.cpp" line="172"/>
         <source>File not saved</source>
         <translation>파일이 저장되지 않았습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/tileset_item_box.cpp" line="171"/>
+        <location filename="../main_window/dock/tileset_item_box.cpp" line="173"/>
         <source>File doesn&apos;t saved on disk.</source>
         <translation>파일이 디스크에 저장되지 않았습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/tileset_item_box.cpp" line="309"/>
+        <location filename="../main_window/dock/tileset_item_box.cpp" line="359"/>
+        <source>&lt;Save file first&gt;</source>
+        <translation type="unfinished">&lt;먼저 파일을 저장&gt;</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/tileset_item_box.cpp" line="365"/>
+        <source>Copy graphic to custom folder</source>
+        <translation type="unfinished">그래픽을 커스텀 폴더로 복사</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/tileset_item_box.cpp" line="366"/>
+        <source>Copy graphic to episode folder</source>
+        <translation type="unfinished">그래픽을 에피소드 폴더로 복사</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/tileset_item_box.cpp" line="450"/>
         <source>Group:</source>
         <translation>그룹:</translation>
+    </message>
+</context>
+<context>
+    <name>TilesetItemButton</name>
+    <message>
+        <location filename="../tools/tilesets/tilesetitembutton.cpp" line="66"/>
+        <source>Unavailable item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tools/tilesets/tilesetitembutton.cpp" line="66"/>
+        <source>This item can not be used in this time.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12321,7 +12362,7 @@ Do you want to save your changes?</source>
 <context>
     <name>tileset</name>
     <message>
-        <location filename="../tools/tilesets/tileset.cpp" line="100"/>
+        <location filename="../tools/tilesets/tileset.cpp" line="101"/>
         <source>Drag &amp; Drop items into this box!
 Right-click to remove!</source>
         <translation>이 상자에 항목을 끌어다 놓습니다.
