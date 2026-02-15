@@ -1955,7 +1955,8 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 level entry point may cause an inability to
 stop on this level entry point on some engines.
 Ignore this notice if this was done intentionally.</source>
-        <translation type="unfinished"></translation>
+        <translation>将关卡地点和路线对象放在同一位置时，在某些引擎里，可能
+无法在该地点停留。如果您是特意想这样的，可以忽略该提示。</translation>
     </message>
 </context>
 <context>
@@ -8545,26 +8546,26 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished">自定义</translation>
+        <translation>自定义</translation>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
-        <translation type="unfinished">&lt;请先保存文件&gt;</translation>
+        <translation>&amp;lt;请先保存文件&amp;gt;</translation>
     </message>
     <message>
         <source>Copy graphic to custom folder</source>
-        <translation type="unfinished">复制素材到自定义文件夹</translation>
+        <translation>复制素材到自定义文件夹</translation>
     </message>
     <message>
         <source>Copy graphic to episode folder</source>
-        <translation type="unfinished">复制素材到地图文件夹</translation>
+        <translation>复制素材到地图文件夹</translation>
     </message>
 </context>
 <context>
     <name>TilesetItemButton</name>
     <message>
         <source>Unavailable item</source>
-        <translation type="unfinished"></translation>
+        <translation>无效对象</translation>
     </message>
     <message>
         <source>This item can not be used in this time.</source>
