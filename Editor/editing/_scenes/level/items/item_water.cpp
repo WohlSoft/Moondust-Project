@@ -71,6 +71,7 @@ void ItemPhysEnv::construct()
 ItemPhysEnv::~ItemPhysEnv()
 {
     m_scene->unregisterElement(this);
+    m_scene->m_itemsPhysEnv.remove(m_data.meta.array_id);
 }
 
 
@@ -354,6 +355,7 @@ void ItemPhysEnv::arrayApply()
     //Update R-tree innex
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsPhysEnv.insert(m_data.meta.array_id, this);
 }
 
 void ItemPhysEnv::removeFromArray()
@@ -520,6 +522,7 @@ void ItemPhysEnv::setPhysEnvData(LevelPhysEnv inD)
     refreshItemSize();
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsPhysEnv.insert(m_data.meta.array_id, this);
 }
 
 void ItemPhysEnv::refreshItemSize()

@@ -74,6 +74,8 @@ public:
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
+    void syncPairItems();
+
     QBrush m_brush;
     QPen   m_pen;
     QGraphicsItemGroup     *m_grp = nullptr;

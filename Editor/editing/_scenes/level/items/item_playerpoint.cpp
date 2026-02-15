@@ -64,6 +64,7 @@ void ItemPlayerPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
 ItemPlayerPoint::~ItemPlayerPoint()
 {
     m_scene->unregisterElement(this);
+    m_scene->m_itemsPlayers.remove(m_data.id);
 }
 
 void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
@@ -220,7 +221,6 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
 
 void ItemPlayerPoint::arrayApply()
 {
-
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
@@ -239,6 +239,7 @@ void ItemPlayerPoint::arrayApply()
     //Update R-tree innex
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsPlayers.insert(m_data.id, this);
 }
 
 void ItemPlayerPoint::removeFromArray()

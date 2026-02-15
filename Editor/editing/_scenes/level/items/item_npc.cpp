@@ -89,13 +89,29 @@ void ItemNPC::construct()
 
 ItemNPC::~ItemNPC()
 {
-    if(m_includedNPC != nullptr) delete m_includedNPC;
-    if(m_randomDirection != nullptr) delete m_randomDirection;
-    if(m_talking != nullptr) delete m_talking;
-    if(m_generatorArrow != nullptr) delete m_generatorArrow;
-    if(m_grp != nullptr) delete m_grp;
-    if(!m_DisableScene) m_scene->unregisterElement(this);
-    if(_internal_animator) delete _internal_animator;
+    if(m_includedNPC != nullptr)
+        delete m_includedNPC;
+
+    if(m_randomDirection != nullptr)
+        delete m_randomDirection;
+
+    if(m_talking != nullptr)
+        delete m_talking;
+
+    if(m_generatorArrow != nullptr)
+        delete m_generatorArrow;
+
+    if(m_grp != nullptr)
+        delete m_grp;
+
+    if(!m_DisableScene)
+    {
+        m_scene->unregisterElement(this);
+        m_scene->m_itemsNPC.remove(m_data.meta.array_id);
+    }
+
+    if(_internal_animator)
+        delete _internal_animator;
 }
 
 void ItemNPC::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
@@ -879,6 +895,7 @@ void ItemNPC::arrayApply()
     //Update R-tree innex
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsNPC.insert(m_data.meta.array_id, this);
 }
 
 
@@ -1103,6 +1120,7 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bo
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsNPC.insert(m_data.meta.array_id, this);
 }
 
 

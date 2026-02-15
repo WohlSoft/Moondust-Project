@@ -74,6 +74,7 @@ ItemBlock::~ItemBlock()
     if(m_slipperyShade != nullptr) delete m_slipperyShade;
     if(m_grp != nullptr) delete m_grp;
     m_scene->unregisterElement(this);
+    m_scene->m_itemsBlocks.remove(m_data.meta.array_id);
 }
 
 void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
@@ -725,6 +726,7 @@ void ItemBlock::arrayApply()
     //Update R-tree innex
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsBlocks.insert(m_data.meta.array_id, this);
 }
 
 void ItemBlock::removeFromArray()
@@ -742,6 +744,7 @@ void ItemBlock::removeFromArray()
         m_scene->m_data->blocks.removeAt(m_data.meta.index);
     }
     else
+    {
         for(int i = 0; i < m_scene->m_data->blocks.size(); i++)
         {
             if(m_scene->m_data->blocks[i].meta.array_id == m_data.meta.array_id)
@@ -750,6 +753,7 @@ void ItemBlock::removeFromArray()
                 break;
             }
         }
+    }
 
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
@@ -919,6 +923,7 @@ void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animato
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsBlocks.insert(m_data.meta.array_id, this);
 }
 
 

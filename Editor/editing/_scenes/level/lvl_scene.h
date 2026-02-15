@@ -24,6 +24,8 @@
 #include <QGraphicsItem>
 #include <QProgressDialog>
 #include <QMenu>
+#include <QMap>
+#include <QSet>
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
 #include <QBitmap>
@@ -52,10 +54,12 @@ class LevelEdit;
 class LvlHistoryManager;
 class MainWindow;
 
+class LvlBaseItem;
 class ItemBlock;
 class ItemBGO;
 class ItemNPC;
 class ItemPhysEnv;
+class ItemDoor;
 class ItemPlayerPoint;
 
 class LvlScene : public QGraphicsScene
@@ -380,7 +384,18 @@ public:
     void unregisterElement(QGraphicsItem *item);
     // //////////////////////////////////
 
+    // Items list, key is array_id!
+    QMap<unsigned int, ItemPlayerPoint*> m_itemsPlayers;
 
+    QMap<unsigned int, ItemBlock*> m_itemsBlocks;
+    QMap<unsigned int, ItemBGO*> m_itemsBGO;
+    QMap<unsigned int, ItemNPC*> m_itemsNPC;
+    QMap<unsigned int, ItemPhysEnv*> m_itemsPhysEnv;
+
+    QMap<unsigned int, ItemDoor*> m_itemsDoorEnters;
+    QMap<unsigned int, ItemDoor*> m_itemsDoorExits;
+
+    QSet<QGraphicsItem*> m_itemsAll;
 
     // ////////////////////////////////////////////////////////////////////////////////
     // /////////////////////////////////EDITING////////////////////////////////////////

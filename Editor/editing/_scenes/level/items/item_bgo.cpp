@@ -62,6 +62,7 @@ void ItemBGO::construct()
 ItemBGO::~ItemBGO()
 {
     m_scene->unregisterElement(this);
+    m_scene->m_itemsBGO.remove(m_data.meta.array_id);
 }
 
 
@@ -171,7 +172,7 @@ void ItemBGO::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         m_scene->removeSelectedLvlItems();
     else if((selected == remove_all_s) || (selected == remove_all))
     {
-        QList<QGraphicsItem *> our_items;
+        LvlScene::PGE_ItemList our_items;
         QList<QGraphicsItem *> selectedList;
         unsigned long oldID = m_data.id;
 
@@ -192,6 +193,7 @@ void ItemBGO::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             section.setBottom(s.size_bottom + mg);
             our_items = m_scene->items(section, Qt::IntersectsItemShape);
         }
+
         foreach(QGraphicsItem *SelItem, our_items)
         {
             if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
@@ -202,6 +204,7 @@ void ItemBGO::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                     selectedList.push_back(SelItem);
             }
         }
+
         if(!selectedList.isEmpty())
         {
             LvlScene    *scene = m_scene;
@@ -557,6 +560,7 @@ void ItemBGO::arrayApply()
     //Update R-tree innex
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsBGO.insert(m_data.meta.array_id, this);
 }
 
 void ItemBGO::removeFromArray()
@@ -574,15 +578,14 @@ void ItemBGO::removeFromArray()
         //directlry
         m_scene->m_data->bgo.removeAt(m_data.meta.index);
     }
-    else
-        for(int i = 0; i < m_scene->m_data->bgo.size(); i++)
+    else for(int i = 0; i < m_scene->m_data->bgo.size(); i++)
+    {
+        if(m_scene->m_data->bgo[i].meta.array_id == m_data.meta.array_id)
         {
-            if(m_scene->m_data->bgo[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_scene->m_data->bgo.removeAt(i);
-                break;
-            }
+            m_scene->m_data->bgo.removeAt(i);
+            break;
         }
+    }
 
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
@@ -633,6 +636,7 @@ void ItemBGO::setBGOData(LevelBGO inD, obj_bgo *mergedSet, long *animator_id)
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsBGO.insert(m_data.meta.array_id, this);
 }
 
 void ItemBGO::setZMode(int mode, qreal offset, bool init)

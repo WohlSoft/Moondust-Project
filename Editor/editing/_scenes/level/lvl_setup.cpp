@@ -124,7 +124,7 @@ void LvlScene::hideWarpsAndDoors(bool visible)
     for(auto &layer : m_data->layers)
         localLayers[layer.name] = layer;
 
-    foreach(QGraphicsItem *i, items())
+    foreach(QGraphicsItem *i, m_itemsAll)
     {
         if(i->data(ITEM_IS_ITEM).isNull() || !i->data(ITEM_IS_ITEM).toBool())
             continue;
@@ -148,7 +148,7 @@ void LvlScene::applyLayersVisible()
 {
     QList<QGraphicsItem *> ItemList = items();
 
-    foreach(QGraphicsItem *item, ItemList)
+    foreach(QGraphicsItem *item, items())
     {
         if(item->data(ITEM_IS_ITEM).isNull() || !item->data(ITEM_IS_ITEM).toBool())
             continue;
@@ -244,8 +244,8 @@ void LvlScene::setLocked(int type, bool lock)
         break;
     }
 
-    QList<QGraphicsItem *> ItemList = items();
-    for(auto &it : ItemList)
+    // QList<QGraphicsItem *> ItemList = items();
+    foreach(auto &it, m_itemsAll)
     {
         if(it == nullptr)
             continue;

@@ -430,6 +430,7 @@ void LvlScene::registerElement(QGraphicsItem *item)
     tree.Insert(lt, rb, item);
     item->setData(ITEM_LAST_POS, pt);
     item->setData(ITEM_LAST_SIZE, pz);
+    m_itemsAll.insert(item);
 }
 
 void LvlScene::unregisterElement(QGraphicsItem *item)
@@ -452,4 +453,5 @@ void LvlScene::unregisterElement(QGraphicsItem *item)
         rb[1] = pt.y() + 1;
 
     tree.Remove(lt, rb, item);
+    m_itemsAll.remove(item);
 }

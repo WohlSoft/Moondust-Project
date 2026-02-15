@@ -62,7 +62,13 @@ ItemDoor::~ItemDoor()
     if(m_arrowEnter != nullptr) delete m_arrowEnter;
     if(m_arrowExit != nullptr) delete m_arrowExit;
     if(m_grp != nullptr) delete m_grp;
+
     m_scene->unregisterElement(this);
+
+    if(m_pointSide == D_Entrance)
+        m_scene->m_itemsDoorEnters.remove(m_data.meta.array_id);
+    else
+        m_scene->m_itemsDoorExits.remove(m_data.meta.array_id);
 }
 
 static void updateWarpDirection(LvlScene *m_scene, bool isEnter, bool isExit, int enterDir, int exitDir)
@@ -395,6 +401,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 d->arrayApply();
             }
         }
+
         m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_ALLOWNPC, QVariant(allowNPC->isChecked()));
         m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
@@ -430,6 +437,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 d->arrayApply();
             }
         }
+
         m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_LOCKED, QVariant(locked->isChecked()));
         m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
@@ -465,6 +473,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 d->arrayApply();
             }
         }
+
         m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_NEED_A_BOMB, QVariant(bombNeed->isChecked()));
         m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
@@ -500,6 +509,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 d->arrayApply();
             }
         }
+
         m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED, QVariant(specialStReq->isChecked()));
         m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
@@ -596,6 +606,74 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
                 break;
             }//Find selected layer's item
+        }
+    }
+}
+
+void ItemDoor::syncPairItems()
+{
+    bool found = false;
+
+    //Sync data to its pair door item
+    if(m_pointSide == D_Entrance && m_data.isSetOut)
+    {
+        auto f = m_scene->m_itemsDoorExits.find(m_data.meta.array_id);
+        if(f != m_scene->m_itemsDoorExits.end())
+        {
+            ItemDoor *d = f.value();
+            d->m_data = m_data;
+            d->refreshArrows();
+        }
+    }
+    else if(m_pointSide == D_Exit && m_data.isSetIn)
+    {
+        auto f = m_scene->m_itemsDoorEnters.find(m_data.meta.array_id);
+        if(f != m_scene->m_itemsDoorEnters.end())
+        {
+            ItemDoor *d = f.value();
+            d->m_data = m_data;
+            d->refreshArrows();
+        }
+    }
+
+    /** Explanation for cramps-man why was that dumb bug:
+     *
+     * when we killed point, doorData.isSetIn is false.
+     * so:
+     * direction==D_Entrance is true, but isSetIN - false
+     * else isSetOut - true
+     * so: we are applying ENTRANCE's physical coordinates into EXIT :P
+     * but that will NOT appear in file if we will just make dummy modify
+     * of exit point and it's true value will overwrire invalid data.
+     *
+     * To prevent this crap, need to also add condition
+     * to check "is this point is exit"?
+     * so, even if entrance point marked as "false" because "not placed" flag
+     * exit point's value will not be overwritten
+     *
+     */
+
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->doors.size())
+    {
+        //Check index
+        if(m_data.meta.array_id == m_scene->m_data->doors[m_data.meta.index].meta.array_id)
+            found = true;
+    }
+
+    //Apply current data in main array
+    if(found)
+    {
+        //directlry
+        m_scene->m_data->doors[m_data.meta.index] = m_data; //apply current bgoData
+    }
+    else for(int i = 0; i < m_scene->m_data->doors.size(); i++)
+    {
+        //after find it into array
+        if(m_scene->m_data->doors[i].meta.array_id == m_data.meta.array_id)
+        {
+            m_data.meta.index = i;
+            m_scene->m_data->doors[i] = m_data;
+            break;
         }
     }
 }
@@ -758,7 +836,7 @@ void ItemDoor::refreshArrows()
 
 void ItemDoor::arrayApply()
 {
-    bool found = false;
+    // bool found = false;
 
     if((m_pointSide == D_Entrance) && m_data.isSetIn)
     {
@@ -770,81 +848,6 @@ void ItemDoor::arrayApply()
         m_data.ox = qRound(this->scenePos().x());
         m_data.oy = qRound(this->scenePos().y());
     }
-    /** Explanation for cramps-man why was that dumb bug:
-     *
-     * when we killed point, doorData.isSetIn is false.
-     * so:
-     * direction==D_Entrance is true, but isSetIN - false
-     * else isSetOut - true
-     * so: we are applying ENTRANCE's physical coordinates into EXIT :P
-     * but that will NOT appear in file if we will just make dummy modify
-     * of exit point and it's true value will overwrire invalid data.
-     *
-     * To prevent this crap, need to also add condition
-     * to check "is this point is exit"?
-     * so, even if entrance point marked as "false" because "not placed" flag
-     * exit point's value will not be overwritten
-     *
-     */
-
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->doors.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->doors[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    //Apply current data in main array
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->doors[m_data.meta.index] = m_data; //apply current bgoData
-    }
-    else for(int i = 0; i < m_scene->m_data->doors.size(); i++)
-    {
-        //after find it into array
-        if(m_scene->m_data->doors[i].meta.array_id == m_data.meta.array_id)
-        {
-            m_data.meta.index = i;
-            m_scene->m_data->doors[i] = m_data;
-            break;
-        }
-    }
-
-    //Sync data to his pair door item
-    if(m_pointSide == D_Entrance)
-    {
-        if(m_data.isSetOut)
-        {
-            for(QGraphicsItem *door : m_scene->items())
-            {
-                if((door->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_META_DoorExit) && (door->data(LvlScene::ITEM_ARRAY_ID).toUInt() == m_data.meta.array_id))
-                {
-                    ItemDoor *d = (ItemDoor *)door;
-                    d->m_data = m_data;
-                    d->refreshArrows();
-                    break;
-                }
-            }
-        }
-    }
-    else
-    {
-        if(m_data.isSetIn)
-        {
-            for(QGraphicsItem *door : m_scene->items())
-            {
-                if((door->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_META_DoorEnter) && (door->data(LvlScene::ITEM_ARRAY_ID).toUInt() == m_data.meta.array_id))
-                {
-                    ItemDoor *d = (ItemDoor *)door;
-                    d->m_data = m_data;
-                    d->refreshArrows();
-                    break;
-                }
-            }
-        }
-
-    }
 
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
@@ -852,6 +855,13 @@ void ItemDoor::arrayApply()
     //Update R-tree innex
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+
+    if(m_pointSide == D_Entrance)
+        m_scene->m_itemsDoorEnters.insert(m_data.meta.array_id, this);
+    else
+        m_scene->m_itemsDoorExits.insert(m_data.meta.array_id, this);
+
+    syncPairItems();
 }
 
 void ItemDoor::removeFromArray()
@@ -861,14 +871,18 @@ void ItemDoor::removeFromArray()
         m_data.isSetIn = false;
         m_data.ix = 0;
         m_data.iy = 0;
+        m_scene->m_itemsDoorEnters.remove(m_data.meta.array_id);
     }
     else
     {
         m_data.isSetOut = false;
         m_data.ox = 0;
         m_data.oy = 0;
+        m_scene->m_itemsDoorExits.remove(m_data.meta.array_id);
     }
-    arrayApply();
+
+    m_scene->unregisterElement(this);
+    syncPairItems();
 }
 
 
@@ -955,6 +969,11 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+
+    if(m_pointSide == D_Entrance)
+        m_scene->m_itemsDoorEnters.insert(m_data.meta.array_id, this);
+    else
+        m_scene->m_itemsDoorExits.insert(m_data.meta.array_id, this);
 }
 
 QRectF ItemDoor::boundingRect() const
