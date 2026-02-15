@@ -2183,7 +2183,7 @@ void LvlItemProperties::processNpcContainerButton(QPushButton *btn)
         QList<QGraphicsItem *> items1 = edit->scene->selectedItems();
         foreach(QGraphicsItem *targetItem, items1)
         {
-            if((targetItem->data(LvlScene::ITEM_TYPE_INT).toString() == ItemTypes::LVL_NPC) && ((targetItem->data(LvlScene::ITEM_ARRAY_ID).toInt() == m_currentNpcArrayId)))
+            if((targetItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC) && ((targetItem->data(LvlScene::ITEM_ARRAY_ID).toInt() == m_currentNpcArrayId)))
             {
                 npcID = ((ItemNPC *)targetItem)->m_data.contents;
                 break;

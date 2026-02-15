@@ -36,9 +36,9 @@ WorldData WldScene::copy(bool cut)
     {
         for(QList<QGraphicsItem *>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
         {
-            QString ObjType = (*it)->data(ITEM_TYPE).toString();
+            int ObjType = (*it)->data(ITEM_TYPE_INT).toInt();
 
-            if(ObjType == "TILE")
+            if(ObjType == ItemTypes::WLD_Tile)
             {
                 ItemTile *sourceTile = (ItemTile *)(*it);
                 copyData.tiles.push_back(sourceTile->m_data);
@@ -49,7 +49,7 @@ WorldData WldScene::copy(bool cut)
                     delete(*it);
                 }
             }
-            else if(ObjType == "SCENERY")
+            else if(ObjType == ItemTypes::WLD_Scenery)
             {
                 ItemScene *sourceScene = (ItemScene *)(*it);
                 copyData.scenery.push_back(sourceScene->m_data);
@@ -60,7 +60,7 @@ WorldData WldScene::copy(bool cut)
                     delete(*it);
                 }
             }
-            else if(ObjType == "PATH")
+            else if(ObjType == ItemTypes::WLD_Path)
             {
                 ItemPath *sourcePath = (ItemPath *)(*it);
                 copyData.paths.push_back(sourcePath->m_data);
@@ -71,7 +71,7 @@ WorldData WldScene::copy(bool cut)
                     delete(*it);
                 }
             }
-            else if(ObjType == "LEVEL")
+            else if(ObjType == ItemTypes::WLD_Level)
             {
                 ItemLevel *sourceLevel = (ItemLevel *)(*it);
                 copyData.levels.push_back(sourceLevel->m_data);
@@ -82,7 +82,7 @@ WorldData WldScene::copy(bool cut)
                     delete(*it);
                 }
             }
-            else if(ObjType == "MUSICBOX")
+            else if(ObjType == ItemTypes::WLD_MusicBox)
             {
                 ItemMusic *sourceMusic = (ItemMusic *)(*it);
                 copyData.music.push_back(sourceMusic->m_data);
