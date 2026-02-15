@@ -818,7 +818,7 @@ void ItemDoor::arrayApply()
         {
             for(QGraphicsItem *door : m_scene->items())
             {
-                if((door->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_META_DoorExit) && ((unsigned int)door->data(LvlScene::ITEM_ARRAY_ID).toUInt() == m_data.meta.array_id))
+                if((door->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_META_DoorExit) && (door->data(LvlScene::ITEM_ARRAY_ID).toUInt() == m_data.meta.array_id))
                 {
                     ItemDoor *d = (ItemDoor *)door;
                     d->m_data = m_data;
@@ -834,7 +834,7 @@ void ItemDoor::arrayApply()
         {
             for(QGraphicsItem *door : m_scene->items())
             {
-                if((door->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_META_DoorEnter) && ((unsigned int)door->data(LvlScene::ITEM_ARRAY_ID).toUInt() == m_data.meta.array_id))
+                if((door->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_META_DoorEnter) && (door->data(LvlScene::ITEM_ARRAY_ID).toUInt() == m_data.meta.array_id))
                 {
                     ItemDoor *d = (ItemDoor *)door;
                     d->m_data = m_data;
