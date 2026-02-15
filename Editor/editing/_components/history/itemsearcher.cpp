@@ -95,7 +95,12 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem *
 
     foreach(QGraphicsItem *unsortedItem, allItems)
     {
-        switch(unsortedItem->data(LvlScene::ITEM_TYPE_INT).toInt())
+        if(unsortedItem->data(LvlScene::ITEM_IS_ITEM).isNull() || !unsortedItem->data(LvlScene::ITEM_IS_ITEM).toBool())
+            continue;
+
+        int objType = unsortedItem->data(WldScene::ITEM_TYPE_INT).toInt();
+
+        switch(objType)
         {
         case ItemTypes::LVL_Block:
             if(m_findFilter & ItemTypes::LVL_S_Block)
@@ -352,6 +357,9 @@ void ItemSearcher::find(const WorldData &dataToFind, const QList<QGraphicsItem *
 
     foreach(QGraphicsItem *unsortedItem, allItems)
     {
+        if(unsortedItem->data(WldScene::ITEM_IS_ITEM).isNull() || !unsortedItem->data(WldScene::ITEM_IS_ITEM).toBool())
+            continue;
+
         int objType = unsortedItem->data(WldScene::ITEM_TYPE_INT).toInt();
 
         switch(objType)
