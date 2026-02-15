@@ -483,6 +483,9 @@ void LvlWarpBox::on_WarpSetEntrance_clicked()
         edit->scene->clearSelection();
         for(QGraphicsItem *item : edit->scene->items())
         {
+            if(item->data(LvlScene::ITEM_IS_ITEM).isNull() || !item->data(LvlScene::ITEM_IS_ITEM).toBool())
+                continue;
+
             if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_META_DoorEnter)
             {
                 if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() == array_id)
@@ -539,6 +542,9 @@ void LvlWarpBox::on_WarpSetExit_clicked()
         edit->scene->clearSelection();
         for(QGraphicsItem *item : edit->scene->items())
         {
+            if(item->data(LvlScene::ITEM_IS_ITEM).isNull() || !item->data(LvlScene::ITEM_IS_ITEM).toBool())
+                continue;
+
             if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_META_DoorExit)
             {
                 if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() == array_id)

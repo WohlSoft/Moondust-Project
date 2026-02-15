@@ -1024,9 +1024,15 @@ void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
 
     for(QList<QGraphicsItem *>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
-        if((*it)->data(LvlScene::ITEM_IS_CURSOR).toBool()) continue; //skip cursor item
+        QGraphicsItem *item = *it;
 
-        int iType = (*it)->data(LvlScene::ITEM_TYPE_INT).toInt();
+        if(item->data(LvlScene::ITEM_IS_ITEM).isNull() || !item->data(LvlScene::ITEM_IS_ITEM).toBool())
+            continue;
+
+        if(item->data(LvlScene::ITEM_IS_CURSOR).toBool())
+            continue; //skip cursor item
+
+        int iType = item->data(LvlScene::ITEM_TYPE_INT).toInt();
 
         if(iType == ItemTypes::LVL_Block)
         {

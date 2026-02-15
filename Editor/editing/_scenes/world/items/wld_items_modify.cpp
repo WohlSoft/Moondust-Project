@@ -247,6 +247,9 @@ void WldScene::placeItemUnderCursor()
 
         foreach(auto *xxx, foundItems)
         {
+            if(xxx->data(ITEM_IS_ITEM).isNull() || !xxx->data(ITEM_IS_ITEM).toBool())
+                continue;
+
             objType = xxx->data(ITEM_TYPE_INT).toInt();
 
             if(objType == ItemTypes::WLD_Tile)
@@ -407,6 +410,9 @@ void WldScene::removeWldItems(QList<QGraphicsItem * > items, bool globalHistory)
 
     for(QList<QGraphicsItem *>::iterator it = items.begin(); it != items.end(); it++)
     {
+        if((*it)->data(ITEM_IS_ITEM).isNull() || !(*it)->data(ITEM_IS_ITEM).toBool())
+            continue;
+
         objType = (*it)->data(ITEM_TYPE_INT).toInt();
 
         if(!(*it)->isVisible())

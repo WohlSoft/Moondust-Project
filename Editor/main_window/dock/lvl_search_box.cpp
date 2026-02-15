@@ -596,6 +596,9 @@ void LvlSearchBox::resetNPCSearch()
 
 bool LvlSearchBox::checkBlockCriteria(QGraphicsItem *gri)
 {
+    if(gri->data(LvlScene::ITEM_IS_ITEM).isNull() || !gri->data(LvlScene::ITEM_IS_ITEM).toBool())
+        return false;
+
     if(gri->data(LvlScene::ITEM_TYPE_INT).toInt() != ItemTypes::LVL_Block)
         return false;
 

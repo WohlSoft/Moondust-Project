@@ -55,6 +55,9 @@ void WldScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
         if(!it)
             continue;
 
+        if(it->data(ITEM_IS_ITEM).isNull() || !it->data(ITEM_IS_ITEM).toBool())
+            continue;
+
         offset.setX(0);
         offset.setY(0);
 
@@ -124,6 +127,9 @@ void WldScene::applyGridToEach(QList<QGraphicsItem *> items)
     for(QGraphicsItem *it : items)
     {
         if(!it)
+            continue;
+
+        if(it->data(ITEM_IS_ITEM).isNull() || !it->data(ITEM_IS_ITEM).toBool())
             continue;
 
         offset.setX(0);

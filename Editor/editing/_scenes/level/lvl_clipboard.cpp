@@ -231,6 +231,9 @@ void LvlScene::paste(LevelData &BufferIn, QPoint pos)
         if(!it)
             continue;
 
+        if(it->data(ITEM_IS_ITEM).isNull() || !it->data(ITEM_IS_ITEM).toBool())
+            continue;
+
         objType = it->data(ITEM_TYPE_INT).toInt();
 
         if(objType == ItemTypes::LVL_NPC)

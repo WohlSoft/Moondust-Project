@@ -302,10 +302,13 @@ void LvlLayersBox::removeLayerItems(QString layerName)
 
     for(QList<QGraphicsItem *>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
-        int objType = (*it)->data(LvlScene::ITEM_TYPE_INT).toInt();
+        if((*it)->data(LvlScene::ITEM_IS_ITEM).isNull() || !(*it)->data(LvlScene::ITEM_IS_ITEM).toBool())
+            continue;
 
         if((*it)->data(LvlScene::ITEM_IS_CURSOR).toBool())
             continue; //skip cursor item
+
+        int objType = (*it)->data(LvlScene::ITEM_TYPE_INT).toInt();
 
         if(objType == ItemTypes::LVL_Block)
         {
@@ -449,6 +452,9 @@ void LvlLayersBox::modifyLayer(QString layerName, bool visible)
     {
         QGraphicsItem *item = *it;
 
+        if(item->data(LvlScene::ITEM_IS_ITEM).isNull() || !item->data(LvlScene::ITEM_IS_ITEM).toBool())
+            continue;
+
         if(item->data(LvlScene::ITEM_IS_CURSOR).toBool())
             continue; //skip cursor item
 
@@ -511,6 +517,9 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName)
     for(QList<QGraphicsItem *>::iterator it = itemList.begin(); it != itemList.end(); ++it)
     {
         QGraphicsItem *item = *it;
+
+        if(item->data(LvlScene::ITEM_IS_ITEM).isNull() || !item->data(LvlScene::ITEM_IS_ITEM).toBool())
+            continue;
 
         if(item->data(LvlScene::ITEM_IS_CURSOR).toBool())
             continue; //skip cursor item
@@ -616,6 +625,9 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName, bool vis
     for(QList<QGraphicsItem *>::iterator it = itemList.begin(); it != itemList.end(); ++it)
     {
         QGraphicsItem *item = *it;
+
+        if(item->data(LvlScene::ITEM_IS_ITEM).isNull() || !item->data(LvlScene::ITEM_IS_ITEM).toBool())
+            continue;
 
         if(item->data(LvlScene::ITEM_IS_CURSOR).toBool())
             continue; //skip cursor item

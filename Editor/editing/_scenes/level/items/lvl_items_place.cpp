@@ -144,6 +144,9 @@ ItemPlayerPoint *LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
     {
         foreach(QGraphicsItem *plrt, this->items())
         {
+            if(plrt->data(ITEM_IS_ITEM).isNull() || !plrt->data(ITEM_IS_ITEM).toBool())
+                continue;
+
             int objType = plrt->data(ITEM_TYPE_INT).toInt();
             unsigned int arrId = plrt->data(ITEM_ARRAY_ID).toUInt();
 

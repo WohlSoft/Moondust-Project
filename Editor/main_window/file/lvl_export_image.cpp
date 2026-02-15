@@ -178,8 +178,12 @@ void LevelEdit::ExportingReady() //slot
     if(imageExportDialog.hideInvisibleBlocks())
     {
         QList<QGraphicsItem*> allBlocks = scene->items();
-        for(QGraphicsItem* it : allBlocks)
+
+        foreach(QGraphicsItem* it, allBlocks)
         {
+            if(it->data(LvlScene::ITEM_IS_ITEM).isNull() || !it->data(LvlScene::ITEM_IS_ITEM).toBool())
+                continue;
+
             int objType = it->data(LvlScene::ITEM_TYPE_INT).toInt();
 
             if(objType != ItemTypes::LVL_Block && objType != ItemTypes::LVL_BGO && objType != ItemTypes::LVL_NPC)

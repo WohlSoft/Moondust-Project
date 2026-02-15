@@ -72,6 +72,9 @@ void MainWindow::on_actionClear_NPC_garbadge_triggered()
 
         for(int i = 0; i < items.size(); i++)
         {
+            if(items[i]->data(LvlScene::ITEM_IS_ITEM).isNull() || !items[i]->data(LvlScene::ITEM_IS_ITEM).toBool())
+                continue;
+
             if(items[i]->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 ItemNPC *npc = qgraphicsitem_cast<ItemNPC *>(items[i]);

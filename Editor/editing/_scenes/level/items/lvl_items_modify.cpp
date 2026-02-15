@@ -105,6 +105,9 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
         if((!m_data->doors[i].isSetIn) && (!m_data->doors[i].isSetOut))
             break;   //Don't sync door points if not placed
 
+        if(item->data(ITEM_IS_ITEM).isNull() || !item->data(ITEM_IS_ITEM).toBool())
+            continue;
+
         int objType = item->data(ITEM_TYPE_INT).toInt();
         unsigned int arrayId = item->data(ITEM_ARRAY_ID).toUInt();
 
