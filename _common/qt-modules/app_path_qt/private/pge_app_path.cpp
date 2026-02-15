@@ -22,6 +22,10 @@
 #include <QDir>
 #include <QFileInfo>
 
+#ifdef __APPLE__
+#include <unistd.h>
+#endif
+
 #include "../pge_app_path.h"
 #include "pge_app_path_private.h"
 #include PGE_APP_PATH_VERSION_HEADER
@@ -87,6 +91,7 @@ void AppPathManager::initAppPath(const char *argv0)
         if(!QDir(ApplicationPath + "/Data directory").exists())
             symlink((path + UserDirName).toUtf8().data(), (ApplicationPath + "/Data directory").toUtf8().data());
 #endif
+
         m_userPath = appDir.absolutePath();
         initSettingsPath();
         initDataPath();
