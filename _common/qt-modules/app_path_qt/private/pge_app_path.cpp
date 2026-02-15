@@ -21,107 +21,58 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <QFileInfo>
-#ifdef __APPLE__
-#include <CoreFoundation/CoreFoundation.h>
-#include <CoreServices/CoreServices.h>
-#include <QUrl>
-#endif
 
-#ifdef __ANDROID__
-#include "dir_copy.h"
-#endif
-#include "pge_app_path.h"
+#include "../pge_app_path.h"
+#include "pge_app_path_private.h"
 #include PGE_APP_PATH_VERSION_HEADER
 
 QString ApplicationPath;
 QString ApplicationPath_x;
 
-bool AppPathManager::m_isPortable = false;
-QString AppPathManager::m_settingsPath;
-QString AppPathManager::m_userPath;
-QString AppPathManager::m_dataPath;
-QString AppPathManager::m_libExecPath;
+bool AppPathManagerPrivate::m_isPortable = false;
 
-#define SHARE_DATA_DIR "moondust-project"
-#if defined(__ANDROID__) || defined(__APPLE__) || defined(__HAIKU__)
-#   define UserDirName "/PGE Project"
-#else
-#   define UserDirName "/.PGE_Project"
-#endif
+QString AppPathManagerPrivate::m_userPath;
+QString AppPathManagerPrivate::m_dataPath;
+QString AppPathManagerPrivate::m_libExecPath;
+
+QString AppPathManagerPrivate::m_settingsPath;
+QString AppPathManagerPrivate::m_languagesPath;
+QString AppPathManagerPrivate::m_logsPath;
+
 
 void AppPathManager::initAppPath(const char *argv0)
 {
-#ifdef __APPLE__
-    Q_UNUSED(argv0);
-    {
-        CFURLRef appUrlRef;
-        appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-        CFStringRef filePathRef = CFURLGetString(appUrlRef);
-        //const char* filePath = CFStringGetCStringPtr(filePathRef, kCFStringEncodingUTF8);
-        ApplicationPath = QUrl(QString::fromCFString(filePathRef)).toLocalFile();
-        {
-            int i = ApplicationPath.lastIndexOf(".app");
-            i = ApplicationPath.lastIndexOf('/', i);
-            ApplicationPath.remove(i, ApplicationPath.size() - i);
-        }
-        //CFRelease(filePathRef);
-        CFRelease(appUrlRef);
-
-        //! If it's a path randomizer
-        if(ApplicationPath.startsWith("/private/var/"))
-        {
-            QString realAppPath("/Applications/Moondust Project");
-            if(QDir(realAppPath).exists())
-                ApplicationPath = realAppPath;
-        }
-    }
-#else
-    ApplicationPath = QFileInfo(QString::fromUtf8(argv0)).absoluteDir().absolutePath();
-#endif
-
-    ApplicationPath_x = ApplicationPath;
+    using namespace AppPathManagerPrivate;
 
     QApplication::addLibraryPath(".");
-    QApplication::addLibraryPath(ApplicationPath);
     QApplication::addLibraryPath(QFileInfo(QString::fromLocal8Bit(argv0)).absoluteDir().absolutePath());
 
     QApplication::setOrganizationName(V_COMPANY);
     QApplication::setOrganizationDomain(V_PGE_URL);
     QApplication::setApplicationName(PGE_APP_PATH_MODULE_NAME);
 
-#ifdef __ANDROID__
-    ApplicationPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/PGE Project Data";
-    QDir appPath(ApplicationPath);
-    if(!appPath.exists())
-        appPath.mkpath(ApplicationPath);
+    initAppPathPrivate(argv0);
 
-    QDir languagesFolder(ApplicationPath + "/languages");
-    if(!languagesFolder.exists())
-    {
-        languagesFolder.mkpath(ApplicationPath + "/languages");
-        DirCopy::copy("assets:/languages", languagesFolder.absolutePath());
-    }
-
-#   ifdef PGE_APP_PATH_HAS_THEMES
-    QDir themesFolder(ApplicationPath + "/themes");
-    if(!themesFolder.exists())
-    {
-        themesFolder.mkpath(ApplicationPath + "/themes");
-        DirCopy::copy("assets:/themes", themesFolder.absolutePath());
-    }
-#   endif
-#endif
+    ApplicationPath_x = ApplicationPath;
+    QApplication::addLibraryPath(ApplicationPath);
 
     initIsPortable();
 
     if(m_isPortable)
+    {
+        m_dataPath = ApplicationPath;
+        m_libExecPath = m_dataPath;
+        initLangsDir();
+        initLogsDir();
         return;
+    }
 
 #if defined(__ANDROID__) || defined(__APPLE__)
     QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
 #else
     QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
+
     if(!path.isEmpty())
     {
         QDir appDir(path + UserDirName);
@@ -131,6 +82,7 @@ void AppPathManager::initAppPath(const char *argv0)
             if(!appDir.exists()) // Re-check the existance
                 goto defaultSettingsPath;
         }
+
 #ifdef __APPLE__
         if(!QDir(ApplicationPath + "/Data directory").exists())
             symlink((path + UserDirName).toUtf8().data(), (ApplicationPath + "/Data directory").toUtf8().data());
@@ -139,6 +91,8 @@ void AppPathManager::initAppPath(const char *argv0)
         initSettingsPath();
         initDataPath();
         initLibExecPath();
+        initLangsDir();
+        initLogsDir();
     }
     else
         goto defaultSettingsPath;
@@ -150,55 +104,44 @@ defaultSettingsPath:
     initSettingsPath();
     initDataPath();
     initLibExecPath();
+    initLangsDir();
+    initLogsDir();
 }
 
 QString AppPathManager::settingsFile()
 {
-    return m_settingsPath + "/" + PGE_APP_PATH_SETUP_FILE_NAME;
+    return AppPathManagerPrivate::m_settingsPath + "/" + PGE_APP_PATH_SETUP_FILE_NAME;
 }
 
 QString AppPathManager::settingsPath()
 {
-    return m_settingsPath;
+    return AppPathManagerPrivate::m_settingsPath;
 }
 
 QString AppPathManager::userAppDir()
 {
-    return m_userPath;
+    return AppPathManagerPrivate::m_userPath;
 }
 
 QString AppPathManager::dataDir()
 {
-    return m_dataPath;
+    return AppPathManagerPrivate::m_dataPath;
 }
 
 QString AppPathManager::libExecDir()
 {
-    return m_libExecPath;
+    return AppPathManagerPrivate::m_libExecPath;
 }
 
 
 QString AppPathManager::languagesDir()
 {
-#ifndef Q_OS_MAC
-    return m_dataPath + "/languages";
-#else
-    CFURLRef appUrlRef;
-    appUrlRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("languages"), NULL, NULL);
-    CFStringRef filePathRef = CFURLGetString(appUrlRef);
-    QString path = QUrl(QString::fromCFString(filePathRef)).toLocalFile();
-    CFRelease(appUrlRef);
-    return path;
-#endif
+    return AppPathManagerPrivate::m_languagesPath;
 }
 
 QString AppPathManager::logsDir()
 {
-#ifndef Q_OS_MAC
-    return m_userPath + "/logs";
-#else
-    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/Library/Logs/PGE Project";
-#endif
+    return AppPathManagerPrivate::m_logsPath;
 }
 
 void AppPathManager::install()
@@ -220,15 +163,15 @@ void AppPathManager::install()
 
 bool AppPathManager::isPortable()
 {
-    return m_isPortable;
+    return AppPathManagerPrivate::m_isPortable;
 }
 
 bool AppPathManager::userDirIsAvailable()
 {
-    return !m_isPortable;
+    return !AppPathManagerPrivate::m_isPortable;
 }
 
-void AppPathManager::initSettingsPath()
+void AppPathManagerPrivate::initSettingsPath()
 {
     m_settingsPath = m_userPath + "/settings";
 
@@ -241,49 +184,7 @@ void AppPathManager::initSettingsPath()
         st.mkpath(m_settingsPath);
 }
 
-void AppPathManager::initDataPath()
-{
-#ifndef __APPLE__
-    QDir dataPath(ApplicationPath);
-    m_dataPath = ApplicationPath;
-
-    dataPath.cdUp();
-
-    if(!dataPath.exists("share"))
-        return;
-
-    dataPath.cd("share");
-
-    if(dataPath.exists(SHARE_DATA_DIR))
-        m_dataPath = dataPath.absoluteFilePath(SHARE_DATA_DIR);
-
-#else
-    m_dataPath = ApplicationPath;
-#endif
-}
-
-void AppPathManager::initLibExecPath()
-{
-#ifndef __APPLE__
-    QDir dataPath(ApplicationPath);
-    m_libExecPath = m_dataPath;
-
-    dataPath.cdUp();
-
-    if(!dataPath.exists("libexec"))
-        return;
-
-    dataPath.cd("libexec");
-
-    if(dataPath.exists(SHARE_DATA_DIR))
-        m_libExecPath = dataPath.absoluteFilePath(SHARE_DATA_DIR);
-
-#else
-    m_libExecPath = m_dataPath;
-#endif
-}
-
-void AppPathManager::initIsPortable()
+void AppPathManagerPrivate::initIsPortable()
 {
     if(m_settingsPath.isNull())
         m_settingsPath = ApplicationPath;
@@ -297,14 +198,14 @@ void AppPathManager::initIsPortable()
     if(m_libExecPath.isNull())
         m_libExecPath = ApplicationPath;
 
-    if(!QFile::exists(settingsFile()))
+    if(!QFile::exists(AppPathManager::settingsFile()))
     {
         m_isPortable = false;
         return;
     }
 
     bool forcePortable = false;
-    QSettings checkForPort(settingsFile(), QSettings::IniFormat);
+    QSettings checkForPort(AppPathManager::settingsFile(), QSettings::IniFormat);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0) // In Qt6, INI files are always UTF-8
     checkForPort.setIniCodec("UTF-8");
 #endif

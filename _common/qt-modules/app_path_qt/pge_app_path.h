@@ -30,84 +30,68 @@ extern QString ApplicationPath_x;
 /**
  * @brief Manager of the application paths and settings files
  */
-class AppPathManager
+namespace AppPathManager
 {
-public:
-    /**
-     * @brief Initialize path manager
-     */
-    static void initAppPath(const char *argv0);
-    /**
-     * @brief Returns application settings file
-     * @return path to settings INI file
-     */
-    static QString settingsFile();
-    /**
-     * @brief Returns generic folder for saving of various settings files
-     * @return path to settings folder
-     */
-    static QString settingsPath();
-    /**
-     * @brief Path to user profile application dir
-     * @return Path to user profile application dir
-     */
-    static QString userAppDir();
 
-    /**
-     * @brief Default read-only path to hold general data files for Moondust aplications
-     * @return Path to read-only data path
-     *
-     * There are files such as translations, helper resources, and other stuff. On some platforms it might match to the application path.
-     */
-    static QString dataDir();
+/**
+ * @brief Initialize path manager
+ */
+void initAppPath(const char *argv0);
+/**
+ * @brief Returns application settings file
+ * @return path to settings INI file
+ */
+QString settingsFile();
+/**
+ * @brief Returns generic folder for saving of various settings files
+ * @return path to settings folder
+ */
+QString settingsPath();
+/**
+ * @brief Path to user profile application dir
+ * @return Path to user profile application dir
+ */
+QString userAppDir();
 
-    /**
-     * @brief Directory that contains utility executables used by the devkit directly
-     * @return Path to the libexec directory
-     */
-    static QString libExecDir();
+/**
+ * @brief Default read-only path to hold general data files for Moondust aplications
+ * @return Path to read-only data path
+ *
+ * There are files such as translations, helper resources, and other stuff. On some platforms it might match to the application path.
+ */
+QString dataDir();
 
-    /**
-     * @brief Path to UI translation files
-     * @return Path to UI translation files
-     */
-    static QString languagesDir();
-    /**
-     * @brief Path to logs directory
-     * @return Path to logs directory
-     */
-    static QString logsDir();
-    /**
-     * @brief Process installation (make user directory, save properties to operating system registry)
-     */
-    static void install();
-    /**
-     * @brief Is this application portable
-     * @return true if this application works in portable mode, false in intergated mode
-     */
-    static bool isPortable();
-    /**
-     * @brief Is user profile directory available for writing
-     * @return true if user profile directory is available
-     */
-    static bool userDirIsAvailable();
+/**
+ * @brief Directory that contains utility executables used by the devkit directly
+ * @return Path to the libexec directory
+ */
+QString libExecDir();
 
-private:
-    /**
-     * @brief Makes settings path if not exists
-     */
-    static void initSettingsPath();
-    static void initDataPath();
-    static void initLibExecPath();
-    static void initIsPortable();
+/**
+ * @brief Path to UI translation files
+ * @return Path to UI translation files
+ */
+QString languagesDir();
+/**
+ * @brief Path to logs directory
+ * @return Path to logs directory
+ */
+QString logsDir();
+/**
+ * @brief Process installation (make user directory, save properties to operating system registry)
+ */
+void install();
+/**
+ * @brief Is this application portable
+ * @return true if this application works in portable mode, false in intergated mode
+ */
+bool isPortable();
+/**
+ * @brief Is user profile directory available for writing
+ * @return true if user profile directory is available
+ */
+bool userDirIsAvailable();
 
-    static bool m_isPortable;
-    //! Full path to settings INI file
-    static QString m_settingsPath;
-    static QString m_userPath;
-    //! Path to read-only resources directory (on UNIX-like systems it might appear around the /usr/share/moondust-project/ directory)
-    static QString m_dataPath;
-    static QString m_libExecPath;
-};
+}
 
 #endif // APP_PATH_H
