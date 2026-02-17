@@ -141,7 +141,7 @@ QGraphicsItem *LvlScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *ite
         return nullptr;
 
     shape1 = item->data(ITEM_BLOCK_SHAPE).toInt();
-    sizable1 = item->data(ITEM_NPC_NO_NPC_COLLISION).toBool();
+    sizable1 = item->data(ITEM_BLOCK_IS_SIZABLE).toBool();
     itemId1 = (unsigned long)item->data(ITEM_ID).toULongLong();
     collNoBlock1 = !item->data(ITEM_NPC_BLOCK_COLLISION).toBool();
     collNoNpc1 = item->data(ITEM_NPC_NO_NPC_COLLISION).toBool();
@@ -176,7 +176,7 @@ QGraphicsItem *LvlScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *ite
 
         objType2 = it->data(ITEM_TYPE_INT).toInt();
         shape2 = it->data(ITEM_BLOCK_SHAPE).toInt();
-        sizable2 = it->data(ITEM_NPC_NO_NPC_COLLISION).toBool();
+        sizable2 = it->data(ITEM_BLOCK_IS_SIZABLE).toBool();
         itemId2 = (unsigned long)it->data(ITEM_ID).toULongLong();
         collNoBlock2 = !it->data(ITEM_NPC_BLOCK_COLLISION).toBool();
         collNoNpc2 = it->data(ITEM_NPC_NO_NPC_COLLISION).toBool();
