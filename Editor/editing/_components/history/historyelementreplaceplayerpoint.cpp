@@ -34,7 +34,7 @@ void HistoryElementReplacePlayerPoint::undo()
 
     ItemSearcher* searcher = new ItemSearcher(ItemTypes::LVL_S_Player);
     connect(searcher, SIGNAL(foundPlayerPoint(PlayerPoint,QGraphicsItem*)), this, SLOT(historyRemovePlayerPoint(PlayerPoint,QGraphicsItem*)));
-    searcher->find(placeData, m_scene->items());
+    searcher->find(placeData, lvlScene);
     delete searcher;
 }
 

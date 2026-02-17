@@ -36,8 +36,8 @@ void HistoryElementPlaceDoor::undo()
     LevelData data;
     data.doors << m_door;
 
-    connect(searcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRemoveDoors(LevelDoor,QGraphicsItem*)));
-    searcher->find(data, m_scene->items());
+    QObject::connect(searcher,&ItemSearcher::foundDoor, this, &HistoryElementPlaceDoor::historyRemoveDoors);
+    searcher->find(data, lvlScene);
     delete searcher;
 }
 

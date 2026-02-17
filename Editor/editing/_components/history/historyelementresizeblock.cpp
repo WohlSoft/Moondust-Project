@@ -33,7 +33,7 @@ void HistoryElementResizeBlock::undo()
     LevelData data;
     data.blocks << m_block;
 
-    searcher.find(data, m_scene->items());
+    searcher.find(data, lvlScene);
 }
 
 void HistoryElementResizeBlock::redo()
@@ -51,7 +51,7 @@ void HistoryElementResizeBlock::redo()
     LevelData data;
     data.blocks << m_block;
 
-    searcher.find(data, m_scene->items());
+    searcher.find(data, lvlScene);
 }
 
 void HistoryElementResizeBlock::historyUndoResizeBlock(const LevelBlock &/*orig*/, QGraphicsItem* item)

@@ -52,7 +52,7 @@ void HistoryElementChangedNewLayer::undo()
     connect(searcher, SIGNAL(foundNPC(LevelNPC, QGraphicsItem *)), this, SLOT(historyUndoChangeLayerNPC(LevelNPC, QGraphicsItem *)));
     connect(searcher, SIGNAL(foundPhysEnv(LevelPhysEnv, QGraphicsItem *)), this, SLOT(historyUndoChangeLayerWater(LevelPhysEnv, QGraphicsItem *)));
     connect(searcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyUndoChangeLayerDoor(LevelDoor, QGraphicsItem *)));
-    searcher->find(modifiedSourceData, m_scene->items());
+    searcher->find(modifiedSourceData, lvlScene);
     delete searcher;
 
     for(int i = 0; i < lvlScene->m_data->layers.size(); i++)
@@ -91,7 +91,7 @@ void HistoryElementChangedNewLayer::redo()
     connect(searcher, SIGNAL(foundNPC(LevelNPC, QGraphicsItem *)), this, SLOT(historyRedoChangeLayerNPC(LevelNPC, QGraphicsItem *)));
     connect(searcher, SIGNAL(foundPhysEnv(LevelPhysEnv, QGraphicsItem *)), this, SLOT(historyRedoChangeLayerWater(LevelPhysEnv, QGraphicsItem *)));
     connect(searcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyRedoChangeLayerDoor(LevelDoor, QGraphicsItem *)));
-    searcher->find(modifiedSourceData, m_scene->items());
+    searcher->find(modifiedSourceData, lvlScene);
     delete searcher;
 
     MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);

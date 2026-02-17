@@ -490,7 +490,13 @@ void SanBaEiRuntimeEngine::actionStartTest()
             return;
 
         m_battleMode = false;
-        doTestLevelIPC(edit->LvlData);
+
+        LevelData data = edit->LvlData;
+
+        if(edit->scene)
+            edit->scene->sceneItemsToData(data);
+
+        doTestLevelIPC(data);
     }
 }
 
@@ -512,7 +518,13 @@ void SanBaEiRuntimeEngine::actionStartBattleTest()
         }
 
         m_battleMode = true;
-        doTestLevelIPC(edit->LvlData);
+
+        LevelData data = edit->LvlData;
+
+        if(edit->scene)
+            edit->scene->sceneItemsToData(data);
+
+        doTestLevelIPC(data);
     }
 }
 

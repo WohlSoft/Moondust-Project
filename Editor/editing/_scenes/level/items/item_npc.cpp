@@ -857,37 +857,10 @@ void ItemNPC::arrayApply()
     if(m_DisableScene)
         return;
 
-    bool found = false;
+    // bool found = false;
 
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
-
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->npc.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->npc[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    //Apply current data in main array
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->npc[m_data.meta.index] = m_data; //apply current npcData
-    }
-    else
-    {
-        for(int i = 0; i < m_scene->m_data->npc.size(); i++)
-        {
-            //after find it into array
-            if(m_scene->m_data->npc[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_data.meta.index = i;
-                m_scene->m_data->npc[i] = m_data;
-                break;
-            }
-        }
-    }
 
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
@@ -903,29 +876,6 @@ void ItemNPC::removeFromArray()
 {
     if(m_DisableScene)
         return;
-
-    bool found = false;
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->npc.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->npc[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    if(found) //directlry
-        m_scene->m_data->npc.removeAt(m_data.meta.index);
-    else
-    {
-        // Find in the list
-        for(int i = 0; i < m_scene->m_data->npc.size(); i++)
-        {
-            if(m_scene->m_data->npc[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_scene->m_data->npc.removeAt(i);
-                break;
-            }
-        }
-    }
 
     //Mark level as modified
     m_scene->m_data->meta.modified = true;

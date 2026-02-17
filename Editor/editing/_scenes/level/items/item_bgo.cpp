@@ -526,33 +526,8 @@ void ItemBGO::setLayer(QString layer)
 
 void ItemBGO::arrayApply()
 {
-    bool found = false;
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->bgo.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->bgo[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    //Apply current data in main array
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->bgo[m_data.meta.index] = m_data; //apply current bgoData
-    }
-    else
-        for(int i = 0; i < m_scene->m_data->bgo.size(); i++)
-        {
-            //after find it into array
-            if(m_scene->m_data->bgo[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_data.meta.index = i;
-                m_scene->m_data->bgo[i] = m_data;
-                break;
-            }
-        }
 
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
@@ -565,28 +540,6 @@ void ItemBGO::arrayApply()
 
 void ItemBGO::removeFromArray()
 {
-    bool found = false;
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->bgo.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->bgo[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->bgo.removeAt(m_data.meta.index);
-    }
-    else for(int i = 0; i < m_scene->m_data->bgo.size(); i++)
-    {
-        if(m_scene->m_data->bgo[i].meta.array_id == m_data.meta.array_id)
-        {
-            m_scene->m_data->bgo.removeAt(i);
-            break;
-        }
-    }
-
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
 }

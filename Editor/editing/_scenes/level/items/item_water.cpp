@@ -315,39 +315,10 @@ QString ItemPhysEnv::getLayerName()
 
 void ItemPhysEnv::arrayApply()
 {
-    bool found = false;
-
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
     this->setData(LvlScene::ITEM_WIDTH, (int)m_data.w);
     this->setData(LvlScene::ITEM_HEIGHT, (int)m_data.h);
-
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->physez.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->physez[(int)m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    //Apply current data in main array
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->physez[(int)m_data.meta.index] = m_data; //apply current bgoData
-    }
-    else
-    {
-        for(int i = 0; i < m_scene->m_data->physez.size(); i++)
-        {
-            //after find it into array
-            if(m_scene->m_data->physez[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_data.meta.index = (unsigned int)i;
-                m_scene->m_data->physez[i] = m_data;
-                break;
-            }
-        }
-    }
 
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
@@ -360,31 +331,6 @@ void ItemPhysEnv::arrayApply()
 
 void ItemPhysEnv::removeFromArray()
 {
-    bool found = false;
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->physez.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->physez[(int)m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->physez.removeAt((int)m_data.meta.index);
-    }
-    else
-    {
-        for(int i = 0; i < m_scene->m_data->physez.size(); i++)
-        {
-            if(m_scene->m_data->physez[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_scene->m_data->physez.removeAt(i);
-                break;
-            }
-        }
-    }
-
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
 }

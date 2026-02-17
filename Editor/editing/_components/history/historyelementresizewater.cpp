@@ -33,7 +33,7 @@ void HistoryElementResizeWater::undo()
     LevelData data;
     data.physez << m_physEnv;
 
-    searcher.find(data, m_scene->items());
+    searcher.find(data, lvlScene);
 }
 
 void HistoryElementResizeWater::redo()
@@ -51,7 +51,7 @@ void HistoryElementResizeWater::redo()
     LevelData data;
     data.physez << m_physEnv;
 
-    searcher.find(data, m_scene->items());
+    searcher.find(data, lvlScene);
 }
 
 void HistoryElementResizeWater::historyUndoResizeWater(const LevelPhysEnv &/*orig*/, QGraphicsItem *item)

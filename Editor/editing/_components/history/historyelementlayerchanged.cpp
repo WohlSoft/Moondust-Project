@@ -47,7 +47,7 @@ void HistoryElementLayerChanged::undo()
     connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyUndoChangeLayerNPC(LevelNPC,QGraphicsItem*)));
     connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyUndoChangeLayerDoor(LevelDoor,QGraphicsItem*)));
     connect(&levelSearcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)), this, SLOT(historyUndoChangeLayerWater(LevelPhysEnv,QGraphicsItem*)));
-    levelSearcher.find(m_levelData, m_scene->items());
+    levelSearcher.find(m_levelData, lvlScene);
 
     MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
     MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
@@ -76,7 +76,7 @@ void HistoryElementLayerChanged::redo()
     connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoChangeLayerNPC(LevelNPC,QGraphicsItem*)));
     connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoChangeLayerDoor(LevelDoor,QGraphicsItem*)));
     connect(&levelSearcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)), this, SLOT(historyRedoChangeLayerWater(LevelPhysEnv,QGraphicsItem*)));
-    levelSearcher.find(m_levelData, m_scene->items());
+    levelSearcher.find(m_levelData, lvlScene);
 
     MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
     MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();

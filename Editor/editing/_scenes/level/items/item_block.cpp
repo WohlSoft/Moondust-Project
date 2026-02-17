@@ -688,37 +688,11 @@ void ItemBlock::transformTo(long target_id)
 ///////////////////MainArray functions/////////////////////////////
 void ItemBlock::arrayApply()
 {
-    bool found = false;
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
     if(this->data(LvlScene::ITEM_BLOCK_IS_SIZABLE).toBool())
         this->setZValue(m_scene->Z_blockSizable + sizableBlockZ(m_data));
-
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->blocks.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->blocks[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    //Apply current data in main array
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->blocks[m_data.meta.index] = m_data; //apply current blockdata
-    }
-    else
-        for(int i = 0; i < m_scene->m_data->blocks.size(); i++)
-        {
-            //after find it into array
-            if(m_scene->m_data->blocks[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_data.meta.index = i;
-                m_scene->m_data->blocks[i] = m_data;
-                break;
-            }
-        }
 
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
@@ -731,30 +705,6 @@ void ItemBlock::arrayApply()
 
 void ItemBlock::removeFromArray()
 {
-    bool found = false;
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->blocks.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->blocks[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->blocks.removeAt(m_data.meta.index);
-    }
-    else
-    {
-        for(int i = 0; i < m_scene->m_data->blocks.size(); i++)
-        {
-            if(m_scene->m_data->blocks[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_scene->m_data->blocks.removeAt(i);
-                break;
-            }
-        }
-    }
-
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
 }

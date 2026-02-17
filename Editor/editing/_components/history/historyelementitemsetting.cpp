@@ -375,7 +375,7 @@ void HistoryElementItemSetting::processLevelUndo()
                 this, SLOT(historyUndoSettingCustom(LevelDoor,QGraphicsItem*)));
     }
 
-    levelSearcher.find(m_modLevelData, m_scene->items());
+    levelSearcher.find(m_modLevelData, lvlScene);
 }
 
 void HistoryElementItemSetting::processWorldRedo()
@@ -447,164 +447,196 @@ void HistoryElementItemSetting::processLevelRedo()
 
     ItemSearcher levelSearcher;
 
-    if(m_modLevelSetting == HistorySettings::SETTING_INVISIBLE){
+    if(m_modLevelSetting == HistorySettings::SETTING_INVISIBLE)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Block);
         connect(&levelSearcher, SIGNAL(foundBlock(LevelBlock,QGraphicsItem*)), this, SLOT(historyRedoSettingsInvisibleBlock(LevelBlock,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_SLIPPERY){
+    if(m_modLevelSetting == HistorySettings::SETTING_SLIPPERY)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Block);
         connect(&levelSearcher, SIGNAL(foundBlock(LevelBlock,QGraphicsItem*)), this, SLOT(historyRedoSettingsSlipperyBlock(LevelBlock,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_Z_LAYER){
+    if(m_modLevelSetting == HistorySettings::SETTING_Z_LAYER)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_BGO);
         connect(&levelSearcher, SIGNAL(foundBGO(LevelBGO,QGraphicsItem*)), this, SLOT(historyRedoSettingsZLayerBgo(LevelBGO,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_Z_OFFSET){
+    if(m_modLevelSetting == HistorySettings::SETTING_Z_OFFSET)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_BGO);
         connect(&levelSearcher, SIGNAL(foundBGO(LevelBGO,QGraphicsItem*)), this, SLOT(historyRedoSettingsZOffsetBgo(LevelBGO,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_FRIENDLY){
+    if(m_modLevelSetting == HistorySettings::SETTING_FRIENDLY)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_NPC);
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsFriendlyNPC(LevelNPC,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_BOSS){
+    if(m_modLevelSetting == HistorySettings::SETTING_BOSS)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_NPC);
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsBossNPC(LevelNPC,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_NOMOVEABLE){
+    if(m_modLevelSetting == HistorySettings::SETTING_NOMOVEABLE)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_NPC);
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsNoMoveableNPC(LevelNPC,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_MESSAGE){
+    if(m_modLevelSetting == HistorySettings::SETTING_MESSAGE)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_NPC);
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsMessageNPC(LevelNPC,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_DIRECTION){
+    if(m_modLevelSetting == HistorySettings::SETTING_DIRECTION)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_NPC);
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsDirectionNPC(LevelNPC,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_CHANGENPC){
+    if(m_modLevelSetting == HistorySettings::SETTING_CHANGENPC)
+    {
         levelSearcher.setFindFilter(static_cast<ItemTypes::itemTypesMultiSelectable>(ItemTypes::LVL_S_Block | ItemTypes::LVL_S_NPC));
         connect(&levelSearcher, SIGNAL(foundBlock(LevelBlock,QGraphicsItem*)), this, SLOT(historyRedoSettingsChangeNPCBlocks(LevelBlock,QGraphicsItem*)));
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsChangeNPCNPC(LevelNPC,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_WATERTYPE){
+    if(m_modLevelSetting == HistorySettings::SETTING_WATERTYPE)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_PhysEnv);
         connect(&levelSearcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)), this, SLOT(historyRedoSettingsTypeWater(LevelPhysEnv,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_TWOWAY){
+    if(m_modLevelSetting == HistorySettings::SETTING_TWOWAY)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoSettingsTwoWayDoors(LevelDoor,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_NOVEHICLE){
+    if(m_modLevelSetting == HistorySettings::SETTING_NOVEHICLE)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoSettingsNoVehiclesDoors(LevelDoor,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_ALLOWNPC){
+    if(m_modLevelSetting == HistorySettings::SETTING_ALLOWNPC)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoSettingsAllowNPCDoors(LevelDoor,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_ALLOWNPC_IL){
+    if(m_modLevelSetting == HistorySettings::SETTING_ALLOWNPC_IL)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoSettingsAllowNPCILDoors(LevelDoor,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_LOCKED){
+    if(m_modLevelSetting == HistorySettings::SETTING_LOCKED)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoSettingsLockedDoors(LevelDoor,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_NEED_A_BOMB){
+    if(m_modLevelSetting == HistorySettings::SETTING_NEED_A_BOMB)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoSettingsBombNeedDoors(LevelDoor,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_HIDE_STAR_NUMBER){
+    if(m_modLevelSetting == HistorySettings::SETTING_HIDE_STAR_NUMBER)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoSettingsHideStarNumDoors(LevelDoor,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_ENABLE_CANNON){
+    if(m_modLevelSetting == HistorySettings::SETTING_ENABLE_CANNON)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoSettingsEnCannonDoors(LevelDoor,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED){
+    if(m_modLevelSetting == HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoSettingsSpecialStateReqDoors(LevelDoor,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_W_NEEDS_FLOOR){
+    if(m_modLevelSetting == HistorySettings::SETTING_W_NEEDS_FLOOR)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoSettingsStoodReqDoors(LevelDoor,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_HIDE_LEVEL_ENTER_SCENE){
+    if(m_modLevelSetting == HistorySettings::SETTING_HIDE_LEVEL_ENTER_SCENE)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoSettingsHideLvlEntSceneDoors(LevelDoor,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_GENACTIVATE){
+    if(m_modLevelSetting == HistorySettings::SETTING_GENACTIVATE)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_NPC);
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsActivateGeneratorNPC(LevelNPC,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_GENTYPE){
+    if(m_modLevelSetting == HistorySettings::SETTING_GENTYPE)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_NPC);
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsTypeGeneratorNPC(LevelNPC,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_GENDIR){
+    if(m_modLevelSetting == HistorySettings::SETTING_GENDIR)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_NPC);
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsDirectionGeneratorNPC(LevelNPC,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_GENTIME){
+    if(m_modLevelSetting == HistorySettings::SETTING_GENTIME)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_NPC);
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsTimeGeneratorNPC(LevelNPC,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_ATTACHLAYER){
+    if(m_modLevelSetting == HistorySettings::SETTING_ATTACHLAYER)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_NPC);
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsAttachLayerNPC(LevelNPC,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_EV_DESTROYED){
+    if(m_modLevelSetting == HistorySettings::SETTING_EV_DESTROYED)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Block);
         connect(&levelSearcher, SIGNAL(foundBlock(LevelBlock,QGraphicsItem*)), this, SLOT(historyRedoSettingsDestroyedEventBlocks(LevelBlock,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_EV_HITED){
+    if(m_modLevelSetting == HistorySettings::SETTING_EV_HITED)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Block);
         connect(&levelSearcher, SIGNAL(foundBlock(LevelBlock,QGraphicsItem*)), this, SLOT(historyRedoSettingsHitedEventBlocks(LevelBlock,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_EV_LAYER_EMP){
+    if(m_modLevelSetting == HistorySettings::SETTING_EV_LAYER_EMP)
+    {
         levelSearcher.setFindFilter(static_cast<ItemTypes::itemTypesMultiSelectable>(ItemTypes::LVL_S_Block | ItemTypes::LVL_S_NPC));
         connect(&levelSearcher, SIGNAL(foundBlock(LevelBlock,QGraphicsItem*)), this, SLOT(historyRedoSettingsLayerEmptyEventBlocks(LevelBlock,QGraphicsItem*)));
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsLayerEmptyEventNPC(LevelNPC,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_EV_ACTIVATE){
+    if(m_modLevelSetting == HistorySettings::SETTING_EV_ACTIVATE)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_NPC);
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsActivateEventNPC(LevelNPC,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_EV_DEATH){
+    if(m_modLevelSetting == HistorySettings::SETTING_EV_DEATH)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_NPC);
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsDeathEventNPC(LevelNPC,QGraphicsItem*)));
     }
@@ -614,17 +646,20 @@ void HistoryElementItemSetting::processLevelRedo()
         connect(&levelSearcher, SIGNAL(foundBlock(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsTalkEventNPC(LevelNPC,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_SPECIAL_DATA){
+    if(m_modLevelSetting == HistorySettings::SETTING_SPECIAL_DATA)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_NPC);
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoSettingsSpecialDataNPC(LevelNPC,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_BGOSORTING){
+    if(m_modLevelSetting == HistorySettings::SETTING_BGOSORTING)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_BGO);
         connect(&levelSearcher, SIGNAL(foundBGO(LevelBGO,QGraphicsItem*)), this, SLOT(historyRedoSettingsSortingBGO(LevelBGO,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_LVL_CUSTOM){
+    if(m_modLevelSetting == HistorySettings::SETTING_LVL_CUSTOM)
+    {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Block|ItemTypes::LVL_S_BGO|ItemTypes::LVL_S_NPC|ItemTypes::LVL_S_Door|ItemTypes::LVL_S_PhysEnv);
 
         connect(&levelSearcher, SIGNAL(foundBlock(LevelBlock,QGraphicsItem*)),
@@ -642,7 +677,8 @@ void HistoryElementItemSetting::processLevelRedo()
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)),
                 this, SLOT(historyRedoSettingCustom(LevelDoor,QGraphicsItem*)));
     }
-    levelSearcher.find(m_modLevelData, m_scene->items());
+
+    levelSearcher.find(m_modLevelData, lvlScene);
 }
 
 void HistoryElementItemSetting::historyUndoSettingPathBackgroundLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)

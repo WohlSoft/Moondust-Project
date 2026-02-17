@@ -19,7 +19,11 @@
 #include <editing/edit_level/level_edit.h>
 
 #include "lvl_scene.h"
+#include "items/item_block.h"
+#include "items/item_bgo.h"
 #include "items/item_npc.h"
+#include "items/item_water.h"
+#include "items/item_playerpoint.h"
 
 // //////////////////////////Apply used sections///////////////////////////////////////
 void LvlScene::makeSectionBG(QProgressDialog &progress)
@@ -150,3 +154,26 @@ void LvlScene::setPlayerPoints()
         placePlayerPoint(m_data->players[i], true);
 }
 
+// //////////////////////// Collect all items into data store /////////////////////////////////
+void LvlScene::sceneItemsToData(LevelData &data)
+{
+    data.players.clear();
+    foreach(auto *p, m_itemsPlayers)
+        data.players.push_back(p->m_data);
+
+    data.blocks.clear();
+    foreach(auto *p, m_itemsBlocks)
+        data.blocks.push_back(p->m_data);
+
+    data.bgo.clear();
+    foreach(auto *p, m_itemsBGO)
+        data.bgo.push_back(p->m_data);
+
+    data.npc.clear();
+    foreach(auto *p, m_itemsNPC)
+        data.npc.push_back(p->m_data);
+
+    data.physez.clear();
+    foreach(auto *p, m_itemsPhysEnv)
+        data.physez.push_back(p->m_data);
+}

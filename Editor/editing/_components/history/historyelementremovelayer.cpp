@@ -49,7 +49,7 @@ void HistoryElementRemoveLayer::undo()
     connect(searcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyUpdateVisibleNPC(LevelNPC,QGraphicsItem*)));
     connect(searcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)), this, SLOT(historyUpdateVisibleWater(LevelPhysEnv,QGraphicsItem*)));
     connect(searcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyUpdateVisibleDoor(LevelDoor,QGraphicsItem*)));
-    searcher->find(m_modData, m_scene->items());
+    searcher->find(m_modData, lvlScene);
     delete searcher;
 
     MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
@@ -78,7 +78,7 @@ void HistoryElementRemoveLayer::redo()
     connect(searcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(removeNPC(LevelNPC,QGraphicsItem*)));
     connect(searcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)), this, SLOT(removePhysEnv(LevelPhysEnv,QGraphicsItem*)));
     connect(searcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(removeDoor(LevelDoor,QGraphicsItem*)));
-    searcher->find(m_modData, m_scene->items());
+    searcher->find(m_modData, lvlScene);
     delete searcher;
 
     for(int i = 0; i < lvlScene->m_data->layers.size(); i++){

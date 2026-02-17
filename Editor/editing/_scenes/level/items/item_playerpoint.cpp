@@ -184,6 +184,7 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
         m_gridOffsetX = -1 * qRound(qreal((int)m_data.w % m_gridSize) / 2);
     else
         m_gridOffsetX = qRound(qreal(m_gridSize - (int)m_data.w) / 2);
+
     m_gridOffsetX += (m_gridSize / 2);
 
     m_gridOffsetY = -m_data.h % m_gridSize;

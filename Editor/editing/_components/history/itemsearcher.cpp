@@ -31,292 +31,78 @@ void ItemSearcher::setFindFilter(const int &findFilter)
 
 
 
-void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem *> &allItems)
+void ItemSearcher::find(const LevelData &dataToFind, LvlScene *scene)
 {
-    QMap<unsigned int, LevelDoor> sortedEntranceDoors;
-    QMap<unsigned int, LevelDoor> sortedExitDoors;
     if(m_findFilter & ItemTypes::LVL_S_Door)
     {
-        foreach(LevelDoor door, dataToFind.doors)
+        foreach(const LevelDoor &door, dataToFind.doors)
         {
             if(door.isSetIn && !door.isSetOut)
-                sortedEntranceDoors[door.meta.array_id] = door;
+            {
+                auto d = scene->m_itemsDoorEnters.find(door.meta.array_id);
+                if(d != scene->m_itemsDoorEnters.end() && d.value()->data(LvlScene::ITEM_ARRAY_ID).toUInt() == door.meta.array_id)
+                    emit foundDoor(door, d.value());
+            }
         }
 
-        foreach(LevelDoor door, dataToFind.doors)
+        foreach(const LevelDoor &door, dataToFind.doors)
         {
             if(!door.isSetIn && door.isSetOut)
-                sortedExitDoors[door.meta.array_id] = door;
-        }
-    }
-
-    QMap<unsigned int, LevelBlock> sortedBlock;
-    if(m_findFilter & ItemTypes::LVL_S_Block)
-    {
-        foreach(LevelBlock block, dataToFind.blocks)
-            sortedBlock[block.meta.array_id] = block;
-    }
-
-    QMap<unsigned int, LevelBGO> sortedBGO;
-    if(m_findFilter & ItemTypes::LVL_S_BGO)
-    {
-        foreach(LevelBGO bgo, dataToFind.bgo)
-            sortedBGO[bgo.meta.array_id] = bgo;
-    }
-
-    QMap<unsigned int, LevelNPC> sortedNPC;
-    if(m_findFilter & ItemTypes::LVL_S_NPC)
-    {
-        foreach(LevelNPC npc, dataToFind.npc)
-            sortedNPC[npc.meta.array_id] = npc;
-    }
-
-    QMap<unsigned int, LevelPhysEnv> sortedWater;
-    if(m_findFilter & ItemTypes::LVL_S_PhysEnv)
-    {
-        foreach(LevelPhysEnv water, dataToFind.physez)
-            sortedWater[water.meta.array_id] = water;
-    }
-
-    QMap<unsigned int, PlayerPoint> sortedPlayers;
-    if(m_findFilter & ItemTypes::LVL_S_Player)
-    {
-        foreach(PlayerPoint player, dataToFind.players)
-            sortedPlayers[player.id] = player;
-    }
-
-    QMap<unsigned int, QGraphicsItem *> sortedGraphBlocks;
-    QMap<unsigned int, QGraphicsItem *> sortedGraphBGO;
-    QMap<unsigned int, QGraphicsItem *> sortedGraphNPC;
-    QMap<unsigned int, QGraphicsItem *> sortedGraphWater;
-    QMap<unsigned int, QGraphicsItem *> sortedGraphDoorEntrance;
-    QMap<unsigned int, QGraphicsItem *> sortedGraphDoorExit;
-    QMap<unsigned int, QGraphicsItem *> sortedGraphPlayers;
-
-    foreach(QGraphicsItem *unsortedItem, allItems)
-    {
-        if(unsortedItem->data(LvlScene::ITEM_IS_ITEM).isNull() || !unsortedItem->data(LvlScene::ITEM_IS_ITEM).toBool())
-            continue;
-
-        int objType = unsortedItem->data(WldScene::ITEM_TYPE_INT).toInt();
-
-        switch(objType)
-        {
-        case ItemTypes::LVL_Block:
-            if(m_findFilter & ItemTypes::LVL_S_Block)
-                sortedGraphBlocks[unsortedItem->data(LvlScene::ITEM_ARRAY_ID).toUInt()] = unsortedItem;
-            break;
-
-        case ItemTypes::LVL_BGO:
-            if(m_findFilter & ItemTypes::LVL_S_BGO)
-                sortedGraphBGO[unsortedItem->data(LvlScene::ITEM_ARRAY_ID).toUInt()] = unsortedItem;
-            break;
-
-        case ItemTypes::LVL_NPC:
-            if(m_findFilter & ItemTypes::LVL_S_NPC)
-                sortedGraphNPC[unsortedItem->data(LvlScene::ITEM_ARRAY_ID).toUInt()] = unsortedItem;
-            break;
-
-        case ItemTypes::LVL_PhysEnv:
-            if(m_findFilter & ItemTypes::LVL_S_PhysEnv)
-                sortedGraphWater[unsortedItem->data(LvlScene::ITEM_ARRAY_ID).toUInt()] = unsortedItem;
-            break;
-
-        case ItemTypes::LVL_META_DoorEnter:
-            if(m_findFilter & ItemTypes::LVL_S_Door)
-                sortedGraphDoorEntrance[unsortedItem->data(LvlScene::ITEM_ARRAY_ID).toUInt()] = unsortedItem;
-            break;
-
-        case ItemTypes::LVL_META_DoorExit:
-            if(m_findFilter & ItemTypes::LVL_S_Door)
-                sortedGraphDoorExit[unsortedItem->data(LvlScene::ITEM_ARRAY_ID).toUInt()] = unsortedItem;
-            break;
-
-        case ItemTypes::LVL_Player:
-            if(m_findFilter & ItemTypes::LVL_S_Player)
-                sortedGraphPlayers[unsortedItem->data(LvlScene::ITEM_ARRAY_ID).toUInt()] = unsortedItem;
-            break;
-
-        default:
-            break;
+            {
+                auto d = scene->m_itemsDoorExits.find(door.meta.array_id);
+                if(d != scene->m_itemsDoorExits.end() && d.value()->data(LvlScene::ITEM_ARRAY_ID).toUInt() == door.meta.array_id)
+                    emit foundDoor(door, d.value());
+            }
         }
     }
 
     if(m_findFilter & ItemTypes::LVL_S_Block)
     {
-        foreach(QGraphicsItem *item, sortedGraphBlocks)
+        foreach(const LevelBlock &block, dataToFind.blocks)
         {
-            if(sortedBlock.isEmpty())
-                break;
-
-            QMap<unsigned int, LevelBlock>::iterator beginItem = sortedBlock.begin();
-            unsigned int currentArrayId = (*beginItem).meta.array_id;
-            if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() > currentArrayId)
-            {
-                //not found
-                sortedBlock.erase(beginItem);
-                if(sortedBlock.isEmpty())
-                    break;
-            }
-
-            //but still test if the next blocks, is the block we search!
-            beginItem = sortedBlock.begin();
-            currentArrayId = (*beginItem).meta.array_id;
-            if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() == currentArrayId)
-                emit foundBlock(*beginItem, item);
+            auto d = scene->m_itemsBlocks.find(block.meta.array_id);
+                if(d != scene->m_itemsBlocks.end() && d.value()->data(LvlScene::ITEM_ARRAY_ID).toUInt() == block.meta.array_id)
+                    emit foundBlock(block, d.value());
         }
     }
 
     if(m_findFilter & ItemTypes::LVL_S_BGO)
     {
-        foreach(QGraphicsItem *item, sortedGraphBGO)
+        foreach(const LevelBGO &bgo, dataToFind.bgo)
         {
-            if(sortedBGO.isEmpty())
-                break;
-
-            QMap<unsigned int, LevelBGO>::iterator beginItem = sortedBGO.begin();
-            unsigned int currentArrayId = (*beginItem).meta.array_id;
-            if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() > currentArrayId)
-            {
-                //not found
-                sortedBGO.erase(beginItem);
-                if(sortedBGO.isEmpty())
-                    break;
-            }
-
-            //but still test if the next blocks, is the block we search!
-            beginItem = sortedBGO.begin();
-            currentArrayId = (*beginItem).meta.array_id;
-
-            if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() == currentArrayId)
-                emit foundBGO(*beginItem, item);
+            auto d = scene->m_itemsBGO.find(bgo.meta.array_id);
+            if(d != scene->m_itemsBGO.end() && d.value()->data(LvlScene::ITEM_ARRAY_ID).toUInt() == bgo.meta.array_id)
+                emit foundBGO(bgo, d.value());
         }
     }
 
     if(m_findFilter & ItemTypes::LVL_S_NPC)
     {
-        foreach(QGraphicsItem *item, sortedGraphNPC)
+        foreach(const LevelNPC &npc, dataToFind.npc)
         {
-            if(sortedNPC.isEmpty())
-                break;
-
-            QMap<unsigned int, LevelNPC>::iterator beginItem = sortedNPC.begin();
-            unsigned int currentArrayId = (*beginItem).meta.array_id;
-            if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() > currentArrayId)
-            {
-                //not found
-                sortedNPC.erase(beginItem);
-                if(sortedNPC.isEmpty())
-                    break;
-            }
-
-            //but still test if the next blocks, is the block we search!
-            beginItem = sortedNPC.begin();
-
-            currentArrayId = (*beginItem).meta.array_id;
-
-            if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() == currentArrayId)
-                emit foundNPC(*beginItem, item);
+            auto d = scene->m_itemsNPC.find(npc.meta.array_id);
+            if(d != scene->m_itemsNPC.end() && d.value()->data(LvlScene::ITEM_ARRAY_ID).toUInt() == npc.meta.array_id)
+                emit foundNPC(npc, d.value());
         }
     }
 
     if(m_findFilter & ItemTypes::LVL_S_PhysEnv)
     {
-        foreach(QGraphicsItem *item, sortedGraphWater)
+        foreach(const LevelPhysEnv &water, dataToFind.physez)
         {
-            if(sortedWater.isEmpty())
-                break;
-
-            QMap<unsigned int, LevelPhysEnv>::iterator beginItem = sortedWater.begin();
-            unsigned int currentArrayId = (*beginItem).meta.array_id;
-            if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() > currentArrayId)
-            {
-                //not found
-                sortedWater.erase(beginItem);
-                if(sortedWater.isEmpty())
-                    break;
-            }
-
-            //but still test if the next blocks, is the block we search!
-            beginItem = sortedWater.begin();
-
-            currentArrayId = (*beginItem).meta.array_id;
-
-            if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() == currentArrayId)
-                emit foundPhysEnv(*beginItem, item);
-
+            auto d = scene->m_itemsPhysEnv.find(water.meta.array_id);
+            if(d != scene->m_itemsPhysEnv.end() && d.value()->data(LvlScene::ITEM_ARRAY_ID).toUInt() == water.meta.array_id)
+                emit foundPhysEnv(water, d.value());
         }
-    }
-
-    if(m_findFilter & ItemTypes::LVL_S_Door)
-    {
-        foreach(QGraphicsItem *item, sortedGraphDoorEntrance)
-        {
-            if(sortedEntranceDoors.isEmpty())
-                break;
-
-            QMap<unsigned int, LevelDoor>::iterator beginItem = sortedEntranceDoors.begin();
-            unsigned int currentArrayId = (*beginItem).meta.array_id;
-            if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() > currentArrayId)
-            {
-                //not found
-                sortedEntranceDoors.erase(beginItem);
-                if(sortedEntranceDoors.isEmpty())
-                    break;
-            }
-
-            //but still test if the next blocks, is the block we search!
-            beginItem = sortedEntranceDoors.begin();
-
-            currentArrayId = (*beginItem).meta.array_id;
-
-            if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() == currentArrayId)
-                emit foundDoor(*beginItem, item);
-        }
-
-        foreach(QGraphicsItem *item, sortedGraphDoorExit)
-        {
-            if(sortedExitDoors.isEmpty())
-                break;
-
-            QMap<unsigned int, LevelDoor>::iterator beginItem = sortedExitDoors.begin();
-            unsigned int currentArrayId = (*beginItem).meta.array_id;
-            if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() > currentArrayId)
-            {
-                //not found
-                sortedExitDoors.erase(beginItem);
-                if(sortedExitDoors.isEmpty())
-                    break;
-            }
-
-            //but still test if the next blocks, is the block we search!
-            beginItem = sortedExitDoors.begin();
-
-            currentArrayId = (*beginItem).meta.array_id;
-
-            if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() == currentArrayId)
-                emit foundDoor(*beginItem, item);
-        }
-
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2); //update Door data
     }
 
     if(m_findFilter & ItemTypes::LVL_S_Player)
     {
-        foreach(QGraphicsItem *item, sortedGraphPlayers)
+        foreach(const PlayerPoint &player, dataToFind.players)
         {
-            if(sortedPlayers.isEmpty())
-                break;
-
-            QMap<unsigned int, PlayerPoint>::iterator beginItem = sortedPlayers.begin();
-            unsigned int currentArrayId;
-
-            //but still test if the next blocks, is the block we search!
-            beginItem = sortedPlayers.begin();
-            currentArrayId = (*beginItem).id;
-
-            if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() == currentArrayId)
-                emit foundPlayerPoint(*beginItem, item);
+            auto d = scene->m_itemsPlayers.find(player.id);
+            if(d != scene->m_itemsPlayers.end() && d.value()->data(LvlScene::ITEM_ARRAY_ID).toUInt() == player.id)
+                emit foundPlayerPoint(player, d.value());
         }
     }
 }

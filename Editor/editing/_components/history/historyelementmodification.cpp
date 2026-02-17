@@ -83,7 +83,7 @@ void HistoryElementModification::processReplacement(const LevelData &toRemoveDat
         QObject::connect(&lvlSearcher, &ItemSearcher::foundDoor,        this, &HistoryElementModification::processDoor);
         QObject::connect(&lvlSearcher, &ItemSearcher::foundPlayerPoint, this, &HistoryElementModification::processPlayerPoint);
 
-        lvlSearcher.find(toRemoveData, m_scene->items()); //remove the new level Data
+        lvlSearcher.find(toRemoveData, lvlScene); //remove the new level Data
 
         //place the old lvl Data
         lvlScene->placeAll(toPlaceData);

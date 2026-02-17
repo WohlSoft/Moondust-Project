@@ -48,7 +48,7 @@ void HistoryElementMergeLayer::undo()
     connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyUndoChangeLayerNPC(LevelNPC,QGraphicsItem*)));
     connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyUndoChangeLayerDoor(LevelDoor,QGraphicsItem*)));
     connect(&levelSearcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)), this, SLOT(historyUndoChangeLayerWater(LevelPhysEnv,QGraphicsItem*)));
-    levelSearcher.find(m_mergedData, m_scene->items());
+    levelSearcher.find(m_mergedData, lvlScene);
 
     //just in case
     MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
@@ -79,7 +79,7 @@ void HistoryElementMergeLayer::redo()
     connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyRedoChangeLayerNPC(LevelNPC,QGraphicsItem*)));
     connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoChangeLayerDoor(LevelDoor,QGraphicsItem*)));
     connect(&levelSearcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)), this, SLOT(historyRedoChangeLayerWater(LevelPhysEnv,QGraphicsItem*)));
-    levelSearcher.find(m_mergedData, m_scene->items());
+    levelSearcher.find(m_mergedData, lvlScene);
 
 
     for(int i = 0; i < lvlScene->m_data->layers.size(); i++){

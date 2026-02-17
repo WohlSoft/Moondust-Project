@@ -84,6 +84,8 @@ void LevelEdit::prepareLevelFile(LevelData &data)
     if(!sceneCreated || !scene)
         return;
 
+    scene->sceneItemsToData(data);
+
     DataConfig *config = scene->m_configs;
 
     data.meta.configPackId = config->configPackId;

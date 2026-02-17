@@ -7,6 +7,9 @@
 #include <QGraphicsItem>
 #include <defines.h>
 
+class LvlScene;
+class WldScene;
+
 class ItemSearcher : public QObject
 {
     Q_OBJECT
@@ -14,7 +17,7 @@ public:
     explicit ItemSearcher(QObject *parent = 0);
     explicit ItemSearcher(uint32_t typesToFind, QObject *parent = 0);
 
-    void find(const LevelData &dataToFind, const QList<QGraphicsItem *> &allItems);
+    void find(const LevelData &dataToFind, LvlScene *scene);
     void find(const WorldData &dataToFind, const QList<QGraphicsItem *> &allItems);
 
     int findFilter() const;
