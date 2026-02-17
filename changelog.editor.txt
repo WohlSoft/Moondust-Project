@@ -65,6 +65,9 @@ beta2
 - Added an ability to store mixed types in tilesets
 - Resizing tileset will no longer remove out of scope items immediately: instead, they gets removed on tileset save only
 - Added context menu for tilesets item box items
+- Improved performance of the history undoing/redoing on the level scene
+- Implemented recounting of displayed warp IDs when deleting or undeleting entries at the warps list
+- Going to opposite warp point now will make it being selected after position change jump
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

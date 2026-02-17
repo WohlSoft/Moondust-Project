@@ -52,22 +52,19 @@ void HistoryElementRemoveWarp::undo()
     warplist->insertItem(m_removedDoor.meta.index, QString("%1: x%2y%3 <=> x%4y%5")
                          .arg(m_removedDoor.meta.array_id).arg(m_removedDoor.ix).arg(m_removedDoor.iy).arg(m_removedDoor.ox).arg(m_removedDoor.oy),
                          m_removedDoor.meta.array_id);
+
+    MainWinConnect::pMainWin->dock_LvlWarpProps->recountWarpIndexes();
+
     if(warplist->count() > (int)m_removedDoor.meta.index)
-    {
-        warplist->setCurrentIndex( m_removedDoor.meta.index );
-    }
+        warplist->setCurrentIndex(m_removedDoor.meta.index);
     else
-    {
-        warplist->setCurrentIndex( warplist->count()-1 );
-    }
+        warplist->setCurrentIndex(warplist->count() - 1);
 
-    if(m_removedDoor.isSetOut){
+    if(m_removedDoor.isSetOut)
         lvlScene->placeDoorExit(m_removedDoor);
-    }
-    if(m_removedDoor.isSetIn){
-        lvlScene->placeDoorEnter(m_removedDoor);
-    }
 
+    if(m_removedDoor.isSetIn)
+        lvlScene->placeDoorEnter(m_removedDoor);
 
     MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 }
@@ -94,14 +91,20 @@ void HistoryElementRemoveWarp::redo()
     }
 
     QComboBox* warplist = MainWinConnect::pMainWin->dock_LvlWarpProps->getWarpList();
-    for(int i = 0; i < warplist->count(); i++){
-        if((unsigned int)warplist->itemData(i).toInt() == m_removedDoor.meta.array_id){
+    for(int i = 0; i < warplist->count(); i++)
+    {
+        if((unsigned int)warplist->itemData(i).toInt() == m_removedDoor.meta.array_id)
+        {
             warplist->removeItem(i);
+
             break;
         }
     }
 
-    if(warplist->count()<=0) MainWinConnect::pMainWin->dock_LvlWarpProps->setWarpRemoveButtonEnabled(false);
+    MainWinConnect::pMainWin->dock_LvlWarpProps->recountWarpIndexes();
+
+    if(warplist->count() <= 0)
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setWarpRemoveButtonEnabled(false);
 
     MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 }

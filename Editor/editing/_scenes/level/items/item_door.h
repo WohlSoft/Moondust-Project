@@ -46,6 +46,8 @@ public:
     void setDoorData(LevelDoor inD, int doorDir, bool init = false);
     void setScenePoint(LvlScene *theScene);
 
+    void updateNumber();
+
     int m_pointSide;
     enum doorDirect
     {

@@ -92,10 +92,13 @@ void HistoryElementAddWarp::undo()
             }
         }
     }
+
     LogDebug(QString("HistoryManager -> found and removed = %1").arg(found));
 
+    MainWinConnect::pMainWin->dock_LvlWarpProps->recountWarpIndexes();
 
-    if(warplist->count()<=0) MainWinConnect::pMainWin->dock_LvlWarpProps->setWarpRemoveButtonEnabled(false);
+    if(warplist->count() <= 0)
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setWarpRemoveButtonEnabled(false);
 
     MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 
@@ -119,18 +122,19 @@ void HistoryElementAddWarp::redo()
     newDoor.meta.index = m_doorindex;
 
     lvlScene->m_data->doors.insert(m_doorindex, newDoor);
+
     QComboBox* warplist = MainWinConnect::pMainWin->dock_LvlWarpProps->getWarpList();
     warplist->addItem(QString("%1: x%2y%3 <=> x%4y%5")
                       .arg(newDoor.meta.array_id).arg(newDoor.ix).arg(newDoor.iy).arg(newDoor.ox).arg(newDoor.oy),
                       newDoor.meta.array_id);
+
+    MainWinConnect::pMainWin->dock_LvlWarpProps->recountWarpIndexes();
+
     if(warplist->count() < m_listindex)
-    {
         warplist->setCurrentIndex( m_listindex );
-    }
     else
-    {
-        warplist->setCurrentIndex( warplist->count()-1 );
-    }
+        warplist->setCurrentIndex( warplist->count() - 1);
+
 
     MainWinConnect::pMainWin->dock_LvlWarpProps->setWarpRemoveButtonEnabled(true);
 

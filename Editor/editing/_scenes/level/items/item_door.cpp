@@ -162,6 +162,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         setLayer->setChecked(layer.name == m_data.layer);
         layerItems.push_back(setLayer);
     }
+
     itemMenu.addSeparator();
     /*************Layers*end***************/
 
@@ -310,12 +311,30 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         if(isEnter)
         {
             if(m_data.isSetOut)
+            {
                 m_scene->m_mw->activeLvlEditWin()->goTo(m_data.ox, m_data.oy, true, QPoint(0, 0), true);
+
+                auto d = m_scene->m_itemsDoorExits.find(m_data.meta.array_id);
+                if(d != m_scene->m_itemsDoorExits.end())
+                {
+                    m_scene->clearSelection();
+                    d.value()->setSelected(true);
+                }
+            }
         }
         else if(isExit)
         {
             if(m_data.isSetIn)
+            {
                 m_scene->m_mw->activeLvlEditWin()->goTo(m_data.ix, m_data.iy, true, QPoint(0, 0), true);
+
+                auto d = m_scene->m_itemsDoorEnters.find(m_data.meta.array_id);
+                if(d != m_scene->m_itemsDoorEnters.end())
+                {
+                    m_scene->clearSelection();
+                    d.value()->setSelected(true);
+                }
+            }
         }
     }
     else if(dirLeft && selected == dirLeft)
@@ -925,7 +944,7 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
     ox = m_data.ox;
     oy = m_data.oy;
 
-    m_doorLabel = new QGraphicsPixmapItem(GraphicsHelps::drawDigitFont(m_data.meta.array_id));
+    m_doorLabel = new QGraphicsPixmapItem(GraphicsHelps::drawDigitFont(m_data.meta.index + 1));
 
     if(m_pointSide == D_Entrance)
     {
@@ -1002,4 +1021,10 @@ void ItemDoor::setScenePoint(LvlScene *theScene)
     if(m_grp) delete m_grp;
     m_grp = new QGraphicsItemGroup(this);
     m_doorLabel = nullptr;
+}
+
+void ItemDoor::updateNumber()
+{
+    if(m_doorLabel)
+        m_doorLabel->setPixmap(GraphicsHelps::drawDigitFont(m_data.meta.index + 1));
 }

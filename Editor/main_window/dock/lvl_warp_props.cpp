@@ -232,7 +232,7 @@ void LvlWarpBox::init()
 QString LvlWarpBox::doorTitle(LevelDoor &door)
 {
     return QString("%1: x%2y%3 <=> x%4y%5")
-           .arg(door.meta.array_id).arg(door.ix).arg(door.iy).arg(door.ox).arg(door.oy);
+           .arg(door.meta.index + 1).arg(door.ix).arg(door.iy).arg(door.ox).arg(door.oy);
 }
 
 
@@ -407,6 +407,7 @@ void LvlWarpBox::removeWarpEntry()
     auto *w = findWarp(edit->LvlData, warpId);
     if(w)
         edit->scene->m_history->addRemoveWarp(*w);
+
     edit->scene->doorPointsSync(warpId, true);
 
     for(int i = 0; i < edit->LvlData.doors.size(); i++)
@@ -422,6 +423,8 @@ void LvlWarpBox::removeWarpEntry()
 
     if(ui->warpsList->count() <= 0)
         setWarpRemoveButtonEnabled(false);
+
+    recountWarpIndexes();
 
     edit->LvlData.meta.modified = true;
 }
@@ -1427,6 +1430,47 @@ void LvlWarpBox::on_WarpAllowNPC_IL_clicked(bool checked)
             QVariant(checked));
     edit->scene->doorPointsSync(warpId);
     edit->LvlData.meta.modified = true;
+}
+
+void LvlWarpBox::recountWarpIndexes()
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelEdit *edit = mw()->activeLvlEditWin();
+
+    if(!edit->sceneCreated || !edit->scene)
+        return;
+
+    LvlScene *scene = edit->scene;
+
+    for(unsigned int i = 0; i < (unsigned int)edit->LvlData.doors.size(); ++i)
+    {
+        auto &d = edit->LvlData.doors[i];
+        d.meta.index = i;
+
+        ui->warpsList->setItemData(i, doorTitle(d), Qt::DisplayRole);
+
+        if(d.isSetIn)
+        {
+            auto ds = scene->m_itemsDoorEnters.find(d.meta.array_id);
+            if(ds != scene->m_itemsDoorEnters.end() && ds.value()->m_data.meta.index != i)
+            {
+                ds.value()->m_data.meta.index = i;
+                ds.value()->updateNumber();
+            }
+        }
+
+        if(d.isSetOut)
+        {
+            auto ds = scene->m_itemsDoorExits.find(d.meta.array_id);
+            if(ds != scene->m_itemsDoorExits.end() && ds.value()->m_data.meta.index != i)
+            {
+                ds.value()->m_data.meta.index = i;
+                ds.value()->updateNumber();
+            }
+        }
+    }
 }
 
 unsigned int LvlWarpBox::getWarpId()
