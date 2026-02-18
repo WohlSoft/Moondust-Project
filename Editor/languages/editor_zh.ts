@@ -8569,7 +8569,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>This item can not be used in this time.</source>
-        <translation type="unfinished"></translation>
+        <translation>该对象是无效对象，无法选择。</translation>
     </message>
 </context>
 <context>
