@@ -78,85 +78,67 @@ void LvlScene::returnItemBack(QGraphicsItem *item)
 /// \param arrayID        Array ID of warp entry which is a key for found items on the map
 /// \param remove         Remove warp points from the map because warp entry will be removed
 ///
-void LvlScene::doorPointsSync(long arrayID, bool remove)
+void LvlScene::doorPointsSync(unsigned int arrayID, bool remove)
 {
-
     bool doorExist = false;
-    bool doorEntranceSynced = false;
-    bool doorExitSynced = false;
-
     int i = 0;
+
     //find doorItem in array
     for(i = 0; i < m_data->doors.size(); i++)
     {
-        if(m_data->doors[i].meta.array_id == (unsigned int)arrayID)
+        if(m_data->doors[i].meta.array_id == arrayID)
         {
             doorExist = true;
             break;
         }
     }
-    if(!doorExist) return;
 
-    //get ItemList
-    QList<QGraphicsItem *> items = this->items();
+    if(!doorExist)
+        return;
 
-    foreach(QGraphicsItem *item, items)
+    auto &door = m_data->doors[i];
+
+    if(door.isSetIn || remove)
     {
-        if((!m_data->doors[i].isSetIn) && (!m_data->doors[i].isSetOut))
-            break;   //Don't sync door points if not placed
-
-        if(item->data(ITEM_IS_ITEM).isNull() || !item->data(ITEM_IS_ITEM).toBool())
-            continue;
-
-        int objType = item->data(ITEM_TYPE_INT).toInt();
-        unsigned int arrayId = item->data(ITEM_ARRAY_ID).toUInt();
-
-        if(objType == ItemTypes::LVL_META_DoorEnter && arrayId == arrayID)
+        auto di = m_itemsDoorEnters.find(arrayID);
+        if(di != m_itemsDoorEnters.end())
         {
-            if((!(((!m_data->doors[i].lvl_o) && (!m_data->doors[i].lvl_i)) ||
-                  ((m_data->doors[i].lvl_o) && (!m_data->doors[i].lvl_i)))
-               ) || (remove))
+            ItemDoor *d = di.value();
+
+            if( (!(!door.lvl_o && !door.lvl_i) || (door.lvl_o && !door.lvl_i) ) || remove)
             {
-                ItemDoor *d = dynamic_cast<ItemDoor *>(item);
                 d->m_data = m_data->doors[i];
                 d->removeFromArray();
                 delete d;
-                doorEntranceSynced = true;
-
             }
             else
             {
-                m_data->doors[i].isSetIn = true;
-                ItemDoor *d = dynamic_cast<ItemDoor *>(item);
-                d->m_data = m_data->doors[i];
+                door.isSetIn = true;
+                d->m_data = door;
                 d->refreshArrows();
-                doorEntranceSynced = true;
             }
         }
-        else if(objType == ItemTypes::LVL_META_DoorExit && arrayId == arrayID)
+    }
+
+    if(door.isSetOut || remove)
+    {
+        auto di = m_itemsDoorExits.find(arrayID);
+        if(di != m_itemsDoorExits.end())
         {
-            if((!(((!m_data->doors[i].lvl_o) && (!m_data->doors[i].lvl_i)) ||
-                  (m_data->doors[i].lvl_i))
-               ) || (remove))
+            ItemDoor *d = di.value();
+            if((!((!door.lvl_o && !door.lvl_i) || door.lvl_i)) || remove)
             {
-                ItemDoor *d = dynamic_cast<ItemDoor *>(item);
-                d->m_data = m_data->doors[i];
+                d->m_data = door;
                 d->removeFromArray();
                 delete d;
-                doorExitSynced = true;
             }
             else
             {
-                m_data->doors[i].isSetOut = true;
-                ItemDoor *d = dynamic_cast<ItemDoor *>(item);
+                door.isSetOut = true;
                 d->m_data = m_data->doors[i];
                 d->refreshArrows();
-                doorExitSynced = true;
             }
         }
-
-        if(doorEntranceSynced && doorExitSynced)
-            break; // stop fetch, because door points was synced
     }
 }
 

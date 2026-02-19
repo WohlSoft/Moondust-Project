@@ -329,7 +329,7 @@ public:
 
     void applyArrayForItemGroup(QList<QGraphicsItem * >items);
     void applyArrayForItem(QGraphicsItem *item);
-    void doorPointsSync(long arrayID, bool remove = false);
+    void doorPointsSync(unsigned int arrayID, bool remove = false);
     void collectDataFromItem(LevelData &dataToStore, QGraphicsItem *item);
     void collectDataFromItems(LevelData &dataToStore, QList<QGraphicsItem *> items);
     void placeAll(const LevelData &data);
@@ -394,6 +394,9 @@ public:
 
     QMap<unsigned int, ItemDoor*> m_itemsDoorEnters;
     QMap<unsigned int, ItemDoor*> m_itemsDoorExits;
+
+    // Variouis background related objects
+    QSet<QGraphicsItem*> m_itemsBG;
 
     QSet<QGraphicsItem*> m_itemsAll;
 

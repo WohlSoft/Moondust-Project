@@ -482,22 +482,15 @@ void LvlWarpBox::on_WarpSetEntrance_clicked()
         LogDebugQD("Warp: Go to location: " + QString::number(w->ix) + "x" + QString::number(w->iy));
         edit->goTo(w->ix, w->iy, true, QPoint(0, 0), true);
         //deselect all and select placed one
+
         LogDebugQD("Warp: Clear scene selection");
         edit->scene->clearSelection();
-        for(QGraphicsItem *item : edit->scene->items())
-        {
-            if(item->data(LvlScene::ITEM_IS_ITEM).isNull() || !item->data(LvlScene::ITEM_IS_ITEM).toBool())
-                continue;
 
-            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_META_DoorEnter)
-            {
-                if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() == array_id)
-                {
-                    LogDebugQD("Warp: Select the warp entry");
-                    item->setSelected(true);
-                    break;
-                }
-            }
+        auto d = edit->scene->m_itemsDoorEnters.find(array_id);
+        if(d != edit->scene->m_itemsDoorEnters.end())
+        {
+            LogDebugQD("Warp: Select the warp entry");
+            d.value()->setSelected(true);
         }
 
         LogDebugQD("Warp: found a placed warp entrance");
@@ -540,23 +533,16 @@ void LvlWarpBox::on_WarpSetExit_clicked()
     {
         LogDebugQD("Warp: Go to location: " + QString::number(w->ox) + "x" + QString::number(w->oy));
         edit->goTo(w->ox, w->oy, true, QPoint(0, 0), true);
+
         //deselect all and select placed one
         LogDebugQD("Warp: Clear scene selection");
         edit->scene->clearSelection();
-        for(QGraphicsItem *item : edit->scene->items())
-        {
-            if(item->data(LvlScene::ITEM_IS_ITEM).isNull() || !item->data(LvlScene::ITEM_IS_ITEM).toBool())
-                continue;
 
-            if(item->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_META_DoorExit)
-            {
-                if(item->data(LvlScene::ITEM_ARRAY_ID).toUInt() == array_id)
-                {
-                    LogDebugQD("Warp: Select the warp entry");
-                    item->setSelected(true);
-                    break;
-                }
-            }
+        auto d = edit->scene->m_itemsDoorExits.find(array_id);
+        if(d != edit->scene->m_itemsDoorExits.end())
+        {
+            LogDebugQD("Warp: Select the warp entry");
+            d.value()->setSelected(true);
         }
 
         LogDebugQD("Warp: found a placed warp exit");
@@ -1284,7 +1270,7 @@ void LvlWarpBox::on_WarpLevelExit_clicked(bool checked)
     bool iPlaced = w->isSetIn;
     bool oPlaced = w->isSetOut;
 
-    edit->scene->doorPointsSync((unsigned int)ui->warpsList->currentData().toInt());
+    edit->scene->doorPointsSync(ui->warpsList->currentData().toUInt());
 
     //Unset placed point, if not it avaliable
     if(!((!w->lvl_o && !w->lvl_i) || w->lvl_i))
@@ -1340,7 +1326,7 @@ void LvlWarpBox::on_WarpLevelEntrance_clicked(bool checked)
     bool iPlaced = w->isSetIn;
     bool oPlaced = w->isSetOut;
 
-    edit->scene->doorPointsSync((unsigned int)ui->warpsList->currentData().toInt());
+    edit->scene->doorPointsSync(ui->warpsList->currentData().toUInt());
 
     //Unset placed point, if not it avaliable
     if(!((!w->lvl_o && !w->lvl_i) || (w->lvl_o && !w->lvl_i)))

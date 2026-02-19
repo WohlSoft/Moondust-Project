@@ -1018,11 +1018,10 @@ void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
     //Apply layer's name to all items
     LevelEdit *edit = mw()->activeLvlEditWin();
 
-    if(!edit) return;
+    if(!edit)
+        return;
 
-    QList<QGraphicsItem *> ItemList = edit->scene->items();
-
-    for(QList<QGraphicsItem *>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    for(auto it = edit->scene->m_itemsAll.begin(); it != edit->scene->m_itemsAll.end(); it++)
     {
         QGraphicsItem *item = *it;
 

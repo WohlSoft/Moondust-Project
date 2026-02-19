@@ -150,8 +150,7 @@ void WorldEdit::ExportingReady() //slot
     QList<QGraphicsItem*> invisibleMetas;
     if(hideMetas)
     {
-        QList<QGraphicsItem*> allBlocks = scene->items();
-        for(QGraphicsItem* it : allBlocks)
+        foreach(QGraphicsItem* it, scene->m_itemsAll)
         {
             int objType = it->data(WldScene::ITEM_TYPE_INT).toInt();
 

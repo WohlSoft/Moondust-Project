@@ -146,9 +146,7 @@ void LvlScene::setTiledBackground(bool forceTiled)
 
 void LvlScene::applyLayersVisible()
 {
-    QList<QGraphicsItem *> ItemList = items();
-
-    foreach(QGraphicsItem *item, items())
+    foreach(QGraphicsItem *item, m_itemsAll)
     {
         if(item->data(ITEM_IS_ITEM).isNull() || !item->data(ITEM_IS_ITEM).toBool())
             continue;

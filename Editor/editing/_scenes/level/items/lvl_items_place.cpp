@@ -142,7 +142,7 @@ ItemPlayerPoint *LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 
     if(!init)
     {
-        foreach(QGraphicsItem *plrt, this->items())
+        foreach(QGraphicsItem *plrt, m_itemsPlayers)
         {
             if(plrt->data(ITEM_IS_ITEM).isNull() || !plrt->data(ITEM_IS_ITEM).toBool())
                 continue;

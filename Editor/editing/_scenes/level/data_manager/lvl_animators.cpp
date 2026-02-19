@@ -144,11 +144,11 @@ void LvlScene::stopAnimation()
 
 void LvlScene::setMetaSignsVisibility(bool visible)
 {
-    QList<QGraphicsItem *> everything = items();
-    for(QGraphicsItem *it : everything)
+    foreach(QGraphicsItem *it, m_itemsAll)
     {
         if(it->data(ITEM_IS_ITEM).isNull())
             continue;
+
         LvlBaseItem *item = qgraphicsitem_cast<LvlBaseItem *>(it);
         item->setMetaSignsVisibility(visible);
     }

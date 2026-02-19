@@ -295,12 +295,12 @@ void LvlLayersBox::removeCurrentLayer(bool moveToDefault)
 void LvlLayersBox::removeLayerItems(QString layerName)
 {
     LevelEdit *edit = mw()->activeLvlEditWin();
-    if(!edit) return;
+    if(!edit)
+        return;
 
-    QList<QGraphicsItem *> ItemList = edit->scene->items();
     LevelData delData;
 
-    for(QList<QGraphicsItem *>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    for(auto it = edit->scene->m_itemsAll.begin(); it != edit->scene->m_itemsAll.end(); it++)
     {
         if((*it)->data(LvlScene::ITEM_IS_ITEM).isNull() || !(*it)->data(LvlScene::ITEM_IS_ITEM).toBool())
             continue;
@@ -446,9 +446,7 @@ void LvlLayersBox::modifyLayer(QString layerName, bool visible)
     if(!edit)
         return;
 
-    QList<QGraphicsItem *> itemList = edit->scene->items();
-
-    for(QList<QGraphicsItem *>::iterator it = itemList.begin(); it != itemList.end(); ++it)
+    for(auto it = edit->scene->m_itemsAll.begin(); it != edit->scene->m_itemsAll.end(); it++)
     {
         QGraphicsItem *item = *it;
 
@@ -510,11 +508,10 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName)
 {
     //Apply layer's name to all items
     LevelEdit *edit = mw()->activeLvlEditWin();
-    if(!edit) return;
+    if(!edit)
+        return;
 
-    QList<QGraphicsItem *> itemList = edit->scene->items();
-
-    for(QList<QGraphicsItem *>::iterator it = itemList.begin(); it != itemList.end(); ++it)
+    for(auto it = edit->scene->m_itemsAll.begin(); it != edit->scene->m_itemsAll.end(); it++)
     {
         QGraphicsItem *item = *it;
 
@@ -620,9 +617,8 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName, bool vis
         return;
 
     LevelData modData;
-    QList<QGraphicsItem *> itemList = edit->scene->items();
 
-    for(QList<QGraphicsItem *>::iterator it = itemList.begin(); it != itemList.end(); ++it)
+    for(auto it = edit->scene->m_itemsAll.begin(); it != edit->scene->m_itemsAll.end(); it++)
     {
         QGraphicsItem *item = *it;
 

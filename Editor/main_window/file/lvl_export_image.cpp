@@ -175,11 +175,10 @@ void LevelEdit::ExportingReady() //slot
         scene->setTiledBackground(true);
 
     QList<QGraphicsItem*> invisibleBlocks;
+
     if(imageExportDialog.hideInvisibleBlocks())
     {
-        QList<QGraphicsItem*> allBlocks = scene->items();
-
-        foreach(QGraphicsItem* it, allBlocks)
+        foreach(QGraphicsItem* it, scene->m_itemsAll)
         {
             if(it->data(LvlScene::ITEM_IS_ITEM).isNull() || !it->data(LvlScene::ITEM_IS_ITEM).toBool())
                 continue;
