@@ -113,45 +113,30 @@ void WldScene::switchMode(QString title)
 
 void WldScene::hideMusicBoxes(bool visible)
 {
-    foreach(QGraphicsItem *i, items())
-    {
-        if(i->data(ITEM_TYPE_INT).toInt() == ItemTypes::WLD_MusicBox)
-            i->setVisible(visible);
-    }
+    foreach(ItemMusic *i, m_itemsMusicBoxes)
+        i->setVisible(visible);
 }
 
 void WldScene::setSemiTransparentPaths(bool semiTransparent)
 {
-    foreach(QGraphicsItem *i, items())
-    {
-        if(i->data(ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Path)
-            i->setOpacity(semiTransparent ? 0.5 : 1);
-    }
+    foreach(ItemPath *i, m_itemsPaths)
+        i->setOpacity(semiTransparent ? 0.5 : 1);
 
     update();
 }
 
 void WldScene::hidePathAndLevels(bool visible)
 {
-    foreach(QGraphicsItem *i, items())
-    {
-        int objType = i->data(ITEM_TYPE_INT).toInt();
+    foreach(ItemPath *i, m_itemsPaths)
+        i->setVisible(visible);
 
-        if(objType == ItemTypes::WLD_Path)
-            i->setVisible(visible);
-        else if(objType == ItemTypes::WLD_Level)
-        {
-            i->setVisible(visible ||
-                          ((ItemLevel *)i)->m_data.gamestart ||
-                          ((ItemLevel *)i)->m_data.alwaysVisible);
-        }
-    }
+    foreach(ItemLevel *i, m_itemsLevels)
+        i->setVisible(visible || i->m_data.gamestart || i->m_data.alwaysVisible);
 }
 
 /////////////////////////////////////////////Locks////////////////////////////////
 void WldScene::setLocked(int type, bool lock)
 {
-    QList<QGraphicsItem *> ItemList = items();
     // setLock
     switch(type)
     {
@@ -174,7 +159,7 @@ void WldScene::setLocked(int type, bool lock)
         break;
     }
 
-    for(QList<QGraphicsItem *>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    for(QSet<QGraphicsItem *>::iterator it = m_itemsAll.begin(); it != m_itemsAll.end(); it++)
     {
         int objType = (*it)->data(ITEM_TYPE_INT).toInt();
 
@@ -229,7 +214,6 @@ void WldScene::setLocked(int type, bool lock)
             break;
         }
     }
-
 }
 
 

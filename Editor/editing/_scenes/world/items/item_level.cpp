@@ -92,6 +92,7 @@ void ItemLevel::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 ItemLevel::~ItemLevel()
 {
     m_scene->unregisterElement(this);
+    m_scene->m_itemsLevels.remove(m_data.meta.array_id);
 }
 
 void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
@@ -386,69 +387,21 @@ void ItemLevel::transformTo(long target_id)
 
 void ItemLevel::arrayApply()
 {
-    bool found = false;
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
-
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->levels.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->levels[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    //Apply current data in main array
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->levels[m_data.meta.index] = m_data; //apply current levelData
-    }
-    else
-        for(int i = 0; i < m_scene->m_data->levels.size(); i++)
-        {
-            //after find it into array
-            if(m_scene->m_data->levels[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_data.meta.index = i;
-                m_scene->m_data->levels[i] = m_data;
-                break;
-            }
-        }
 
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsLevels.insert(m_data.meta.array_id, this);
 
     updateNotices();
 }
 
 void ItemLevel::removeFromArray()
 {
-    bool found = false;
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->levels.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->levels[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->levels.removeAt(m_data.meta.index);
-    }
-    else
-        for(int i = 0; i < m_scene->m_data->levels.size(); i++)
-        {
-            if(m_scene->m_data->levels[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_scene->m_data->levels.removeAt(i);
-                break;
-            }
-        }
-
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
 }
@@ -522,6 +475,7 @@ void ItemLevel::setLevelData(WorldLevelTile inD, obj_w_level *mergedSet,
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsLevels.insert(m_data.meta.array_id, this);
 
     updateNotices();
 }

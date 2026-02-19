@@ -24,6 +24,8 @@
 #include <QGraphicsItem>
 #include <QProgressDialog>
 #include <QMenu>
+#include <QMap>
+#include <QSet>
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
 #include <QBitmap>
@@ -46,10 +48,18 @@
 
 #include "wld_point_selector.h"
 
+class WldBaseItem;
+class ItemTile;
+class ItemScene;
+class ItemPath;
+class ItemLevel;
+class ItemMusic;
+
 class WorldEdit;
 class MainWindow;
 class WldHistoryManager;
 class WldPointSelector;
+
 
 class WldScene : public QGraphicsScene
 {
@@ -353,6 +363,19 @@ public:
     void unregisterElement(QGraphicsItem *item);
     // //////////////////////////////////
 
+    // Items list, key is array_id!
+    QMap<unsigned int, ItemTile*> m_itemsTiles;
+    QMap<unsigned int, ItemScene*> m_itemsScenery;
+    QMap<unsigned int, ItemPath*> m_itemsPaths;
+    QMap<unsigned int, ItemLevel*> m_itemsLevels;
+    QMap<unsigned int, ItemMusic*> m_itemsMusicBoxes;
+
+    QSet<QGraphicsItem*> m_itemsAll;
+
+    /**
+     * @brief Collects all items on the scene and puts them to the *m_data store
+     */
+    void sceneItemsToData(WorldData &data);
 
 
     // ////////////////////////////////////////////////////////////////////////////////

@@ -59,6 +59,7 @@ void ItemScene::construct()
 ItemScene::~ItemScene()
 {
     m_scene->unregisterElement(this);
+    m_scene->m_itemsScenery.remove(m_data.meta.array_id);
 }
 
 void ItemScene::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
@@ -250,68 +251,19 @@ void ItemScene::transformTo(long target_id)
 
 void ItemScene::arrayApply()
 {
-    bool found = false;
-
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
-
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->scenery.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->scenery[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    //Apply current data in main array
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->scenery[m_data.meta.index] = m_data; //apply current sceneData
-    }
-    else
-        for(int i = 0; i < m_scene->m_data->scenery.size(); i++)
-        {
-            //after find it into array
-            if(m_scene->m_data->scenery[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_data.meta.index = i;
-                m_scene->m_data->scenery[i] = m_data;
-                break;
-            }
-        }
 
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsScenery.insert(m_data.meta.array_id, this);
 }
 
 void ItemScene::removeFromArray()
 {
-    bool found = false;
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->scenery.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->scenery[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->scenery.removeAt(m_data.meta.index);
-    }
-    else
-        for(int i = 0; i < m_scene->m_data->scenery.size(); i++)
-        {
-            if(m_scene->m_data->scenery[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_scene->m_data->scenery.removeAt(i);
-                break;
-            }
-        }
-
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
 }
@@ -351,6 +303,7 @@ void ItemScene::setSceneData(WorldScenery inD, obj_w_scenery *mergedSet, long *a
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsScenery.insert(m_data.meta.array_id, this);
 }
 
 QRectF ItemScene::boundingRect() const

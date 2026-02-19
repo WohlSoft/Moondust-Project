@@ -51,6 +51,7 @@ void ItemTile::construct()
 ItemTile::~ItemTile()
 {
     m_scene->unregisterElement(this);
+    m_scene->m_itemsTiles.remove(m_data.meta.array_id);
 }
 
 void ItemTile::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
@@ -237,67 +238,19 @@ void ItemTile::transformTo(long target_id)
 
 void ItemTile::arrayApply()
 {
-    bool found = false;
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
-
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->tiles.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->tiles[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    //Apply current data in main array
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->tiles[m_data.meta.index] = m_data; //apply current tileData
-    }
-    else
-        for(int i = 0; i < m_scene->m_data->tiles.size(); i++)
-        {
-            //after find it into array
-            if(m_scene->m_data->tiles[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_data.meta.index = i;
-                m_scene->m_data->tiles[i] = m_data;
-                break;
-            }
-        }
 
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsTiles.insert(m_data.meta.array_id, this);
 }
 
 void ItemTile::removeFromArray()
 {
-    bool found = false;
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->tiles.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->tiles[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->tiles.removeAt(m_data.meta.index);
-    }
-    else
-        for(int i = 0; i < m_scene->m_data->tiles.size(); i++)
-        {
-            if(m_scene->m_data->tiles[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_scene->m_data->tiles.removeAt(i);
-                break;
-            }
-        }
-
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
 }
@@ -338,6 +291,7 @@ void ItemTile::setTileData(WorldTerrainTile inD, obj_w_tile *mergedSet, long *an
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsTiles.insert(m_data.meta.array_id, this);
 }
 
 

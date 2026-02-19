@@ -77,6 +77,7 @@ void ItemPath::updateNearObjects(QPoint oldPos, QPoint newPos)
 ItemPath::~ItemPath()
 {
     m_scene->unregisterElement(this);
+    m_scene->m_itemsPaths.remove(m_data.meta.array_id);
 }
 
 void ItemPath::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
@@ -264,74 +265,24 @@ void ItemPath::transformTo(long target_id)
 
 void ItemPath::arrayApply()
 {
-    bool found = false;
     QPoint oldPos = sourcePos();
 
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
-
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->paths.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->paths[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    //Apply current data in main array
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->paths[m_data.meta.index] = m_data; //apply current pathData
-    }
-    else
-        for(int i = 0; i < m_scene->m_data->paths.size(); i++)
-        {
-            //after find it into array
-            if(m_scene->m_data->paths[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_data.meta.index = i;
-                m_scene->m_data->paths[i] = m_data;
-                break;
-            }
-        }
 
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsPaths.insert(m_data.meta.array_id, this);
 
     updateNearObjects(oldPos, sourcePos());
 }
 
 void ItemPath::removeFromArray()
 {
-    bool found = false;
     QPoint oldPos(m_data.x, m_data.y);
-
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->paths.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->paths[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->paths.removeAt(m_data.meta.index);
-    }
-    else
-    {
-        for(int i = 0; i < m_scene->m_data->paths.size(); i++)
-        {
-            if(m_scene->m_data->paths[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_scene->m_data->paths.removeAt(i);
-                break;
-            }
-        }
-    }
 
     // Mark as "dead"
     setData(WldScene::ITEM_IS_ITEM, false);
@@ -372,6 +323,7 @@ void ItemPath::setPathData(WorldPathTile inD, obj_w_path *mergedSet, long *anima
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsPaths.insert(m_data.meta.array_id, this);
 
     updateNearObjects(sourcePos(), sourcePos());
 }

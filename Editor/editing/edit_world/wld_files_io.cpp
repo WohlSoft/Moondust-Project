@@ -332,6 +332,9 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
+    if(sceneCreated && scene)
+        scene->sceneItemsToData(WldData);
+
     WldData.meta.configPackId = getMainWindow()->configs.configPackId;
     FileFormats::WorldPrepare(WldData); // Sort all data arrays
 

@@ -61,6 +61,7 @@ void ItemMusic::construct()
 ItemMusic::~ItemMusic()
 {
     m_scene->unregisterElement(this);
+    m_scene->m_itemsMusicBoxes.remove(m_data.meta.array_id);
 }
 
 void ItemMusic::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
@@ -256,67 +257,19 @@ void ItemMusic::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
 void ItemMusic::arrayApply()
 {
-    bool found = false;
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
-
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->music.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->music[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    //Apply current data in main array
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->music[m_data.meta.index] = m_data; //apply current musicData
-    }
-    else
-        for(int i = 0; i < m_scene->m_data->music.size(); i++)
-        {
-            //after find it into array
-            if(m_scene->m_data->music[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_data.meta.index = i;
-                m_scene->m_data->music[i] = m_data;
-                break;
-            }
-        }
 
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsMusicBoxes.insert(m_data.meta.array_id, this);
 }
 
 void ItemMusic::removeFromArray()
 {
-    bool found = false;
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->music.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->music[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->music.removeAt(m_data.meta.index);
-    }
-    else
-        for(int i = 0; i < m_scene->m_data->music.size(); i++)
-        {
-            if(m_scene->m_data->music[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_scene->m_data->music.removeAt(i);
-                break;
-            }
-        }
-
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
 }
@@ -345,6 +298,7 @@ void ItemMusic::setMusicData(WorldMusicBox inD)
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsMusicBoxes.insert(m_data.meta.array_id, this);
 }
 
 

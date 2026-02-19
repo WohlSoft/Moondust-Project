@@ -18,7 +18,7 @@ public:
     explicit ItemSearcher(uint32_t typesToFind, QObject *parent = 0);
 
     void find(const LevelData &dataToFind, LvlScene *scene);
-    void find(const WorldData &dataToFind, const QList<QGraphicsItem *> &allItems);
+    void find(const WorldData &dataToFind, WldScene *scene);
 
     int findFilter() const;
     void setFindFilter(const int &findFilter);

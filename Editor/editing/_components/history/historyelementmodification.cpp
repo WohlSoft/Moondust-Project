@@ -111,7 +111,7 @@ void HistoryElementModification::processReplacement(const WorldData &toRemoveDat
         QObject::connect(&wldSearcher, &ItemSearcher::foundLevel,   this, &HistoryElementModification::processLevel);
         QObject::connect(&wldSearcher, &ItemSearcher::foundMusicbox,this, &HistoryElementModification::processMusicbox);
 
-        wldSearcher.find(toRemoveData, m_scene->items()); //remove the new level Data
+        wldSearcher.find(toRemoveData, wldScene); //remove the new level Data
 
         //place the old lvl Data
         wldScene->placeAll(toPlaceData);
