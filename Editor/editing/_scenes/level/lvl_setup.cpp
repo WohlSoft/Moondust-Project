@@ -26,7 +26,7 @@
 #include "lvl_history_manager.h"
 #include "newlayerbox.h"
 
-void LvlScene::SwitchEditingMode(int EdtMode)
+void LvlScene::SwitchEditingMode(MoondustBaseScene::EditModeID EdtMode)
 {
     //int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
     // 3 - drawing water/sand zone, 4 - placing from Buffer
@@ -43,70 +43,24 @@ void LvlScene::SwitchEditingMode(int EdtMode)
     m_busyMode = false;
     m_disableMoveItems = false;
 
-    switch(EdtMode)
-    {
-    case MODE_PlacingNew:
-        switchMode("Placing");
-        break;
+    auto newMode = m_editModes.find(EdtMode);
 
-    case MODE_DrawRect:
-        switchMode("Square");
-        break;
+    if(newMode == m_editModes.end())
+        newMode = m_editModes.find(MODE_Selecting);
 
-    case MODE_DrawCircle:
-        switchMode("Circle");
-        break;
+    Q_ASSERT(newMode != m_editModes.end());
 
-    case MODE_Line:
-        switchMode("Line");
-        break;
-
-    case MODE_Resizing:
-        switchMode("Resize");
-        break;
-
-    case MODE_PasteFromClip:
-        switchMode("Select");
-        clearSelection();
-        m_disableMoveItems = true;
-        m_viewPort->setInteractive(true);
-        m_viewPort->setCursor(Themes::Cursor(Themes::cursor_pasting));
-        m_viewPort->setDragMode(QGraphicsView::NoDrag);
-        break;
-
-    case MODE_Erasing:
-        switchMode("Erase");
-        break;
-
-    case MODE_SelectingOnly:
-        switchMode("Select");
-        m_disableMoveItems = true;
-        break;
-
-    case MODE_HandScroll:
-        switchMode("HandScroll");
-        break;
-
-
-    case MODE_Fill:
-        switchMode("Fill");
-        break;
-
-    case MODE_Selecting:
-    default:
-        switchMode("Select");
-        break;
-    }
+    m_editModeObj = newMode.value();
+    m_editModeObj->set(EdtMode);
     m_editMode = EdtMode;
-
 }
 
 void LvlScene::switchMode(const QString &title)
 {
     qDebug() << "Switching mode " << title;
-    for(auto &editMode : m_editModes)
+    foreach(auto &editMode,  m_editModes)
     {
-        if(editMode->name() == title)
+        if(editMode->name().compare(title, Qt::CaseInsensitive))
         {
             m_editModeObj = editMode;
             m_editModeObj->set();
@@ -331,7 +285,7 @@ void LvlScene::setLayerToSelected()
 void LvlScene::setLayerToSelected(const QString &lName, bool isNew)
 {
     LevelData modData;
-    for(const LevelLayer &lr : m_data->layers)
+    foreach(const LevelLayer &lr, m_data->layers)
     {
         //Find layer's settings
         if(lr.name == lName)

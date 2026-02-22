@@ -131,30 +131,38 @@ void LvlScene::paste(LevelData &BufferIn, QPoint pos)
     {
         if(block.x < baseX)
             baseX = block.x;
+
         if(block.y < baseY)
             baseY = block.y;
     }
+
     for(LevelBGO &bgo : BufferIn.bgo)
     {
         if(bgo.x < baseX)
             baseX = bgo.x;
+
         if(bgo.y < baseY)
             baseY = bgo.y;
     }
+
     for(LevelNPC &npc : BufferIn.npc)
     {
         if(npc.x < baseX)
             baseX = npc.x;
+
         if(npc.y < baseY)
             baseY = npc.y;
     }
+
     for(LevelPhysEnv &water : BufferIn.physez)
     {
         if(water.x < baseX)
             baseX = water.x;
+
         if(water.y < baseY)
             baseY = water.y;
     }
+
 
     for(LevelBlock &block : BufferIn.blocks)
     {

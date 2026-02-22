@@ -47,9 +47,10 @@ void LVL_ModeErase::set()
     s->m_busyMode = false;
     s->m_disableMoveItems = false;
 
-    s->m_viewPort->setInteractive(true);
-    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_erasing));
-    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
+    auto *vp = s->curViewPort();
+    vp->setInteractive(true);
+    vp->setCursor(Themes::Cursor(Themes::cursor_erasing));
+    vp->setDragMode(QGraphicsView::NoDrag);
 }
 
 void LVL_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
@@ -59,7 +60,7 @@ void LVL_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 
     if(mouseEvent->buttons() & Qt::RightButton)
     {
-        s->m_mw->on_actionSelect_triggered();
+        s->mw()->on_actionSelect_triggered();
         dontCallEvent = true;
         s->m_mouseIsMovedAfterKey = true;
         return;
@@ -144,7 +145,8 @@ void LVL_ModeErase::keyRelease(QKeyEvent *keyEvent)
     case(Qt::Key_Escape):
     {
         LvlScene *s = dynamic_cast<LvlScene *>(scene);
-        if(s) s->m_mw->on_actionSelect_triggered();
+        if(s)
+            s->mw()->on_actionSelect_triggered();
         break;
     }
     default:

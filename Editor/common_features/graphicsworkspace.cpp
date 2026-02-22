@@ -17,7 +17,6 @@
  */
 
 #include "graphicsworkspace.h"
-#include "logger.h"
 #include <cmath>
 #include <QElapsedTimer>
 #include <QRubberBand>
@@ -29,8 +28,7 @@
 #include <QNativeGestureEvent>
 #endif
 
-#include <editing/_scenes/level/lvl_scene.h>
-#include <editing/_scenes/world/wld_scene.h>
+#include <editing/_scenes/common/base_scene.h>
 #include <pge_qt_compat.h>
 
 #include <common_features/main_window_ptr.h>
@@ -543,13 +541,13 @@ void GraphicsWorkspace::mousePressEvent(QMouseEvent *event)
     }
     else
     {
-        LvlScene *s = dynamic_cast<LvlScene *>(scene());
-        WldScene *w = dynamic_cast<WldScene *>(scene());
+        MoondustBaseScene *base = dynamic_cast<MoondustBaseScene *>(scene());
+
         bool setSelect = false;
-        if(s)
-            setSelect = (s->m_editMode == LvlScene::MODE_HandScroll);
-        else if(w)
-            setSelect = ((!w->m_isSelectionDialog) && (w->m_editMode == WldScene::MODE_HandScroll));
+
+        if(base)
+            setSelect = (base->allowEditModeSwitch() && base->allowEditModeSwitch() == MoondustBaseScene::MODE_HandScroll);
+
         if(setSelect)
         {
             if(event->buttons() & Qt::RightButton)
@@ -684,18 +682,16 @@ void GraphicsWorkspace::mouseMoveEventHandler(PGEMouseEvent &event)
         && */ cachedItemsUnderMouse.isEmpty())
     {
         QRectF target(mapToScene(mouseEvent.screenPos()), mapToScene(mouseEvent.screenPos() + QPoint(1, 1)));
-        LvlScene *lsc = qobject_cast<LvlScene * >(scene());
-        WldScene *wsc = qobject_cast<WldScene * >(scene());
-        if(lsc)
-            lsc->queryItems(target, &cachedItemsUnderMouse);
-        else if(wsc)
-            wsc->queryItems(target, &cachedItemsUnderMouse);
+        MoondustBaseScene *sc = qobject_cast<MoondustBaseScene * >(scene());
+
+        if(sc)
+            sc->queryItems(target, &cachedItemsUnderMouse);
         else
             cachedItemsUnderMouse = scene()->items(target, Qt::IntersectsItemBoundingRect);
     }
 
     // Find the topmost item under the mouse with a cursor.
-    for(QGraphicsItem *item : cachedItemsUnderMouse)
+    foreach(QGraphicsItem *item, cachedItemsUnderMouse)
     {
         if(item && item->hasCursor())
         {
@@ -734,16 +730,14 @@ void GraphicsWorkspace::_q_unsetViewportCursor()
 {
     QList<QGraphicsItem *> theItems;
     QRectF target(lastMouseEvent.pos(), lastMouseEvent.pos() + QPoint(1, 1));
-    LvlScene *lsc = qobject_cast<LvlScene * >(scene());
-    WldScene *wsc = qobject_cast<WldScene * >(scene());
-    if(lsc)
-        lsc->queryItems(target, &theItems);
-    else if(wsc)
-        wsc->queryItems(target, &theItems);
+    MoondustBaseScene *sc = qobject_cast<MoondustBaseScene *>(scene());
+
+    if(sc)
+        sc->queryItems(target, &theItems);
     else
         theItems = scene()->items(target, Qt::IntersectsItemBoundingRect);
 
-    for(QGraphicsItem *item : theItems)
+    foreach(QGraphicsItem *item, theItems)
     {
         if(item->hasCursor())
         {
@@ -866,7 +860,7 @@ void GraphicsWorkspace::updateRubberBand(const PGEMouseEvent &event)
 #endif
         if(!rubberBandExtendSelection.isEmpty())
         {
-            for(QGraphicsItem *item : rubberBandExtendSelection)
+            foreach(QGraphicsItem *item, rubberBandExtendSelection)
                 item->setSelected(true);
         }
     }

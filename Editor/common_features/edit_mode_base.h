@@ -31,7 +31,8 @@ class EditMode : public QObject
 public:
     explicit EditMode(QString toolTitle, QGraphicsScene *ParentScene = nullptr, QObject *parent = nullptr);
     virtual ~EditMode();
-    virtual void set();
+    virtual void set() = 0;
+    virtual void set(int editMode);
     QString name() const;
     virtual void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
     virtual void mouseMove(QGraphicsSceneMouseEvent *mouseEvent);

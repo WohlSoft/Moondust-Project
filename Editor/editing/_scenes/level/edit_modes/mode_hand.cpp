@@ -44,9 +44,10 @@ void LVL_ModeHand::set()
     s->m_busyMode = true;
     s->m_disableMoveItems = false;
 
-    s->m_viewPort->setCursor(Qt::ArrowCursor);
-    s->m_viewPort->setInteractive(false);
-    s->m_viewPort->setDragMode(QGraphicsView::ScrollHandDrag);
+    auto *vp = s->curViewPort();
+    vp->setCursor(Qt::ArrowCursor);
+    vp->setInteractive(false);
+    vp->setDragMode(QGraphicsView::ScrollHandDrag);
 }
 
 void LVL_ModeHand::mousePress(QGraphicsSceneMouseEvent *mouseEvent)

@@ -25,8 +25,11 @@ EditMode::EditMode(QString toolTitle, QGraphicsScene *ParentScene, QObject *pare
 EditMode::~EditMode()
 {}
 
-void EditMode::set()
-{}
+void EditMode::set(int editMode)
+{
+    Q_UNUSED(editMode)
+    set();
+}
 
 QString EditMode::name() const
 {

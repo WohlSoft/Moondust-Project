@@ -53,11 +53,12 @@ void ItemPath::updateNearObjects(QPoint oldPos, QPoint newPos)
     WldScene::PGE_ItemList levelCollides;
     QSize objSize(data(WldScene::ITEM_WIDTH).toInt(), data(WldScene::ITEM_HEIGHT).toInt());
     bool isUpdate = oldPos != newPos;
+    QRectF rect(oldPos, objSize);
 
-    m_scene->queryItems(QRectF(oldPos, objSize), &levelCollides);
+    m_scene->queryItems(rect, &levelCollides);
 
     if(isUpdate)
-        m_scene->queryItems(QRectF(newPos, objSize), &levelCollides);
+        m_scene->queryItems(rect, &levelCollides);
 
     foreach(auto *it, levelCollides)
     {
@@ -118,7 +119,7 @@ void ItemPath::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     else if(selected == copyArrayID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.meta.array_id));
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyItemID)
     {

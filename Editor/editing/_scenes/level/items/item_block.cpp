@@ -169,12 +169,12 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     if(selected == copyArrayID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.meta.array_id));
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyItemID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.id));
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXY)
     {
@@ -183,7 +183,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_data.x)
             .arg(m_data.y)
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXYWH)
     {
@@ -194,7 +194,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_imageSize.width())
             .arg(m_imageSize.height())
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosLTRB)
     {
@@ -205,12 +205,12 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_data.x + m_imageSize.width())
             .arg(m_data.y + m_imageSize.height())
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == cutBlock)
-        m_scene->m_mw->on_actionCut_triggered();
+        m_scene->mw()->on_actionCut_triggered();
     else if(selected == copyBlock)
-        m_scene->m_mw->on_actionCopy_triggered();
+        m_scene->mw()->on_actionCopy_triggered();
     else if((selected == transform) || (selected == transform_all) || (selected == transform_all_s))
     {
         LvlScene *scene = m_scene;
@@ -363,8 +363,8 @@ typeEventAgain:
                     m_scene->m_history->addAddEvent(msgEvent);
                     m_scene->m_history->addChangeSettings(historyOldData, HistorySettings::SETTING_EV_HITED, QVariant(eventName));
 
-                    m_scene->m_mw->setEventsBox();
-                    m_scene->m_mw->EventListsSync();
+                    m_scene->mw()->setEventsBox();
+                    m_scene->mw()->EventListsSync();
 
                     QMessageBox::information(m_scene->m_subWindow, tr("Event created"),
                                              tr("Message event created!"), QMessageBox::Ok);
@@ -417,7 +417,7 @@ typeEventAgain:
         ItemSelectDialog *npcList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_NPC,
                 ItemSelectDialog::NPCEXTRA_WITHCOINS | (m_data.npc_id < 0 && m_data.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0), 0, 0,
                 (m_data.npc_id < 0 && m_data.npc_id != 0 ? m_data.npc_id * -1 : m_data.npc_id),
-                0, 0, 0, 0, 0, m_scene->m_mw);
+                0, 0, 0, 0, 0, m_scene->mw());
         npcList->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
         npcList->setGeometry(util::alignToScreenCenter(npcList->size()));
         if(npcList->exec() == QDialog::Accepted)
@@ -474,14 +474,14 @@ typeEventAgain:
             our_items = m_scene->items(section, Qt::IntersectsItemShape);
         }
 
-        for(QGraphicsItem *SelItem : our_items)
+        foreach(QGraphicsItem *selItem, our_items)
         {
-            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
+            if(selItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
             {
-                ItemBlock *b = qgraphicsitem_cast<ItemBlock*>(SelItem);
+                ItemBlock *b = qgraphicsitem_cast<ItemBlock*>(selItem);
                 Q_ASSERT(b);
                 if(b->m_data.id == oldID)
-                    selectedList.push_back(SelItem);
+                    selectedList.push_back(selItem);
             }
         }
 

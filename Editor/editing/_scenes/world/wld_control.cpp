@@ -24,12 +24,7 @@
 #include <main_window/dock/debugger.h>
 
 #include "wld_scene.h"
-#include "items/item_tile.h"
-#include "items/item_scene.h"
-#include "items/item_path.h"
 #include "items/item_level.h"
-#include "items/item_music.h"
-#include "wld_item_placing.h"
 
 #include "../../../defines.h"
 

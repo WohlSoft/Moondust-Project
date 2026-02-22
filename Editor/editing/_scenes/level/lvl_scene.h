@@ -26,6 +26,7 @@
 #include <QMenu>
 #include <QMap>
 #include <QSet>
+#include <QHash>
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
 #include <QBitmap>
@@ -34,6 +35,7 @@
 #include <QList>
 #include <Utils/vptrlist.h>
 
+#include "../common/base_scene.h"
 #include <common_features/logger.h>
 #include <common_features/simple_animator.h>
 #include <common_features/npc_animator.h>
@@ -62,7 +64,7 @@ class ItemPhysEnv;
 class ItemDoor;
 class ItemPlayerPoint;
 
-class LvlScene : public QGraphicsScene
+class LvlScene : public MoondustBaseScene
 {
     Q_OBJECT
     friend class EditMode;
@@ -109,14 +111,10 @@ public:
 
     // ///////////////////Common////////////////////////
 public:
-    //! Main window pointer
-    MainWindow         *m_mw = nullptr;
     //! Pointer to global configuration in the main window
     DataConfig        *m_configs = nullptr;
     //! Pointer to level data storage in the sub-window class
     LevelData          *m_data = nullptr;
-    //! Pointer to parent graphics view
-    GraphicsWorkspace *m_viewPort = nullptr;
     //! Pointer to parent edit sub-window;
     LevelEdit          *m_subWindow = nullptr;
 
@@ -193,7 +191,7 @@ public:
     void Debugger_updateItemList();
 
 protected:
-    void drawForeground(QPainter *painter, const QRectF &rect);
+    void drawForeground(QPainter *painter, const QRectF &rect) override;
 
     // ///////////////////GFX Manager////////////////////////
 public:
@@ -279,26 +277,6 @@ public:
     qlonglong m_lastBgoArrayID;
     qlonglong m_lastNpcArrayID;
 
-    //Defining indexes for data values of items
-    enum ItemDataField
-    {
-        ITEM_TYPE                  = 0,  //String
-        ITEM_ID                    = 1,  //int
-        ITEM_ARRAY_ID              = 2,  //int
-        ITEM_BLOCK_IS_SIZABLE      = 3,  //bool
-        ITEM_BLOCK_SHAPE           = 4,  //int
-        ITEM_NPC_BLOCK_COLLISION   = 5,  //bool
-        ITEM_NPC_NO_NPC_COLLISION  = 6,  //bool
-        ITEM_WIDTH                 = 7,  //int
-        ITEM_HEIGHT                = 8, //int
-        ITEM_IS_ITEM               = 24, //bool
-        ITEM_IS_CURSOR             = 25, //bool
-        ITEM_LAST_POS              = 26, //QPointF
-        ITEM_LAST_SIZE             = 27, //QSizeF
-        ITEM_IS_META =               28, //bool
-        ITEM_TYPE_INT              = 29, //Int
-    };
-
     long m_IncrementingNpcSpecialSpin;
 
     ItemBlock *placeBlock(LevelBlock &block, bool toGrid = false);
@@ -370,18 +348,9 @@ public:
     bool m_emptyCollisionCheck;
     void prepareCollisionBuffer();
 
-    typedef QList<QGraphicsItem *> PGE_ItemList;
-    bool checkGroupCollisions(PGE_ItemList *items);
-    QGraphicsItem *itemCollidesWith(QGraphicsItem *item, PGE_ItemList *itemgrp = nullptr, PGE_ItemList *allCollisions = nullptr);
-    QGraphicsItem *itemCollidesCursor(QGraphicsItem *item);
+    QGraphicsItem *itemCollidesWith(const QGraphicsItem *item, PGE_ItemList *itemgrp = nullptr, PGE_ItemList *allCollisions = nullptr) override;
+    QGraphicsItem *itemCollidesCursor(const QGraphicsItem *item) override;
 
-    typedef RTree<QGraphicsItem *, int64_t, 2, int64_t > IndexTree;
-    typedef int64_t RPoint[2];
-    IndexTree tree;
-    void queryItems(QRectF &zone, PGE_ItemList *resultList);
-    void queryItems(double x, double y, PGE_ItemList *resultList);
-    void registerElement(QGraphicsItem *item);
-    void unregisterElement(QGraphicsItem *item);
     // //////////////////////////////////
 
     // Items list, key is array_id!
@@ -398,8 +367,6 @@ public:
     // Variouis background related objects
     QSet<QGraphicsItem*> m_itemsBG;
 
-    QSet<QGraphicsItem*> m_itemsAll;
-
     /**
      * @brief Collects all items on the scene and puts them to the *m_data store
      */
@@ -412,27 +379,11 @@ public:
 
     // ///////////////////Edit modes///////////////////////////
 public:
-    int m_editMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
-    // 3 - drawing water/sand zone, 4 - placing from Buffer
+    QHash<EditModeID, EditMode *> m_editModes;
+    EditMode *m_editModeObj = nullptr;
 
-    QList<EditMode *> m_editModes;
-    EditMode *m_editModeObj;
-    enum EditModeID
-    {
-        MODE_Selecting = 0,
-        MODE_HandScroll,
-        MODE_Erasing,
-        MODE_PlacingNew,
-        MODE_DrawRect,
-        MODE_DrawCircle,
-        MODE_PasteFromClip,
-        MODE_Resizing,
-        MODE_SelectingOnly,
-        MODE_Line,
-        MODE_Fill
-    };
-    void switchMode(const QString &title);
-    void SwitchEditingMode(int EdtMode);
+    void switchMode(const QString &title) override;
+    void SwitchEditingMode(EditModeID EdtMode) override;
 
 
 
@@ -491,18 +442,18 @@ public:
     bool m_keyCtrlPressed = false;
 
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
-    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
     bool m_skipChildMousePressEvent;
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
     bool m_skipChildMouseMoveEvent;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
     bool m_skipChildMousReleaseEvent;
-    void keyPressEvent(QKeyEvent *keyEvent);
-    void keyReleaseEvent(QKeyEvent *keyEvent);
+    void keyPressEvent(QKeyEvent *keyEvent) override;
+    void keyReleaseEvent(QKeyEvent *keyEvent) override;
 
-    void focusInEvent(QFocusEvent* event);
-    void focusOutEvent(QFocusEvent* event);
+    void focusInEvent(QFocusEvent* event) override;
+    void focusOutEvent(QFocusEvent* event) override;
 
 
     // ////////////////////////////////////////////////////////////////////////////////

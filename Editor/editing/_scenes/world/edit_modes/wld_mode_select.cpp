@@ -39,6 +39,11 @@ WLD_ModeSelect::~WLD_ModeSelect()
 
 void WLD_ModeSelect::set()
 {
+    set(MoondustBaseScene::MODE_Selecting);
+}
+
+void WLD_ModeSelect::set(int editMode)
+{
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
@@ -51,18 +56,35 @@ void WLD_ModeSelect::set()
     s->m_busyMode = false;
     s->m_disableMoveItems = false;
 
-    s->m_viewPort->setInteractive(true);
-    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_normal));
-    s->m_viewPort->setDragMode(QGraphicsView::RubberBandDrag);
+    auto *vp = s->curViewPort();
+    if(editMode == MoondustBaseScene::MODE_PasteFromClip)
+    {
+        s->clearSelection();
+        vp->setInteractive(true);
+        vp->setCursor(Themes::Cursor(Themes::cursor_pasting));
+        vp->setDragMode(QGraphicsView::NoDrag);
+        s->m_disableMoveItems = true;
+    }
+    else
+    {
+        vp->setInteractive(true);
+        vp->setCursor(Themes::Cursor(Themes::cursor_normal));
+        vp->setDragMode(QGraphicsView::RubberBandDrag);
+    }
+
+    if(editMode == MoondustBaseScene::MODE_SelectingOnly)
+        s->m_disableMoveItems = true;
 }
 
 
 void WLD_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if(!scene) return;
+    if(!scene)
+        return;
+
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if(s->m_editMode == WldScene::MODE_PasteFromClip)
+    if(s->editMode() == MoondustBaseScene::MODE_PasteFromClip)
     {
         if(mouseEvent->buttons() & Qt::RightButton)
         {
@@ -172,7 +194,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         MainWinConnect::pMainWin->on_actionSelect_triggered();
     }
 
-    QList<QGraphicsItem *> selectedList = s->selectedItems();
+    MoondustBaseScene::PGE_ItemList selectedList = s->selectedItems();
 
     // check for grid snap
     if((!selectedList.isEmpty()) && (s->m_mouseIsMoved))
@@ -196,7 +218,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         //Only if collision ckecking enabled
         if(!s->m_pastingMode)
         {
-            if(s->m_opts.collisionsEnabled && s->checkGroupCollisions(&selectedList))
+            if(s->m_opts.collisionsEnabled && s->checkGroupCollisions(selectedList))
             {
                 collisionPassed = false;
                 s->returnItemBackGroup(selectedList);

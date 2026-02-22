@@ -25,7 +25,9 @@
 #include "items/item_water.h"
 #include "items/item_door.h"
 
+#ifdef _DEBUG_
 #include "../../../common_features/logger.h"
+#endif
 
 
 ///
@@ -50,75 +52,7 @@ void LvlScene::prepareCollisionBuffer()
     }
 }
 
-//Checking group collisions. Return true if was found even one passed collision in this group
-bool LvlScene::checkGroupCollisions(PGE_ItemList *items)
-{
-    if(!items)
-        return false;
-    if(items->empty())
-        return false;
-    if(items->size() == 1)
-    {
-        LogDebug(QString("Collision check: single item"));
-        return (itemCollidesWith(items->first()) != nullptr);
-    }
-
-    //9 - width, 10 - height
-    QRectF findZone = QRectF(items->first()->scenePos(),
-                             QSizeF(items->first()->data(ITEM_WIDTH).toInt(),
-                                    items->first()->data(ITEM_HEIGHT).toInt()));
-    //get Zone
-    for(auto *it : *items)
-    {
-        if(!it) continue;
-        if(it->scenePos().x() - 10 < findZone.left())
-            findZone.setLeft(it->scenePos().x());
-        if(it->scenePos().y() - 10 < findZone.top())
-            findZone.setTop(it->scenePos().y());
-
-        if(it->scenePos().x() + it->data(ITEM_WIDTH).toInt() > findZone.right())
-            findZone.setRight(it->scenePos().x() + it->data(ITEM_WIDTH).toInt());
-        if(it->scenePos().y() + it->data(ITEM_HEIGHT).toInt() > findZone.bottom())
-            findZone.setBottom(it->scenePos().y() + it->data(ITEM_HEIGHT).toInt());
-    }
-
-    findZone.setLeft(findZone.left() - 10);
-    findZone.setRight(findZone.right() + 10);
-    findZone.setTop(findZone.top() - 10);
-    findZone.setBottom(findZone.bottom() + 10);
-
-    PGE_ItemList CheckZone;
-    queryItems(findZone, &CheckZone);
-#ifdef _DEBUG_
-    LogDebug(QString("Collision check: found items for check %1").arg(CheckZone.size()));
-    LogDebug(QString("Collision rect: x%1 y%2 w%3 h%4").arg(findZone.x())
-             .arg(findZone.y()).arg(findZone.width()).arg(findZone.height()));
-#endif
-
-    //Don't collide with items which in the group
-    for(int i = 0; i < CheckZone.size(); i++)
-    {
-        for(int j = 0; j < (*items).size(); j++)
-        {
-            if(CheckZone[i] == (*items)[j])
-            {
-                CheckZone.removeOne(CheckZone[i]);
-                i--;
-                break;
-            }
-        }
-    }
-
-    for(auto *it : *items)
-    {
-        if(itemCollidesWith(it, &CheckZone) != nullptr)
-            return true;
-    }
-    return false;
-
-}
-
-QGraphicsItem *LvlScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *itemgrp, PGE_ItemList *allCollisions)
+QGraphicsItem *LvlScene::itemCollidesWith(const QGraphicsItem *item, PGE_ItemList *itemgrp, PGE_ItemList *allCollisions)
 {
     qreal leftA, leftB;
     qreal rightA, rightB;
@@ -312,7 +246,7 @@ QGraphicsItem *LvlScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *ite
     return nullptr;
 }
 
-QGraphicsItem *LvlScene::itemCollidesCursor(QGraphicsItem *item)
+QGraphicsItem *LvlScene::itemCollidesCursor(const QGraphicsItem *item)
 {
     PGE_ItemList collisions;
     double x = item->scenePos().x();
@@ -379,79 +313,4 @@ QGraphicsItem *LvlScene::itemCollidesCursor(QGraphicsItem *item)
             return it;
     }
     return nullptr;
-}
-
-namespace LevelScene_space
-{
-    bool _TreeSearchCallback(QGraphicsItem *item, void *arg)
-    {
-        LvlScene::PGE_ItemList *list = static_cast<LvlScene::PGE_ItemList * >(arg);
-        if(list)
-        {
-            if(item)
-                (*list).push_back(item);
-        }
-        return true;
-    }
-}
-
-void LvlScene::queryItems(QRectF &zone, PGE_ItemList *resultList)
-{
-    RPoint lt = {(int64_t)zone.left(), (int64_t)zone.top()};
-    RPoint rb = {(int64_t)zone.right() + 1, (int64_t)zone.bottom() + 1};
-    tree.Search(lt, rb, LevelScene_space::_TreeSearchCallback, (void *)resultList);
-}
-
-void LvlScene::queryItems(double x, double y, PGE_ItemList *resultList)
-{
-    QRectF zone(x, y, 1, 1);
-    queryItems(zone, resultList);
-}
-
-
-void LvlScene::registerElement(QGraphicsItem *item)
-{
-    QPoint pt = item->scenePos().toPoint();
-    QSize pz(item->data(ITEM_WIDTH).toInt(), item->data(ITEM_HEIGHT).toInt());
-    RPoint lt = {(int64_t)pt.x(), (int64_t)pt.y()};
-    RPoint rb = {(int64_t)pt.x() + (int64_t)pz.width(), (int64_t)pt.y() + (int64_t)pz.height()};
-
-    if(pz.width() <= 0)
-    {
-        rb[0] = pt.x() + 1;
-        pz.setWidth(1);
-    }
-    if(pz.height() <= 0)
-    {
-        rb[1] = pt.y() + 1;
-        pz.setHeight(1);
-    }
-
-    tree.Insert(lt, rb, item);
-    item->setData(ITEM_LAST_POS, pt);
-    item->setData(ITEM_LAST_SIZE, pz);
-    m_itemsAll.insert(item);
-}
-
-void LvlScene::unregisterElement(QGraphicsItem *item)
-{
-    if(!item->data(ITEM_LAST_POS).isValid())
-        return;
-
-    if(item->data(ITEM_LAST_SIZE).isNull())
-        return;
-
-    QPoint pt = item->data(ITEM_LAST_POS).toPoint();
-    QSize  pz = item->data(ITEM_LAST_SIZE).toSize();
-    RPoint lt = {(int64_t)pt.x(), (int64_t)pt.y()};
-    RPoint rb = {(int64_t)pt.x() + (int64_t)pz.width(), (int64_t)pt.y() + (int64_t)pz.height()};
-
-    if(pz.width() <= 0)
-        rb[0] = pt.x() + 1;
-
-    if(pz.height() <= 0)
-        rb[1] = pt.y() + 1;
-
-    tree.Remove(lt, rb, item);
-    m_itemsAll.remove(item);
 }

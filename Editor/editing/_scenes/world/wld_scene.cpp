@@ -39,11 +39,9 @@ WldScene::WldScene(MainWindow *mw,
                    DataConfig &configs,
                    WorldData &FileData,
                    QObject *parent) :
-    QGraphicsScene(parent),
-    m_mw(mw),
+    MoondustBaseScene(mw, parentView, parent),
     m_configs(&configs), // Pointer to Main Configs
     m_data(&FileData), //Add pointer to level data
-    m_viewPort(parentView),
     m_subWindow(nullptr),
 
     //set dummy images if target not exist or wrong
@@ -72,7 +70,6 @@ WldScene::WldScene(MainWindow *mw,
     m_emptyCollisionCheck(false),
 
     //Editing mode
-    m_editMode(0),
     m_editModeObj(nullptr),
 
     m_placingItemType(0),
@@ -158,34 +155,34 @@ WldScene::WldScene(MainWindow *mw,
 
     //Build edit mode classes
     WLD_ModeHand *modeHand = new WLD_ModeHand(this);
-    m_editModes.push_back(modeHand);
+    m_editModes.insert(MODE_HandScroll, modeHand);
 
     WLD_ModeSelect *modeSelect = new WLD_ModeSelect(this);
-    m_editModes.push_back(modeSelect);
+    m_editModes.insert(MODE_Selecting, modeSelect);
 
     WLD_ModeResize *modeResize = new WLD_ModeResize(this);
-    m_editModes.push_back(modeResize);
+    m_editModes.insert(MODE_Resizing, modeResize);
 
     WLD_ModeErase *modeErase = new WLD_ModeErase(this);
-    m_editModes.push_back(modeErase);
+    m_editModes.insert(MODE_Erasing, modeErase);
 
     WLD_ModePlace *modePlace = new WLD_ModePlace(this);
-    m_editModes.push_back(modePlace);
+    m_editModes.insert(MODE_PlacingNew, modePlace);
 
     WLD_ModeRect *modeSquare = new WLD_ModeRect(this);
-    m_editModes.push_back(modeSquare);
+    m_editModes.insert(MODE_DrawRect, modeSquare);
 
     WLD_ModeCircle *modeCircle = new WLD_ModeCircle(this);
-    m_editModes.push_back(modeCircle);
+    m_editModes.insert(MODE_DrawCircle, modeCircle);
 
     WLD_ModeLine *modeLine = new WLD_ModeLine(this);
-    m_editModes.push_back(modeLine);
+    m_editModes.insert(MODE_Line, modeLine);
 
     WLD_ModeSetPoint *modeSetPoint = new WLD_ModeSetPoint(this);
-    m_editModes.push_back(modeSetPoint);
+    m_editModes.insert(MODE_SetPoint, modeSetPoint);
 
     WLD_ModeFill *modeFill = new WLD_ModeFill(this);
-    m_editModes.push_back(modeFill);
+    m_editModes.insert(MODE_Fill, modeFill);
 
     m_editModeObj = modeSelect;
     m_editModeObj->set();
@@ -193,13 +190,13 @@ WldScene::WldScene(MainWindow *mw,
 
 WldScene::~WldScene()
 {
-    if(m_labelBox) delete m_labelBox;
-    while(!m_editModes.isEmpty())
-    {
-        EditMode *tmp = m_editModes.first();
-        m_editModes.pop_front();
-        delete tmp;
-    }
+    if(m_labelBox)
+        delete m_labelBox;
+
+    for(auto p = m_editModes.begin(); p != m_editModes.end(); ++p)
+        delete p.value();
+
+    m_editModes.clear();
 }
 
 void WldScene::drawForeground(QPainter *painter, const QRectF &rect)

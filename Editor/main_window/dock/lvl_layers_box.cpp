@@ -299,8 +299,10 @@ void LvlLayersBox::removeLayerItems(QString layerName)
         return;
 
     LevelData delData;
+    // It must be copied, otherwise it might crash on removal of layer with items
+    QSet<QGraphicsItem *> allItems = edit->scene->allItems();
 
-    for(auto it = edit->scene->m_itemsAll.begin(); it != edit->scene->m_itemsAll.end(); it++)
+    for(auto it = allItems.begin(); it != allItems.end(); it++)
     {
         if((*it)->data(LvlScene::ITEM_IS_ITEM).isNull() || !(*it)->data(LvlScene::ITEM_IS_ITEM).toBool())
             continue;
@@ -310,7 +312,9 @@ void LvlLayersBox::removeLayerItems(QString layerName)
 
         int objType = (*it)->data(LvlScene::ITEM_TYPE_INT).toInt();
 
-        if(objType == ItemTypes::LVL_Block)
+        switch(objType)
+        {
+        case ItemTypes::LVL_Block:
         {
             auto *b = qgraphicsitem_cast<ItemBlock *>(*it);
             Q_ASSERT(b);
@@ -323,8 +327,10 @@ void LvlLayersBox::removeLayerItems(QString layerName)
                 //activeLvlEditWin()->scene->removeItem((*it));
             }
 
+            break;
         }
-        else if(objType == ItemTypes::LVL_BGO)
+
+        case ItemTypes::LVL_BGO:
         {
             auto *b = qgraphicsitem_cast<ItemBGO *>(*it);
             Q_ASSERT(b);
@@ -336,8 +342,11 @@ void LvlLayersBox::removeLayerItems(QString layerName)
                 delete(b);
                 //activeLvlEditWin()->scene->removeItem((*it));
             }
+
+            break;
         }
-        else if(objType == ItemTypes::LVL_NPC)
+
+        case ItemTypes::LVL_NPC:
         {
             auto *b = qgraphicsitem_cast<ItemNPC *>(*it);
             Q_ASSERT(b);
@@ -349,8 +358,11 @@ void LvlLayersBox::removeLayerItems(QString layerName)
                 delete(b);
                 //activeLvlEditWin()->scene->removeItem((*it));
             }
+
+            break;
         }
-        else if(objType == ItemTypes::LVL_PhysEnv)
+
+        case ItemTypes::LVL_PhysEnv:
         {
             auto *b = qgraphicsitem_cast<ItemPhysEnv *>(*it);
             Q_ASSERT(b);
@@ -362,8 +374,12 @@ void LvlLayersBox::removeLayerItems(QString layerName)
                 delete(b);
                 //activeLvlEditWin()->scene->removeItem((*it));
             }
+
+            break;
         }
-        else if(objType == ItemTypes::LVL_META_DoorEnter || objType == ItemTypes::LVL_META_DoorExit)
+
+        case ItemTypes::LVL_META_DoorEnter:
+        case ItemTypes::LVL_META_DoorExit:
         {
             auto *b = qgraphicsitem_cast<ItemDoor *>(*it);
             Q_ASSERT(b);
@@ -389,6 +405,11 @@ void LvlLayersBox::removeLayerItems(QString layerName)
                 delete(b);
                 //activeLvlEditWin()->scene->removeItem((*it));
             }
+            break;
+        }
+
+        default:
+            break;
         }
     }
 
@@ -446,7 +467,9 @@ void LvlLayersBox::modifyLayer(QString layerName, bool visible)
     if(!edit)
         return;
 
-    for(auto it = edit->scene->m_itemsAll.begin(); it != edit->scene->m_itemsAll.end(); it++)
+    const QSet<QGraphicsItem *> &allItems = edit->scene->allItems();
+
+    for(auto it = allItems.begin(); it != allItems.end(); it++)
     {
         QGraphicsItem *item = *it;
 
@@ -511,7 +534,9 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName)
     if(!edit)
         return;
 
-    for(auto it = edit->scene->m_itemsAll.begin(); it != edit->scene->m_itemsAll.end(); it++)
+    const QSet<QGraphicsItem *> &allItems = edit->scene->allItems();
+
+    for(auto it = allItems.begin(); it != allItems.end(); it++)
     {
         QGraphicsItem *item = *it;
 
@@ -618,7 +643,9 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName, bool vis
 
     LevelData modData;
 
-    for(auto it = edit->scene->m_itemsAll.begin(); it != edit->scene->m_itemsAll.end(); it++)
+    const QSet<QGraphicsItem *> &allItems = edit->scene->allItems();
+
+    for(auto it = allItems.begin(); it != allItems.end(); it++)
     {
         QGraphicsItem *item = *it;
 

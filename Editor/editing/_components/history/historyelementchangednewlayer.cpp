@@ -39,7 +39,7 @@ void HistoryElementChangedNewLayer::undo()
 
     LevelData modifiedSourceData = m_changedItems;
 
-    ItemSearcher *searcher = new ItemSearcher(static_cast<ItemTypes::itemTypesMultiSelectable>(
+    ItemSearcher *searcher = new ItemSearcher(static_cast<uint32_t>(
                 ItemTypes::LVL_S_Block |
                 ItemTypes::LVL_S_BGO |
                 ItemTypes::LVL_S_NPC |
@@ -78,7 +78,7 @@ void HistoryElementChangedNewLayer::redo()
 
     lvlScene->m_data->layers.push_back(m_newLayer);
 
-    ItemSearcher *searcher = new ItemSearcher(static_cast<ItemTypes::itemTypesMultiSelectable>(
+    ItemSearcher *searcher = new ItemSearcher(static_cast<uint32_t>(
                 ItemTypes::LVL_S_Block |
                 ItemTypes::LVL_S_BGO |
                 ItemTypes::LVL_S_NPC |

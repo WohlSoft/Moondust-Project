@@ -319,6 +319,7 @@ list(APPEND PGE_EDITOR_SRCS
     editing/edit_world/wld_edit_control.cpp
     editing/edit_world/wld_files_io.cpp
     editing/edit_world/world_edit.cpp
+    editing/_scenes/common/base_scene.cpp
     editing/_scenes/level/data_manager/lvl_animators.cpp
     editing/_scenes/level/data_manager/lvl_custom_gfx.cpp
     editing/_scenes/level/edit_modes/mode_circle.cpp
@@ -546,6 +547,7 @@ file(GLOB MOONDUST_EDITOR_HEADS_SRC
     editing/_dialogs/_WIP/*.h
     editing/_scenes/*.h
     editing/_scenes/common/*.h
+    editing/_scenes/common/*.hpp
     editing/_scenes/world/*.h
     editing/_scenes/world/edit_modes/*.h
     editing/_scenes/world/data_manager/*.h

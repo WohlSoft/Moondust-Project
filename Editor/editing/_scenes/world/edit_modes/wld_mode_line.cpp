@@ -52,11 +52,12 @@ void WLD_ModeLine::set()
     s->m_busyMode = true;
     s->m_disableMoveItems = false;
 
-    s->m_viewPort->setInteractive(true);
-    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_line_fill));
-    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
-    s->m_viewPort->setRenderHint(QPainter::Antialiasing, true);
-    s->m_viewPort->viewport()->setMouseTracking(true);
+    auto *vp = s->curViewPort();
+    vp->setInteractive(true);
+    vp->setCursor(Themes::Cursor(Themes::cursor_line_fill));
+    vp->setDragMode(QGraphicsView::NoDrag);
+    vp->setRenderHint(QPainter::Antialiasing, true);
+    vp->viewport()->setMouseTracking(true);
 }
 
 void WLD_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
@@ -76,7 +77,7 @@ void WLD_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(!(mouseEvent->buttons() & Qt::LeftButton)) // Deny any other mouse buttons
         return;
 
-    LogDebug(QString("Line mode %1").arg(s->m_editMode));
+    LogDebug(QString("Line mode %1").arg(s->editMode()));
 
     s->m_lastTerrainArrayID = s->m_data->tile_array_id;
     s->m_lastSceneryArrayID = s->m_data->scene_array_id;

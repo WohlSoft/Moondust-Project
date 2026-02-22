@@ -165,9 +165,9 @@ void ItemBGO::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
 
     if(selected == cutBGO)
-        m_scene->m_mw->on_actionCut_triggered();
+        m_scene->mw()->on_actionCut_triggered();
     else if(selected == copyBGO)
-        m_scene->m_mw->on_actionCopy_triggered();
+        m_scene->mw()->on_actionCopy_triggered();
     else if(selected == remove)
         m_scene->removeSelectedLvlItems();
     else if((selected == remove_all_s) || (selected == remove_all))
@@ -324,7 +324,7 @@ cancelRemoveSSS:
         int tabType;
         ItemSelectDialog *blockList = new ItemSelectDialog(m_scene->m_configs,
                 ItemSelectDialog::TAB_BGO | ItemSelectDialog::TAB_BLOCK,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_mw,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->mw(),
                 ItemSelectDialog::TAB_BGO);
         blockList->setTabsOrder({ItemSelectDialog::TAB_BGO, ItemSelectDialog::TAB_BLOCK});
         util::DialogToCenter(blockList, true);
@@ -421,12 +421,12 @@ cancelTransform:
     else if(selected == copyArrayID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.meta.array_id));
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyItemID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.id));
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXY)
     {
@@ -435,7 +435,7 @@ cancelTransform:
             .arg(m_data.x)
             .arg(m_data.y)
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXYWH)
     {
@@ -446,7 +446,7 @@ cancelTransform:
             .arg(m_imageSize.width())
             .arg(m_imageSize.height())
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosLTRB)
     {
@@ -457,7 +457,7 @@ cancelTransform:
             .arg(m_data.x + m_imageSize.width())
             .arg(m_data.y + m_imageSize.height())
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == rawUserData)
     {
@@ -500,7 +500,6 @@ cancelTransform:
             }//Find selected layer's item
         }
     }
-
 }
 
 

@@ -149,34 +149,43 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
     {
         if(tile.x < baseX)
             baseX = tile.x;
+
         if(tile.y < baseY)
             baseY = tile.y;
     }
+
     for(WorldScenery &scene : BufferIn.scenery)
     {
         if(scene.x < baseX)
             baseX = scene.x;
+
         if(scene.y < baseY)
             baseY = scene.y;
     }
+
     for(WorldPathTile &path : BufferIn.paths)
     {
         if(path.x < baseX)
             baseX = path.x;
+
         if(path.y < baseY)
             baseY = path.y;
     }
+
     for(WorldLevelTile &level : BufferIn.levels)
     {
         if(level.x < baseX)
             baseX = level.x;
+
         if(level.y < baseY)
             baseY = level.y;
     }
+
     for(WorldMusicBox &music : BufferIn.music)
     {
         if(music.x < baseX)
             baseX = music.x;
+
         if(music.y < baseY)
             baseY = music.y;
     }

@@ -53,9 +53,10 @@ void WLD_ModeErase::set()
     s->m_busyMode = false;
     s->m_disableMoveItems = false;
 
-    s->m_viewPort->setInteractive(true);
-    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_erasing));
-    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
+    auto *vp = s->curViewPort();
+    vp->setInteractive(true);
+    vp->setCursor(Themes::Cursor(Themes::cursor_erasing));
+    vp->setDragMode(QGraphicsView::NoDrag);
 }
 
 void WLD_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)

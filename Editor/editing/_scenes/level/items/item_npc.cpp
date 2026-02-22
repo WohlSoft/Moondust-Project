@@ -241,9 +241,9 @@ void ItemNPC::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
 
     if(selected == cutNpc)
-        m_scene->m_mw->on_actionCut_triggered();
+        m_scene->mw()->on_actionCut_triggered();
     else if(selected == copyNpc)
-        m_scene->m_mw->on_actionCopy_triggered();
+        m_scene->mw()->on_actionCopy_triggered();
     else if((selected == transform) || (selected == transform_all) || (selected == transform_all_s))
     {
         LevelData oldData;
@@ -341,12 +341,12 @@ cancelTransform:
     else if(selected == copyArrayID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.meta.array_id));
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyItemID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.id));
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXY)
     {
@@ -355,7 +355,7 @@ cancelTransform:
             .arg(m_data.x)
             .arg(m_data.y)
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXYWH)
     {
@@ -366,7 +366,7 @@ cancelTransform:
             .arg(m_localProps.setup.width)
             .arg(m_localProps.setup.height)
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosLTRB)
     {
@@ -377,7 +377,7 @@ cancelTransform:
             .arg(m_data.x + m_localProps.setup.width)
             .arg(m_data.y + m_localProps.setup.height)
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == newNpc)
     {
@@ -385,12 +385,12 @@ cancelTransform:
         LogDebug(QString("NPC.txt path 2: %1").arg(NPCpath2));
 
         if((!m_scene->m_data->meta.untitled) && (QFileInfo(NPCpath2).exists()))
-            m_scene->m_mw->OpenFile(NPCpath2);
+            m_scene->mw()->OpenFile(NPCpath2);
         else if((!m_scene->m_data->meta.untitled) && (QFileInfo(NPCpath1).exists()))
-            m_scene->m_mw->OpenFile(NPCpath1);
+            m_scene->mw()->OpenFile(NPCpath1);
         else
         {
-            NpcEdit *child = m_scene->m_mw->createNPCChild();
+            NpcEdit *child = m_scene->mw()->createNPCChild();
             child->newFile(m_data.id,
                            m_scene->m_data->meta.path + "/" + m_scene->m_data->meta.filename);
             child->show();
@@ -432,7 +432,7 @@ cancelTransform:
     {
         LevelData selData;
 
-        ItemMsgBox msgBox(Opened_By::NPC, m_data.msg, m_data.friendly, QString(), QString(), m_scene->m_mw);
+        ItemMsgBox msgBox(Opened_By::NPC, m_data.msg, m_data.friendly, QString(), QString(), m_scene->mw());
         util::DialogToCenter(&msgBox, true);
 
         if(msgBox.exec() == QDialog::Accepted)

@@ -38,10 +38,16 @@ LVL_ModeSelect::LVL_ModeSelect(QGraphicsScene *parentScene, QObject *parent)
 LVL_ModeSelect::~LVL_ModeSelect()
 {}
 
-
 void LVL_ModeSelect::set()
 {
-    if(!scene) return;
+    set(MoondustBaseScene::MODE_Selecting);
+}
+
+void LVL_ModeSelect::set(int editMode)
+{
+    if(!scene)
+        return;
+
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
     s->resetCursor();
@@ -52,9 +58,25 @@ void LVL_ModeSelect::set()
     s->m_busyMode = false;
     s->m_disableMoveItems = false;
 
-    s->m_viewPort->setInteractive(true);
-    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_normal));
-    s->m_viewPort->setDragMode(QGraphicsView::RubberBandDrag);
+    auto *vp = s->curViewPort();
+
+    if(editMode == MoondustBaseScene::MODE_PasteFromClip)
+    {
+        s->clearSelection();
+        vp->setInteractive(true);
+        vp->setCursor(Themes::Cursor(Themes::cursor_pasting));
+        vp->setDragMode(QGraphicsView::NoDrag);
+        s->m_disableMoveItems = true;
+    }
+    else
+    {
+        vp->setInteractive(true);
+        vp->setCursor(Themes::Cursor(Themes::cursor_normal));
+        vp->setDragMode(QGraphicsView::RubberBandDrag);
+    }
+
+    if(editMode == MoondustBaseScene::MODE_SelectingOnly)
+        s->m_disableMoveItems = true;
 }
 
 
@@ -63,15 +85,16 @@ void LVL_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
-    if(s->m_editMode == LvlScene::MODE_PasteFromClip)
+    if(s->editMode() == MoondustBaseScene::MODE_PasteFromClip)
     {
         if(mouseEvent->buttons() & Qt::RightButton)
         {
-            s->m_mw->on_actionSelect_triggered();
+            s->mw()->on_actionSelect_triggered();
             dontCallEvent = true;
             s->m_mouseIsMovedAfterKey = true;
             return;
         }
+
         s->m_pastingMode = true;
         dontCallEvent = true;
         s->m_mouseIsMovedAfterKey = true;
@@ -101,7 +124,7 @@ void LVL_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     ItemBlock *blk = qgraphicsitem_cast<ItemBlock *>(it);
                     if(blk) LvlPlacingItems::blockSet = blk->m_data;
-                    s->m_mw->SwitchPlacingItem(ItemTypes::LVL_Block, itd, true);
+                    s->mw()->SwitchPlacingItem(ItemTypes::LVL_Block, itd, true);
                     return;
                 }
 
@@ -109,7 +132,7 @@ void LVL_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     ItemBGO *blk = qgraphicsitem_cast<ItemBGO *>(it);
                     if(blk) LvlPlacingItems::bgoSet = blk->m_data;
-                    s->m_mw->SwitchPlacingItem(ItemTypes::LVL_BGO, itd, true);
+                    s->mw()->SwitchPlacingItem(ItemTypes::LVL_BGO, itd, true);
                     return;
                 }
 
@@ -117,7 +140,7 @@ void LVL_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     ItemNPC *blk = qgraphicsitem_cast<ItemNPC *>(it);
                     if(blk) LvlPlacingItems::npcSet = blk->m_data;
-                    s->m_mw->SwitchPlacingItem(ItemTypes::LVL_NPC, itd, true);
+                    s->mw()->SwitchPlacingItem(ItemTypes::LVL_NPC, itd, true);
                     return;
                 }
                 }
@@ -172,7 +195,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         s->paste(s->m_dataBuffer, mouseEvent->scenePos().toPoint());
         s->m_pastingMode = false;
         s->m_mouseIsMovedAfterKey = false;
-        s->m_mw->on_actionSelect_triggered();
+        s->mw()->on_actionSelect_triggered();
         s->Debugger_updateItemList();
     }
 
@@ -199,7 +222,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         //Only if collision ckecking enabled
         if(!s->m_pastingMode)
         {
-            if(s->m_opts.collisionsEnabled && s->checkGroupCollisions(&selectedList))
+            if(s->m_opts.collisionsEnabled && s->checkGroupCollisions(selectedList))
             {
                 collisionPassed = false;
                 s->returnItemBackGroup(selectedList);
@@ -351,7 +374,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         {
             /***********If some door items are moved, refresh list!*****************/
             if(!historySourceBuffer.doors.isEmpty())
-                s->m_mw->dock_LvlWarpProps->setDoorData(-2);
+                s->mw()->dock_LvlWarpProps->setDoorData(-2);
             /***********************************************************************/
             s->m_history->addMove(historySourceBuffer, historyBuffer);
         }

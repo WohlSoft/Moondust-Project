@@ -27,13 +27,13 @@ class LVL_ModeSquare : public EditMode
 public:
     LVL_ModeSquare(QGraphicsScene *parentScene = nullptr, QObject *parent = nullptr);
     ~LVL_ModeSquare();
-    void set();
-    void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseMove(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseRelease(QGraphicsSceneMouseEvent *mouseEvent);
+    void set() override;
+    void mousePress(QGraphicsSceneMouseEvent *mouseEvent) override;
+    void mouseMove(QGraphicsSceneMouseEvent *mouseEvent) override;
+    void mouseRelease(QGraphicsSceneMouseEvent *mouseEvent) override;
 
-    void keyPress(QKeyEvent *keyEvent);
-    void keyRelease(QKeyEvent *keyEvent);
+    void keyPress(QKeyEvent *keyEvent) override;
+    void keyRelease(QKeyEvent *keyEvent) override;
 
 private:
     QPointF drawStartPos;

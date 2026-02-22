@@ -165,7 +165,7 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
     if(selected == openLvl)
     {
-        m_scene->m_mw ->OpenFile(lvlDstPath);
+        m_scene->mw()->OpenFile(lvlDstPath);
         m_scene->m_contextMenuIsOpened = false;
     }
     else if(selected == setPathBG)
@@ -213,13 +213,13 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     else if(selected == cutTile)
     {
         //scene->doCut = true ;
-        m_scene->m_mw->on_actionCut_triggered();
+        m_scene->mw()->on_actionCut_triggered();
         m_scene->m_contextMenuIsOpened = false;
     }
     else if(selected == copyTile)
     {
         //scene->doCopy = true ;
-        m_scene->m_mw->on_actionCopy_triggered();
+        m_scene->mw()->on_actionCopy_triggered();
         m_scene->m_contextMenuIsOpened = false;
     }
     else if((selected == transform) || (selected == transform_all))
@@ -266,12 +266,12 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     else if(selected == copyArrayID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.meta.array_id));
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyItemID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.id));
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXY)
     {
@@ -280,7 +280,7 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_data.x)
             .arg(m_data.y)
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXYWH)
     {
@@ -291,7 +291,7 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_imageSize.width())
             .arg(m_imageSize.height())
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosLTRB)
     {
@@ -302,7 +302,7 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_data.x + m_imageSize.width())
             .arg(m_data.y + m_imageSize.height())
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == remove)
         m_scene->removeSelectedWldItems();

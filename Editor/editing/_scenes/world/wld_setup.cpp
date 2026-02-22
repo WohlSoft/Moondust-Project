@@ -27,83 +27,40 @@
 #include "items/item_level.h"
 #include "items/item_music.h"
 
-void WldScene::SwitchEditingMode(int EdtMode)
+void WldScene::SwitchEditingMode(EditModeID EdtMode)
 {
     m_eraserIsEnabled = false; //All just selected items will be removed
     m_pastingMode = false;
     m_busyMode = false; //Placing/drawing on map, disable selecting and dragging items
     m_disableMoveItems = false; // You can do anything with items, but can't move them
 
-    switch(EdtMode)
-    {
-    case MODE_PlacingNew:
-        switchMode("Placing");
-        break;
+    auto newMode = m_editModes.find(EdtMode);
 
-    case MODE_DrawRect:
-        switchMode("Square");
-        break;
+    if(newMode == m_editModes.end())
+        newMode = m_editModes.find(MODE_Selecting);
 
-    case MODE_DrawCircle:
-        switchMode("Circle");
-        break;
+    Q_ASSERT(newMode != m_editModes.end());
 
-    case MODE_Line:
-        switchMode("Line");
-        break;
-
-    case MODE_SetPoint:
-        switchMode("SetPoint");
-        break;
-
-    case MODE_Resizing:
-        switchMode("Resize");
-        break;
-
-    case MODE_PasteFromClip:
-        switchMode("Select");
-        clearSelection();
-        m_disableMoveItems = true;
-        m_viewPort->setInteractive(true);
-        m_viewPort->setCursor(Themes::Cursor(Themes::cursor_pasting));
-        m_viewPort->setDragMode(QGraphicsView::NoDrag);
-        break;
-
-    case MODE_Erasing:
-        switchMode("Erase");
-        break;
-
-    case MODE_SelectingOnly:
-        switchMode("Select");
-        m_disableMoveItems = true;
-        break;
-
-    case MODE_HandScroll:
-        switchMode("HandScroll");
-        break;
-
-    case MODE_Fill:
-        switchMode("Fill");
-        break;
-
-    case MODE_Selecting:
-    default:
-        switchMode("Select");
-        break;
-
-    }
+    m_editModeObj = newMode.value();
+    m_editModeObj->set(EdtMode);
     m_editMode = EdtMode;
-
 }
 
-void WldScene::switchMode(QString title)
+bool WldScene::allowEditModeSwitch() const
 {
-    for(int i = 0; i < m_editModes.size(); i++)
+    return !m_isSelectionDialog;
+}
+
+void WldScene::switchMode(const QString &title)
+{
+    qDebug() << "Switching mode " << title;
+    foreach(auto &editMode,  m_editModes)
     {
-        if(m_editModes[i]->name() == title)
+        if(editMode->name().compare(title, Qt::CaseInsensitive))
         {
-            m_editModeObj = m_editModes[i];
+            m_editModeObj = editMode;
             m_editModeObj->set();
+            qDebug() << "mode " << title << "switched!";
             break;
         }
     }

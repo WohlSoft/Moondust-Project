@@ -43,9 +43,10 @@ void WLD_ModeHand::set()
     s->m_busyMode = false;
     s->m_disableMoveItems = false;
 
-    s->m_viewPort->setCursor(Qt::ArrowCursor);
-    s->m_viewPort->setInteractive(false);
-    s->m_viewPort->setDragMode(QGraphicsView::ScrollHandDrag);
+    auto *vp = s->curViewPort();
+    vp->setCursor(Qt::ArrowCursor);
+    vp->setInteractive(false);
+    vp->setDragMode(QGraphicsView::ScrollHandDrag);
 }
 
 void WLD_ModeHand::mousePress(QGraphicsSceneMouseEvent *mouseEvent)

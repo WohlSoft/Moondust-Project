@@ -1021,7 +1021,9 @@ void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
     if(!edit)
         return;
 
-    for(auto it = edit->scene->m_itemsAll.begin(); it != edit->scene->m_itemsAll.end(); it++)
+    const auto &allItems = edit->scene->allItems();
+
+    for(auto it = allItems.begin(); it != allItems.end(); it++)
     {
         QGraphicsItem *item = *it;
 
