@@ -39,12 +39,6 @@ WorldEdit::WorldEdit(MainWindow *mw, QWidget *parent) :
     ui->setupUi(this);
     updateTimer=NULL;
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
-#endif
-    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
-    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);
-
     ui->graphicsView->horizontalScrollBar()->setSingleStep(32);
     ui->graphicsView->horizontalScrollBar()->setTracking(true);
     ui->graphicsView->verticalScrollBar()->setSingleStep(32);

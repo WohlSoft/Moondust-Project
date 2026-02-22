@@ -92,8 +92,17 @@ GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     handScrollMotions = 0;
     originalCursor = this->cursor();
     rubberBandSelectionMode = Qt::IntersectsItemShape;
+    this->setCacheMode(QGraphicsView::CacheNone);
     this->setMouseTracking(true);
     this->setRubberBandSelectionMode(Qt::IntersectsItemShape);
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    setOptimizationFlag(QGraphicsView::DontClipPainter, true);
+#endif
+    setOptimizationFlag(QGraphicsView::DontSavePainterState, false);
+    setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing, true);
+    setRenderHint(QPainter::Antialiasing, false);
+
 #ifdef __APPLE__
     this->setAttribute(Qt::WA_AcceptTouchEvents, true);
 #endif
@@ -394,6 +403,76 @@ bool GraphicsWorkspace::eventFilter(QObject *obj, QEvent *event)
     }
 
     return QGraphicsView::eventFilter(obj, event);
+}
+#endif
+
+#if 0
+void GraphicsWorkspace::paintEvent(QPaintEvent *event)
+{
+    MoondustBaseScene *scene = dynamic_cast<MoondustBaseScene *>(this->scene());
+
+    if(!scene)
+    {
+        QGraphicsView::paintEvent(event);
+        return;
+    }
+
+    QRegion exposedRegion = event->region();
+    QRectF exposedSceneRect = mapToScene(exposedRegion.boundingRect()).boundingRect();
+
+    QPainter painter(viewport());
+
+#if QT_CONFIG(rubberband)
+    if(rubberBanding && !rubberBandRect.isEmpty())
+        painter.save();
+#endif
+
+    // Set up render hints
+    painter.setRenderHints(painter.renderHints(), false);
+    painter.setRenderHints(renderHints(), true);
+
+    // Set up viewport transform
+    const bool viewTransformed = isTransformed();
+    if(viewTransformed)
+        painter.setWorldTransform(viewportTransform());
+    const QTransform viewTransform = painter.worldTransform();
+
+    if(!(optimizationFlags() & DontSavePainterState))
+        painter.save();
+
+    drawBackground(&painter, exposedSceneRect);
+
+    if(!(optimizationFlags() & DontSavePainterState))
+        painter.restore();
+
+    // Items
+    scene->drawBetterDrawItems(&painter, viewTransformed ? &viewTransform : nullptr, &exposedRegion, viewport());
+    painter.setOpacity(1.0);
+    painter.setWorldTransform(viewTransform);
+
+    // Foreground
+    drawForeground(&painter, exposedSceneRect);
+
+    // Rubberband
+    if(rubberBanding && !rubberBandRect.isEmpty())
+    {
+        painter.restore();
+        QStyleOptionRubberBand option;
+        option.initFrom(viewport());
+        option.rect = rubberBandRect;
+        option.shape = QRubberBand::Rectangle;
+
+        QStyleHintReturnMask mask;
+        if(viewport()->style()->styleHint(QStyle::SH_RubberBand_Mask, &option, viewport(), &mask))
+        {
+            // painter clipping for masked rubberbands
+            painter.setClipRegion(mask.region, Qt::IntersectClip);
+        }
+
+        viewport()->style()->drawControl(QStyle::CE_RubberBand, &option, &painter, viewport());
+    }
+
+    painter.end();
 }
 #endif
 

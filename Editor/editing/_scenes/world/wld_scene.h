@@ -71,7 +71,7 @@ class WldScene : public MoondustBaseScene
 public:
     WldScene(MainWindow *mw, GraphicsWorkspace *parentView,
              DataConfig &configs, WorldData &FileData, QObject *parent = nullptr);
-    ~WldScene();
+    virtual ~WldScene() override;
 
     /* //////////////////////Contents/////////////////////////////
      *

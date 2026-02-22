@@ -94,7 +94,6 @@ WldScene::WldScene(MainWindow *mw,
 
     m_history(new WldHistoryManager(this, this))
 {
-    setItemIndexMethod(QGraphicsScene::NoIndex);
     if(parent)
     {
         if(strcmp(parent->metaObject()->className(), WORLD_EDIT_CLASS) == 0)

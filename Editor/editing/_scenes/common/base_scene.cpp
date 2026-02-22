@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QPainter>
+
 #include <common_features/logger.h>
 #include <common_features/edit_mode_base.h>
 
@@ -27,7 +29,7 @@ MoondustBaseScene::MoondustBaseScene(MainWindow *mw, GraphicsWorkspace *parentVi
     , m_mw(mw)
     , m_viewPort(parentView)
 {
-    setItemIndexMethod(QGraphicsScene::NoIndex);
+    setItemIndexMethod(QGraphicsScene::BspTreeIndex);
 }
 
 MoondustBaseScene::~MoondustBaseScene()
@@ -295,3 +297,222 @@ void MoondustBaseScene::unregisterElement(QGraphicsItem *item)
     tree.Remove(lt, rb, item);
     m_itemsAll.remove(item);
 }
+
+// static inline void _q_adjustRect(QRectF *rect)
+// {
+//     Q_ASSERT(rect);
+
+//     if (!rect->width())
+//         rect->adjust(qreal(-0.00001), 0, qreal(0.00001), 0);
+
+//     if (!rect->height())
+//         rect->adjust(0, qreal(-0.00001), 0, qreal(0.00001));
+// }
+
+// static inline QRectF adjustedItemEffectiveBoundingRect(const QGraphicsItem *item)
+// {
+//     Q_ASSERT(item);
+//     QRectF boundingRect(item->sceneBoundingRect());
+//     _q_adjustRect(&boundingRect);
+//     return boundingRect;
+// }
+
+// static inline bool itemIsUntransformableF(const QGraphicsItem *p)
+// {
+//     return p->flags() & QGraphicsItem::ItemIgnoresTransformations;
+// }
+
+#if 0
+void MoondustBaseScene::drawBetterDrawItems(QPainter *painter, const QTransform * const viewTransform, QRegion *exposedRegion, QWidget *widget)
+{
+    QRectF exposedSceneRect;
+
+    Q_ASSERT(exposedRegion);
+
+    if(!exposedRegion)
+        return; // Nothing to draw!
+
+    if(exposedRegion)
+    {
+        exposedSceneRect = exposedRegion->boundingRect().adjusted(-1, -1, 1, 1);
+
+        if(viewTransform)
+            exposedSceneRect = viewTransform->inverted().mapRect(exposedSceneRect);
+    }
+
+    PGE_ItemsListSorted tli;
+    queryItemsSorted(exposedSceneRect, &tli);
+
+    // bool allItems = false;
+    // QList<QGraphicsItem *> tli = items(exposedSceneRect, Qt::IntersectsItemShape, Qt::DescendingOrder, *viewTransform);
+
+    for(auto it = tli.begin(); it != tli.end(); ++it)
+    {
+        QGraphicsItem *item = it.value();
+        if(!item->isVisible())
+            continue;
+
+        painter->save();
+        painter->setTransform(item->sceneTransform(), true);
+        item->paint(painter, nullptr, widget);
+        painter->restore();
+
+        // QList<QGraphicsItem *> children = item->childItems();
+        // for(auto jt = children.begin(); jt != children.end(); ++jt)
+        // {
+        //     QGraphicsItem *child = *jt;
+        //     child->paint(painter, nullptr, widget);
+        // }
+    }
+}
+#endif
+
+#if 0
+static inline qreal combineOpacityFromParent(const QGraphicsItem *p, qreal parentOpacity)
+{
+    if(p->parentItem() && !(p->flags() & QGraphicsItem::ItemIgnoresParentOpacity) && !(p->parentItem()->flags() & QGraphicsItem::ItemDoesntPropagateOpacityToChildren))
+        return parentOpacity * p->opacity();
+
+    return p->opacity();
+}
+
+static inline bool childrenCombineOpacity(const QGraphicsItem *p)
+{
+    if(!p->childItems().size())
+        return true;
+
+    if(p->flags() & QGraphicsItem::ItemDoesntPropagateOpacityToChildren)
+        return false;
+
+    for(int i = 0; i < p->childItems().size(); ++i)
+    {
+        if (p->childItems().at(i)->flags() & QGraphicsItem::ItemIgnoresParentOpacity)
+            return false;
+    }
+
+    return true;
+}
+
+
+
+void MoondustBaseScene::drawSubtreeRecursive(QGraphicsItem *item, QPainter *painter, const QTransform * const viewTransform, QRegion *exposedRegion, QWidget *widget, qreal parentOpacity, const QTransform * const effectTransform)
+{
+    drawItems();
+
+    Q_ASSERT(item);
+
+    if(!item->isVisible())
+        return;
+
+    const bool itemHasContents = !(item->flags() & QGraphicsItem::ItemHasNoContents);
+    const bool itemHasChildren = !item->childItems().isEmpty();
+
+    if(!itemHasContents && !itemHasChildren)
+        return; // Item has neither contents nor children!(?)
+
+    const qreal opacity = combineOpacityFromParent(item, parentOpacity);
+    const bool itemIsFullyTransparent = opacity < qreal(0.001);
+    if(itemIsFullyTransparent && (!itemHasChildren || childrenCombineOpacity(item)))
+        return;
+
+    QTransform sceneTransform(Qt::Uninitialized);
+    QTransform transform(Qt::Uninitialized);
+    QTransform *transformPtr = nullptr;
+    bool translateOnlyTransform = false;
+
+#define ENSURE_TRANSFORM_PTR \
+    if(!transformPtr) \
+    { \
+        Q_ASSERT(!itemIsUntransformable); \
+        if (viewTransform) \
+        { \
+            transform = item->sceneTransform(); \
+            transform *= *viewTransform; \
+            transformPtr = &transform; \
+        } \
+        else \
+        { \
+            sceneTransform = item->sceneTransform(); \
+            transformPtr = &sceneTransform; \
+        } \
+    }
+
+
+    // Update the item's scene transform if the item is transformable;
+    // otherwise calculate the full transform,
+    bool wasDirtyParentSceneTransform = false;
+    const bool itemIsUntransformable = itemIsUntransformableF(item);
+
+    if(itemIsUntransformable)
+    {
+        transform = item->deviceTransform(viewTransform ? *viewTransform : QTransform());
+        transformPtr = &transform;
+    }
+    // else if(item->d_ptr->dirtySceneTransform)
+    // {
+    //     item->d_ptr->updateSceneTransformFromParent();
+    //     Q_ASSERT(!item->d_ptr->dirtySceneTransform);
+    //     wasDirtyParentSceneTransform = true;
+    // }
+
+    const bool itemClipsChildrenToShape = (item->flags() & QGraphicsItem::ItemClipsChildrenToShape || item->flags() & QGraphicsItem::ItemContainsChildrenInShape);
+    bool drawItem = itemHasContents && !itemIsFullyTransparent;
+    if(drawItem || minimumRenderSize() > 0.0)
+    {
+        const QRectF brect = adjustedItemEffectiveBoundingRect(item);
+
+        ENSURE_TRANSFORM_PTR
+
+        QRectF preciseViewBoundingRect = translateOnlyTransform ? brect.translated(transformPtr->dx(), transformPtr->dy())
+                                                                : transformPtr->mapRect(brect);
+
+        bool itemIsTooSmallToRender = false;
+        if(minimumRenderSize() > 0.0 && (preciseViewBoundingRect.width() < minimumRenderSize() || preciseViewBoundingRect.height() < minimumRenderSize()))
+        {
+            itemIsTooSmallToRender = true;
+            drawItem = false;
+        }
+
+        bool itemIsOutsideVisibleRect = false;
+
+        if(drawItem)
+        {
+            QRect viewBoundingRect = preciseViewBoundingRect.toAlignedRect();
+            viewBoundingRect.adjust(-int(rectAdjust), -int(rectAdjust), rectAdjust, rectAdjust);
+
+            if(widget)
+                item->d_ptr->paintedViewBoundingRects.insert(widget, viewBoundingRect);
+
+            drawItem = exposedRegion ? exposedRegion->intersects(viewBoundingRect)
+                                     : !viewBoundingRect.normalized().isEmpty();
+            itemIsOutsideVisibleRect = !drawItem;
+        }
+
+        if (itemIsTooSmallToRender || itemIsOutsideVisibleRect)
+        {
+            // We cannot simply use !drawItem here. If we did it is possible
+            // to enter the outter if statement with drawItem == false and minimumRenderSize > 0
+            // and finally end up inside this inner if, even though none of the above two
+            // conditions are met. In that case we should not return from this function
+            // but call draw() instead.
+            if(!itemHasChildren)
+                return;
+
+            if(itemClipsChildrenToShape)
+            {
+                // if (wasDirtyParentSceneTransform)
+                //     item->d_ptr->invalidateChildrenSceneTransform();
+                return;
+            }
+        }
+    } // else we know for sure this item has children we must process.
+
+    if (itemHasChildren && itemClipsChildrenToShape)
+        ENSURE_TRANSFORM_PTR;
+
+
+    draw(item, painter, viewTransform, transformPtr, exposedRegion, widget, opacity,
+         effectTransform, wasDirtyParentSceneTransform, drawItem);
+
+}
+#endif // if 0

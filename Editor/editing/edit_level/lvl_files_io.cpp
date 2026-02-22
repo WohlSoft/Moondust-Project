@@ -604,6 +604,8 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, DataConfi
         return false;
     }
 
+    ui->graphicsView->setUpdatesEnabled(false);
+
     LogDebug(QString(">>Starting to load file"));
     //Declaring of the scene
     scene = new LvlScene(m_mw, ui->graphicsView, configs, LvlData, this);
@@ -649,6 +651,8 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, DataConfi
     LvlData.meta.untitled = untitledstate;
     updateTitle();
     progress.deleteLater();
+
+    ui->graphicsView->setUpdatesEnabled(true);
 
     return true;
 }

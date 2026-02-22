@@ -138,6 +138,9 @@ protected:
 #ifdef __APPLE__
     virtual bool eventFilter(QObject *obj, QEvent *event) override;
 #endif
+
+    // virtual void paintEvent(QPaintEvent *event) override;
+
 private:
     bool gestureEvent(QGestureEvent *event);
 

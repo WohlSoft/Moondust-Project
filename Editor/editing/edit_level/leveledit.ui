@@ -35,7 +35,7 @@
    <string notr="true">--level--</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../_resources/editor.qrc">
+   <iconset resource="../../_resources/toolbar/toolbar.qrc">
     <normaloff>:/toolbar/dock/level16.png</normaloff>
     <normalon>:/toolbar/dock/level16.png</normalon>
     <activeoff>:/toolbar/dock/level16.png</activeoff>
@@ -98,9 +98,6 @@
      <property name="rubberBandSelectionMode">
       <enum>Qt::IntersectsItemShape</enum>
      </property>
-     <property name="optimizationFlags">
-      <set>QGraphicsView::DontAdjustForAntialiasing|QGraphicsView::DontSavePainterState</set>
-     </property>
     </widget>
    </item>
   </layout>
@@ -113,7 +110,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../_resources/editor.qrc"/>
+  <include location="../../_resources/toolbar/toolbar.qrc"/>
  </resources>
  <connections/>
 </ui>

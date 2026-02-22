@@ -71,9 +71,9 @@ class LvlScene : public MoondustBaseScene
     friend class LevelEdit;
     friend class LvlHistoryManager;
 public:
-    LvlScene(MainWindow *mw, GraphicsWorkspace *parentView,
+    explicit LvlScene(MainWindow *mw, GraphicsWorkspace *parentView,
              DataConfig &configs, LevelData &FileData, QObject *parent = nullptr);
-    ~LvlScene();
+    virtual ~LvlScene() override;
 
     /* //////////////////////Contents/////////////////////////////
      *

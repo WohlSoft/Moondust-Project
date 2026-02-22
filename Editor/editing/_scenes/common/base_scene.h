@@ -142,6 +142,10 @@ public:
     void updateElement(QGraphicsItem *item);
     void unregisterElement(QGraphicsItem *item);
 
+#if 0
+    void drawBetterDrawItems(QPainter *painter, const QTransform *const viewTransform, QRegion *exposedRect, QWidget *widget);
+#endif
+
 protected:
     //! Main window pointer
     MainWindow          *m_mw = nullptr;
@@ -164,6 +168,11 @@ protected:
     //! Placing/drawing on map, disable selecting and dragging items
     bool m_busyMode = false;
     bool m_disableMoveItems = false;
+
+private:
+    // quint32 rectAdjust = 2;
+
+    friend class GraphicsWorkspace;
 };
 
 #endif

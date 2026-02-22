@@ -564,6 +564,7 @@ void LvlScene::drawSpace()
         {
             removeItem(spaceItem);
             it = m_itemsBG.erase(it);
+            unregisterElement(spaceItem);
             delete spaceItem;
             continue;
         }
@@ -571,6 +572,7 @@ void LvlScene::drawSpace()
         {
             removeItem(spaceItem);
             it = m_itemsBG.erase(it);
+            unregisterElement(spaceItem);
             delete spaceItem;
             continue;
         }
@@ -672,8 +674,14 @@ void LvlScene::drawSpace()
     item->setOpacity(qreal(0.4));
     item->setData(ITEM_TYPE, "Space");
     item->setData(ITEM_TYPE_INT, ItemTypes::META_Space);
+    item->setData(ITEM_WIDTH, item->boundingRect().width());
+    item->setData(ITEM_HEIGHT, item->boundingRect().height());
     item2->setData(ITEM_TYPE, "SectionBorder");
     item2->setData(ITEM_TYPE_INT, ItemTypes::META_SectionBorder);
+    item2->setData(ITEM_WIDTH, item2->boundingRect().width());
+    item2->setData(ITEM_HEIGHT, item2->boundingRect().height());
     m_itemsBG.insert(item);
+    registerElement(item);
     m_itemsBG.insert(item2);
+    registerElement(item2);
 }

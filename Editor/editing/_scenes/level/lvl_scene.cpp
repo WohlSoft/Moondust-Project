@@ -91,7 +91,6 @@ LvlScene::LvlScene(MainWindow *mw,
     m_history(new LvlHistoryManager(this, this))
 
 {
-    setItemIndexMethod(QGraphicsScene::NoIndex);
     if(parent)
     {
         if(strcmp(parent->metaObject()->className(), LEVEL_EDIT_CLASS) == 0)
