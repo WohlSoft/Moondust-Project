@@ -40,10 +40,10 @@ void LVL_ModePlace::set()
     s->clearSelection();
     s->resetResizers();
 
-    s->m_eraserIsEnabled = false;
-    s->m_pastingMode = false;
-    s->m_busyMode = true;
-    s->m_disableMoveItems = false;
+    s->setEditFlagEraser(false);
+    s->setEditFlagPasteMode(false);
+    s->setEditFlagBusyMode(true);
+    s->setEditFlagNoMoveItems(false);
 
     auto *vp = s->curViewPort();
     vp->setInteractive(true);

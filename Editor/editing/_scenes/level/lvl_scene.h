@@ -377,16 +377,6 @@ public:
     // ////////////////////////////////////////////////////////////////////////////////
 
 
-    // ///////////////////Edit modes///////////////////////////
-public:
-    QHash<EditModeID, EditMode *> m_editModes;
-    EditMode *m_editModeObj = nullptr;
-
-    void switchMode(const QString &title) override;
-    void SwitchEditingMode(EditModeID EdtMode) override;
-
-
-
     // ///////////////////Placing Mode settings///////////////////////////
 public:
     enum placingItemType
@@ -426,11 +416,6 @@ public:
 public:
     bool m_mouseIsMovedAfterKey;
 
-    bool m_eraserIsEnabled;
-    bool m_pastingMode;
-
-    bool m_busyMode; //Placing/drawing on map, disable selecting and dragging items
-    bool m_disableMoveItems;
     bool m_contextMenuIsOpened;
 
     bool m_mouseLeftPressed; //Left mouse key is pressed

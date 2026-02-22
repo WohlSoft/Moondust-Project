@@ -24,11 +24,13 @@
 #include <QMultiMap>
 #include <QGraphicsScene>
 #include <QGraphicsItem>
+#include <QSharedPointer>
 
 #include <common_features/RTree.h>
 
 class MainWindow;
 class GraphicsWorkspace;
+class EditMode;
 
 class MoondustBaseScene : public QGraphicsScene
 {
@@ -36,7 +38,11 @@ class MoondustBaseScene : public QGraphicsScene
 
     static bool treeSearchCallback(QGraphicsItem *item, void *arg);
     static bool treeSearchCallbackMap(QGraphicsItem *item, void *arg);
+
 public:
+    explicit MoondustBaseScene(MainWindow *mw, GraphicsWorkspace *parentView, QObject *parent = nullptr);
+    virtual ~MoondustBaseScene();
+
     typedef QList<QGraphicsItem *> PGE_ItemList;
     typedef QMultiMap<qreal, QGraphicsItem*> PGE_ItemsListSorted;
     typedef RTree<QGraphicsItem *, int64_t, 2, int64_t > IndexTree;
@@ -95,14 +101,23 @@ public:
         MODE_Fill
     };
 
-    virtual void switchMode(const QString &title) = 0;
-    virtual void SwitchEditingMode(EditModeID EdtMode) = 0;
+    void switchEditMode(EditModeID EdtMode);
+
+    void setEditFlagEraser(bool en);
+    bool getEditFlagEraser() const;
+
+    void setEditFlagPasteMode(bool en);
+    bool getEditFlagPasteMode() const;
+
+    void setEditFlagBusyMode(bool en);
+    bool getEditFlagBusyMode() const;
+
+    void setEditFlagNoMoveItems(bool en);
+    bool getEditFlagNoMoveItems() const;
 
     EditModeID editMode() const;
 
     virtual bool allowEditModeSwitch() const;
-
-    explicit MoondustBaseScene(MainWindow *mw, GraphicsWorkspace *parentView, QObject *parent = nullptr);
 
     MainWindow *mw();
     GraphicsWorkspace *curViewPort();
@@ -138,6 +153,17 @@ protected:
     QSet<QGraphicsItem*> m_itemsAll;
     //! Current editing mode
     EditModeID m_editMode = MODE_Selecting;
+    //! Store of available edit modes
+    QHash<EditModeID, QSharedPointer<EditMode>> m_editModes;
+    //! Instance of the current edit mode
+    EditMode *m_editModeObj = nullptr;
+
+    // --- Scene related setup ---
+    bool m_eraserIsEnabled = false;
+    bool m_pastingMode = false;
+    //! Placing/drawing on map, disable selecting and dragging items
+    bool m_busyMode = false;
+    bool m_disableMoveItems = false;
 };
 
 #endif

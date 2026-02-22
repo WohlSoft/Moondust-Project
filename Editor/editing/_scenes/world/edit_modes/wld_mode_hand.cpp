@@ -38,10 +38,10 @@ void WLD_ModeHand::set()
     s->resetResizers();
     s->m_pointSelector.unserPointSelector();
 
-    s->m_eraserIsEnabled = false;
-    s->m_pastingMode = false;
-    s->m_busyMode = false;
-    s->m_disableMoveItems = false;
+    s->setEditFlagEraser(false);
+    s->setEditFlagPasteMode(false);
+    s->setEditFlagBusyMode(false);
+    s->setEditFlagNoMoveItems(false);
 
     auto *vp = s->curViewPort();
     vp->setCursor(Qt::ArrowCursor);

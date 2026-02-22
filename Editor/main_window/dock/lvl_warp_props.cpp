@@ -501,7 +501,7 @@ void LvlWarpBox::on_WarpSetEntrance_clicked()
 
     edit->scene->clearSelection();
     edit->changeCursor(LevelEdit::MODE_PlaceItem);
-    edit->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
+    edit->scene->switchEditMode(LvlScene::MODE_PlacingNew);
     edit->scene->setItemPlacer(4, warpId, LvlPlacingItems::DOOR_Entrance);
 
     mw()->dock_LvlItemProps->hide();
@@ -553,7 +553,7 @@ void LvlWarpBox::on_WarpSetExit_clicked()
 
     edit->scene->clearSelection();
     edit->changeCursor(LevelEdit::MODE_PlaceItem);
-    edit->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
+    edit->scene->switchEditMode(LvlScene::MODE_PlacingNew);
     edit->scene->setItemPlacer(4, warpId, LvlPlacingItems::DOOR_Exit);
 
     mw()->dock_LvlItemProps->hide();

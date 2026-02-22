@@ -23,7 +23,6 @@
 #include <PGE_File_Formats/file_formats.h>
 
 #include "../lvl_history_manager.h"
-#include "../lvl_item_placing.h"
 
 void LvlScene::setPhysEnvResizer(QGraphicsItem *targetRect, bool enabled, bool accept)
 {
@@ -49,7 +48,7 @@ void LvlScene::setPhysEnvResizer(QGraphicsItem *targetRect, bool enabled, bool a
         m_resizeBox->m_minSize = QSizeF(16, 16);
         this->setFocus(Qt::ActiveWindowFocusReason);
 
-        SwitchEditingMode(MODE_Resizing);
+        switchEditMode(MODE_Resizing);
         m_mw->resizeToolbarVisible(true);
     }
     else
@@ -80,11 +79,13 @@ void LvlScene::setPhysEnvResizer(QGraphicsItem *targetRect, bool enabled, bool a
 
                 m_history->addResizePhysEnv(env->m_data, oldX, oldY, oldX + oldW, oldY + oldH, x, y, x + w, y + h);
             }
+
             delete m_resizeBox;
             m_resizeBox = nullptr;
             m_mw->on_actionSelect_triggered();
             m_mw->resizeToolbarVisible(false);
         }
+
         m_busyMode = false;
     }
 }

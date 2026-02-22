@@ -26,50 +26,6 @@
 #include "lvl_history_manager.h"
 #include "newlayerbox.h"
 
-void LvlScene::SwitchEditingMode(MoondustBaseScene::EditModeID EdtMode)
-{
-    //int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
-    // 3 - drawing water/sand zone, 4 - placing from Buffer
-    //bool EraserEnabled;
-    //bool PasteFromBuffer;
-
-    //bool DrawMode; //Placing/drawing on map, disable selecting and dragging items
-
-    //bool disableMoveItems;
-
-    //bool contextMenuOpened;
-    m_eraserIsEnabled = false;
-    m_pastingMode = false;
-    m_busyMode = false;
-    m_disableMoveItems = false;
-
-    auto newMode = m_editModes.find(EdtMode);
-
-    if(newMode == m_editModes.end())
-        newMode = m_editModes.find(MODE_Selecting);
-
-    Q_ASSERT(newMode != m_editModes.end());
-
-    m_editModeObj = newMode.value();
-    m_editModeObj->set(EdtMode);
-    m_editMode = EdtMode;
-}
-
-void LvlScene::switchMode(const QString &title)
-{
-    qDebug() << "Switching mode " << title;
-    foreach(auto &editMode,  m_editModes)
-    {
-        if(editMode->name().compare(title, Qt::CaseInsensitive))
-        {
-            m_editModeObj = editMode;
-            m_editModeObj->set();
-            qDebug() << "mode " << title << "switched!";
-            break;
-        }
-    }
-}
-
 
 void LvlScene::hideWarpsAndDoors(bool visible)
 {

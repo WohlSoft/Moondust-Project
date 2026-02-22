@@ -130,7 +130,7 @@ void LvlBaseItem::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    if(m_scene->m_busyMode)
+    if(m_scene->getEditFlagBusyMode())
     {
         unsetCursor();
         ungrabMouse();
@@ -138,6 +138,7 @@ void LvlBaseItem::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         mouseEvent->accept();
         return;
     }
+
     //Discard multi-mouse keys
     if((m_mouseLeft) || (m_mouseMid) || (m_mouseRight))
     {
@@ -189,7 +190,7 @@ void LvlBaseItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     /////////////////////////CONTEXT MENU:///////////////////////////////
     if((callContext) && (!m_scene->m_contextMenuIsOpened))
     {
-        if((!itemTypeIsLocked()) && (!m_scene->m_busyMode) && (!m_locked))
+        if((!itemTypeIsLocked()) && (!m_scene->getEditFlagBusyMode()) && (!m_locked))
             contextMenu(mouseEvent);
     }
 }

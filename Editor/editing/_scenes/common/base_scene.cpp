@@ -17,6 +17,7 @@
  */
 
 #include <common_features/logger.h>
+#include <common_features/edit_mode_base.h>
 
 #include "base_scene.h"
 
@@ -27,6 +28,70 @@ MoondustBaseScene::MoondustBaseScene(MainWindow *mw, GraphicsWorkspace *parentVi
     , m_viewPort(parentView)
 {
     setItemIndexMethod(QGraphicsScene::NoIndex);
+}
+
+MoondustBaseScene::~MoondustBaseScene()
+{
+    m_editModes.clear();
+}
+
+void MoondustBaseScene::switchEditMode(EditModeID EdtMode)
+{
+    m_eraserIsEnabled = false;
+    m_pastingMode = false;
+    m_busyMode = false;
+    m_disableMoveItems = false;
+
+    auto newMode = m_editModes.find(EdtMode);
+
+    if(newMode == m_editModes.end())
+        newMode = m_editModes.find(MODE_Selecting);
+
+    Q_ASSERT(newMode != m_editModes.end());
+
+    m_editModeObj = newMode.value().data();
+    m_editModeObj->set(EdtMode);
+    m_editMode = EdtMode;
+}
+
+void MoondustBaseScene::setEditFlagEraser(bool en)
+{
+    m_eraserIsEnabled = en;
+}
+
+bool MoondustBaseScene::getEditFlagEraser() const
+{
+    return m_eraserIsEnabled;
+}
+
+void MoondustBaseScene::setEditFlagPasteMode(bool en)
+{
+    m_pastingMode = en;
+}
+
+bool MoondustBaseScene::getEditFlagPasteMode() const
+{
+    return m_pastingMode;
+}
+
+void MoondustBaseScene::setEditFlagBusyMode(bool en)
+{
+    m_busyMode = en;
+}
+
+bool MoondustBaseScene::getEditFlagBusyMode() const
+{
+    return m_busyMode;
+}
+
+void MoondustBaseScene::setEditFlagNoMoveItems(bool en)
+{
+    m_disableMoveItems = en;
+}
+
+bool MoondustBaseScene::getEditFlagNoMoveItems() const
+{
+    return m_disableMoveItems;
 }
 
 MainWindow *MoondustBaseScene::mw()

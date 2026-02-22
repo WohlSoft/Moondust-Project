@@ -52,7 +52,7 @@ void LvlScene::setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool ac
         if(!m_data->meta.smbx64strict)
             m_resizeBox->setNoGrid(!m_opts.grid_snap);
         this->setFocus(Qt::ActiveWindowFocusReason);
-        SwitchEditingMode(MODE_Resizing);
+        switchEditMode(MODE_Resizing);
         m_mw->resizeToolbarVisible(true);
     }
     else

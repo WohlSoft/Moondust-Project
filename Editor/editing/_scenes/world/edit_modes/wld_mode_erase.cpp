@@ -23,11 +23,7 @@
 #include "wld_mode_erase.h"
 #include "../wld_scene.h"
 #include "../wld_history_manager.h"
-#include "../items/item_tile.h"
-#include "../items/item_scene.h"
-#include "../items/item_path.h"
-#include "../items/item_level.h"
-#include "../items/item_music.h"
+
 
 WLD_ModeErase::WLD_ModeErase(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Erase", parentScene, parent)
@@ -48,10 +44,10 @@ void WLD_ModeErase::set()
     s->resetResizers();
     s->m_pointSelector.unserPointSelector();
 
-    s->m_eraserIsEnabled = false;
-    s->m_pastingMode = false;
-    s->m_busyMode = false;
-    s->m_disableMoveItems = false;
+    s->setEditFlagEraser(false);
+    s->setEditFlagPasteMode(false);
+    s->setEditFlagBusyMode(false);
+    s->setEditFlagNoMoveItems(false);
 
     auto *vp = s->curViewPort();
     vp->setInteractive(true);
@@ -89,7 +85,7 @@ void WLD_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         s->Debugger_updateItemList();
     }
 
-    s->m_eraserIsEnabled = true;
+    s->setEditFlagEraser(true);
 }
 
 void WLD_ModeErase::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
@@ -98,7 +94,7 @@ void WLD_ModeErase::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
     if(s->m_cursorItemImg) s->m_cursorItemImg->setPos(mouseEvent->scenePos());
-    if(s->m_eraserIsEnabled) // Remove All items, placed under Cursor
+    if(s->getEditFlagEraser()) // Remove All items, placed under Cursor
     {
         s->removeItemUnderCursor();
         s->Debugger_updateItemList();
@@ -135,7 +131,7 @@ void WLD_ModeErase::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         s->Debugger_updateItemList();
     }
 
-    s->m_eraserIsEnabled = false;
+    s->setEditFlagEraser(false);
 }
 
 void WLD_ModeErase::keyPress(QKeyEvent *keyEvent)

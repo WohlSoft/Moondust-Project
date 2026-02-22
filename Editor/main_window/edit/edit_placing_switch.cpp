@@ -156,7 +156,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
 
             activeLvlEditWin()->scene->clearSelection();
             activeLvlEditWin()->changeCursor(LevelEdit::MODE_PlaceItem);
-            activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
+            activeLvlEditWin()->scene->switchEditMode(LvlScene::MODE_PlacingNew);
 
             LvlPlacingItems::placingMode = LvlPlacingItems::PMODE_Brush;
 
@@ -261,7 +261,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
 
             activeWldEditWin()->scene->clearSelection();
             activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
-            activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
+            activeWldEditWin()->scene->switchEditMode(WldScene::MODE_PlacingNew);
 
             WldPlacingItems::placingMode = WldPlacingItems::PMODE_Brush;
 

@@ -53,10 +53,10 @@ void LVL_ModeSelect::set(int editMode)
     s->resetCursor();
     s->resetResizers();
 
-    s->m_eraserIsEnabled = false;
-    s->m_pastingMode = false;
-    s->m_busyMode = false;
-    s->m_disableMoveItems = false;
+    s->setEditFlagEraser(false);
+    s->setEditFlagPasteMode(false);
+    s->setEditFlagBusyMode(false);
+    s->setEditFlagNoMoveItems(false);
 
     auto *vp = s->curViewPort();
 
@@ -66,7 +66,7 @@ void LVL_ModeSelect::set(int editMode)
         vp->setInteractive(true);
         vp->setCursor(Themes::Cursor(Themes::cursor_pasting));
         vp->setDragMode(QGraphicsView::NoDrag);
-        s->m_disableMoveItems = true;
+        s->setEditFlagNoMoveItems(true);
     }
     else
     {
@@ -76,7 +76,7 @@ void LVL_ModeSelect::set(int editMode)
     }
 
     if(editMode == MoondustBaseScene::MODE_SelectingOnly)
-        s->m_disableMoveItems = true;
+        s->setEditFlagNoMoveItems(true);
 }
 
 
@@ -95,13 +95,13 @@ void LVL_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
             return;
         }
 
-        s->m_pastingMode = true;
+        s->setEditFlagPasteMode(true);
         dontCallEvent = true;
         s->m_mouseIsMovedAfterKey = true;
         return;
     }
 
-    if((s->m_disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
+    if((s->getEditFlagNoMoveItems()) && (mouseEvent->buttons() & Qt::LeftButton)
        && (Qt::ControlModifier != QApplication::keyboardModifiers()))
     {
         dontCallEvent = true;
@@ -152,7 +152,7 @@ void LVL_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
             if(!s->selectedItems().isEmpty())
             {
                 s->m_dataBuffer = s->copy();
-                s->m_pastingMode = true;
+                s->setEditFlagPasteMode(true);
             }
         }
     }
@@ -190,10 +190,10 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     LevelData historyBuffer;
     LevelData historySourceBuffer;
 
-    if(s->m_pastingMode)
+    if(s->getEditFlagPasteMode())
     {
         s->paste(s->m_dataBuffer, mouseEvent->scenePos().toPoint());
-        s->m_pastingMode = false;
+        s->setEditFlagPasteMode(false);
         s->m_mouseIsMovedAfterKey = false;
         s->mw()->on_actionSelect_triggered();
         s->Debugger_updateItemList();
@@ -220,7 +220,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
         // Check collisions
         //Only if collision ckecking enabled
-        if(!s->m_pastingMode)
+        if(!s->getEditFlagPasteMode())
         {
             if(s->m_opts.collisionsEnabled && s->checkGroupCollisions(selectedList))
             {

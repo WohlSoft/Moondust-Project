@@ -157,7 +157,7 @@ bool WLD_SetPoint::loadFile(const WorldData &fileData,
     ui->animation->setChecked(m_scene->m_opts.animationEnabled);
 
     // Preparing a point selection mode
-    m_scene->SwitchEditingMode(WldScene::MODE_SetPoint);
+    m_scene->switchEditMode(WldScene::MODE_SetPoint);
     if(m_mapPointIsNull)
         m_scene->m_pointSelector.m_pointNotPlaced = true;
     else

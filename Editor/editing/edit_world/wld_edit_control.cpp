@@ -254,19 +254,19 @@ void WorldEdit::changeCursor(int mode)
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setInteractive(false);
         ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
-        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_Selecting);
+        if(sceneCreated) scene->switchEditMode(WldScene::MODE_Selecting);
         break;
     case MODE_Selecting:  //0  // Selector
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
-        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_Selecting);
+        if(sceneCreated) scene->switchEditMode(WldScene::MODE_Selecting);
         break;
     case MODE_Erasing://1    // Eriser
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(QCursor(Themes::Image(Themes::cursor_erasing), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
-        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_Erasing);
+        if(sceneCreated) scene->switchEditMode(WldScene::MODE_Erasing);
         break;
     case MODE_PlaceItem://2    // place New item
         ui->graphicsView->setInteractive(true);
@@ -274,7 +274,7 @@ void WorldEdit::changeCursor(int mode)
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
         ui->graphicsView->viewport()->setMouseTracking(true);
-        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
+        if(sceneCreated) scene->switchEditMode(WldScene::MODE_PlacingNew);
         break;
     case MODE_DrawSquares://3    // Draw squares
         ui->graphicsView->setInteractive(true);
@@ -282,20 +282,20 @@ void WorldEdit::changeCursor(int mode)
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
         ui->graphicsView->viewport()->setMouseTracking(true);
-        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_DrawRect);
+        if(sceneCreated) scene->switchEditMode(WldScene::MODE_DrawRect);
         break;
     case MODE_Pasting://4    // paste from Buffer
         scene->clearSelection();
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(QCursor(Themes::Image(Themes::cursor_pasting), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
-        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_PasteFromClip);
+        if(sceneCreated) scene->switchEditMode(WldScene::MODE_PasteFromClip);
         break;
     case MODE_Resizing://5    // Resizing mode
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
-        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_Resizing);
+        if(sceneCreated) scene->switchEditMode(WldScene::MODE_Resizing);
         break;
     default:
         break;

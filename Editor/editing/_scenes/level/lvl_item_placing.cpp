@@ -217,7 +217,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             return;
         }
 
-        SwitchEditingMode(MODE_PlacingNew);
+        switchEditMode(MODE_PlacingNew);
 
         break;
     }
@@ -325,7 +325,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             return;
         }
 
-        SwitchEditingMode(MODE_PlacingNew);
+        switchEditMode(MODE_PlacingNew);
         break;
     }
     case 2: //npcs
@@ -541,7 +541,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         break;
     }
 
-    SwitchEditingMode(MODE_PlacingNew);
+    switchEditMode(MODE_PlacingNew);
     m_busyMode = true;
     m_contextMenuIsOpened = false;
 }
@@ -614,7 +614,7 @@ void LvlScene::setRectDrawer()
     m_cursorItemImg->setVisible(false);
     m_cursorItemImg->setEnabled(true);
 
-    SwitchEditingMode(MODE_DrawRect);
+    switchEditMode(MODE_DrawRect);
     m_busyMode = true;
 }
 
@@ -673,7 +673,7 @@ void LvlScene::setCircleDrawer()
     m_cursorItemImg->setVisible(false);
     m_cursorItemImg->setEnabled(true);
 
-    SwitchEditingMode(MODE_DrawCircle);
+    switchEditMode(MODE_DrawCircle);
     m_busyMode = true;
 }
 
@@ -721,12 +721,12 @@ void LvlScene::setLineDrawer()
     m_cursorItemImg->setVisible(false);
     m_cursorItemImg->setEnabled(true);
 
-    SwitchEditingMode(MODE_Line);
+    switchEditMode(MODE_Line);
 }
 
 void LvlScene::setFloodFiller()
 {
-    SwitchEditingMode(MODE_Fill);
+    switchEditMode(MODE_Fill);
 }
 
 

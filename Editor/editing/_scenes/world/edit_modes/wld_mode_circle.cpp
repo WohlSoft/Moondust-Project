@@ -23,11 +23,7 @@
 #include "wld_mode_circle.h"
 #include "../wld_scene.h"
 #include "../wld_item_placing.h"
-#include "../items/item_tile.h"
-#include "../items/item_scene.h"
-#include "../items/item_path.h"
-#include "../items/item_level.h"
-#include "../items/item_music.h"
+
 
 WLD_ModeCircle::WLD_ModeCircle(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Circle", parentScene, parent)
@@ -47,10 +43,10 @@ void WLD_ModeCircle::set()
     s->resetResizers();
     s->m_pointSelector.unserPointSelector();
 
-    s->m_eraserIsEnabled = false;
-    s->m_pastingMode = false;
-    s->m_busyMode = true;
-    s->m_disableMoveItems = false;
+    s->setEditFlagEraser(false);
+    s->setEditFlagPasteMode(false);
+    s->setEditFlagBusyMode(true);
+    s->setEditFlagNoMoveItems(false);
 
     auto *vp = s->curViewPort();
     vp->setInteractive(true);

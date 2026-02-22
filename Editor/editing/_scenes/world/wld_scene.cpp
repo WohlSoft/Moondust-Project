@@ -70,8 +70,6 @@ WldScene::WldScene(MainWindow *mw,
     m_emptyCollisionCheck(false),
 
     //Editing mode
-    m_editModeObj(nullptr),
-
     m_placingItemType(0),
 
     m_cursorItemImg(nullptr),
@@ -80,11 +78,6 @@ WldScene::WldScene(MainWindow *mw,
 
     m_mouseIsMovedAfterKey(false),
 
-    m_eraserIsEnabled(false),
-    m_pastingMode(false),
-
-    m_busyMode(false),
-    m_disableMoveItems(false),
     m_contextMenuIsOpened(false),
 
     m_mouseLeftPressed(false),
@@ -154,37 +147,39 @@ WldScene::WldScene(MainWindow *mw,
 
 
     //Build edit mode classes
-    WLD_ModeHand *modeHand = new WLD_ModeHand(this);
+    QSharedPointer<EditMode> modeHand(new WLD_ModeHand(this));
     m_editModes.insert(MODE_HandScroll, modeHand);
 
-    WLD_ModeSelect *modeSelect = new WLD_ModeSelect(this);
+    QSharedPointer<EditMode> modeSelect(new WLD_ModeSelect(this));
     m_editModes.insert(MODE_Selecting, modeSelect);
+    m_editModes.insert(MODE_PasteFromClip, modeSelect);
+    m_editModes.insert(MODE_SelectingOnly, modeSelect);
 
-    WLD_ModeResize *modeResize = new WLD_ModeResize(this);
+    QSharedPointer<EditMode> modeResize(new WLD_ModeResize(this));
     m_editModes.insert(MODE_Resizing, modeResize);
 
-    WLD_ModeErase *modeErase = new WLD_ModeErase(this);
+    QSharedPointer<EditMode> modeErase(new WLD_ModeErase(this));
     m_editModes.insert(MODE_Erasing, modeErase);
 
-    WLD_ModePlace *modePlace = new WLD_ModePlace(this);
+    QSharedPointer<EditMode> modePlace(new WLD_ModePlace(this));
     m_editModes.insert(MODE_PlacingNew, modePlace);
 
-    WLD_ModeRect *modeSquare = new WLD_ModeRect(this);
+    QSharedPointer<EditMode> modeSquare(new WLD_ModeRect(this));
     m_editModes.insert(MODE_DrawRect, modeSquare);
 
-    WLD_ModeCircle *modeCircle = new WLD_ModeCircle(this);
+    QSharedPointer<EditMode> modeCircle(new WLD_ModeCircle(this));
     m_editModes.insert(MODE_DrawCircle, modeCircle);
 
-    WLD_ModeLine *modeLine = new WLD_ModeLine(this);
+    QSharedPointer<EditMode> modeLine(new WLD_ModeLine(this));
     m_editModes.insert(MODE_Line, modeLine);
 
-    WLD_ModeSetPoint *modeSetPoint = new WLD_ModeSetPoint(this);
+    QSharedPointer<EditMode> modeSetPoint(new WLD_ModeSetPoint(this));
     m_editModes.insert(MODE_SetPoint, modeSetPoint);
 
-    WLD_ModeFill *modeFill = new WLD_ModeFill(this);
+    QSharedPointer<EditMode> modeFill(new WLD_ModeFill(this));
     m_editModes.insert(MODE_Fill, modeFill);
 
-    m_editModeObj = modeSelect;
+    m_editModeObj = modeSelect.data();
     m_editModeObj->set();
 }
 
@@ -192,11 +187,6 @@ WldScene::~WldScene()
 {
     if(m_labelBox)
         delete m_labelBox;
-
-    for(auto p = m_editModes.begin(); p != m_editModes.end(); ++p)
-        delete p.value();
-
-    m_editModes.clear();
 }
 
 void WldScene::drawForeground(QPainter *painter, const QRectF &rect)
@@ -210,8 +200,10 @@ void WldScene::drawForeground(QPainter *painter, const QRectF &rect)
         qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
 
         QVarLengthArray<QLineF, 100> lines;
+
         for(qreal x = left; x < rect.right(); x += gridSize)
             lines.append(QLineF(x, rect.top(), x, rect.bottom()));
+
         for(qreal y = top; y < rect.bottom(); y += gridSize)
             lines.append(QLineF(rect.left(), y, rect.right(), y));
 

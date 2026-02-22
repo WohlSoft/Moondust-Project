@@ -51,10 +51,10 @@ void WLD_ModeSelect::set(int editMode)
     s->resetResizers();
     s->m_pointSelector.unserPointSelector();
 
-    s->m_eraserIsEnabled = false;
-    s->m_pastingMode = false;
-    s->m_busyMode = false;
-    s->m_disableMoveItems = false;
+    s->setEditFlagEraser(false);
+    s->setEditFlagPasteMode(false);
+    s->setEditFlagBusyMode(false);
+    s->setEditFlagNoMoveItems(false);
 
     auto *vp = s->curViewPort();
     if(editMode == MoondustBaseScene::MODE_PasteFromClip)
@@ -63,7 +63,7 @@ void WLD_ModeSelect::set(int editMode)
         vp->setInteractive(true);
         vp->setCursor(Themes::Cursor(Themes::cursor_pasting));
         vp->setDragMode(QGraphicsView::NoDrag);
-        s->m_disableMoveItems = true;
+        s->setEditFlagNoMoveItems(true);
     }
     else
     {
@@ -73,7 +73,7 @@ void WLD_ModeSelect::set(int editMode)
     }
 
     if(editMode == MoondustBaseScene::MODE_SelectingOnly)
-        s->m_disableMoveItems = true;
+        s->setEditFlagNoMoveItems(true);
 }
 
 
@@ -93,13 +93,13 @@ void WLD_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
             s->m_mouseIsMovedAfterKey = true;
             return;
         }
-        s->m_pastingMode = true;
+        s->setEditFlagPasteMode(true);
         dontCallEvent = true;
         s->m_mouseIsMovedAfterKey = true;
         return;
     }
 
-    if((s->m_disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
+    if(s->getEditFlagNoMoveItems() && (mouseEvent->buttons() & Qt::LeftButton)
        && (Qt::ControlModifier != QApplication::keyboardModifiers()))
         return;
 
@@ -147,7 +147,7 @@ void WLD_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
             if(!s->selectedItems().isEmpty())
             {
                 s->WldBuffer = s->copy();
-                s->m_pastingMode = true;
+                s->setEditFlagPasteMode(true);
             }
         }
     }
@@ -185,11 +185,11 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     WorldData historyBuffer;// bool deleted=false;
     WorldData historySourceBuffer;
 
-    if(s->m_pastingMode)
+    if(s->getEditFlagPasteMode())
     {
         s->paste(s->WldBuffer, mouseEvent->scenePos().toPoint());
         s->Debugger_updateItemList();
-        s->m_pastingMode = false;
+        s->setEditFlagPasteMode(false);
         s->m_mouseIsMoved = false;
         MainWinConnect::pMainWin->on_actionSelect_triggered();
     }
@@ -216,7 +216,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
         // Check collisions
         //Only if collision ckecking enabled
-        if(!s->m_pastingMode)
+        if(!s->getEditFlagPasteMode())
         {
             if(s->m_opts.collisionsEnabled && s->checkGroupCollisions(selectedList))
             {

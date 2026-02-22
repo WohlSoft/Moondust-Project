@@ -144,7 +144,7 @@ void WldBaseItem::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    if(m_scene->m_busyMode)
+    if(m_scene->getEditFlagBusyMode())
     {
         unsetCursor();
         ungrabMouse();
@@ -173,12 +173,16 @@ void WldBaseItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     int multimouse = 0;
     bool callContext = false;
+
     if(((m_mouseMidPressed) || (m_mouseRightPressed)) && (m_mouseLeftPressed ^ (mouseEvent->buttons() & Qt::LeftButton)))
         multimouse++;
+
     if((((m_mouseLeftPressed) || (m_mouseRightPressed))) && (m_mouseMidPressed ^ (mouseEvent->buttons() & Qt::MiddleButton)))
         multimouse++;
+
     if((((m_mouseLeftPressed) || (m_mouseMidPressed))) && (m_mouseRightPressed ^ (mouseEvent->buttons() & Qt::RightButton)))
         multimouse++;
+
     if(multimouse > 0)
     {
         mouseEvent->accept();
@@ -202,7 +206,7 @@ void WldBaseItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     /////////////////////////CONTEXT MENU:///////////////////////////////
     if((callContext) && (!m_scene->m_contextMenuIsOpened))
     {
-        if((!itemTypeIsLocked()) && (!m_scene->m_busyMode) && (!m_locked))
+        if(!itemTypeIsLocked() && !m_scene->getEditFlagBusyMode() && !m_locked)
             contextMenu(mouseEvent);
     }
 }

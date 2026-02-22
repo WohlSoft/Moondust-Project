@@ -778,7 +778,7 @@ void WLD_ItemProps::on_WLD_PROPS_GetPoint_clicked()
                 ui->WLD_PROPS_GetPoint->setChecked(false);
                 ui->WLD_PROPS_GetPoint->setCheckable(false);
 
-                edit->scene->SwitchEditingMode(WldScene::MODE_Selecting);
+                edit->scene->switchEditMode(WldScene::MODE_Selecting);
             }
             else
             {
@@ -789,7 +789,7 @@ void WLD_ItemProps::on_WLD_PROPS_GetPoint_clicked()
                 ui->WLD_PROPS_GetPoint->setChecked(true);
 
                 //activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
-                edit->scene->SwitchEditingMode(WldScene::MODE_SetPoint);
+                edit->scene->switchEditMode(WldScene::MODE_SetPoint);
 
                 WldPlacingItems::placingMode = WldPlacingItems::PMODE_Brush;
 

@@ -69,10 +69,8 @@ ItemPlayerPoint::~ItemPlayerPoint()
 
 void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if(!m_scene->m_busyMode)
-    {
+    if(!m_scene->getEditFlagBusyMode())
         m_scene->m_contextMenuIsOpened = true; //bug protector
-    }
 
     //Remove selection from non-block items
     if(!this->isSelected())

@@ -302,7 +302,7 @@ void LevelEdit::changeCursor(int mode)
         ui->graphicsView->setInteractive(false);
         ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
 
-        if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_HandScroll);
+        if(sceneCreated) scene->switchEditMode(LvlScene::MODE_HandScroll);
 
         break;
 
@@ -311,7 +311,7 @@ void LevelEdit::changeCursor(int mode)
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
 
-        if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_Selecting);
+        if(sceneCreated) scene->switchEditMode(LvlScene::MODE_Selecting);
 
         break;
 
@@ -320,7 +320,7 @@ void LevelEdit::changeCursor(int mode)
         ui->graphicsView->setCursor(QCursor(Themes::Image(Themes::cursor_erasing), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
 
-        if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_Erasing);
+        if(sceneCreated) scene->switchEditMode(LvlScene::MODE_Erasing);
 
         break;
 
@@ -331,7 +331,7 @@ void LevelEdit::changeCursor(int mode)
         ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
         ui->graphicsView->viewport()->setMouseTracking(true);
 
-        if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
+        if(sceneCreated) scene->switchEditMode(LvlScene::MODE_PlacingNew);
 
         break;
 
@@ -342,7 +342,7 @@ void LevelEdit::changeCursor(int mode)
         ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
         ui->graphicsView->viewport()->setMouseTracking(true);
 
-        if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_DrawRect);
+        if(sceneCreated) scene->switchEditMode(LvlScene::MODE_DrawRect);
 
         break;
 
@@ -352,7 +352,7 @@ void LevelEdit::changeCursor(int mode)
         ui->graphicsView->setCursor(QCursor(Themes::Image(Themes::cursor_pasting), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
 
-        if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_PasteFromClip);
+        if(sceneCreated) scene->switchEditMode(LvlScene::MODE_PasteFromClip);
 
         break;
 
@@ -361,7 +361,7 @@ void LevelEdit::changeCursor(int mode)
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
 
-        if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_Resizing);
+        if(sceneCreated) scene->switchEditMode(LvlScene::MODE_Resizing);
 
         break;
 

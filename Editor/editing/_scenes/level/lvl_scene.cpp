@@ -64,8 +64,6 @@ LvlScene::LvlScene(MainWindow *mw,
     m_emptyCollisionCheck(false),
 
     //Editing mode
-    m_editModeObj(nullptr),
-
     m_placingItemType(0),
 
     m_cursorItemImg(nullptr),
@@ -75,10 +73,6 @@ LvlScene::LvlScene(MainWindow *mw,
     //Mouse Events
     m_mouseIsMovedAfterKey(false),  //Is Mouse moved after pressing key
 
-    m_eraserIsEnabled(false),
-    m_pastingMode(false),
-    m_busyMode(false),
-    m_disableMoveItems(false),
     m_contextMenuIsOpened(false),
 
     m_mouseLeftPressed(false), //Left mouse key is pressed
@@ -171,34 +165,36 @@ LvlScene::LvlScene(MainWindow *mw,
     connect(this, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
 
     //Build edit mode classes
-    LVL_ModeHand *modeHand = new LVL_ModeHand(this);
+    QSharedPointer<EditMode> modeHand(new LVL_ModeHand(this));
     m_editModes.insert(MODE_HandScroll, modeHand);
 
-    LVL_ModeSelect *modeSelect = new LVL_ModeSelect(this);
+    QSharedPointer<EditMode> modeSelect(new LVL_ModeSelect(this));
     m_editModes.insert(MODE_Selecting, modeSelect);
+    m_editModes.insert(MODE_PasteFromClip, modeSelect);
+    m_editModes.insert(MODE_SelectingOnly, modeSelect);
 
-    LVL_ModeResize *modeResize = new LVL_ModeResize(this);
+    QSharedPointer<EditMode> modeResize(new LVL_ModeResize(this));
     m_editModes.insert(MODE_Resizing, modeResize);
 
-    LVL_ModeErase *modeErase = new LVL_ModeErase(this);
+    QSharedPointer<EditMode> modeErase(new LVL_ModeErase(this));
     m_editModes.insert(MODE_Erasing, modeErase);
 
-    LVL_ModePlace *modePlace = new LVL_ModePlace(this);
+    QSharedPointer<EditMode> modePlace(new LVL_ModePlace(this));
     m_editModes.insert(MODE_PlacingNew, modePlace);
 
-    LVL_ModeSquare *modeSquare = new LVL_ModeSquare(this);
+    QSharedPointer<EditMode> modeSquare(new LVL_ModeSquare(this));
     m_editModes.insert(MODE_DrawRect, modeSquare);
 
-    LVL_ModeCircle *modeCircle = new LVL_ModeCircle(this);
+    QSharedPointer<EditMode> modeCircle(new LVL_ModeCircle(this));
     m_editModes.insert(MODE_DrawCircle, modeCircle);
 
-    LVL_ModeLine *modeLine = new LVL_ModeLine(this);
+    QSharedPointer<EditMode> modeLine(new LVL_ModeLine(this));
     m_editModes.insert(MODE_Line, modeLine);
 
-    LVL_ModeFill *modeFill = new LVL_ModeFill(this);
+    QSharedPointer<EditMode> modeFill(new LVL_ModeFill(this));
     m_editModes.insert(MODE_Fill, modeFill);
 
-    m_editModeObj = modeSelect;
+    m_editModeObj = modeSelect.data();
     m_editModeObj->set();
 }
 
@@ -216,11 +212,6 @@ LvlScene::~LvlScene()
     m_localConfigNPCs.clear();
 
     m_localImages.clear();
-
-    for(auto p = m_editModes.begin(); p != m_editModes.end(); ++p)
-        delete p.value();
-
-    m_editModes.clear();
 }
 
 void LvlScene::drawForeground(QPainter *painter, const QRectF &rect)

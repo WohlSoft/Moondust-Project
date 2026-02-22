@@ -21,11 +21,6 @@
 #include <editing/edit_world/world_edit.h>
 
 #include "wld_scene.h"
-#include "items/item_tile.h"
-#include "items/item_scene.h"
-#include "items/item_path.h"
-#include "items/item_level.h"
-#include "items/item_music.h"
 #include "wld_item_placing.h"
 
 /*
@@ -166,7 +161,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             return;
         }
 
-        SwitchEditingMode(MODE_PlacingNew);
+        switchEditMode(MODE_PlacingNew);
 
         break;
     }
@@ -266,7 +261,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             return;
         }
 
-        SwitchEditingMode(MODE_PlacingNew);
+        switchEditMode(MODE_PlacingNew);
 
         break;
     }
@@ -365,7 +360,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             return;
         }
 
-        SwitchEditingMode(MODE_PlacingNew);
+        switchEditMode(MODE_PlacingNew);
 
         break;
     }
@@ -470,7 +465,8 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setFloodFiller();
             return;
         }
-        SwitchEditingMode(MODE_PlacingNew);
+
+        switchEditMode(MODE_PlacingNew);
         break;
     }
 
@@ -501,7 +497,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         m_cursorItemImg->setVisible(false);
         m_cursorItemImg->setEnabled(true);
 
-        SwitchEditingMode(MODE_PlacingNew);
+        switchEditMode(MODE_PlacingNew);
 
         break;
     }
@@ -532,7 +528,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         m_cursorItemImg->setVisible(false);
         m_cursorItemImg->setEnabled(true);
 
-        SwitchEditingMode(MODE_SetPoint);
+        switchEditMode(MODE_SetPoint);
 
         // restore last point
         if(!m_pointSelector.m_pointNotPlaced)
@@ -543,7 +539,10 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     default:
         break;
     }
-    if(itemType != 5) SwitchEditingMode(MODE_PlacingNew);
+
+    if(itemType != 5)
+        switchEditMode(MODE_PlacingNew);
+
     m_contextMenuIsOpened = false;
 }
 
@@ -593,7 +592,7 @@ void WldScene::setRectDrawer()
     m_cursorItemImg->setVisible(false);
     m_cursorItemImg->setEnabled(true);
 
-    SwitchEditingMode(MODE_DrawRect);
+    switchEditMode(MODE_DrawRect);
 }
 
 void WldScene::setCircleDrawer()
@@ -641,7 +640,7 @@ void WldScene::setCircleDrawer()
     m_cursorItemImg->setVisible(false);
     m_cursorItemImg->setEnabled(true);
 
-    SwitchEditingMode(MODE_DrawCircle);
+    switchEditMode(MODE_DrawCircle);
 }
 
 void WldScene::setLineDrawer()
@@ -678,13 +677,13 @@ void WldScene::setLineDrawer()
     m_cursorItemImg->setVisible(false);
     m_cursorItemImg->setEnabled(true);
 
-    SwitchEditingMode(MODE_Line);
+    switchEditMode(MODE_Line);
 
 }
 
 void WldScene::setFloodFiller()
 {
-    SwitchEditingMode(MODE_Fill);
+    switchEditMode(MODE_Fill);
 }
 
 void WldScene::resetCursor()
