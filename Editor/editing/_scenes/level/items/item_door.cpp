@@ -746,6 +746,7 @@ void ItemDoor::refreshArrows()
             QPixmap pix(":/arrows/warp_arrow_enter.png");
             m_arrowEnter->setPixmap(pix);
             m_scene->addItem(m_arrowEnter);
+            m_arrowEnter->setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::META_Child);
             m_arrowEnter->setOpacity(qreal(0.6));
 
             QPointF offset = QPoint(0, 0);
@@ -802,6 +803,7 @@ void ItemDoor::refreshArrows()
             QPixmap pix(":/arrows/warp_arrow_exit.png");
             m_arrowExit->setPixmap(pix);
             m_scene->addItem(m_arrowExit);
+            m_arrowExit->setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::META_Child);
             m_arrowExit->setOpacity(qreal(0.6));
 
             QPointF offset = QPoint(0, 0);
@@ -947,6 +949,7 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
     oy = m_data.oy;
 
     m_doorLabel = new QGraphicsPixmapItem(GraphicsHelps::drawDigitFont(m_data.meta.index + 1));
+    m_doorLabel->setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::META_Child);
 
     if(m_pointSide == D_Entrance)
     {
@@ -956,8 +959,8 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
         m_doorLabel->setPos(ix + 2, iy + 2);
 
         setPos(ix, iy);
-        setData(LvlScene::ITEM_TYPE, "Door_enter"); // ObjType
-        setData(LvlScene::ITEM_TYPE_INT, ItemTypes::LVL_META_DoorEnter); // ObjType
+        setData(MoondustBaseScene::ITEM_TYPE, "Door_enter"); // ObjType
+        setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::LVL_META_DoorEnter); // ObjType
     }
     else
     {
@@ -967,8 +970,8 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
         m_doorLabel->setPos(ox + 16, oy + 16);
 
         setPos(ox, oy);
-        setData(LvlScene::ITEM_TYPE, "Door_exit"); // ObjType
-        setData(LvlScene::ITEM_TYPE_INT, ItemTypes::LVL_META_DoorExit); // ObjType
+        setData(MoondustBaseScene::ITEM_TYPE, "Door_exit"); // ObjType
+        setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::LVL_META_DoorExit); // ObjType
     }
 
     m_grp->addToGroup(m_doorLabel);
@@ -978,8 +981,8 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
 
     m_doorLabel->setZValue(m_scene->Z_sys_door + 0.0000020);
 
-    setData(LvlScene::ITEM_ID, 0ull);
-    setData(LvlScene::ITEM_ARRAY_ID, m_data.meta.array_id);
+    setData(MoondustBaseScene::ITEM_ID, 0ull);
+    setData(MoondustBaseScene::ITEM_ARRAY_ID, m_data.meta.array_id);
 
     setZValue(m_scene->Z_sys_door);
 

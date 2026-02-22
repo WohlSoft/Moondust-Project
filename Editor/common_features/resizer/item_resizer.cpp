@@ -22,8 +22,10 @@
 #include <math.h>
 #include <QMenu>
 
+#include <defines.h>
 #include <common_features/grid.h>
 #include <common_features/logger.h>
+#include <editing/_scenes/common/base_scene.h>
 
 #include "item_resizer.h"
 
@@ -69,6 +71,9 @@ ItemResizer::ItemResizer(QSize size, QColor color, int grid):
     m_targetItem = nullptr;
 
     this->setFlag(QGraphicsItem::ItemIsMovable, true);
+
+    this->setData(MoondustBaseScene::ITEM_IS_META, true);
+    this->setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::META_ResizeBox);
 
     QBrush brush;
     brush.setStyle(Qt::DiagCrossPattern);

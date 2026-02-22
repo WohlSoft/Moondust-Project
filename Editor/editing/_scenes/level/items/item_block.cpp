@@ -263,8 +263,11 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             //Change ID of each block
             if(tabType == ItemSelectDialog::TAB_BLOCK)
             {
-                for(QGraphicsItem *SelItem : our_items)
+                foreach(QGraphicsItem *SelItem, our_items)
                 {
+                    if(SelItem->data(LvlScene::ITEM_IS_ITEM).isNull() || !SelItem->data(LvlScene::ITEM_IS_ITEM).toBool())
+                        continue;
+
                     if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
                     {
                         ItemBlock *item = qgraphicsitem_cast<ItemBlock*>(SelItem);
@@ -281,8 +284,11 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             //Transform every block into BGO
             else if(tabType == ItemSelectDialog::TAB_BGO)
             {
-                for(QGraphicsItem *SelItem : our_items)
+                foreach(QGraphicsItem *SelItem, our_items)
                 {
+                    if(SelItem->data(LvlScene::ITEM_IS_ITEM).isNull() || !SelItem->data(LvlScene::ITEM_IS_ITEM).toBool())
+                        continue;
+
                     if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
                     {
                         ItemBlock *item = qgraphicsitem_cast<ItemBlock*>(SelItem);
@@ -644,6 +650,8 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
 
     QPixmap npcImg = QPixmap(m_scene->getNPCimg(((npcID > 0) ? (npcID) : m_scene->m_configs->marker_npc.coin_in_block)));
     m_includedNPC = m_scene->addPixmap(npcImg);
+    m_includedNPC->setData(MoondustBaseScene::ITEM_IS_META, true);
+    m_includedNPC->setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::META_Child);
     m_includedNPC->setPos(
         (
             m_data.x + ((m_data.w - npcImg.width()) / 2)

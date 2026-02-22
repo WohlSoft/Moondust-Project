@@ -700,6 +700,8 @@ void WldScene::resetCursor()
     m_cursorItemImg = addPixmap(QPixmap(cur));
     m_cursorItemImg->setZValue(1000);
     m_cursorItemImg->hide();
+    m_cursorItemImg->setData(ITEM_IS_CURSOR, true);
+    m_cursorItemImg->setData(ITEM_TYPE_INT, ItemTypes::META_Cursor);
 }
 
 void WldScene::setMessageBoxItem(bool show, QPointF pos, QString text)
@@ -730,5 +732,6 @@ void WldScene::setMessageBoxItem(bool show, QPointF pos, QString text)
         m_labelBox->setFont(*GlobalSettings::LvlOpts.labelBoxFont);
         this->addItem(m_labelBox);
         m_labelBox->setPos(pos);
+        m_labelBox->setData(ITEM_TYPE_INT, ItemTypes::META_Label);
     }
 }

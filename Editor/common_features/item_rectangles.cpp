@@ -18,6 +18,8 @@
 
 #include <qmath.h>
 
+#include <defines.h>
+#include <editing/_scenes/common/base_scene.h>
 #include "item_rectangles.h"
 
 QList<QGraphicsRectItem *> item_rectangles::rectArray;
@@ -26,7 +28,7 @@ void item_rectangles::clearArray()
 {
     while(!rectArray.isEmpty())
     {
-        QGraphicsRectItem * tmp = rectArray.first();
+        QGraphicsRectItem *tmp = rectArray.first();
         rectArray.pop_front();
         if(tmp) delete tmp;
     }
@@ -40,20 +42,23 @@ void item_rectangles::drawMatrix(QGraphicsScene *scene, QRect bigRect, QSize sma
     long y = bigRect.y();
     long width = bigRect.width();
     long height = bigRect.height();
-    int repWidth = width/smallRect.width();
-    int repHeight = height/smallRect.height();
+    int repWidth = width / smallRect.width();
+    int repHeight = height / smallRect.height();
     QBrush brush = QBrush(Qt::darkYellow);
 
-    for(int i = 0; i < repWidth; i++){
-        for(int j = 0; j < repHeight; j++){
+    for(int i = 0; i < repWidth; i++)
+    {
+        for(int j = 0; j < repHeight; j++)
+        {
             long x1 = x + i * smallRect.width();
             long y1 = y + j * smallRect.height();
 
-            QGraphicsRectItem* r=scene->addRect(1, 1, smallRect.width()-2, smallRect.height()-2,
-                                            QPen(Qt::yellow, 1),
-                                            brush);
+            QGraphicsRectItem *r = scene->addRect(1, 1, smallRect.width() - 2, smallRect.height() - 2,
+                                                  QPen(Qt::yellow, 1),
+                                                  brush);
             r->setPos(x1, y1);
-            r->setData(0, "YellowRectangle");
+            r->setData(MoondustBaseScene::ITEM_TYPE, "YellowRectangle");
+            r->setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::META_YellowRect);
             r->setOpacity(0.7);
             r->setZValue(10000);
             rectArray.push_back(r);
@@ -69,14 +74,14 @@ void item_rectangles::drawRound(QGraphicsScene *scene, QRect bigRect, QSize smal
     long y = bigRect.y();
     long width = bigRect.width();
     long height = bigRect.height();
-    int repWidth = width/smallRect.width();
-    int repHeight = height/smallRect.height();
+    int repWidth = width / smallRect.width();
+    int repHeight = height / smallRect.height();
     QBrush brush = QBrush(Qt::darkYellow);
 
-    int Cx = x+(width/2);
-    int Cy = y+(height/2);
-    int hRadius = width/2;
-    int vRadius = height/2;
+    int Cx = x + (width / 2);
+    int Cy = y + (height / 2);
+    int hRadius = width / 2;
+    int vRadius = height / 2;
 
     for(int i = 0; i < repWidth; i++)
     {
@@ -84,18 +89,19 @@ void item_rectangles::drawRound(QGraphicsScene *scene, QRect bigRect, QSize smal
         {
             int x1 = x + i * smallRect.width();
             int y1 = y + j * smallRect.height();
-            int Px = x1+smallRect.width()/2;
-            int Py = y1+smallRect.height()/2;
+            int Px = x1 + smallRect.width() / 2;
+            int Py = y1 + smallRect.height() / 2;
 
             if((hRadius <= 0.0) || (vRadius <= 0.0)) continue;
 
-            if( ((pow(Px-Cx,2)/pow(hRadius, 2))+(pow(Py-Cy, 2)/pow(vRadius, 2))) > 1.0 ) continue;
+            if(((pow(Px - Cx, 2) / pow(hRadius, 2)) + (pow(Py - Cy, 2) / pow(vRadius, 2))) > 1.0) continue;
 
-            QGraphicsRectItem* r=scene->addRect(1, 1, smallRect.width()-2, smallRect.height()-2,
-                                            QPen(Qt::yellow, 1),
-                                            brush);
+            QGraphicsRectItem *r = scene->addRect(1, 1, smallRect.width() - 2, smallRect.height() - 2,
+                                                  QPen(Qt::yellow, 1),
+                                                  brush);
             r->setPos(x1, y1);
-            r->setData(0, "YellowRectangle");
+            r->setData(MoondustBaseScene::ITEM_TYPE, "YellowRectangle");
+            r->setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::META_YellowRect);
             r->setOpacity(0.7);
             r->setZValue(10000);
             rectArray.push_back(r);
@@ -107,47 +113,47 @@ void item_rectangles::drawLine(QGraphicsScene *scene, QLineF lineItem, QSize sma
 {
     clearArray();
 
-    int h_dir=0;
-    int v_dir=0;
+    int h_dir = 0;
+    int v_dir = 0;
 
     int angle = qRound(lineItem.angle());
 
     //Calculate direction
     switch(angle)
     {
-        case 0:
-            h_dir=1;
-            break;
-        case 90:
-            v_dir=-1;
-            break;
-        case 180:
-            h_dir=-1;
-            break;
-        case 270:
-            v_dir=1;
-            break;
-        default:
-            if((angle>0)&&(angle<90))
-            {
-                h_dir=1;
-                v_dir=-1;
-            }
-            else if((angle>90)&&(angle<180))
-            {
-                h_dir=-1;
-                v_dir=-1;
-            }
-            else if((angle>180)&&(angle<270))
-            {
-                h_dir=-1;
-                v_dir=1;
-            }
-            else if((angle>270)&&(angle<360))
-            {
-                h_dir=1;
-                v_dir=1;
-            }
+    case 0:
+        h_dir = 1;
+        break;
+    case 90:
+        v_dir = -1;
+        break;
+    case 180:
+        h_dir = -1;
+        break;
+    case 270:
+        v_dir = 1;
+        break;
+    default:
+        if((angle > 0) && (angle < 90))
+        {
+            h_dir = 1;
+            v_dir = -1;
+        }
+        else if((angle > 90) && (angle < 180))
+        {
+            h_dir = -1;
+            v_dir = -1;
+        }
+        else if((angle > 180) && (angle < 270))
+        {
+            h_dir = -1;
+            v_dir = 1;
+        }
+        else if((angle > 270) && (angle < 360))
+        {
+            h_dir = 1;
+            v_dir = 1;
+        }
         break;
     }
 
@@ -157,19 +163,21 @@ void item_rectangles::drawLine(QGraphicsScene *scene, QLineF lineItem, QSize sma
     long tW = abs(qRound(lineItem.dx())); //targetWidth
     long tH = abs(qRound(lineItem.dy())); //targetHeight
 
-        QBrush brush = QBrush(Qt::darkYellow);
+    QBrush brush = QBrush(Qt::darkYellow);
 
-    for(int k=0,l=0, i=0, j=0; (i<=tW)&&(j<=tH); i+=smallRect.width()*abs(h_dir), j+=smallRect.height()*abs(v_dir),k++,l++ )
+    for(int k = 0, l = 0, i = 0, j = 0; (i <= tW) && (j <= tH); i += smallRect.width() * abs(h_dir), j += smallRect.height() * abs(v_dir), k++, l++)
     {
-        long x1 = x + k * smallRect.width()*h_dir;
-        long y1 = y + l * smallRect.height()*v_dir;
-        rectArray.push_back(scene->addRect(1, 1, smallRect.width()-2,
-                                           smallRect.height()-2,
+        long x1 = x + k * smallRect.width() * h_dir;
+        long y1 = y + l * smallRect.height() * v_dir;
+        rectArray.push_back(scene->addRect(1, 1, smallRect.width() - 2,
+                                           smallRect.height() - 2,
                                            QPen(Qt::yellow, 2), brush));
-        rectArray.last()->setPos(x1, y1);
-        rectArray.last()->setData(0, "YellowRectangle");
-        rectArray.last()->setOpacity(0.7);
-        rectArray.last()->setZValue(10000);
+        auto *it = rectArray.last();
+        it->setPos(x1, y1);
+        it->setData(MoondustBaseScene::ITEM_TYPE, "YellowRectangle");
+        it->setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::META_YellowRect);
+        it->setOpacity(0.7);
+        it->setZValue(10000);
     }
 }
 
@@ -177,11 +185,11 @@ void item_rectangles::drawLine(QGraphicsScene *scene, QLineF lineItem, QSize sma
 QLineF item_rectangles::snapLine(QLineF mouseLine, QSizeF Box)
 {
     qreal a = mouseLine.angle();
-    qreal relA = QLineF(0,0, Box.width(), -Box.height()).angle();
+    qreal relA = QLineF(0, 0, Box.width(), -Box.height()).angle();
     qreal tarA = 0;
 
-    bool isDiagonal=false;
-    bool isVertical=false;
+    bool isDiagonal = false;
+    bool isVertical = false;
 
     if(a == 0)
     {
@@ -191,7 +199,7 @@ QLineF item_rectangles::snapLine(QLineF mouseLine, QSizeF Box)
     else if(a == 90)
     {
         tarA = a;
-        isVertical=true;
+        isVertical = true;
         goto skipAngleCalculate;
     }
     else if(a == 180)
@@ -202,61 +210,78 @@ QLineF item_rectangles::snapLine(QLineF mouseLine, QSizeF Box)
     else if(a == 270)
     {
         tarA = a;
-        isVertical=true;
+        isVertical = true;
         goto skipAngleCalculate;
     }
 
     //Calculating target angle
-    if(a <= 90){
-        if(a < relA/2){
+    if(a <= 90)
+    {
+        if(a < relA / 2)
             tarA = 0;
-        }else if(a <= 90-(90-relA)/2 ){
+        else if(a <= 90 - (90 - relA) / 2)
+        {
             tarA = relA;
-            isDiagonal=true;
-        }else{
+            isDiagonal = true;
+        }
+        else
+        {
             tarA = 90;
-            isVertical=true;
-        }
-    }else if(a <= 180){
-        if(a <= 90+(90-relA)/2 ){
-            tarA = 90;
-            isVertical=true;
-        }else if(a <= 180-relA/2 ){
-            tarA = 180-relA;
-            isDiagonal=true;
-        }else{
-            tarA = 180;
-        }
-    }else if(a <= 270){
-        if(a < 180+(relA/2)){
-            tarA = 180;
-        }else if(a <= 270-(90-relA)/2){
-            tarA = 180+relA;
-            isDiagonal=true;
-        }else{
-            tarA = 270;
-            isVertical=true;
-        }
-    }else{
-        if(a <= 270+(90-relA)/2 ){
-            tarA = 270;
-            isVertical=true;
-        }else if(a < 360-relA/2){
-            tarA = 360-relA;
-            isDiagonal=true;
-        }else{
-            tarA = 360;
+            isVertical = true;
         }
     }
+    else if(a <= 180)
+    {
+        if(a <= 90 + (90 - relA) / 2)
+        {
+            tarA = 90;
+            isVertical = true;
+        }
+        else if(a <= 180 - relA / 2)
+        {
+            tarA = 180 - relA;
+            isDiagonal = true;
+        }
+        else
+            tarA = 180;
+    }
+    else if(a <= 270)
+    {
+        if(a < 180 + (relA / 2))
+            tarA = 180;
+        else if(a <= 270 - (90 - relA) / 2)
+        {
+            tarA = 180 + relA;
+            isDiagonal = true;
+        }
+        else
+        {
+            tarA = 270;
+            isVertical = true;
+        }
+    }
+    else
+    {
+        if(a <= 270 + (90 - relA) / 2)
+        {
+            tarA = 270;
+            isVertical = true;
+        }
+        else if(a < 360 - relA / 2)
+        {
+            tarA = 360 - relA;
+            isDiagonal = true;
+        }
+        else
+            tarA = 360;
+    }
 
-
-    skipAngleCalculate:
-
-    qreal diagonalSize = qSqrt( qPow(Box.height(),2) + qPow(Box.width(),2) ); //get box diagonal size
+skipAngleCalculate:
+    qreal diagonalSize = qSqrt(qPow(Box.height(), 2) + qPow(Box.width(), 2)); //get box diagonal size
     qreal Lenght = mouseLine.length() -
-            ((isDiagonal)? qRound(mouseLine.length())%qRound(diagonalSize)   //Diagonal
-            : (isVertical ? qRound(mouseLine.length())%qRound(Box.height()): //Vertical
-              qRound(mouseLine.length())%qRound(Box.width()) ) );            //Horizontal
+                   ((isDiagonal) ? qRound(mouseLine.length()) % qRound(diagonalSize) //Diagonal
+                    : (isVertical ? qRound(mouseLine.length()) % qRound(Box.height()) : //Vertical
+                       qRound(mouseLine.length()) % qRound(Box.width())));            //Horizontal
 
-    return QLineF::fromPolar(Lenght,tarA).translated(mouseLine.p1());;
+    return QLineF::fromPolar(Lenght, tarA).translated(mouseLine.p1());;
 }

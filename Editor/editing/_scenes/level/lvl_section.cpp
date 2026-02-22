@@ -673,10 +673,12 @@ void LvlScene::drawSpace()
     item2->setZValue(Z_sys_sctBorder);
     item->setOpacity(qreal(0.4));
     item->setData(ITEM_TYPE, "Space");
+    item->setData(ITEM_IS_META, true);
     item->setData(ITEM_TYPE_INT, ItemTypes::META_Space);
     item->setData(ITEM_WIDTH, item->boundingRect().width());
     item->setData(ITEM_HEIGHT, item->boundingRect().height());
     item2->setData(ITEM_TYPE, "SectionBorder");
+    item2->setData(ITEM_IS_META, true);
     item2->setData(ITEM_TYPE_INT, ItemTypes::META_SectionBorder);
     item2->setData(ITEM_WIDTH, item2->boundingRect().width());
     item2->setData(ITEM_HEIGHT, item2->boundingRect().height());

@@ -22,7 +22,7 @@
 #include <PGE_File_Formats/file_formats.h>
 
 #include "../wld_scene.h"
-#include "../wld_item_placing.h"
+
 
 void WldScene::setScreenshotSelector(bool enabled, bool accept)
 {

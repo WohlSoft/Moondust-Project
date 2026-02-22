@@ -657,6 +657,7 @@ void ItemNPC::changeDirection(int dir)
         m_randomDirection = new QGraphicsPixmapItem;
         m_randomDirection->setPixmap(QPixmap(":/npc/random_direction.png"));
         m_scene->addItem(m_randomDirection);
+        m_randomDirection->setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::META_Child);
         m_randomDirection->setOpacity(qreal(0.9));
         m_randomDirection->setPos(
             this->scenePos().x() + ((qreal(m_localProps.setup.width) - 40.0) / 2.0),
@@ -717,6 +718,8 @@ void ItemNPC::setIncludedNPC(int npcID, bool init)
 
     QPixmap npcImg = QPixmap(m_scene->getNPCimg(npcID));
     m_includedNPC = m_scene->addPixmap(npcImg);
+    m_includedNPC->setData(MoondustBaseScene::ITEM_IS_META, true);
+    m_includedNPC->setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::META_Child);
 
     double containerAlignXTo = scenePos().x() +
                                qreal((qreal(m_localProps.setup.width) - qreal(npcImg.width())) / 2.0);
@@ -740,7 +743,6 @@ void ItemNPC::setIncludedNPC(int npcID, bool init)
 
     //Default included NPC pos
     m_includedNPC->setPos(containerAlignXTo, containerAlignYTo);
-
     m_includedNPC->setOpacity(m_localProps.setup.container_show_contents ? qreal(1.0) : qreal(0.4));
     m_includedNPC->setZValue(this->zValue() + m_localProps.setup.container_content_z_offset);
     m_grp->addToGroup(m_includedNPC);
@@ -773,6 +775,7 @@ void ItemNPC::setGenerator(bool enable, int direction, int type, bool init)
     else
     {
         m_generatorArrow = new QGraphicsPixmapItem;
+
         switch(type)
         {
         case 2:
@@ -783,12 +786,15 @@ void ItemNPC::setGenerator(bool enable, int direction, int type, bool init)
             m_generatorArrow->setPixmap(QPixmap(":/npc/warp.png"));
             break;
         }
-        if(!init) m_data.generator_type = type;
+
+        if(!init)
+            m_data.generator_type = type;
 
         m_scene->addItem(m_generatorArrow);
 
         m_gridSize = 16;
 
+        m_generatorArrow->setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::META_Child);
         m_generatorArrow->setOpacity(qreal(0.6));
 
         QPointF offset = QPoint(0, 0);
@@ -896,6 +902,7 @@ void ItemNPC::updateTalking()
         m_talking = new QGraphicsPixmapItem;
         m_talking->setPixmap(QPixmap(":/npc/talking.png"));
         m_scene->addItem(m_talking);
+        m_talking->setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::META_Child);
         m_talking->setOpacity(qreal(0.5));
         m_talking->setPos(
             (m_data.direct < 0 ? this->scenePos().x() : this->scenePos().x() + qreal(m_localProps.setup.width)) - 8,

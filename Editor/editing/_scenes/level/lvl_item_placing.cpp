@@ -201,7 +201,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         m_cursorItemImg = addPixmap(tImg);
 
         //set data flags
-        for(const dataFlag &itemFlag : LvlPlacingItems::flags)
+        foreach(const dataFlag &itemFlag, LvlPlacingItems::flags)
             m_cursorItemImg->setData(itemFlag.first, itemFlag.second);
 
         m_cursorItemImg->setZValue(7000);
@@ -530,6 +530,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         dynamic_cast<QGraphicsPixmapItem *>(m_cursorItemImg)->setOffset(qRound(qreal(x.w - w) / 2.0), x.h - h);
         m_cursorItemImg->setData(ITEM_IS_CURSOR, true);
+        m_cursorItemImg->setData(ITEM_TYPE_INT, ItemTypes::LVL_Player);
         m_cursorItemImg->setZValue(7000);
         m_cursorItemImg->setOpacity(0.8);
         m_cursorItemImg->setVisible(true);
@@ -761,6 +762,8 @@ void LvlScene::resetCursor()
     ((QGraphicsPixmapItem *) m_cursorItemImg)->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     m_cursorItemImg->setZValue(1000);
     m_cursorItemImg->hide();
+    m_cursorItemImg->setData(ITEM_IS_CURSOR, true);
+    m_cursorItemImg->setData(ITEM_TYPE_INT, ItemTypes::META_Cursor);
 }
 
 void LvlScene::setLabelBoxItem(bool show, QPointF pos, QString text)
@@ -789,6 +792,7 @@ void LvlScene::setLabelBoxItem(bool show, QPointF pos, QString text)
         m_labelBox->setBoundingRegionGranularity(1);
         m_labelBox->setZValue(10000);
         m_labelBox->setFont(*GlobalSettings::LvlOpts.labelBoxFont);
+        m_labelBox->setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::META_Label);
         this->addItem(m_labelBox);
         m_labelBox->setPos(pos);
     }

@@ -143,6 +143,7 @@ WldScene::WldScene(MainWindow *mw,
 
     QGraphicsRectItem *bigRect = addRect(-padding, -padding, padding * 2, padding * 2, QPen(Qt::transparent), QBrush(Qt::transparent));
     bigRect->setZValue(-10000000000);
+    bigRect->setData(ITEM_TYPE_INT, ItemTypes::META_Space);
 
 
     //Build edit mode classes
