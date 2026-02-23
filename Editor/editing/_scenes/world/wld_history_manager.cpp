@@ -25,9 +25,9 @@
 #include "wld_scene.h"
 #include "wld_history_manager.h"
 
-#include <editing/_components/history/historyelementmodification.h>
-#include <editing/_components/history/historyelementmainsetting.h>
-#include <editing/_components/history/historyelementitemsetting.h>
+#include <editing/_components/history/history_element_modification.h>
+#include <editing/_components/history/history_element_main_setting.h>
+#include <editing/_components/history/history_element_item_setting.h>
 
 
 WldHistoryManager::WldHistoryManager(WldScene *scene, QObject *parent):

@@ -299,7 +299,6 @@ void WldScene::placeItemUnderCursor()
         m_data->tile_array_id++;
         WldPlacingItems::terrainSet.meta.array_id = m_data->tile_array_id;
 
-        m_data->tiles.push_back(WldPlacingItems::terrainSet);
         placeTile(WldPlacingItems::terrainSet, true);
         m_placingItems.tiles.push_back(WldPlacingItems::terrainSet);
         wasPlaced = true;
@@ -312,7 +311,6 @@ void WldScene::placeItemUnderCursor()
         m_data->scene_array_id++;
         WldPlacingItems::sceneSet.meta.array_id = m_data->scene_array_id;
 
-        m_data->scenery.push_back(WldPlacingItems::sceneSet);
         placeScenery(WldPlacingItems::sceneSet, true);
         m_placingItems.scenery.push_back(WldPlacingItems::sceneSet);
         wasPlaced = true;
@@ -325,7 +323,6 @@ void WldScene::placeItemUnderCursor()
         m_data->path_array_id++;
         WldPlacingItems::pathSet.meta.array_id = m_data->path_array_id;
 
-        m_data->paths.push_back(WldPlacingItems::pathSet);
         placePath(WldPlacingItems::pathSet, true);
         m_placingItems.paths.push_back(WldPlacingItems::pathSet);
         wasPlaced = true;
@@ -338,7 +335,6 @@ void WldScene::placeItemUnderCursor()
         m_data->level_array_id++;
         WldPlacingItems::levelSet.meta.array_id = m_data->level_array_id;
 
-        m_data->levels.push_back(WldPlacingItems::levelSet);
         placeLevel(WldPlacingItems::levelSet, true);
         m_placingItems.levels.push_back(WldPlacingItems::levelSet);
         wasPlaced = true;
@@ -351,7 +347,6 @@ void WldScene::placeItemUnderCursor()
         m_data->musicbox_array_id++;
         WldPlacingItems::musicSet.meta.array_id = m_data->musicbox_array_id;
 
-        m_data->music.push_back(WldPlacingItems::musicSet);
         placeMusicbox(WldPlacingItems::musicSet, true);
         m_placingItems.music.push_back(WldPlacingItems::musicSet);
         wasPlaced = true;
@@ -477,40 +472,26 @@ void WldScene::removeWldItems(QList<QGraphicsItem * > items, bool globalHistory)
 
 void WldScene::placeAll(const WorldData &data)
 {
-    foreach(WorldTerrainTile tile, data.tiles)
-    {
-        //place them back
-        m_data->tiles.push_back(tile);
+    foreach(const WorldTerrainTile &tile, data.tiles)
         placeTile(tile);
-    }
-    foreach(WorldPathTile path, data.paths)
-    {
-        //place them back
-        m_data->paths.push_back(path);
+
+    foreach(const WorldPathTile &path, data.paths)
         placePath(path);
-    }
-    foreach(WorldScenery scenery, data.scenery)
-    {
-        //place them back
-        m_data->scenery.push_back(scenery);
+
+    foreach(const WorldScenery &scenery, data.scenery)
         placeScenery(scenery);
-    }
-    foreach(WorldLevelTile level, data.levels)
-    {
-        //place them back
-        m_data->levels.push_back(level);
+
+    foreach(const WorldLevelTile &level, data.levels)
         placeLevel(level);
-    }
-    foreach(WorldMusicBox music, data.music)
-    {
-        m_data->music.push_back(music);
+
+
+    foreach(const WorldMusicBox &music, data.music)
         placeMusicbox(music);
-    }
 
     //refresh Animation control
-    if(m_opts.animationEnabled) stopAnimation();
-    if(m_opts.animationEnabled) startAnimation();
+    if(m_opts.animationEnabled)
+        stopAnimation();
+
+    if(m_opts.animationEnabled)
+        startAnimation();
 }
-
-
-

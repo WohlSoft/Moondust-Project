@@ -174,8 +174,6 @@ void LvlScene::paste(LevelData &BufferIn, QPoint pos)
         dumpBlock.meta.array_id = m_data->blocks_array_id;
 
         placeBlock(dumpBlock);
-
-        m_data->blocks.push_back(dumpBlock);
         newData.blocks.push_back(dumpBlock);
     }
 
@@ -189,8 +187,6 @@ void LvlScene::paste(LevelData &BufferIn, QPoint pos)
         dumpBGO.meta.array_id = m_data->bgo_array_id;
 
         placeBGO(dumpBGO);
-
-        m_data->bgo.push_back(dumpBGO);
         newData.bgo.push_back(dumpBGO);
     }
 
@@ -204,8 +200,6 @@ void LvlScene::paste(LevelData &BufferIn, QPoint pos)
         dumpNPC.meta.array_id = m_data->npc_array_id;
 
         placeNPC(dumpNPC);
-
-        m_data->npc.push_back(dumpNPC);
         newData.npc.push_back(dumpNPC);
     }
 
@@ -219,8 +213,6 @@ void LvlScene::paste(LevelData &BufferIn, QPoint pos)
         dumpWater.meta.array_id = m_data->physenv_array_id;
 
         placeEnvironmentZone(dumpWater);
-
-        m_data->physez.push_back(dumpWater);
         newData.physez.push_back(dumpWater);
     }
 

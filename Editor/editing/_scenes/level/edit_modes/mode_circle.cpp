@@ -166,8 +166,6 @@ void LVL_ModeCircle::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 s->m_data->blocks_array_id++;
 
                 LvlPlacingItems::blockSet.meta.array_id = s->m_data->blocks_array_id;
-                s->m_data->blocks.push_back(LvlPlacingItems::blockSet);
-
                 s->placeBlock(LvlPlacingItems::blockSet, true);
                 LevelData plSzBlock;
                 plSzBlock.blocks.push_back(LvlPlacingItems::blockSet);

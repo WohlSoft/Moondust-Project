@@ -691,6 +691,7 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
         dirPath = edit->WldData.meta.path;
         /*********************Stop animations to increase performance***********************/
         edit->scene->stopAnimation();
+        edit->setUpdatesEnabled(false);
         /*********************Stop animations to increase performance***********************/
         QProgressDialog progress(tr("Calculating total star count in accessible levels"),
                                  tr("Abort"),
@@ -740,6 +741,8 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
         /***********************Resume stoped animation and restore 'count' button state**************************/
         if(edit->scene->m_opts.animationEnabled)
             edit->scene->startAnimation();
+
+        edit->setUpdatesEnabled(true);
 
         ui->WLD_DoCountStars->setEnabled(true);
         ui->WLD_DoCountStars->setText(__backUP);

@@ -276,12 +276,11 @@ void WldScene::Debugger_updateItemList()
            "Levels:\t%4\n"
            "Music boxes:\t\t%5\n");
 
-    itemList = itemList.arg(
-                   m_data->tiles.size())
-               .arg(m_data->scenery.size())
-               .arg(m_data->paths.size())
-               .arg(m_data->levels.size())
-               .arg(m_data->music.size());
+    itemList = itemList.arg(m_itemsTiles.size())
+               .arg(m_itemsScenery.size())
+               .arg(m_itemsPaths.size())
+               .arg(m_itemsLevels.size())
+               .arg(m_itemsMusicBoxes.size());
 
     MainWinConnect::pMainWin->dock_DebuggerBox->setItemStat(itemList);
 }

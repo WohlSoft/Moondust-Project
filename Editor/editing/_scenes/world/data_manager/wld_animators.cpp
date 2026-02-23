@@ -137,16 +137,17 @@ void WldScene::buildAnimators()
 
 void WldScene::startAnimation()
 {
-    long q = m_data->tiles.size();
-    q += m_data->levels.size();
-    q += m_data->scenery.size();
-    q += m_data->paths.size();
+    long q = m_itemsTiles.size();
+    q += m_itemsLevels.size();
+    q += m_itemsScenery.size();
+    q += m_itemsPaths.size();
 
     if(q > GlobalSettings::animatorItemsLimit)
     {
         LogWarning(QString("Can't start animation: too many items on map: %1").arg(q));
         return;
     }
+
     m_animationTimer.start(32);
 }
 

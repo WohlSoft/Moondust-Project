@@ -301,12 +301,12 @@ void LvlScene::Debugger_updateItemList()
            "Warp entries:\t\t%5\n"
            "Physical env. zones:\t%6\n");
 
-    itemList = itemList.arg(m_data->players.size())
-               .arg(m_data->blocks.size())
-               .arg(m_data->bgo.size())
-               .arg(m_data->npc.size())
+    itemList = itemList.arg(m_itemsPlayers.size())
+               .arg(m_itemsBlocks.size())
+               .arg(m_itemsBGO.size())
+               .arg(m_itemsNPC.size())
                .arg(m_data->doors.size())
-               .arg(m_data->physez.size());
+               .arg(m_itemsPhysEnv.size());
 
     m_mw->dock_DebuggerBox->setItemStat(itemList);
 }

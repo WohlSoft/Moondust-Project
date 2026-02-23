@@ -115,9 +115,9 @@ void LvlScene::buildAnimators()
 ////////////////////////////////////Animator////////////////////////////////
 void LvlScene::startAnimation()
 {
-    long q = m_data->blocks.size();
-    q += m_data->bgo.size();
-    q += m_data->npc.size();
+    long q = m_itemsBlocks.size();
+    q += m_itemsBGO.size();
+    q += m_itemsNPC.size();
 
     if(q > GlobalSettings::animatorItemsLimit)
     {
@@ -126,8 +126,10 @@ void LvlScene::startAnimation()
     }
 
     m_animationTimer.start(32);
+
     foreach(AdvNpcAnimator *npcA, m_animatorsNPC)
         npcA->start();
+
     m_subWindow->setAutoUpdateTimer(31);
 }
 

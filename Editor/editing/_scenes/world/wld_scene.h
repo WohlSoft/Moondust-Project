@@ -45,7 +45,7 @@
 #include <data_configs/custom_data.h>
 #include <PGE_File_Formats/wld_filedata.h>
 
-#include <editing/_components/history/ihistoryelement.h>
+#include <editing/_components/history/i_history_element.h>
 
 #include "wld_point_selector.h"
 
@@ -242,11 +242,20 @@ public:
     qlonglong m_lastLevelArrayID = 0;
     qlonglong m_lastMusicBoxArrayID = 0;
 
-    void placeTile(WorldTerrainTile &tile, bool toGrid = false);
-    void placeScenery(WorldScenery &scenery, bool toGrid = false);
-    void placePath(WorldPathTile &pathItem, bool toGrid = false);
-    void placeLevel(WorldLevelTile &level, bool toGrid = false);
-    void placeMusicbox(WorldMusicBox &musicbox, bool toGrid = false);
+    void placeTile(WorldTerrainTile &tile, bool toGrid);
+    void placeTile(const WorldTerrainTile &tile);
+
+    void placeScenery(WorldScenery &scenery, bool toGrid);
+    void placeScenery(const WorldScenery &scenery);
+
+    void placePath(WorldPathTile &path, bool toGrid);
+    void placePath(const WorldPathTile &path);
+
+    void placeLevel(WorldLevelTile &level, bool toGrid);
+    void placeLevel(const WorldLevelTile &level);
+
+    void placeMusicbox(WorldMusicBox &musicbox, bool toGrid);
+    void placeMusicbox(const WorldMusicBox &musicbox);
 
     // ///////////////////Point selector/////////////////////////
 public:

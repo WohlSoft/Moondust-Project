@@ -142,6 +142,8 @@ void WorldEdit::ExportingReady() //slot
 
     qApp->processEvents();
     scene->stopAnimation(); //Reset animation to 0 frame
+    setUpdatesEnabled(false);
+
     if(hideMusic)
         scene->hideMusicBoxes(false);
     if(hidePathLevels)
@@ -248,19 +250,26 @@ void WorldEdit::ExportingReady() //slot
     qApp->processEvents();
     if(scene->m_opts.animationEnabled)
         scene->startAnimation(); // Restart animation
+
     if(hideMusic)
         scene->hideMusicBoxes(true);
+
     if(hidePathLevels)
         scene->hidePathAndLevels(true);
+
     if(gridWasShown)
         scene->m_opts.grid_show = true;
+
     if(cameraGridWasShown)
         scene->m_opts.camera_grid_show = true;
+
     if(hideMetas)
     {
         for(QGraphicsItem *it : invisibleMetas)
             it->setVisible(true);
     }
+
+    setUpdatesEnabled(true);
     scene->invalidate();
     scene->update();
 

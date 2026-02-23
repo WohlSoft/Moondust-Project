@@ -274,31 +274,31 @@ list(APPEND PGE_EDITOR_SRCS
     data_configs/obj_tilesets.cpp
     data_configs/selection_dialog/config_manager.cpp
     dev_console/devconsole.cpp
-    editing/_components/history/historyelementaddlayer.cpp
-    editing/_components/history/historyelementaddwarp.cpp
-    editing/_components/history/historyelementchangednewlayer.cpp
-    editing/_components/history/historyelementitemsetting.cpp
-    editing/_components/history/historyelementlayerchanged.cpp
-    editing/_components/history/historyelementmainsetting.cpp
-    editing/_components/history/historyelementmergelayer.cpp
-    editing/_components/history/historyelementmodification.cpp
-    editing/_components/history/historyelementmodifyevent.cpp
-    editing/_components/history/historyelementnewlayer.cpp
-    editing/_components/history/historyelementplacedoor.cpp
-    editing/_components/history/historyelementremovelayerandsave.cpp
-    editing/_components/history/historyelementremovelayer.cpp
-    editing/_components/history/historyelementremovewarp.cpp
-    editing/_components/history/historyelementrenameevent.cpp
-    editing/_components/history/historyelementrenamelayer.cpp
-    editing/_components/history/historyelementreplaceplayerpoint.cpp
-    editing/_components/history/historyelementresizeblock.cpp
-    editing/_components/history/historyelementresizesection.cpp
-    editing/_components/history/historyelementresizewater.cpp
-    editing/_components/history/historyelementsettingsevent.cpp
-    editing/_components/history/historyelementsettingssection.cpp
-    editing/_components/history/historyelementsettingswarp.cpp
-    editing/_components/history/ihistoryelement.cpp
-    editing/_components/history/itemsearcher.cpp
+    editing/_components/history/history_element_add_layer.cpp
+    editing/_components/history/history_element_add_warp.cpp
+    editing/_components/history/history_element_changed_new_layer.cpp
+    editing/_components/history/history_element_item_setting.cpp
+    editing/_components/history/history_element_layer_changed.cpp
+    editing/_components/history/history_element_main_setting.cpp
+    editing/_components/history/history_element_merge_layer.cpp
+    editing/_components/history/history_element_modification.cpp
+    editing/_components/history/history_element_modify_event.cpp
+    editing/_components/history/history_element_new_layer.cpp
+    editing/_components/history/history_element_place_door.cpp
+    editing/_components/history/history_element_remove_layer.cpp
+    editing/_components/history/history_element_remove_layer_and_save.cpp
+    editing/_components/history/history_element_remove_warp.cpp
+    editing/_components/history/history_element_rename_event.cpp
+    editing/_components/history/history_element_rename_layer.cpp
+    editing/_components/history/history_element_replace_player_point.cpp
+    editing/_components/history/history_element_resize_block.cpp
+    editing/_components/history/history_element_resize_section.cpp
+    editing/_components/history/history_element_resize_water.cpp
+    editing/_components/history/history_element_settings_event.cpp
+    editing/_components/history/history_element_settings_section.cpp
+    editing/_components/history/history_element_settings_warp.cpp
+    editing/_components/history/i_history_element.cpp
+    editing/_components/history/item_searcher.cpp
     editing/_dialogs/itemselectdialog.cpp
     editing/_dialogs/savingnotificationdialog.cpp
     editing/_dialogs/user_data_edit.cpp

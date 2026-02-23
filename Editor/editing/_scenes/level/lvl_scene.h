@@ -48,7 +48,7 @@
 #include <PGE_File_Formats/lvl_filedata.h>
 #include <PGE_File_Formats/npc_filedata.h>
 
-#include <editing/_components/history/ihistoryelement.h>
+#include <editing/_components/history/i_history_element.h>
 
 #include <common_features/RTree.h>
 
@@ -279,11 +279,19 @@ public:
 
     long m_IncrementingNpcSpecialSpin;
 
-    ItemBlock *placeBlock(LevelBlock &block, bool toGrid = false);
-    ItemBGO *placeBGO(LevelBGO &bgo, bool toGrid = false);
-    ItemNPC *placeNPC(LevelNPC &npc, bool toGrid = false);
-    ItemPhysEnv *placeEnvironmentZone(LevelPhysEnv &water, bool toGrid = false);
-    ItemPlayerPoint *placePlayerPoint(PlayerPoint plr, bool init = false);
+    ItemBlock *placeBlock(LevelBlock &block, bool toGrid);
+    ItemBlock *placeBlock(const LevelBlock &block);
+
+    ItemBGO *placeBGO(LevelBGO &bgo, bool toGrid);
+    ItemBGO *placeBGO(const LevelBGO &bgo);
+
+    ItemNPC *placeNPC(LevelNPC &npc, bool toGrid);
+    ItemNPC *placeNPC(const LevelNPC &npc);
+
+    ItemPhysEnv *placeEnvironmentZone(LevelPhysEnv &water, bool toGrid);
+    ItemPhysEnv *placeEnvironmentZone(const LevelPhysEnv &water);
+
+    ItemPlayerPoint *placePlayerPoint(const PlayerPoint &plr, bool init = false);
 
     void placeDoor(LevelDoor &door, bool toGrid = false);
     void placeDoorEnter(LevelDoor &door, bool toGrid = false, bool init = false);

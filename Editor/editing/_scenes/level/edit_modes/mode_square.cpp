@@ -166,8 +166,6 @@ void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             s->m_data->physenv_array_id++;
 
             LvlPlacingItems::waterSet.meta.array_id = s->m_data->physenv_array_id;
-            s->m_data->physez.push_back(LvlPlacingItems::waterSet);
-
             s->placeEnvironmentZone(LvlPlacingItems::waterSet, true);
             LevelData plWater;
             plWater.physez.push_back(LvlPlacingItems::waterSet);
@@ -188,8 +186,6 @@ void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 s->m_data->blocks_array_id++;
 
                 LvlPlacingItems::blockSet.meta.array_id = s->m_data->blocks_array_id;
-                s->m_data->blocks.push_back(LvlPlacingItems::blockSet);
-
                 s->placeBlock(LvlPlacingItems::blockSet, true);
                 LevelData plSzBlock;
                 plSzBlock.blocks.push_back(LvlPlacingItems::blockSet);

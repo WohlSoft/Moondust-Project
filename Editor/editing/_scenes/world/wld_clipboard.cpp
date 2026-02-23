@@ -201,8 +201,6 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
         dumpTile.meta.array_id = m_data->tile_array_id;
 
         placeTile(dumpTile);
-
-        m_data->tiles.push_back(dumpTile);
         newData.tiles.push_back(dumpTile);
     }
 
@@ -216,8 +214,6 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
         dumpScene.meta.array_id = m_data->scene_array_id;
 
         placeScenery(dumpScene);
-
-        m_data->scenery.push_back(dumpScene);
         newData.scenery.push_back(dumpScene);
     }
 
@@ -231,8 +227,6 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
         dumpPath.meta.array_id = m_data->path_array_id;
 
         placePath(dumpPath);
-
-        m_data->paths.push_back(dumpPath);
         newData.paths.push_back(dumpPath);
     }
 
@@ -246,8 +240,6 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
         dumpLevel.meta.array_id = m_data->level_array_id;
 
         placeLevel(dumpLevel);
-
-        m_data->levels.push_back(dumpLevel);
         newData.levels.push_back(dumpLevel);
     }
 
@@ -261,8 +253,6 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
         dumpMusic.meta.array_id = m_data->musicbox_array_id;
 
         placeMusicbox(dumpMusic);
-
-        m_data->music.push_back(dumpMusic);
         newData.music.push_back(dumpMusic);
     }
 
@@ -284,30 +274,42 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
 
         objType = it->data(ITEM_TYPE_INT).toInt();
 
-        if(objType == ItemTypes::WLD_Tile)
+        switch(objType)
+        {
+        case ItemTypes::WLD_Tile:
         {
             ItemTile *item = dynamic_cast<ItemTile *>(it);
             newData.tiles.push_back(item->m_data);
+            break;
         }
-        else if(objType == ItemTypes::WLD_Scenery)
+
+        case ItemTypes::WLD_Scenery:
         {
             ItemScene *item = dynamic_cast<ItemScene *>(it);
             newData.scenery.push_back(item->m_data);
+            break;
         }
-        else if(objType == ItemTypes::WLD_Path)
+
+        case ItemTypes::WLD_Path:
         {
             ItemPath *item = dynamic_cast<ItemPath *>(it);
             newData.paths.push_back(item->m_data);
+            break;
         }
-        else if(objType == ItemTypes::WLD_Level)
+
+        case ItemTypes::WLD_Level:
         {
             ItemLevel *item = dynamic_cast<ItemLevel *>(it);
             newData.levels.push_back(item->m_data);
+            break;
         }
-        else if(objType == ItemTypes::WLD_MusicBox)
+
+        case ItemTypes::WLD_MusicBox:
         {
             ItemMusic *item = dynamic_cast<ItemMusic *>(it);
             newData.music.push_back(item->m_data);
+            break;
+        }
         }
     }
 

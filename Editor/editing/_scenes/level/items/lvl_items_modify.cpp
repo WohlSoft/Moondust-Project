@@ -192,40 +192,23 @@ void LvlScene::placeAll(const LevelData &data)
 {
     bool hasToUpdateDoorData = false;
 
-    for(LevelBlock block : data.blocks)
-    {
-        //place them back
-        m_data->blocks.push_back(block);
+    foreach(const LevelBlock &block, data.blocks)
         placeBlock(block);
 
-    }
-
-    for(LevelBGO bgo : data.bgo)
-    {
-        //place them back
-        m_data->bgo.push_back(bgo);
+    foreach(const LevelBGO &bgo, data.bgo)
         placeBGO(bgo);
 
-    }
+    foreach(const LevelNPC &npc, data.npc)
+        placeNPC(npc);
 
-    for(LevelNPC npc : data.npc)
-    {
-        //place them back
-        m_data->npc.push_back(npc);
-        placeNPC(npc, false);
-    }
-
-    for(LevelPhysEnv water : data.physez)
-    {
-        //place them back
-        m_data->physez.push_back(water);
+    foreach(const LevelPhysEnv &water, data.physez)
         placeEnvironmentZone(water);
-    }
 
-    for(LevelDoor door : data.doors)
+    foreach(const LevelDoor &door, data.doors)
     {
         LevelDoor originalDoor;
         bool found = false;
+
         foreach(LevelDoor findDoor, m_data->doors)
         {
             if(door.meta.array_id == findDoor.meta.array_id)
@@ -235,6 +218,7 @@ void LvlScene::placeAll(const LevelData &data)
                 break;
             }
         }
+
         if(!found)
             break;
 
@@ -252,19 +236,22 @@ void LvlScene::placeAll(const LevelData &data)
             originalDoor.isSetOut = true;
             placeDoorExit(originalDoor, false, false);
         }
+
         hasToUpdateDoorData = true;
     }
 
-    for(PlayerPoint plr : data.players)
+    foreach(const PlayerPoint &plr, data.players)
         placePlayerPoint(plr);
 
     if(hasToUpdateDoorData)
         m_mw->dock_LvlWarpProps->setDoorData(-2);
 
-
     //refresh Animation control
-    if(m_opts.animationEnabled) stopAnimation();
-    if(m_opts.animationEnabled) startAnimation();
+    if(m_opts.animationEnabled)
+        stopAnimation();
+
+    if(m_opts.animationEnabled)
+        startAnimation();
 }
 
 
@@ -293,6 +280,7 @@ void LvlScene::placeItemsByRectArray()
 
         if(m_cursorItemImg) delete m_cursorItemImg;
     }
+
     m_cursorItemImg = backup;
     m_cursorItemImg->hide();
 
@@ -419,8 +407,6 @@ void LvlScene::placeItemUnderCursor()
 
         m_data->blocks_array_id++;
         LvlPlacingItems::blockSet.meta.array_id = m_data->blocks_array_id;
-
-        m_data->blocks.push_back(LvlPlacingItems::blockSet);
         placeBlock(LvlPlacingItems::blockSet, true);
         m_placingItems.blocks.push_back(LvlPlacingItems::blockSet);
         wasPlaced = true;
@@ -432,8 +418,6 @@ void LvlScene::placeItemUnderCursor()
 
         m_data->bgo_array_id++;
         LvlPlacingItems::bgoSet.meta.array_id = m_data->bgo_array_id;
-
-        m_data->bgo.push_back(LvlPlacingItems::bgoSet);
         placeBGO(LvlPlacingItems::bgoSet, true);
         m_placingItems.bgo.push_back(LvlPlacingItems::bgoSet);
         wasPlaced = true;
@@ -451,9 +435,6 @@ void LvlScene::placeItemUnderCursor()
 
         m_data->npc_array_id++;
         LvlPlacingItems::npcSet.meta.array_id = m_data->npc_array_id;
-
-        m_data->npc.push_back(LvlPlacingItems::npcSet);
-
         placeNPC(LvlPlacingItems::npcSet, !LvlPlacingItems::npcSet.generator);
 
         m_placingItems.npc.push_back(LvlPlacingItems::npcSet);

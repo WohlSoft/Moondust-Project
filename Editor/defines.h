@@ -76,11 +76,14 @@ public:
         LVL_S_PhysEnv     = 1<<3,
         LVL_S_Door        = 1<<4,
         LVL_S_Player      = 1<<5,
+        LVL_S_ALL_BASE    = LVL_S_Block | LVL_S_BGO | LVL_S_NPC | LVL_S_Door | LVL_S_PhysEnv,
+
         WLD_S_Tile        = 1<<6,
         WLD_S_Scenery     = 1<<7,
         WLD_S_Path        = 1<<8,
         WLD_S_Level       = 1<<9,
-        WLD_S_MusicBox    = 1<<10
+        WLD_S_MusicBox    = 1<<10,
+        WLD_S_ALL         = WLD_S_Tile | WLD_S_Scenery | WLD_S_Path | WLD_S_Level | WLD_S_MusicBox
     };
 
 

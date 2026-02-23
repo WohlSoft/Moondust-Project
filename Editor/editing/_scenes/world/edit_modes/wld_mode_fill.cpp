@@ -173,7 +173,6 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     scene->m_data->tile_array_id++;
                     WldPlacingItems::terrainSet.meta.array_id = scene->m_data->tile_array_id;
 
-                    scene->m_data->tiles.push_back(WldPlacingItems::terrainSet);
                     scene->placeTile(WldPlacingItems::terrainSet, true);
                     historyBuffer.tiles.push_back(WldPlacingItems::terrainSet);
 
@@ -222,7 +221,6 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     scene->m_data->scene_array_id++;
                     WldPlacingItems::sceneSet.meta.array_id = scene->m_data->scene_array_id;
 
-                    scene->m_data->scenery.push_back(WldPlacingItems::sceneSet);
                     scene->placeScenery(WldPlacingItems::sceneSet, true);
                     historyBuffer.scenery.push_back(WldPlacingItems::sceneSet);
 
@@ -271,7 +269,6 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     scene->m_data->path_array_id++;
                     WldPlacingItems::pathSet.meta.array_id = scene->m_data->path_array_id;
 
-                    scene->m_data->paths.push_back(WldPlacingItems::pathSet);
                     scene->placePath(WldPlacingItems::pathSet, true);
                     historyBuffer.paths.push_back(WldPlacingItems::pathSet);
 
@@ -320,7 +317,6 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     scene->m_data->level_array_id++;
                     WldPlacingItems::levelSet.meta.array_id = scene->m_data->level_array_id;
 
-                    scene->m_data->levels.push_back(WldPlacingItems::levelSet);
                     scene->placeLevel(WldPlacingItems::levelSet, true);
                     historyBuffer.levels.push_back(WldPlacingItems::levelSet);
 
