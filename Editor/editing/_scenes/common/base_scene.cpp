@@ -222,16 +222,18 @@ bool MoondustBaseScene::checkGroupCollisions(const PGE_ItemList &items)
     //Don't collide with items which in the group
     for(auto it = checkZone.begin(); it != checkZone.end(); )
     {
+        bool found = false;
         for(auto jt = items.begin(); jt != items.end(); ++jt)
         {
             if(*it == *jt)
             {
                 it = checkZone.erase(it);
+                found = true;
                 break;
             }
         }
 
-        if(it != checkZone.end())
+        if(!found && it != checkZone.end())
             ++it;
     }
 
