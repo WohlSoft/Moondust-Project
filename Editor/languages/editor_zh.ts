@@ -1076,6 +1076,61 @@ Please save them before doing anything else.</source>
     </message>
 </context>
 <context>
+    <name>DebuggerStatsModel</name>
+    <message>
+        <source>Player start points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished">砖块</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <translation type="unfinished">背景对象</translation>
+    </message>
+    <message>
+        <source>Non-playable characters/items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warp entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical env. zones</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain tiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path cells</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level entrances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music change boxes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Item type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation type="unfinished">计算</translation>
+    </message>
+</context>
+<context>
     <name>DevConsole</name>
     <message>
         <source>Developer Console</source>
@@ -4246,22 +4301,6 @@ All elements of this layer will be removed too!</source>
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
         <translation>关卡属性……</translation>
-    </message>
-    <message>
-        <source>Player start points:		%1
-Blocks:			%2
-Background objects&apos;s:	%3
-Non-playable characters&apos;s:	%4
-Warp entries:		%5
-Physical env. zones:	%6
-</source>
-        <translation>玩家起点数量：	 %1
-砖块数量：	 %2
-背景数量：	 %3
-NPC 数量：	 %4
-传送点数量：	 %5
-物理区域数量：	 %6
-</translation>
     </message>
     <message>
         <source>Search User Backgrounds %1</source>
@@ -9194,20 +9233,6 @@ Bottom:	%4</source>
 </context>
 <context>
     <name>WldScene</name>
-    <message>
-        <source>Tiles:		%1
-Sceneries:			%2
-Paths:	%3
-Levels:	%4
-Music boxes:		%5
-</source>
-        <translation>地形数量：		%1
-风景数量：		%2
-路线数量：		%3
-关卡数量：		%4
-音乐数量：		%5
-</translation>
-    </message>
     <message>
         <source>Search User Tiles %1</source>
         <translation>正在查找自定义地形 %1</translation>

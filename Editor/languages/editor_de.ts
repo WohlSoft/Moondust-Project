@@ -1050,6 +1050,61 @@ Bitte speichere sie sofort ab!.</translation>
     </message>
 </context>
 <context>
+    <name>DebuggerStatsModel</name>
+    <message>
+        <source>Player start points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished">Blöcke</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Non-playable characters/items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warp entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical env. zones</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain tiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation type="unfinished">Umgebung</translation>
+    </message>
+    <message>
+        <source>Path cells</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level entrances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music change boxes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Item type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation type="unfinished">Zähle</translation>
+    </message>
+</context>
+<context>
     <name>DevConsole</name>
     <message>
         <source>Developer Console</source>
@@ -4183,21 +4238,6 @@ Bitte konventiere die kaputten Bilddateien und lade das Level neu.</translation>
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Player start points:		%1
-Blocks:			%2
-Background objects&apos;s:	%3
-Non-playable characters&apos;s:	%4
-Warp entries:		%5
-Physical env. zones:	%6
-</source>
-        <translation type="unfinished">Player Startpunt:	%1
-Blöcke:		%2
-Hintergrundobjekte:	%3
-NPCs:		%4
-Warpeingänge:	%5
-Physikalische Umgebungen:	%6</translation>
     </message>
 </context>
 <context>
@@ -9051,19 +9091,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>Dieses Level hat falsche benutzerdefinierte Bilddateien.
 Diese Bilddateien werden mit einem &quot;Geister&quot;-Bild bzw. dummy-Bild ersetzt. Dies passiert weil, z.B. die Bilddatei im BMP-Format abgespeichert wurde, jedoch mit einer GIF-Erweiterung gekennzeichnet wurde.
 Bitte konventiere die kaputten Bilddateien und lade das Level neu.</translation>
-    </message>
-    <message>
-        <source>Tiles:		%1
-Sceneries:			%2
-Paths:	%3
-Levels:	%4
-Music boxes:		%5
-</source>
-        <translation>Tiles:		%1
-Umgebungsobjekte:	%2
-Pfade:		%3
-Levels:		%4
-Musicboxen:		%5</translation>
     </message>
 </context>
 <context>

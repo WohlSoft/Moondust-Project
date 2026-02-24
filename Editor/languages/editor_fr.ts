@@ -1058,6 +1058,61 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
 </context>
 <context>
+    <name>DebuggerStatsModel</name>
+    <message>
+        <source>Player start points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished">Blocs</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <translation type="unfinished">Objets de l&apos;arrière-plan</translation>
+    </message>
+    <message>
+        <source>Non-playable characters/items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warp entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical env. zones</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain tiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation type="unfinished">Paysage</translation>
+    </message>
+    <message>
+        <source>Path cells</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level entrances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music change boxes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Item type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation type="unfinished">Compter</translation>
+    </message>
+</context>
+<context>
     <name>DevConsole</name>
     <message>
         <source>Developer Console</source>
@@ -4227,22 +4282,6 @@ Veuillez reconvertir vos images dans un format valide et essayer de recharger ce
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
         <translation>Propriétés du niveau…</translation>
-    </message>
-    <message>
-        <source>Player start points:		%1
-Blocks:			%2
-Background objects&apos;s:	%3
-Non-playable characters&apos;s:	%4
-Warp entries:		%5
-Physical env. zones:	%6
-</source>
-        <translation>Point de démarrage du joueur :	%1
-Blocs :								%2
-Objets d&apos;arrière-plan :				%3
-Personnages non-joueurs :			%4
-Entrées de passage : 				%5
-Zones d&apos;env. physique : 			%6
-</translation>
     </message>
 </context>
 <context>
@@ -9158,20 +9197,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>Ce niveau contient des fichiers d&apos;éléments graphiques personnalisés incorrects.
 Vous verrez des « fantômes » ou d&apos;autres images factices au lieu de vos éléments graphiques personnalisés. Cela est probablement dû à une mauvaise conversion, comme le passage de BMP à GIF.
 Veuillez reconvertir vos images dans un format valide et essayer de recharger ce niveau.</translation>
-    </message>
-    <message>
-        <source>Tiles:		%1
-Sceneries:			%2
-Paths:	%3
-Levels:	%4
-Music boxes:		%5
-</source>
-        <translation>Tuiles :				%1
-Paysages :			%2
-Chemins :			%3
-Niveaux :			%4
-Boîtes à musique :	%5
-</translation>
     </message>
 </context>
 <context>

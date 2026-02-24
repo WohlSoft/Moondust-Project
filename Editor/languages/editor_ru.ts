@@ -1077,6 +1077,61 @@ Please save them before doing anything else.</source>
     </message>
 </context>
 <context>
+    <name>DebuggerStatsModel</name>
+    <message>
+        <source>Player start points</source>
+        <translation>Точки начала игры</translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation>Блоки</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <translation>Фоновые объекты</translation>
+    </message>
+    <message>
+        <source>Non-playable characters/items</source>
+        <translation>Неигр. персонажи/предметы</translation>
+    </message>
+    <message>
+        <source>Warp entries</source>
+        <translation>Записи проходов</translation>
+    </message>
+    <message>
+        <source>Physical env. zones</source>
+        <translation>Зоны физич. сред</translation>
+    </message>
+    <message>
+        <source>Terrain tiles</source>
+        <translation>Клетки ландшафта</translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation>Декорации</translation>
+    </message>
+    <message>
+        <source>Path cells</source>
+        <translation>Клетки пути</translation>
+    </message>
+    <message>
+        <source>Level entrances</source>
+        <translation>Точки входа на уровни</translation>
+    </message>
+    <message>
+        <source>Music change boxes</source>
+        <translation>Точки смены музыки</translation>
+    </message>
+    <message>
+        <source>Item type</source>
+        <translation>Тип элемента</translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation>Кол-во</translation>
+    </message>
+</context>
+<context>
     <name>DevConsole</name>
     <message>
         <source>Developer Console</source>
@@ -4288,22 +4343,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
         <translation>Настройки уровня...</translation>
-    </message>
-    <message>
-        <source>Player start points:		%1
-Blocks:			%2
-Background objects&apos;s:	%3
-Non-playable characters&apos;s:	%4
-Warp entries:		%5
-Physical env. zones:	%6
-</source>
-        <translation>Начальные точки:	%1
-Блоки:			%2
-Фоновые объекты:	%3
-Неигровые персонажи:	%4
-Записи проходов:	%5
-Зоны физических сред:	%6
-</translation>
     </message>
 </context>
 <context>
@@ -9246,20 +9285,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>Этот уровень имеет неправильные файлы пользовательской графики
 Вы будете видеть &apos;призраков&apos; или другое заменяющее изображение вместо пользовательской графики объектов. Это может быть потому что, например, был сохранён BMP-файл под расширением GIF.
 Пожалуйста, переконвертируйте изображения в правильный формат и перезагрузите этот уровень.</translation>
-    </message>
-    <message>
-        <source>Tiles:		%1
-Sceneries:			%2
-Paths:	%3
-Levels:	%4
-Music boxes:		%5
-</source>
-        <translation>Плитки:			%1
-Декорации:		%2
-Дороги:			%3
-Уровни:			%4
-Музыкальные коробки:	%5
-</translation>
     </message>
 </context>
 <context>

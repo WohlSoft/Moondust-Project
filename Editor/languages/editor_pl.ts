@@ -1055,6 +1055,61 @@ Proszę zapisz je przed zrobieniem czegokolwiek innego.</translation>
     </message>
 </context>
 <context>
+    <name>DebuggerStatsModel</name>
+    <message>
+        <source>Player start points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished">Bloki</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Non-playable characters/items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warp entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical env. zones</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain tiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path cells</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level entrances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music change boxes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Item type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation type="unfinished">Policz</translation>
+    </message>
+</context>
+<context>
     <name>DevConsole</name>
     <message>
         <source>Developer Console</source>
@@ -4219,23 +4274,6 @@ Zobaczysz duchy i inne obrazki zamiast wlasnych grafik, które używają błędn
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
         <translation>Właściowości poziomu...</translation>
-    </message>
-    <message>
-        <source>Player start points:		%1
-Blocks:			%2
-Background objects&apos;s:	%3
-Non-playable characters&apos;s:	%4
-Warp entries:		%5
-Physical env. zones:	%6
-</source>
-        <translatorcomment>Co to jest Physical env. zones:	%6 ????</translatorcomment>
-        <translation>Punkty startu gracza: %1
-Bloki:   %2
-Obiekty tła: %3
-Niegrywalne postacie: %4
-Wejścia do teleportu:  %5
-Fizyczne strefy środowiska: %6
-</translation>
     </message>
 </context>
 <context>
@@ -9142,20 +9180,6 @@ You will see &apos;ghosties&apos; or other dummy images instead custom GFX of it
 Please, reconvert your images to valid format and try to reload this level.</source>
         <translation>Ten poziom ma złe własne grafiki.
 Zobaczysz duchy i inne obrazki zamiast wlasnych grafik, które używają błędnych grafik. To się stało np. z powodu użycia pliku BMP z rozszerzeniem GIF.</translation>
-    </message>
-    <message>
-        <source>Tiles:		%1
-Sceneries:			%2
-Paths:	%3
-Levels:	%4
-Music boxes:		%5
-</source>
-        <translation>Bloki:		%1
-Scenerie:			%2
-Ścieżki:	%3
-Poziomy:	%4
-Bloki muzyczne:		%5
-</translation>
     </message>
 </context>
 <context>

@@ -1079,6 +1079,61 @@ Please save them before doing anything else.</translation>
     </message>
 </context>
 <context>
+    <name>DebuggerStatsModel</name>
+    <message>
+        <source>Player start points</source>
+        <translation>Player start points</translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation>Blocks</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <translation>Background objects</translation>
+    </message>
+    <message>
+        <source>Non-playable characters/items</source>
+        <translation>Non-playable characters/items</translation>
+    </message>
+    <message>
+        <source>Warp entries</source>
+        <translation>Warp entries</translation>
+    </message>
+    <message>
+        <source>Physical env. zones</source>
+        <translation>Physical env. zones</translation>
+    </message>
+    <message>
+        <source>Terrain tiles</source>
+        <translation>Terrain tiles</translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation>Scenery</translation>
+    </message>
+    <message>
+        <source>Path cells</source>
+        <translation>Path cells</translation>
+    </message>
+    <message>
+        <source>Level entrances</source>
+        <translation>Level entrances</translation>
+    </message>
+    <message>
+        <source>Music change boxes</source>
+        <translation>Music change boxes</translation>
+    </message>
+    <message>
+        <source>Item type</source>
+        <translation>Item type</translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation>Count</translation>
+    </message>
+</context>
+<context>
     <name>DevConsole</name>
     <message>
         <source>Developer Console</source>
@@ -4287,22 +4342,6 @@ Please reconvert your images to a valid format and try reloading this level.</tr
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
         <translation>Level properties...</translation>
-    </message>
-    <message>
-        <source>Player start points:		%1
-Blocks:			%2
-Background objects&apos;s:	%3
-Non-playable characters&apos;s:	%4
-Warp entries:		%5
-Physical env. zones:	%6
-</source>
-        <translation>Player start points:	 %1
-Blocks:			 %2
-Background objects:	 %3
-Non-playable characters: %4
-Warp entries:		 %5
-Physical env. zones:	 %6
-</translation>
     </message>
 </context>
 <context>
@@ -9233,20 +9272,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>This level has invalid custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead of your custom graphics. This occurred due to a bad conversion, such as from BMP to GIF.
 Please reconvert your images to a valid format and try reloading this level.</translation>
-    </message>
-    <message>
-        <source>Tiles:		%1
-Sceneries:			%2
-Paths:	%3
-Levels:	%4
-Music boxes:		%5
-</source>
-        <translation>Tiles:		%1
-Scenery:	%2
-Paths:		%3
-Levels:		%4
-Music boxes:	%5
-</translation>
     </message>
 </context>
 <context>

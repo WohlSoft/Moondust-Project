@@ -1052,6 +1052,61 @@ Por favor salve eles antes de fazer qualquer coisa.</translation>
     </message>
 </context>
 <context>
+    <name>DebuggerStatsModel</name>
+    <message>
+        <source>Player start points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished">Blocos</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Non-playable characters/items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warp entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical env. zones</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain tiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation type="unfinished">Objetos de cenário</translation>
+    </message>
+    <message>
+        <source>Path cells</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level entrances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music change boxes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Item type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation type="unfinished">Contar</translation>
+    </message>
+</context>
+<context>
     <name>DevConsole</name>
     <message>
         <source>Developer Console</source>
@@ -4185,22 +4240,6 @@ Por favor, converta suas imagens para um formato válido e recarregue o nível.<
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Player start points:		%1
-Blocks:			%2
-Background objects&apos;s:	%3
-Non-playable characters&apos;s:	%4
-Warp entries:		%5
-Physical env. zones:	%6
-</source>
-        <translation type="unfinished">Pontos de início do jogador:		%1
-Blocos:			%2
-Objetos decorativos:	%3
-NPCs:	%4
-Transportes:		%5
-Zonas de ambientes físicos:	%6
-</translation>
     </message>
 </context>
 <context>
@@ -9055,19 +9094,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>Este level tem gráficos personalizados defeituosos.
 Você irá ver fantasminhas ou outros gráficos por cima desses gráficos defeitusos. Uma das possíveis causas pode ser o uso do Fake Gif (Formato BMP com extensão GIF).
 Por favor, converta suas imagens para um formato válido e recarregue o nível.</translation>
-    </message>
-    <message>
-        <source>Tiles:		%1
-Sceneries:			%2
-Paths:	%3
-Levels:	%4
-Music boxes:		%5
-</source>
-        <translation>Tiles:		%1
-Objetos de cenário:	%2
-Caminhos:		%3
-Níveis:		%4
-Caixas de música:	%5</translation>
     </message>
 </context>
 <context>
