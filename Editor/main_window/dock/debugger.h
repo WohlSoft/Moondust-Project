@@ -8,6 +8,8 @@
 
 class MainWindow;
 class QListWidgetItem;
+class DebuggerStatsModel;
+class MoondustBaseScene;
 
 namespace Ui {
 class DebuggerBox;
@@ -25,7 +27,7 @@ private:
 public slots:
     void re_translate();
     void setMousePos(QPoint p, bool isOffScreen=false);
-    void setItemStat(QString list);
+    void updateStats(MoondustBaseScene *scene);
 
     void Debugger_loadCustomCounters();
     void Debugger_saveCustomCounters();
@@ -42,6 +44,7 @@ private slots:
 private:
     QVector<CustomCounter > m_customCounters;
     bool m_isLoaded = false;
+    DebuggerStatsModel *m_model = nullptr;
     Ui::DebuggerBox *ui;
 };
 

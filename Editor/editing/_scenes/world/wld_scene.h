@@ -73,6 +73,8 @@ public:
              DataConfig &configs, WorldData &FileData, QObject *parent = nullptr);
     virtual ~WldScene() override;
 
+    SceneType sceneType() const override;
+
     /* //////////////////////Contents/////////////////////////////
      *
      * COMMON

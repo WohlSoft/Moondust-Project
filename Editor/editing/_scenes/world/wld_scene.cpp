@@ -189,6 +189,11 @@ WldScene::~WldScene()
         delete m_labelBox;
 }
 
+MoondustBaseScene::SceneType WldScene::sceneType() const
+{
+    return SCENE_WORLD;
+}
+
 void WldScene::drawForeground(QPainter *painter, const QRectF &rect)
 {
     QGraphicsScene::drawForeground(painter, rect);

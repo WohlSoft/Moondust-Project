@@ -30,6 +30,7 @@
 #include <editing/_scenes/world/items/item_path.h>
 #include <editing/_scenes/world/items/item_level.h>
 #include <editing/_scenes/world/items/item_music.h>
+#include "debugger_stats_model.h"
 
 #include "../../mainwindow.h"
 #include <ui_mainwindow.h>
@@ -61,15 +62,14 @@ DebuggerBox::DebuggerBox(QWidget *parent) :
         height()
     );
 
+    m_model = new DebuggerStatsModel(ui->DEBUG_Items);
+    ui->DEBUG_Items->setModel(m_model);
+    ui->DEBUG_Items->setWordWrap(false);
+    ui->DEBUG_Items->resizeColumnToContents(0);
+
     m_lastVisibilityState = isVisible();
     mw()->docks_level_and_world.
     addState(this, &m_lastVisibilityState);
-
-    QFont font("Monospace");
-    font.setStyleHint(QFont::TypeWriter);
-    font.setWeight(QFont::Normal);
-    ui->DEBUG_Items->setFont(font);
-
 }
 
 DebuggerBox::~DebuggerBox()
@@ -80,6 +80,8 @@ DebuggerBox::~DebuggerBox()
 void DebuggerBox::re_translate()
 {
     ui->retranslateUi(this);
+    m_model->re_translate();
+    ui->DEBUG_Items->resizeColumnsToContents();
 }
 
 void MainWindow::on_actionDebugger_triggered(bool checked)
@@ -106,11 +108,13 @@ void DebuggerBox::setMousePos(QPoint p, bool isOffScreen)
     }
 }
 
-void DebuggerBox::setItemStat(QString list)
+void DebuggerBox::updateStats(MoondustBaseScene *scene)
 {
-    if(!mw()->ui->actionDebugger->isVisible()) return; //SpeedUp
+    if(!mw()->ui->actionDebugger->isVisible())
+        return; //SpeedUp
 
-    ui->DEBUG_Items->setText(list);
+    m_model->refreshCounters(scene);
+    ui->DEBUG_Items->resizeColumnsToContents();
 }
 
 void DebuggerBox::on_DEBUG_GotoPoint_clicked()

@@ -269,20 +269,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void WldScene::Debugger_updateItemList()
 {
-    QString itemList =
-        tr("Tiles:\t\t%1\n"
-           "Sceneries:\t\t\t%2\n"
-           "Paths:\t%3\n"
-           "Levels:\t%4\n"
-           "Music boxes:\t\t%5\n");
-
-    itemList = itemList.arg(m_itemsTiles.size())
-               .arg(m_itemsScenery.size())
-               .arg(m_itemsPaths.size())
-               .arg(m_itemsLevels.size())
-               .arg(m_itemsMusicBoxes.size());
-
-    MainWinConnect::pMainWin->dock_DebuggerBox->setItemStat(itemList);
+    m_mw->dock_DebuggerBox->updateStats(this);
 }
 
 // /////////////////////////////Open properties window of selected item////////////////////////////////

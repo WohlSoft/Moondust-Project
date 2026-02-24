@@ -101,6 +101,15 @@ public:
         MODE_Fill
     };
 
+    enum SceneType
+    {
+        SCENE_UNKNOWN = 0,
+        SCENE_LEVEL,
+        SCENE_WORLD
+    };
+
+    virtual SceneType sceneType() const = 0;
+
     void switchEditMode(EditModeID EdtMode);
 
     void setEditFlagEraser(bool en);

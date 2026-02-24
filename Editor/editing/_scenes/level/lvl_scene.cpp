@@ -213,6 +213,11 @@ LvlScene::~LvlScene()
     m_localImages.clear();
 }
 
+MoondustBaseScene::SceneType LvlScene::sceneType() const
+{
+    return SCENE_LEVEL;
+}
+
 void LvlScene::drawForeground(QPainter *painter, const QRectF &rect)
 {
     QGraphicsScene::drawForeground(painter, rect);

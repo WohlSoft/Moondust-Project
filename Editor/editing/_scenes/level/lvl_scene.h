@@ -75,6 +75,8 @@ public:
              DataConfig &configs, LevelData &FileData, QObject *parent = nullptr);
     virtual ~LvlScene() override;
 
+    SceneType sceneType() const override;
+
     /* //////////////////////Contents/////////////////////////////
      *
      * COMMON

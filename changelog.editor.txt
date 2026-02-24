@@ -68,6 +68,7 @@ beta2
 - Improved performance of the history undoing/redoing on the level scene
 - Implemented recounting of displayed warp IDs when deleting or undeleting entries at the warps list
 - Going to opposite warp point now will make it being selected after position change jump
+- Upgraded overlook of standard item counters at the Debugger dialogue
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

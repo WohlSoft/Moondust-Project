@@ -293,22 +293,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void LvlScene::Debugger_updateItemList()
 {
-    QString itemList =
-        tr("Player start points:\t\t%1\n"
-           "Blocks:\t\t\t%2\n"
-           "Background objects's:\t%3\n"
-           "Non-playable characters's:\t%4\n"
-           "Warp entries:\t\t%5\n"
-           "Physical env. zones:\t%6\n");
-
-    itemList = itemList.arg(m_itemsPlayers.size())
-               .arg(m_itemsBlocks.size())
-               .arg(m_itemsBGO.size())
-               .arg(m_itemsNPC.size())
-               .arg(m_data->doors.size())
-               .arg(m_itemsPhysEnv.size());
-
-    m_mw->dock_DebuggerBox->setItemStat(itemList);
+    m_mw->dock_DebuggerBox->updateStats(this);
 }
 
 
