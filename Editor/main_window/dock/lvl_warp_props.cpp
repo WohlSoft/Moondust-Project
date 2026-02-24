@@ -32,6 +32,7 @@
 #include <mainwindow.h>
 
 #include "lvl_warp_props.h"
+#include "debugger.h"
 #include "ui_lvl_warp_props.h"
 
 void MainWindow::on_actionWarpsAndDoors_triggered(bool checked)
@@ -391,9 +392,12 @@ void LvlWarpBox::addWarpEntry()
                                        ui->warpsList->count(),
                                        static_cast<int>(newDoor.meta.index));
 
+
     ui->warpsList->addItem(doorTitle(newDoor), newDoor.meta.array_id);
     ui->warpsList->setCurrentIndex(ui->warpsList->count() - 1);
     ui->entryRemove->setEnabled(true);
+
+    mw()->dock_DebuggerBox->updateStats(edit->scene);
 }
 
 void LvlWarpBox::removeWarpEntry()
@@ -427,6 +431,8 @@ void LvlWarpBox::removeWarpEntry()
     recountWarpIndexes();
 
     edit->LvlData.meta.modified = true;
+
+    mw()->dock_DebuggerBox->updateStats(edit->scene);
 }
 
 void LvlWarpBox::duplicateWarpEntry()
@@ -455,6 +461,8 @@ void LvlWarpBox::duplicateWarpEntry()
     ui->warpsList->addItem(doorTitle(newDoor), newDoor.meta.array_id);
     ui->warpsList->setCurrentIndex(ui->warpsList->count() - 1);
     ui->entryRemove->setEnabled(true);
+
+    mw()->dock_DebuggerBox->updateStats(edit->scene);
 }
 
 void LvlWarpBox::on_WarpSetEntrance_clicked()
