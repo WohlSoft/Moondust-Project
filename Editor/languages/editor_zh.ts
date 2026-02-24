@@ -1079,55 +1079,55 @@ Please save them before doing anything else.</source>
     <name>DebuggerStatsModel</name>
     <message>
         <source>Player start points</source>
-        <translation type="unfinished"></translation>
+        <translation>玩家起点</translation>
     </message>
     <message>
         <source>Blocks</source>
-        <translation type="unfinished">砖块</translation>
+        <translation>砖块</translation>
     </message>
     <message>
         <source>Background objects</source>
-        <translation type="unfinished">背景对象</translation>
+        <translation>背景对象</translation>
     </message>
     <message>
         <source>Non-playable characters/items</source>
-        <translation type="unfinished"></translation>
+        <translation>敌人及道具</translation>
     </message>
     <message>
         <source>Warp entries</source>
-        <translation type="unfinished"></translation>
+        <translation>传送点</translation>
     </message>
     <message>
         <source>Physical env. zones</source>
-        <translation type="unfinished"></translation>
+        <translation>物理区域</translation>
     </message>
     <message>
         <source>Terrain tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>地形</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>风景</translation>
     </message>
     <message>
         <source>Path cells</source>
-        <translation type="unfinished"></translation>
+        <translation>路线对象</translation>
     </message>
     <message>
         <source>Level entrances</source>
-        <translation type="unfinished"></translation>
+        <translation>关卡入口</translation>
     </message>
     <message>
         <source>Music change boxes</source>
-        <translation type="unfinished"></translation>
+        <translation>大地图音乐</translation>
     </message>
     <message>
         <source>Item type</source>
-        <translation type="unfinished"></translation>
+        <translation>对象类型</translation>
     </message>
     <message>
         <source>Count</source>
-        <translation type="unfinished">计算</translation>
+        <translation>计算</translation>
     </message>
 </context>
 <context>
