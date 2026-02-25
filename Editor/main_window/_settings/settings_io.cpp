@@ -152,7 +152,8 @@ void MainWindow::loadSettings()
                       Qt::white, QPen(Qt::black, 2));
 
         GlobalSettings::LvlItemDefaults.LockedItemOpacity = settings.value("locked-item-opacity", 0.3).toDouble();
-        GlobalSettings::LvlItemDefaults.npc_direction = settings.value("defaults-npc-directuin", -1).toInt();
+        GlobalSettings::LvlItemDefaults.npc_direction_override = settings.value("defaults-npc-direction-override", false).toBool();
+        GlobalSettings::LvlItemDefaults.npc_direction = settings.value("defaults-npc-direction", -1).toInt();
         GlobalSettings::LvlItemDefaults.npc_generator_type = settings.value("defaults-npc-gen-type", 1).toInt();
         GlobalSettings::LvlItemDefaults.npc_generator_delay = settings.value("defaults-npc-gen-delay", 20).toInt();
         LvlPlacingItems::npcSet.direct = GlobalSettings::LvlItemDefaults.npc_direction;
@@ -375,7 +376,8 @@ void MainWindow::saveSettings()
                       *GlobalSettings::LvlOpts.labelBoxBrush,
                       *GlobalSettings::LvlOpts.labelBoxPen);
 
-        settings.setValue("defaults-npc-directuin", GlobalSettings::LvlItemDefaults.npc_direction);
+        settings.setValue("defaults-npc-direction-override", GlobalSettings::LvlItemDefaults.npc_direction_override);
+        settings.setValue("defaults-npc-direction", GlobalSettings::LvlItemDefaults.npc_direction);
         settings.setValue("defaults-npc-gen-type", GlobalSettings::LvlItemDefaults.npc_generator_type);
         settings.setValue("defaults-npc-gen-delay", GlobalSettings::LvlItemDefaults.npc_generator_delay);
         settings.setValue("defaults-warp-type", GlobalSettings::LvlItemDefaults.warp_type);

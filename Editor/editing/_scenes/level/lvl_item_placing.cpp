@@ -332,7 +332,17 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     {
         obj_npc &mergedSet = m_localConfigNPCs[static_cast<int>(itemID)];
 
-        LvlPlacingItems::npcSet.direct = mergedSet.setup.direct_default_value;
+        if(GlobalSettings::LvlItemDefaults.npc_direction_override)
+        {
+            LvlPlacingItems::npcSet.direct = GlobalSettings::LvlItemDefaults.npc_direction;
+
+            // When override sets "random" and when it is set as a "prohibited value", set config-wide default
+            if(mergedSet.setup.direct_disable_random && LvlPlacingItems::npcSet.direct == 0)
+                LvlPlacingItems::npcSet.direct = mergedSet.setup.direct_default_value;
+        }
+        else
+            LvlPlacingItems::npcSet.direct = mergedSet.setup.direct_default_value;
+
         tImg = getNPCimg(itemID, LvlPlacingItems::npcSet.direct);
         if(!mergedSet.isValid)
         {

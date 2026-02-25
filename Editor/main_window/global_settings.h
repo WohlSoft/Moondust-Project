@@ -56,6 +56,7 @@ struct EditingSettings
 struct SETTINGS_ItemDefaults
 {
     double LockedItemOpacity;
+    bool npc_direction_override;
     int npc_direction;
     int npc_generator_type;
     int npc_generator_delay;

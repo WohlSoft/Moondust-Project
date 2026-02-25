@@ -701,10 +701,21 @@ like when choosing an item from the item toolbox or from the tileset item box.</
           </item>
           <item row="1" column="0">
            <widget class="QGroupBox" name="directionGrp">
+            <property name="toolTip">
+             <string>When this option is enabled, NPC direction will be always set to given value
+with no matter what config pack default value is set. However, some NPC might
+have &quot;random&quot; direction being disabled, so, it will not work for these NPC.</string>
+            </property>
             <property name="title">
-             <string>Direction</string>
+             <string>Override initial direction</string>
             </property>
             <property name="flat">
+             <bool>false</bool>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
              <bool>false</bool>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_2">

@@ -45,6 +45,7 @@ void MainWindow::setDefaults()
 
     GlobalSettings::LvlItemDefaults.LockedItemOpacity               = 0.3;
 
+    GlobalSettings::LvlItemDefaults.npc_direction_override          = false;
     GlobalSettings::LvlItemDefaults.npc_direction                   = -1;
     GlobalSettings::LvlItemDefaults.npc_generator_type              = 1;
     GlobalSettings::LvlItemDefaults.npc_generator_delay             = 20;
