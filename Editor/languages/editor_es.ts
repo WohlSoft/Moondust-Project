@@ -171,10 +171,6 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>Retraso (segundos):</translation>
     </message>
     <message>
-        <source>Direction</source>
-        <translation>Dirección</translation>
-    </message>
-    <message>
         <source>Left</source>
         <translation>Izquierda</translation>
     </message>
@@ -377,6 +373,16 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
         <comment>Explanation for the opacity of locked items</comment>
         <translation>Define el nivel de opacidad que se aplicará a todos los elementos bloqueados de la escena.</translation>
+    </message>
+    <message>
+        <source>When this option is enabled, NPC direction will be always set to given value
+with no matter what config pack default value is set. However, some NPC might
+have &quot;random&quot; direction being disabled, so, it will not work for these NPC.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Override initial direction</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

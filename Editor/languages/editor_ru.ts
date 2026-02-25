@@ -172,10 +172,6 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>Задержка:</translation>
     </message>
     <message>
-        <source>Direction</source>
-        <translation>Направление</translation>
-    </message>
-    <message>
         <source>Left</source>
         <translation>Лево</translation>
     </message>
@@ -378,6 +374,19 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
         <comment>Explanation for the opacity of locked items</comment>
         <translation>Определяет степень видимости (непрозрачности), применяемую ко всем заблокированным элементам на сцене.</translation>
+    </message>
+    <message>
+        <source>When this option is enabled, NPC direction will be always set to given value
+with no matter what config pack default value is set. However, some NPC might
+have &quot;random&quot; direction being disabled, so, it will not work for these NPC.</source>
+        <translation>Если эта настройка включена, направление НИП будет всегда установлено
+в указанное значение не зависимо от того, какое назначено умолчание в конфигурационном
+пакете. Однако, у некоторых НИП может быть отключено направление &quot;Случайно&quot;, и поэтому
+оно работать не будет.</translation>
+    </message>
+    <message>
+        <source>Override initial direction</source>
+        <translation>Заменить начальное направление</translation>
     </message>
 </context>
 <context>

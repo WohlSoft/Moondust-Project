@@ -201,60 +201,72 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="744"/>
+        <location filename="../main_window/tools/app_settings.ui" line="705"/>
+        <source>When this option is enabled, NPC direction will be always set to given value
+with no matter what config pack default value is set. However, some NPC might
+have &quot;random&quot; direction being disabled, so, it will not work for these NPC.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="710"/>
+        <source>Override initial direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="755"/>
         <source>Opacity of locked items</source>
         <comment>The title of group where user can set up the opacity level of locked items</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="758"/>
+        <location filename="../main_window/tools/app_settings.ui" line="769"/>
         <source>Opacity</source>
         <comment>Opacity of locked items (label text)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="765"/>
+        <location filename="../main_window/tools/app_settings.ui" line="776"/>
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
         <comment>Explanation for the opacity of locked items</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="799"/>
+        <location filename="../main_window/tools/app_settings.ui" line="810"/>
         <source>Classic Events tabs to auto-expand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="819"/>
+        <location filename="../main_window/tools/app_settings.ui" line="830"/>
         <source>Autoscroll section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="805"/>
+        <location filename="../main_window/tools/app_settings.ui" line="816"/>
         <source>Common</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="833"/>
+        <location filename="../main_window/tools/app_settings.ui" line="844"/>
         <source>Layer visibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="840"/>
+        <location filename="../main_window/tools/app_settings.ui" line="851"/>
         <source>Layer movement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="860"/>
+        <location filename="../main_window/tools/app_settings.ui" line="871"/>
         <source>Trigger event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="812"/>
+        <location filename="../main_window/tools/app_settings.ui" line="823"/>
         <source>Hold buttons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="826"/>
+        <location filename="../main_window/tools/app_settings.ui" line="837"/>
         <source>Section settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -305,172 +317,167 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="705"/>
-        <source>Direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/app_settings.ui" line="717"/>
+        <location filename="../main_window/tools/app_settings.ui" line="728"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="724"/>
+        <location filename="../main_window/tools/app_settings.ui" line="735"/>
         <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="731"/>
+        <location filename="../main_window/tools/app_settings.ui" line="742"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="870"/>
+        <location filename="../main_window/tools/app_settings.ui" line="881"/>
         <source>Warps and Doors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="876"/>
+        <location filename="../main_window/tools/app_settings.ui" line="887"/>
         <source>Warp type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="884"/>
+        <location filename="../main_window/tools/app_settings.ui" line="895"/>
         <source>0 - Instant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="889"/>
+        <location filename="../main_window/tools/app_settings.ui" line="900"/>
         <source>1 - Pipe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="894"/>
+        <location filename="../main_window/tools/app_settings.ui" line="905"/>
         <source>2 - Door</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="899"/>
+        <location filename="../main_window/tools/app_settings.ui" line="910"/>
         <source>3 - Portal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="924"/>
+        <location filename="../main_window/tools/app_settings.ui" line="935"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="933"/>
+        <location filename="../main_window/tools/app_settings.ui" line="944"/>
         <source>Tileset Item toolbox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="942"/>
-        <location filename="../main_window/tools/app_settings.ui" line="968"/>
-        <location filename="../main_window/tools/app_settings.ui" line="1026"/>
+        <location filename="../main_window/tools/app_settings.ui" line="953"/>
+        <location filename="../main_window/tools/app_settings.ui" line="979"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1037"/>
         <source>Display tabs horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="949"/>
-        <location filename="../main_window/tools/app_settings.ui" line="975"/>
-        <location filename="../main_window/tools/app_settings.ui" line="1033"/>
+        <location filename="../main_window/tools/app_settings.ui" line="960"/>
+        <location filename="../main_window/tools/app_settings.ui" line="986"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1044"/>
         <source>Display tabs vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="959"/>
+        <location filename="../main_window/tools/app_settings.ui" line="970"/>
         <source>World Map Item toolbox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="985"/>
-        <location filename="../main_window/tools/app_settings.ui" line="994"/>
+        <location filename="../main_window/tools/app_settings.ui" line="996"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1005"/>
         <source>Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1004"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1015"/>
         <source>Palette</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1017"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1028"/>
         <source>Level Item toolbox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1056"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1067"/>
         <source>Font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1075"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1086"/>
         <source>Font size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1095"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1106"/>
         <source>Use default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1106"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1117"/>
         <source>Logging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1115"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1126"/>
         <source>Log level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1125"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1136"/>
         <source>Browse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1132"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1143"/>
         <source>Log file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1156"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1167"/>
         <source>Extra</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1165"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1176"/>
         <source>Note: Some of those settings will take change on application restart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1178"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1189"/>
         <source>Enable auto-scaling on the High-DPI screens</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="227"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="229"/>
         <source>Set log file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="228"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="230"/>
         <source>Text files (*.txt *.log)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="329"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="333"/>
         <source>Success</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="329"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="333"/>
         <source>All file associations have been set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="331"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="335"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6314,84 +6321,84 @@ If this flag is enabled, you can only place a warp exit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="120"/>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="125"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="121"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="126"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="121"/>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="124"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="122"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="125"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="122"/>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="127"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="123"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="128"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="123"/>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="126"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="124"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="127"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="856"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="864"/>
         <source>Apply to all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="867"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="875"/>
         <source>Apply to all entries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="868"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="876"/>
         <source>Do you really want to apply this setting to all objects?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1151"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1159"/>
         <source>World map files not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1152"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1160"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1165"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1173"/>
         <source>Select world map file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1166"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1174"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1183"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1191"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1184"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1192"/>
         <source>Can&apos;t open the file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1367"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1375"/>
         <source>Please save the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1368"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1376"/>
         <source>Please save the file before selecting levels.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8234,84 +8241,84 @@ Please save the file first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="240"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="241"/>
         <source>Default by item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="273"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="274"/>
         <source>Custom...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="279"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="280"/>
         <source>Next grid size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="284"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="285"/>
         <source>Previous grid size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="296"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="298"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="297"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="299"/>
         <source>Select</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="309"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="311"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="310"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="312"/>
         <source>Erase</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="322"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="324"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="323"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="325"/>
         <source>Items</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="335"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="337"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="336"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="338"/>
         <source>Player</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="351"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="353"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="352"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="354"/>
         <source>Section</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="363"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="365"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="364"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="366"/>
         <source>World settings</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="375"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="377"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="376"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="378"/>
         <source>Warps and Doors</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="387"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="389"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="388"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="390"/>
         <source>Water</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="416"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="418"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="417"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="419"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8687,7 +8694,7 @@ Error description:
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="331"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="335"/>
         <source>File association failed.</source>
         <translation type="unfinished"></translation>
     </message>
