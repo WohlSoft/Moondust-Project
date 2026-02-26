@@ -378,11 +378,13 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>When this option is enabled, NPC direction will be always set to given value
 with no matter what config pack default value is set. However, some NPC might
 have &quot;random&quot; direction being disabled, so, it will not work for these NPC.</source>
-        <translation type="unfinished"></translation>
+        <translation>启用该选项将使NPC的方向强制设置为给定的方向，
+并无视配置包的设置。当方向设置为“随机”时，对
+于不支持随机方向的NPC来说，该设置不会生效。</translation>
     </message>
     <message>
         <source>Override initial direction</source>
-        <translation type="unfinished"></translation>
+        <translation>强制设置初始方向</translation>
     </message>
 </context>
 <context>
