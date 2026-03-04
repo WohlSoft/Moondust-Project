@@ -141,6 +141,7 @@ list(APPEND PGE_EDITOR_UI
     common_features/crashhandler.ui
     data_configs/config_status/config_status.ui
     data_configs/selection_dialog/config_manager.ui
+    data_configs/selection_dialog/config_profile_selector.ui
     dev_console/devconsole.ui
     editing/_dialogs/itemselectdialog.ui
     editing/_dialogs/savingnotificationdialog.ui
@@ -273,6 +274,7 @@ list(APPEND PGE_EDITOR_SRCS
     data_configs/obj_player.cpp
     data_configs/obj_tilesets.cpp
     data_configs/selection_dialog/config_manager.cpp
+    data_configs/selection_dialog/config_profile_selector.cpp
     dev_console/devconsole.cpp
     editing/_components/history/history_element_add_layer.cpp
     editing/_components/history/history_element_add_warp.cpp

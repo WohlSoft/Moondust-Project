@@ -751,6 +751,33 @@ Note: most of config packs gets being updates with Moondust Project togeter. The
     </message>
 </context>
 <context>
+    <name>ConfigProfileSelect</name>
+    <message>
+        <source>Integration profile selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the integration profile to start this config pack:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;New profile&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new integration profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No selected profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select profile from the list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConfigStatus</name>
     <message>
         <source>Current configuration status</source>
@@ -5799,10 +5826,6 @@ Gli oggetti non potranno essere piazzati uno sopra l&apos;altro, e se si prover√
         <translation>Editor di script</translation>
     </message>
     <message>
-        <source>Run configure tool...</source>
-        <translation>Avvia strumento di configurazione...</translation>
-    </message>
-    <message>
         <source>Open local script</source>
         <translation>Apri script locale</translation>
     </message>
@@ -6553,6 +6576,14 @@ Please, choose the engine application yourself!</source>
         <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select configuration profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New profile...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -22,6 +22,8 @@
 
 #include <QVector>
 #include <QHash>
+#include <QSet>
+#include <QMultiMap>
 #include <QWidget>
 #include <QObject>
 #include <QPixmap>
@@ -252,13 +254,27 @@ public:
 
     bool loadFullConfig();
     DataFolders dirs;
+    //! Path to the config pack's directory
     QString config_dir;
+    //! Path to the selected integration profile or empty for non-integrational packs
+    QString profile_file_path;
     QString arg_config_app_dir;
     QString data_dir;
     QString localScriptName_lvl;
     QString commonScriptName_lvl;
     QString localScriptName_wld;
     QString commonScriptName_wld;
+
+    struct ProfileEntry
+    {
+        QString path;
+        QString title;
+        QString dir;
+        QString icon;
+    };
+
+    QMultiMap<QString, ProfileEntry> configProfiles;
+    QSet<QString> configProfilesAvailable;
 
     QString splash_logo;
     QList<obj_splash_ani > animations;
@@ -373,7 +389,7 @@ public:
 
     void  loadTilesets();
 
-    void setConfigPath(const QString &p, const QString &appDir = QString());
+    void setConfigPath(const QString &p, const QString &appDir, const QString &profilePath);
     bool loadBasics();
 
     bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with=nullptr, QString iniFile="", IniProcessing *setup=nullptr);
@@ -407,7 +423,12 @@ public:
     QString getPathExtraSettingsPath();
     QString getWlvlExtraSettingsPath();
 
+    void rebuildConfigProfiles();
+
     static QString buildLocalConfigPath(const QString &configPackPath);
+    static QString buildLocalProfilePath(const QString &configPackPath, int index);
+    static QString buildFreeLocalProfilePath(const QString &configPackPath);
+    static QStringList getAvailableLocalProfiles(const QString &configPackPath);
 
 signals:
     void progressValue(int);

@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QStandardPaths>
 #include "js_system.h"
 
 PGE_JS_System::PGE_JS_System(QObject *parent)
@@ -46,4 +47,14 @@ QString PGE_JS_System::osName()
 #else
     return "unknown";
 #endif
+}
+
+QString PGE_JS_System::homeDir()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+}
+
+QString PGE_JS_System::appData()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 }

@@ -48,6 +48,8 @@ public:
     QString m_currentConfig;
     //! Path to currently selected configuration package
     QString m_currentConfigPath;
+    //! Path to currently selected integrational config file
+    QString m_currentConfigProfilePath;
     //! Current incompatibility level
     int     m_currentIncompatLevel = 0;
     //! Current API Version
@@ -69,6 +71,11 @@ public:
     bool m_doAskAgain;
 
     /**
+     * @brief Attempt to find possible profiles
+     */
+    void tryFindAutoProfiles();
+
+    /**
      * @brief Checks is current config pack configured (or non-configurable)
      * @return true if config pack is non-configurable or already configured
      */
@@ -78,6 +85,14 @@ public:
      * @return true on success configuring, false if no config tool found, rejected or script was been errored
      */
     bool runConfigureTool();
+
+    /**
+     * @brief Coice the profile if it's an integrational config pack
+     * @return true if choice done, false if cancelled
+     */
+    bool choiceProfile();
+
+    QString selectConfigProfile(bool *ok);
 
 private:
     bool configure_loadScript(PGE_JsEngine *js);

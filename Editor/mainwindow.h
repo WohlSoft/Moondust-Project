@@ -90,7 +90,7 @@ public:
      * @param themePack Path to theme pack to load
      * @return true if everything has been successfully initialized, false if fatal error has occouped
      */
-    bool initEverything(const QString &configDir, const QString &themePack, const QString &configAppPath = QString());
+    bool initEverything(const QString &configDir, const QString &profilePath, const QString &themePack, const QString &configAppPath = QString());
 
     //! Global game configucrations
     DataConfig configs;
@@ -821,7 +821,9 @@ public:
         void on_actionCurConfig_triggered();    //!< Config status
         void on_actionReConfigure_triggered();  //!< Run configure tool
         void on_actionChangeConfig_triggered(); //!< Change configuration
+        void onProfileMenuSelect();
     private:
+        void updateConfigProfilesMenu();
         QString currentConfigDir;
         bool askConfigAgain;
     signals:

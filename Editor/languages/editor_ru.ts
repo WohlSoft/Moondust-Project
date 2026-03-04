@@ -774,6 +774,33 @@ Note: most of config packs gets being updates with Moondust Project togeter. The
     </message>
 </context>
 <context>
+    <name>ConfigProfileSelect</name>
+    <message>
+        <source>Integration profile selection</source>
+        <translation>Выбор интеграционного профиля</translation>
+    </message>
+    <message>
+        <source>Please select the integration profile to start this config pack:</source>
+        <translation>Чтобы запустить конфигурационный пакет, пожалуйста, выберите интеграционный профиль:</translation>
+    </message>
+    <message>
+        <source>&lt;New profile&gt;</source>
+        <translation>&lt;Новый профиль&gt;</translation>
+    </message>
+    <message>
+        <source>Create new integration profile</source>
+        <translation>Создать новый интеграционный профиль</translation>
+    </message>
+    <message>
+        <source>No selected profile</source>
+        <translation>Профиль не выбран</translation>
+    </message>
+    <message>
+        <source>Please select profile from the list.</source>
+        <translation>Пожалуйста, выберите профиль из списка.</translation>
+    </message>
+</context>
+<context>
     <name>ConfigStatus</name>
     <message>
         <source>Current configuration status</source>
@@ -3745,7 +3772,7 @@ Do you want to continue?</source>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation type="unfinished">Данные настройки автопрокрутки секции являются устаревшими. Они использовались в старых SMBX64-уровнях, либо в уровнях, ранее сконвертированных из устаревшего формата в современный. Используйте данные настройки только при создании уровней для непосредственного их запуска на SMBX64-движках и более старых. Данные настройки также могут работать на более новых движках, таких как TheXTech и Moondust-движок. Однако, если в вашем уровне используются современные настройки автопрокрутки, эти будут полнолстью проигнорированы. Также, если уровень сохранён в формат SMBX-38A, данные настройки будут утеряны. Современные настройки автопрокрутки можно найти в блоке &quot;Настройки секции&quot;.</translation>
+        <translation>Данные настройки автопрокрутки секции являются устаревшими. Они использовались в старых SMBX64-уровнях, либо в уровнях, ранее сконвертированных из устаревшего формата в современный. Используйте данные настройки только при создании уровней для непосредственного их запуска на SMBX64-движках и более старых. Данные настройки также могут работать на более новых движках, таких как TheXTech и Moondust-движок. Однако, если в вашем уровне используются современные настройки автопрокрутки, эти будут полнолстью проигнорированы. Также, если уровень сохранён в формат SMBX-38A, данные настройки будут утеряны. Современные настройки автопрокрутки можно найти в блоке &quot;Настройки секции&quot;.</translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
@@ -5596,10 +5623,6 @@ show the current playable character(s) and number of lives.</source>
         <translation>Редактор сценариев</translation>
     </message>
     <message>
-        <source>Run configure tool...</source>
-        <translation>Запустить настроечную утилиту...</translation>
-    </message>
-    <message>
         <source>Open local script</source>
         <translation>Открыть локальный сценарий</translation>
     </message>
@@ -6672,6 +6695,14 @@ Please, choose the Moondust Maintainer application yourself!</source>
     <message>
         <source>Bulk convert and repair of level and world files...</source>
         <translation>Массовое преобр./восстановл. уровней и миров...</translation>
+    </message>
+    <message>
+        <source>Select configuration profile</source>
+        <translation>Выбрать профиль конфигурации</translation>
+    </message>
+    <message>
+        <source>New profile...</source>
+        <translation>Новый профиль...</translation>
     </message>
 </context>
 <context>

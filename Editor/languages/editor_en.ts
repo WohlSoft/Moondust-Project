@@ -775,6 +775,33 @@ Note: most of config packs gets being updates with Moondust Project togeter. The
     </message>
 </context>
 <context>
+    <name>ConfigProfileSelect</name>
+    <message>
+        <source>Integration profile selection</source>
+        <translation>Integration profile selection</translation>
+    </message>
+    <message>
+        <source>Please select the integration profile to start this config pack:</source>
+        <translation>Please select the integration profile to start this config pack:</translation>
+    </message>
+    <message>
+        <source>&lt;New profile&gt;</source>
+        <translation>&lt;New profile&gt;</translation>
+    </message>
+    <message>
+        <source>Create new integration profile</source>
+        <translation>Create new integration profile</translation>
+    </message>
+    <message>
+        <source>No selected profile</source>
+        <translation>No selected profile</translation>
+    </message>
+    <message>
+        <source>Please select profile from the list.</source>
+        <translation>Please select profile from the list.</translation>
+    </message>
+</context>
+<context>
     <name>ConfigStatus</name>
     <message>
         <source>Current configuration status</source>
@@ -5584,10 +5611,6 @@ show the current playable character(s) and number of lives.</translation>
         <translation>Script Editor</translation>
     </message>
     <message>
-        <source>Run configure tool...</source>
-        <translation>Run configure tool...</translation>
-    </message>
-    <message>
         <source>Open local script</source>
         <translation>Open local script</translation>
     </message>
@@ -6661,6 +6684,14 @@ Please, choose the Moondust Maintainer application yourself!</translation>
     <message>
         <source>Bulk convert and repair of level and world files...</source>
         <translation>Bulk convert and repair of level and world files...</translation>
+    </message>
+    <message>
+        <source>Select configuration profile</source>
+        <translation>Select configuration profile</translation>
+    </message>
+    <message>
+        <source>New profile...</source>
+        <translation>New profile...</translation>
     </message>
 </context>
 <context>

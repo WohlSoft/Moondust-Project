@@ -312,6 +312,7 @@ int main(int argc, char *argv[])
     /******************************Config manager*********************************/
     QString currentConfigDir;
     QString themePack;
+    QString configProfile;
 
     if(!runConfigArg.isEmpty())
     {
@@ -322,6 +323,7 @@ int main(int argc, char *argv[])
         ConfigManager cmanager(nullptr);
         currentConfigDir    = cmanager.loadConfigs();
         themePack           = cmanager.m_themePackName;
+        configProfile       = cmanager.m_currentConfigProfilePath;
 
         //If application started first time or target configuration is not exist
         if(cmanager.m_doAskAgain || currentConfigDir.isEmpty())
@@ -338,11 +340,12 @@ int main(int argc, char *argv[])
         }
 
         currentConfigDir = cmanager.m_currentConfigPath;
+        configProfile    = cmanager.m_currentConfigProfilePath;
     }
     /******************************Config manager***END***************************/
 
     //Init Main Window class
-    if(!mWindow->initEverything(currentConfigDir, themePack, runCustomAppPath))
+    if(!mWindow->initEverything(currentConfigDir, configProfile, themePack, runCustomAppPath))
     {
         delete mWindow;
         goto QuitFromEditor;

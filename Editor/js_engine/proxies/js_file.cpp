@@ -85,6 +85,16 @@ bool PGE_JS_File::isDirExists(QString dirPath)
     return QDir(dirPath).exists();
 }
 
+QStringList PGE_JS_File::getDirDirs(QString dirPath)
+{
+    return QDir(dirPath).entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);
+}
+
+QStringList PGE_JS_File::getDirFiles(QString dirPath)
+{
+    return QDir(dirPath).entryList(QDir::NoDotAndDotDot | QDir::Files, QDir::Name);
+}
+
 QString PGE_JS_File::getBundleName(QString appPath)
 {
     QFileInfo f(appPath);
@@ -98,10 +108,12 @@ bool PGE_JS_File::copy(QString source, QString target, bool override)
         if(QDir(target).exists())//Is target a directory
             target += "/" + QFile(source).fileName();
     }
+
     if(override)
     {
         if(QFile::exists(target))
             QFile::remove(target);
     }
+
     return QFile::copy(source, target);
 }

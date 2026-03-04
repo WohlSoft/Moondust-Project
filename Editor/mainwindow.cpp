@@ -110,11 +110,11 @@ static BOOL s_isWow64()
 }
 #endif
 
-bool MainWindow::initEverything(const QString &configDir, const QString &themePack, const QString &configAppPath)
+bool MainWindow::initEverything(const QString &configDir, const QString &profilePath, const QString &themePack, const QString &configAppPath)
 {
     currentConfigDir = configDir;
 
-    configs.setConfigPath(configDir, configAppPath);
+    configs.setConfigPath(configDir, configAppPath, profilePath);
 
 #ifdef WIN_CHECK_FOR_64BIT_CPU
     // Notify users of 32-bit application when they use it on 64-bit operating system
@@ -270,6 +270,9 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
 
         // Apply setup
         applySetup(true);
+
+        // Load profiles if available
+        updateConfigProfilesMenu();
 
         LogDebug(QString("Loading theme..."));
         splash.progressTitle(tr("Loading theme..."));

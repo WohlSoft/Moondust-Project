@@ -119,6 +119,7 @@ long ConfStatus::total_sound=0;
 QString ConfStatus::configName;
 QString ConfStatus::configPath;
 QString ConfStatus::configLocalSettingsFile;
+QString ConfStatus::configLocalProfileFile;
 bool    ConfStatus::configIsIntegrational = false;
 QString ConfStatus::configConfigureTool;
 

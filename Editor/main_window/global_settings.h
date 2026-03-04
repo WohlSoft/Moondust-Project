@@ -222,6 +222,7 @@ public:
     static QString configPath;
     //! Config pack specific settings (they won't go between config packs when reloading)
     static QString configLocalSettingsFile;
+    static QString configLocalProfileFile;
     //! Identify the configuration package is integrational (opposed to standalone)
     static bool    configIsIntegrational;
     static QString configConfigureTool;

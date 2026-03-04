@@ -108,7 +108,7 @@ void DataConfig::addError(QString bug, PGE_LogLevel level)
     errorsList[m_errOut] << bug;
 }
 
-void DataConfig::setConfigPath(const QString &p, const QString &appDir)
+void DataConfig::setConfigPath(const QString &p, const QString &appDir, const QString &profilePath)
 {
     config_dir = p;
     if(!config_dir.endsWith('/'))
@@ -117,6 +117,10 @@ void DataConfig::setConfigPath(const QString &p, const QString &appDir)
     arg_config_app_dir = appDir;
     if(!arg_config_app_dir.isEmpty() && !arg_config_app_dir.endsWith('/'))
         arg_config_app_dir.append('/');
+
+    rebuildConfigProfiles();
+
+    profile_file_path = profilePath;
 }
 
 static void s_readWidgetDefaults(IniProcessing &s, QString name, EditorSetup::DefaultToolboxPositions::State &target, const EditorSetup::DefaultToolboxPositions::State &defaults)
@@ -492,8 +496,15 @@ bool DataConfig::loadFullConfig()
 
     // Load the local config pack settings (writable)
     ConfStatus::configLocalSettingsFile = buildLocalConfigPath(config_dir);
+    ConfStatus::configLocalProfileFile = profile_file_path;
+
     {
-        IniProcessing localSet(ConfStatus::configLocalSettingsFile);
+        QString setPath = ConfStatus::configLocalSettingsFile;
+
+        if(!ConfStatus::configLocalProfileFile.isEmpty() && QFile::exists(ConfStatus::configLocalProfileFile))
+            setPath = ConfStatus::configLocalProfileFile;
+
+        IniProcessing localSet(setPath);
         if(localSet.contains("main"))
         {
             localSet.beginGroup("main");
@@ -552,6 +563,7 @@ bool DataConfig::loadFullConfig()
         emit errorOccured();
         return false;
     }
+
     if(!QDir(dirs.gworld).exists())
     {
         LogCritical(QString("World map graphics path not exists: %1").arg(dirs.gworld));
@@ -866,8 +878,99 @@ QString DataConfig::getWlvlExtraSettingsPath()
     }
 }
 
+void DataConfig::rebuildConfigProfiles()
+{
+    configProfiles.clear();
+    configProfilesAvailable.clear();
+
+    // Load locally saved profiles
+    QStringList profiles = DataConfig::getAvailableLocalProfiles(config_dir);
+
+    foreach(const QString &item, profiles)
+    {
+        ProfileEntry entry;
+        QSettings profile(item, QSettings::IniFormat);
+        QFileInfo pathInfo;
+
+        entry.path = item;
+
+        profile.beginGroup("main");
+        entry.dir = profile.value("application-path", QString()).toString();
+        entry.title = profile.value("application-title", QString()).toString();
+        entry.icon = profile.value("application-icon", QString()).toString();
+        profile.endGroup();
+
+        if(entry.dir.isEmpty())
+        {
+            qWarning() << "Rejected invalid profile:" << item << "(Path is empty)";
+            continue;
+        }
+
+        if(configProfilesAvailable.contains(entry.dir))
+        {
+            qWarning() << "Rejected duplicated profile:" << item;
+            QFile::remove(item); // Remove it just in a case!
+            continue;
+        }
+
+        pathInfo.setFile(entry.dir);
+
+        if(!pathInfo.exists() || !pathInfo.isDir())
+        {
+            qWarning() << "Rejected invalid profile:" << item << "(Directory is not exists)";
+            return; // Invalid path!
+        }
+
+        if(entry.title.isEmpty())
+            entry.title = pathInfo.baseName();
+        else
+            entry.title = QString("%1 (%2)").arg(entry.title, pathInfo.baseName());
+
+        configProfiles.insert(entry.title, entry);
+        configProfilesAvailable.insert(entry.dir);
+    }
+}
+
 QString DataConfig::buildLocalConfigPath(const QString &configPackPath)
 {
     QString cpDirName = QDir(configPackPath).dirName();
-    return AppPathManager::settingsPath() + "/pge_editor_config_" + cpDirName + ".ini";
+    return AppPathManager::settingsPath() + QString("/pge_editor_config_%1.ini").arg(cpDirName);
+}
+
+QString DataConfig::buildLocalProfilePath(const QString &configPackPath, int index)
+{
+    QString cpDirName = QDir(configPackPath).dirName();
+    return AppPathManager::settingsPath() + QString("/pge_editor_config_%1_Profile_%2.ini").arg(cpDirName).arg(index);
+}
+
+QString DataConfig::buildFreeLocalProfilePath(const QString &configPackPath)
+{
+    for(int i = 0; i < 100000; ++i)
+    {
+        QString path = buildLocalProfilePath(configPackPath, i);
+
+        if(!QFile::exists(path))
+            return path;
+    }
+
+    return QString();
+}
+
+QStringList DataConfig::getAvailableLocalProfiles(const QString &configPackPath)
+{
+    QStringList ret;
+    QDir cpDir(configPackPath), setupDir(AppPathManager::settingsPath());
+    QString cpDirName = cpDir.dirName();
+    QStringList filters =
+    {
+        "pge_editor_config_" + cpDirName + "_Profile_*.ini"
+    };
+
+    ret = setupDir.entryList(filters, QDir::NoDotAndDotDot|QDir::Files, QDir::Name);
+    QString prefix = AppPathManager::settingsPath() + "/";
+
+    for(QString &path : ret)
+        path.insert(0, prefix);
+
+    return ret;
 }

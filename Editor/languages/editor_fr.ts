@@ -752,6 +752,33 @@ Note: most of config packs gets being updates with Moondust Project togeter. The
     </message>
 </context>
 <context>
+    <name>ConfigProfileSelect</name>
+    <message>
+        <source>Integration profile selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the integration profile to start this config pack:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;New profile&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new integration profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No selected profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select profile from the list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConfigStatus</name>
     <message>
         <source>Current configuration status</source>
@@ -5547,10 +5574,6 @@ affiché le(s) personnage(s) jouable(s) actuel(s) et le nombre de vies.</transla
         <translation>Éditeur de script</translation>
     </message>
     <message>
-        <source>Run configure tool...</source>
-        <translation>Exécuter l&apos;outil de configuration…</translation>
-    </message>
-    <message>
         <source>Open local script</source>
         <translation>Ouvrir le script local</translation>
     </message>
@@ -6584,6 +6607,14 @@ Please, choose the Moondust Maintainer application yourself!</source>
         <translation>Impossible de lancer l&apos;utilitaire, Moondust Maintainer est introuvable&#xa0;: 
 %1
 Veuillez sélectionner l&apos;application Moondust Maintainer pat vous-même&#x202f;!</translation>
+    </message>
+    <message>
+        <source>Select configuration profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New profile...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

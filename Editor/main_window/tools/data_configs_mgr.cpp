@@ -17,6 +17,7 @@
  */
 
 #include <QtConcurrent>
+#include <QEventLoop>
 #include <QMdiSubWindow>
 
 #include <data_configs/config_status/config_status.h>
@@ -137,18 +138,32 @@ void MainWindow::on_actionLoad_configs_triggered()
     LogDebug("Lock tile item box...");
     dock_TilesetBox->m_lockSettings = true;
     dock_TilesetBox->clearTilesetGroups();
+
     // Do the loading in a thread
+    QFutureWatcher<bool> isOk;
+    QEventLoop waitLoop;
+    QAtomicInt waitLoopQuit(false);
+    QObject::connect(&isOk, &QFutureWatcher<bool>::finished,
+    [&waitLoop, &waitLoopQuit]()->void
+    {
+        waitLoop.quit();
+        waitLoopQuit = true;
+    });
+    QObject::connect(&configs, &DataConfig::errorOccured,
+    [&waitLoop, &waitLoopQuit]()->void
+    {
+        waitLoop.exit(1);
+        waitLoopQuit = true;
+    });
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QFuture<bool> isOk = QtConcurrent::run(&this->configs, &DataConfig::loadFullConfig);
+    isOk.setFuture(QtConcurrent::run(&this->configs, &DataConfig::loadFullConfig));
 #else
-    QFuture<bool> isOk = QtConcurrent::run(&DataConfig::loadFullConfig, &this->configs);
+    isOk.setFuture(QtConcurrent::run(&DataConfig::loadFullConfig, &this->configs));
 #endif
 
-    while(!isOk.isFinished())
-    {
-        qApp->processEvents();
-        QThread::msleep(1);
-    }
+    // Now wait until the config load in finished.
+    if(!waitLoopQuit)
+        waitLoop.exec();
 
     LogDebug("Configuration feloading is finished, re-initializing toolboxes...");
     dock_TilesetBox->m_lockSettings = false;
@@ -201,6 +216,8 @@ void MainWindow::on_actionLoad_configs_triggered()
             on_actionCurConfig_triggered();
         }
     }
+
+    updateConfigProfilesMenu();
 
     LogDebug("Completed!");
 }
@@ -255,4 +272,41 @@ void MainWindow::on_actionChangeConfig_triggered()
             }
         }
     }
+}
+
+void MainWindow::onProfileMenuSelect()
+{
+    QAction *item = qobject_cast<QAction *>(sender());
+
+    if(!item)
+        return;
+
+    configs.profile_file_path = item->data().toString();
+    saveSettings();
+
+    int ret = QMessageBox::question(this,
+                                    tr("Configuration changed"),
+                                    tr("The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?"),
+                                    QMessageBox::Yes|QMessageBox::No);
+    if(ret == QMessageBox::Yes)
+        on_actionLoad_configs_triggered();
+}
+
+void MainWindow::updateConfigProfilesMenu()
+{
+    ui->menuConfigProfiles->clear();
+
+    for(auto it = configs.configProfiles.begin(); it != configs.configProfiles.end(); ++it)
+    {
+        const auto &profile = it.value();
+        QIcon icon(profile.icon.isEmpty() ? QPixmap() : QPixmap(profile.icon));
+        QAction *item = ui->menuConfigProfiles->addAction(icon, profile.title);
+        item->setCheckable(true);
+        item->setChecked(profile.path == configs.profile_file_path);
+        item->setData(profile.path);
+        QObject::connect(item, &QAction::triggered, this, &MainWindow::onProfileMenuSelect);
+    }
+
+    ui->menuConfigProfiles->addAction(ui->actionReConfigure);
+    ui->menuConfigProfiles->setEnabled(!configs.configProfiles.isEmpty());
 }

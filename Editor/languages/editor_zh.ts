@@ -771,6 +771,33 @@ Note: most of config packs gets being updates with Moondust Project togeter. The
     </message>
 </context>
 <context>
+    <name>ConfigProfileSelect</name>
+    <message>
+        <source>Integration profile selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the integration profile to start this config pack:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;New profile&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new integration profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No selected profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select profile from the list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConfigStatus</name>
     <message>
         <source>Current configuration status</source>
@@ -5771,10 +5798,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation>脚本编辑器</translation>
     </message>
     <message>
-        <source>Run configure tool...</source>
-        <translation>运行配置工具……</translation>
-    </message>
-    <message>
         <source>Open local script</source>
         <translation>打开脚本</translation>
     </message>
@@ -6648,6 +6671,14 @@ Please, choose the Moondust Maintainer application yourself!</source>
         <translation>未找到月尘引擎管理器，无法启动工具：
 %1
 请选择月尘引擎管理器文件夹！</translation>
+    </message>
+    <message>
+        <source>Select configuration profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New profile...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
