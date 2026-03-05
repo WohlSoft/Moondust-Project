@@ -230,6 +230,8 @@ void MainWindow::on_actionReConfigure_triggered()
 
     if(cmanager.runConfigureTool())
     {
+        updateConfigProfilesMenu();
+
         int ret = QMessageBox::question(this,
                                         tr("Configuration changed"),
                                         tr("The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?"),
@@ -284,12 +286,7 @@ void MainWindow::onProfileMenuSelect()
     configs.profile_file_path = item->data().toString();
     saveSettings();
 
-    int ret = QMessageBox::question(this,
-                                    tr("Configuration changed"),
-                                    tr("The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?"),
-                                    QMessageBox::Yes|QMessageBox::No);
-    if(ret == QMessageBox::Yes)
-        on_actionLoad_configs_triggered();
+    on_actionLoad_configs_triggered();
 }
 
 void MainWindow::updateConfigProfilesMenu()

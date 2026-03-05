@@ -478,6 +478,18 @@ void MainWindow::saveSettings()
 
     //Save settings of custom counters in the debugger
     dock_DebuggerBox->Debugger_saveCustomCounters();
+
+    // If any config profile is available, save it!
+    if(!configs.configProfiles.isEmpty())
+    {
+        QSettings locSettings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        locSettings.setIniCodec("UTF-8");
+#endif
+        locSettings.beginGroup("main");
+        locSettings.setValue("profile-file", configs.profile_file_path);
+        locSettings.endGroup();
+    }
 }
 
 

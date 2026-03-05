@@ -501,6 +501,18 @@ bool DataConfig::loadFullConfig()
     {
         QString setPath = ConfStatus::configLocalSettingsFile;
 
+        if(profile_file_path.isEmpty()) // Try to read recent profile
+        {
+            IniProcessing localSet(setPath);
+            if(localSet.contains("main"))
+            {
+                localSet.beginGroup("main");
+                localSet.read("profile-file", profile_file_path, profile_file_path);
+                localSet.endGroup();
+                ConfStatus::configLocalProfileFile = profile_file_path;
+            }
+        }
+
         if(!ConfStatus::configLocalProfileFile.isEmpty() && QFile::exists(ConfStatus::configLocalProfileFile))
             setPath = ConfStatus::configLocalProfileFile;
 
