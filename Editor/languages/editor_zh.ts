@@ -774,27 +774,27 @@ Note: most of config packs gets being updates with Moondust Project togeter. The
     <name>ConfigProfileSelect</name>
     <message>
         <source>Integration profile selection</source>
-        <translation type="unfinished"></translation>
+        <translation>选择集成配置包的配置方案</translation>
     </message>
     <message>
         <source>Please select the integration profile to start this config pack:</source>
-        <translation type="unfinished"></translation>
+        <translation>请选择配置方案以启动该集成配置包：</translation>
     </message>
     <message>
         <source>&lt;New profile&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;lt;新配置方案&amp;gt;</translation>
     </message>
     <message>
         <source>Create new integration profile</source>
-        <translation type="unfinished"></translation>
+        <translation>创建新配置方案</translation>
     </message>
     <message>
         <source>No selected profile</source>
-        <translation type="unfinished"></translation>
+        <translation>未选择配置方案</translation>
     </message>
     <message>
         <source>Please select profile from the list.</source>
-        <translation type="unfinished"></translation>
+        <translation>请从列表中选择配置方案。</translation>
     </message>
 </context>
 <context>
@@ -1162,7 +1162,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Count</source>
-        <translation>计算</translation>
+        <translation>对象数量</translation>
     </message>
 </context>
 <context>
@@ -6674,11 +6674,11 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>Select configuration profile</source>
-        <translation type="unfinished"></translation>
+        <translation>选择配置方案</translation>
     </message>
     <message>
         <source>New profile...</source>
-        <translation type="unfinished"></translation>
+        <translation>新建配置方案……</translation>
     </message>
 </context>
 <context>
