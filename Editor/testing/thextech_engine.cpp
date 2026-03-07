@@ -125,11 +125,16 @@ void TheXTechEngine::loadSetup()
     settings.setIniCodec("UTF-8");
 #endif
 
-    settings.beginGroup("main");
+    QSettings profile(ConfStatus::getConfigLocalSettingsOrProfile(), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    profile.setIniCodec("UTF-8");
+#endif
+
+    profile.beginGroup("main");
     {
-        m_defaultEngineName = settings.value("executable-name", THEXTECH_EXE).toString();
+        m_defaultEngineName = profile.value("executable-name", THEXTECH_EXE).toString();
     }
-    settings.endGroup();
+    profile.endGroup();
 
     settings.beginGroup("TheXTech");
     {

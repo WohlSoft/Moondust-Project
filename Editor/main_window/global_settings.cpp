@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+#include <QFile>
 #include "global_settings.h"
 
 EditingSettings::EditingSettings()
@@ -120,6 +122,16 @@ QString ConfStatus::configName;
 QString ConfStatus::configPath;
 QString ConfStatus::configLocalSettingsFile;
 QString ConfStatus::configLocalProfileFile;
+
+QString ConfStatus::getConfigLocalSettingsOrProfile()
+{
+    if(!ConfStatus::configLocalProfileFile.isEmpty() && QFile::exists(ConfStatus::configLocalProfileFile))
+        return ConfStatus::configLocalProfileFile;
+    else
+        return ConfStatus::configLocalSettingsFile;
+}
+
+
 bool    ConfStatus::configIsIntegrational = false;
 QString ConfStatus::configConfigureTool;
 
@@ -137,3 +149,4 @@ void GlobalSettings::cleanUp()
     font.reset();
     fontDefault.reset();
 }
+
