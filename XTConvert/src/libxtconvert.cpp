@@ -1441,7 +1441,7 @@ public:
         const QStringList junk_files_tails =
         {
             // OS junk
-            ".db", ".db:encryptable", ".tmp", ".bak",
+            ".db", ".db:encryptable", ".tmp", ".bak", "~",
             // Moondust Tilesets
             ".tileset.ini", ".tsgrp.ini",
             // Game saves
@@ -1449,7 +1449,7 @@ public:
             // Unsupported images
             ".jpg", ".jpeg", ".bmp", ".tga", ".pcx",
             // Special graphics formats
-            ".xcf", ".psd", ".pdn", ".ai", ".psg", ".ps",
+            ".xcf", ".psd", ".pdn", ".ai", ".psg", ".ps", ".kra",
             // Executables
             ".dll", ".exe",
             // Archives
