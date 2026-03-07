@@ -561,6 +561,15 @@ public:
             }
         }
 
+        // Figure out if the original is already a downscaled QOI
+        bool orig_is_1x_qoi = false;
+        {
+            FITAG *tag;
+
+            if(FreeImage_GetMetadata(FIMD_COMMENTS, image, "colorspace", &tag))
+                orig_is_1x_qoi = *(const uint8_t*)FreeImage_GetTagValue(tag);
+        }
+
         TargetPlatform output_format = m_spec.target_platform;
 
         bool bitmask_required = GraphicsLoad::validateBitmaskRequired(image, mask);
@@ -617,7 +626,7 @@ public:
         // properties for QOIs
         bool qoi_is_1x = false;
         bool qoi_is_trans = true;
-        bool already_1x = m_cur_dir.textures_1x.contains(filename);
+        bool already_1x = m_cur_dir.textures_1x.contains(filename) || orig_is_1x_qoi;
 
         // 2x downscale only if safe on Desktop, and check for RGBA
         if(m_spec.target_platform == TargetPlatform::Desktop)
