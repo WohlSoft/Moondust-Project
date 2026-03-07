@@ -782,7 +782,7 @@ Note: most of config packs gets being updates with Moondust Project togeter. The
     </message>
     <message>
         <source>&lt;New profile&gt;</source>
-        <translation>&amp;lt;新配置方案&amp;gt;</translation>
+        <translation>新建配置方案</translation>
     </message>
     <message>
         <source>Create new integration profile</source>
