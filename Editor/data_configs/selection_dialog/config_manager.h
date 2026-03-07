@@ -96,6 +96,7 @@ public:
 
 private:
     bool configure_loadScript(PGE_JsEngine *js);
+    void configure_showError(PGE_JsEngine *js, const char *function);
 
 private slots:
 

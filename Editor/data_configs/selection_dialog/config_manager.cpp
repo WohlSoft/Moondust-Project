@@ -606,11 +606,11 @@ void ConfigManager::tryFindAutoProfiles()
             setEnabled(false);
 
             // This is a function that should return array of objects filled with specific fields
-            QJSValue ret = js.call<QJSValue>("findAutoProfiles", nullptr);
+            QJSValue ret = js.callJS("findAutoProfiles", nullptr);
 
             if(ret.isError())
             {
-                qWarning() << "Failed to execute findAutoProfiles() " << js.getLastError() << js.getLastErrorLine();
+                configure_showError(&js, "findAutoProfiles()");
             }
             else if(!ret.isUndefined() && !ret.isNull() && ret.isArray())
             {
@@ -718,7 +718,17 @@ bool ConfigManager::isConfigured(PGE_JsEngine *js)
         ret &= !path.isEmpty() && pathInfo.isDir() && pathInfo.exists();
 
         if(js_valid && js->hasFunction("isValidIntegration"))
-            ret &= js->call<bool>("isValidIntegration", nullptr, path);
+        {
+            QJSValue jsret = js->callJS("isValidIntegration", nullptr, path);
+
+            if(jsret.isError())
+            {
+                configure_showError(js, "isValidIntegration()");
+                ret = false;
+            }
+            else
+                ret &= jsret.toBool();
+        }
 
         if(ret) // At least one is configured
             return true;
@@ -871,9 +881,20 @@ bool ConfigManager::runConfigureTool()
 
         if(configure_loadScript(&js))
         {
+            bool succ = false;
             setEnabled(false);
 
-            if(!js.call<bool>("onConfigure", nullptr))
+            if(js.hasFunction("onConfigure"))
+            {
+                QJSValue ret = js.callJS("onConfigure", nullptr);
+
+                if(ret.isError())
+                    configure_showError(&js, "onConfigure()");
+                else
+                    succ = ret.toBool();
+            }
+
+            if(!succ)
             {
                 setEnabled(true);
                 m_currentConfigProfilePath.clear();
@@ -996,4 +1017,19 @@ bool ConfigManager::configure_loadScript(PGE_JsEngine *js)
     js->loadFileByExpcetedResult<void>(ConfStatus::configConfigureTool, &successfulLoaded);
 
     return successfulLoaded;
+}
+
+void ConfigManager::configure_showError(PGE_JsEngine *js, const char *function)
+{
+    qWarning() << "Failed to execute function: " << QString::fromUtf8(function) << js->getLastError() << ConfStatus::configConfigureTool << js->getLastErrorLine();
+
+    QMessageBox::warning(this,
+        tr("Configure script error:"),
+        tr("Failed to execute function %1\n\n"
+           "Error at %2:%3:\n\n%4")
+            .arg(function)
+            .arg(ConfStatus::configConfigureTool)
+            .arg(js->getLastErrorLine())
+            .arg(js->getLastError())
+    );
 }
