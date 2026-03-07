@@ -296,6 +296,9 @@ class Converter
     DirInfo m_cur_dir;
     QFile m_main_graphics_list;
 
+    // externally-referenced graphics which must receive size files
+    QSet<QString> m_force_size_files;
+
     EpisodeInfo m_episode_info;
     uint32_t m_source_hash = 0;
 
@@ -457,7 +460,7 @@ public:
         return false;
     }
 
-    bool convert_image(const QString& filename, const QString& in_path, const QString& out_path)
+    bool convert_image(const QString& filename, const QString& in_path, const QString& out_path, const QString& rel_path)
     {
         FIBITMAP* image = GraphicsLoad::loadImage(in_path);
         if(!image)
@@ -1115,6 +1118,8 @@ public:
             // always write if filename doesn't follow graphics.list format
             make_size_file = true;
         }
+        else if(m_force_size_files.contains(rel_path.toLower()))
+            make_size_file = true;
         else if(m_cur_dir.make_size_files == DirInfo::SIZEFILES_PREVIEW_ASSETS)
         {
             // UI and background sprites
@@ -1492,7 +1497,7 @@ public:
         else if(m_spec.package_type == PackageType::AssetPack && m_spec.target_platform == TargetPlatform::DSG && (rel_path.startsWith("sound/") || rel_path.startsWith("music/")))
             return true;
         else if((filename.endsWith(".png") || filename.endsWith(".gif")) && !rel_path.startsWith("graphics/fallback/"))
-            return convert_image(filename, in_path, out_path);
+            return convert_image(filename, in_path, out_path, rel_path);
         else if(filename.endsWith(".ini") && m_cur_dir.convert_font_inis)
             return convert_font_ini(filename, in_path, out_path);
         else if(m_spec.target_platform != TargetPlatform::Desktop && filename.endsWith(".lvl"))
@@ -2120,7 +2125,7 @@ public:
         return mmutil_success;
     }
 
-    static bool find_assets_root(QDir& assets_dir)
+    bool find_assets_root(QDir& assets_dir)
     {
         QDirIterator it(assets_dir.path(), QStringList() << "gameinfo.ini", QDir::NoFilter, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
 
@@ -2146,6 +2151,27 @@ public:
         {
             qInfo() << "Could not find gameinfo.ini";
             return false;
+        }
+
+        m_force_size_files.clear();
+
+        // quickly check which preview graphics must receive .size files
+        {
+                QSettings gameinfo(it.filePath(), QSettings::IniFormat);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+                gameinfo.setIniCodec("UTF-8");
+#endif
+
+                gameinfo.beginGroup("android");
+                QString gfx_logo = gameinfo.value("logo", "").toString();
+                QString gfx_background = gameinfo.value("background", "").toString();
+                gameinfo.endGroup();
+
+                if(!gfx_logo.isEmpty())
+                    m_force_size_files.insert(gfx_logo.toLower());
+
+                if(!gfx_background.isEmpty())
+                    m_force_size_files.insert(gfx_background.toLower());
         }
 
         return true;
