@@ -22,7 +22,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QCloseEvent>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <QStandardPaths>
 
 #include <QtDebug>
@@ -224,7 +224,7 @@ void XTConvertUI::on_finish()
     }
 
     ui->progress_sub->setValue(0);
-    ui->progress_sub->setFormat("");
+    ui->progress_sub->setFormat(QString());
 
     updateControls();
 }
@@ -373,10 +373,10 @@ void XTConvertUI::on_browse_content_clicked()
     m_recent_content_path = fi.absolutePath();
 
     ui->content_path->setText(file);
-    ui->output_path->setText("");
+    ui->output_path->clear();
 
     ui->progress_big->setValue(0);
-    ui->progress_big->setFormat("");
+    ui->progress_big->setFormat(QString());
 
     updateControls();
 }
@@ -443,7 +443,7 @@ void XTConvertUI::on_browse_output_clicked()
     ui->output_path->setText(out);
 
     ui->progress_big->setValue(0);
-    ui->progress_big->setFormat("");
+    ui->progress_big->setFormat(QString());
 
     updateControls();
 }
@@ -456,10 +456,10 @@ void XTConvertUI::on_content_type_currentIndexChanged(int index)
         m_target_asset_pack = false;
 
     if(!m_target_legacy)
-        ui->output_path->setText("");
+        ui->output_path->clear();
 
     ui->progress_big->setValue(0);
-    ui->progress_big->setFormat("");
+    ui->progress_big->setFormat(QString());
 
     updateControls();
 }
@@ -482,10 +482,10 @@ void XTConvertUI::on_target_platform_currentIndexChanged(int index)
         break;
     }
 
-    ui->output_path->setText("");
+    ui->output_path->clear();
 
     ui->progress_big->setValue(0);
-    ui->progress_big->setFormat("");
+    ui->progress_big->setFormat(QString());
 
     updateControls();
 }
@@ -497,10 +497,10 @@ void XTConvertUI::on_target_version_currentIndexChanged(int index)
     else
         m_target_legacy = true;
 
-    ui->output_path->setText("");
+    ui->output_path->clear();
 
     ui->progress_big->setValue(0);
-    ui->progress_big->setFormat("");
+    ui->progress_big->setFormat(QString());
 
     updateControls();
 }
