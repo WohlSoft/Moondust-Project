@@ -32,6 +32,10 @@ public:
 
     Q_INVOKABLE QString osName();
 
+    Q_INVOKABLE QString homeDir();
+
+    Q_INVOKABLE QString appData();
+
 signals:
 
 };

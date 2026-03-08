@@ -25,7 +25,6 @@
 
 bool DataConfig::loadWorldTerrain(obj_w_tile &stile, QString section, obj_w_tile *merge_with, QString iniFile, IniProcessing *setup)
 {
-    bool valid = true;
     bool internal = !setup;
     QString errStr;
     if(internal)
@@ -43,11 +42,13 @@ bool DataConfig::loadWorldTerrain(obj_w_tile &stile, QString section, obj_w_tile
         addError(errStr);
         stile.isValid = false;
     }
+
     stile.m_itemType = ItemTypes::WLD_Tile;
     closeSection(setup);
     if(internal)
         delete setup;
-    return valid;
+
+    return stile.isValid;
 }
 
 void DataConfig::loadWorldTiles()
@@ -56,6 +57,7 @@ void DataConfig::loadWorldTiles()
 
     obj_w_tile stile;
     unsigned long tiles_total = 0;
+    unsigned long soft_limit = 0;
     bool useDirectory = false;
 
     QString tile_ini = getFullIniPath("wld_tiles.ini");
@@ -71,6 +73,7 @@ void DataConfig::loadWorldTiles()
         return;
     {
         setup.read("total", tiles_total, 0);
+        setup.read("soft-limit", soft_limit, 0);
         setup.read("grid", defaultGrid.terrain, defaultGrid.terrain);
         total_data += tiles_total;
         setup.read("config-dir", folderWldTerrain.items, "");
@@ -125,6 +128,21 @@ void DataConfig::loadWorldTiles()
                                        stile.icon);
         }
         /***************Load image*end***************/
+        else if(soft_limit > 0 && i > soft_limit)
+        {
+            // If resource after soft-limit is invalid, consider previous is the total number:
+            --i;
+            total_data -= tiles_total;
+            total_data += i;
+            tiles_total = i;
+            ConfStatus::total_wtile = signed(tiles_total);
+            main_wtiles.shrinkTo(i);
+            // Remove last error
+            errorsList[ERR_GLOBAL].pop_back();
+            emit progressMax(int(i));
+            break;
+        }
+
         stile.setup.id = i;
         main_wtiles.storeElement(int(i), stile, valid);
 

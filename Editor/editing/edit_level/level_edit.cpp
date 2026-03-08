@@ -27,7 +27,7 @@
 //#include <QGLWidget>
 #include <QDebug>
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/logger.h>
 #include <editing/_scenes/level/lvl_scene.h>
 #include <main_window/file/lvl_export_image.h>
@@ -50,13 +50,6 @@ LevelEdit::LevelEdit(MainWindow *mw, QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
     m_recentExportPath = AppPathManager::userAppDir();
     setWindowIcon(QIcon(QPixmap(":/toolbar/dock/level16.png")));
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
-#endif
-    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
-    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);
-    ui->graphicsView->setRenderHint(QPainter::Antialiasing, false);
 
     ui->graphicsView->horizontalScrollBar()->setSingleStep(32);
     ui->graphicsView->horizontalScrollBar()->setTracking(true);
@@ -83,6 +76,8 @@ void LevelEdit::prepareLevelFile(LevelData &data)
 {
     if(!sceneCreated || !scene)
         return;
+
+    scene->sceneItemsToData(data);
 
     DataConfig *config = scene->m_configs;
 

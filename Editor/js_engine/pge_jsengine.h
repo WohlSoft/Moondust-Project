@@ -91,6 +91,20 @@ public:
         return qjsvalue_cast<RetVal>(result);
     }
 
+    template<typename... Args>
+    QJSValue callJS(const QString &functionName, bool *ok, Args &&... args)
+    {
+        QJSValue function = m_jsengine.evaluate(functionName);
+        if(!checkForErrors(function, ok))
+            return function;
+
+        QJSValue result = function.call(QJSValueList({std::forward<Args>(args)...}));
+        if(!checkForErrors(result, ok))
+            return result;
+
+        return result;
+    }
+
     int getLastErrorLine() const;
     QString getLastError() const;
 private:

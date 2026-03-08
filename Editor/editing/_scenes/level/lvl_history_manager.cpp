@@ -25,28 +25,28 @@
 
 #include "lvl_history_manager.h"
 
-#include <editing/_components/history/historyelementmodification.h>
-#include <editing/_components/history/historyelementmainsetting.h>
-#include <editing/_components/history/historyelementitemsetting.h>
-#include <editing/_components/history/historyelementresizesection.h>
-#include <editing/_components/history/historyelementlayerchanged.h>
-#include <editing/_components/history/historyelementresizeblock.h>
-#include <editing/_components/history/historyelementplacedoor.h>
-#include <editing/_components/history/historyelementaddwarp.h>
-#include <editing/_components/history/historyelementremovewarp.h>
-#include <editing/_components/history/historyelementsettingswarp.h>
-#include <editing/_components/history/historyelementmodifyevent.h>
-#include <editing/_components/history/historyelementsettingsevent.h>
-#include <editing/_components/history/historyelementchangednewlayer.h>
-#include <editing/_components/history/historyelementaddlayer.h>
-#include <editing/_components/history/historyelementremovelayer.h>
-#include <editing/_components/history/historyelementrenameevent.h>
-#include <editing/_components/history/historyelementrenamelayer.h>
-#include <editing/_components/history/historyelementremovelayerandsave.h>
-#include <editing/_components/history/historyelementmergelayer.h>
-#include <editing/_components/history/historyelementsettingssection.h>
-#include <editing/_components/history/historyelementreplaceplayerpoint.h>
-#include <editing/_components/history/historyelementresizewater.h>
+#include <editing/_components/history/history_element_modification.h>
+#include <editing/_components/history/history_element_main_setting.h>
+#include <editing/_components/history/history_element_item_setting.h>
+#include <editing/_components/history/history_element_resize_section.h>
+#include <editing/_components/history/history_element_layer_changed.h>
+#include <editing/_components/history/history_element_resize_block.h>
+#include <editing/_components/history/history_element_place_door.h>
+#include <editing/_components/history/history_element_add_warp.h>
+#include <editing/_components/history/history_element_remove_warp.h>
+#include <editing/_components/history/history_element_settings_warp.h>
+#include <editing/_components/history/history_element_modify_event.h>
+#include <editing/_components/history/history_element_settings_event.h>
+#include <editing/_components/history/history_element_changed_new_layer.h>
+#include <editing/_components/history/history_element_add_layer.h>
+#include <editing/_components/history/history_element_remove_layer.h>
+#include <editing/_components/history/history_element_rename_event.h>
+#include <editing/_components/history/history_element_rename_layer.h>
+#include <editing/_components/history/history_element_remove_layer_and_save.h>
+#include <editing/_components/history/history_element_merge_layer.h>
+#include <editing/_components/history/history_element_settings_section.h>
+#include <editing/_components/history/history_element_replace_player_point.h>
+#include <editing/_components/history/history_element_resize_water.h>
 
 LvlHistoryManager::LvlHistoryManager(LvlScene *scene, QObject *parent) :
     QObject(parent),

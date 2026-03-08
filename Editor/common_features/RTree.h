@@ -1051,11 +1051,11 @@ int RTREE_QUAL::PickBranch(const Rect* a_rect, Node* a_node)
   ASSERT(a_rect && a_node);
   
   bool firstTime = true;
-  ELEMTYPEREAL increase;
+  ELEMTYPEREAL increase = 0;
   ELEMTYPEREAL bestIncr = (ELEMTYPEREAL)-1;
-  ELEMTYPEREAL area;
-  ELEMTYPEREAL bestArea;
-  int best=0;
+  ELEMTYPEREAL area = 0;
+  ELEMTYPEREAL bestArea = 0;
+  int best = 0;
   Rect tempRect;
 
   for(int index=0; index < a_node->m_count; ++index)

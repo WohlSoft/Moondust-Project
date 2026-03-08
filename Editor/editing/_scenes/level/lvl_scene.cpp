@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/themes.h>
 #include <editing/edit_level/level_edit.h>
 
@@ -38,11 +38,9 @@ LvlScene::LvlScene(MainWindow *mw,
                    DataConfig &configs,
                    LevelData &FileData,
                    QObject *parent) :
-    QGraphicsScene(parent),
-    m_mw(mw),
+    MoondustBaseScene(mw, parentView, parent),
     m_configs(&configs), // Pointer to Main Configs
     m_data(&FileData), //Add pointer to level data
-    m_viewPort(parentView),
     m_subWindow(nullptr),
 
     //set dummy images if target not exist or wrong
@@ -66,9 +64,6 @@ LvlScene::LvlScene(MainWindow *mw,
     m_emptyCollisionCheck(false),
 
     //Editing mode
-    m_editMode(MODE_Selecting),
-    m_editModeObj(nullptr),
-
     m_placingItemType(0),
 
     m_cursorItemImg(nullptr),
@@ -78,10 +73,6 @@ LvlScene::LvlScene(MainWindow *mw,
     //Mouse Events
     m_mouseIsMovedAfterKey(false),  //Is Mouse moved after pressing key
 
-    m_eraserIsEnabled(false),
-    m_pastingMode(false),
-    m_busyMode(false),
-    m_disableMoveItems(false),
     m_contextMenuIsOpened(false),
 
     m_mouseLeftPressed(false), //Left mouse key is pressed
@@ -100,7 +91,6 @@ LvlScene::LvlScene(MainWindow *mw,
     m_history(new LvlHistoryManager(this, this))
 
 {
-    setItemIndexMethod(QGraphicsScene::NoIndex);
     if(parent)
     {
         if(strcmp(parent->metaObject()->className(), LEVEL_EDIT_CLASS) == 0)
@@ -174,41 +164,45 @@ LvlScene::LvlScene(MainWindow *mw,
     connect(this, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
 
     //Build edit mode classes
-    LVL_ModeHand *modeHand = new LVL_ModeHand(this);
-    m_editModes.push_back(modeHand);
+    QSharedPointer<EditMode> modeHand(new LVL_ModeHand(this));
+    m_editModes.insert(MODE_HandScroll, modeHand);
 
-    LVL_ModeSelect *modeSelect = new LVL_ModeSelect(this);
-    m_editModes.push_back(modeSelect);
+    QSharedPointer<EditMode> modeSelect(new LVL_ModeSelect(this));
+    m_editModes.insert(MODE_Selecting, modeSelect);
+    m_editModes.insert(MODE_PasteFromClip, modeSelect);
+    m_editModes.insert(MODE_SelectingOnly, modeSelect);
 
-    LVL_ModeResize *modeResize = new LVL_ModeResize(this);
-    m_editModes.push_back(modeResize);
+    QSharedPointer<EditMode> modeResize(new LVL_ModeResize(this));
+    m_editModes.insert(MODE_Resizing, modeResize);
 
-    LVL_ModeErase *modeErase = new LVL_ModeErase(this);
-    m_editModes.push_back(modeErase);
+    QSharedPointer<EditMode> modeErase(new LVL_ModeErase(this));
+    m_editModes.insert(MODE_Erasing, modeErase);
 
-    LVL_ModePlace *modePlace = new LVL_ModePlace(this);
-    m_editModes.push_back(modePlace);
+    QSharedPointer<EditMode> modePlace(new LVL_ModePlace(this));
+    m_editModes.insert(MODE_PlacingNew, modePlace);
 
-    LVL_ModeSquare *modeSquare = new LVL_ModeSquare(this);
-    m_editModes.push_back(modeSquare);
+    QSharedPointer<EditMode> modeSquare(new LVL_ModeSquare(this));
+    m_editModes.insert(MODE_DrawRect, modeSquare);
 
-    LVL_ModeCircle *modeCircle = new LVL_ModeCircle(this);
-    m_editModes.push_back(modeCircle);
+    QSharedPointer<EditMode> modeCircle(new LVL_ModeCircle(this));
+    m_editModes.insert(MODE_DrawCircle, modeCircle);
 
-    LVL_ModeLine *modeLine = new LVL_ModeLine(this);
-    m_editModes.push_back(modeLine);
+    QSharedPointer<EditMode> modeLine(new LVL_ModeLine(this));
+    m_editModes.insert(MODE_Line, modeLine);
 
-    LVL_ModeFill *modeFill = new LVL_ModeFill(this);
-    m_editModes.push_back(modeFill);
+    QSharedPointer<EditMode> modeFill(new LVL_ModeFill(this));
+    m_editModes.insert(MODE_Fill, modeFill);
 
-    m_editModeObj = modeSelect;
+    m_editModeObj = modeSelect.data();
     m_editModeObj->set();
 }
 
 
 LvlScene::~LvlScene()
 {
-    if(m_labelBox) delete m_labelBox;
+    if(m_labelBox)
+        delete m_labelBox;
+
     m_customBGOs.clear();
     m_customBlocks.clear();
     m_localConfigBackgrounds.clear();
@@ -217,13 +211,11 @@ LvlScene::~LvlScene()
     m_localConfigNPCs.clear();
 
     m_localImages.clear();
+}
 
-    while(!m_editModes.isEmpty())
-    {
-        EditMode *tmp = m_editModes.first();
-        m_editModes.pop_front();
-        delete tmp;
-    }
+MoondustBaseScene::SceneType LvlScene::sceneType() const
+{
+    return SCENE_LEVEL;
 }
 
 void LvlScene::drawForeground(QPainter *painter, const QRectF &rect)
@@ -237,8 +229,10 @@ void LvlScene::drawForeground(QPainter *painter, const QRectF &rect)
         qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
 
         QVarLengthArray<QLineF, 100> lines;
+
         for(qreal x = left; x < rect.right(); x += gridSize)
             lines.append(QLineF(x, rect.top(), x, rect.bottom()));
+
         for(qreal y = top; y < rect.bottom(); y += gridSize)
             lines.append(QLineF(rect.left(), y, rect.right(), y));
 
@@ -272,10 +266,13 @@ void LvlScene::drawForeground(QPainter *painter, const QRectF &rect)
 
         QVarLengthArray<QLineF, 100> lines;
         QVarLengthArray<QLineF, 100> top_lines;
+
         for(qreal x = left; x < rect.right(); x += gridSizeX)
             lines.append(QLineF(x, rect.top(), x, rect.bottom()));
+
         for(qreal y = top; y < rect.bottom(); y += gridSizeY)
             lines.append(QLineF(rect.left(), y, rect.right(), y));
+
         for(qreal y = cam_top; y < rect.bottom(); y += gridSizeY)
             top_lines.append(QLineF(rect.left(), y, rect.right(), y));
 

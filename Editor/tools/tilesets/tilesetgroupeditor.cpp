@@ -322,7 +322,7 @@ void TilesetGroupEditor::redrawAll()
             SimpleTilesetItem *item = &items->items[j];
             TilesetItemButton *ib = new TilesetItemButton(m_configs, scn);
             ib->applySize(32, 32);
-            ib->applyItem(items->type, item->id);
+            ib->applyItem(item->type >= 0 ? item->type : items->type, item->id);
             l->addWidget(ib, item->row, item->col);
         }
         DevConsole::log(QString("Current GridLayout Items: %1").arg(l->count()), QString("Tileset"));

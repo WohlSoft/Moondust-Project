@@ -20,8 +20,8 @@
 #ifdef Q_OS_MAC
 #include <QStandardPaths>
 #endif
+#include <pge_app_path.h>
 #include <common_features/util.h>
-#include <common_features/app_path.h>
 #include <tools/tilesets/tileset_editor.h>
 #include <tools/tilesets/tilesetgroupeditor.h>
 #include <tools/external_tools/audiocvt_sox_gui.h>

@@ -18,10 +18,19 @@
 
 #include <QSettings>
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/util.h>
 #include <main_window/global_settings.h>
 #include <tools/debugger/custom_counter_gui.h>
+#include <editing/_scenes/level/items/item_block.h>
+#include <editing/_scenes/level/items/item_bgo.h>
+#include <editing/_scenes/level/items/item_npc.h>
+#include <editing/_scenes/world/items/item_tile.h>
+#include <editing/_scenes/world/items/item_scene.h>
+#include <editing/_scenes/world/items/item_path.h>
+#include <editing/_scenes/world/items/item_level.h>
+#include <editing/_scenes/world/items/item_music.h>
+#include "debugger_stats_model.h"
 
 #include "../../mainwindow.h"
 #include <ui_mainwindow.h>
@@ -42,9 +51,9 @@ DebuggerBox::DebuggerBox(QWidget *parent) :
     QRect mwg = mw()->geometry();
     int GOffset = 10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
-    connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
-    connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionDebugger, SLOT(setChecked(bool)));
-    connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(on_DEBUG_RefreshCoutners_clicked()));
+    QObject::connect(mw(), &MainWindow::languageSwitched, this, &DebuggerBox::re_translate);
+    QObject::connect(this, &QDockWidget::visibilityChanged, mw()->ui->actionDebugger, &QAction::setChecked);
+    QObject::connect(this, &QDockWidget::visibilityChanged, this, &DebuggerBox::on_DEBUG_RefreshCoutners_clicked);
     setFloating(true);
     setGeometry(
         mwg.right() - width() - GOffset,
@@ -53,15 +62,14 @@ DebuggerBox::DebuggerBox(QWidget *parent) :
         height()
     );
 
+    m_model = new DebuggerStatsModel(ui->DEBUG_Items);
+    ui->DEBUG_Items->setModel(m_model);
+    ui->DEBUG_Items->setWordWrap(false);
+    ui->DEBUG_Items->resizeColumnToContents(0);
+
     m_lastVisibilityState = isVisible();
     mw()->docks_level_and_world.
     addState(this, &m_lastVisibilityState);
-
-    QFont font("Monospace");
-    font.setStyleHint(QFont::TypeWriter);
-    font.setWeight(QFont::Normal);
-    ui->DEBUG_Items->setFont(font);
-
 }
 
 DebuggerBox::~DebuggerBox()
@@ -72,17 +80,21 @@ DebuggerBox::~DebuggerBox()
 void DebuggerBox::re_translate()
 {
     ui->retranslateUi(this);
+    m_model->re_translate();
+    ui->DEBUG_Items->resizeColumnsToContents();
 }
 
 void MainWindow::on_actionDebugger_triggered(bool checked)
 {
     dock_DebuggerBox->setVisible(checked);
-    if(checked) dock_DebuggerBox->raise();
+    if(checked)
+        dock_DebuggerBox->raise();
 }
 
 void DebuggerBox::setMousePos(QPoint p, bool isOffScreen)
 {
-    if(!mw()->ui->actionDebugger->isVisible()) return; //SpeedUp
+    if(!mw()->ui->actionDebugger->isVisible())
+        return; //SpeedUp
 
     if(isOffScreen)
     {
@@ -96,11 +108,13 @@ void DebuggerBox::setMousePos(QPoint p, bool isOffScreen)
     }
 }
 
-void DebuggerBox::setItemStat(QString list)
+void DebuggerBox::updateStats(MoondustBaseScene *scene)
 {
-    if(!mw()->ui->actionDebugger->isVisible()) return; //SpeedUp
+    if(!mw()->ui->actionDebugger->isVisible())
+        return; //SpeedUp
 
-    ui->DEBUG_Items->setText(list);
+    m_model->refreshCounters(scene);
+    ui->DEBUG_Items->resizeColumnsToContents();
 }
 
 void DebuggerBox::on_DEBUG_GotoPoint_clicked()
@@ -130,10 +144,9 @@ void DebuggerBox::Debugger_loadCustomCounters()
 {
     QString userDFile = AppPathManager::settingsPath() + "/" + util::filePath(ConfStatus::configName) + " counters.ini";
     QString debuggerFile = userDFile;
+
     if(!QFile::exists(debuggerFile))
-    {
         debuggerFile = mw()->configs.config_dir + "/counters.ini";
-    }
 
 reload:
     QSettings cCounters(debuggerFile, QSettings::IniFormat);
@@ -166,20 +179,25 @@ reload:
             QStringList items;
             cCounters.beginGroup(QString("custom-counter-%1").arg(cntn));
             counter.name = cCounters.value("name", "").toString();
-            if(counter.name.isEmpty()) valid = false;
+
+            if(counter.name.isEmpty())
+                valid = false;
+
             counter.type = (ItemTypes::itemTypes)cCounters.value("type", 0).toInt();
             counter.windowType = cCounters.value("window-type", 0).toInt();
             QString tmp = cCounters.value("items", "").toString();
+
             if(tmp.isEmpty())
             {
                 valid = false;
                 goto skip;
             }
+
             items = tmp.split(',');
+
             foreach(QString x, items)
-            {
                 counter.items.push_back(x.toLong());
-            }
+
 skip:
             cCounters.endGroup();
             if(valid) m_customCounters.push_back(counter);
@@ -192,7 +210,8 @@ quit:
 
 void DebuggerBox::Debugger_saveCustomCounters()
 {
-    if(!m_isLoaded) return;
+    if(!m_isLoaded)
+        return;
 
     QString debuggerFile = AppPathManager::settingsPath() + "/" + util::filePath(ConfStatus::configName) + " counters.ini";
 
@@ -205,12 +224,14 @@ void DebuggerBox::Debugger_saveCustomCounters()
     cCounters.beginGroup("custom-counters");
     cCounters.setValue("total", m_customCounters.size());
     cCounters.endGroup();
+
     for(int i = 0; i < m_customCounters.size(); i++)
     {
         cCounters.beginGroup(QString("custom-counter-%1").arg(i + 1));
         cCounters.setValue("name", m_customCounters[i].name);
         cCounters.setValue("type", (int)m_customCounters[i].type);
         cCounters.setValue("window-type", m_customCounters[i].windowType);
+
         QString items;
         for(int j = 0; j < m_customCounters[i].items.size(); j++)
         {
@@ -219,6 +240,7 @@ void DebuggerBox::Debugger_saveCustomCounters()
             else
                 items.append(QString::number(m_customCounters[i].items[j]) + ",");
         }
+
         cCounters.setValue("items", items);
         cCounters.endGroup();
     }
@@ -241,14 +263,18 @@ void DebuggerBox::on_DEBUG_AddCustomCounter_clicked()
 
 void DebuggerBox::on_DEBUG_RefreshCoutners_clicked()
 {
-    if(!isVisible()) return;
+    if(!isVisible())
+        return;
+
     if(!m_isLoaded)
         Debugger_loadCustomCounters();
 
     int win = mw()->activeChildWindow(mw()->LastActiveSubWindow);
 
     qDebug() << "Size of custom conters array:" << m_customCounters.size();
+
     util::memclear(ui->DEBUG_CustomCountersList);
+
     for(int i = 0; i < m_customCounters.size(); i++)
     {
         if(m_customCounters[i].windowType != win) continue;
@@ -262,28 +288,32 @@ void DebuggerBox::on_DEBUG_RefreshCoutners_clicked()
             if(m_customCounters[i].type == ItemTypes::LVL_NPC)
             {
                 LevelEdit *e = mw()->activeLvlEditWin(mw()->LastActiveSubWindow);
-                if(e)
+                if(e && e->scene)
                 {
+                    LvlScene *scene = e->scene;
+
                     if(!m_customCounters[i].items.isEmpty())
                     {
                         //Deep search of NPC's
-                        for(int j = 0; j < e->LvlData.npc.size(); j++)
+                        for(auto it = scene->m_itemsNPC.begin(); it != scene->m_itemsNPC.end(); ++it)
                         {
+                            const auto &npc = it.value()->m_data;
+
                             foreach(long q, m_customCounters[i].items)
                             {
                                 //check as regular NPC
-                                if(e->LvlData.npc[j].id == (unsigned)q)
+                                if(npc.id == (unsigned)q)
                                 {
                                     countItems++;
                                     break;
                                 }
                                 //check as NPC-Container
-                                if((e->LvlData.npc[j].id > 0) && e->scene->m_localConfigNPCs.contains(e->LvlData.npc[j].id))
+                                if(npc.id > 0 && e->scene->m_localConfigNPCs.contains(npc.id))
                                 {
-                                    obj_npc &t_npc = e->scene->m_localConfigNPCs[ e->LvlData.npc[j].id ];
+                                    obj_npc &t_npc = e->scene->m_localConfigNPCs[npc.id];
                                     if(t_npc.setup.container)
                                     {
-                                        if(e->LvlData.npc[j].contents == q)
+                                        if(npc.contents == q)
                                         {
                                             countItems++;
                                             break;
@@ -292,20 +322,23 @@ void DebuggerBox::on_DEBUG_RefreshCoutners_clicked()
                                 }
                             }
                         }
+
                         //find all NPC's in blocks
-                        for(int j = 0; j < e->LvlData.blocks.size(); j++)
+                        for(auto it = scene->m_itemsBlocks.begin(); it != scene->m_itemsBlocks.end(); ++it)
                         {
+                            const auto &block = it.value()->m_data;
+
                             foreach(long q, m_customCounters[i].items)
                             {
                                 if((unsigned)q == mw()->configs.marker_npc.coin_in_block)
                                 {
-                                    if(e->LvlData.blocks[j].npc_id < 0)
+                                    if(block.npc_id < 0)
                                     {
-                                        countItems += e->LvlData.blocks[j].npc_id * -1;
+                                        countItems += block.npc_id * -1;
                                         break;
                                     }
                                 }
-                                else if(e->LvlData.blocks[j].npc_id == q)
+                                else if(block.npc_id == q)
                                 {
                                     countItems++;
                                     break;
@@ -318,40 +351,46 @@ void DebuggerBox::on_DEBUG_RefreshCoutners_clicked()
             else if(m_customCounters[i].type == ItemTypes::LVL_Block)
             {
                 LevelEdit *e = mw()->activeLvlEditWin(mw()->LastActiveSubWindow);
-                if(e)
-                    if(!m_customCounters[i].items.isEmpty())
+                if(e && e->scene && !m_customCounters[i].items.isEmpty())
+                {
+                    LvlScene *scene = e->scene;
+
+                    for(auto it = scene->m_itemsBlocks.begin(); it != scene->m_itemsBlocks.end(); ++it)
                     {
-                        for(int j = 0; j < e->LvlData.blocks.size(); j++)
+                        const auto &block = it.value()->m_data;
+
+                        foreach(long q, m_customCounters[i].items)
                         {
-                            foreach(long q, m_customCounters[i].items)
+                            if(block.id == (unsigned)q)
                             {
-                                if(e->LvlData.blocks[j].id == (unsigned)q)
-                                {
-                                    countItems++;
-                                    break;
-                                }
+                                countItems++;
+                                break;
                             }
                         }
                     }
+                }
             }
             else if(m_customCounters[i].type == ItemTypes::LVL_BGO)
             {
                 LevelEdit *e = mw()->activeLvlEditWin(mw()->LastActiveSubWindow);
-                if(e)
-                    if(!m_customCounters[i].items.isEmpty())
+                if(e && e->scene && !m_customCounters[i].items.isEmpty())
+                {
+                    LvlScene *scene = e->scene;
+
+                    for(auto it = scene->m_itemsBGO.begin(); it != scene->m_itemsBGO.end(); ++it)
                     {
-                        for(int j = 0; j < e->LvlData.bgo.size(); j++)
+                        const auto &bgo = it.value()->m_data;
+
+                        foreach(long q, m_customCounters[i].items)
                         {
-                            foreach(long q, m_customCounters[i].items)
+                            if(bgo.id == (unsigned)q)
                             {
-                                if(e->LvlData.bgo[j].id == (unsigned)q)
-                                {
-                                    countItems++;
-                                    break;
-                                }
+                                countItems++;
+                                break;
                             }
                         }
                     }
+                }
             }
         }
         else if(mw()->activeChildWindow() == MainWindow::WND_World)
@@ -359,14 +398,16 @@ void DebuggerBox::on_DEBUG_RefreshCoutners_clicked()
             if(m_customCounters[i].type == ItemTypes::WLD_Tile)
             {
                 WorldEdit *e = mw()->activeWldEditWin(mw()->LastActiveSubWindow);
-                if(!e) return;
-                if(!m_customCounters[i].items.isEmpty())
+                if(e && e->scene && !m_customCounters[i].items.isEmpty()) return;
                 {
-                    for(int j = 0; j < e->WldData.tiles.size(); j++)
+                    WldScene *scene = e->scene;
+
+                    for(auto it = scene->m_itemsTiles.begin(); it != scene->m_itemsTiles.end(); ++it)
                     {
+                        const auto &tile = it.value()->m_data;
                         foreach(long q, m_customCounters[i].items)
                         {
-                            if(e->WldData.tiles[j].id == (unsigned)q)
+                            if(tile.id == (unsigned)q)
                             {
                                 countItems++;
                                 break;
@@ -378,85 +419,96 @@ void DebuggerBox::on_DEBUG_RefreshCoutners_clicked()
             else if(m_customCounters[i].type == ItemTypes::WLD_Scenery)
             {
                 WorldEdit *e = mw()->activeWldEditWin(mw()->LastActiveSubWindow);
-                if(e)
-                    if(!m_customCounters[i].items.isEmpty())
+                if(e && e->scene && !m_customCounters[i].items.isEmpty()) return;
+                {
+                    WldScene *scene = e->scene;
+
+                    for(auto it = scene->m_itemsScenery.begin(); it != scene->m_itemsScenery.end(); ++it)
                     {
-                        for(int j = 0; j < e->WldData.scenery.size(); j++)
+                        const auto &scene = it.value()->m_data;
+
+                        foreach(long q, m_customCounters[i].items)
                         {
-                            foreach(long q, m_customCounters[i].items)
+                            if(scene.id == (unsigned)q)
                             {
-                                if(e->WldData.scenery[j].id == (unsigned)q)
-                                {
-                                    countItems++;
-                                    break;
-                                }
+                                countItems++;
+                                break;
                             }
                         }
                     }
+                }
             }
             else if(m_customCounters[i].type == ItemTypes::WLD_Path)
             {
                 WorldEdit *e = mw()->activeWldEditWin(mw()->LastActiveSubWindow);
-                if(e)
-                    if(!m_customCounters[i].items.isEmpty())
+                if(e && e->scene && !m_customCounters[i].items.isEmpty()) return;
+                {
+                    WldScene *scene = e->scene;
+
+                    for(auto it = scene->m_itemsPaths.begin(); it != scene->m_itemsPaths.end(); ++it)
                     {
-                        for(int j = 0; j < e->WldData.paths.size(); j++)
+                        const auto &path = it.value()->m_data;
+
+                        foreach(long q, m_customCounters[i].items)
                         {
-                            foreach(long q, m_customCounters[i].items)
+                            if(path.id == (unsigned)q)
                             {
-                                if(e->WldData.paths[j].id == (unsigned)q)
-                                {
-                                    countItems++;
-                                    break;
-                                }
+                                countItems++;
+                                break;
                             }
                         }
                     }
+                }
             }
             else if(m_customCounters[i].type == ItemTypes::WLD_Level)
             {
                 WorldEdit *e = mw()->activeWldEditWin(mw()->LastActiveSubWindow);
-                if(e)
-                    if(!m_customCounters[i].items.isEmpty())
+                if(e && e->scene && !m_customCounters[i].items.isEmpty()) return;
+                {
+                    WldScene *scene = e->scene;
+
+                    for(auto it = scene->m_itemsLevels.begin(); it != scene->m_itemsLevels.end(); ++it)
                     {
-                        for(int j = 0; j < e->WldData.levels.size(); j++)
+                        const auto &level = it.value()->m_data;
+
+                        foreach(long q, m_customCounters[i].items)
                         {
-                            foreach(long q, m_customCounters[i].items)
+                            if(level.id == (unsigned)q)
                             {
-                                if(e->WldData.levels[j].id == (unsigned)q)
-                                {
-                                    countItems++;
-                                    break;
-                                }
+                                countItems++;
+                                break;
                             }
                         }
                     }
+                }
             }
             else if(m_customCounters[i].type == ItemTypes::WLD_MusicBox)
             {
                 WorldEdit *e = mw()->activeWldEditWin(mw()->LastActiveSubWindow);
-                if(e)
-                    if(!m_customCounters[i].items.isEmpty())
+                if(e && e->scene && !m_customCounters[i].items.isEmpty())
+                {
+                    WldScene *scene = e->scene;
+
+                    for(auto it = scene->m_itemsMusicBoxes.begin(); it != scene->m_itemsMusicBoxes.end(); ++it)
                     {
-                        for(int j = 0; j < e->WldData.music.size(); j++)
+                        const auto &musicbox = it.value()->m_data;
+
+                        foreach(long q, m_customCounters[i].items)
                         {
-                            foreach(long q, m_customCounters[i].items)
+                            if(musicbox.id == (unsigned)q)
                             {
-                                if(e->WldData.music[j].id == (unsigned)q)
-                                {
-                                    countItems++;
-                                    break;
-                                }
+                                countItems++;
+                                break;
                             }
                         }
                     }
+                }
             }
-
         }
+
         item->setText(QString("%1\t%2").arg(countItems).arg(m_customCounters[i].name));
         ui->DEBUG_CustomCountersList->addItem(item);
     }
-
 }
 
 
@@ -467,7 +519,7 @@ void DebuggerBox::on_DEBUG_CustomCountersList_itemClicked(QListWidgetItem *item)
     on_DEBUG_RefreshCoutners_clicked();
 
     auto items = util::items(ui->DEBUG_CustomCountersList);
-    for(QListWidgetItem *x : items)
+    foreach(QListWidgetItem *x, items)
     {
         if(x->data(Qt::UserRole).toInt() == itemID)
         {
@@ -481,7 +533,8 @@ void DebuggerBox::on_DEBUG_CustomCountersList_itemClicked(QListWidgetItem *item)
 
 void DebuggerBox::on_DEBUG_CustomCountersList_customContextMenuRequested(const QPoint &pos)
 {
-    if(ui->DEBUG_CustomCountersList->selectedItems().isEmpty()) return;
+    if(ui->DEBUG_CustomCountersList->selectedItems().isEmpty())
+        return;
 
     QListWidgetItem *item = ui->DEBUG_CustomCountersList->selectedItems().first();
     int itemID = item->data(Qt::UserRole).toInt();
@@ -490,7 +543,10 @@ void DebuggerBox::on_DEBUG_CustomCountersList_customContextMenuRequested(const Q
     QAction *edit = menu.addAction(tr("Edit"));
     QAction *remove = menu.addAction(tr("Remove"));
     QAction *selected = menu.exec(ui->DEBUG_CustomCountersList->mapToGlobal(pos));
-    if(selected == NULL) return;
+
+    if(selected == NULL)
+        return;
+
     if(selected == remove)
     {
         m_customCounters.remove(itemID);
@@ -509,6 +565,5 @@ void DebuggerBox::on_DEBUG_CustomCountersList_customContextMenuRequested(const Q
             on_DEBUG_RefreshCoutners_clicked();
         }
     }
-
 }
 

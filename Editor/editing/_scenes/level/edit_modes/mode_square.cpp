@@ -41,16 +41,17 @@ void LVL_ModeSquare::set()
     s->clearSelection();
     s->resetResizers();
 
-    s->m_eraserIsEnabled = false;
-    s->m_pastingMode = false;
-    s->m_busyMode = true;
-    s->m_disableMoveItems = false;
+    s->setEditFlagEraser(false);
+    s->setEditFlagPasteMode(false);
+    s->setEditFlagBusyMode(true);
+    s->setEditFlagNoMoveItems(false);
 
-    s->m_viewPort->setInteractive(true);
-    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_square_fill));
-    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
-    s->m_viewPort->setRenderHint(QPainter::Antialiasing, true);
-    s->m_viewPort->viewport()->setMouseTracking(true);
+    auto *vp = s->curViewPort();
+    vp->setInteractive(true);
+    vp->setCursor(Themes::Cursor(Themes::cursor_square_fill));
+    vp->setDragMode(QGraphicsView::NoDrag);
+    vp->setRenderHint(QPainter::Antialiasing, true);
+    vp->viewport()->setMouseTracking(true);
 }
 
 void LVL_ModeSquare::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
@@ -61,7 +62,7 @@ void LVL_ModeSquare::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(mouseEvent->buttons() & Qt::RightButton)
     {
         item_rectangles::clearArray();
-        s->m_mw->on_actionSelect_triggered();
+        s->mw()->on_actionSelect_triggered();
         dontCallEvent = true;
         s->m_mouseIsMovedAfterKey = true;
         return;
@@ -74,7 +75,7 @@ void LVL_ModeSquare::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     s->m_lastBgoArrayID = s->m_data->bgo_array_id;
     s->m_lastNpcArrayID = s->m_data->npc_array_id;
 
-    LogDebug(QString("Rectangle mode %1").arg(s->m_editMode));
+    LogDebug(QString("Rectangle mode %1").arg(s->editMode()));
     if(s->m_cursorItemImg)
     {
         QGraphicsRectItem *cur = dynamic_cast<QGraphicsRectItem *>(s->m_cursorItemImg);
@@ -165,8 +166,6 @@ void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             s->m_data->physenv_array_id++;
 
             LvlPlacingItems::waterSet.meta.array_id = s->m_data->physenv_array_id;
-            s->m_data->physez.push_back(LvlPlacingItems::waterSet);
-
             s->placeEnvironmentZone(LvlPlacingItems::waterSet, true);
             LevelData plWater;
             plWater.physez.push_back(LvlPlacingItems::waterSet);
@@ -187,8 +186,6 @@ void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 s->m_data->blocks_array_id++;
 
                 LvlPlacingItems::blockSet.meta.array_id = s->m_data->blocks_array_id;
-                s->m_data->blocks.push_back(LvlPlacingItems::blockSet);
-
                 s->placeBlock(LvlPlacingItems::blockSet, true);
                 LevelData plSzBlock;
                 plSzBlock.blocks.push_back(LvlPlacingItems::blockSet);
@@ -241,7 +238,8 @@ void LVL_ModeSquare::keyRelease(QKeyEvent *keyEvent)
     {
         item_rectangles::clearArray();
         LvlScene *s = dynamic_cast<LvlScene *>(scene);
-        if(s) s->m_mw->on_actionSelect_triggered();
+        if(s)
+            s->mw()->on_actionSelect_triggered();
         break;
     }
     default:

@@ -22,7 +22,7 @@
 #include <QInputDialog>
 #include <QKeyEvent>
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/util.h>
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/world/wld_scene.h>
@@ -214,7 +214,7 @@ void TilesetEditor::on_clearTileset_clicked()
 
 void TilesetEditor::setUpTileset(int type)
 {
-    m_tileset->clear();
+    // m_tileset->clear();
     m_tileset->setType(type);
 }
 
@@ -226,7 +226,7 @@ void TilesetEditor::setUpItems(int type)
     LvlScene *lvl_scene = dynamic_cast<LvlScene *>(scn);
     WldScene *wld_scene = dynamic_cast<WldScene *>(scn);
 
-    m_model->clear();
+    // m_model->clear();
     m_model->setElementsType(toElementType(type));
 
     m_model->setScene(scn);

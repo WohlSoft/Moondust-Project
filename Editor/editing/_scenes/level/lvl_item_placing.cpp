@@ -140,6 +140,10 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         flag.second = "Block";
         LvlPlacingItems::flags.push_back(flag);
 
+        flag.first = ITEM_TYPE_INT;
+        flag.second = ItemTypes::LVL_Block;
+        LvlPlacingItems::flags.push_back(flag);
+
         flag.first = ITEM_ID;
         flag.second = QString::number(LvlPlacingItems::blockSet.id);
         LvlPlacingItems::flags.push_back(flag);
@@ -147,7 +151,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         if(blockC.setup.sizable)
         {
             flag.first = ITEM_BLOCK_IS_SIZABLE;
-            flag.second = "sizable";
+            flag.second = true;
             LvlPlacingItems::flags.push_back(flag);
         }
 
@@ -164,7 +168,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::flags.push_back(flag);
 
         flag.first = ITEM_IS_CURSOR;
-        flag.second = "CURSOR";
+        flag.second = true;
         LvlPlacingItems::flags.push_back(flag);
 
 
@@ -197,7 +201,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         m_cursorItemImg = addPixmap(tImg);
 
         //set data flags
-        for(const dataFlag &itemFlag : LvlPlacingItems::flags)
+        foreach(const dataFlag &itemFlag, LvlPlacingItems::flags)
             m_cursorItemImg->setData(itemFlag.first, itemFlag.second);
 
         m_cursorItemImg->setZValue(7000);
@@ -213,7 +217,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             return;
         }
 
-        SwitchEditingMode(MODE_PlacingNew);
+        switchEditMode(MODE_PlacingNew);
 
         break;
     }
@@ -253,24 +257,28 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::flags.clear();
         QPair<int, QVariant> flag;
 
-        flag.first = 0;
+        flag.first = ITEM_TYPE;
         flag.second = "BGO";
         LvlPlacingItems::flags.push_back(flag);
 
-        flag.first = 1;
+        flag.first = ITEM_TYPE_INT;
+        flag.second = ItemTypes::LVL_BGO;
+        LvlPlacingItems::flags.push_back(flag);
+
+        flag.first = ITEM_ID;
         flag.second = QString::number(itemID);
         LvlPlacingItems::flags.push_back(flag);
 
-        flag.first = 9;
+        flag.first = ITEM_WIDTH;
         flag.second = QString::number(w);
         LvlPlacingItems::flags.push_back(flag);
 
-        flag.first = 10;
+        flag.first = ITEM_HEIGHT;
         flag.second = QString::number(h);
         LvlPlacingItems::flags.push_back(flag);
 
-        flag.first = 25;
-        flag.second = "CURSOR";
+        flag.first = ITEM_IS_CURSOR;
+        flag.second = true;
         LvlPlacingItems::flags.push_back(flag);
 
 
@@ -317,14 +325,24 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             return;
         }
 
-        SwitchEditingMode(MODE_PlacingNew);
+        switchEditMode(MODE_PlacingNew);
         break;
     }
     case 2: //npcs
     {
         obj_npc &mergedSet = m_localConfigNPCs[static_cast<int>(itemID)];
 
-        LvlPlacingItems::npcSet.direct = mergedSet.setup.direct_default_value;
+        if(GlobalSettings::LvlItemDefaults.npc_direction_override)
+        {
+            LvlPlacingItems::npcSet.direct = GlobalSettings::LvlItemDefaults.npc_direction;
+
+            // When override sets "random" and when it is set as a "prohibited value", set config-wide default
+            if(mergedSet.setup.direct_disable_random && LvlPlacingItems::npcSet.direct == 0)
+                LvlPlacingItems::npcSet.direct = mergedSet.setup.direct_default_value;
+        }
+        else
+            LvlPlacingItems::npcSet.direct = mergedSet.setup.direct_default_value;
+
         tImg = getNPCimg(itemID, LvlPlacingItems::npcSet.direct);
         if(!mergedSet.isValid)
         {
@@ -386,6 +404,10 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         flag.second = "NPC";
         LvlPlacingItems::flags.push_back(flag);
 
+        flag.first = ITEM_TYPE_INT;
+        flag.second = ItemTypes::LVL_NPC;
+        LvlPlacingItems::flags.push_back(flag);
+
         flag.first = ITEM_ID;
         flag.second = QString::number(itemID);
         LvlPlacingItems::flags.push_back(flag);
@@ -407,7 +429,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::flags.push_back(flag);
 
         flag.first = ITEM_IS_CURSOR;
-        flag.second = "CURSOR";
+        flag.second = true;
         LvlPlacingItems::flags.push_back(flag);
 
         //Line mode
@@ -465,7 +487,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         ((QGraphicsRectItem *) m_cursorItemImg)->setBrush(QBrush(QColor(qRgb(0xff, 0x00, 0x7f))));
         ((QGraphicsRectItem *) m_cursorItemImg)->setPen(
             QPen(QColor(qRgb(0xff, 0x00, 0x7f)), 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
-        m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
+        m_cursorItemImg->setData(ITEM_IS_CURSOR, true);
         m_cursorItemImg->setZValue(7000);
         m_cursorItemImg->setOpacity(0.8);
         m_cursorItemImg->setVisible(false);
@@ -517,7 +539,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::c_offset_y = (int) x.h - h;
 
         dynamic_cast<QGraphicsPixmapItem *>(m_cursorItemImg)->setOffset(qRound(qreal(x.w - w) / 2.0), x.h - h);
-        m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
+        m_cursorItemImg->setData(ITEM_IS_CURSOR, true);
+        m_cursorItemImg->setData(ITEM_TYPE_INT, ItemTypes::LVL_Player);
         m_cursorItemImg->setZValue(7000);
         m_cursorItemImg->setOpacity(0.8);
         m_cursorItemImg->setVisible(true);
@@ -529,7 +552,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         break;
     }
 
-    SwitchEditingMode(MODE_PlacingNew);
+    switchEditMode(MODE_PlacingNew);
     m_busyMode = true;
     m_contextMenuIsOpened = false;
 }
@@ -594,14 +617,15 @@ void LvlScene::setRectDrawer()
         m_cursorItemImg->setData(itemFlag.first, itemFlag.second);
 
     m_cursorItemImg->setData(ITEM_TYPE, "Square");
+    m_cursorItemImg->setData(ITEM_TYPE_INT, ItemTypes::META_Rectangle);
 
-    m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
+    m_cursorItemImg->setData(ITEM_IS_CURSOR, true);
     m_cursorItemImg->setZValue(7000);
     m_cursorItemImg->setOpacity(0.5);
     m_cursorItemImg->setVisible(false);
     m_cursorItemImg->setEnabled(true);
 
-    SwitchEditingMode(MODE_DrawRect);
+    switchEditMode(MODE_DrawRect);
     m_busyMode = true;
 }
 
@@ -652,14 +676,15 @@ void LvlScene::setCircleDrawer()
         m_cursorItemImg->setData(itemFlag.first, itemFlag.second);
 
     m_cursorItemImg->setData(ITEM_TYPE, "Circle");
+    m_cursorItemImg->setData(ITEM_TYPE_INT, ItemTypes::META_Circle);
 
-    m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
+    m_cursorItemImg->setData(ITEM_IS_CURSOR, true);
     m_cursorItemImg->setZValue(7000);
     m_cursorItemImg->setOpacity(0.5);
     m_cursorItemImg->setVisible(false);
     m_cursorItemImg->setEnabled(true);
 
-    SwitchEditingMode(MODE_DrawCircle);
+    switchEditMode(MODE_DrawCircle);
     m_busyMode = true;
 }
 
@@ -699,26 +724,27 @@ void LvlScene::setLineDrawer()
         m_cursorItemImg->setData(itemFlag.first, itemFlag.second);
 
     m_cursorItemImg->setData(ITEM_TYPE, "LineDrawer");
+    m_cursorItemImg->setData(ITEM_TYPE_INT, ItemTypes::META_LineDrawer);
 
-    m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
+    m_cursorItemImg->setData(ITEM_IS_CURSOR, true);
     m_cursorItemImg->setZValue(7000);
     m_cursorItemImg->setOpacity(0.5);
     m_cursorItemImg->setVisible(false);
     m_cursorItemImg->setEnabled(true);
 
-    SwitchEditingMode(MODE_Line);
+    switchEditMode(MODE_Line);
 }
 
 void LvlScene::setFloodFiller()
 {
-    SwitchEditingMode(MODE_Fill);
+    switchEditMode(MODE_Fill);
 }
 
 
 void LvlScene::updateCursoredNpcDirection()
 {
-    if(!m_cursorItemImg) return;
-    if(m_cursorItemImg->data(ITEM_TYPE).toString() != "NPC") return;
+    if(!m_cursorItemImg || m_cursorItemImg->data(ITEM_TYPE_INT).toInt() != ItemTypes::LVL_NPC)
+        return;
 
     const QPixmap &p = getNPCimg(LvlPlacingItems::npcSet.id, LvlPlacingItems::npcSet.direct);
     long offsetX = (LvlPlacingItems::npcGfxOffsetX1 +
@@ -746,6 +772,8 @@ void LvlScene::resetCursor()
     ((QGraphicsPixmapItem *) m_cursorItemImg)->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     m_cursorItemImg->setZValue(1000);
     m_cursorItemImg->hide();
+    m_cursorItemImg->setData(ITEM_IS_CURSOR, true);
+    m_cursorItemImg->setData(ITEM_TYPE_INT, ItemTypes::META_Cursor);
 }
 
 void LvlScene::setLabelBoxItem(bool show, QPointF pos, QString text)
@@ -774,6 +802,7 @@ void LvlScene::setLabelBoxItem(bool show, QPointF pos, QString text)
         m_labelBox->setBoundingRegionGranularity(1);
         m_labelBox->setZValue(10000);
         m_labelBox->setFont(*GlobalSettings::LvlOpts.labelBoxFont);
+        m_labelBox->setData(MoondustBaseScene::ITEM_TYPE_INT, ItemTypes::META_Label);
         this->addItem(m_labelBox);
         m_labelBox->setPos(pos);
     }

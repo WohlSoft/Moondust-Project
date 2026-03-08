@@ -785,7 +785,7 @@ bool GlRenderer::init()
     if(!PGE_Window::isReady())
         return false;
 
-    g_ScreenshotPath = AppPathManager::screenshotsDir() + "/";
+    g_ScreenshotPath = EnginePathMan::screenshotsDir();
     m_isReady = g_renderer->init();
 
     if(m_isReady)

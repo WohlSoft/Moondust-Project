@@ -20,13 +20,14 @@
 #ifndef CONFIG_WLD_GENERIC_H
 #define CONFIG_WLD_GENERIC_H
 
-#include <PGEString.h>
-#include <stdint.h>
+#include "../base/config_base.h"
 
-class IniProcessing;
-
-struct WldGenericSetup
+struct WldGenericSetup : ConfigBaseSetup
 {
+    WldGenericSetup();
+    WldGenericSetup(const WldGenericSetup &o) = default;
+    WldGenericSetup &operator=(const WldGenericSetup &o) = default;
+
     /**
      * @brief Read data from the external INI file and fill the config
      * @param setup [_in] Instance of opened INI file processor
@@ -41,33 +42,6 @@ struct WldGenericSetup
                uint32_t defaultGrid,
                const WldGenericSetup* merge_with = nullptr,
                PGEString *error = nullptr);
-
-    //! Element type ID
-    uint64_t    id = 0;
-    //! Sprite image filename
-    PGEString   image_n;
-    //! Mask of sprite image filename (for bitmask GIF pair only)
-    PGEString   mask_n;
-
-    //! (Optional) In-editor icon for item boxes
-    PGEString   icon_n;
-
-    //! Alignment grid size
-    uint32_t    grid = 0;
-    //! Understandible name of element
-    PGEString   name;
-    //! Filter group name
-    PGEString   group    = "_NoGroup";
-    //! Filter category name
-    PGEString   category = "_Other";
-    //! Detailed description of element
-    PGEString   description = "";
-
-    //! Extra Settings JSON layout file name
-    PGEString   extra_settings = "";
-
-    //! Is this a meta-object that should be never shown in game or exported images (screenshots)
-    bool        is_meta_object = false;
 
     //! Has element an animated sprite?
     bool        animated = false;

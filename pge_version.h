@@ -17,6 +17,8 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 
+// IWYU pragma: private; include "version.h"
+
 #ifndef GLOBAL_PGE_VERSION
 #define GLOBAL_PGE_VERSION
 

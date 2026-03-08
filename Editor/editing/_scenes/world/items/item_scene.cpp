@@ -52,12 +52,14 @@ ItemScene::ItemScene(WldScene *parentScene, QGraphicsItem *parent)
 void ItemScene::construct()
 {
     m_gridSize = 16;
-    setData(ITEM_TYPE, "SCENERY");
+    setData(WldScene::ITEM_TYPE, "SCENERY");
+    setData(WldScene::ITEM_TYPE_INT, ItemTypes::WLD_Scenery);
 }
 
 ItemScene::~ItemScene()
 {
     m_scene->unregisterElement(this);
+    m_scene->m_itemsScenery.remove(m_data.meta.array_id);
 }
 
 void ItemScene::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
@@ -102,7 +104,7 @@ void ItemScene::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     if(selected == copyArrayID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.meta.array_id));
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyItemID)
     {
@@ -170,7 +172,7 @@ void ItemScene::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
             foreach(QGraphicsItem *SelItem, our_items)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "SCENERY")
+                if(SelItem->data(WldScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Scenery)
                 {
                     if((!sameID) || (((ItemScene *) SelItem)->m_data.id == oldID))
                     {
@@ -181,7 +183,9 @@ void ItemScene::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 }
             }
         }
+
         delete itemList;
+
         if(!newData.scenery.isEmpty())
             m_scene->m_history->addTransformHistory(newData, oldData);
     }
@@ -196,12 +200,13 @@ void ItemScene::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
         foreach(QGraphicsItem *SelItem, our_items)
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "SCENERY")
+            if(SelItem->data(WldScene::ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Scenery)
             {
                 if(((ItemScene *) SelItem)->m_data.id == oldID)
                     selectedList.push_back(SelItem);
             }
         }
+
         if(!selectedList.isEmpty())
         {
             m_scene->removeWldItems(selectedList);
@@ -246,68 +251,19 @@ void ItemScene::transformTo(long target_id)
 
 void ItemScene::arrayApply()
 {
-    bool found = false;
-
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
-
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->scenery.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->scenery[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    //Apply current data in main array
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->scenery[m_data.meta.index] = m_data; //apply current sceneData
-    }
-    else
-        for(int i = 0; i < m_scene->m_data->scenery.size(); i++)
-        {
-            //after find it into array
-            if(m_scene->m_data->scenery[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_data.meta.index = i;
-                m_scene->m_data->scenery[i] = m_data;
-                break;
-            }
-        }
 
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsScenery.insert(m_data.meta.array_id, this);
 }
 
 void ItemScene::removeFromArray()
 {
-    bool found = false;
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->scenery.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->scenery[m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->scenery.removeAt(m_data.meta.index);
-    }
-    else
-        for(int i = 0; i < m_scene->m_data->scenery.size(); i++)
-        {
-            if(m_scene->m_data->scenery[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_scene->m_data->scenery.removeAt(i);
-                break;
-            }
-        }
-
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
 }
@@ -317,7 +273,7 @@ void ItemScene::returnBack()
     setPos(m_data.x, m_data.y);
 }
 
-QPoint ItemScene::sourcePos()
+QPoint ItemScene::sourcePos() const
 {
     return QPoint(m_data.x, m_data.y);
 }
@@ -330,21 +286,24 @@ bool ItemScene::itemTypeIsLocked()
 void ItemScene::setSceneData(WorldScenery inD, obj_w_scenery *mergedSet, long *animator_id)
 {
     m_data = inD;
-    setData(ITEM_ID, QString::number(m_data.id));
-    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id));
+    setData(WldScene::ITEM_ID, (unsigned long long)m_data.id);
+    setData(WldScene::ITEM_ARRAY_ID, m_data.meta.array_id);
     setZValue(m_scene->Z_Scenery + sceneryZ(m_data));
     setPos(m_data.x, m_data.y);
+
     if(mergedSet)
     {
         m_localProps = *mergedSet;
         m_gridSize = m_localProps.setup.grid;
-        setData(ITEM_IS_META, m_localProps.setup.is_meta_object);
+        setData(WldScene::ITEM_IS_META, m_localProps.setup.is_meta_object);
     }
+
     if(animator_id)
         setAnimator(*animator_id);
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsScenery.insert(m_data.meta.array_id, this);
 }
 
 QRectF ItemScene::boundingRect() const
@@ -359,6 +318,7 @@ void ItemScene::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
         painter->drawRect(QRect(0, 0, 1, 1));
         return;
     }
+
     if(m_scene->m_animatorsScenery.size() > m_animatorID)
         painter->drawPixmap(m_imageSize,
                             m_scene->m_animatorsScenery[m_animatorID]->wholeImage(),
@@ -385,9 +345,7 @@ void ItemScene::setAnimator(long aniID)
         m_imageSize = QRectF(0, 0, frameRect.width(), frameRect.height());
     }
 
-    this->setData(ITEM_WIDTH, QString::number(m_gridSize));    //width
-    this->setData(ITEM_HEIGHT, QString::number(m_gridSize));    //height
+    this->setData(WldScene::ITEM_WIDTH, m_gridSize);    //width
+    this->setData(WldScene::ITEM_HEIGHT, m_gridSize);    //height
     m_animatorID = aniID;
 }
-
-

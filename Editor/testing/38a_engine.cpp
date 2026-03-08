@@ -38,7 +38,7 @@
 #include <mainwindow.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/pge_file_lib_private.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <dev_console/devconsole.h>
 
 #include "qfile_dialogs_default_options.hpp"
@@ -378,7 +378,7 @@ QString SanBaEiRuntimeEngine::getBridgePath()
     QDir exePath(QApplication::applicationDirPath());
     return exePath.absoluteFilePath("../Resources/ipc/38a_ipc_bridge.exe");
 #else
-    return ApplicationPath + "/ipc/38a_ipc_bridge.exe";
+    return AppPathManager::libExecDir() + "/ipc/38a_ipc_bridge.exe";
 #endif
 }
 
@@ -490,7 +490,13 @@ void SanBaEiRuntimeEngine::actionStartTest()
             return;
 
         m_battleMode = false;
-        doTestLevelIPC(edit->LvlData);
+
+        LevelData data = edit->LvlData;
+
+        if(edit->scene)
+            edit->scene->sceneItemsToData(data);
+
+        doTestLevelIPC(data);
     }
 }
 
@@ -512,7 +518,13 @@ void SanBaEiRuntimeEngine::actionStartBattleTest()
         }
 
         m_battleMode = true;
-        doTestLevelIPC(edit->LvlData);
+
+        LevelData data = edit->LvlData;
+
+        if(edit->scene)
+            edit->scene->sceneItemsToData(data);
+
+        doTestLevelIPC(data);
     }
 }
 

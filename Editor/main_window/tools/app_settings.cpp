@@ -27,7 +27,7 @@
 #include <QSysInfo>
 #endif
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/installer.h>
 #include <common_features/logger_sets.h>
 #include <common_features/logger.h>
@@ -183,6 +183,8 @@ void AppSettings::loadSettings()
     }
 
     /************************Item Defaults***************************/
+    ui->directionGrp->setChecked(GlobalSettings::LvlItemDefaults.npc_direction_override);
+
     switch(GlobalSettings::LvlItemDefaults.npc_direction)
     {
     case 1:
@@ -296,6 +298,8 @@ void AppSettings::on_buttonBox_accepted()
     LogWriter::DebugLogFile = ui->logFileName->text();
 
     /************************Item Defaults***************************/
+    GlobalSettings::LvlItemDefaults.npc_direction_override = ui->directionGrp->isChecked();
+
     if(ui->defaults_npc_direction_right->isChecked())
         GlobalSettings::LvlItemDefaults.npc_direction = 1;
     else if(ui->defaults_npc_direction_random->isChecked())

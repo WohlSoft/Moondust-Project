@@ -219,10 +219,6 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>延迟 (秒) ：</translation>
     </message>
     <message>
-        <source>Direction</source>
-        <translation>方向</translation>
-    </message>
-    <message>
         <source>Left</source>
         <translation>向左</translation>
     </message>
@@ -377,6 +373,18 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
         <comment>Explanation for the opacity of locked items</comment>
         <translation>应用于场景中全部锁定对象的透明度设置。</translation>
+    </message>
+    <message>
+        <source>When this option is enabled, NPC direction will be always set to given value
+with no matter what config pack default value is set. However, some NPC might
+have &quot;random&quot; direction being disabled, so, it will not work for these NPC.</source>
+        <translation>启用该选项将使NPC的方向强制设置为给定的方向，
+并无视配置包的设置。当方向设置为“随机”时，对
+于不支持随机方向的NPC来说，该设置不会生效。</translation>
+    </message>
+    <message>
+        <source>Override initial direction</source>
+        <translation>强制设置初始方向</translation>
     </message>
 </context>
 <context>
@@ -763,6 +771,33 @@ Note: most of config packs gets being updates with Moondust Project togeter. The
     </message>
 </context>
 <context>
+    <name>ConfigProfileSelect</name>
+    <message>
+        <source>Integration profile selection</source>
+        <translation>选择集成配置包的配置方案</translation>
+    </message>
+    <message>
+        <source>Please select the integration profile to start this config pack:</source>
+        <translation>请选择配置方案以启动该集成配置包：</translation>
+    </message>
+    <message>
+        <source>&lt;New profile&gt;</source>
+        <translation>新建配置方案</translation>
+    </message>
+    <message>
+        <source>Create new integration profile</source>
+        <translation>创建新配置方案</translation>
+    </message>
+    <message>
+        <source>No selected profile</source>
+        <translation>未选择配置方案</translation>
+    </message>
+    <message>
+        <source>Please select profile from the list.</source>
+        <translation>请从列表中选择配置方案。</translation>
+    </message>
+</context>
+<context>
     <name>ConfigStatus</name>
     <message>
         <source>Current configuration status</source>
@@ -1073,6 +1108,61 @@ Please save them before doing anything else.</source>
     <message>
         <source>Remove</source>
         <translation>移除</translation>
+    </message>
+</context>
+<context>
+    <name>DebuggerStatsModel</name>
+    <message>
+        <source>Player start points</source>
+        <translation>玩家起点</translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation>砖块</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <translation>背景对象</translation>
+    </message>
+    <message>
+        <source>Non-playable characters/items</source>
+        <translation>敌人及道具</translation>
+    </message>
+    <message>
+        <source>Warp entries</source>
+        <translation>传送点</translation>
+    </message>
+    <message>
+        <source>Physical env. zones</source>
+        <translation>物理区域</translation>
+    </message>
+    <message>
+        <source>Terrain tiles</source>
+        <translation>地形</translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation>风景</translation>
+    </message>
+    <message>
+        <source>Path cells</source>
+        <translation>路线对象</translation>
+    </message>
+    <message>
+        <source>Level entrances</source>
+        <translation>关卡入口</translation>
+    </message>
+    <message>
+        <source>Music change boxes</source>
+        <translation>大地图音乐</translation>
+    </message>
+    <message>
+        <source>Item type</source>
+        <translation>对象类型</translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation>对象数量</translation>
     </message>
 </context>
 <context>
@@ -1949,6 +2039,14 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Array-ID: %1</source>
         <translation>对象索引：%1</translation>
+    </message>
+    <message>
+        <source>Placing a path cell at the same position as the
+level entry point may cause an inability to
+stop on this level entry point on some engines.
+Ignore this notice if this was done intentionally.</source>
+        <translation>将关卡地点和路线对象放在同一位置时，在某些引擎里，可能
+无法在该地点停留。如果您是特意想这样的，可以忽略该提示。</translation>
     </message>
 </context>
 <context>
@@ -3659,7 +3757,7 @@ Do you want to continue?</source>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation>旧版场景强制卷轴设置，用于旧版 SMBX64 关卡文件，或从旧格式转换为新格式的关卡文件。请在面向 SMBX64 或更早的引擎制作的关卡文件使用该设置。该设置同样适用于现代引擎（例如 TheXTech、月尘引擎等）。另外，在 SMBX64 或更早的引擎下，场景编号必须与给定事件的索引编号相同才能使旧版强制卷轴生效。如果您的关卡使用了新版强制卷轴设置，该设置将被忽略；如果您保存为 SMBX-38A 格式，该设置将会丢失。您可以通过“场景设置”标签中查找“更改强制卷轴速度”来设置新版强制卷轴。</translation>
+        <translation>旧版场景强制卷轴设置，用于旧版 SMBX64 关卡文件，或从旧格式转换为新格式的关卡文件。请在面向 SMBX64 或更早的引擎制作的关卡文件使用该设置。该设置同样适用于现代引擎（例如 TheXTech、月尘引擎等）。另外，场景编号必须与给定事件的索引编号相同才能使旧版强制卷轴生效。如果您的关卡使用了新版强制卷轴设置，该设置将被忽略；如果您保存为 SMBX-38A 格式，该设置将会丢失。您可以通过“场景设置”标签中找到“更改强制卷轴速度”来设置新版强制卷轴。</translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
@@ -4238,22 +4336,6 @@ All elements of this layer will be removed too!</source>
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
         <translation>关卡属性……</translation>
-    </message>
-    <message>
-        <source>Player start points:		%1
-Blocks:			%2
-Background objects&apos;s:	%3
-Non-playable characters&apos;s:	%4
-Warp entries:		%5
-Physical env. zones:	%6
-</source>
-        <translation>玩家起点数量：	 %1
-砖块数量：	 %2
-背景数量：	 %3
-NPC 数量：	 %4
-传送点数量：	 %5
-物理区域数量：	 %6
-</translation>
     </message>
     <message>
         <source>Search User Backgrounds %1</source>
@@ -5716,10 +5798,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation>脚本编辑器</translation>
     </message>
     <message>
-        <source>Run configure tool...</source>
-        <translation>运行配置工具……</translation>
-    </message>
-    <message>
         <source>Open local script</source>
         <translation>打开脚本</translation>
     </message>
@@ -6593,6 +6671,14 @@ Please, choose the Moondust Maintainer application yourself!</source>
         <translation>未找到月尘引擎管理器，无法启动工具：
 %1
 请选择月尘引擎管理器文件夹！</translation>
+    </message>
+    <message>
+        <source>Select configuration profile</source>
+        <translation>选择配置方案</translation>
+    </message>
+    <message>
+        <source>New profile...</source>
+        <translation>新建配置方案……</translation>
     </message>
 </context>
 <context>
@@ -8536,6 +8622,33 @@ Data may be corrupted!</source>
         <source>Group:</source>
         <translation>分组：</translation>
     </message>
+    <message>
+        <source>Custom</source>
+        <translation>自定义</translation>
+    </message>
+    <message>
+        <source>&lt;Save file first&gt;</source>
+        <translation>&amp;lt;请先保存文件&amp;gt;</translation>
+    </message>
+    <message>
+        <source>Copy graphic to custom folder</source>
+        <translation>复制素材到自定义文件夹</translation>
+    </message>
+    <message>
+        <source>Copy graphic to episode folder</source>
+        <translation>复制素材到地图文件夹</translation>
+    </message>
+</context>
+<context>
+    <name>TilesetItemButton</name>
+    <message>
+        <source>Unavailable item</source>
+        <translation>无效对象</translation>
+    </message>
+    <message>
+        <source>This item can not be used in this time.</source>
+        <translation>该对象是无效对象，无法选择。</translation>
+    </message>
 </context>
 <context>
     <name>TipOfDay</name>
@@ -9159,20 +9272,6 @@ Bottom:	%4</source>
 </context>
 <context>
     <name>WldScene</name>
-    <message>
-        <source>Tiles:		%1
-Sceneries:			%2
-Paths:	%3
-Levels:	%4
-Music boxes:		%5
-</source>
-        <translation>地形数量：		%1
-风景数量：		%2
-路线数量：		%3
-关卡数量：		%4
-音乐数量：		%5
-</translation>
-    </message>
     <message>
         <source>Search User Tiles %1</source>
         <translation>正在查找自定义地形 %1</translation>

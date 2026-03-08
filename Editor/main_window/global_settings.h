@@ -56,6 +56,7 @@ struct EditingSettings
 struct SETTINGS_ItemDefaults
 {
     double LockedItemOpacity;
+    bool npc_direction_override;
     int npc_direction;
     int npc_generator_type;
     int npc_generator_delay;
@@ -221,6 +222,8 @@ public:
     static QString configPath;
     //! Config pack specific settings (they won't go between config packs when reloading)
     static QString configLocalSettingsFile;
+    static QString configLocalProfileFile;
+    static QString getConfigLocalSettingsOrProfile();
     //! Identify the configuration package is integrational (opposed to standalone)
     static bool    configIsIntegrational;
     static QString configConfigureTool;

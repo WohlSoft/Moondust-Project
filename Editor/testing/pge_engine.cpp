@@ -28,7 +28,7 @@
 
 #include "pge_engine.h"
 #include <mainwindow.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/logger.h>
 #include <common_features/util.h>
 #include <main_window/global_settings.h>

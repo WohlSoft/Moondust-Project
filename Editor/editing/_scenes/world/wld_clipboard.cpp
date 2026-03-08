@@ -36,9 +36,9 @@ WorldData WldScene::copy(bool cut)
     {
         for(QList<QGraphicsItem *>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
         {
-            QString ObjType = (*it)->data(ITEM_TYPE).toString();
+            int ObjType = (*it)->data(ITEM_TYPE_INT).toInt();
 
-            if(ObjType == "TILE")
+            if(ObjType == ItemTypes::WLD_Tile)
             {
                 ItemTile *sourceTile = (ItemTile *)(*it);
                 copyData.tiles.push_back(sourceTile->m_data);
@@ -49,7 +49,7 @@ WorldData WldScene::copy(bool cut)
                     delete(*it);
                 }
             }
-            else if(ObjType == "SCENERY")
+            else if(ObjType == ItemTypes::WLD_Scenery)
             {
                 ItemScene *sourceScene = (ItemScene *)(*it);
                 copyData.scenery.push_back(sourceScene->m_data);
@@ -60,7 +60,7 @@ WorldData WldScene::copy(bool cut)
                     delete(*it);
                 }
             }
-            else if(ObjType == "PATH")
+            else if(ObjType == ItemTypes::WLD_Path)
             {
                 ItemPath *sourcePath = (ItemPath *)(*it);
                 copyData.paths.push_back(sourcePath->m_data);
@@ -71,7 +71,7 @@ WorldData WldScene::copy(bool cut)
                     delete(*it);
                 }
             }
-            else if(ObjType == "LEVEL")
+            else if(ObjType == ItemTypes::WLD_Level)
             {
                 ItemLevel *sourceLevel = (ItemLevel *)(*it);
                 copyData.levels.push_back(sourceLevel->m_data);
@@ -82,7 +82,7 @@ WorldData WldScene::copy(bool cut)
                     delete(*it);
                 }
             }
-            else if(ObjType == "MUSICBOX")
+            else if(ObjType == ItemTypes::WLD_MusicBox)
             {
                 ItemMusic *sourceMusic = (ItemMusic *)(*it);
                 copyData.music.push_back(sourceMusic->m_data);
@@ -149,34 +149,43 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
     {
         if(tile.x < baseX)
             baseX = tile.x;
+
         if(tile.y < baseY)
             baseY = tile.y;
     }
+
     for(WorldScenery &scene : BufferIn.scenery)
     {
         if(scene.x < baseX)
             baseX = scene.x;
+
         if(scene.y < baseY)
             baseY = scene.y;
     }
+
     for(WorldPathTile &path : BufferIn.paths)
     {
         if(path.x < baseX)
             baseX = path.x;
+
         if(path.y < baseY)
             baseY = path.y;
     }
+
     for(WorldLevelTile &level : BufferIn.levels)
     {
         if(level.x < baseX)
             baseX = level.x;
+
         if(level.y < baseY)
             baseY = level.y;
     }
+
     for(WorldMusicBox &music : BufferIn.music)
     {
         if(music.x < baseX)
             baseX = music.x;
+
         if(music.y < baseY)
             baseY = music.y;
     }
@@ -192,8 +201,6 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
         dumpTile.meta.array_id = m_data->tile_array_id;
 
         placeTile(dumpTile);
-
-        m_data->tiles.push_back(dumpTile);
         newData.tiles.push_back(dumpTile);
     }
 
@@ -207,8 +214,6 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
         dumpScene.meta.array_id = m_data->scene_array_id;
 
         placeScenery(dumpScene);
-
-        m_data->scenery.push_back(dumpScene);
         newData.scenery.push_back(dumpScene);
     }
 
@@ -222,8 +227,6 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
         dumpPath.meta.array_id = m_data->path_array_id;
 
         placePath(dumpPath);
-
-        m_data->paths.push_back(dumpPath);
         newData.paths.push_back(dumpPath);
     }
 
@@ -237,8 +240,6 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
         dumpLevel.meta.array_id = m_data->level_array_id;
 
         placeLevel(dumpLevel);
-
-        m_data->levels.push_back(dumpLevel);
         newData.levels.push_back(dumpLevel);
     }
 
@@ -252,15 +253,13 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
         dumpMusic.meta.array_id = m_data->musicbox_array_id;
 
         placeMusicbox(dumpMusic);
-
-        m_data->music.push_back(dumpMusic);
         newData.music.push_back(dumpMusic);
     }
 
     auto s = selectedItems();
     applyGroupGrid(s, true);
 
-    QString objType;
+    int objType;
     newData.tiles.clear();
     newData.scenery.clear();
     newData.paths.clear();
@@ -268,34 +267,49 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
     newData.music.clear();
 
     // Get an actual set of items after grid aligning
-    for(QGraphicsItem *it : s)
+    foreach(QGraphicsItem *it, s)
     {
-        if(!it) continue;
-        objType = it->data(ITEM_TYPE).toString();
-        if(objType == "TILE")
+        if(!it)
+            continue;
+
+        objType = it->data(ITEM_TYPE_INT).toInt();
+
+        switch(objType)
+        {
+        case ItemTypes::WLD_Tile:
         {
             ItemTile *item = dynamic_cast<ItemTile *>(it);
             newData.tiles.push_back(item->m_data);
+            break;
         }
-        else if(objType == "SCENERY")
+
+        case ItemTypes::WLD_Scenery:
         {
             ItemScene *item = dynamic_cast<ItemScene *>(it);
             newData.scenery.push_back(item->m_data);
+            break;
         }
-        else if(objType == "PATH")
+
+        case ItemTypes::WLD_Path:
         {
             ItemPath *item = dynamic_cast<ItemPath *>(it);
             newData.paths.push_back(item->m_data);
+            break;
         }
-        else if(objType == "LEVEL")
+
+        case ItemTypes::WLD_Level:
         {
             ItemLevel *item = dynamic_cast<ItemLevel *>(it);
             newData.levels.push_back(item->m_data);
+            break;
         }
-        else if(objType == "MUSICBOX")
+
+        case ItemTypes::WLD_MusicBox:
         {
             ItemMusic *item = dynamic_cast<ItemMusic *>(it);
             newData.music.push_back(item->m_data);
+            break;
+        }
         }
     }
 

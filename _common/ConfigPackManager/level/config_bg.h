@@ -20,13 +20,14 @@
 #ifndef CONFIG_BG_H
 #define CONFIG_BG_H
 
-#include <PGEString.h>
-#include <stdint.h>
+#include "../base/config_base.h"
 
-class IniProcessing;
-
-struct BgSetup
+struct BgSetup : ConfigBaseSetup
 {
+    BgSetup();
+    BgSetup(const BgSetup &o) = default;
+    BgSetup &operator=(const BgSetup &o) = default;
+
     /**
      * @brief Read data from the external INI file and fill the config
      * @param setup [_in] Instance of opened INI file processor
@@ -97,13 +98,6 @@ struct BgSetup
     //! Integer array
     typedef PGEList<int32_t> IntArray;
 
-    /*
-     *  Generic properties
-     */
-    //! ID of background
-    uint64_t        id = 0ul;
-    //! Name of background
-    PGEString       name;
     /// Default color to fill background.
     /*!
         "Auto" means fill color will be picked up from left-top pixel of background image or black
@@ -112,11 +106,10 @@ struct BgSetup
 
     /*
      *  First image (Single-row, Tiled and Double-row background)
+     *  // MOVED to the base setup structure!
      */
-    //! Filename for first image
-    PGEString       image_n;
-    //! Icon that will be shown in the backgrounds list
-    PGEString       icon_n;
+
+
     //! Type of background
     uint32_t        type = BG_TYPE_SingleRow;
     //! Horizontal parallax coefficient

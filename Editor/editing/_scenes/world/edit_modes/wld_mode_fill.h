@@ -29,13 +29,13 @@ class WLD_ModeFill : public EditMode
 public:
     WLD_ModeFill(QGraphicsScene *parentScene = nullptr, QObject *parent = nullptr);
     ~WLD_ModeFill();
-    void set();
-    void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseMove(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseRelease(QGraphicsSceneMouseEvent *mouseEvent);
+    void set() override;
+    void mousePress(QGraphicsSceneMouseEvent *mouseEvent) override;
+    void mouseMove(QGraphicsSceneMouseEvent *mouseEvent) override;
+    void mouseRelease(QGraphicsSceneMouseEvent *mouseEvent) override;
 
-    void keyPress(QKeyEvent *keyEvent);
-    void keyRelease(QKeyEvent *keyEvent);
+    void keyPress(QKeyEvent *keyEvent) override;
+    void keyRelease(QKeyEvent *keyEvent) override;
 
 private:
     void attemptFlood(WldScene *scene);

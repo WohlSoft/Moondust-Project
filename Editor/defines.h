@@ -1,3 +1,21 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014-2026 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 #ifndef PGE_EDITOR_DEFINES_H
 #define PGE_EDITOR_DEFINES_H
@@ -24,11 +42,29 @@ public:
         LVL_PhysEnv     = 8,
         LVL_Door        = 9,
         LVL_Player      = 10,
+        LVL_META_DoorEnter = 11,
+        LVL_META_DoorExit  = 12,
+        LVL_META_Background = 13,
+
         WLD_Tile        = 3,
         WLD_Scenery     = 4,
         WLD_Path        = 5,
         WLD_Level       = 6,
-        WLD_MusicBox    = 7
+        WLD_MusicBox    = 7,
+
+        META_Point      = 20,
+        META_Rectangle  = 21,
+        META_Circle     = 22,
+        META_Line       = 23,
+        META_LineDrawer = 24,
+        META_WLD_Point  = 25,
+        META_Space      = 26,
+        META_SectionBorder = 27,
+        META_YellowRect = 28,
+        META_Child      = 29,
+        META_ResizeBox  = 30,
+        META_Cursor     = 31,
+        META_Label      = 32,
     };
 
     //Multiselectable
@@ -40,20 +76,25 @@ public:
         LVL_S_PhysEnv     = 1<<3,
         LVL_S_Door        = 1<<4,
         LVL_S_Player      = 1<<5,
+        LVL_S_ALL_BASE    = LVL_S_Block | LVL_S_BGO | LVL_S_NPC | LVL_S_Door | LVL_S_PhysEnv,
+
         WLD_S_Tile        = 1<<6,
         WLD_S_Scenery     = 1<<7,
         WLD_S_Path        = 1<<8,
         WLD_S_Level       = 1<<9,
-        WLD_S_MusicBox    = 1<<10
+        WLD_S_MusicBox    = 1<<10,
+        WLD_S_ALL         = WLD_S_Tile | WLD_S_Scenery | WLD_S_Path | WLD_S_Level | WLD_S_MusicBox
     };
 
 
 
 };
 
-class HistorySettings{
+class HistorySettings
+{
 public:
-    enum WorldSettingSubType{
+    enum WorldSettingSubType
+    {
         SETTING_HUB = 0,
         SETTING_RESTARTAFTERFAIL,
         SETTING_TOTALSTARS,
@@ -77,7 +118,8 @@ public:
         SETTING_WLD_CUSTOM
     };
 
-    enum LevelSettingSubType{
+    enum LevelSettingSubType
+    {
         SETTING_INVISIBLE = 0,      //extraData: bool [Activated?]
         SETTING_SLIPPERY,           //extraData: bool [Activated?]
         SETTING_Z_LAYER,            //extraData: int  [ZLayerID]
@@ -177,7 +219,8 @@ public:
 
     static QString settingToString(const HistorySettings::LevelSettingSubType &modLevelSetting)
     {
-        switch (modLevelSetting) {
+        switch (modLevelSetting)
+        {
         case SETTING_INVISIBLE: return QObject::tr("Invizible");
         case SETTING_SLIPPERY: return QObject::tr("Slippery");
         case SETTING_Z_LAYER: return QObject::tr("Z-Layer");
@@ -275,7 +318,8 @@ public:
 
     static QString settingToString(const HistorySettings::WorldSettingSubType &modWorldSetting)
     {
-        switch (modWorldSetting) {
+        switch (modWorldSetting)
+        {
         case SETTING_ALWAYSVISIBLE: return QObject::tr("Always Visible");
         case SETTING_BIGPATHBACKGROUND: return QObject::tr("Big Path Background");
         case SETTING_CHARACTER: return QObject::tr("Character");
@@ -302,15 +346,16 @@ public:
     }
 };
 
-class Script{
-public:
-    enum CompilerType{
-        COMPILER_AUTOCODE = 0,
-        COMPILER_LUNALUA,
-        COMPILER_PGELUA
-    };
+namespace Script
+{
 
+enum CompilerType
+{
+    COMPILER_AUTOCODE = 0,
+    COMPILER_LUNALUA,
+    COMPILER_PGELUA
 };
 
+}
 
 #endif // PGE_EDITOR_DEFINES_H

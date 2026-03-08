@@ -59,7 +59,7 @@ ConfigSelectScene::ConfigSelectScene():
     bgcolor.b = 0.1f;
     //% "Choose a game:"
     m_label = qtTrId("CONFIG_SELECT");
-    m_waterMark = "WohlSoft team 2016 by Wohlstand (http://wohlsoft.ru)";
+    m_waterMark = "WohlSoft Team 2026 by Wohlstand (https://wohlsoft.ru)";
     m_waterMarkRect.setPos(200, PGE_Window::Height - 50);
     m_waterMarkFontSize = 20;
     PGE_Size s = FontManager::textSize(m_waterMark, -2, 10000, false, m_waterMarkFontSize);
@@ -72,7 +72,7 @@ ConfigSelectScene::ConfigSelectScene():
     themePack       = "";
     typedef std::pair<std::string, std::string > configPackPair;
     std::vector<configPackPair > config_paths;
-    std::string configPath(ApplicationPathSTD + "configs/");
+    std::string configPath(EnginePathMan::dataDir() + "configs/");
     DirMan  configDir(configPath);
 
     std::vector<std::string> configs;
@@ -87,9 +87,9 @@ ConfigSelectScene::ConfigSelectScene():
         config_paths.push_back( path );
     }
 
-    if(AppPathManager::userDirIsAvailable())
+    if(EnginePathMan::userDirIsAvailable())
     {
-        std::string configPath_user = AppPathManager::userAppDirSTD() + "/configs/"; //!< User additional folder
+        std::string configPath_user = EnginePathMan::userAppDirSTD() + "configs/"; //!< User additional folder
         DirMan configUserDir(configPath_user);
         configUserDir.getListOfFolders(configs);
 
@@ -125,7 +125,7 @@ ConfigSelectScene::ConfigSelectScene():
             guiset.endGroup();
             guiset.beginGroup("main");
             data_dir = (guiset.value("application-dir", "0").toBool() ?
-                        ApplicationPathSTD : config_dir + "data/");
+                        EnginePathMan::dataDir() : config_dir + "data/");
             configName = guiset.value("config_name", Files::dirname(config_dir)).toString();
             description = guiset.value("config_desc", config_dir).toString();
         }

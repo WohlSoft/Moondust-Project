@@ -30,6 +30,7 @@
 struct SimpleTilesetItem
 {
     unsigned int row, col, id;
+    int type;
 };
 
 /**
@@ -37,11 +38,18 @@ struct SimpleTilesetItem
  */
 struct SimpleTileset
 {
+    //! Number of columns and rows in the tileset
     unsigned int rows, cols;
+    //! Name of tileset
     QString tileSetName;
+    //! Name of tileset file
     QString fileName;
+    //! Default type if item doesn't have any defined
     int type;
+    //! Is custom directory
     bool customDir;
+
+    //! Items presented on the tileset
     QList<SimpleTilesetItem> items;
 };
 

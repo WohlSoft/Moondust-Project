@@ -95,12 +95,17 @@ private slots:
     void on_WarpAllowNPC_IL_clicked(bool checked);
 
 private:
+    void recountWarpIndexes();
+
     unsigned int getWarpId();
     QString doorTitle(LevelDoor &door);
     //! Prevent any settings changed slots to write changed settings values
     bool m_lockSettings = false;
 
     Ui::LvlWarpBox *ui;
+
+    friend class HistoryElementAddWarp;
+    friend class HistoryElementRemoveWarp;
 };
 
 #endif // LVL_WARP_PROPS_H

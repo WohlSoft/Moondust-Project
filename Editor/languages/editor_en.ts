@@ -171,10 +171,6 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>Delay (seconds):</translation>
     </message>
     <message>
-        <source>Direction</source>
-        <translation>Direction</translation>
-    </message>
-    <message>
         <source>Left</source>
         <translation>Left</translation>
     </message>
@@ -379,6 +375,18 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
         <comment>Explanation for the opacity of locked items</comment>
         <translation>Defines the opacity level that will be applied to all locked elements of the scene.</translation>
+    </message>
+    <message>
+        <source>When this option is enabled, NPC direction will be always set to given value
+with no matter what config pack default value is set. However, some NPC might
+have &quot;random&quot; direction being disabled, so, it will not work for these NPC.</source>
+        <translation>When this option is enabled, NPC direction will be always set to given value
+with no matter what config pack default value is set. However, some NPC might
+have &quot;random&quot; direction being disabled, so, it will not work for these NPC.</translation>
+    </message>
+    <message>
+        <source>Override initial direction</source>
+        <translation>Override initial direction</translation>
     </message>
 </context>
 <context>
@@ -767,6 +775,33 @@ Note: most of config packs gets being updates with Moondust Project togeter. The
     </message>
 </context>
 <context>
+    <name>ConfigProfileSelect</name>
+    <message>
+        <source>Integration profile selection</source>
+        <translation>Integration profile selection</translation>
+    </message>
+    <message>
+        <source>Please select the integration profile to start this config pack:</source>
+        <translation>Please select the integration profile to start this config pack:</translation>
+    </message>
+    <message>
+        <source>&lt;New profile&gt;</source>
+        <translation>&lt;New profile&gt;</translation>
+    </message>
+    <message>
+        <source>Create new integration profile</source>
+        <translation>Create new integration profile</translation>
+    </message>
+    <message>
+        <source>No selected profile</source>
+        <translation>No selected profile</translation>
+    </message>
+    <message>
+        <source>Please select profile from the list.</source>
+        <translation>Please select profile from the list.</translation>
+    </message>
+</context>
+<context>
     <name>ConfigStatus</name>
     <message>
         <source>Current configuration status</source>
@@ -1076,6 +1111,61 @@ Please save them before doing anything else.</translation>
     <message>
         <source>Remove</source>
         <translation>Remove</translation>
+    </message>
+</context>
+<context>
+    <name>DebuggerStatsModel</name>
+    <message>
+        <source>Player start points</source>
+        <translation>Player start points</translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation>Blocks</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <translation>Background objects</translation>
+    </message>
+    <message>
+        <source>Non-playable characters/items</source>
+        <translation>Non-playable characters/items</translation>
+    </message>
+    <message>
+        <source>Warp entries</source>
+        <translation>Warp entries</translation>
+    </message>
+    <message>
+        <source>Physical env. zones</source>
+        <translation>Physical env. zones</translation>
+    </message>
+    <message>
+        <source>Terrain tiles</source>
+        <translation>Terrain tiles</translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation>Scenery</translation>
+    </message>
+    <message>
+        <source>Path cells</source>
+        <translation>Path cells</translation>
+    </message>
+    <message>
+        <source>Level entrances</source>
+        <translation>Level entrances</translation>
+    </message>
+    <message>
+        <source>Music change boxes</source>
+        <translation>Music change boxes</translation>
+    </message>
+    <message>
+        <source>Item type</source>
+        <translation>Item type</translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation>Count</translation>
     </message>
 </context>
 <context>
@@ -1949,6 +2039,16 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Array-ID: %1</source>
         <translation>Array-ID: %1</translation>
+    </message>
+    <message>
+        <source>Placing a path cell at the same position as the
+level entry point may cause an inability to
+stop on this level entry point on some engines.
+Ignore this notice if this was done intentionally.</source>
+        <translation>Placing a path cell at the same position as the
+level entry point may cause an inability to
+stop on this level entry point on some engines.
+Ignore this notice if this was done intentionally.</translation>
     </message>
 </context>
 <context>
@@ -3670,7 +3770,7 @@ Do you want to continue?</translation>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</translation>
+        <translation>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. These settings will only work when event index matches 0-based section number. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
@@ -4277,22 +4377,6 @@ Please reconvert your images to a valid format and try reloading this level.</tr
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
         <translation>Level properties...</translation>
-    </message>
-    <message>
-        <source>Player start points:		%1
-Blocks:			%2
-Background objects&apos;s:	%3
-Non-playable characters&apos;s:	%4
-Warp entries:		%5
-Physical env. zones:	%6
-</source>
-        <translation>Player start points:	 %1
-Blocks:			 %2
-Background objects:	 %3
-Non-playable characters: %4
-Warp entries:		 %5
-Physical env. zones:	 %6
-</translation>
     </message>
 </context>
 <context>
@@ -5527,10 +5611,6 @@ show the current playable character(s) and number of lives.</translation>
         <translation>Script Editor</translation>
     </message>
     <message>
-        <source>Run configure tool...</source>
-        <translation>Run configure tool...</translation>
-    </message>
-    <message>
         <source>Open local script</source>
         <translation>Open local script</translation>
     </message>
@@ -6604,6 +6684,14 @@ Please, choose the Moondust Maintainer application yourself!</translation>
     <message>
         <source>Bulk convert and repair of level and world files...</source>
         <translation>Bulk convert and repair of level and world files...</translation>
+    </message>
+    <message>
+        <source>Select configuration profile</source>
+        <translation>Select configuration profile</translation>
+    </message>
+    <message>
+        <source>New profile...</source>
+        <translation>New profile...</translation>
     </message>
 </context>
 <context>
@@ -8546,6 +8634,33 @@ Data may be corrupted!</translation>
         <source>Group:</source>
         <translation>Group:</translation>
     </message>
+    <message>
+        <source>Custom</source>
+        <translation>Custom</translation>
+    </message>
+    <message>
+        <source>&lt;Save file first&gt;</source>
+        <translation>&lt;Save file first&gt;</translation>
+    </message>
+    <message>
+        <source>Copy graphic to custom folder</source>
+        <translation>Copy graphics to custom folder</translation>
+    </message>
+    <message>
+        <source>Copy graphic to episode folder</source>
+        <translation>Copy graphics to episode folder</translation>
+    </message>
+</context>
+<context>
+    <name>TilesetItemButton</name>
+    <message>
+        <source>Unavailable item</source>
+        <translation>Unavailable item</translation>
+    </message>
+    <message>
+        <source>This item can not be used in this time.</source>
+        <translation>This item can not be used in this time.</translation>
+    </message>
 </context>
 <context>
     <name>TipOfDay</name>
@@ -9196,20 +9311,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>This level has invalid custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead of your custom graphics. This occurred due to a bad conversion, such as from BMP to GIF.
 Please reconvert your images to a valid format and try reloading this level.</translation>
-    </message>
-    <message>
-        <source>Tiles:		%1
-Sceneries:			%2
-Paths:	%3
-Levels:	%4
-Music boxes:		%5
-</source>
-        <translation>Tiles:		%1
-Scenery:	%2
-Paths:		%3
-Levels:		%4
-Music boxes:	%5
-</translation>
     </message>
 </context>
 <context>

@@ -1,9 +1,6 @@
 cmake_minimum_required (VERSION 3.5...3.10)
 project(MoondustPNG2GIFs C CXX)
 
-set(CMAKE_INSTALL_RPATH ".")
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
@@ -110,8 +107,11 @@ target_link_libraries(PNG2GIFs
     ${PNG2GIFs_LINK_LIBS}
 )
 
-pge_set_nopie(PNG2GIFs)
+if(NOT PGE_INSTALL_ALLOW_PIE_EXECUTABLES)
+    pge_set_nopie(PNG2GIFs)
+endif()
 
 install(TARGETS ${PNG2GIFs_INSTALLS}
-        RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}/"
+    COMPONENT "MoondustPNG2GIFs"
+    RUNTIME DESTINATION "${PGE_INSTALL_BIN}/"
 )

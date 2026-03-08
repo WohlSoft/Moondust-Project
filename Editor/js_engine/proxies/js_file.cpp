@@ -21,7 +21,7 @@
 #include <QFile>
 #include <QDir>
 #include <QFileDialog>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <mainwindow.h>
 
 #include "qfile_dialogs_default_options.hpp"
@@ -62,7 +62,7 @@ QString PGE_JS_File::configSettingFile()
 
 QString PGE_JS_File::appPath()
 {
-    return ApplicationPath;
+    return AppPathManager::dataDir();
 }
 
 QString PGE_JS_File::getOpenFilePath(QString caption, QString dir, QString filter)
@@ -85,6 +85,16 @@ bool PGE_JS_File::isDirExists(QString dirPath)
     return QDir(dirPath).exists();
 }
 
+QStringList PGE_JS_File::getDirDirs(QString dirPath)
+{
+    return QDir(dirPath).entryList(QDir::NoDotAndDotDot | QDir::Dirs, QDir::Name);
+}
+
+QStringList PGE_JS_File::getDirFiles(QString dirPath)
+{
+    return QDir(dirPath).entryList(QDir::NoDotAndDotDot | QDir::Files, QDir::Name);
+}
+
 QString PGE_JS_File::getBundleName(QString appPath)
 {
     QFileInfo f(appPath);
@@ -98,10 +108,12 @@ bool PGE_JS_File::copy(QString source, QString target, bool override)
         if(QDir(target).exists())//Is target a directory
             target += "/" + QFile(source).fileName();
     }
+
     if(override)
     {
         if(QFile::exists(target))
             QFile::remove(target);
     }
+
     return QFile::copy(source, target);
 }

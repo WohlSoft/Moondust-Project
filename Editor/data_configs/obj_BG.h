@@ -22,16 +22,14 @@
 
 #include <QString>
 #include <QPixmap>
-#include <stdint.h>
 #include <ConfigPackManager/level/config_bg.h>
 
-struct obj_BG
+#include "obj_base_item.h"
+
+
+struct obj_BG : obj_base_item
 {
-    bool isValid = false;
-    uint64_t  animator_id = 0;
-    QPixmap * cur_image = nullptr;
-    QPixmap * cur_image_second = nullptr;
-    QPixmap image;
+    QPixmap *cur_image_second = nullptr;
     QPixmap second_image;
     QColor  fill_color;
 

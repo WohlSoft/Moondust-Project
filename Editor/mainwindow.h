@@ -90,7 +90,7 @@ public:
      * @param themePack Path to theme pack to load
      * @return true if everything has been successfully initialized, false if fatal error has occouped
      */
-    bool initEverything(const QString &configDir, const QString &themePack, const QString &configAppPath = QString());
+    bool initEverything(const QString &configDir, const QString &profilePath, const QString &themePack, const QString &configAppPath = QString());
 
     //! Global game configucrations
     DataConfig configs;
@@ -177,6 +177,13 @@ public:
          * \param themeDir Path to the valid PGE Editor theme package
          */
         void applyTheme(QString themeDir = QString());
+
+        /*!
+         * \brief Restore default section button icons
+         */
+        void applyThemeSections();
+        void applyThemeSectionResetIcon(size_t id);
+        void applyThemeSectionUnused(size_t id);
 
         //! Is everything has been successfuly initialized
         bool m_isAppInited;
@@ -747,7 +754,8 @@ public:
 
 // //////////////// Placing tools /////////////////////////
     public slots:
-        void SwitchPlacingItem(int itemType, unsigned long itemID, bool dont_reset_props=false);
+        void SwitchPlacingItem(int itemType, unsigned long itemID);
+        void SwitchPlacingItem(int itemType, unsigned long itemID, bool dont_reset_props);
         void on_actionRectFill_triggered(bool checked);
         void on_actionCircleFill_triggered(bool checked);
         void on_actionLine_triggered(bool checked);
@@ -813,7 +821,9 @@ public:
         void on_actionCurConfig_triggered();    //!< Config status
         void on_actionReConfigure_triggered();  //!< Run configure tool
         void on_actionChangeConfig_triggered(); //!< Change configuration
+        void onProfileMenuSelect();
     private:
+        void updateConfigProfilesMenu();
         QString currentConfigDir;
         bool askConfigAgain;
     signals:
@@ -902,6 +912,8 @@ public:
     public:
         const size_t m_sectionButtonsCount = 21;
         QAction *m_sectionButtons[21] = {0};
+        int m_sectionButtonsOnIcon[21] = {0};
+        int m_sectionButtonsOffIcon[21] = {0};
 
     public slots:
         //Switch section

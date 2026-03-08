@@ -78,77 +78,67 @@ void LvlScene::returnItemBack(QGraphicsItem *item)
 /// \param arrayID        Array ID of warp entry which is a key for found items on the map
 /// \param remove         Remove warp points from the map because warp entry will be removed
 ///
-void LvlScene::doorPointsSync(long arrayID, bool remove)
+void LvlScene::doorPointsSync(unsigned int arrayID, bool remove)
 {
-
     bool doorExist = false;
-    bool doorEntranceSynced = false;
-    bool doorExitSynced = false;
-
     int i = 0;
+
     //find doorItem in array
     for(i = 0; i < m_data->doors.size(); i++)
     {
-        if(m_data->doors[i].meta.array_id == (unsigned int)arrayID)
+        if(m_data->doors[i].meta.array_id == arrayID)
         {
             doorExist = true;
             break;
         }
     }
-    if(!doorExist) return;
 
-    //get ItemList
-    QList<QGraphicsItem * > items = this->items();
+    if(!doorExist)
+        return;
 
-    for(QGraphicsItem *item : items)
+    auto &door = m_data->doors[i];
+
+    if(door.isSetIn || remove)
     {
-        if((!m_data->doors[i].isSetIn) && (!m_data->doors[i].isSetOut)) break;   //Don't sync door points if not placed
-
-        if((item->data(ITEM_TYPE).toString() == "Door_enter") && (item->data(ITEM_ARRAY_ID).toInt() == arrayID))
+        auto di = m_itemsDoorEnters.find(arrayID);
+        if(di != m_itemsDoorEnters.end())
         {
-            if((!(((!m_data->doors[i].lvl_o) && (!m_data->doors[i].lvl_i)) ||
-                  ((m_data->doors[i].lvl_o) && (!m_data->doors[i].lvl_i)))
-               ) || (remove))
+            ItemDoor *d = di.value();
+
+            if( (!(!door.lvl_o && !door.lvl_i) || (door.lvl_o && !door.lvl_i) ) || remove)
             {
-                ItemDoor *d = dynamic_cast<ItemDoor *>(item);
                 d->m_data = m_data->doors[i];
                 d->removeFromArray();
                 delete d;
-                doorEntranceSynced = true;
-
             }
             else
             {
-                m_data->doors[i].isSetIn = true;
-                ItemDoor *d = dynamic_cast<ItemDoor *>(item);
-                d->m_data = m_data->doors[i];
+                door.isSetIn = true;
+                d->m_data = door;
                 d->refreshArrows();
-                doorEntranceSynced = true;
             }
         }
+    }
 
-        if((item->data(ITEM_TYPE).toString() == "Door_exit") && (item->data(ITEM_ARRAY_ID).toInt() == arrayID))
+    if(door.isSetOut || remove)
+    {
+        auto di = m_itemsDoorExits.find(arrayID);
+        if(di != m_itemsDoorExits.end())
         {
-            if((!(((!m_data->doors[i].lvl_o) && (!m_data->doors[i].lvl_i)) ||
-                  (m_data->doors[i].lvl_i))
-               ) || (remove))
+            ItemDoor *d = di.value();
+            if((!((!door.lvl_o && !door.lvl_i) || door.lvl_i)) || remove)
             {
-                ItemDoor *d = dynamic_cast<ItemDoor *>(item);
-                d->m_data = m_data->doors[i];
+                d->m_data = door;
                 d->removeFromArray();
                 delete d;
-                doorExitSynced = true;
             }
             else
             {
-                m_data->doors[i].isSetOut = true;
-                ItemDoor *d = dynamic_cast<ItemDoor *>(item);
+                door.isSetOut = true;
                 d->m_data = m_data->doors[i];
                 d->refreshArrows();
-                doorExitSynced = true;
             }
         }
-        if((doorEntranceSynced) && (doorExitSynced)) break; // stop fetch, because door points was synced
     }
 }
 
@@ -161,21 +151,35 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
 ///
 void LvlScene::collectDataFromItem(LevelData &dataToStore, QGraphicsItem *item)
 {
-    if(!item) return;
+    if(!item)
+        return;
 
-    QString ObjType = item->data(ITEM_TYPE).toString();
-    if(ObjType == "NPC")
+    int ObjType = item->data(ITEM_TYPE_INT).toInt();
+
+    switch(ObjType)
+    {
+    case ItemTypes::LVL_NPC:
         dataToStore.npc << dynamic_cast<ItemNPC *>(item)->m_data;
-    else if(ObjType == "Block")
+        break;
+    case ItemTypes::LVL_Block:
         dataToStore.blocks << dynamic_cast<ItemBlock *>(item)->m_data;
-    else if(ObjType == "BGO")
+        break;
+    case ItemTypes::LVL_BGO:
         dataToStore.bgo << dynamic_cast<ItemBGO *>(item)->m_data;
-    else if(ObjType == "Water")
+        break;
+    case ItemTypes::LVL_PhysEnv:
         dataToStore.physez << dynamic_cast<ItemPhysEnv *>(item)->m_data;
-    else if((ObjType == "Door_enter") || (ObjType == "Door_exit"))
+        break;
+    case ItemTypes::LVL_META_DoorEnter:
+    case ItemTypes::LVL_META_DoorExit:
         dataToStore.doors << dynamic_cast<ItemDoor *>(item)->m_data;
-    else if(ObjType == "playerPoint")
+        break;
+    case ItemTypes::LVL_Player:
         dataToStore.players << dynamic_cast<ItemPlayerPoint *>(item)->m_data;
+        break;
+    default:
+        break;
+    }
 }
 
 void LvlScene::collectDataFromItems(LevelData &dataToStore, QList<QGraphicsItem *> items)
@@ -188,40 +192,23 @@ void LvlScene::placeAll(const LevelData &data)
 {
     bool hasToUpdateDoorData = false;
 
-    for(LevelBlock block : data.blocks)
-    {
-        //place them back
-        m_data->blocks.push_back(block);
+    foreach(const LevelBlock &block, data.blocks)
         placeBlock(block);
 
-    }
-
-    for(LevelBGO bgo : data.bgo)
-    {
-        //place them back
-        m_data->bgo.push_back(bgo);
+    foreach(const LevelBGO &bgo, data.bgo)
         placeBGO(bgo);
 
-    }
+    foreach(const LevelNPC &npc, data.npc)
+        placeNPC(npc);
 
-    for(LevelNPC npc : data.npc)
-    {
-        //place them back
-        m_data->npc.push_back(npc);
-        placeNPC(npc, false);
-    }
-
-    for(LevelPhysEnv water : data.physez)
-    {
-        //place them back
-        m_data->physez.push_back(water);
+    foreach(const LevelPhysEnv &water, data.physez)
         placeEnvironmentZone(water);
-    }
 
-    for(LevelDoor door : data.doors)
+    foreach(const LevelDoor &door, data.doors)
     {
         LevelDoor originalDoor;
         bool found = false;
+
         foreach(LevelDoor findDoor, m_data->doors)
         {
             if(door.meta.array_id == findDoor.meta.array_id)
@@ -231,6 +218,7 @@ void LvlScene::placeAll(const LevelData &data)
                 break;
             }
         }
+
         if(!found)
             break;
 
@@ -248,19 +236,22 @@ void LvlScene::placeAll(const LevelData &data)
             originalDoor.isSetOut = true;
             placeDoorExit(originalDoor, false, false);
         }
+
         hasToUpdateDoorData = true;
     }
 
-    for(PlayerPoint plr : data.players)
+    foreach(const PlayerPoint &plr, data.players)
         placePlayerPoint(plr);
 
     if(hasToUpdateDoorData)
         m_mw->dock_LvlWarpProps->setDoorData(-2);
 
-
     //refresh Animation control
-    if(m_opts.animationEnabled) stopAnimation();
-    if(m_opts.animationEnabled) startAnimation();
+    if(m_opts.animationEnabled)
+        stopAnimation();
+
+    if(m_opts.animationEnabled)
+        startAnimation();
 }
 
 
@@ -289,6 +280,7 @@ void LvlScene::placeItemsByRectArray()
 
         if(m_cursorItemImg) delete m_cursorItemImg;
     }
+
     m_cursorItemImg = backup;
     m_cursorItemImg->hide();
 
@@ -333,7 +325,7 @@ void LvlScene::placeItemUnderCursor()
         while((xxx = itemCollidesWith(m_cursorItemImg)) != nullptr)
         {
             bool removed = false;
-            if(xxx->data(ITEM_TYPE).toString() == "Block")
+            if(xxx->data(ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastBlockArrayID) break;
                 m_overwritedItems.blocks.push_back(dynamic_cast<ItemBlock *>(xxx)->m_data);
@@ -341,7 +333,7 @@ void LvlScene::placeItemUnderCursor()
                 delete xxx;
                 removed = true;
             }
-            else if(xxx->data(ITEM_TYPE).toString() == "BGO")
+            else if(xxx->data(ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastBgoArrayID) break;
                 m_overwritedItems.bgo.push_back(dynamic_cast<ItemBGO *>(xxx)->m_data);
@@ -349,7 +341,7 @@ void LvlScene::placeItemUnderCursor()
                 delete xxx;
                 removed = true;
             }
-            else if(xxx->data(ITEM_TYPE).toString() == "NPC")
+            else if(xxx->data(ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastNpcArrayID) break;
                 m_overwritedItems.npc.push_back(dynamic_cast<ItemNPC *>(xxx)->m_data);
@@ -378,17 +370,17 @@ void LvlScene::placeItemUnderCursor()
 
         for(auto *xxx : foundItems)
         {
-            if(xxx->data(ITEM_TYPE).toString() == "Block")
+            if(xxx->data(ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Block)
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastBlockArrayID)
                     newItems.push_back(xxx);
             }
-            else if(xxx->data(ITEM_TYPE).toString() == "BGO")
+            else if(xxx->data(ITEM_TYPE_INT).toInt() == ItemTypes::LVL_BGO)
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastBgoArrayID)
                     newItems.push_back(xxx);
             }
-            else if(xxx->data(ITEM_TYPE).toString() == "NPC")
+            else if(xxx->data(ITEM_TYPE_INT).toInt() == ItemTypes::LVL_NPC)
             {
                 if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastNpcArrayID)
                     newItems.push_back(xxx);
@@ -415,8 +407,6 @@ void LvlScene::placeItemUnderCursor()
 
         m_data->blocks_array_id++;
         LvlPlacingItems::blockSet.meta.array_id = m_data->blocks_array_id;
-
-        m_data->blocks.push_back(LvlPlacingItems::blockSet);
         placeBlock(LvlPlacingItems::blockSet, true);
         m_placingItems.blocks.push_back(LvlPlacingItems::blockSet);
         wasPlaced = true;
@@ -428,8 +418,6 @@ void LvlScene::placeItemUnderCursor()
 
         m_data->bgo_array_id++;
         LvlPlacingItems::bgoSet.meta.array_id = m_data->bgo_array_id;
-
-        m_data->bgo.push_back(LvlPlacingItems::bgoSet);
         placeBGO(LvlPlacingItems::bgoSet, true);
         m_placingItems.bgo.push_back(LvlPlacingItems::bgoSet);
         wasPlaced = true;
@@ -447,9 +435,6 @@ void LvlScene::placeItemUnderCursor()
 
         m_data->npc_array_id++;
         LvlPlacingItems::npcSet.meta.array_id = m_data->npc_array_id;
-
-        m_data->npc.push_back(LvlPlacingItems::npcSet);
-
         placeNPC(LvlPlacingItems::npcSet, !LvlPlacingItems::npcSet.generator);
 
         m_placingItems.npc.push_back(LvlPlacingItems::npcSet);
@@ -621,20 +606,20 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory,
 {
     LevelData historyBuffer;
     bool deleted = false;
-    QString objType;
+    int objType;
 
     for(QList<QGraphicsItem *>::iterator it = items.begin(); it != items.end(); it++)
     {
         QGraphicsItem *i = *it;
         Q_ASSERT(i);
 
-        objType = i->data(ITEM_TYPE).toString();
+        objType = i->data(ITEM_TYPE_INT).toInt();
 
         if(!forceInvis && !i->isVisible())
             continue;  //Invisible items can't be deleted
 
         //remove data from main array before deletion item from scene
-        if(objType == "Block")
+        if(objType == ItemTypes::LVL_Block)
         {
             auto *b = qgraphicsitem_cast<ItemBlock *>(i);
             Q_ASSERT(b);
@@ -647,7 +632,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory,
             delete i;
             deleted = true;
         }
-        else if(objType == "BGO")
+        else if(objType == ItemTypes::LVL_BGO)
         {
             auto *b = qgraphicsitem_cast<ItemBGO *>(i);
             Q_ASSERT(b);
@@ -660,7 +645,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory,
             delete i;
             deleted = true;
         }
-        else if(objType == "NPC")
+        else if(objType == ItemTypes::LVL_NPC)
         {
             auto *b = qgraphicsitem_cast<ItemNPC *>(i);
             Q_ASSERT(b);
@@ -673,7 +658,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory,
             delete i;
             deleted = true;
         }
-        else if(objType == "Water")
+        else if(objType == ItemTypes::LVL_PhysEnv)
         {
             auto *b = qgraphicsitem_cast<ItemPhysEnv *>(i);
             Q_ASSERT(b);
@@ -686,7 +671,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory,
             delete i;
             deleted = true;
         }
-        else if((objType == "Door_enter") || (objType == "Door_exit"))
+        else if((objType == ItemTypes::LVL_META_DoorEnter) || (objType == ItemTypes::LVL_META_DoorExit))
         {
             auto *b = qgraphicsitem_cast<ItemDoor *>(i);
             Q_ASSERT(b);
@@ -694,7 +679,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory,
             if(m_lockDoor || b->m_locked)
                 continue;
 
-            bool isEntrance = (objType == "Door_enter");
+            bool isEntrance = (objType == ItemTypes::LVL_META_DoorEnter);
 
             LevelDoor doorData = b->m_data;
             if(isEntrance)
@@ -714,7 +699,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory,
             m_mw->dock_LvlWarpProps->setDoorData(-2);
             deleted = true;
         }
-        else if(objType == "playerPoint")
+        else if(objType == ItemTypes::LVL_Player)
         {
             auto *b = qgraphicsitem_cast<ItemPlayerPoint *>(i);
             Q_ASSERT(b);

@@ -24,12 +24,7 @@
 #include <main_window/dock/debugger.h>
 
 #include "wld_scene.h"
-#include "items/item_tile.h"
-#include "items/item_scene.h"
-#include "items/item_path.h"
 #include "items/item_level.h"
-#include "items/item_music.h"
-#include "wld_item_placing.h"
 
 #include "../../../defines.h"
 
@@ -208,12 +203,14 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         isLeftMouse = true;
         LogDebug(QString("Left mouse button released [edit mode: %1]").arg(m_editMode));
     }
+
     if(mouseEvent->button() == Qt::MiddleButton)
     {
         m_mouseMidPressed = false;
         isMiddleMouse = true;
         LogDebug(QString("Middle mouse button released [edit mode: %1]").arg(m_editMode));
     }
+
     if(mouseEvent->button() == Qt::RightButton)
     {
         m_mouseRightPressed = false;
@@ -229,6 +226,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
 
     m_contextMenuIsOpened = false;
+
     if(!isLeftMouse)
     {
         if(m_pastingMode && GlobalSettings::MidMouse_allowDuplicate && isMiddleMouse &&
@@ -271,34 +269,20 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void WldScene::Debugger_updateItemList()
 {
-    QString itemList =
-        tr("Tiles:\t\t%1\n"
-           "Sceneries:\t\t\t%2\n"
-           "Paths:\t%3\n"
-           "Levels:\t%4\n"
-           "Music boxes:\t\t%5\n");
-
-    itemList = itemList.arg(
-                   m_data->tiles.size())
-               .arg(m_data->scenery.size())
-               .arg(m_data->paths.size())
-               .arg(m_data->levels.size())
-               .arg(m_data->music.size());
-
-    MainWinConnect::pMainWin->dock_DebuggerBox->setItemStat(itemList);
+    m_mw->dock_DebuggerBox->updateStats(this);
 }
 
 // /////////////////////////////Open properties window of selected item////////////////////////////////
 void WldScene::openProps()
 {
     QList<QGraphicsItem * > items = this->selectedItems();
+
     if(!items.isEmpty())
     {
-        if(items.first()->data(ITEM_TYPE).toString() == "LEVEL")
+        if(items.first()->data(ITEM_TYPE_INT).toInt() == ItemTypes::WLD_Level)
         {
-            MainWinConnect::pMainWin->dock_WldItemProps->openPropertiesFor(0,
-                    ((ItemLevel *)items.first())->m_data,
-                    false);
+            ItemLevel *l = dynamic_cast<ItemLevel *>(items.first());
+            MainWinConnect::pMainWin->dock_WldItemProps->openPropertiesFor(0, l->m_data, false);
         }
         else
             MainWinConnect::pMainWin->dock_WldItemProps->hideToolbox();

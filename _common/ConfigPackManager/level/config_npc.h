@@ -21,14 +21,15 @@
 #ifndef CONFIG_NPC_H
 #define CONFIG_NPC_H
 
-#include <PGEString.h>
-#include <stdint.h>
-
-class IniProcessing;
+#include "../base/config_base.h"
 struct NPCConfigFile;
 
-struct NpcSetup
+struct NpcSetup : ConfigBaseSetup
 {
+    NpcSetup();
+    NpcSetup(const NpcSetup &o) = default;
+    NpcSetup &operator=(const NpcSetup &o) = default;
+
     /**
      * @brief Parse opened NPC config INI section
      * @param setup [_in] pointer to initialized INI manager with opened NPC section
@@ -53,22 +54,6 @@ struct NpcSetup
                      uint32_t captured_w = 0,
                      uint32_t captured_h = 0);
 
-    //! Element type ID
-    uint64_t        id = 0;
-    //! Understandible name of element
-    PGEString       name;
-    //! Filter group name
-    PGEString       group = "_NoGroup";
-    //! Filter category name
-    PGEString       category = "_Other";
-    //! Detailed description of element
-    PGEString       description = "";
-    //! Main sprite image file
-    PGEString       image_n;
-    //! (Optional) Main sprite mask image file
-    PGEString       mask_n;
-    //! (Optional) In-editor icon for item boxes
-    PGEString       icon_n;
     //! Filename of the NPC AI Lua controller script
     PGEString       algorithm_script;
     //!Name of global level function to process NPC death effect
@@ -89,13 +74,9 @@ struct NpcSetup
     uint32_t        gfx_w = 32;
     //! Allow automatic mapping of the customized hitbox metrics to frame size
     bool            custom_physics_to_gfx = false;
-    //! Size of alignment grid while placing mode
-    uint32_t        grid = 32;          //    grid=32
     //! Offset X relative aligned position
-    int32_t         grid_offset_x = 0;  //    grid-offset-x=0
     bool            grid_offset_x_overriden = false;
     //! Offset Y relative aligned position
-    int32_t         grid_offset_y = 0;  //    grid-offset-y=0
     bool            grid_offset_y_overriden = false;
     //! 0 - Align NPCX position relative it's center to center of the grid cell, 1 - to edge of grid cell
     uint32_t        grid_attach_style = 0; //0 - to center, 1 - to edge
@@ -187,12 +168,6 @@ struct NpcSetup
     int32_t         special_spin_value_offset = 0;
     //! Special option Spinbox: allow "auto-increment" feature to be used with line drawing tool, otherwise, hide it for this NPC
     bool            special_spin_allow_autoincrement = true;
-
-    //! Extra Settings JSON layout file name
-    PGEString       extra_settings = "";
-
-    //! Is this a meta-object that should be never shown in game or exported images (screenshots)
-    bool            is_meta_object = false;
 
     //;game process
     //! [Gameplay] Scores code are will be added to player on beating this NPC

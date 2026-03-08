@@ -61,15 +61,17 @@ void ItemPhysEnv::construct()
     m_data.y = qRound(this->pos().y());
     m_data.env_type = LevelPhysEnv::ENV_WATER;
 
-    setData(ITEM_TYPE, "Water");
-    setData(ITEM_BLOCK_IS_SIZABLE, "sizable");
-    setData(ITEM_WIDTH, static_cast<int>(m_data.w));
-    setData(ITEM_HEIGHT, static_cast<int>(m_data.h));
+    setData(LvlScene::ITEM_TYPE, "Water");
+    setData(LvlScene::ITEM_TYPE_INT, ItemTypes::LVL_PhysEnv);
+    setData(LvlScene::ITEM_BLOCK_IS_SIZABLE, true);
+    setData(LvlScene::ITEM_WIDTH, static_cast<int>(m_data.w));
+    setData(LvlScene::ITEM_HEIGHT, static_cast<int>(m_data.h));
 }
 
 ItemPhysEnv::~ItemPhysEnv()
 {
     m_scene->unregisterElement(this);
+    m_scene->m_itemsPhysEnv.remove(m_data.meta.array_id);
 }
 
 
@@ -173,13 +175,13 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
 
     if(selected == cutWater)
-        m_scene->m_mw->on_actionCut_triggered();
+        m_scene->mw()->on_actionCut_triggered();
     else if(selected == copyWater)
-        m_scene->m_mw->on_actionCopy_triggered();
+        m_scene->mw()->on_actionCopy_triggered();
     else if(selected == copyArrayID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.meta.array_id));
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXYWH)
     {
@@ -190,7 +192,7 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_data.w)
             .arg(m_data.h)
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosLTRB)
     {
@@ -201,7 +203,7 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_data.x + m_data.w)
             .arg(m_data.y + m_data.h)
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->mw()->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == resize)
         m_scene->setPhysEnvResizer(this, true);
@@ -233,7 +235,7 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                     LevelData modData;
                     for(QGraphicsItem *selItem : m_scene->selectedItems())
                     {
-                        if(selItem->data(ITEM_TYPE).toString() == "Water")
+                        if(selItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_PhysEnv)
                         {
                             ItemPhysEnv *pe = qgraphicsitem_cast<ItemPhysEnv *>(selItem);
                             Q_ASSERT(pe);
@@ -264,8 +266,8 @@ QPainterPath ItemPhysEnv::shape() const
     {
         0.0,
         0.0,
-        this->data(ITEM_WIDTH).toReal(),
-        this->data(ITEM_HEIGHT).toReal()
+        this->data(LvlScene::ITEM_WIDTH).toReal(),
+        this->data(LvlScene::ITEM_HEIGHT).toReal()
     };
 
     const int BORDERWIDTH = 12;
@@ -313,39 +315,10 @@ QString ItemPhysEnv::getLayerName()
 
 void ItemPhysEnv::arrayApply()
 {
-    bool found = false;
-
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
-    this->setData(ITEM_WIDTH, (int)m_data.w);
-    this->setData(ITEM_HEIGHT, (int)m_data.h);
-
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->physez.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->physez[(int)m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    //Apply current data in main array
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->physez[(int)m_data.meta.index] = m_data; //apply current bgoData
-    }
-    else
-    {
-        for(int i = 0; i < m_scene->m_data->physez.size(); i++)
-        {
-            //after find it into array
-            if(m_scene->m_data->physez[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_data.meta.index = (unsigned int)i;
-                m_scene->m_data->physez[i] = m_data;
-                break;
-            }
-        }
-    }
+    this->setData(LvlScene::ITEM_WIDTH, (int)m_data.w);
+    this->setData(LvlScene::ITEM_HEIGHT, (int)m_data.h);
 
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
@@ -353,35 +326,11 @@ void ItemPhysEnv::arrayApply()
     //Update R-tree innex
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsPhysEnv.insert(m_data.meta.array_id, this);
 }
 
 void ItemPhysEnv::removeFromArray()
 {
-    bool found = false;
-    if(m_data.meta.index < (unsigned int)m_scene->m_data->physez.size())
-    {
-        //Check index
-        if(m_data.meta.array_id == m_scene->m_data->physez[(int)m_data.meta.index].meta.array_id)
-            found = true;
-    }
-
-    if(found)
-    {
-        //directlry
-        m_scene->m_data->physez.removeAt((int)m_data.meta.index);
-    }
-    else
-    {
-        for(int i = 0; i < m_scene->m_data->physez.size(); i++)
-        {
-            if(m_scene->m_data->physez[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_scene->m_data->physez.removeAt(i);
-                break;
-            }
-        }
-    }
-
     //Mark level as modified
     m_scene->m_data->meta.modified = true;
 }
@@ -513,18 +462,19 @@ void ItemPhysEnv::setPhysEnvData(LevelPhysEnv inD)
     m_data = inD;
     m_waterSize = QSize((int)m_data.w, (int)m_data.h);
     setPos(m_data.x, m_data.y);
-    setData(ITEM_ID, QString::number(0));
-    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id));
+    setData(LvlScene::ITEM_ID, 0ull);
+    setData(LvlScene::ITEM_ARRAY_ID, m_data.meta.array_id);
     updateColor();
     refreshItemSize();
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsPhysEnv.insert(m_data.meta.array_id, this);
 }
 
 void ItemPhysEnv::refreshItemSize()
 {
-    setData(ITEM_WIDTH, (int)m_data.w);
-    setData(ITEM_HEIGHT, (int)m_data.h);
+    setData(LvlScene::ITEM_WIDTH, (int)m_data.w);
+    setData(LvlScene::ITEM_HEIGHT, (int)m_data.h);
 }
 
 QRectF ItemPhysEnv::boundingRect() const

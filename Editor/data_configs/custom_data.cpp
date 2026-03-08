@@ -92,12 +92,14 @@ QString CustomDirManager::getCustomFile(QString name, bool ignoreDefaultDirector
 QStringList CustomDirManager::getCustomFiles(QString nameBase, QStringList extensions, bool ignoreDefaultDirectory)
 {
     QStringList ret;
-    for(QString &e : extensions)
+
+    foreach(const QString &e, extensions)
     {
         QString file = getCustomFile(nameBase + e, ignoreDefaultDirectory);
         if(!file.isEmpty())
             ret.push_back(file);
     }
+
     return ret;
 }
 
@@ -133,12 +135,13 @@ void CustomDirManager::clearExtraDirs()
 
 QString CustomDirManager::findFileInExtraDirs(QString fPath)
 {
-    for(const QString &d : dirsExtra)
+    foreach(const QString &d, dirsExtra)
     {
         QString f = d + "/" + fPath;
         if(QFile::exists(f))
             return f;
     }
+
     return QString();
 }
 
@@ -155,7 +158,8 @@ void CustomDirManager::import(QStringList &files, bool local)
 {
     QString targetDir = (local ? dirCustom : dirEpisode);
     targetDir = (!targetDir.endsWith("/") ? targetDir.append('/') : targetDir);
-    for(QString &targetFile : files)
+
+    foreach(const QString &targetFile, files)
     {
         QFile sourceFile(targetFile);
         sourceFile.copy(targetDir + targetFile.section("/", -1));

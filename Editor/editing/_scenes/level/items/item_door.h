@@ -46,6 +46,8 @@ public:
     void setDoorData(LevelDoor inD, int doorDir, bool init = false);
     void setScenePoint(LvlScene *theScene);
 
+    void updateNumber();
+
     int m_pointSide;
     enum doorDirect
     {
@@ -74,6 +76,8 @@ public:
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
+    void syncPairItems();
+
     QBrush m_brush;
     QPen   m_pen;
     QGraphicsItemGroup     *m_grp = nullptr;

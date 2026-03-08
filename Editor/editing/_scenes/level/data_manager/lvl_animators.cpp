@@ -115,9 +115,9 @@ void LvlScene::buildAnimators()
 ////////////////////////////////////Animator////////////////////////////////
 void LvlScene::startAnimation()
 {
-    long q = m_data->blocks.size();
-    q += m_data->bgo.size();
-    q += m_data->npc.size();
+    long q = m_itemsBlocks.size();
+    q += m_itemsBGO.size();
+    q += m_itemsNPC.size();
 
     if(q > GlobalSettings::animatorItemsLimit)
     {
@@ -126,8 +126,10 @@ void LvlScene::startAnimation()
     }
 
     m_animationTimer.start(32);
+
     foreach(AdvNpcAnimator *npcA, m_animatorsNPC)
         npcA->start();
+
     m_subWindow->setAutoUpdateTimer(31);
 }
 
@@ -144,11 +146,11 @@ void LvlScene::stopAnimation()
 
 void LvlScene::setMetaSignsVisibility(bool visible)
 {
-    QList<QGraphicsItem *> everything = items();
-    for(QGraphicsItem *it : everything)
+    foreach(QGraphicsItem *it, m_itemsAll)
     {
         if(it->data(ITEM_IS_ITEM).isNull())
             continue;
+
         LvlBaseItem *item = qgraphicsitem_cast<LvlBaseItem *>(it);
         item->setMetaSignsVisibility(visible);
     }

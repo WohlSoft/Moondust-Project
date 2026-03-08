@@ -25,7 +25,7 @@
 #include <QStandardPaths>
 #endif
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/logger_sets.h>
 #include <common_features/util.h>
 #include <main_window/global_settings.h>

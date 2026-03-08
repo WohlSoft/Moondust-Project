@@ -172,10 +172,6 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>Задержка:</translation>
     </message>
     <message>
-        <source>Direction</source>
-        <translation>Направление</translation>
-    </message>
-    <message>
         <source>Left</source>
         <translation>Лево</translation>
     </message>
@@ -378,6 +374,19 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
         <comment>Explanation for the opacity of locked items</comment>
         <translation>Определяет степень видимости (непрозрачности), применяемую ко всем заблокированным элементам на сцене.</translation>
+    </message>
+    <message>
+        <source>When this option is enabled, NPC direction will be always set to given value
+with no matter what config pack default value is set. However, some NPC might
+have &quot;random&quot; direction being disabled, so, it will not work for these NPC.</source>
+        <translation>Если эта настройка включена, направление НИП будет всегда установлено
+в указанное значение не зависимо от того, какое назначено умолчание в конфигурационном
+пакете. Однако, у некоторых НИП может быть отключено направление &quot;Случайно&quot;, и поэтому
+оно работать не будет.</translation>
+    </message>
+    <message>
+        <source>Override initial direction</source>
+        <translation>Заменить начальное направление</translation>
     </message>
 </context>
 <context>
@@ -765,6 +774,33 @@ Note: most of config packs gets being updates with Moondust Project togeter. The
     </message>
 </context>
 <context>
+    <name>ConfigProfileSelect</name>
+    <message>
+        <source>Integration profile selection</source>
+        <translation>Выбор интеграционного профиля</translation>
+    </message>
+    <message>
+        <source>Please select the integration profile to start this config pack:</source>
+        <translation>Чтобы запустить конфигурационный пакет, пожалуйста, выберите интеграционный профиль:</translation>
+    </message>
+    <message>
+        <source>&lt;New profile&gt;</source>
+        <translation>&lt;Новый профиль&gt;</translation>
+    </message>
+    <message>
+        <source>Create new integration profile</source>
+        <translation>Создать новый интеграционный профиль</translation>
+    </message>
+    <message>
+        <source>No selected profile</source>
+        <translation>Профиль не выбран</translation>
+    </message>
+    <message>
+        <source>Please select profile from the list.</source>
+        <translation>Пожалуйста, выберите профиль из списка.</translation>
+    </message>
+</context>
+<context>
     <name>ConfigStatus</name>
     <message>
         <source>Current configuration status</source>
@@ -1074,6 +1110,61 @@ Please save them before doing anything else.</source>
     <message>
         <source>Remove</source>
         <translation>Удалить</translation>
+    </message>
+</context>
+<context>
+    <name>DebuggerStatsModel</name>
+    <message>
+        <source>Player start points</source>
+        <translation>Точки начала игры</translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation>Блоки</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <translation>Фоновые объекты</translation>
+    </message>
+    <message>
+        <source>Non-playable characters/items</source>
+        <translation>Неигр. персонажи/предметы</translation>
+    </message>
+    <message>
+        <source>Warp entries</source>
+        <translation>Записи проходов</translation>
+    </message>
+    <message>
+        <source>Physical env. zones</source>
+        <translation>Зоны физич. сред</translation>
+    </message>
+    <message>
+        <source>Terrain tiles</source>
+        <translation>Клетки ландшафта</translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation>Декорации</translation>
+    </message>
+    <message>
+        <source>Path cells</source>
+        <translation>Клетки пути</translation>
+    </message>
+    <message>
+        <source>Level entrances</source>
+        <translation>Точки входа на уровни</translation>
+    </message>
+    <message>
+        <source>Music change boxes</source>
+        <translation>Точки смены музыки</translation>
+    </message>
+    <message>
+        <source>Item type</source>
+        <translation>Тип элемента</translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation>Кол-во</translation>
     </message>
 </context>
 <context>
@@ -1949,6 +2040,17 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Array-ID: %1</source>
         <translation>ID в массиве: %1</translation>
+    </message>
+    <message>
+        <source>Placing a path cell at the same position as the
+level entry point may cause an inability to
+stop on this level entry point on some engines.
+Ignore this notice if this was done intentionally.</source>
+        <translation>Размещение клетки пути на той же позиции, что
+и точка входа на уровень сделает невозможной
+остановку на ней на некоторых движках.
+Если это сделано намеренно, то проигнорируйте
+данное замечание.</translation>
     </message>
 </context>
 <context>
@@ -4278,22 +4380,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <comment>Level properties...</comment>
         <translation>Настройки уровня...</translation>
     </message>
-    <message>
-        <source>Player start points:		%1
-Blocks:			%2
-Background objects&apos;s:	%3
-Non-playable characters&apos;s:	%4
-Warp entries:		%5
-Physical env. zones:	%6
-</source>
-        <translation>Начальные точки:	%1
-Блоки:			%2
-Фоновые объекты:	%3
-Неигровые персонажи:	%4
-Записи проходов:	%5
-Зоны физических сред:	%6
-</translation>
-    </message>
 </context>
 <context>
     <name>LvlSearchBox</name>
@@ -5537,10 +5623,6 @@ show the current playable character(s) and number of lives.</source>
         <translation>Редактор сценариев</translation>
     </message>
     <message>
-        <source>Run configure tool...</source>
-        <translation>Запустить настроечную утилиту...</translation>
-    </message>
-    <message>
         <source>Open local script</source>
         <translation>Открыть локальный сценарий</translation>
     </message>
@@ -6613,6 +6695,14 @@ Please, choose the Moondust Maintainer application yourself!</source>
     <message>
         <source>Bulk convert and repair of level and world files...</source>
         <translation>Массовое преобр./восстановл. уровней и миров...</translation>
+    </message>
+    <message>
+        <source>Select configuration profile</source>
+        <translation>Выбрать профиль конфигурации</translation>
+    </message>
+    <message>
+        <source>New profile...</source>
+        <translation>Новый профиль...</translation>
     </message>
 </context>
 <context>
@@ -8556,6 +8646,33 @@ Data may be corrupted!</source>
         <source>Group:</source>
         <translation>Группа:</translation>
     </message>
+    <message>
+        <source>Custom</source>
+        <translation>Пользовательские</translation>
+    </message>
+    <message>
+        <source>&lt;Save file first&gt;</source>
+        <translation>&lt;Сначала сохраните файл&gt;</translation>
+    </message>
+    <message>
+        <source>Copy graphic to custom folder</source>
+        <translation>Скопировать картинку в польз. папку</translation>
+    </message>
+    <message>
+        <source>Copy graphic to episode folder</source>
+        <translation>Скопировать картинку в папку эпизода</translation>
+    </message>
+</context>
+<context>
+    <name>TilesetItemButton</name>
+    <message>
+        <source>Unavailable item</source>
+        <translation>Недоступный элемент</translation>
+    </message>
+    <message>
+        <source>This item can not be used in this time.</source>
+        <translation>Данный элемент на данный момент нельзя применить.</translation>
+    </message>
 </context>
 <context>
     <name>TipOfDay</name>
@@ -9208,20 +9325,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>Этот уровень имеет неправильные файлы пользовательской графики
 Вы будете видеть &apos;призраков&apos; или другое заменяющее изображение вместо пользовательской графики объектов. Это может быть потому что, например, был сохранён BMP-файл под расширением GIF.
 Пожалуйста, переконвертируйте изображения в правильный формат и перезагрузите этот уровень.</translation>
-    </message>
-    <message>
-        <source>Tiles:		%1
-Sceneries:			%2
-Paths:	%3
-Levels:	%4
-Music boxes:		%5
-</source>
-        <translation>Плитки:			%1
-Декорации:		%2
-Дороги:			%3
-Уровни:			%4
-Музыкальные коробки:	%5
-</translation>
     </message>
 </context>
 <context>

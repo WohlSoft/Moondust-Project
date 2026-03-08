@@ -22,8 +22,9 @@
 
 void ItemPoint::construct()
 {
-    this->setData(ITEM_WIDTH, QString::number(32));
-    this->setData(ITEM_HEIGHT, QString::number(32));
+    this->setData(WldScene::ITEM_WIDTH, 32);
+    this->setData(WldScene::ITEM_HEIGHT,32);
+    this->setData(WldScene::ITEM_TYPE_INT, ItemTypes::META_Point);
     m_imageSize.setX(0);
     m_imageSize.setY(0);
     m_imageSize.setWidth(32);

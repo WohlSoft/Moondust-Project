@@ -23,9 +23,7 @@
 #include <PGE_File_Formats/file_formats.h>
 
 #include "../lvl_scene.h"
-#include "../items/item_block.h"
-#include "../items/item_water.h"
-#include "../lvl_item_placing.h"
+
 
 void LvlScene::setScreenshotSelector()
 {
@@ -46,7 +44,7 @@ void LvlScene::setScreenshotSelector(bool enabled, bool accept)
         m_resizeBox->m_resizerType = ItemResizer::Resizer_Capturer;
         m_resizeBox->m_minSize = QSizeF(320, 200);
         this->setFocus(Qt::ActiveWindowFocusReason);
-        SwitchEditingMode(MODE_Resizing);
+        switchEditMode(MODE_Resizing);
         m_mw->resizeToolbarVisible(true);
     }
     else

@@ -26,7 +26,7 @@
 #include <QDesktopWidget>
 #endif
 #include "calibration_main.h"
-#include <main/app_path.h>
+#include <pge_app_path.h>
 #include <iostream>
 
 #include "version.h"
@@ -51,7 +51,9 @@ int main(int argc, char *argv[])
             QApplication::quit();
             QApplication::exit();
             return 0;
-        } else if(arg == "--version") {
+        }
+        else if(arg == "--version")
+        {
             std::cout << V_INTERNAL_NAME " " V_FILE_VERSION << V_FILE_RELEASE "-" V_BUILD_VER << "-" << V_BUILD_BRANCH << std::endl;
             QApplication::quit();
             QApplication::exit();

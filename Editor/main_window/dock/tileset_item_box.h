@@ -30,6 +30,7 @@ class MainWindow;
 class QScrollArea;
 class QComboBox;
 class QTabBar;
+class TilesetItemButton;
 
 namespace Ui {
 class TilesetItemBox;
@@ -53,9 +54,13 @@ public slots:
     void on_newTileset_clicked();
     void on_tilesetGroup_currentIndexChanged(int index);
 
+    void editSelectedTileset();
+
+    void contextMenuRequest(const QPoint &pos, TilesetItemButton *button);
+
+public:
     void setTabPosition(QTabWidget::TabPosition pos);
 
-    void editSelectedTileset();
     QScrollArea *getFrameTilesetOfTab(QWidget *catTab);
     QTabBar *getGroupComboboxOfTab(QWidget *catTab);
     QWidget *findTabWidget(const QString &categoryItem);
@@ -65,7 +70,7 @@ public slots:
     void clearTilesetGroups();
     void makeSelectedTileset(int tabIndex);
     QVector<SimpleTileset> loadCustomTilesets();
-    void makeCurrentTileset();
+    void makeCurrentTileset(const QString &dummy = QString());
     void makeAllTilesets();
 
 protected:

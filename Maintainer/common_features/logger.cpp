@@ -24,7 +24,7 @@
 #include <QDateTime>
 #include <QtDebug>
 
-#include "app_path.h"
+#include <pge_app_path.h>
 #include "logger_sets.h"
 
 QString     LogWriter::DebugLogFile;
@@ -34,12 +34,12 @@ bool        LogWriter::enabled;
 void LogWriter::LoadLogSettings()
 {
     QString logFileName = QString("PGE_Maintainer_log_%1-%2-%3_%4-%5-%6.txt")
-            .arg(QDate().currentDate().year())
-            .arg(QDate().currentDate().month())
-            .arg(QDate().currentDate().day())
-            .arg(QTime().currentTime().hour())
-            .arg(QTime().currentTime().minute())
-            .arg(QTime().currentTime().second());
+            .arg(QDate().currentDate().year(), 4, 10, QLatin1Char('0'))
+            .arg(QDate().currentDate().month(), 2, 10, QLatin1Char('0'))
+            .arg(QDate().currentDate().day(), 2, 10, QLatin1Char('0'))
+            .arg(QTime().currentTime().hour(), 2, 10, QLatin1Char('0'))
+            .arg(QTime().currentTime().minute(), 2, 10, QLatin1Char('0'))
+            .arg(QTime().currentTime().second(), 2, 10, QLatin1Char('0'));
     logLevel = QtDebugMsg;
 
     QString mainIniFile = AppPathManager::settingsFile();

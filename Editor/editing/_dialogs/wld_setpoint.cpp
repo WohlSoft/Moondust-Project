@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/util.h>
 
 #include "wld_setpoint.h"
@@ -33,12 +33,6 @@ WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
     m_sceneCreated = false;
     m_mapPoint = QPoint(-1, -1);
     setWindowIcon(QIcon(QPixmap(":/toolbar/dock/world16.png")));
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
-#endif
-    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
-    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);
 
     ui->graphicsView->horizontalScrollBar()->setSingleStep(32);
     ui->graphicsView->horizontalScrollBar()->setTracking(true);
@@ -157,7 +151,7 @@ bool WLD_SetPoint::loadFile(const WorldData &fileData,
     ui->animation->setChecked(m_scene->m_opts.animationEnabled);
 
     // Preparing a point selection mode
-    m_scene->SwitchEditingMode(WldScene::MODE_SetPoint);
+    m_scene->switchEditMode(WldScene::MODE_SetPoint);
     if(m_mapPointIsNull)
         m_scene->m_pointSelector.m_pointNotPlaced = true;
     else

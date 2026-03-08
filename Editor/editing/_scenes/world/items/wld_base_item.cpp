@@ -36,7 +36,7 @@ void WldBaseItem::construct()
     m_mouseMidPressed = false;
     m_mouseRightPressed = false;
 
-    setData(ITEM_IS_ITEM, 1);
+    setData(WldScene::ITEM_IS_ITEM, true);
 }
 
 WldBaseItem::WldBaseItem(QGraphicsItem *parent) :
@@ -88,7 +88,7 @@ QPoint WldBaseItem::gridOffset()
     return QPoint(m_gridOffsetX, m_gridOffsetY);
 }
 
-QPoint WldBaseItem::sourcePos()
+QPoint WldBaseItem::sourcePos() const
 {
     return QPoint(0, 0);
 }
@@ -116,6 +116,26 @@ bool WldBaseItem::itemTypeIsLocked()
     return false;
 }
 
+bool WldBaseItem::collidesWith(const WldBaseItem *other) const
+{
+    if(!other)
+        return false;
+
+    QRect me(sourcePos(), QSize(data(WldScene::ITEM_WIDTH).toInt(), data(WldScene::ITEM_HEIGHT).toInt()));
+    QRect o(other->sourcePos(), QSize(other->data(WldScene::ITEM_WIDTH).toInt(), other->data(WldScene::ITEM_HEIGHT).toInt()));
+
+    if(me.left() + 1 > o.right())
+        return false;
+    else if(me.right() < o.left() + 1)
+        return false;
+    else if(me.top() + 1 > o.bottom())
+        return false;
+    else if(me.bottom() < o.top() + 1)
+        return false;
+
+    return true;
+}
+
 void WldBaseItem::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if((this->flags()&QGraphicsItem::ItemIsSelectable) == 0)
@@ -124,7 +144,7 @@ void WldBaseItem::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    if(m_scene->m_busyMode)
+    if(m_scene->getEditFlagBusyMode())
     {
         unsetCursor();
         ungrabMouse();
@@ -153,12 +173,16 @@ void WldBaseItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     int multimouse = 0;
     bool callContext = false;
+
     if(((m_mouseMidPressed) || (m_mouseRightPressed)) && (m_mouseLeftPressed ^ (mouseEvent->buttons() & Qt::LeftButton)))
         multimouse++;
+
     if((((m_mouseLeftPressed) || (m_mouseRightPressed))) && (m_mouseMidPressed ^ (mouseEvent->buttons() & Qt::MiddleButton)))
         multimouse++;
+
     if((((m_mouseLeftPressed) || (m_mouseMidPressed))) && (m_mouseRightPressed ^ (mouseEvent->buttons() & Qt::RightButton)))
         multimouse++;
+
     if(multimouse > 0)
     {
         mouseEvent->accept();
@@ -182,7 +206,7 @@ void WldBaseItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     /////////////////////////CONTEXT MENU:///////////////////////////////
     if((callContext) && (!m_scene->m_contextMenuIsOpened))
     {
-        if((!itemTypeIsLocked()) && (!m_scene->m_busyMode) && (!m_locked))
+        if(!itemTypeIsLocked() && !m_scene->getEditFlagBusyMode() && !m_locked)
             contextMenu(mouseEvent);
     }
 }

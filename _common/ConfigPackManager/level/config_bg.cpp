@@ -27,37 +27,28 @@
 #include <sstream>
 #include <algorithm>
 
+BgSetup::BgSetup() : ConfigBaseSetup() {}
+
 bool BgSetup::parse(IniProcessing *setup,
                     PGEString bgImgPath,
-                    uint32_t /*defaultGrid*/,
+                    uint32_t defaultGrid,
                     const BgSetup *merge_with,
                     PGEString *error)
 {
 #define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
 #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
 #define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
-    int errCode = PGE_ImageInfo::ERR_OK;
+
     PGEString section;
+    int errCode = PGE_ImageInfo::ERR_OK;
     /*************Buffers*********************/
-    uint32_t    w = 0,
-                h = 0;
+    uint32_t    w = 0, h = 0;
     /*************Buffers*********************/
-    if(!setup)
-    {
-        if(error)
-            *error = "setup IniProcessing is null!";
-        return false;
-    }
 
-    section = StdToPGEString(setup->group());
-    setup->read("name", name, pMerge(name, section));
-
-    if(name.size() == 0)
-    {
-        if(error)
-            *error = section + ": item name isn't defined";
+    if(!parseBase(setup, bgImgPath, defaultGrid, w, h, merge_with, error, true))
         return false;
-    }
+
+    section     = StdToPGEString(setup->group());
 
     setup->read("fill-color", fill_color, pMerge(fill_color, "auto"));
 
@@ -91,8 +82,6 @@ bool BgSetup::parse(IniProcessing *setup,
             *error = "Width or height of image has zero or negative value in image " + bgImgPath + image_n;
         return false;
     }
-
-    setup->read("icon", icon_n, pMerge(icon_n, ""));
 
     setup->readEnum("type", type,
                     pMerge(type, 0),

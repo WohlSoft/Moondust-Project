@@ -28,6 +28,8 @@
 #include "../../number_limiter.h"
 #include "../../csv_2_number_array.h"
 
+NpcSetup::NpcSetup() : ConfigBaseSetup() {}
+
 bool NpcSetup::parse(IniProcessing *setup,
                      PGEString npcImgPath,
                      uint32_t defaultGrid,
@@ -38,67 +40,16 @@ bool NpcSetup::parse(IniProcessing *setup,
 #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
 #define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
 
-    int errCode = PGE_ImageInfo::ERR_OK;
     PGEString section;
     /*************Buffers*********************/
-    uint32_t defGFX_h = 0;
+    uint32_t defGFX_h = 0, w, h;
     int combobox_size = 0;
-
     /*************Buffers*********************/
-    if(!setup)
-    {
-        if(error)
-            *error = "setup QSettings is null!";
+
+    if(!parseBase(setup, npcImgPath, defaultGrid, w, h, merge_with, error))
         return false;
-    }
 
-    section = StdToPGEString(setup->group());
-    setup->read("name", name, pMerge(name, section));
-
-    if(name.size() == 0)
-    {
-        if(error)
-            *error = section + " Item name isn't defined";
-        return false;
-    }
-
-    setup->read("group", group, pMergeMe(group));
-    setup->read("category", category, pMergeMe(category));
-    setup->read("description", description, pMerge(description, ""));
-
-    setup->read("image", image_n, pMergeMe(image_n));
-#ifdef PGE_EDITOR // alternative image for Editor
-    pAlias("editor-image", image_n);
-#endif
-
-    if(!merge_with && !PGE_ImageInfo::getImageSize(npcImgPath + image_n, &gfx_w, &gfx_h, &errCode))
-    {
-        if(error)
-        {
-            switch(errCode)
-            {
-            case PGE_ImageInfo::ERR_UNSUPPORTED_FILETYPE:
-                *error = "Unsupported or corrupted file format: " + npcImgPath + image_n;
-                break;
-
-            case PGE_ImageInfo::ERR_NOT_EXISTS:
-                *error = "image file is not exist: " + npcImgPath + image_n;
-                break;
-
-            default:
-            case PGE_ImageInfo::ERR_CANT_OPEN:
-                *error = "Can't open image file: " + npcImgPath + image_n;
-                break;
-            }
-        }
-
-        return false;
-    }
-
-    assert(merge_with || ((gfx_w > 0) && (gfx_h > 0) && "Width or height of image has zero or negative value!"));
-    mask_n = PGE_ImageInfo::getMaskName(image_n);
-
-    setup->read("icon", icon_n, pMerge(icon_n, PGESTRING()));
+    section     = StdToPGEString(setup->group());
 
     setup->read("algorithm",        algorithm_script,   pMerge(algorithm_script, (section + ".lua")));
     setup->read("default-effect",   effect_1,           pMerge(effect_1, 10u));
@@ -309,10 +260,6 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("custom-value-spin-allow-autoincrement", special_spin_allow_autoincrement, pMerge(special_spin_allow_autoincrement, true));
     pAlias("special-spin-allow-autoincrement", special_spin_allow_autoincrement);//Style like old name
 
-    setup->read("extra-settings", extra_settings, pMerge(extra_settings, ""));
-    setup->read("is-meta-object", is_meta_object, pMerge(is_meta_object, false));
-    pAlias("hide-on-exported-images", is_meta_object);//Alias
-
     /*************Build special value combobox***end*****/
     setup->read("score",                score,                  pMerge(score, 0u));
     setup->read("speed",                speed,                  pMerge(speed, 2.0));
@@ -412,12 +359,14 @@ bool NpcSetup::parse(IniProcessing *setup,
 
 void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, uint32_t captured_w, uint32_t captured_h)
 {
+#ifdef PGE_EDITOR // Editor-only field
     //*this = global;
     name = (local->en_name) ? local->name : global.name;
 
     group = (local->en_group) ? local->group : global.group;
     category = (local->en_category) ? local->category : global.category;
     description = (local->en_description) ? local->description : global.description;
+#endif
 
     image_n = (local->en_image) ? local->image : global.image_n;
     mask_n = PGE_ImageInfo::getMaskName(image_n);

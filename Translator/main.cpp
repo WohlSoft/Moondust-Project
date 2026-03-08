@@ -17,12 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <iostream>
 #include "translator_main.h"
 #include <QApplication>
 #include <QFileInfo>
 #include <QDir>
 #include <common_features/logger.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <Utf8Main/utf8main.h>
 #include "version.h"
 
@@ -39,12 +40,35 @@ int main(int argc, char *argv[])
     QApplication::setApplicationName("Moondust Translator");
 
     QApplication a(argc, argv);
+
+    AppPathManager::initAppPath(argv[0]);
+
 #ifdef _WIN32
     for(int i = 0; i < argc; i++)
         args.push_back(QString::fromUtf8(argv[i]));
 #else
     args    = a.arguments();
 #endif
+
+    for(const QString &arg : args)
+    {
+        if(arg == "--install")
+        {
+            AppPathManager::install();
+            AppPathManager::initAppPath(argv[0]);
+
+            QApplication::quit();
+            QApplication::exit();
+            return 0;
+        }
+        else if(arg == "--version")
+        {
+            std::cout << V_INTERNAL_NAME " " V_FILE_VERSION << V_FILE_RELEASE "-" V_BUILD_VER << "-" << V_BUILD_BRANCH << std::endl;
+            QApplication::quit();
+            QApplication::exit();
+            return 0;
+        }
+    }
 
     TranslatorMain w;
 

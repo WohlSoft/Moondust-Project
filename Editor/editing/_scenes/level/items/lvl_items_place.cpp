@@ -51,12 +51,33 @@ ItemBlock *LvlScene::placeBlock(LevelBlock &block, bool toGrid)
         block.y = newPos.y();
     }
 
-    ItemBlock *BlockImage = new ItemBlock(this);
-    block.meta.userdata = BlockImage;
-    BlockImage->setBlockData(block, &mergedSet, &animator);
+    ItemBlock *blockImage = new ItemBlock(this);
+    block.meta.userdata = blockImage;
+    blockImage->setBlockData(block, &mergedSet, &animator);
 
-    if(m_pastingMode) BlockImage->setSelected(true);
-    return BlockImage;
+    if(m_pastingMode)
+        blockImage->setSelected(true);
+
+    return blockImage;
+}
+
+ItemBlock *LvlScene::placeBlock(const LevelBlock &block)
+{
+    obj_block &mergedSet = m_localConfigBlocks[block.id];
+    long animator = mergedSet.animator_id;
+    if(!mergedSet.isValid)
+    {
+        animator = 0;
+        mergedSet = m_configs->main_block[1];
+        mergedSet.image = m_dummyBlockImg;
+    }
+
+    ItemBlock *blockImage = new ItemBlock(this);
+    blockImage->setBlockData(block, &mergedSet, &animator);
+
+    if(m_pastingMode)
+        blockImage->setSelected(true);
+    return blockImage;
 }
 
 ItemBGO *LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
@@ -79,12 +100,34 @@ ItemBGO *LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
         bgo.y = newPos.y();
     }
 
-    ItemBGO *BGOItem = new ItemBGO(this);
-    bgo.meta.userdata = BGOItem;
-    BGOItem->setBGOData(bgo, &mergedSet, &animator);
+    ItemBGO *bgoItem = new ItemBGO(this);
+    bgo.meta.userdata = bgoItem;
+    bgoItem->setBGOData(bgo, &mergedSet, &animator);
 
-    if(m_pastingMode) BGOItem->setSelected(true);
-    return BGOItem;
+    if(m_pastingMode)
+        bgoItem->setSelected(true);
+
+    return bgoItem;
+}
+
+ItemBGO *LvlScene::placeBGO(const LevelBGO &bgo)
+{
+    obj_bgo &mergedSet = m_localConfigBGOs[bgo.id];
+    long animator = mergedSet.animator_id;
+    if(!mergedSet.isValid)
+    {
+        animator = 0;
+        mergedSet = m_configs->main_bgo[1];
+        mergedSet.image = m_dummyBgoImg;
+    }
+
+    ItemBGO *bgoItem = new ItemBGO(this);
+    bgoItem->setBGOData(bgo, &mergedSet, &animator);
+
+    if(m_pastingMode)
+        bgoItem->setSelected(true);
+
+    return bgoItem;
 }
 
 ItemNPC *LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
@@ -108,12 +151,34 @@ ItemNPC *LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         npc.y = newPos.y();
     }
 
-    ItemNPC *NPCItem = new ItemNPC(this);
-    npc.meta.userdata = NPCItem;
-    NPCItem->setNpcData(npc, &mergedSet, &animator);
+    ItemNPC *npcItem = new ItemNPC(this);
+    npc.meta.userdata = npcItem;
+    npcItem->setNpcData(npc, &mergedSet, &animator);
 
-    if(m_pastingMode) NPCItem->setSelected(true);
-    return NPCItem;
+    if(m_pastingMode)
+        npcItem->setSelected(true);
+
+    return npcItem;
+}
+
+ItemNPC *LvlScene::placeNPC(const LevelNPC &npc)
+{
+    obj_npc &mergedSet = m_localConfigNPCs[npc.id];
+    long animator = mergedSet.animator_id;
+    if(!mergedSet.isValid)
+    {
+        animator = 0;
+        mergedSet = m_configs->main_npc[1];
+        mergedSet.image = m_dummyNpcImg;
+    }
+
+    ItemNPC *npcItem = new ItemNPC(this);
+    npcItem->setNpcData(npc, &mergedSet, &animator);
+
+    if(m_pastingMode)
+        npcItem->setSelected(true);
+
+    return npcItem;
 }
 
 ItemPhysEnv *LvlScene::placeEnvironmentZone(LevelPhysEnv &water, bool toGrid)
@@ -130,25 +195,43 @@ ItemPhysEnv *LvlScene::placeEnvironmentZone(LevelPhysEnv &water, bool toGrid)
     water.meta.userdata = PhysEnvItem;
     PhysEnvItem->setPhysEnvData(water);
 
-    if(m_pastingMode) PhysEnvItem->setSelected(true);
+    if(m_pastingMode)
+        PhysEnvItem->setSelected(true);
+
     return PhysEnvItem;
 }
 
+ItemPhysEnv *LvlScene::placeEnvironmentZone(const LevelPhysEnv &water)
+{
+    ItemPhysEnv *physEnvItem = new ItemPhysEnv(this);
+    physEnvItem->setPhysEnvData(water);
 
-ItemPlayerPoint *LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
+    if(m_pastingMode)
+        physEnvItem->setSelected(true);
+
+    return physEnvItem;
+}
+
+
+ItemPlayerPoint *LvlScene::placePlayerPoint(const PlayerPoint &plr, bool init)
 {
     ItemPlayerPoint *player = nullptr;
     bool found = false;
+
     if(!init)
     {
-        foreach(QGraphicsItem *plrt, this->items())
+        foreach(QGraphicsItem *plrt, m_itemsPlayers)
         {
-            if(
-                (plrt->data(ITEM_TYPE).toString() == "playerPoint") &&
-                ((unsigned int)plrt->data(ITEM_ARRAY_ID).toInt() == plr.id)
-            )
+            if(plrt->data(ITEM_IS_ITEM).isNull() || !plrt->data(ITEM_IS_ITEM).toBool())
+                continue;
+
+            int objType = plrt->data(ITEM_TYPE_INT).toInt();
+            unsigned int arrId = plrt->data(ITEM_ARRAY_ID).toUInt();
+
+            if(objType == ItemTypes::LVL_Player && arrId == plr.id)
             {
                 player = dynamic_cast<ItemPlayerPoint *>(plrt);
+                Q_ASSERT(player);
                 found = true;
                 break;
             }
@@ -161,13 +244,10 @@ ItemPlayerPoint *LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
         player->setPos(plr.x, plr.y);
         player->arrayApply();
     }
-    else
+    else if(plr.h != 0 || plr.w != 0 || plr.x != 0 || plr.y != 0)
     {
-        if((plr.h != 0) || (plr.w != 0) || (plr.x != 0) || (plr.y != 0))
-        {
-            player = new ItemPlayerPoint(this);
-            player->setPointData(plr, init);
-        }
+        player = new ItemPlayerPoint(this);
+        player->setPointData(plr, init);
     }
 
     return player;
@@ -176,10 +256,10 @@ ItemPlayerPoint *LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 
 void LvlScene::placeDoor(LevelDoor &door, bool toGrid)
 {
-    if(((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_o) && (!door.lvl_i)))
+    if((!door.lvl_o && !door.lvl_i) || (door.lvl_o && !door.lvl_i))
         placeDoorEnter(door, toGrid, true);
 
-    if(((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_i)))
+    if((!door.lvl_o && !door.lvl_i) || door.lvl_i)
         placeDoorExit(door, toGrid, true);
 }
 

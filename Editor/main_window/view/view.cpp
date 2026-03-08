@@ -176,26 +176,46 @@ void MainWindow::customGrid(bool)
 void MainWindow::on_actionAnimation_triggered(bool checked)
 {
     GlobalSettings::LvlOpts.animationEnabled = checked;
-    if(activeChildWindow() == WND_Level)
+
+    switch(activeChildWindow())
     {
-        LevelEdit *e=activeLvlEditWin(); if(!e) return;
-        LvlScene  *s=e->scene; if(!s) return;
+    case WND_Level:
+    {
+        LevelEdit *e = activeLvlEditWin();
+        if(!e)
+            return;
+
+        LvlScene  *s = e->scene;
+        if(!s)
+            return;
+
         if(GlobalSettings::LvlOpts.animationEnabled)
             s->startAnimation();
         else
             s->stopAnimation();
+
         s->m_opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
+        break;
     }
-    else
-    if(activeChildWindow() == WND_World)
+
+    case WND_World:
     {
-        activeWldEditWin()->scene->m_opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
+        WorldEdit *e = activeWldEditWin();
+        if(!e)
+            return;
+
+        WldScene  *s = e->scene;
+        if(!s)
+            return;
+
+        s->m_opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
+
         if(GlobalSettings::LvlOpts.animationEnabled)
-        {
             activeWldEditWin()->scene->startAnimation();
-        }
         else
             activeWldEditWin()->scene->stopAnimation();
+        break;
+    }
     }
 }
 

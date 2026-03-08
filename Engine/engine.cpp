@@ -203,7 +203,7 @@ void PGEEngineApp::unloadAll()
 //    argc   = m_args.size();
 //    //Generating application path
 //    //Init system paths
-//    AppPathManager::initAppPath(argv[0]);
+//    EnginePathMan::initAppPath(argv[0]);
 //    enable(QAPP);
 //    return m_qApp;
 //}
@@ -477,8 +477,8 @@ bool PGEEngineApp::parseLowArgs(const std::vector<std::string> &args)
             //PGEEngineApp  lib;
             //lib.loadQApp(argc, argv);
             //FIXME: Implement installing on STL-only!
-            AppPathManager::install();
-            AppPathManager::initAppPath();
+            EnginePathMan::install();
+            EnginePathMan::initAppPath();
             return false;
         }
         else if(arg == "--help")
@@ -720,7 +720,7 @@ void PGEEngineApp::parseHighArgs(const std::vector<std::string> &args)
 
 void PGEEngineApp::createConfigsDir()
 {
-    std::string configPath = AppPathManager::userAppDirSTD() + "/" +  "configs";
+    std::string configPath = EnginePathMan::userAppDirSTD() + "configs";
     DirMan configDir(configPath);
     //Create empty config directory if not exists
     if(!configDir.exists())

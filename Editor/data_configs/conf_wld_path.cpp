@@ -25,7 +25,6 @@
 
 bool DataConfig::loadWorldPath(obj_w_path &spath, QString section, obj_w_path *merge_with, QString iniFile, IniProcessing *setup)
 {
-    bool valid = true;
     bool internal = !setup;
     QString errStr;
     if(internal)
@@ -43,11 +42,13 @@ bool DataConfig::loadWorldPath(obj_w_path &spath, QString section, obj_w_path *m
         addError(errStr);
         spath.isValid = false;
     }
+
     spath.m_itemType = ItemTypes::WLD_Path;
     closeSection(setup);
     if(internal)
         delete setup;
-    return valid;
+
+    return spath.isValid;
 }
 
 void DataConfig::loadWorldPaths()
@@ -56,6 +57,7 @@ void DataConfig::loadWorldPaths()
 
     obj_w_path sPath;
     unsigned long path_total = 0;
+    unsigned long soft_limit = 0;
     bool useDirectory = false;
 
     QString scene_ini = getFullIniPath("wld_paths.ini");
@@ -72,6 +74,7 @@ void DataConfig::loadWorldPaths()
         return;
     {
         path_total = setup.value("total", 0).toUInt();
+        setup.read("soft-limit", soft_limit, 0);
         defaultGrid.paths = setup.value("grid", defaultGrid.paths).toUInt();
         total_data += path_total;
         setup.read("config-dir", folderWldPaths.items, "");
@@ -107,6 +110,7 @@ void DataConfig::loadWorldPaths()
             valid = loadWorldPath(sPath, "path", nullptr, QString("%1/path-%2.ini").arg(folderWldPaths.items).arg(i));
         else
             valid = loadWorldPath(sPath, QString("path-%1").arg(i), 0, "", &setup);
+
         /***************Load image*******************/
         if(valid)
         {
@@ -126,6 +130,21 @@ void DataConfig::loadWorldPaths()
                                        sPath.icon);
         }
         /***************Load image*end***************/
+        else if(soft_limit > 0 && i > soft_limit)
+        {
+            // If resource after soft-limit is invalid, consider previous is the total number:
+            --i;
+            total_data -= path_total;
+            total_data += i;
+            path_total = i;
+            ConfStatus::total_wpath = signed(path_total);
+            main_wpaths.shrinkTo(i);
+            // Remove last error
+            errorsList[ERR_GLOBAL].pop_back();
+            emit progressMax(int(i));
+            break;
+        }
+
         sPath.setup.id = i;
         main_wpaths.storeElement(int(i), sPath, valid);
 

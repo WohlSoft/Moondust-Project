@@ -40,7 +40,8 @@ void ItemPlayerPoint::construct()
     m_gridSize = 16;
     m_offset_x = 0;
     m_offset_y = 0;
-    setData(ITEM_TYPE, "playerPoint");
+    setData(LvlScene::ITEM_TYPE, "playerPoint");
+    setData(LvlScene::ITEM_TYPE_INT, ItemTypes::LVL_Player);
 }
 
 QRectF ItemPlayerPoint::boundingRect() const
@@ -63,14 +64,13 @@ void ItemPlayerPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
 ItemPlayerPoint::~ItemPlayerPoint()
 {
     m_scene->unregisterElement(this);
+    m_scene->m_itemsPlayers.remove(m_data.id);
 }
 
 void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if(!m_scene->m_busyMode)
-    {
+    if(!m_scene->getEditFlagBusyMode())
         m_scene->m_contextMenuIsOpened = true; //bug protector
-    }
 
     //Remove selection from non-block items
     if(!this->isSelected())
@@ -115,7 +115,7 @@ void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         //LevelData selData;
         foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "playerPoint")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Player)
             {
                 ItemPlayerPoint *p = qgraphicsitem_cast<ItemPlayerPoint*>(SelItem);
                 Q_ASSERT(p);
@@ -129,7 +129,7 @@ void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         //LevelData selData;
         foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString() == "playerPoint")
+            if(SelItem->data(LvlScene::ITEM_TYPE_INT).toInt() == ItemTypes::LVL_Player)
             {
                 ItemPlayerPoint *p = qgraphicsitem_cast<ItemPlayerPoint*>(SelItem);
                 Q_ASSERT(p);
@@ -182,13 +182,14 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
         m_gridOffsetX = -1 * qRound(qreal((int)m_data.w % m_gridSize) / 2);
     else
         m_gridOffsetX = qRound(qreal(m_gridSize - (int)m_data.w) / 2);
+
     m_gridOffsetX += (m_gridSize / 2);
 
     m_gridOffsetY = -m_data.h % m_gridSize;
 
     this->setPos(m_data.x, m_data.y);
     this->setZValue(m_scene->Z_Player);
-    this->setData(ITEM_ARRAY_ID, QString::number(m_data.id));
+    this->setData(LvlScene::ITEM_ARRAY_ID, m_data.id);
     this->setFlag(QGraphicsItem::ItemIsSelectable, true);
     this->setFlag(QGraphicsItem::ItemIsMovable, true);
 
@@ -208,8 +209,8 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
     m_offset_x = qRound(qreal(pnt.w - m_currentImage.width()) / 2.0);
     m_offset_y = pnt.h - m_currentImage.height();
 
-    this->setData(ITEM_WIDTH, (int)pnt.w);
-    this->setData(ITEM_HEIGHT, (int)pnt.h);
+    this->setData(LvlScene::ITEM_WIDTH, (int)pnt.w);
+    this->setData(LvlScene::ITEM_HEIGHT, (int)pnt.h);
 
     //Apply new image
     changeDirection(m_data.direction);
@@ -219,7 +220,6 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
 
 void ItemPlayerPoint::arrayApply()
 {
-
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
@@ -238,6 +238,7 @@ void ItemPlayerPoint::arrayApply()
     //Update R-tree innex
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
+    m_scene->m_itemsPlayers.insert(m_data.id, this);
 }
 
 void ItemPlayerPoint::removeFromArray()

@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QApplication>
+#include <QMouseEvent>
 #include <common_features/items.h>
 #include <common_features/graphics_funcs.h>
 
@@ -42,54 +44,97 @@ void TilesetItemButton::setConfig(DataConfig *config)
     m_config = config;
 }
 
+static void s_drawRedCross(int w, int h, QPixmap &pix)
+{
+    pix = QPixmap(w, h);
+    QPainter p(&pix);
+    p.fillRect(0, 0, w, h, Qt::black);
+    p.setPen(QPen(Qt::red, 4));
+    p.drawLine(0, 0, w, h);
+    p.drawLine(w, 0, 0, h);
+    p.end();
+}
+
 void TilesetItemButton::applyItem(const int &type_i, const int &id, const int &width, const int &height)
 {
     int wid = (width == -1 ? contentsRect().width() : width);
     int hei = (height == -1 ? contentsRect().height() : height);
     QPixmap p;
-    Items::getItemGFX(type_i, id, p, scn, false, QSize(wid, hei));
-    setToolTip(Items::getTilesetToolTip(type_i, id, scn));
-    if(p.isNull())
+
+    if(!Items::isValid(type_i, id))
     {
-        m_drawItem = QPixmap(wid, hei);
+        setToolTip(QString("<h2>%1</h2>%2").arg(tr("Unavailable item")).arg(tr("This item can not be used in this time.")));
+        s_drawRedCross(wid, hei, m_drawItem);
+        setEnabled(false);
+        setFrameStyle(QFrame::Panel | QFrame::Plain);
         return;
     }
+
+    Items::getItemGFX(type_i, id, p, scn, false, QSize(wid, hei));
+    setToolTip(Items::getTilesetToolTip(type_i, id, scn));
+
+    if(p.isNull())
+    {
+        s_drawRedCross(wid, hei, m_drawItem);
+        return;
+    }
+
     m_drawItem = p;
     m_id = (unsigned int)id;
     m_itemType = static_cast<ItemTypes::itemTypes>(type_i);
+    setEnabled(true);
+    setFrameStyle(QFrame::Panel | QFrame::Raised);
 }
 
 void TilesetItemButton::applySize(const int &width, const int &height)
 {
-    setMinimumSize(width+lineWidth()*2,height+lineWidth()*2);
-    setMaximumSize(width+lineWidth()*2,height+lineWidth()*2);
+    setMinimumSize(width + lineWidth() * 2, height + lineWidth() * 2);
+    setMaximumSize(width + lineWidth() * 2, height + lineWidth() * 2);
 }
 
 void TilesetItemButton::paintEvent(QPaintEvent *ev)
 {
     QPainter painter;
     painter.begin(this);
-    painter.fillRect(contentsRect(), Qt::darkGray);
+    painter.fillRect(contentsRect(), qApp->palette().mid());
 
     if(!m_drawItem.isNull())
-        painter.drawPixmap(contentsRect(),m_drawItem,m_drawItem.rect());
+        painter.drawPixmap(contentsRect(), m_drawItem,m_drawItem.rect());
+
+    if(!isEnabled())
+    {
+        painter.setOpacity(0.5);
+        painter.fillRect(contentsRect(), Qt::gray);
+    }
 
     painter.end();
 
     QFrame::paintEvent(ev);
 }
 
-void TilesetItemButton::mousePressEvent(QMouseEvent *)
+void TilesetItemButton::mousePressEvent(QMouseEvent *event)
 {
-    if(isItemSet())
-        emit clicked(static_cast<int>(m_itemType), (unsigned long)m_id);
-    setFrameStyle(QFrame::Panel | QFrame::Sunken);
+    if(event->button() == Qt::LeftButton)
+        setFrameStyle(QFrame::Panel | QFrame::Sunken);
 }
 
-void TilesetItemButton::mouseReleaseEvent(QMouseEvent *)
+void TilesetItemButton::mouseReleaseEvent(QMouseEvent *event)
 {
-    setFrameStyle(QFrame::Panel | QFrame::Raised);
+    if(event->button() == Qt::RightButton)
+    {
+        if(isItemSet())
+            emit contextMenuRequest(event->globalPos(), this);
+    }
+
+    else if(event->button() == Qt::LeftButton)
+    {
+        setFrameStyle(QFrame::Panel | QFrame::Raised);
+
+        if(isItemSet())
+            emit clicked(static_cast<int>(m_itemType), (unsigned long)m_id);
+    }
 }
+
 unsigned int TilesetItemButton::id() const
 {
     return m_id;
@@ -97,12 +142,10 @@ unsigned int TilesetItemButton::id() const
 
 bool TilesetItemButton::isItemSet()
 {
-    return !m_drawItem.isNull() && m_id!=0;
+    return !m_drawItem.isNull() && m_id != 0;
 }
 
 ItemTypes::itemTypes TilesetItemButton::itemType() const
 {
     return m_itemType;
 }
-
-

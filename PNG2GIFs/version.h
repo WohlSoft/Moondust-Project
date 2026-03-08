@@ -17,7 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../pge_version.h" //Global Project version file
+//Global Project version file
+#include "../pge_version.h" // IWYU pragma: export
 
 #ifndef EDITOR_VERSION_H
 #define EDITOR_VERSION_H

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="text/x-smbx64-level">
+    <sub-class-of type="text/plain"/>
+    <icon name="x-application-smbx64-level"/>
+    <comment>Level file for SMBX of format 64 or 38A (LVL)</comment>
+    <comment xml:lang="ru_RU">Файл уровня для SMBX формата 64 или 38A (LVL)</comment>
+    <glob pattern="*.lvl"/>
+  </mime-type>
+
+  <mime-type type="text/x-smbx64-world">
+    <sub-class-of type="text/plain"/>
+    <icon name="x-application-smbx64-world"/>
+    <comment>World map file for SMBX of format 64 or 38A (LVL)</comment>
+    <comment xml:lang="ru_RU">Файл карты мира для SMBX формата 64 или 38A (LVL)</comment>
+    <glob pattern="*.wld"/>
+  </mime-type>
+
+  <mime-type type="text/x-pgex-level">
+    <sub-class-of type="text/plain"/>
+    <icon name="x-application-pgex-level"/>
+    <comment>Moondust Project level file (LVLX)</comment>
+    <comment xml:lang="ru_RU">Файл уровня Moondust Project (LVLX)</comment>
+    <glob pattern="*.lvlx"/>
+  </mime-type>
+
+  <mime-type type="text/x-pgex-world">
+    <sub-class-of type="text/plain"/>
+    <icon name="x-application-pgex-world"/>
+    <comment>Moondust Project world map file (WLDX)</comment>
+    <comment xml:lang="ru_RU">Файл карты мира Moondust Project (WLDX)</comment>
+    <glob pattern="*.wldx"/>
+  </mime-type>
+</mime-info>

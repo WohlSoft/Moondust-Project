@@ -25,15 +25,11 @@
 #include <QList>
 #include <ConfigPackManager/level/config_block.h>
 
-struct obj_block
-{
-    bool isValid = false;
-    unsigned long animator_id = 0;
-    QPixmap *cur_image = nullptr;
-    QPixmap *cur_icon = nullptr;
-    QPixmap image;
-    QPixmap icon;
+#include "obj_base_item.h"
 
+
+struct obj_block : obj_base_item
+{
     /*!
      * \brief Quickly copies all properties except images
      * \param Target bgo configuration body

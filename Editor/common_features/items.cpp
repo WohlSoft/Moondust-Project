@@ -16,15 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QGraphicsScene>
 #include <common_features/main_window_ptr.h>
 #include <common_features/themes.h>
 #include <common_features/graphics_funcs.h>
 #include <Utils/maths.h>
 
+#include "../mainwindow.h"
 #include <main_window/dock/item_tooltip_make.hpp>
+#include <data_configs/obj_block.h>
+#include <data_configs/obj_bgo.h>
+#include <data_configs/obj_npc.h>
+#include <data_configs/obj_wld_items.h>
+#include <pge_app_path.h>
 
 #include "items.h"
-#include "app_path.h"
+
 
 void Items::getItemGFX(const obj_npc *inObj, QPixmap &outImg, bool whole, QSize targetSize)
 {
@@ -119,6 +126,41 @@ void Items::getItemGFX(const obj_wld_generic *inObj, QPixmap &outImg, bool whole
         ;
     }
     TPL_getItemGFX(inObj, outImg, whole, targetSize, imgType);
+}
+
+bool Items::isValid(int itemType, unsigned long ItemID)
+{
+    DataConfig &config = MainWinConnect::pMainWin->configs;
+
+    if(ItemID == 0)
+        return false;
+
+    switch(itemType)
+    {
+    case ItemTypes::LVL_Block:
+        return ItemID <= (unsigned long)config.main_block.stored();
+
+    case ItemTypes::LVL_BGO:
+        return ItemID <= (unsigned long)config.main_bgo.stored();
+
+    case ItemTypes::LVL_NPC:
+        return ItemID <= (unsigned long)config.main_npc.stored();
+
+    case ItemTypes::WLD_Tile:
+        return ItemID <= (unsigned long)config.main_wtiles.stored();
+
+    case ItemTypes::WLD_Scenery:
+        return ItemID <= (unsigned long)config.main_wscene.stored();
+
+    case ItemTypes::WLD_Path:
+        return ItemID <= (unsigned long)config.main_wpaths.stored();
+
+    case ItemTypes::WLD_Level:
+        return ItemID <= (unsigned long)config.main_wlevels.stored();
+
+    default:
+        return false;
+    }
 }
 
 void Items::getItemGFXCW(int itemType, unsigned long ItemID, QPixmap &outImg, bool whole, QSize targetSize)

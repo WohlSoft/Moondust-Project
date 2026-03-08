@@ -650,7 +650,7 @@ Important: There are only level and world map files gets being converted. Any in
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
-        <location filename="../Graphics/gifs2png.cpp" line="291"/>
+        <location filename="../Graphics/gifs2png.cpp" line="292"/>
         <source>Start</source>
         <translation type="unfinished">Iniciar</translation>
     </message>
@@ -743,7 +743,7 @@ Important: There are only level and world map files gets being converted. Any in
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="289"/>
+        <location filename="../Graphics/gifs2png.cpp" line="290"/>
         <source>Stop</source>
         <translation type="unfinished">Parar</translation>
     </message>

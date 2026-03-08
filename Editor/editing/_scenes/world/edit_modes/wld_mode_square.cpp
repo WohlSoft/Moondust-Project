@@ -47,16 +47,17 @@ void WLD_ModeRect::set()
     s->resetResizers();
     s->m_pointSelector.unserPointSelector();
 
-    s->m_eraserIsEnabled = false;
-    s->m_pastingMode = false;
-    s->m_busyMode = true;
-    s->m_disableMoveItems = false;
+    s->setEditFlagEraser(false);
+    s->setEditFlagPasteMode(false);
+    s->setEditFlagBusyMode(true);
+    s->setEditFlagNoMoveItems(false);
 
-    s->m_viewPort->setInteractive(true);
-    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_square_fill));
-    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
-    s->m_viewPort->setRenderHint(QPainter::Antialiasing, true);
-    s->m_viewPort->viewport()->setMouseTracking(true);
+    auto *vp = s->curViewPort();
+    vp->setInteractive(true);
+    vp->setCursor(Themes::Cursor(Themes::cursor_square_fill));
+    vp->setDragMode(QGraphicsView::NoDrag);
+    vp->setRenderHint(QPainter::Antialiasing, true);
+    vp->viewport()->setMouseTracking(true);
 }
 
 void WLD_ModeRect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)

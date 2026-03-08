@@ -67,5 +67,6 @@
         <file>21.png</file>
         <file>21_dark.png</file>
         <file>21_n.png</file>
+        <file>init_new_sign.png</file>
     </qresource>
 </RCC>

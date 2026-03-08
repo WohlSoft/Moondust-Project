@@ -394,7 +394,7 @@
       <string>LunaLUA scripts</string>
      </property>
      <property name="icon">
-      <iconset resource="_resources/editor.qrc">
+      <iconset resource="_resources/engines/engines.qrc">
        <normaloff>:/engines/lunalua/16.png</normaloff>:/engines/lunalua/16.png</iconset>
      </property>
      <addaction name="actionLunaLUA_lvl"/>
@@ -411,9 +411,15 @@
     <property name="title">
      <string>Configuration</string>
     </property>
+    <widget class="QMenu" name="menuConfigProfiles">
+     <property name="title">
+      <string>Select configuration profile</string>
+     </property>
+     <addaction name="actionReConfigure"/>
+    </widget>
     <addaction name="actionCurConfig"/>
     <addaction name="actionLoad_configs"/>
-    <addaction name="actionReConfigure"/>
+    <addaction name="menuConfigProfiles"/>
     <addaction name="separator"/>
     <addaction name="actionChangeConfig"/>
    </widget>
@@ -2888,8 +2894,12 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
   </action>
   <action name="actionReConfigure">
+   <property name="icon">
+    <iconset resource="_resources/dock/dock.qrc">
+     <normaloff>:/dock/pencil_16x16.png</normaloff>:/dock/pencil_16x16.png</iconset>
+   </property>
    <property name="text">
-    <string>Run configure tool...</string>
+    <string>New profile...</string>
    </property>
   </action>
   <action name="actionCreateScriptLocal">
@@ -3000,8 +3010,9 @@ Objects will not be able to be placed on top of each other, and attempting to do
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="_resources/editor.qrc"/>
   <include location="_resources/appicon/appicon.qrc"/>
+  <include location="_resources/dock/dock.qrc"/>
+  <include location="_resources/engines/engines.qrc"/>
   <include location="_resources/sections/sections.qrc"/>
   <include location="_resources/toolbar/toolbar.qrc"/>
  </resources>

@@ -98,6 +98,21 @@ public:
         m_total_elements = 0;
     }
 
+    /*!
+     * \brief Shrink the store size to value, but don't reallocate the store itself!
+     */
+    void shrinkTo(int number)
+    {
+        if(number == 0 || m_data == nullptr)
+            return;
+
+        if(number > m_total_elements)
+            return; // It's shrink! Not expand!
+
+        m_size = number + 1;
+        m_total_elements = number;
+    }
+
     /**
      * @brief Allocate array of required size. Everything which was previously will be deleted
      * @param number Number of reuired element slots

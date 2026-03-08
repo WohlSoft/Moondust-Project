@@ -11,7 +11,7 @@
 #ifdef PGE_ENABLE_XTCONVERT
 #   include <XTConvert/xt_convert.h>
 #endif
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <QMessageBox>
 
 void MaintainerMain::showWIP()

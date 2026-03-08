@@ -99,8 +99,8 @@ void MainWindow::on_actionReload_triggered()
         }
 
         qreal lastZoom = lvlEdit->getZoomF();
-        long posX = lvlEdit->scene->m_viewPort->horizontalScrollBar()->value();
-        long posY = lvlEdit->scene->m_viewPort->verticalScrollBar()->value();
+        long posX = lvlEdit->scene->curViewPort()->horizontalScrollBar()->value();
+        long posY = lvlEdit->scene->curViewPort()->verticalScrollBar()->value();
         lvlEdit->close();//Close old widget without closing of sub-window
         //Get geometry of current subwindow
         wnGeom = LastActiveSubWindow->geometry();
@@ -139,8 +139,8 @@ void MainWindow::on_actionReload_triggered()
 
             setCurrentLevelSection(lastSection);
             child->setZoomF(lastZoom);
-            child->scene->m_viewPort->horizontalScrollBar()->setValue(static_cast<int>(posX));
-            child->scene->m_viewPort->verticalScrollBar()->setValue(static_cast<int>(posY));
+            child->scene->curViewPort()->horizontalScrollBar()->setValue(static_cast<int>(posX));
+            child->scene->curViewPort()->verticalScrollBar()->setValue(static_cast<int>(posY));
 
             if(GlobalSettings::autoPlayMusic)
                 ui->actionPlayMusic->setChecked(true);
@@ -260,8 +260,8 @@ void MainWindow::on_actionReload_triggered()
         wnGeom = LastActiveSubWindow->geometry();
         QMdiSubWindow *worldWindow = LastActiveSubWindow;
         qreal lastZoom = wldEdit->getZoomF();
-        long posX = wldEdit->scene->m_viewPort->horizontalScrollBar()->value();
-        long posY = wldEdit->scene->m_viewPort->verticalScrollBar()->value();
+        long posX = wldEdit->scene->curViewPort()->horizontalScrollBar()->value();
+        long posY = wldEdit->scene->curViewPort()->verticalScrollBar()->value();
         wldEdit->close();
 
         WorldEdit *child = new WorldEdit(this, worldWindow);
@@ -286,8 +286,8 @@ void MainWindow::on_actionReload_triggered()
             }
 
             child->setZoomF(lastZoom);
-            child->scene->m_viewPort->horizontalScrollBar()->setValue(static_cast<int>(posX));
-            child->scene->m_viewPort->verticalScrollBar()->setValue(static_cast<int>(posY));
+            child->scene->curViewPort()->horizontalScrollBar()->setValue(static_cast<int>(posX));
+            child->scene->curViewPort()->verticalScrollBar()->setValue(static_cast<int>(posY));
             statusBar()->showMessage(tr("World map file loaded"), 2000);
             child->showCustomStuffWarnings();
         }

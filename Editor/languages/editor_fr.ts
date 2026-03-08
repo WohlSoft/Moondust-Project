@@ -191,10 +191,6 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>Délai (secondes) :</translation>
     </message>
     <message>
-        <source>Direction</source>
-        <translation>Direction</translation>
-    </message>
-    <message>
         <source>Left</source>
         <translation>Gauche</translation>
     </message>
@@ -376,6 +372,16 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
         <comment>Explanation for the opacity of locked items</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When this option is enabled, NPC direction will be always set to given value
+with no matter what config pack default value is set. However, some NPC might
+have &quot;random&quot; direction being disabled, so, it will not work for these NPC.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Override initial direction</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -746,6 +752,33 @@ Note: most of config packs gets being updates with Moondust Project togeter. The
     </message>
 </context>
 <context>
+    <name>ConfigProfileSelect</name>
+    <message>
+        <source>Integration profile selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the integration profile to start this config pack:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;New profile&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new integration profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No selected profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select profile from the list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConfigStatus</name>
     <message>
         <source>Current configuration status</source>
@@ -1055,6 +1088,61 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     <message>
         <source>Remove</source>
         <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
+    <name>DebuggerStatsModel</name>
+    <message>
+        <source>Player start points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished">Blocs</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <translation type="unfinished">Objets de l&apos;arrière-plan</translation>
+    </message>
+    <message>
+        <source>Non-playable characters/items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warp entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical env. zones</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain tiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation type="unfinished">Paysage</translation>
+    </message>
+    <message>
+        <source>Path cells</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level entrances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music change boxes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Item type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation type="unfinished">Compter</translation>
     </message>
 </context>
 <context>
@@ -1928,6 +2016,13 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <message>
         <source>Array-ID: %1</source>
         <translation type="unfinished">Matrice de ID&#xa0;: %1</translation>
+    </message>
+    <message>
+        <source>Placing a path cell at the same position as the
+level entry point may cause an inability to
+stop on this level entry point on some engines.
+Ignore this notice if this was done intentionally.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4221,22 +4316,6 @@ Veuillez reconvertir vos images dans un format valide et essayer de recharger ce
         <comment>Level properties...</comment>
         <translation>Propriétés du niveau…</translation>
     </message>
-    <message>
-        <source>Player start points:		%1
-Blocks:			%2
-Background objects&apos;s:	%3
-Non-playable characters&apos;s:	%4
-Warp entries:		%5
-Physical env. zones:	%6
-</source>
-        <translation>Point de démarrage du joueur :	%1
-Blocs :								%2
-Objets d&apos;arrière-plan :				%3
-Personnages non-joueurs :			%4
-Entrées de passage : 				%5
-Zones d&apos;env. physique : 			%6
-</translation>
-    </message>
 </context>
 <context>
     <name>LvlSearchBox</name>
@@ -5495,10 +5574,6 @@ affiché le(s) personnage(s) jouable(s) actuel(s) et le nombre de vies.</transla
         <translation>Éditeur de script</translation>
     </message>
     <message>
-        <source>Run configure tool...</source>
-        <translation>Exécuter l&apos;outil de configuration…</translation>
-    </message>
-    <message>
         <source>Open local script</source>
         <translation>Ouvrir le script local</translation>
     </message>
@@ -6532,6 +6607,14 @@ Please, choose the Moondust Maintainer application yourself!</source>
         <translation>Impossible de lancer l&apos;utilitaire, Moondust Maintainer est introuvable&#xa0;: 
 %1
 Veuillez sélectionner l&apos;application Moondust Maintainer pat vous-même&#x202f;!</translation>
+    </message>
+    <message>
+        <source>Select configuration profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New profile...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8474,6 +8557,33 @@ Des données pourraient être corrompues !</translation>
         <source>Group:</source>
         <translation>Groupe :</translation>
     </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished">Personnalisé</translation>
+    </message>
+    <message>
+        <source>&lt;Save file first&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy graphic to custom folder</source>
+        <translation type="unfinished">Copier les éléments graphiques dans un dossier personnalisé</translation>
+    </message>
+    <message>
+        <source>Copy graphic to episode folder</source>
+        <translation type="unfinished">Copier les éléments graphiques vers le dossier de l&apos;épisode</translation>
+    </message>
+</context>
+<context>
+    <name>TilesetItemButton</name>
+    <message>
+        <source>Unavailable item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This item can not be used in this time.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TipOfDay</name>
@@ -9124,20 +9234,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>Ce niveau contient des fichiers d&apos;éléments graphiques personnalisés incorrects.
 Vous verrez des « fantômes » ou d&apos;autres images factices au lieu de vos éléments graphiques personnalisés. Cela est probablement dû à une mauvaise conversion, comme le passage de BMP à GIF.
 Veuillez reconvertir vos images dans un format valide et essayer de recharger ce niveau.</translation>
-    </message>
-    <message>
-        <source>Tiles:		%1
-Sceneries:			%2
-Paths:	%3
-Levels:	%4
-Music boxes:		%5
-</source>
-        <translation>Tuiles :				%1
-Paysages :			%2
-Chemins :			%3
-Niveaux :			%4
-Boîtes à musique :	%5
-</translation>
     </message>
 </context>
 <context>

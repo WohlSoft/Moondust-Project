@@ -219,10 +219,6 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>Забавяне (секунди):</translation>
     </message>
     <message>
-        <source>Direction</source>
-        <translation>Посока</translation>
-    </message>
-    <message>
         <source>Left</source>
         <translation>Наляво</translation>
     </message>
@@ -376,6 +372,16 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
         <comment>Explanation for the opacity of locked items</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When this option is enabled, NPC direction will be always set to given value
+with no matter what config pack default value is set. However, some NPC might
+have &quot;random&quot; direction being disabled, so, it will not work for these NPC.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Override initial direction</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -746,6 +752,33 @@ Note: most of config packs gets being updates with Moondust Project togeter. The
     </message>
 </context>
 <context>
+    <name>ConfigProfileSelect</name>
+    <message>
+        <source>Integration profile selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the integration profile to start this config pack:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;New profile&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new integration profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No selected profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select profile from the list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConfigStatus</name>
     <message>
         <source>Current configuration status</source>
@@ -1052,6 +1085,61 @@ Please save them before doing anything else.</source>
     <message>
         <source>Remove</source>
         <translation>Премахване</translation>
+    </message>
+</context>
+<context>
+    <name>DebuggerStatsModel</name>
+    <message>
+        <source>Player start points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished">Блокове</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Non-playable characters/items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warp entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical env. zones</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain tiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation type="unfinished">Пейзажи</translation>
+    </message>
+    <message>
+        <source>Path cells</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level entrances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music change boxes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Item type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1924,6 +2012,13 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Array-ID: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Placing a path cell at the same position as the
+level entry point may cause an inability to
+stop on this level entry point on some engines.
+Ignore this notice if this was done intentionally.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4176,16 +4271,6 @@ All elements of this layer will be removed too!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Player start points:		%1
-Blocks:			%2
-Background objects&apos;s:	%3
-Non-playable characters&apos;s:	%4
-Warp entries:		%5
-Physical env. zones:	%6
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Search User Backgrounds %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5605,10 +5690,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Run configure tool...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Open local script</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6449,6 +6530,14 @@ Please, choose the engine application yourself!</source>
         <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select configuration profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New profile...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8362,6 +8451,33 @@ Data may be corrupted!</source>
         <source>Group:</source>
         <translation type="unfinished">Група:</translation>
     </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished">Потребителски</translation>
+    </message>
+    <message>
+        <source>&lt;Save file first&gt;</source>
+        <translation type="unfinished">&amp;lt;Първо запазете файла&amp;gt;</translation>
+    </message>
+    <message>
+        <source>Copy graphic to custom folder</source>
+        <translation type="unfinished">Копиране на графики в потребителска папка</translation>
+    </message>
+    <message>
+        <source>Copy graphic to episode folder</source>
+        <translation type="unfinished">Копиране на графики в папка на епизод</translation>
+    </message>
+</context>
+<context>
+    <name>TilesetItemButton</name>
+    <message>
+        <source>Unavailable item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This item can not be used in this time.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TipOfDay</name>
@@ -8981,15 +9097,6 @@ Bottom:	%4</source>
 </context>
 <context>
     <name>WldScene</name>
-    <message>
-        <source>Tiles:		%1
-Sceneries:			%2
-Paths:	%3
-Levels:	%4
-Music boxes:		%5
-</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Search User Tiles %1</source>
         <translation type="unfinished"></translation>

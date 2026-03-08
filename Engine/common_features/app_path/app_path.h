@@ -24,7 +24,7 @@
 
 extern std::string  ApplicationPathSTD;
 
-class AppPathManager
+class EnginePathMan
 {
 public:
 
@@ -44,6 +44,14 @@ public:
      * \return Path to ther writable user directory, always ends with a slash
      */
     static std::string userAppDirSTD();
+
+    /**
+     * @brief Default read-only path to hold general data files for Moondust aplications
+     * @return Path to read-only data path
+     *
+     * There are files such as translations, helper resources, and other stuff. On some platforms it might match to the application path.
+     */
+    static std::string dataDir();
 
     /*!
      * \brief Get the path to engine languages directory
@@ -84,9 +92,15 @@ private:
      * @brief Makes settings path if not exists
      */
     static void initSettingsPath();
+    static void initDataPath();
+    static void initIsPortable();
+
+    static bool m_isPortable;
     //! Full path to settings INI file
     static std::string m_settingsPath;
     static std::string m_userPath;
+    //! Path to read-only resources directory (on UNIX-like systems it might appear around the /usr/share/moondust-project/ directory)
+    static std::string m_dataPath;
 };
 
 #endif // APP_PATH_H

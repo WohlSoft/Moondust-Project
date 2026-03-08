@@ -20,7 +20,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <mainwindow.h>
 #include <common_features/logger.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <networking/engine_intproc.h>
 #include <cstring>
 
@@ -405,7 +405,7 @@ void PgeEngineIpcClient::sendLevelBuffer()
                    .arg(m_levelTestBuffer.meta.filename + ".lvl" + x);
     else
         sendLvlx = QString("SEND_LVLX: %1/%2%3\n")
-                   .arg(ApplicationPath)
+                   .arg(AppPathManager::dataDir())
                    .arg("_untitled.lvl").arg(x);
 
     if(m_levelTestBufferRaw.size() <= 0)
@@ -446,7 +446,7 @@ void PgeEngineIpcClient::sendLevelBufferMultipart()
                        .arg(m_levelTestBuffer.meta.filename + ".lvl" + x);
     else
         sendLvlx = QString("SEND_LVLX_PARTS: %1/%2%3\n")
-                       .arg(ApplicationPath)
+                       .arg(AppPathManager::dataDir())
                        .arg("_untitled.lvl").arg(x);
 
     if(m_levelTestBufferRaw.size() <= 0)

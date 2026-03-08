@@ -607,7 +607,7 @@ void WldSearchBox::on_mboxSelectAll_clicked()
 
 bool WldSearchBox::checkTileCriteria(QGraphicsItem *gri)
 {
-    if(gri->data(ITEM_TYPE).toString() != "TILE")
+    if(gri->data(WldScene::ITEM_TYPE_INT).toInt() != ItemTypes::WLD_Tile)
         return false;
 
     auto *it = qgraphicsitem_cast<ItemTile *>(gri);
@@ -624,7 +624,7 @@ bool WldSearchBox::checkTileCriteria(QGraphicsItem *gri)
 
 bool WldSearchBox::checkSceneryCriteria(QGraphicsItem *gri)
 {
-    if(gri->data(ITEM_TYPE).toString() != "SCENERY")
+    if(gri->data(WldScene::ITEM_TYPE_INT).toInt() != ItemTypes::WLD_Scenery)
         return false;
 
     auto *it = qgraphicsitem_cast<ItemScene *>(gri);
@@ -641,7 +641,7 @@ bool WldSearchBox::checkSceneryCriteria(QGraphicsItem *gri)
 
 bool WldSearchBox::checkPathCriteria(QGraphicsItem *gri)
 {
-    if(gri->data(ITEM_TYPE).toString() != "PATH")
+    if(gri->data(WldScene::ITEM_TYPE_INT).toInt() != ItemTypes::WLD_Path)
         return false;
 
     auto *it = qgraphicsitem_cast<ItemPath *>(gri);
@@ -658,7 +658,7 @@ bool WldSearchBox::checkPathCriteria(QGraphicsItem *gri)
 
 bool WldSearchBox::checkLevelCriteria(QGraphicsItem *gri)
 {
-    if(gri->data(ITEM_TYPE).toString() != "LEVEL")
+    if(gri->data(WldScene::ITEM_TYPE_INT).toInt() != ItemTypes::WLD_Level)
         return false;
 
     auto *it = qgraphicsitem_cast<ItemLevel *>(gri);
@@ -693,7 +693,7 @@ bool WldSearchBox::checkLevelCriteria(QGraphicsItem *gri)
 
 bool WldSearchBox::checkMusicBoxCriteria(QGraphicsItem *gri)
 {
-    if(gri->data(ITEM_TYPE).toString() != "MUSICBOX")
+    if(gri->data(WldScene::ITEM_TYPE_INT).toInt() != ItemTypes::WLD_MusicBox)
         return false;
 
     auto *it = qgraphicsitem_cast<ItemMusic *>(gri);

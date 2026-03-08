@@ -18,7 +18,7 @@
 
 #include <QStandardPaths>
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/util.h>
 #include <common_features/main_window_ptr.h>
 #include <editing/edit_world/world_edit.h>
@@ -142,6 +142,8 @@ void WorldEdit::ExportingReady() //slot
 
     qApp->processEvents();
     scene->stopAnimation(); //Reset animation to 0 frame
+    setUpdatesEnabled(false);
+
     if(hideMusic)
         scene->hideMusicBoxes(false);
     if(hidePathLevels)
@@ -150,50 +152,49 @@ void WorldEdit::ExportingReady() //slot
     QList<QGraphicsItem*> invisibleMetas;
     if(hideMetas)
     {
-        QList<QGraphicsItem*> allBlocks = scene->items();
-        for(QGraphicsItem* it : allBlocks)
+        foreach(QGraphicsItem* it, scene->m_itemsAll)
         {
-            if(it->data(ITEM_TYPE).toString() != "TILE" &&
-               it->data(ITEM_TYPE).toString() != "SCENERY" &&
-               it->data(ITEM_TYPE).toString() != "PATH" &&
-               it->data(ITEM_TYPE).toString() != "LEVEL")
+            int objType = it->data(WldScene::ITEM_TYPE_INT).toInt();
+
+            if(objType != ItemTypes::WLD_Tile && objType != ItemTypes::WLD_Scenery &&
+               objType != ItemTypes::WLD_Path && objType != ItemTypes::WLD_Level)
                 continue;
 
             //Exclude already hidden elements
             if(!it->isVisible())
                 continue;
 
-            if(it->data(ITEM_TYPE).toString() == "TILE")
+            if(objType == ItemTypes::WLD_Tile)
             {
                 auto *blk = dynamic_cast<ItemTile*>(it);
-                if(blk && blk->data(ITEM_IS_META).toBool())
+                if(blk && blk->data(WldScene::ITEM_IS_META).toBool())
                 {
                     it->setVisible(false);
                     invisibleMetas.push_back(it);
                 }
             }
-            else if(it->data(ITEM_TYPE).toString() == "SCENERY")
+            else if(objType == ItemTypes::WLD_Scenery)
             {
                 auto *blk = dynamic_cast<ItemScene*>(it);
-                if(blk && blk->data(ITEM_IS_META).toBool())
+                if(blk && blk->data(WldScene::ITEM_IS_META).toBool())
                 {
                     it->setVisible(false);
                     invisibleMetas.push_back(it);
                 }
             }
-            else if(it->data(ITEM_TYPE).toString() == "PATH")
+            else if(objType == ItemTypes::WLD_Path)
             {
                 auto *blk = dynamic_cast<ItemPath*>(it);
-                if(blk && blk->data(ITEM_IS_META).toBool())
+                if(blk && blk->data(WldScene::ITEM_IS_META).toBool())
                 {
                     it->setVisible(false);
                     invisibleMetas.push_back(it);
                 }
             }
-            else if(it->data(ITEM_TYPE).toString() == "LEVEL")
+            else if(objType == ItemTypes::WLD_Level)
             {
                 auto *blk = dynamic_cast<ItemLevel*>(it);
-                if(blk && blk->data(ITEM_IS_META).toBool())
+                if(blk && blk->data(WldScene::ITEM_IS_META).toBool())
                 {
                     it->setVisible(false);
                     invisibleMetas.push_back(it);
@@ -249,19 +250,26 @@ void WorldEdit::ExportingReady() //slot
     qApp->processEvents();
     if(scene->m_opts.animationEnabled)
         scene->startAnimation(); // Restart animation
+
     if(hideMusic)
         scene->hideMusicBoxes(true);
+
     if(hidePathLevels)
         scene->hidePathAndLevels(true);
+
     if(gridWasShown)
         scene->m_opts.grid_show = true;
+
     if(cameraGridWasShown)
         scene->m_opts.camera_grid_show = true;
+
     if(hideMetas)
     {
         for(QGraphicsItem *it : invisibleMetas)
             it->setVisible(true);
     }
+
+    setUpdatesEnabled(true);
     scene->invalidate();
     scene->update();
 

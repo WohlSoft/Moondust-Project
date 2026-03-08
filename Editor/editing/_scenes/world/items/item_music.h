@@ -53,7 +53,7 @@ public:
     void removeFromArray();
 
     void returnBack();
-    QPoint sourcePos();
+    QPoint sourcePos() const;
 
     WorldMusicBox  m_data;
     QString     m_musicTitle;

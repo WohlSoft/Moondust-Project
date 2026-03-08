@@ -39,14 +39,15 @@ void WLD_ModeResize::set()
     s->resetCursor();
     s->m_pointSelector.unserPointSelector();
 
-    s->m_eraserIsEnabled = false;
-    s->m_pastingMode = false;
-    s->m_busyMode = true;
-    s->m_disableMoveItems = true;
+    s->setEditFlagEraser(false);
+    s->setEditFlagPasteMode(false);
+    s->setEditFlagBusyMode(true);
+    s->setEditFlagNoMoveItems(true);
 
-    s->m_viewPort->setInteractive(true);
-    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_resizing));
-    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
+    auto *vp = s->curViewPort();
+    vp->setInteractive(true);
+    vp->setCursor(Themes::Cursor(Themes::cursor_resizing));
+    vp->setDragMode(QGraphicsView::NoDrag);
 }
 
 void WLD_ModeResize::mousePress(QGraphicsSceneMouseEvent *mouseEvent)

@@ -4,7 +4,7 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <pge_qt_compat.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/util.h>
 #include <audio/sdl_music_player.h>
 #include <audio/music_player.h>

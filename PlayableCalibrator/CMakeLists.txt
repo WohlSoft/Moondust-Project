@@ -12,9 +12,6 @@ set(CMAKE_AUTOMOC ON)
 # to always look for includes there:
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_INSTALL_RPATH ".")
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
@@ -32,6 +29,13 @@ include(../_common/build_props.cmake)
 include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
+
+set(PGE_APP_PATH_MODULE_NAME "PGE Calibrator")
+set(PGE_APP_PATH_SETUP_FILE_NAME "pge_calibrator.ini")
+set(PGE_APP_PATH_VERSION_HEADER "../../PlayableCalibrator/version.h")
+set(PGE_APP_PATH_HAS_THEMES FALSE)
+set(PGE_APP_PATH_TARGET_SUFFIX Calibrator)
+include(../_common/qt-modules/app_path_qt/app_path.cmake)
 
 include(../_common/translator-qt/translator.cmake)
 include(../_common/qt-modules/compat/pge_qt_compat.cmake)
@@ -79,7 +83,7 @@ endif()
 
 # =============== Translations ===============
 set(_LANGAUGES_TEMP_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/languages")
-set(PGE_LANG_OUTPUT_DIR "${CMAKE_BINARY_DIR}/bin/languages")
+set(PGE_LANG_OUTPUT_DIR "${PGE_DEBUG_DATA}/languages")
 
 file(GLOB PGE_LANG_SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.ts")
 
@@ -89,7 +93,7 @@ pge_qt_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
 add_custom_target(calibrator_translations DEPENDS ${PGE_LANG_BIN_FILES})
 
 if(NOT APPLE AND NOT EMSCRIPTEN)
-    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
+    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DATA}/languages" COMPONENT "MoondustCalibrator")
 endif()
 # ===========================================
 
@@ -132,7 +136,6 @@ list(APPEND PGE_CALIBRATOR_SRCS
     main/files_io.cpp
     main/graphics.cpp
     main/settings.cpp
-    main/app_path.cpp
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
     ${QT_PLUGINS_CPP}
@@ -206,11 +209,14 @@ list(APPEND PGE_CALIBRATOR_INSTALLS
 
 list(APPEND PGE_CALIBRATOR_LINK_LIBS
     ${UTILS_LIBS}
+    PGE_AppPathCalibratorQt
     PGE_Calibrator_QtLibs
     PGE_FreeImage
 )
 
-pge_set_nopie(pge_calibrator)
+if(NOT PGE_INSTALL_ALLOW_PIE_EXECUTABLES)
+    pge_set_nopie(pge_calibrator)
+endif()
 
 if(WIN32)
     list(APPEND PGE_CALIBRATOR_LINK_LIBS
@@ -265,15 +271,45 @@ target_link_libraries(pge_calibrator
     ${PGE_CALIBRATOR_LINK_LIBS}
 )
 
+if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
+    # application launcher
+    if(NOT EXISTS "${CMAKE_BINARY_DIR}/share/applications")
+        file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/share/applications")
+    endif()
+
+    set(PGE_COMPONENT_EXECUTABLE_NAME "pge_calibrator")
+    set(DESKTOP_EXEC ${PGE_COMPONENT_EXECUTABLE_NAME})
+    set(DESKTOP_ICON ${PGE_COMPONENT_EXECUTABLE_NAME})
+    set(DESKTOP_WMCLASS ${PGE_COMPONENT_EXECUTABLE_NAME})
+
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon.desktop.in"
+                   "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop")
+    install(FILES "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop"
+            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications
+            COMPONENT "MoondustCalibrator")
+
+    # application icons
+    set(PGE_DESKTOP_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon")
+
+    foreach(FOR_ICON_SIZE 16;32;48;256)
+        install(FILES "${PGE_DESKTOP_ICON_PATH}/calibrator_${FOR_ICON_SIZE}.png"
+                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/${FOR_ICON_SIZE}x${FOR_ICON_SIZE}/apps/"
+                RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png"
+                COMPONENT "MoondustCalibrator")
+    endforeach()
+endif()
+
 install(TARGETS ${PGE_CALIBRATOR_INSTALLS}
-    RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}"
-    BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}"
+    COMPONENT "MoondustCalibrator"
+    RUNTIME DESTINATION "${PGE_INSTALL_BIN}"
+    BUNDLE DESTINATION "${PGE_INSTALL_BIN}"
 )
 
 # Calibrator's default properties
-file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/calibrator" DESTINATION "${CMAKE_BINARY_DIR}/bin")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/calibrator" DESTINATION "${PGE_DEBUG_DATA}")
 
 # Calibrator's stuff
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/calibrator"
-    DESTINATION "${PGE_INSTALL_DIRECTORY}"
+    DESTINATION "${PGE_INSTALL_DATA}"
+    COMPONENT "MoondustCalibrator"
 )

@@ -41,23 +41,24 @@ void LVL_ModeCircle::set()
     s->clearSelection();
     s->resetResizers();
 
-    s->m_eraserIsEnabled = false;
-    s->m_pastingMode = false;
-    s->m_busyMode = true;
-    s->m_disableMoveItems = false;
+    s->setEditFlagEraser(false);
+    s->setEditFlagPasteMode(false);
+    s->setEditFlagBusyMode(true);
+    s->setEditFlagNoMoveItems(false);
 
-    s->m_viewPort->setInteractive(true);
-    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_square_fill));
-    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
-    s->m_viewPort->setRenderHint(QPainter::Antialiasing, true);
-    s->m_viewPort->viewport()->setMouseTracking(true);
+    auto *vp = s->curViewPort();
+    vp->setInteractive(true);
+    vp->setCursor(Themes::Cursor(Themes::cursor_square_fill));
+    vp->setDragMode(QGraphicsView::NoDrag);
+    vp->setRenderHint(QPainter::Antialiasing, true);
+    vp->viewport()->setMouseTracking(true);
 }
 
 void LVL_ModeCircle::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
-    MainWindow *mw = s->m_mw;
+    MainWindow *mw = s->mw();
 
     if(mouseEvent->buttons() & Qt::RightButton)
     {
@@ -75,7 +76,7 @@ void LVL_ModeCircle::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     s->m_lastBgoArrayID = s->m_data->bgo_array_id;
     s->m_lastNpcArrayID = s->m_data->npc_array_id;
 
-    LogDebug(QString("Circle mode %1").arg(s->m_editMode));
+    LogDebug(QString("Circle mode %1").arg(s->editMode()));
     if(s->m_cursorItemImg)
     {
         drawStartPos = QPointF(s->applyGrid(mouseEvent->scenePos().toPoint(),
@@ -165,8 +166,6 @@ void LVL_ModeCircle::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 s->m_data->blocks_array_id++;
 
                 LvlPlacingItems::blockSet.meta.array_id = s->m_data->blocks_array_id;
-                s->m_data->blocks.push_back(LvlPlacingItems::blockSet);
-
                 s->placeBlock(LvlPlacingItems::blockSet, true);
                 LevelData plSzBlock;
                 plSzBlock.blocks.push_back(LvlPlacingItems::blockSet);
@@ -218,7 +217,8 @@ void LVL_ModeCircle::keyRelease(QKeyEvent *keyEvent)
     {
         item_rectangles::clearArray();
         LvlScene *s = dynamic_cast<LvlScene *>(scene);
-        if(s) s->m_mw->on_actionSelect_triggered();
+        if(s)
+            s->mw()->on_actionSelect_triggered();
         break;
     }
     default:

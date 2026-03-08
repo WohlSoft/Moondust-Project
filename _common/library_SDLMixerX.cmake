@@ -78,8 +78,8 @@ target_link_libraries(PGE_SDLMixerX_static INTERFACE
 )
 
 if(PGE_SHARED_SDLMIXER AND NOT WIN32)
-    install(FILES ${SDL_MixerX_SO_Lib} DESTINATION "${PGE_INSTALL_DIRECTORY}")
+    install(FILES ${SDL_MixerX_SO_Lib} DESTINATION "${PGE_INSTALL_LIB}" COMPONENT "MoondustLibs")
 endif()
 
 # Append licenses of libraries
-InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/SDL_Mixer_X/COPYING.txt" RENAME "License.SDL2_mixer_ext.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/licenses")
+InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/SDL_Mixer_X/COPYING.txt" RENAME "License.SDL2_mixer_ext.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")

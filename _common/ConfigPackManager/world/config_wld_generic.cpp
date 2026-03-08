@@ -21,10 +21,11 @@
 
 #include <IniProcessor/ini_processing.h>
 #include <Utils/maths.h>
-#include "../image_size.h"
 #include "../../number_limiter.h"
 
 #include <assert.h>
+
+WldGenericSetup::WldGenericSetup() : ConfigBaseSetup() {}
 
 bool WldGenericSetup::parse(IniProcessing *setup,
                             PGEString imgPath,
@@ -36,65 +37,13 @@ bool WldGenericSetup::parse(IniProcessing *setup,
 #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
 #define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
 
-    int errCode = PGE_ImageInfo::ERR_OK;
-    PGEString section;
     /*************Buffers*********************/
-    uint32_t    w = 0,
-                h = 0;
-
+    uint32_t    w = 0, h = 0;
     /*************Buffers*********************/
-    if(!setup)
-    {
-        if(error)
-            *error = "setup QSettings is null!";
 
+    if(!parseBase(setup, imgPath, defaultGrid, w, h, merge_with, error))
         return false;
-    }
 
-    section     = StdToPGEString(setup->group());
-    setup->read("name",     name,       pMerge(name, ""));
-    setup->read("group",    group,      pMergeMe(group));
-    setup->read("category", category,   pMergeMe(category));
-    setup->read("description", description, pMerge(description, ""));
-    setup->read("extra-settings", extra_settings, pMerge(extra_settings, ""));
-    setup->read("is-meta-object", is_meta_object, pMerge(is_meta_object, false));
-    pAlias("hide-on-exported-images", is_meta_object);//Alias
-
-    setup->read("image",    image_n,    pMerge(image_n, ""));
-#ifdef PGE_EDITOR // alternative image for Editor
-    pAlias("editor-image", image_n);
-#endif
-
-    if(!merge_with && !PGE_ImageInfo::getImageSize(imgPath + image_n, &w, &h, &errCode))
-    {
-        if(error)
-        {
-            switch(errCode)
-            {
-            case PGE_ImageInfo::ERR_UNSUPPORTED_FILETYPE:
-                *error = "Unsupported or corrupted file format: " + imgPath + image_n;
-                break;
-
-            case PGE_ImageInfo::ERR_NOT_EXISTS:
-                *error = "image file is not exist: " + imgPath + image_n;
-                break;
-
-            case PGE_ImageInfo::ERR_CANT_OPEN:
-                *error = "Can't open image file: " + imgPath + image_n;
-                break;
-            default:
-                break;
-            }
-        }
-
-        return false;
-    }
-    assert(merge_with || ((w > 0) && (h > 0) && "Width or height of image has zero or negative value!"));
-    mask_n  =    PGE_ImageInfo::getMaskName(image_n);
-
-    setup->read("icon", icon_n, pMerge(icon_n, ""));
-
-    setup->read("grid",         grid,       pMerge(grid, defaultGrid));
     setup->read("frames",       frames,     pMerge(frames, 1u));//Real
     pAlias("framecount",        frames);//Alias
     pAlias("frame-count",       frames);//Alias

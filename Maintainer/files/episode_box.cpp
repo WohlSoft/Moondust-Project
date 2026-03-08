@@ -250,6 +250,7 @@ void EpisodeBox_world::buildEntriesCache()
 {
     music_entries.clear();
     level_entries.clear();
+
     //Collect music and level entries!
     if(d.meta.ReadFileValid)
     {

@@ -32,6 +32,7 @@
 #include <mainwindow.h>
 
 #include "lvl_warp_props.h"
+#include "debugger.h"
 #include "ui_lvl_warp_props.h"
 
 void MainWindow::on_actionWarpsAndDoors_triggered(bool checked)
@@ -232,7 +233,7 @@ void LvlWarpBox::init()
 QString LvlWarpBox::doorTitle(LevelDoor &door)
 {
     return QString("%1: x%2y%3 <=> x%4y%5")
-           .arg(door.meta.array_id).arg(door.ix).arg(door.iy).arg(door.ox).arg(door.oy);
+           .arg(door.meta.index + 1).arg(door.ix).arg(door.iy).arg(door.ox).arg(door.oy);
 }
 
 
@@ -391,9 +392,12 @@ void LvlWarpBox::addWarpEntry()
                                        ui->warpsList->count(),
                                        static_cast<int>(newDoor.meta.index));
 
+
     ui->warpsList->addItem(doorTitle(newDoor), newDoor.meta.array_id);
     ui->warpsList->setCurrentIndex(ui->warpsList->count() - 1);
     ui->entryRemove->setEnabled(true);
+
+    mw()->dock_DebuggerBox->updateStats(edit->scene);
 }
 
 void LvlWarpBox::removeWarpEntry()
@@ -407,6 +411,7 @@ void LvlWarpBox::removeWarpEntry()
     auto *w = findWarp(edit->LvlData, warpId);
     if(w)
         edit->scene->m_history->addRemoveWarp(*w);
+
     edit->scene->doorPointsSync(warpId, true);
 
     for(int i = 0; i < edit->LvlData.doors.size(); i++)
@@ -423,7 +428,11 @@ void LvlWarpBox::removeWarpEntry()
     if(ui->warpsList->count() <= 0)
         setWarpRemoveButtonEnabled(false);
 
+    recountWarpIndexes();
+
     edit->LvlData.meta.modified = true;
+
+    mw()->dock_DebuggerBox->updateStats(edit->scene);
 }
 
 void LvlWarpBox::duplicateWarpEntry()
@@ -452,6 +461,8 @@ void LvlWarpBox::duplicateWarpEntry()
     ui->warpsList->addItem(doorTitle(newDoor), newDoor.meta.array_id);
     ui->warpsList->setCurrentIndex(ui->warpsList->count() - 1);
     ui->entryRemove->setEnabled(true);
+
+    mw()->dock_DebuggerBox->updateStats(edit->scene);
 }
 
 void LvlWarpBox::on_WarpSetEntrance_clicked()
@@ -479,19 +490,15 @@ void LvlWarpBox::on_WarpSetEntrance_clicked()
         LogDebugQD("Warp: Go to location: " + QString::number(w->ix) + "x" + QString::number(w->iy));
         edit->goTo(w->ix, w->iy, true, QPoint(0, 0), true);
         //deselect all and select placed one
+
         LogDebugQD("Warp: Clear scene selection");
         edit->scene->clearSelection();
-        for(QGraphicsItem *item : edit->scene->items())
+
+        auto d = edit->scene->m_itemsDoorEnters.find(array_id);
+        if(d != edit->scene->m_itemsDoorEnters.end())
         {
-            if(item->data(ITEM_TYPE).toString() == "Door_enter")
-            {
-                if(item->data(ITEM_ARRAY_ID).toUInt() == array_id)
-                {
-                    LogDebugQD("Warp: Select the warp entry");
-                    item->setSelected(true);
-                    break;
-                }
-            }
+            LogDebugQD("Warp: Select the warp entry");
+            d.value()->setSelected(true);
         }
 
         LogDebugQD("Warp: found a placed warp entrance");
@@ -502,7 +509,7 @@ void LvlWarpBox::on_WarpSetEntrance_clicked()
 
     edit->scene->clearSelection();
     edit->changeCursor(LevelEdit::MODE_PlaceItem);
-    edit->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
+    edit->scene->switchEditMode(LvlScene::MODE_PlacingNew);
     edit->scene->setItemPlacer(4, warpId, LvlPlacingItems::DOOR_Entrance);
 
     mw()->dock_LvlItemProps->hide();
@@ -534,20 +541,16 @@ void LvlWarpBox::on_WarpSetExit_clicked()
     {
         LogDebugQD("Warp: Go to location: " + QString::number(w->ox) + "x" + QString::number(w->oy));
         edit->goTo(w->ox, w->oy, true, QPoint(0, 0), true);
+
         //deselect all and select placed one
         LogDebugQD("Warp: Clear scene selection");
         edit->scene->clearSelection();
-        for(QGraphicsItem *item : edit->scene->items())
+
+        auto d = edit->scene->m_itemsDoorExits.find(array_id);
+        if(d != edit->scene->m_itemsDoorExits.end())
         {
-            if(item->data(ITEM_TYPE).toString() == "Door_exit")
-            {
-                if(item->data(ITEM_ARRAY_ID).toUInt() == array_id)
-                {
-                    LogDebugQD("Warp: Select the warp entry");
-                    item->setSelected(true);
-                    break;
-                }
-            }
+            LogDebugQD("Warp: Select the warp entry");
+            d.value()->setSelected(true);
         }
 
         LogDebugQD("Warp: found a placed warp exit");
@@ -558,7 +561,7 @@ void LvlWarpBox::on_WarpSetExit_clicked()
 
     edit->scene->clearSelection();
     edit->changeCursor(LevelEdit::MODE_PlaceItem);
-    edit->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
+    edit->scene->switchEditMode(LvlScene::MODE_PlacingNew);
     edit->scene->setItemPlacer(4, warpId, LvlPlacingItems::DOOR_Exit);
 
     mw()->dock_LvlItemProps->hide();
@@ -1275,7 +1278,7 @@ void LvlWarpBox::on_WarpLevelExit_clicked(bool checked)
     bool iPlaced = w->isSetIn;
     bool oPlaced = w->isSetOut;
 
-    edit->scene->doorPointsSync((unsigned int)ui->warpsList->currentData().toInt());
+    edit->scene->doorPointsSync(ui->warpsList->currentData().toUInt());
 
     //Unset placed point, if not it avaliable
     if(!((!w->lvl_o && !w->lvl_i) || w->lvl_i))
@@ -1331,7 +1334,7 @@ void LvlWarpBox::on_WarpLevelEntrance_clicked(bool checked)
     bool iPlaced = w->isSetIn;
     bool oPlaced = w->isSetOut;
 
-    edit->scene->doorPointsSync((unsigned int)ui->warpsList->currentData().toInt());
+    edit->scene->doorPointsSync(ui->warpsList->currentData().toUInt());
 
     //Unset placed point, if not it avaliable
     if(!((!w->lvl_o && !w->lvl_i) || (w->lvl_o && !w->lvl_i)))
@@ -1421,6 +1424,47 @@ void LvlWarpBox::on_WarpAllowNPC_IL_clicked(bool checked)
             QVariant(checked));
     edit->scene->doorPointsSync(warpId);
     edit->LvlData.meta.modified = true;
+}
+
+void LvlWarpBox::recountWarpIndexes()
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelEdit *edit = mw()->activeLvlEditWin();
+
+    if(!edit->sceneCreated || !edit->scene)
+        return;
+
+    LvlScene *scene = edit->scene;
+
+    for(unsigned int i = 0; i < (unsigned int)edit->LvlData.doors.size(); ++i)
+    {
+        auto &d = edit->LvlData.doors[i];
+        d.meta.index = i;
+
+        ui->warpsList->setItemData(i, doorTitle(d), Qt::DisplayRole);
+
+        if(d.isSetIn)
+        {
+            auto ds = scene->m_itemsDoorEnters.find(d.meta.array_id);
+            if(ds != scene->m_itemsDoorEnters.end() && ds.value()->m_data.meta.index != i)
+            {
+                ds.value()->m_data.meta.index = i;
+                ds.value()->updateNumber();
+            }
+        }
+
+        if(d.isSetOut)
+        {
+            auto ds = scene->m_itemsDoorExits.find(d.meta.array_id);
+            if(ds != scene->m_itemsDoorExits.end() && ds.value()->m_data.meta.index != i)
+            {
+                ds.value()->m_data.meta.index = i;
+                ds.value()->updateNumber();
+            }
+        }
+    }
 }
 
 unsigned int LvlWarpBox::getWarpId()

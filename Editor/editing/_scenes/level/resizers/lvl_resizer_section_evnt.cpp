@@ -51,7 +51,7 @@ void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
         m_resizeBox->m_resizerType = ItemResizer::Resizer_InEventSection;
         m_resizeBox->m_minSize = QSizeF(800, 600);
         this->setFocus(Qt::ActiveWindowFocusReason);
-        SwitchEditingMode(MODE_Resizing);
+        switchEditMode(MODE_Resizing);
         m_mw->resizeToolbarVisible(true);
     }
     else
@@ -93,6 +93,7 @@ void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
             m_mw->on_actionSelect_triggered();
             m_mw->resizeToolbarVisible(false);
         }
+
         m_busyMode = false;
     }
 }

@@ -37,9 +37,9 @@ LevelData LvlScene::copy(bool cut)
     {
         for(QList<QGraphicsItem *>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
         {
-            QString ObjType = (*it)->data(ITEM_TYPE).toString();
+            int ObjType = (*it)->data(ITEM_TYPE_INT).toInt();
 
-            if(ObjType == "Block")
+            if(ObjType == ItemTypes::LVL_Block)
             {
                 ItemBlock *sourceBlock = (ItemBlock *)(*it);
                 copyData.blocks.push_back(sourceBlock->m_data);
@@ -49,7 +49,7 @@ LevelData LvlScene::copy(bool cut)
                     delete(*it);
                 }
             }
-            else if(ObjType == "BGO")
+            else if(ObjType == ItemTypes::LVL_BGO)
             {
                 ItemBGO *sourceBGO = (ItemBGO *)(*it);
                 copyData.bgo.push_back(sourceBGO->m_data);
@@ -59,7 +59,7 @@ LevelData LvlScene::copy(bool cut)
                     delete(*it);
                 }
             }
-            else if(ObjType == "NPC")
+            else if(ObjType == ItemTypes::LVL_NPC)
             {
                 ItemNPC *sourceNPC = (ItemNPC *)(*it);
                 copyData.npc.push_back(sourceNPC->m_data);
@@ -69,7 +69,7 @@ LevelData LvlScene::copy(bool cut)
                     delete(*it);
                 }
             }
-            else if(ObjType == "Water")
+            else if(ObjType == ItemTypes::LVL_PhysEnv)
             {
                 ItemPhysEnv *sourceWater = (ItemPhysEnv *)(*it);
                 copyData.physez.push_back(sourceWater->m_data);
@@ -131,30 +131,38 @@ void LvlScene::paste(LevelData &BufferIn, QPoint pos)
     {
         if(block.x < baseX)
             baseX = block.x;
+
         if(block.y < baseY)
             baseY = block.y;
     }
+
     for(LevelBGO &bgo : BufferIn.bgo)
     {
         if(bgo.x < baseX)
             baseX = bgo.x;
+
         if(bgo.y < baseY)
             baseY = bgo.y;
     }
+
     for(LevelNPC &npc : BufferIn.npc)
     {
         if(npc.x < baseX)
             baseX = npc.x;
+
         if(npc.y < baseY)
             baseY = npc.y;
     }
+
     for(LevelPhysEnv &water : BufferIn.physez)
     {
         if(water.x < baseX)
             baseX = water.x;
+
         if(water.y < baseY)
             baseY = water.y;
     }
+
 
     for(LevelBlock &block : BufferIn.blocks)
     {
@@ -166,8 +174,6 @@ void LvlScene::paste(LevelData &BufferIn, QPoint pos)
         dumpBlock.meta.array_id = m_data->blocks_array_id;
 
         placeBlock(dumpBlock);
-
-        m_data->blocks.push_back(dumpBlock);
         newData.blocks.push_back(dumpBlock);
     }
 
@@ -181,8 +187,6 @@ void LvlScene::paste(LevelData &BufferIn, QPoint pos)
         dumpBGO.meta.array_id = m_data->bgo_array_id;
 
         placeBGO(dumpBGO);
-
-        m_data->bgo.push_back(dumpBGO);
         newData.bgo.push_back(dumpBGO);
     }
 
@@ -196,8 +200,6 @@ void LvlScene::paste(LevelData &BufferIn, QPoint pos)
         dumpNPC.meta.array_id = m_data->npc_array_id;
 
         placeNPC(dumpNPC);
-
-        m_data->npc.push_back(dumpNPC);
         newData.npc.push_back(dumpNPC);
     }
 
@@ -211,41 +213,45 @@ void LvlScene::paste(LevelData &BufferIn, QPoint pos)
         dumpWater.meta.array_id = m_data->physenv_array_id;
 
         placeEnvironmentZone(dumpWater);
-
-        m_data->physez.push_back(dumpWater);
         newData.physez.push_back(dumpWater);
     }
 
     auto s = selectedItems();
     applyGroupGrid(s, true);
 
-    QString objType;
+    int objType;
     newData.blocks.clear();
     newData.bgo.clear();
     newData.npc.clear();
     newData.physez.clear();
 
     // Get an actual set of items after grid aligning
-    for(QGraphicsItem *it : s)
+    foreach(QGraphicsItem *it, s)
     {
-        if(!it) continue;
-        objType = it->data(ITEM_TYPE).toString();
-        if(objType == "NPC")
+        if(!it)
+            continue;
+
+        if(it->data(ITEM_IS_ITEM).isNull() || !it->data(ITEM_IS_ITEM).toBool())
+            continue;
+
+        objType = it->data(ITEM_TYPE_INT).toInt();
+
+        if(objType == ItemTypes::LVL_NPC)
         {
             ItemNPC *item = dynamic_cast<ItemNPC *>(it);
             newData.npc.push_back(item->m_data);
         }
-        else if(objType == "Block")
+        else if(objType == ItemTypes::LVL_Block)
         {
             ItemBlock *item = dynamic_cast<ItemBlock *>(it);
             newData.blocks.push_back(item->m_data);
         }
-        else if(objType == "BGO")
+        else if(objType == ItemTypes::LVL_BGO)
         {
             ItemBGO *item = dynamic_cast<ItemBGO *>(it);
             newData.bgo.push_back(item->m_data);
         }
-        else if(objType == "Water")
+        else if(objType == ItemTypes::LVL_PhysEnv)
         {
             ItemPhysEnv *item = dynamic_cast<ItemPhysEnv *>(it);
             newData.physez.push_back(item->m_data);

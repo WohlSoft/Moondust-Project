@@ -38,6 +38,8 @@ class ItemPath : public WldBaseItem
         return QCoreApplication::translate("ItemPath", sourceText, disambiguation, n);
     }
 
+    void updateNearObjects(QPoint oldPos, QPoint newPos);
+
 public:
     ItemPath(QGraphicsItem *parent = nullptr);
     ItemPath(WldScene *parentScene, QGraphicsItem *parent = nullptr);
@@ -59,7 +61,7 @@ public:
     void removeFromArray();
 
     void returnBack();
-    QPoint sourcePos();
+    QPoint sourcePos() const;
 
     WorldPathTile m_data;
     obj_w_path m_localProps;

@@ -41,29 +41,34 @@ void LVL_ModeFill::set()
     s->clearSelection();
     s->resetResizers();
 
-    s->m_eraserIsEnabled = false;
-    s->m_pastingMode = false;
-    s->m_busyMode = true;
-    s->m_disableMoveItems = false;
+    s->setEditFlagEraser(false);
+    s->setEditFlagPasteMode(false);
+    s->setEditFlagBusyMode(true);
+    s->setEditFlagNoMoveItems(false);
 
-    s->m_viewPort->setInteractive(true);
-    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_flood_fill));
-    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
-    s->m_viewPort->setRenderHint(QPainter::Antialiasing, true);
-    s->m_viewPort->viewport()->setMouseTracking(true);
+    auto *vp = s->curViewPort();
+    vp->setInteractive(true);
+    vp->setCursor(Themes::Cursor(Themes::cursor_flood_fill));
+    vp->setDragMode(QGraphicsView::NoDrag);
+    vp->setRenderHint(QPainter::Antialiasing, true);
+    vp->viewport()->setMouseTracking(true);
 }
 
 void LVL_ModeFill::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if(!scene) return;
+    if(!scene)
+        return;
+
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
+
     if(mouseEvent->buttons() & Qt::RightButton)
     {
-        s->m_mw->on_actionSelect_triggered();
+        s->mw()->on_actionSelect_triggered();
         dontCallEvent = true;
         s->m_mouseIsMovedAfterKey = true;
         return;
     }
+
     if(!(mouseEvent->buttons()&Qt::LeftButton))
         return;
 
@@ -126,7 +131,8 @@ void LVL_ModeFill::keyRelease(QKeyEvent *keyEvent)
     case(Qt::Key_Escape):
     {
         LvlScene *s = dynamic_cast<LvlScene *>(scene);
-        if(s) s->m_mw->on_actionSelect_triggered();
+        if(s)
+            s->mw()->on_actionSelect_triggered();
         break;
     }
     default:
@@ -161,7 +167,7 @@ void LVL_ModeFill::attemptFlood(LvlScene *l_scene)
         while(true)
         {
             QList<CoorPair> newList; //items to be checked next in the next loop
-            for(const CoorPair &coor : nextList)
+            foreach(const CoorPair &coor, nextList)
             {
                 if(blackList.contains(coor)) //don't check block in blacklist
                     continue;
@@ -189,8 +195,6 @@ void LVL_ModeFill::attemptFlood(LvlScene *l_scene)
                     l_scene->m_data->blocks_array_id++;
 
                     LvlPlacingItems::blockSet.meta.array_id = l_scene->m_data->blocks_array_id;
-                    l_scene->m_data->blocks.push_back(LvlPlacingItems::blockSet);
-
                     l_scene->placeBlock(LvlPlacingItems::blockSet, true);
                     historyBuffer.blocks.push_back(LvlPlacingItems::blockSet);
                     //expand on all sides
@@ -222,7 +226,7 @@ void LVL_ModeFill::attemptFlood(LvlScene *l_scene)
         {
             QList<CoorPair> newList; //items to be checked next in the next loop
 
-            for(const CoorPair &coor : nextList)
+            foreach(const CoorPair &coor, nextList)
             {
                 if(blackList.contains(coor)) //don't check block in blacklist
                     continue;
@@ -246,8 +250,6 @@ void LVL_ModeFill::attemptFlood(LvlScene *l_scene)
                     l_scene->m_data->bgo_array_id++;
 
                     LvlPlacingItems::bgoSet.meta.array_id = l_scene->m_data->bgo_array_id;
-                    l_scene->m_data->bgo.push_back(LvlPlacingItems::bgoSet);
-
                     l_scene->placeBGO(LvlPlacingItems::bgoSet);
                     historyBuffer.bgo.push_back(LvlPlacingItems::bgoSet);
                     //expand on all sides
@@ -275,11 +277,6 @@ void LVL_ModeFill::attemptFlood(LvlScene *l_scene)
 
     l_scene->m_cursorItemImg->setPos(backUpPos);
 
-    if(
-        historyBuffer.blocks.size() > 0 ||
-        historyBuffer.bgo.size() > 0
-    )
-
+    if(historyBuffer.blocks.size() > 0 || historyBuffer.bgo.size() > 0)
         l_scene->m_history->addPlace(historyBuffer);
-
 }

@@ -22,7 +22,7 @@
 #include "world_edit.h"
 #include <ui_world_edit.h>
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <tools/smart_import/smartimporter.h>
 
 WorldEdit::WorldEdit(MainWindow *mw, QWidget *parent) :
@@ -38,12 +38,6 @@ WorldEdit::WorldEdit(MainWindow *mw, QWidget *parent) :
     setWindowIcon(QIcon(QPixmap(":/toolbar/dock/world16.png")));
     ui->setupUi(this);
     updateTimer=NULL;
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
-#endif
-    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
-    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);
 
     ui->graphicsView->horizontalScrollBar()->setSingleStep(32);
     ui->graphicsView->horizontalScrollBar()->setTracking(true);

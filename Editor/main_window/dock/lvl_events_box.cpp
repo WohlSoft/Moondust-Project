@@ -161,7 +161,7 @@ void LvlEventsBox::setEventsBox()
             if((event.name != "Level - Start") && (event.name != "P Switch - Start") && (event.name != "P Switch - End"))
                 item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
-            item->setData(Qt::UserRole, QString::number(event.meta.array_id));
+            item->setData(Qt::UserRole, event.meta.array_id);
             ui->LVLEvents_List->addItem(item);
         }
 
@@ -1018,17 +1018,24 @@ void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
     //Apply layer's name to all items
     LevelEdit *edit = mw()->activeLvlEditWin();
 
-    if(!edit) return;
+    if(!edit)
+        return;
 
-    QList<QGraphicsItem *> ItemList = edit->scene->items();
+    const auto &allItems = edit->scene->allItems();
 
-    for(QList<QGraphicsItem *>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    for(auto it = allItems.begin(); it != allItems.end(); it++)
     {
-        if((*it)->data(ITEM_IS_CURSOR).toString() == "CURSOR") continue; //skip cursor item
+        QGraphicsItem *item = *it;
 
-        QString iType = (*it)->data(ITEM_TYPE).toString();
+        if(item->data(LvlScene::ITEM_IS_ITEM).isNull() || !item->data(LvlScene::ITEM_IS_ITEM).toBool())
+            continue;
 
-        if(iType == "Block")
+        if(item->data(LvlScene::ITEM_IS_CURSOR).toBool())
+            continue; //skip cursor item
+
+        int iType = item->data(LvlScene::ITEM_TYPE_INT).toInt();
+
+        if(iType == ItemTypes::LVL_Block)
         {
             bool isMod = false;
             ItemBlock  *block = (ItemBlock *)(*it);
@@ -1054,7 +1061,7 @@ void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
             if(isMod)
                 block->arrayApply();
         }
-        else if(iType == "NPC")
+        else if(iType == ItemTypes::LVL_NPC)
         {
             bool isMod = false;
             ItemNPC *npc = (ItemNPC *)(*it);
@@ -1086,7 +1093,7 @@ void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
             if(isMod)
                 npc->arrayApply();
         }
-        else if(iType == "Door_enter" || iType == "Door_exit")
+        else if(iType == ItemTypes::LVL_META_DoorEnter || iType == ItemTypes::LVL_META_DoorExit)
         {
             ItemDoor *door = (ItemDoor *)(*it);
 

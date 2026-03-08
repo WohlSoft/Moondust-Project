@@ -59,6 +59,18 @@ beta2
 - Fixed an inability to select a music file that contains multiple repeating spaces
 - Added the custom music file validation with notices showing for not existing files, legacy, or heavy formats
 - Improved the behaviour of the wheel/touchpad scrolling events handling, especially on macOS with the Magic Mouse's touchpad
+- Added the support for "soft-limit" field for integration configuration packages to allow some amount of items being disabled due to missing graphics
+- Added an explicit indication of unused/uninitialised level sections
+- Added a small notice when placing level entry point and the path tile at the same cell on the world map
+- Added an ability to store mixed types in tilesets
+- Resizing tileset will no longer remove out of scope items immediately: instead, they gets removed on tileset save only
+- Added context menu for tilesets item box items
+- Improved performance of the history undoing/redoing on the level scene
+- Implemented recounting of displayed warp IDs when deleting or undeleting entries at the warps list
+- Going to opposite warp point now will make it being selected after position change jump
+- Upgraded overlook of standard item counters at the Debugger dialogue
+- Repaired the work of "Default NPC direction" setting previously broken by enforcing config pack side default NPC direction instead
+- Added profiles menu for integrational config packs to simplify use of different games selected
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

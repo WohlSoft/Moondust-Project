@@ -191,10 +191,6 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>Затримка (в секундах):</translation>
     </message>
     <message>
-        <source>Direction</source>
-        <translation>Напрям</translation>
-    </message>
-    <message>
         <source>Left</source>
         <translation>Вліво</translation>
     </message>
@@ -376,6 +372,16 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>Defines the opacity level that will be applied to all locked elements of the scene.</source>
         <comment>Explanation for the opacity of locked items</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When this option is enabled, NPC direction will be always set to given value
+with no matter what config pack default value is set. However, some NPC might
+have &quot;random&quot; direction being disabled, so, it will not work for these NPC.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Override initial direction</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -746,6 +752,33 @@ Note: most of config packs gets being updates with Moondust Project togeter. The
     </message>
 </context>
 <context>
+    <name>ConfigProfileSelect</name>
+    <message>
+        <source>Integration profile selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the integration profile to start this config pack:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;New profile&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new integration profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No selected profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select profile from the list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConfigStatus</name>
     <message>
         <source>Current configuration status</source>
@@ -1055,6 +1088,61 @@ Please save them before doing anything else.</source>
     <message>
         <source>Remove</source>
         <translation>Видалити</translation>
+    </message>
+</context>
+<context>
+    <name>DebuggerStatsModel</name>
+    <message>
+        <source>Player start points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished">Блоки</translation>
+    </message>
+    <message>
+        <source>Background objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Non-playable characters/items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warp entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical env. zones</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain tiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path cells</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level entrances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music change boxes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Item type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation type="unfinished">Порахувати</translation>
     </message>
 </context>
 <context>
@@ -1927,6 +2015,13 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Array-ID: %1</source>
         <translation>ID масиву: %1</translation>
+    </message>
+    <message>
+        <source>Placing a path cell at the same position as the
+level entry point may cause an inability to
+stop on this level entry point on some engines.
+Ignore this notice if this was done intentionally.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3612,7 +3707,7 @@ Do you want to continue?</source>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation>Дані налаштування автопрокрутки секції є застарілими. Вони використовувались в старих SMBX64-рівнях, або в рівнях, які були раніше конвертовані зі старого формату в сучасніший. Використовуйте дані налаштування тільки коли ви збираєтесь запускати рівень у SMBX64-двигуні або старіших двигунах. Дані налаштування також можуть працювати і в нових двигунах, такі як TheXTech та Moondust. Однак, якщо у вашому рівні використовуються сучасні налаштування автопрокрутки, старі будуть повністю проігноровані. Також, якщо рівень збережено у форматі SMBX-38A, дані налаштування зникнуть. Сучасні налаштування автопрокрутки можна знайти у блоці &quot;Налаштування секції&quot;.</translation>
+        <translation type="unfinished">Дані налаштування автопрокрутки секції є застарілими. Вони використовувались в старих SMBX64-рівнях, або в рівнях, які були раніше конвертовані зі старого формату в сучасніший. Використовуйте дані налаштування тільки коли ви збираєтесь запускати рівень у SMBX64-двигуні або старіших двигунах. Дані налаштування також можуть працювати і в нових двигунах, такі як TheXTech та Moondust. Однак, якщо у вашому рівні використовуються сучасні налаштування автопрокрутки, старі будуть повністю проігноровані. Також, якщо рівень збережено у форматі SMBX-38A, дані налаштування зникнуть. Сучасні налаштування автопрокрутки можна знайти у блоці &quot;Налаштування секції&quot;.</translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
@@ -4215,22 +4310,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
         <translation>Властивості рівня...</translation>
-    </message>
-    <message>
-        <source>Player start points:		%1
-Blocks:			%2
-Background objects&apos;s:	%3
-Non-playable characters&apos;s:	%4
-Warp entries:		%5
-Physical env. zones:	%6
-</source>
-        <translation>Початкові точки:	%1
-Блоки:			%2
-Фонові об&apos;єкти:	%3
-Неігрові персонажі:	%4
-Записи проходів:	%5
-Зони фіз.середовищ:	%6
-</translation>
     </message>
 </context>
 <context>
@@ -5491,10 +5570,6 @@ Please, select necessary world map in a list:</source>
         <translation>Редагувач скриптів</translation>
     </message>
     <message>
-        <source>Run configure tool...</source>
-        <translation>Запустити інструмент налаштування...</translation>
-    </message>
-    <message>
         <source>Open local script</source>
         <translation>Відкрити локальний сценарій</translation>
     </message>
@@ -6528,6 +6603,14 @@ Please, choose the Moondust Maintainer application yourself!</source>
     <message>
         <source>Bulk convert and repair of level and world files...</source>
         <translation>Масове виправ./віднов. рівнів та світів...</translation>
+    </message>
+    <message>
+        <source>Select configuration profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New profile...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8470,6 +8553,33 @@ Data may be corrupted!</source>
         <source>Group:</source>
         <translation>Група:</translation>
     </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;Save file first&gt;</source>
+        <translation type="unfinished">&lt;Збережіть файл спочатку&gt;</translation>
+    </message>
+    <message>
+        <source>Copy graphic to custom folder</source>
+        <translation type="unfinished">Копіювати графіку в корист. теку</translation>
+    </message>
+    <message>
+        <source>Copy graphic to episode folder</source>
+        <translation type="unfinished">Копіювати графіку в теку епізоду</translation>
+    </message>
+</context>
+<context>
+    <name>TilesetItemButton</name>
+    <message>
+        <source>Unavailable item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This item can not be used in this time.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TipOfDay</name>
@@ -9120,20 +9230,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>Цей рівень має невірні файли користувацької графіки.
 Ви будете бачити &apos;привидів&apos; або інше замінне зображення замість користувацької графіки об&apos;єктів. Таке могло статися, наприклад, із-за поганої конвертації форматів зображень.
 Будь ласка, переконвертуйте ваші зображення у правильний формат та перезавантажте цей рівень.</translation>
-    </message>
-    <message>
-        <source>Tiles:		%1
-Sceneries:			%2
-Paths:	%3
-Levels:	%4
-Music boxes:		%5
-</source>
-        <translation>Плити:	%1
-Декорації:	 %2
-Шляхи:	%3
-Рівні:	%4
-Музичні точки:	%5
-</translation>
     </message>
 </context>
 <context>

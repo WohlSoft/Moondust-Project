@@ -119,7 +119,7 @@
       </widget>
       <widget class="QWidget" name="custom_cat">
        <attribute name="title">
-        <string notr="true">Custom</string>
+        <string>Custom</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_28">
         <property name="leftMargin">

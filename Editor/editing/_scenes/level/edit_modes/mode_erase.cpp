@@ -42,24 +42,27 @@ void LVL_ModeErase::set()
     s->resetCursor();
     s->resetResizers();
 
-    s->m_eraserIsEnabled = false;
-    s->m_pastingMode = false;
-    s->m_busyMode = false;
-    s->m_disableMoveItems = false;
+    s->setEditFlagEraser(false);
+    s->setEditFlagPasteMode(false);
+    s->setEditFlagBusyMode(false);
+    s->setEditFlagNoMoveItems(false);
 
-    s->m_viewPort->setInteractive(true);
-    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_erasing));
-    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
+    auto *vp = s->curViewPort();
+    vp->setInteractive(true);
+    vp->setCursor(Themes::Cursor(Themes::cursor_erasing));
+    vp->setDragMode(QGraphicsView::NoDrag);
 }
 
 void LVL_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if(!scene) return;
+    if(!scene)
+        return;
+
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
     if(mouseEvent->buttons() & Qt::RightButton)
     {
-        s->m_mw->on_actionSelect_triggered();
+        s->mw()->on_actionSelect_triggered();
         dontCallEvent = true;
         s->m_mouseIsMovedAfterKey = true;
         return;
@@ -82,7 +85,7 @@ void LVL_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         s->Debugger_updateItemList();
     }
 
-    s->m_eraserIsEnabled = true;
+    s->setEditFlagEraser(true);
 }
 
 void LVL_ModeErase::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
@@ -90,8 +93,10 @@ void LVL_ModeErase::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
-    if(s->m_cursorItemImg) s->m_cursorItemImg->setPos(mouseEvent->scenePos());
-    if(s->m_eraserIsEnabled) // Remove All items, placed under Cursor
+    if(s->m_cursorItemImg)
+        s->m_cursorItemImg->setPos(mouseEvent->scenePos());
+
+    if(s->getEditFlagEraser()) // Remove All items, placed under Cursor
     {
         s->removeItemUnderCursor();
         s->Debugger_updateItemList();
@@ -128,7 +133,7 @@ void LVL_ModeErase::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         s->Debugger_updateItemList();
     }
 
-    s->m_eraserIsEnabled = false;
+    s->setEditFlagEraser(false);
 }
 
 void LVL_ModeErase::keyPress(QKeyEvent *keyEvent)
@@ -144,7 +149,8 @@ void LVL_ModeErase::keyRelease(QKeyEvent *keyEvent)
     case(Qt::Key_Escape):
     {
         LvlScene *s = dynamic_cast<LvlScene *>(scene);
-        if(s) s->m_mw->on_actionSelect_triggered();
+        if(s)
+            s->mw()->on_actionSelect_triggered();
         break;
     }
     default:

@@ -678,7 +678,7 @@ Important: There are only level and world map files gets being converted. Any in
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
-        <location filename="../Graphics/gifs2png.cpp" line="291"/>
+        <location filename="../Graphics/gifs2png.cpp" line="292"/>
         <source>Start</source>
         <translation>Почати</translation>
     </message>
@@ -771,7 +771,7 @@ Important: There are only level and world map files gets being converted. Any in
         <translation>Конвертування завершилось з помилками. У вихідному звіті можна побачити всі подробиці.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="289"/>
+        <location filename="../Graphics/gifs2png.cpp" line="290"/>
         <source>Stop</source>
         <translation>Зупинити</translation>
     </message>

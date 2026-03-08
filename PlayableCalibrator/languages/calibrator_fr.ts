@@ -464,7 +464,7 @@ Right button - Move the right-bottom crop edges.</source>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="657"/>
-        <location filename="../calibration_main.cpp" line="988"/>
+        <location filename="../calibration_main.cpp" line="987"/>
         <source>Right direction</source>
         <translation>Vers la droite</translation>
     </message>
@@ -514,7 +514,7 @@ Right button - Move the right-bottom crop edges.</source>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="670"/>
-        <location filename="../calibration_main.cpp" line="991"/>
+        <location filename="../calibration_main.cpp" line="990"/>
         <source>Show carried item</source>
         <translation>Afficher l&apos;objet déplacé</translation>
     </message>
@@ -525,7 +525,7 @@ Right button - Move the right-bottom crop edges.</source>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="644"/>
-        <location filename="../calibration_main.cpp" line="985"/>
+        <location filename="../calibration_main.cpp" line="984"/>
         <source>Is duck frame</source>
         <translation>Position assise</translation>
     </message>
@@ -536,7 +536,7 @@ Right button - Move the right-bottom crop edges.</source>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="680"/>
-        <location filename="../calibration_main.cpp" line="994"/>
+        <location filename="../calibration_main.cpp" line="993"/>
         <source>Mount riding</source>
         <translation type="unfinished"></translation>
     </message>
@@ -623,7 +623,7 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>Haut</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="142"/>
+        <location filename="../main/files_io.cpp" line="143"/>
         <source>Save hitbox map as image</source>
         <translation>Enregistrer la carte des boîtes de collision comme image</translation>
     </message>
@@ -647,7 +647,7 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>Certaines valeurs générées sont en dehors des bornes, SMBX-38A pourrait planter. Le fichier ne sera pas corrigé.</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="160"/>
+        <location filename="../main/files_io.cpp" line="161"/>
         <source>Hitbox map has been saved!</source>
         <translation>La carte des boîtes de collision a été enregistrée !</translation>
     </message>
@@ -662,129 +662,129 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>Enregistrer autre part…</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="90"/>
+        <location filename="../main/files_io.cpp" line="91"/>
         <source>Open sprite file</source>
         <translation>Ouvrir le fichier de sprite</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="94"/>
+        <location filename="../main/files_io.cpp" line="95"/>
         <source>SMBX playble sprite</source>
         <comment>Type of image file to open</comment>
         <translation>Sprite SMBX jouable</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="92"/>
+        <location filename="../main/files_io.cpp" line="93"/>
         <source>GIF images</source>
         <comment>Type of image file to open</comment>
         <translation>Images GIF</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="682"/>
+        <location filename="../calibration_main.cpp" line="681"/>
         <source>Background color</source>
         <translation>Couleur d&apos;arrière-plan</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="720"/>
+        <location filename="../calibration_main.cpp" line="719"/>
         <source>Open SMBX-38A level file</source>
         <translation>Ouvrir le fichier de niveau SMBX-38A</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="722"/>
+        <location filename="../calibration_main.cpp" line="721"/>
         <source>SMBX-38A level files</source>
         <comment>Type of file to open</comment>
         <translation>Fichiers de niveau SMBX-38A</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="723"/>
+        <location filename="../calibration_main.cpp" line="722"/>
         <source>All Files</source>
         <comment>Type of file to open</comment>
         <translation>Tous les fichiers</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="733"/>
+        <location filename="../calibration_main.cpp" line="732"/>
         <source>File opening error</source>
         <translation>Erreur d&apos;ouverture du fichier</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="734"/>
+        <location filename="../calibration_main.cpp" line="733"/>
         <source>Can&apos;t import calibration data from this file: the file doesn&apos;t contain calibration settings, or this file is not a valid SMBX-38A level file.</source>
         <translation>Impossible d&apos;ouvrir les données de calibration à partir de ce fichier : soit le fichier ne contient pas de paramètres de calibration, soir ce fichier n&apos;est pas un fichier de niveau SMBX-38A valide.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="751"/>
+        <location filename="../calibration_main.cpp" line="750"/>
         <source>Export calibration settings into SMBX-38A level file</source>
         <translation>Exporter les paramètres de calibration vers le fichier de niveau SMBX-38A</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="762"/>
+        <location filename="../calibration_main.cpp" line="761"/>
         <source>File saving error</source>
         <translation>Erreur d&apos;enregistrement du fichier</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="763"/>
+        <location filename="../calibration_main.cpp" line="762"/>
         <source>Can&apos;t export calibration data into this file: this is not a valid SMBX-38A level file.</source>
         <translation>Impossible d&apos;exporter les données de calibration vers ce fichier : ce n&apos;est pas un fichier de niveau SMBX-38A valide.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="768"/>
+        <location filename="../calibration_main.cpp" line="767"/>
         <source>The level file has been patched!</source>
         <translation>Le fichier de niveau à été mis à jour !</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="844"/>
-        <location filename="../calibration_main.cpp" line="850"/>
-        <location filename="../calibration_main.cpp" line="856"/>
-        <location filename="../calibration_main.cpp" line="862"/>
-        <location filename="../calibration_main.cpp" line="868"/>
-        <location filename="../calibration_main.cpp" line="874"/>
+        <location filename="../calibration_main.cpp" line="843"/>
+        <location filename="../calibration_main.cpp" line="849"/>
+        <location filename="../calibration_main.cpp" line="855"/>
+        <location filename="../calibration_main.cpp" line="861"/>
+        <location filename="../calibration_main.cpp" line="867"/>
+        <location filename="../calibration_main.cpp" line="873"/>
         <source>Compat: %1</source>
         <translation>Compatibilité&#xa0;: %1</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="844"/>
+        <location filename="../calibration_main.cpp" line="843"/>
         <source>Unspecified</source>
         <comment>Unspecified compatibility mode</comment>
         <translation>Non spécifié</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="979"/>
+        <location filename="../calibration_main.cpp" line="978"/>
         <source>Reset incorrect frame setup...</source>
         <comment>Reset frame properties</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="982"/>
+        <location filename="../calibration_main.cpp" line="981"/>
         <source>Select properties to reset if they were inproperly set:</source>
         <comment>Reset frame properties</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1004"/>
+        <location filename="../calibration_main.cpp" line="1003"/>
         <source>Reset at all frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1008"/>
+        <location filename="../calibration_main.cpp" line="1007"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1025"/>
+        <location filename="../calibration_main.cpp" line="1024"/>
         <source>Incompatible sprite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1026"/>
+        <location filename="../calibration_main.cpp" line="1025"/>
         <source>Can&apos;t perform the reset to incompatible sprite (the width and/or height of matrix are different).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1084"/>
+        <location filename="../calibration_main.cpp" line="1083"/>
         <source>Set direction by halves</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="1085"/>
+        <location filename="../calibration_main.cpp" line="1084"/>
         <source>This action will set the &quot;Right direction&quot; option at all right frames on the matrix, and unset at all left frames. This action is supposed to be used with SMBX-compatible sprites. If your sprite is not based on SMBX standard, you will break it. Apply this action?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -799,97 +799,97 @@ Right button - Move the right-bottom crop edges.</source>
         <translation>Exporter les données dans un niveau SMBX-38A…</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="91"/>
+        <location filename="../main/files_io.cpp" line="92"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>Type de fichier d&apos;image à ouvrir</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="93"/>
+        <location filename="../main/files_io.cpp" line="94"/>
         <source>PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>Images PNG</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="95"/>
+        <location filename="../main/files_io.cpp" line="96"/>
         <source>All Files</source>
         <comment>Type of image file to open</comment>
         <translation>Tous les fichiers</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="810"/>
+        <location filename="../calibration_main.cpp" line="809"/>
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="811"/>
+        <location filename="../calibration_main.cpp" line="810"/>
         <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
         <translation>Cette action va copier les paramètres de la boîte de collision actuelle dans toutes les autres images. Les paramètres de toutes les autres images seront remplacés par les paramètres de l&apos;image courante. Souhaitez-vous continuer ?</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="505"/>
+        <location filename="../calibration_main.cpp" line="504"/>
         <source>Calibration is not saved!</source>
         <translation>La calibration n&apos;a pas été enregistrée !</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="401"/>
+        <location filename="../calibration_main.cpp" line="400"/>
         <source>None</source>
         <comment>Display wall</comment>
         <translation>Aucun</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="404"/>
+        <location filename="../calibration_main.cpp" line="403"/>
         <source>Floor</source>
         <comment>Display wall</comment>
         <translation>Sol</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="406"/>
+        <location filename="../calibration_main.cpp" line="405"/>
         <source>Floor + left wall</source>
         <comment>Display wall</comment>
         <translation>Sol + mur gauche</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="408"/>
+        <location filename="../calibration_main.cpp" line="407"/>
         <source>Floor + right wall</source>
         <comment>Display wall</comment>
         <translation>Sol + mur droit</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="411"/>
+        <location filename="../calibration_main.cpp" line="410"/>
         <source>Ceiling</source>
         <comment>Display wall</comment>
         <translation>Plafond</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="413"/>
+        <location filename="../calibration_main.cpp" line="412"/>
         <source>Ceiling + left wall</source>
         <comment>Display wall</comment>
         <translation>Plafond + mur gauche</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="415"/>
+        <location filename="../calibration_main.cpp" line="414"/>
         <source>Ceiling + right wall</source>
         <comment>Display wall</comment>
         <translation>Plafond + mur droit</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="506"/>
+        <location filename="../calibration_main.cpp" line="505"/>
         <source>Configuration was modified and not saved. Do you want to save it?</source>
         <translation>La configuration a été modifiée mais n&apos;a pas été enregistrée. Souhaitez-vous l&apos;enregistrer ?</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="85"/>
+        <location filename="../main/settings.cpp" line="90"/>
         <source>Graphical editor is not specified</source>
         <translation>L&apos;éditeur graphique n&apos;est pas spécifié</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="86"/>
+        <location filename="../main/settings.cpp" line="91"/>
         <source>External graphics editor application is not specified. Do you want to select it now?</source>
         <translation>L&apos;application externe d&apos;édition des graphismes n&apos;est pas spécifiée. Souhaitez-vous la définir maintenant&#xa0;?</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="108"/>
+        <location filename="../main/settings.cpp" line="113"/>
         <source>Select a path to the graphical editor executable</source>
         <comment>File dialog title</comment>
         <translation>Sélectionner un chemin vers l&apos;exécutable de l&apos;éditeur graphique</translation>

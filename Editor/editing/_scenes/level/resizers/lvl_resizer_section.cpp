@@ -23,8 +23,6 @@
 #include <PGE_File_Formats/file_formats.h>
 
 #include "../lvl_history_manager.h"
-#include "../lvl_item_placing.h"
-
 
 
 void LvlScene::setSectionResizer(bool enabled, bool accept)
@@ -48,7 +46,7 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
         m_resizeBox->m_resizerType = ItemResizer::Resizer_Section;
         m_resizeBox->m_minSize = QSizeF(800, 600);
         this->setFocus(Qt::ActiveWindowFocusReason);
-        SwitchEditingMode(MODE_Resizing);
+        switchEditMode(MODE_Resizing);
         m_mw->resizeToolbarVisible(true);
     }
     else

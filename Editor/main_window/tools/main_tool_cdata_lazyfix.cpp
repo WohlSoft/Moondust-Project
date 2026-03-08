@@ -18,8 +18,8 @@
 
 #include <QFile>
 
+#include <pge_app_path.h>
 #include <common_features/graphics_funcs.h>
-#include <common_features/app_path.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>

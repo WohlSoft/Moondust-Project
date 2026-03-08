@@ -18,7 +18,7 @@
 
 #include <qmath.h>
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/themes.h>
 #include <common_features/graphics_funcs.h>
 #include <main_window/global_settings.h>

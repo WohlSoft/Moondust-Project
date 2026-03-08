@@ -27,128 +27,38 @@
 #include "items/item_level.h"
 #include "items/item_music.h"
 
-void WldScene::SwitchEditingMode(int EdtMode)
+
+bool WldScene::allowEditModeSwitch() const
 {
-    m_eraserIsEnabled = false; //All just selected items will be removed
-    m_pastingMode = false;
-    m_busyMode = false; //Placing/drawing on map, disable selecting and dragging items
-    m_disableMoveItems = false; // You can do anything with items, but can't move them
-
-    switch(EdtMode)
-    {
-    case MODE_PlacingNew:
-        switchMode("Placing");
-        break;
-
-    case MODE_DrawRect:
-        switchMode("Square");
-        break;
-
-    case MODE_DrawCircle:
-        switchMode("Circle");
-        break;
-
-    case MODE_Line:
-        switchMode("Line");
-        break;
-
-    case MODE_SetPoint:
-        switchMode("SetPoint");
-        break;
-
-    case MODE_Resizing:
-        switchMode("Resize");
-        break;
-
-    case MODE_PasteFromClip:
-        switchMode("Select");
-        clearSelection();
-        m_disableMoveItems = true;
-        m_viewPort->setInteractive(true);
-        m_viewPort->setCursor(Themes::Cursor(Themes::cursor_pasting));
-        m_viewPort->setDragMode(QGraphicsView::NoDrag);
-        break;
-
-    case MODE_Erasing:
-        switchMode("Erase");
-        break;
-
-    case MODE_SelectingOnly:
-        switchMode("Select");
-        m_disableMoveItems = true;
-        break;
-
-    case MODE_HandScroll:
-        switchMode("HandScroll");
-        break;
-
-    case MODE_Fill:
-        switchMode("Fill");
-        break;
-
-    case MODE_Selecting:
-    default:
-        switchMode("Select");
-        break;
-
-    }
-    m_editMode = EdtMode;
-
+    return !m_isSelectionDialog;
 }
-
-void WldScene::switchMode(QString title)
-{
-    for(int i = 0; i < m_editModes.size(); i++)
-    {
-        if(m_editModes[i]->name() == title)
-        {
-            m_editModeObj = m_editModes[i];
-            m_editModeObj->set();
-            break;
-        }
-    }
-}
-
-
 
 void WldScene::hideMusicBoxes(bool visible)
 {
-    foreach(QGraphicsItem *i, items())
-    {
-        if(i->data(0).toString() == "MUSICBOX")
-            i->setVisible(visible);
-    }
+    foreach(ItemMusic *i, m_itemsMusicBoxes)
+        i->setVisible(visible);
 }
 
 void WldScene::setSemiTransparentPaths(bool semiTransparent)
 {
-    foreach(QGraphicsItem *i, items())
-    {
-        if(i->data(0).toString() == "PATH")
-            i->setOpacity(semiTransparent ? 0.5 : 1);
-    }
+    foreach(ItemPath *i, m_itemsPaths)
+        i->setOpacity(semiTransparent ? 0.5 : 1);
+
     update();
 }
 
 void WldScene::hidePathAndLevels(bool visible)
 {
-    foreach(QGraphicsItem *i, items())
-    {
-        if(i->data(0).toString() == "PATH")
-            i->setVisible(visible);
-        else if(i->data(0).toString() == "LEVEL")
-        {
-            i->setVisible(visible ||
-                          ((ItemLevel *)i)->m_data.gamestart ||
-                          ((ItemLevel *)i)->m_data.alwaysVisible);
-        }
-    }
+    foreach(ItemPath *i, m_itemsPaths)
+        i->setVisible(visible);
+
+    foreach(ItemLevel *i, m_itemsLevels)
+        i->setVisible(visible || i->m_data.gamestart || i->m_data.alwaysVisible);
 }
 
 /////////////////////////////////////////////Locks////////////////////////////////
 void WldScene::setLocked(int type, bool lock)
 {
-    QList<QGraphicsItem *> ItemList = items();
     // setLock
     switch(type)
     {
@@ -171,12 +81,14 @@ void WldScene::setLocked(int type, bool lock)
         break;
     }
 
-    for(QList<QGraphicsItem *>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    for(QSet<QGraphicsItem *>::iterator it = m_itemsAll.begin(); it != m_itemsAll.end(); it++)
     {
+        int objType = (*it)->data(ITEM_TYPE_INT).toInt();
+
         switch(type)
         {
         case 1://Tile
-            if((*it)->data(0).toString() == "TILE")
+            if(objType == ItemTypes::WLD_Tile)
             {
                 ItemTile *gi = qgraphicsitem_cast<ItemTile *>(*it);
                 if(!gi)continue;
@@ -185,7 +97,7 @@ void WldScene::setLocked(int type, bool lock)
             }
             break;
         case 2://Scenery
-            if((*it)->data(0).toString() == "SCENERY")
+            if(objType == ItemTypes::WLD_Scenery)
             {
                 ItemScene *gi = qgraphicsitem_cast<ItemScene *>(*it);
                 if(!gi)continue;
@@ -194,7 +106,7 @@ void WldScene::setLocked(int type, bool lock)
             }
             break;
         case 3://Paths
-            if((*it)->data(0).toString() == "PATH")
+            if(objType == ItemTypes::WLD_Path)
             {
                 ItemPath *gi = qgraphicsitem_cast<ItemPath *>(*it);
                 if(!gi)continue;
@@ -203,7 +115,7 @@ void WldScene::setLocked(int type, bool lock)
             }
             break;
         case 4://Levels
-            if((*it)->data(0).toString() == "LEVEL")
+            if(objType == ItemTypes::WLD_Level)
             {
                 ItemLevel *gi = qgraphicsitem_cast<ItemLevel *>(*it);
                 if(!gi)continue;
@@ -212,7 +124,7 @@ void WldScene::setLocked(int type, bool lock)
             }
             break;
         case 5://Musicboxes
-            if((*it)->data(0).toString() == "MUSICBOX")
+            if(objType == ItemTypes::WLD_MusicBox)
             {
                 ItemMusic *gi = qgraphicsitem_cast<ItemMusic *>(*it);
                 if(!gi)continue;
@@ -224,7 +136,6 @@ void WldScene::setLocked(int type, bool lock)
             break;
         }
     }
-
 }
 
 

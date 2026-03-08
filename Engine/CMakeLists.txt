@@ -1,12 +1,8 @@
 cmake_minimum_required (VERSION 3.5...3.10)
 project(MoondustEngine C CXX)
 
-set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
-
 set(BUILD_SHARED_LIBRARIES OFF)
 
-set(CMAKE_INSTALL_RPATH ".")
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 if(EMSCRIPTEN)
     set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
 endif()
@@ -97,8 +93,8 @@ file(GLOB PGE_LANG_BIN_FILES "${_LANGAUGES_TEMP_FOLDER}/*.qm")
 #endforeach()
 
 if(NOT APPLE AND NOT EMSCRIPTEN AND NOT ANDROID)
-    file(COPY ${PGE_LANG_BIN_FILES} DESTINATION "${CMAKE_BINARY_DIR}/bin/languages")
-    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
+    file(COPY ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_DEBUG_DATA}/languages")
+    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DATA}/languages" COMPONENT "MoondustRuntime")
 endif()
 
 if(ANDROID)
@@ -408,7 +404,9 @@ target_compile_definitions(pge_engine
     -DPGE_ENGINE
 )
 
-pge_set_nopie(pge_engine)
+if(NOT PGE_INSTALL_ALLOW_PIE_EXECUTABLES)
+    pge_set_nopie(pge_engine)
+endif()
 
 # add "USE_LUA_JIT" when use LuaJIT or don't add when using PUC-Rio Lua
 if(PGE_USE_LUAJIT)
@@ -540,8 +538,37 @@ target_link_libraries(pge_engine
     ${PGE_ENGINE_LINK_LIBS}
 )
 
+if(PGE_INSTALL_UNIX_DESKTOP AND PGE_INSTALL_UNIX_TREE)
+    # application launcher
+    if(NOT EXISTS "${CMAKE_BINARY_DIR}/share/applications")
+        file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/share/applications")
+    endif()
+
+    set(PGE_COMPONENT_EXECUTABLE_NAME "pge_engine")
+    set(DESKTOP_EXEC ${PGE_COMPONENT_EXECUTABLE_NAME})
+    set(DESKTOP_ICON ${PGE_COMPONENT_EXECUTABLE_NAME})
+    set(DESKTOP_WMCLASS ${PGE_COMPONENT_EXECUTABLE_NAME})
+
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon.desktop.in"
+                   "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop")
+    install(FILES "${DEPENDENCIES_INSTALL_DIR}/share/applications/${PGE_COMPONENT_EXECUTABLE_NAME}.desktop"
+            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications
+            COMPONENT "MoondustRuntime")
+
+    # application icons
+    set(PGE_DESKTOP_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/_resources/icon")
+
+    foreach(FOR_ICON_SIZE 16;32;48;128;256)
+        install(FILES "${PGE_DESKTOP_ICON_PATH}/cat_${FOR_ICON_SIZE}.png"
+                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/${FOR_ICON_SIZE}x${FOR_ICON_SIZE}/apps/"
+                RENAME "${PGE_COMPONENT_EXECUTABLE_NAME}.png"
+                COMPONENT "MoondustRuntime")
+    endforeach()
+endif()
+
 install(TARGETS ${PGE_ENGINE_INSTALLS}
-    RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}/"
-    LIBRARY DESTINATION "${PGE_INSTALL_DIRECTORY}/"
-    BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}/"
+    COMPONENT "MoondustRuntime"
+    RUNTIME DESTINATION "${PGE_INSTALL_BIN}/"
+    LIBRARY DESTINATION "${PGE_INSTALL_LIB}/"
+    BUNDLE DESTINATION "${PGE_INSTALL_BIN}/"
 )

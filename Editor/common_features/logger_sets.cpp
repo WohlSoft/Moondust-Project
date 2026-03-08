@@ -32,7 +32,7 @@
 
 #include "crashhandler.h"
 
-#include "app_path.h"
+#include <pge_app_path.h>
 #include "logger_sets.h"
 
 #ifdef DEBUG_BUILD
@@ -120,12 +120,12 @@ void LogWriter::LoadLogSettings()
     QDate d = QDate::currentDate();
     QTime t = QTime::currentTime();
     QString logFileName = QString("PGE_Editor_log_%1-%2-%3_%4-%5-%6.txt")
-            .arg(d.year())
-            .arg(d.month())
-            .arg(d.day())
-            .arg(t.hour())
-            .arg(t.minute())
-            .arg(t.second());
+            .arg(d.year(), 4, 10, QLatin1Char('0'))
+            .arg(d.month(), 2, 10, QLatin1Char('0'))
+            .arg(d.day(), 2, 10, QLatin1Char('0'))
+            .arg(t.hour(), 2, 10, QLatin1Char('0'))
+            .arg(t.minute(), 2, 10, QLatin1Char('0'))
+            .arg(t.second(), 2, 10, QLatin1Char('0'));
     logLevel = PGE_LogLevel::Debug;
 
     QString mainIniFile = AppPathManager::settingsFile();
@@ -153,8 +153,8 @@ void LogWriter::LoadLogSettings()
     logSettings.endGroup();
 
     qDebug() << QString("LogLevel %1, log file %2")
-                .arg( PgeLL2Str(logLevel) )
-                .arg( DebugLogFile );
+                .arg(PgeLL2Str(logLevel))
+                .arg(DebugLogFile);
 
     qInstallMessageHandler(logMessageHandler);
 

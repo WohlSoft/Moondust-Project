@@ -3,7 +3,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QCloseEvent>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <QDirIterator>
 #include <QtConcurrent>
@@ -632,7 +632,7 @@ void AudioCvt_Sox_gui::on_cvt_lvlfile_browse_clicked()
     QString filter;
     filter = "SMBX/PGE Level and world files with music (*.lvl *.lvlx *.wldx)";
     QString file = QFileDialog::getOpenFileName(this, tr("Selecting a level file to convert custom music"),
-                   (ui->cvt_lvlfile->text().isEmpty() ? ApplicationPath : ui->cvt_lvlfile->text()),
+                   (ui->cvt_lvlfile->text().isEmpty() ? AppPathManager::userAppDir() : ui->cvt_lvlfile->text()),
                    filter, nullptr, c_fileDialogOptions);
     if(file.isEmpty()) return;
 
@@ -645,7 +645,7 @@ void AudioCvt_Sox_gui::on_cvt_episode_browse_clicked()
     filter = "SoX binary (sox)";
 
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open episode path to convert entire music set"),
-                  (ui->cvt_episode->text().isEmpty() ? ApplicationPath : ui->cvt_episode->text()), c_dirDialogOptions);
+                  (ui->cvt_episode->text().isEmpty() ? AppPathManager::userAppDir() : ui->cvt_episode->text()), c_dirDialogOptions);
     if(dir.isEmpty()) return;
 
     ui->cvt_episode->setText(dir);

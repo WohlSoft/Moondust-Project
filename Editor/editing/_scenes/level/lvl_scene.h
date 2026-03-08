@@ -24,6 +24,9 @@
 #include <QGraphicsItem>
 #include <QProgressDialog>
 #include <QMenu>
+#include <QMap>
+#include <QSet>
+#include <QHash>
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
 #include <QBitmap>
@@ -32,6 +35,7 @@
 #include <QList>
 #include <Utils/vptrlist.h>
 
+#include "../common/base_scene.h"
 #include <common_features/logger.h>
 #include <common_features/simple_animator.h>
 #include <common_features/npc_animator.h>
@@ -44,7 +48,7 @@
 #include <PGE_File_Formats/lvl_filedata.h>
 #include <PGE_File_Formats/npc_filedata.h>
 
-#include <editing/_components/history/ihistoryelement.h>
+#include <editing/_components/history/i_history_element.h>
 
 #include <common_features/RTree.h>
 
@@ -52,22 +56,26 @@ class LevelEdit;
 class LvlHistoryManager;
 class MainWindow;
 
+class LvlBaseItem;
 class ItemBlock;
 class ItemBGO;
 class ItemNPC;
 class ItemPhysEnv;
+class ItemDoor;
 class ItemPlayerPoint;
 
-class LvlScene : public QGraphicsScene
+class LvlScene : public MoondustBaseScene
 {
     Q_OBJECT
     friend class EditMode;
     friend class LevelEdit;
     friend class LvlHistoryManager;
 public:
-    LvlScene(MainWindow *mw, GraphicsWorkspace *parentView,
+    explicit LvlScene(MainWindow *mw, GraphicsWorkspace *parentView,
              DataConfig &configs, LevelData &FileData, QObject *parent = nullptr);
-    ~LvlScene();
+    virtual ~LvlScene() override;
+
+    SceneType sceneType() const override;
 
     /* //////////////////////Contents/////////////////////////////
      *
@@ -105,14 +113,10 @@ public:
 
     // ///////////////////Common////////////////////////
 public:
-    //! Main window pointer
-    MainWindow         *m_mw = nullptr;
     //! Pointer to global configuration in the main window
     DataConfig        *m_configs = nullptr;
     //! Pointer to level data storage in the sub-window class
     LevelData          *m_data = nullptr;
-    //! Pointer to parent graphics view
-    GraphicsWorkspace *m_viewPort = nullptr;
     //! Pointer to parent edit sub-window;
     LevelEdit          *m_subWindow = nullptr;
 
@@ -189,7 +193,7 @@ public:
     void Debugger_updateItemList();
 
 protected:
-    void drawForeground(QPainter *painter, const QRectF &rect);
+    void drawForeground(QPainter *painter, const QRectF &rect) override;
 
     // ///////////////////GFX Manager////////////////////////
 public:
@@ -275,28 +279,21 @@ public:
     qlonglong m_lastBgoArrayID;
     qlonglong m_lastNpcArrayID;
 
-    //Defining indexes for data values of items
-#define ITEM_TYPE                    0 //String
-#define ITEM_ID                      1 //int
-#define ITEM_ARRAY_ID                2 //int
-#define ITEM_BLOCK_IS_SIZABLE        3 //bool
-#define ITEM_BLOCK_SHAPE             5 //int
-#define ITEM_NPC_BLOCK_COLLISION     7 //bool
-#define ITEM_NPC_NO_NPC_COLLISION    8 //bool
-#define ITEM_WIDTH                   9 //int
-#define ITEM_HEIGHT                  10 //int
-#define ITEM_IS_ITEM                 24 //bool
-#define ITEM_IS_CURSOR               25 //bool
-#define ITEM_LAST_POS                26 //QPointF
-#define ITEM_LAST_SIZE               27 //QSizeF
-
     long m_IncrementingNpcSpecialSpin;
 
-    ItemBlock *placeBlock(LevelBlock &block, bool toGrid = false);
-    ItemBGO *placeBGO(LevelBGO &bgo, bool toGrid = false);
-    ItemNPC *placeNPC(LevelNPC &npc, bool toGrid = false);
-    ItemPhysEnv *placeEnvironmentZone(LevelPhysEnv &water, bool toGrid = false);
-    ItemPlayerPoint *placePlayerPoint(PlayerPoint plr, bool init = false);
+    ItemBlock *placeBlock(LevelBlock &block, bool toGrid);
+    ItemBlock *placeBlock(const LevelBlock &block);
+
+    ItemBGO *placeBGO(LevelBGO &bgo, bool toGrid);
+    ItemBGO *placeBGO(const LevelBGO &bgo);
+
+    ItemNPC *placeNPC(LevelNPC &npc, bool toGrid);
+    ItemNPC *placeNPC(const LevelNPC &npc);
+
+    ItemPhysEnv *placeEnvironmentZone(LevelPhysEnv &water, bool toGrid);
+    ItemPhysEnv *placeEnvironmentZone(const LevelPhysEnv &water);
+
+    ItemPlayerPoint *placePlayerPoint(const PlayerPoint &plr, bool init = false);
 
     void placeDoor(LevelDoor &door, bool toGrid = false);
     void placeDoorEnter(LevelDoor &door, bool toGrid = false, bool init = false);
@@ -320,7 +317,7 @@ public:
 
     void applyArrayForItemGroup(QList<QGraphicsItem * >items);
     void applyArrayForItem(QGraphicsItem *item);
-    void doorPointsSync(long arrayID, bool remove = false);
+    void doorPointsSync(unsigned int arrayID, bool remove = false);
     void collectDataFromItem(LevelData &dataToStore, QGraphicsItem *item);
     void collectDataFromItems(LevelData &dataToStore, QList<QGraphicsItem *> items);
     void placeAll(const LevelData &data);
@@ -361,51 +358,33 @@ public:
     bool m_emptyCollisionCheck;
     void prepareCollisionBuffer();
 
-    typedef QList<QGraphicsItem *> PGE_ItemList;
-    bool checkGroupCollisions(PGE_ItemList *items);
-    QGraphicsItem *itemCollidesWith(QGraphicsItem *item, PGE_ItemList *itemgrp = nullptr, PGE_ItemList *allCollisions = nullptr);
-    QGraphicsItem *itemCollidesCursor(QGraphicsItem *item);
+    QGraphicsItem *itemCollidesWith(const QGraphicsItem *item, PGE_ItemList *itemgrp = nullptr, PGE_ItemList *allCollisions = nullptr) override;
+    QGraphicsItem *itemCollidesCursor(const QGraphicsItem *item) override;
 
-    typedef RTree<QGraphicsItem *, int64_t, 2, int64_t > IndexTree;
-    typedef int64_t RPoint[2];
-    IndexTree tree;
-    void queryItems(QRectF &zone, PGE_ItemList *resultList);
-    void queryItems(double x, double y, PGE_ItemList *resultList);
-    void registerElement(QGraphicsItem *item);
-    void unregisterElement(QGraphicsItem *item);
     // //////////////////////////////////
 
+    // Items list, key is array_id!
+    QMap<unsigned int, ItemPlayerPoint*> m_itemsPlayers;
 
+    QMap<unsigned int, ItemBlock*> m_itemsBlocks;
+    QMap<unsigned int, ItemBGO*> m_itemsBGO;
+    QMap<unsigned int, ItemNPC*> m_itemsNPC;
+    QMap<unsigned int, ItemPhysEnv*> m_itemsPhysEnv;
+
+    QMap<unsigned int, ItemDoor*> m_itemsDoorEnters;
+    QMap<unsigned int, ItemDoor*> m_itemsDoorExits;
+
+    // Variouis background related objects
+    QSet<QGraphicsItem*> m_itemsBG;
+
+    /**
+     * @brief Collects all items on the scene and puts them to the *m_data store
+     */
+    void sceneItemsToData(LevelData &data);
 
     // ////////////////////////////////////////////////////////////////////////////////
     // /////////////////////////////////EDITING////////////////////////////////////////
     // ////////////////////////////////////////////////////////////////////////////////
-
-
-    // ///////////////////Edit modes///////////////////////////
-public:
-    int m_editMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
-    // 3 - drawing water/sand zone, 4 - placing from Buffer
-
-    QList<EditMode *> m_editModes;
-    EditMode *m_editModeObj;
-    enum EditModeID
-    {
-        MODE_Selecting = 0,
-        MODE_HandScroll,
-        MODE_Erasing,
-        MODE_PlacingNew,
-        MODE_DrawRect,
-        MODE_DrawCircle,
-        MODE_PasteFromClip,
-        MODE_Resizing,
-        MODE_SelectingOnly,
-        MODE_Line,
-        MODE_Fill
-    };
-    void switchMode(const QString &title);
-    void SwitchEditingMode(int EdtMode);
-
 
 
     // ///////////////////Placing Mode settings///////////////////////////
@@ -447,11 +426,6 @@ public:
 public:
     bool m_mouseIsMovedAfterKey;
 
-    bool m_eraserIsEnabled;
-    bool m_pastingMode;
-
-    bool m_busyMode; //Placing/drawing on map, disable selecting and dragging items
-    bool m_disableMoveItems;
     bool m_contextMenuIsOpened;
 
     bool m_mouseLeftPressed; //Left mouse key is pressed
@@ -463,18 +437,18 @@ public:
     bool m_keyCtrlPressed = false;
 
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
-    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
     bool m_skipChildMousePressEvent;
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
     bool m_skipChildMouseMoveEvent;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
     bool m_skipChildMousReleaseEvent;
-    void keyPressEvent(QKeyEvent *keyEvent);
-    void keyReleaseEvent(QKeyEvent *keyEvent);
+    void keyPressEvent(QKeyEvent *keyEvent) override;
+    void keyReleaseEvent(QKeyEvent *keyEvent) override;
 
-    void focusInEvent(QFocusEvent* event);
-    void focusOutEvent(QFocusEvent* event);
+    void focusInEvent(QFocusEvent* event) override;
+    void focusOutEvent(QFocusEvent* event) override;
 
 
     // ////////////////////////////////////////////////////////////////////////////////

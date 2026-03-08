@@ -23,7 +23,7 @@
 #include <QSysInfo>
 #endif
 
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 #include <common_features/util.h>
 #include <common_features/graphics_funcs.h>
 #include <main_window/global_settings.h>
@@ -42,6 +42,7 @@
 #include <js_engine/proxies/js_ini.h>
 #include <js_engine/proxies/js_system.h>
 
+#include "config_profile_selector.h"
 #include "../data_configs.h"
 #include "version.h"
 
@@ -279,7 +280,7 @@ void ConfigManager::loadConfigPackList()
     QListWidgetItem *item;
 
     //! Stuff PGE config dir
-    QString     configPath      = ApplicationPath + "/configs/";
+    QString     configPath      = AppPathManager::dataDir() + "/configs/";
     //! User profile PGE config dir
     QString     configPath_user = AppPathManager::userAppDir() + "/configs/";
 #ifdef MOONDUST_UNIX_INSTALL
@@ -292,21 +293,26 @@ void ConfigManager::loadConfigPackList()
 #   endif
 #endif
 
+    QDir        dataAppDir(AppPathManager::dataDir());
+    QDir        dataUserDir(AppPathManager::userAppDir());
+#ifdef MOONDUST_UNIX_INSTALL
+    QDir        configDirSys(configPathSys);
+#endif
+
     //Create empty config directory if not exists
-    if(!QDir(configPath).exists())
-        QDir().mkdir(configPath);
+    if(!dataAppDir.exists("configs"))
+        dataAppDir.mkdir("configs");
 
     if(AppPathManager::userDirIsAvailable())
     {
-        if(!QDir(configPath_user).exists())
-            QDir().mkdir(configPath_user);
+        if(!dataUserDir.exists())
+            dataUserDir.mkdir("configs");
     }
 
 #ifdef MOONDUST_UNIX_INSTALL
-    if(QDir(configPathSys).exists())
+    if(configDirSys.exists())
     {
-        QDir configDir(configPathSys);
-        QStringList configs = configDir.entryList(QDir::AllDirs);
+        QStringList configs = configDirSys.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
         for(QString &cpName : configs)
         {
             QString config_dir = configPathSys + cpName + "/";
@@ -318,10 +324,10 @@ void ConfigManager::loadConfigPackList()
     }
 #endif
 
-    if(QDir(configPath).exists())
+    if(dataAppDir.exists("configs"))
     {
         QDir configDir(configPath);
-        QStringList configs = configDir.entryList(QDir::AllDirs);
+        QStringList configs = configDir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
         for(QString &cpName : configs)
         {
             QString config_dir = configPath + cpName + "/";
@@ -335,7 +341,7 @@ void ConfigManager::loadConfigPackList()
     if(AppPathManager::userDirIsAvailable())
     {
         QDir configUserDir(configPath_user);
-        QStringList configs = configUserDir.entryList(QDir::AllDirs);
+        QStringList configs = configUserDir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
         for(QString &cpName : configs)
         {
             QString config_dir = configPath_user + cpName + "/";
@@ -385,7 +391,7 @@ void ConfigManager::loadConfigPackList()
 
         guiset.beginGroup("main");
         data_dir = (guiset.value("application-dir", "0").toBool() ?
-                    ApplicationPath + "/" :
+                    AppPathManager::dataDir() + "/" :
                     cpFullDirPath + "data/");
 
         configName =    guiset.value("config_name", QDir(cpFullDirPath).dirName()).toString();
@@ -481,6 +487,7 @@ bool ConfigManager::hasConfigPacks()
         msgBox.exec();
         return false;
     }
+
     return true;
 }
 
@@ -519,7 +526,7 @@ QString ConfigManager::loadConfigs()
         availableConfigs[0]->setSelected(true);
         ui->configList->scrollToItem(availableConfigs[0]);
     }
-    else for(QListWidgetItem *it : availableConfigs) //check exists of config in list
+    else foreach(QListWidgetItem *it, availableConfigs) //check exists of config in list
     {
         if(configPath.isEmpty())
         {
@@ -549,7 +556,7 @@ QString ConfigManager::loadConfigs()
 
     checkIsIntegrational();
 
-    if((!m_currentConfigPath.isEmpty()) && (!m_doAskAgain))
+    if(!m_currentConfigPath.isEmpty() && !m_doAskAgain)
     {
         if(!checkForConfigureTool())
             return QString();
@@ -566,6 +573,8 @@ void ConfigManager::setAskAgain(bool _x)
 
 void ConfigManager::on_configList_itemDoubleClicked(QListWidgetItem *item)
 {
+    bool ok = true;
+
     m_currentConfig         = item->data(CP_NAME_ROLE).toString();
     m_currentConfigPath     = item->data(CP_FULLDIR_ROLE).toString();
     m_currentIncompatLevel  = item->data(CP_INCOMPATIBLE_ROLE).toInt();
@@ -573,7 +582,14 @@ void ConfigManager::on_configList_itemDoubleClicked(QListWidgetItem *item)
     m_currentConfigHomeUrl  = item->data(CP_HOMEPAGE_ROLE).toString();
     m_doAskAgain            = ui->AskAgain->isChecked();
 
-    if(verifyCompatibility())
+    ok &= verifyCompatibility();
+
+    tryFindAutoProfiles();
+
+    ok &= ok && checkForConfigureTool();
+    ok &= ok && choiceProfile();
+
+    if(ok)
         this->accept();
 }
 
@@ -585,55 +601,189 @@ void ConfigManager::on_buttonBox_accepted()
     on_configList_itemDoubleClicked(ui->configList->selectedItems().first());
 }
 
-bool ConfigManager::isConfigured(PGE_JsEngine *js)
+void ConfigManager::tryFindAutoProfiles()
 {
-    QString settingsFile = DataConfig::buildLocalConfigPath(m_currentConfigPath);
-    if(!QFile::exists(settingsFile))
-        return false;
+    QStringList profiles = DataConfig::getAvailableLocalProfiles(m_currentConfigPath);
+    QSet<QString> profilesAvailable;
 
-    QSettings settings(settingsFile, QSettings::IniFormat);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    settings.setIniCodec("UTF-8");
-#endif
-
-    settings.beginGroup("main");
-    bool ret = settings.value("application-path-configured", false).toBool();
-    QString path = settings.value("application-path", QString()).toString();
-    settings.endGroup();
-
-    PGE_JsEngine loc_js;
-    bool js_valid = js != nullptr;
-    if(!js)
+    // To prevent duplicates, collect paths of known profiles
+    foreach(const QString &file, profiles)
     {
-        js = &loc_js;
-        js_valid = configure_loadScript(js);
+        IniProcessing settings(file);
+        QString path;
+        bool ret;
+
+        settings.beginGroup("main");
+        settings.read("application-path-configured", ret, false);
+        settings.read("application-path", path, QString());
+        settings.endGroup();
+        settings.close();
+
+        if(ret)
+            profilesAvailable.insert(path);
     }
 
-    // When directory got moved or deleted, config pack should be marked as not configured because got broken
-    ret &= !path.isEmpty() && QFileInfo(path).isDir() && QDir(path).exists();
+    if(ConfStatus::configIsIntegrational)
+    {
+        PGE_JsEngine js;
 
-    if(js_valid && js->hasFunction("isValidIntegration"))
-        ret &= js->call<bool>("isValidIntegration", nullptr, path);
+        if(configure_loadScript(&js) && js.hasFunction("findAutoProfiles"))
+        {
+            qDebug() << "Attempting to detect profiles automatically for" << m_currentConfigPath;
+            setEnabled(false);
 
-    return ret;
+            // This is a function that should return array of objects filled with specific fields
+            QJSValue ret = js.callJS("findAutoProfiles", nullptr);
+
+            if(ret.isError())
+            {
+                configure_showError(&js, "findAutoProfiles()");
+            }
+            else if(!ret.isUndefined() && !ret.isNull() && ret.isArray())
+            {
+                int size = ret.property("length").toInt();
+                qDebug() << "Found entries:" << size;
+
+                for(int i = 0; i < size; ++i)
+                {
+                    QJSValue entry = ret.property(i);
+                    if(entry.isObject())
+                    {
+                        if(!entry.hasProperty("application-path"))
+                            continue; // Required fields absent!
+
+                        QString appPath = entry.property("application-path").toString();
+                        QFileInfo appPathInfo(appPath);
+
+                        if(!appPathInfo.isDir() || !appPathInfo.exists())
+                            continue; // Invalid profile!
+
+                        if(profilesAvailable.contains(appPath))
+                            continue; // Duplicate entry!
+
+                        IniProcessing newProfile(DataConfig::buildFreeLocalProfilePath(m_currentConfigPath));
+                        newProfile.beginGroup("main");
+
+                        newProfile.setValue("application-path", appPath);
+
+                        if(entry.hasProperty("application-title"))
+                            newProfile.setValue("application-title", entry.property("application-title").toString());
+
+                        if(entry.hasProperty("application-icon"))
+                            newProfile.setValue("application-icon", entry.property("application-icon").toString());
+
+                        if(entry.hasProperty("executable-name"))
+                            newProfile.setValue("executable-name", entry.property("executable-name").toString());
+                        else
+                            newProfile.setValue("executable-name", "pge_engine"); // Placeholder
+
+                        if(entry.hasProperty("graphics-level"))
+                            newProfile.setValue("graphics-level", entry.property("graphics-level").toString());
+                        else
+                            newProfile.setValue("graphics-level", "graphics"); // Placeholder
+
+                        if(entry.hasProperty("graphics-worldmap"))
+                            newProfile.setValue("graphics-worldmap", entry.property("graphics-worldmap").toString());
+                        else
+                            newProfile.setValue("graphics-worldmap", "graphics"); // Placeholder
+
+                        if(entry.hasProperty("graphics-characters"))
+                            newProfile.setValue("graphics-characters", entry.property("graphics-characters").toString());
+                        else
+                            newProfile.setValue("graphics-characters", "graphics"); // Placeholder
+
+                        if(entry.hasProperty("application-dir") && (entry.property("application-dir").isNumber() || entry.property("application-dir").isBool()))
+                            newProfile.setValue("application-dir", entry.property("application-dir").toInt());
+                        else
+                            newProfile.setValue("application-dirs", 1); // Placeholder
+
+                        newProfile.setValue("application-path-configured", true);
+
+                        newProfile.endGroup();
+                        newProfile.writeIniFile();
+                        newProfile.close();
+                        profilesAvailable.insert(appPath);
+                    }
+                }
+            }
+
+            setEnabled(true);
+        }
+    }
+}
+
+bool ConfigManager::isConfigured(PGE_JsEngine *js)
+{
+    QStringList profiles = DataConfig::getAvailableLocalProfiles(m_currentConfigPath);
+
+    if(profiles.isEmpty())
+        return false;
+
+    foreach(const QString &file, profiles)
+    {
+        IniProcessing settings(file);
+        QString path;
+        bool ret;
+
+        settings.beginGroup("main");
+        settings.read("application-path-configured", ret, false);
+        settings.read("application-path", path, QString());
+        settings.endGroup();
+        settings.close();
+
+        PGE_JsEngine loc_js;
+        bool js_valid = js != nullptr;
+        if(!js)
+        {
+            js = &loc_js;
+            js_valid = configure_loadScript(js);
+        }
+
+        QFileInfo pathInfo(path);
+
+        // When directory got moved or deleted, config pack should be marked as not configured because got broken
+        ret &= !path.isEmpty() && pathInfo.isDir() && pathInfo.exists();
+
+        if(js_valid && js->hasFunction("isValidIntegration"))
+        {
+            QJSValue jsret = js->callJS("isValidIntegration", nullptr, path);
+
+            if(jsret.isError())
+            {
+                configure_showError(js, "isValidIntegration()");
+                ret = false;
+            }
+            else
+                ret &= jsret.toBool();
+        }
+
+        if(ret) // At least one is configured
+            return true;
+    }
+
+    return false;
 }
 
 bool ConfigManager::checkForConfigureTool()
 {
     //If configure tool has been detected
-    if(ConfStatus::configIsIntegrational && (!isConfigured()))
+    if(ConfStatus::configIsIntegrational)
     {
-        QMessageBox::StandardButton reply =
-            QMessageBox::information(this,
-                                     tr("Configuration package is not configured!"),
-                                     tr("\"%1\" configuration package is not configured yet.\n"
-                                        "Do you want to configure it?")
-                                     .arg(m_currentConfig),
-                                     QMessageBox::Yes | QMessageBox::No);
-        if(reply == QMessageBox::Yes)
-            return runConfigureTool();
-        else
-            return false;
+        if(!isConfigured())
+        {
+            QMessageBox::StandardButton reply =
+                QMessageBox::information(this,
+                                         tr("Configuration package is not configured!"),
+                                         tr("\"%1\" configuration package is not configured yet.\n"
+                                            "Do you want to configure it?")
+                                         .arg(m_currentConfig),
+                                         QMessageBox::Yes | QMessageBox::No);
+
+            if(reply == QMessageBox::Yes)
+                return runConfigureTool();
+            else
+                return false;
+        }
     }
 
     return true;
@@ -739,12 +889,13 @@ bool ConfigManager::verifyCompatibility()
     }
     }
 
-    return checkForConfigureTool();
+    return true;
 }
 
 bool ConfigManager::runConfigureTool()
 {
     QWidget *parentW = qobject_cast<QWidget *>(parent());
+
     if(!parentW || isVisible())
         parentW = this;
 
@@ -752,21 +903,44 @@ bool ConfigManager::runConfigureTool()
     {
         PGE_JsEngine js;
 
+        // For JavaScript API to return the profile path as a settings file
+        m_currentConfigProfilePath = DataConfig::buildFreeLocalProfilePath(m_currentConfigPath);
+
         if(configure_loadScript(&js))
         {
+            bool succ = false;
             setEnabled(false);
-            if(!js.call<bool>("onConfigure", nullptr))
+
+            if(js.hasFunction("onConfigure"))
+            {
+                QJSValue ret = js.callJS("onConfigure", nullptr);
+
+                if(ret.isError())
+                    configure_showError(&js, "onConfigure()");
+                else
+                    succ = ret.toBool();
+            }
+
+            if(!succ)
             {
                 setEnabled(true);
+                m_currentConfigProfilePath.clear();
                 return false;
             }
+
             setEnabled(true);
+
             if(!isConfigured(&js))
+            {
+                m_currentConfigProfilePath.clear();
                 return false;
+            }
+
             return true;
         }
         else
         {
+            m_currentConfigProfilePath.clear();
             QMessageBox::critical(parentW,
                                   tr("Configuration script failed"),
                                   tr("Configuring tool encountered an error: %1 at line %2.\n"
@@ -788,6 +962,67 @@ bool ConfigManager::runConfigureTool()
     }
 }
 
+bool ConfigManager::choiceProfile()
+{
+    bool ok;
+
+    if(!ConfStatus::configIsIntegrational)
+    {
+        m_currentConfigProfilePath.clear();
+        return true; // No profile needed!
+    }
+
+    m_currentConfigProfilePath = selectConfigProfile(&ok);
+
+    if(ok && m_currentConfigProfilePath.isEmpty()) // Requested new profile
+        return runConfigureTool();
+    else if(!ok) // Cancelled
+        return false;
+
+    return true;
+}
+
+QString ConfigManager::selectConfigProfile(bool *ok)
+{
+    QString config = DataConfig::buildLocalConfigPath(m_currentConfigPath);
+    QStringList profiles = DataConfig::getAvailableLocalProfiles(m_currentConfigPath);
+    Q_ASSERT(ok);
+    *ok = false;
+
+    if(profiles.isEmpty())
+        return QString();
+
+    ConfigProfileSelect profile(this);
+    profile.setItemsList(profiles);
+
+    if(QFile::exists(config))
+    {
+        IniProcessing loc(config);
+        QString curProfile;
+
+        if(loc.beginGroup("main"))
+            loc.read("profile-file", curProfile, QString());
+
+        loc.endGroup();
+
+        if(!curProfile.isEmpty())
+            profile.setCurrentItem(curProfile);
+    }
+
+    int ret = profile.exec();
+    if(ret == QDialog::Accepted)
+    {
+        *ok = true;
+
+        if(profile.isNewProfile())
+            return QString();
+
+        return profile.currentItem();
+    }
+
+    return QString();
+}
+
 bool ConfigManager::configure_loadScript(PGE_JsEngine *js)
 {
     QWidget *parentW = qobject_cast<QWidget *>(parent());
@@ -797,7 +1032,9 @@ bool ConfigManager::configure_loadScript(PGE_JsEngine *js)
     bool successfulLoaded = false;
 
     // QString cpDirName = QDir(m_currentConfigPath).dirName();
-    QString cpSetupFile = DataConfig::buildLocalConfigPath(m_currentConfigPath);
+    QString cpSetupFile = m_currentConfigProfilePath.isEmpty() ?
+                            DataConfig::buildLocalConfigPath(m_currentConfigPath) :
+                            m_currentConfigProfilePath;
 
     js->bindProxy(new PGE_JS_Common(parentW), "PGE");
     js->bindProxy(new PGE_JS_File(m_currentConfigPath, cpSetupFile, parentW), "FileIO");
@@ -807,4 +1044,19 @@ bool ConfigManager::configure_loadScript(PGE_JsEngine *js)
     js->loadFileByExpcetedResult<void>(ConfStatus::configConfigureTool, &successfulLoaded);
 
     return successfulLoaded;
+}
+
+void ConfigManager::configure_showError(PGE_JsEngine *js, const char *function)
+{
+    qWarning() << "Failed to execute function: " << QString::fromUtf8(function) << js->getLastError() << ConfStatus::configConfigureTool << js->getLastErrorLine();
+
+    QMessageBox::warning(this,
+        tr("Configure script error:"),
+        tr("Failed to execute function %1\n\n"
+           "Error at %2:%3:\n\n%4")
+            .arg(function)
+            .arg(ConfStatus::configConfigureTool)
+            .arg(js->getLastErrorLine())
+            .arg(js->getLastError())
+    );
 }

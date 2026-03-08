@@ -25,7 +25,6 @@
 
 bool DataConfig::loadWorldScene(obj_w_scenery &sScene, QString section, obj_w_scenery *merge_with, QString iniFile, IniProcessing *setup)
 {
-    bool valid = true;
     bool internal = !setup;
     QString errStr;
     if(internal)
@@ -43,11 +42,13 @@ bool DataConfig::loadWorldScene(obj_w_scenery &sScene, QString section, obj_w_sc
         addError(errStr);
         sScene.isValid = false;
     }
+
     sScene.m_itemType = ItemTypes::WLD_Scenery;
     closeSection(setup);
     if(internal)
         delete setup;
-    return valid;
+
+    return sScene.isValid;
 }
 
 
@@ -57,6 +58,7 @@ void DataConfig::loadWorldScene()
 
     obj_w_scenery sScene;
     unsigned long scenery_total = 0;
+    unsigned long soft_limit = 0;
     bool useDirectory = false;
 
     QString scene_ini = getFullIniPath("wld_scenery.ini");
@@ -72,6 +74,7 @@ void DataConfig::loadWorldScene()
         return;
     {
         setup.read("total", scenery_total, 0);
+        setup.read("soft-limit", soft_limit, 0);
         setup.read("grid", defaultGrid.scenery, defaultGrid.scenery);
         total_data += scenery_total;
         setup.read("config-dir", folderWldScenery.items, "");
@@ -107,6 +110,7 @@ void DataConfig::loadWorldScene()
             valid = loadWorldScene(sScene, "scenery", nullptr, QString("%1/scenery-%2.ini").arg(folderWldScenery.items).arg(i));
         else
             valid = loadWorldScene(sScene, QString("scenery-%1").arg(i), 0, "", &setup);
+
         /***************Load image*******************/
         if(valid)
         {
@@ -126,6 +130,21 @@ void DataConfig::loadWorldScene()
                                        sScene.icon);
         }
         /***************Load image*end***************/
+        else if(soft_limit > 0 && i > soft_limit)
+        {
+            // If resource after soft-limit is invalid, consider previous is the total number:
+            --i;
+            total_data -= scenery_total;
+            total_data += i;
+            scenery_total = i;
+            ConfStatus::total_wscene = signed(scenery_total);
+            main_wscene.shrinkTo(i);
+            // Remove last error
+            errorsList[ERR_GLOBAL].pop_back();
+            emit progressMax(int(i));
+            break;
+        }
+
         sScene.setup.id = i;
         main_wscene.storeElement(int(i), sScene, valid);
 

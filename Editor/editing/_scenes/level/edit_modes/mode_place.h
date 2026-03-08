@@ -27,13 +27,13 @@ class LVL_ModePlace : public EditMode
 public:
     LVL_ModePlace(QGraphicsScene *parentScene = nullptr, QObject *parent = nullptr);
     ~LVL_ModePlace();
-    void set();
-    void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseMove(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseRelease(QGraphicsSceneMouseEvent *mouseEvent);
+    void set() override;
+    void mousePress(QGraphicsSceneMouseEvent *mouseEvent) override;
+    void mouseMove(QGraphicsSceneMouseEvent *mouseEvent) override;
+    void mouseRelease(QGraphicsSceneMouseEvent *mouseEvent) override;
 
-    void keyPress(QKeyEvent *keyEvent);
-    void keyRelease(QKeyEvent *keyEvent);
+    void keyPress(QKeyEvent *keyEvent) override;
+    void keyRelease(QKeyEvent *keyEvent) override;
 };
 
 #endif // LVL_MODE_PLACING_H

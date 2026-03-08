@@ -8,7 +8,7 @@
 #include <QFileDialog>
 #include <QSettings>
 #include <signal.h>
-#include <common_features/app_path.h>
+#include <pge_app_path.h>
 
 #include "qfile_dialogs_default_options.hpp"
 
@@ -232,6 +232,7 @@ void GIFs2PNG::findConfigPacks()
 {
     QStringList possibleConfigPacks;
     QString path;
+
     if(AppPathManager::userDirIsAvailable())
     {
         path = AppPathManager::userAppDir() + "/configs";
@@ -245,8 +246,8 @@ void GIFs2PNG::findConfigPacks()
         }
     }
 
-    path = ApplicationPath + "/configs";
-    QDir dpa(ApplicationPath + "/configs");
+    path = AppPathManager::dataDir() + "/configs";
+    QDir dpa(path);
     if(dpa.exists())
     {
         for(QString &p : dpa.entryList(QDir::Dirs|QDir::NoDotAndDotDot))

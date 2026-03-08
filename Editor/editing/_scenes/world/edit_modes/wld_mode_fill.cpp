@@ -42,16 +42,17 @@ void WLD_ModeFill::set()
     s->clearSelection();
     s->resetResizers();
 
-    s->m_eraserIsEnabled = false;
-    s->m_pastingMode = false;
-    s->m_busyMode = true;
-    s->m_disableMoveItems = false;
+    s->setEditFlagEraser(false);
+    s->setEditFlagPasteMode(false);
+    s->setEditFlagBusyMode(true);
+    s->setEditFlagNoMoveItems(false);
 
-    s->m_viewPort->setInteractive(true);
-    s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_flood_fill));
-    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
-    s->m_viewPort->setRenderHint(QPainter::Antialiasing, true);
-    s->m_viewPort->viewport()->setMouseTracking(true);
+    auto *vp = s->curViewPort();
+    vp->setInteractive(true);
+    vp->setCursor(Themes::Cursor(Themes::cursor_flood_fill));
+    vp->setDragMode(QGraphicsView::NoDrag);
+    vp->setRenderHint(QPainter::Antialiasing, true);
+    vp->viewport()->setMouseTracking(true);
 }
 
 void WLD_ModeFill::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
@@ -172,7 +173,6 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     scene->m_data->tile_array_id++;
                     WldPlacingItems::terrainSet.meta.array_id = scene->m_data->tile_array_id;
 
-                    scene->m_data->tiles.push_back(WldPlacingItems::terrainSet);
                     scene->placeTile(WldPlacingItems::terrainSet, true);
                     historyBuffer.tiles.push_back(WldPlacingItems::terrainSet);
 
@@ -221,7 +221,6 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     scene->m_data->scene_array_id++;
                     WldPlacingItems::sceneSet.meta.array_id = scene->m_data->scene_array_id;
 
-                    scene->m_data->scenery.push_back(WldPlacingItems::sceneSet);
                     scene->placeScenery(WldPlacingItems::sceneSet, true);
                     historyBuffer.scenery.push_back(WldPlacingItems::sceneSet);
 
@@ -270,7 +269,6 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     scene->m_data->path_array_id++;
                     WldPlacingItems::pathSet.meta.array_id = scene->m_data->path_array_id;
 
-                    scene->m_data->paths.push_back(WldPlacingItems::pathSet);
                     scene->placePath(WldPlacingItems::pathSet, true);
                     historyBuffer.paths.push_back(WldPlacingItems::pathSet);
 
@@ -319,7 +317,6 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     scene->m_data->level_array_id++;
                     WldPlacingItems::levelSet.meta.array_id = scene->m_data->level_array_id;
 
-                    scene->m_data->levels.push_back(WldPlacingItems::levelSet);
                     scene->placeLevel(WldPlacingItems::levelSet, true);
                     historyBuffer.levels.push_back(WldPlacingItems::levelSet);
 

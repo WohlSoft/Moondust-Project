@@ -100,7 +100,7 @@ public:
     /// \brief sourcePos
     /// \return registred position of item
     ///
-    virtual QPoint sourcePos();
+    virtual QPoint sourcePos() const;
 
     /*!
      * \brief Is item locked
@@ -125,6 +125,8 @@ public:
      * \return state of type-based global lock of items
      */
     virtual bool itemTypeIsLocked();
+
+    bool collidesWith(const WldBaseItem *other) const;
 
 protected:
     //! Is item locked

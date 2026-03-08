@@ -50,7 +50,7 @@ void LvlBaseItem::construct()
     m_mouseMid = false;
     m_mouseRight = false;
 
-    setData(ITEM_IS_ITEM, 1);
+    setData(LvlScene::ITEM_IS_ITEM, true);
 }
 
 void LvlBaseItem::arrayApply()
@@ -91,8 +91,8 @@ QPainterPath LvlBaseItem::shape() const
 {
     QPainterPath path;
     path.addRect(QRectF(0.0, 0.0,
-                        this->data(ITEM_WIDTH).toReal(),
-                        this->data(ITEM_HEIGHT).toReal()));
+                        this->data(LvlScene::ITEM_WIDTH).toReal(),
+                        this->data(LvlScene::ITEM_HEIGHT).toReal()));
     return path;
 }
 
@@ -130,7 +130,7 @@ void LvlBaseItem::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    if(m_scene->m_busyMode)
+    if(m_scene->getEditFlagBusyMode())
     {
         unsetCursor();
         ungrabMouse();
@@ -138,6 +138,7 @@ void LvlBaseItem::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         mouseEvent->accept();
         return;
     }
+
     //Discard multi-mouse keys
     if((m_mouseLeft) || (m_mouseMid) || (m_mouseRight))
     {
@@ -189,7 +190,7 @@ void LvlBaseItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     /////////////////////////CONTEXT MENU:///////////////////////////////
     if((callContext) && (!m_scene->m_contextMenuIsOpened))
     {
-        if((!itemTypeIsLocked()) && (!m_scene->m_busyMode) && (!m_locked))
+        if((!itemTypeIsLocked()) && (!m_scene->getEditFlagBusyMode()) && (!m_locked))
             contextMenu(mouseEvent);
     }
 }

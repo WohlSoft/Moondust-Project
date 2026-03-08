@@ -17,7 +17,6 @@
  */
 
 #include "graphicsworkspace.h"
-#include "logger.h"
 #include <cmath>
 #include <QElapsedTimer>
 #include <QRubberBand>
@@ -29,8 +28,7 @@
 #include <QNativeGestureEvent>
 #endif
 
-#include <editing/_scenes/level/lvl_scene.h>
-#include <editing/_scenes/world/wld_scene.h>
+#include <editing/_scenes/common/base_scene.h>
 #include <pge_qt_compat.h>
 
 #include <common_features/main_window_ptr.h>
@@ -94,8 +92,17 @@ GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     handScrollMotions = 0;
     originalCursor = this->cursor();
     rubberBandSelectionMode = Qt::IntersectsItemShape;
+    this->setCacheMode(QGraphicsView::CacheNone);
     this->setMouseTracking(true);
     this->setRubberBandSelectionMode(Qt::IntersectsItemShape);
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    setOptimizationFlag(QGraphicsView::DontClipPainter, true);
+#endif
+    setOptimizationFlag(QGraphicsView::DontSavePainterState, false);
+    setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing, true);
+    setRenderHint(QPainter::Antialiasing, false);
+
 #ifdef __APPLE__
     this->setAttribute(Qt::WA_AcceptTouchEvents, true);
 #endif
@@ -399,6 +406,76 @@ bool GraphicsWorkspace::eventFilter(QObject *obj, QEvent *event)
 }
 #endif
 
+#if 0
+void GraphicsWorkspace::paintEvent(QPaintEvent *event)
+{
+    MoondustBaseScene *scene = dynamic_cast<MoondustBaseScene *>(this->scene());
+
+    if(!scene)
+    {
+        QGraphicsView::paintEvent(event);
+        return;
+    }
+
+    QRegion exposedRegion = event->region();
+    QRectF exposedSceneRect = mapToScene(exposedRegion.boundingRect()).boundingRect();
+
+    QPainter painter(viewport());
+
+#if QT_CONFIG(rubberband)
+    if(rubberBanding && !rubberBandRect.isEmpty())
+        painter.save();
+#endif
+
+    // Set up render hints
+    painter.setRenderHints(painter.renderHints(), false);
+    painter.setRenderHints(renderHints(), true);
+
+    // Set up viewport transform
+    const bool viewTransformed = isTransformed();
+    if(viewTransformed)
+        painter.setWorldTransform(viewportTransform());
+    const QTransform viewTransform = painter.worldTransform();
+
+    if(!(optimizationFlags() & DontSavePainterState))
+        painter.save();
+
+    drawBackground(&painter, exposedSceneRect);
+
+    if(!(optimizationFlags() & DontSavePainterState))
+        painter.restore();
+
+    // Items
+    scene->drawBetterDrawItems(&painter, viewTransformed ? &viewTransform : nullptr, &exposedRegion, viewport());
+    painter.setOpacity(1.0);
+    painter.setWorldTransform(viewTransform);
+
+    // Foreground
+    drawForeground(&painter, exposedSceneRect);
+
+    // Rubberband
+    if(rubberBanding && !rubberBandRect.isEmpty())
+    {
+        painter.restore();
+        QStyleOptionRubberBand option;
+        option.initFrom(viewport());
+        option.rect = rubberBandRect;
+        option.shape = QRubberBand::Rectangle;
+
+        QStyleHintReturnMask mask;
+        if(viewport()->style()->styleHint(QStyle::SH_RubberBand_Mask, &option, viewport(), &mask))
+        {
+            // painter clipping for masked rubberbands
+            painter.setClipRegion(mask.region, Qt::IntersectClip);
+        }
+
+        viewport()->style()->drawControl(QStyle::CE_RubberBand, &option, &painter, viewport());
+    }
+
+    painter.end();
+}
+#endif
+
 bool GraphicsWorkspace::gestureEvent(QGestureEvent *event)
 {
     if(QGesture *pan = event->gesture(Qt::PanGesture))
@@ -543,13 +620,13 @@ void GraphicsWorkspace::mousePressEvent(QMouseEvent *event)
     }
     else
     {
-        LvlScene *s = dynamic_cast<LvlScene *>(scene());
-        WldScene *w = dynamic_cast<WldScene *>(scene());
+        MoondustBaseScene *base = dynamic_cast<MoondustBaseScene *>(scene());
+
         bool setSelect = false;
-        if(s)
-            setSelect = (s->m_editMode == LvlScene::MODE_HandScroll);
-        else if(w)
-            setSelect = ((!w->m_isSelectionDialog) && (w->m_editMode == WldScene::MODE_HandScroll));
+
+        if(base)
+            setSelect = (base->allowEditModeSwitch() && base->allowEditModeSwitch() == MoondustBaseScene::MODE_HandScroll);
+
         if(setSelect)
         {
             if(event->buttons() & Qt::RightButton)
@@ -684,18 +761,16 @@ void GraphicsWorkspace::mouseMoveEventHandler(PGEMouseEvent &event)
         && */ cachedItemsUnderMouse.isEmpty())
     {
         QRectF target(mapToScene(mouseEvent.screenPos()), mapToScene(mouseEvent.screenPos() + QPoint(1, 1)));
-        LvlScene *lsc = qobject_cast<LvlScene * >(scene());
-        WldScene *wsc = qobject_cast<WldScene * >(scene());
-        if(lsc)
-            lsc->queryItems(target, &cachedItemsUnderMouse);
-        else if(wsc)
-            wsc->queryItems(target, &cachedItemsUnderMouse);
+        MoondustBaseScene *sc = qobject_cast<MoondustBaseScene * >(scene());
+
+        if(sc)
+            sc->queryItems(target, &cachedItemsUnderMouse);
         else
             cachedItemsUnderMouse = scene()->items(target, Qt::IntersectsItemBoundingRect);
     }
 
     // Find the topmost item under the mouse with a cursor.
-    for(QGraphicsItem *item : cachedItemsUnderMouse)
+    foreach(QGraphicsItem *item, cachedItemsUnderMouse)
     {
         if(item && item->hasCursor())
         {
@@ -734,16 +809,14 @@ void GraphicsWorkspace::_q_unsetViewportCursor()
 {
     QList<QGraphicsItem *> theItems;
     QRectF target(lastMouseEvent.pos(), lastMouseEvent.pos() + QPoint(1, 1));
-    LvlScene *lsc = qobject_cast<LvlScene * >(scene());
-    WldScene *wsc = qobject_cast<WldScene * >(scene());
-    if(lsc)
-        lsc->queryItems(target, &theItems);
-    else if(wsc)
-        wsc->queryItems(target, &theItems);
+    MoondustBaseScene *sc = qobject_cast<MoondustBaseScene *>(scene());
+
+    if(sc)
+        sc->queryItems(target, &theItems);
     else
         theItems = scene()->items(target, Qt::IntersectsItemBoundingRect);
 
-    for(QGraphicsItem *item : theItems)
+    foreach(QGraphicsItem *item, theItems)
     {
         if(item->hasCursor())
         {
@@ -866,7 +939,7 @@ void GraphicsWorkspace::updateRubberBand(const PGEMouseEvent &event)
 #endif
         if(!rubberBandExtendSelection.isEmpty())
         {
-            for(QGraphicsItem *item : rubberBandExtendSelection)
+            foreach(QGraphicsItem *item, rubberBandExtendSelection)
                 item->setSelected(true);
         }
     }

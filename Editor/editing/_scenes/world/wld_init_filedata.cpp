@@ -19,6 +19,12 @@
 #include <editing/edit_world/world_edit.h>
 
 #include "wld_scene.h"
+#include "items/item_tile.h"
+#include "items/item_scene.h"
+#include "items/item_path.h"
+#include "items/item_level.h"
+#include "items/item_music.h"
+
 
 // ///////////////////SET Tiles Objects/////////////////////////////////////////////
 void WldScene::setTiles(QProgressDialog &progress)
@@ -101,4 +107,28 @@ void WldScene::setMusicBoxes(QProgressDialog &progress)
         if(progress.wasCanceled())
             return;
     }
+}
+
+// //////////////////////// Collect all items into data store /////////////////////////////////
+void WldScene::sceneItemsToData(WorldData &data)
+{
+    data.tiles.clear();
+    foreach(auto *p, m_itemsTiles)
+        data.tiles.push_back(p->m_data);
+
+    data.scenery.clear();
+    foreach(auto *p, m_itemsScenery)
+        data.scenery.push_back(p->m_data);
+
+    data.paths.clear();
+    foreach(auto *p, m_itemsPaths)
+        data.paths.push_back(p->m_data);
+
+    data.levels.clear();
+    foreach(auto *p, m_itemsLevels)
+        data.levels.push_back(p->m_data);
+
+    data.music.clear();
+    foreach(auto *p, m_itemsMusicBoxes)
+        data.music.push_back(p->m_data);
 }
