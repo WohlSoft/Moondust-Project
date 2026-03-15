@@ -518,6 +518,7 @@ bool MDAudioFFMPEG::updateStream(bool *spec_changed)
         m_spec.m_channels = channels;
         m_spec.m_sample_format = fmt;
         m_spec.m_sample_rate = srate;
+        m_spec.m_frame_size = m_spec.m_channels * (SDL_AUDIO_BITSIZE(m_spec.m_sample_format) / 8);
 
         if(spec_changed)
             *spec_changed = true;
@@ -946,6 +947,8 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         p->sfmt = AV_SAMPLE_FMT_FLT;
         break;
     }
+
+    m_spec.m_frame_size = m_spec.m_channels * (SDL_AUDIO_BITSIZE(m_spec.m_sample_format) / 8);
 
     p->schannels = m_spec.m_channels;
     p->select_chgannel_layout();

@@ -195,6 +195,7 @@ bool MDAudioMP3::openRead(SDL_RWops *file)
     m_spec.m_sample_format = format;
     m_spec.m_channels = channels;
     m_spec.m_sample_rate = rate;
+    m_spec.m_frame_size = m_spec.m_channels * (SDL_AUDIO_BITSIZE(m_spec.m_sample_format) / 8);
 
     m_spec.m_total_length = mpg123_length(m_handle);
 
@@ -263,6 +264,8 @@ bool MDAudioMP3::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
             break;
         }
     }
+
+    m_spec.m_frame_size = m_spec.m_channels * (SDL_AUDIO_BITSIZE(m_spec.m_sample_format) / 8);
 
     m_lame = lame_init();
 
