@@ -669,6 +669,7 @@ uint32_t MDAudioFFMPEG::getCodecSpec() const
 
 bool MDAudioFFMPEG::openRead(SDL_RWops *file)
 {
+#ifdef MOONDUST_DECODE_FFMPEG
     const AVDictionaryEntry *tag = NULL;
     char proto[] = "file:///sdl_rwops";
     int ret;
@@ -863,10 +864,16 @@ bool MDAudioFFMPEG::openRead(SDL_RWops *file)
     }
 
     return true;
+#else
+    (void)file;
+    m_lastError = "FFMPEG Decode support is not built!";
+    return true;
+#endif
 }
 
 bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
 {
+#ifdef MOONDUST_ENCODE_FFMPEG
     AVCodecID tCodec = AV_CODEC_ID_NONE;
     close();
 
@@ -1023,9 +1030,12 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         p->merge_buffer.clear();
     }
 
-
-
     return false;
+#else
+    (void)file; (void)dstSpec;
+    m_lastError = "FFMPEG Encode support is not built!";
+    return false;
+#endif
 }
 
 bool MDAudioFFMPEG::close()
@@ -1163,5 +1173,10 @@ retry:
 
 size_t MDAudioFFMPEG::writeChunk(uint8_t *in, size_t inSize)
 {
+#ifdef MOONDUST_ENCODE_FFMPEG
     return 0;
+#else
+    (void)in; (void)inSize;
+    return 0;
+#endif
 }

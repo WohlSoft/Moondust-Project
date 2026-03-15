@@ -1,5 +1,67 @@
 
-set(AUDIO_PROCESSOR_SRC
+option(ENABLE_AUDIO_PROCESSOR_FFMPEG_ENCODE "Enable encoding support for FFMPEG" OFF)
+option(ENABLE_AUDIO_PROCESSOR_FFMPEG_DECODE "Enable decoding support for FFMPEG" ON)
+
+option(ENABLE_AUDIO_PROCESSOR_OPUS_ENCODE "Enable encoding support for OPUS" ON)
+option(ENABLE_AUDIO_PROCESSOR_OPUS_DECODE "Enable decoding support for OPUS" ON)
+
+option(ENABLE_AUDIO_PROCESSOR_MP3_ENCODE "Enable encoding support for MP3 using Lame" ON)
+option(ENABLE_AUDIO_PROCESSOR_MP3_DECODE_MPG123 "Enable decoding support for MP3 using MPG123" ON)
+
+add_library(libMoondustAudio STATIC)
+
+if(ENABLE_AUDIO_PROCESSOR_MP3_ENCODE OR ENABLE_AUDIO_PROCESSOR_MP3_DECODE_MPG123)
+    target_sources(libMoondustAudio PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/codec/audio_mp3.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/codec/audio_mp3.h
+        ${CMAKE_CURRENT_LIST_DIR}/codec/mp3/mp3utils.c
+        ${CMAKE_CURRENT_LIST_DIR}/codec/mp3/mp3utils.h
+    )
+
+    if(ENABLE_AUDIO_PROCESSOR_MP3_ENCODE)
+        target_compile_definitions(libMoondustAudio PRIVATE -DMOONDUST_ENCODE_MP3)
+    endif()
+
+    if(ENABLE_AUDIO_PROCESSOR_MP3_DECODE_MPG123)
+        target_compile_definitions(libMoondustAudio PRIVATE -DMOONDUST_DECODE_MP3)
+    endif()
+endif()
+
+if(ENABLE_AUDIO_PROCESSOR_OPUS_ENCODE OR ENABLE_AUDIO_PROCESSOR_OPUS_DECODE)
+    target_sources(libMoondustAudio PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/codec/audio_opus.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/codec/audio_opus.h
+    )
+
+    target_include_directories(libMoondustAudio PRIVATE
+        /usr/include/opus
+    )
+
+    if(ENABLE_AUDIO_PROCESSOR_OPUS_ENCODE)
+        target_compile_definitions(libMoondustAudio PRIVATE -DMOONDUST_ENCODE_OPUS)
+    endif()
+
+    if(ENABLE_AUDIO_PROCESSOR_OPUS_DECODE)
+        target_compile_definitions(libMoondustAudio PRIVATE -DMOONDUST_DECODE_OPUS)
+    endif()
+endif()
+
+if(ENABLE_AUDIO_PROCESSOR_FFMPEG_ENCODE OR ENABLE_AUDIO_PROCESSOR_FFMPEG_DECODE)
+    target_sources(libMoondustAudio PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/codec/audio_ffmpeg.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/codec/audio_ffmpeg.h
+    )
+
+    if(ENABLE_AUDIO_PROCESSOR_FFMPEG_ENCODE)
+        target_compile_definitions(libMoondustAudio PRIVATE -DMOONDUST_ENCODE_FFMPEG)
+    endif()
+
+    if(ENABLE_AUDIO_PROCESSOR_FFMPEG_DECODE)
+        target_compile_definitions(libMoondustAudio PRIVATE -DMOONDUST_DECODE_FFMPEG)
+    endif()
+endif()
+
+target_sources(libMoondustAudio PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/audio_processor.cpp
     ${CMAKE_CURRENT_LIST_DIR}/audio_processor.h
     ${CMAKE_CURRENT_LIST_DIR}/audio_detect.cpp
@@ -13,16 +75,8 @@ set(AUDIO_PROCESSOR_SRC
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_vorbis.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_vorbis.h
 
-    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_opus.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_opus.h
-
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_flac.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_flac.h
-
-    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_mp3.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_mp3.h
-    ${CMAKE_CURRENT_LIST_DIR}/codec/mp3/mp3utils.c
-    ${CMAKE_CURRENT_LIST_DIR}/codec/mp3/mp3utils.h
 
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_wav.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_wav.h
@@ -34,9 +88,6 @@ set(AUDIO_PROCESSOR_SRC
 
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_gme.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_gme.h
-
-    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_ffmpeg.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/codec/audio_ffmpeg.h
 
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_adl.cpp
     ${CMAKE_CURRENT_LIST_DIR}/codec/audio_midi_adl.h
@@ -103,7 +154,7 @@ set(AUDIO_PROCESSOR_SRC
     ${CMAKE_CURRENT_LIST_DIR}/codec/pxtone/pxtoneNoise.h
 )
 
-set(AUDIO_PROCESSOR_LIBS
+target_link_libraries(libMoondustAudio PUBLIC
     SDL2 SDL2main
     swresample avformat avcodec avutil
     ogg
@@ -114,12 +165,7 @@ set(AUDIO_PROCESSOR_LIBS
     xmp
     ADLMIDI OPNMIDI EDMIDI fluidsynth gme
 )
-set(AUDIO_PROCESSOR_INCLUDES ${CMAKE_CURRENT_LIST_DIR})
 
-set(AUDIO_PROCESSOR_DEFINES
-    -DMOONDUST_DECODE_MP3_MPG123
-    -DMOONDUST_ENCODE_MP3
-    -DMOONDUST_ENCODE_OPUS
-    -DMOONDUST_DECODE_FFMPEG
-    # -DMOONDUST_ENCODE_FFMPEG
-)
+target_compile_options(libMoondustAudio PRIVATE -Wall -Wextra)
+
+target_include_directories(libMoondustAudio PUBLIC ${CMAKE_CURRENT_LIST_DIR})
