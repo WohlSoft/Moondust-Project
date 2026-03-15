@@ -514,7 +514,28 @@ bool MoondustAudioProcessor::runChunk(bool dry)
     if(dry)
         written = filled;
     else if(m_out_file.get())
-        written = m_out_file->writeChunk(m_out_buffer.data(), filled);
+    {
+        const auto &dst_spec = m_out_file->getSpec();
+
+        if(dst_spec.m_loop_start > 0)
+        {
+            int64_t loopStartByte = dst_spec.m_loop_start * dst_spec.m_frame_size;
+
+            /* Attempt to write loop start blocks at loop start */
+            if(m_stat_write <= loopStartByte && m_stat_write + filled > loopStartByte)
+            {
+                int preLoopStart = loopStartByte - m_stat_write;
+                written = m_out_file->writeChunk(m_out_buffer.data(), preLoopStart);
+
+                if(preLoopStart < filled)
+                    written += m_out_file->writeChunk(m_out_buffer.data() + preLoopStart, filled - preLoopStart);
+            }
+            else
+                written = m_out_file->writeChunk(m_out_buffer.data(), filled);
+        }
+        else
+            written = m_out_file->writeChunk(m_out_buffer.data(), filled);
+    }
 
     if(written == 0)
     {
