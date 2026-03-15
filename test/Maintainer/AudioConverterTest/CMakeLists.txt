@@ -27,7 +27,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(AudioConverterTest
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        ${AUDIO_PROCESSOR_SRC}
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET AudioConverterTest APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -37,14 +36,12 @@ else()
     if(ANDROID)
         add_library(AudioConverterTest SHARED
             ${PROJECT_SOURCES}
-            ${AUDIO_PROCESSOR_SRC}
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
         add_executable(AudioConverterTest
             ${PROJECT_SOURCES}
-            ${AUDIO_PROCESSOR_SRC}
         )
     endif()
 endif()
@@ -56,8 +53,7 @@ if(ENABLE_ADDRESS_SANITIZER)
     target_link_libraries(AudioConverterTest PRIVATE asan)
 endif()
 
-target_include_directories(AudioConverterTest PRIVATE ${AUDIO_PROCESSOR_INCLUDES} /usr/include/opus)
-target_link_libraries(AudioConverterTest PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Concurrent ${AUDIO_PROCESSOR_LIBS})
+target_link_libraries(AudioConverterTest PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Concurrent libMoondustAudio)
 
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
