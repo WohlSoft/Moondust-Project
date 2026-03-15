@@ -130,6 +130,7 @@ bool MDAudioGME::openRead(SDL_RWops *file)
     m_spec.m_channels = 2;
     m_spec.m_sample_format = AUDIO_S16SYS;
     m_spec.m_sample_rate = m_specWanted.getSampleRate(48000);
+    m_spec.m_frame_size = m_spec.m_channels * (SDL_AUDIO_BITSIZE(m_spec.m_sample_format) / 8);
 
     file_size = SDL_RWsize(m_file);
     m_in_file.resize(file_size);
