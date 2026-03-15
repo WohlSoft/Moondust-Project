@@ -69,6 +69,7 @@ bool MDAudioOpus::updateSection()
 
     m_spec.m_sample_rate = 48000;
     m_spec.m_channels = m_op_info->channel_count;
+    m_spec.m_frame_size = m_spec.m_channels * (SDL_AUDIO_BITSIZE(m_spec.m_sample_format) / 8);
 
     return true;
 }
@@ -240,6 +241,8 @@ bool MDAudioOpus::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         m_spec.m_sample_format = AUDIO_S16SYS;
 
     m_spec.m_sample_rate = 48000;
+
+    m_spec.m_frame_size = m_spec.m_channels * (SDL_AUDIO_BITSIZE(m_spec.m_sample_format) / 8);
 
     SDL_zero(callbacks);
     callbacks.write = sdl_write_func;
