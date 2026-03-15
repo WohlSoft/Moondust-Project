@@ -43,6 +43,9 @@ struct MDAudioFileSpec
     int      m_sample_format = 0;
     int      m_sample_rate = 0;
 
+    //! Computed size of frame in bytes
+    int      m_frame_size = 0;
+
     //! Channels layout map for some encoders
     std::vector<int> m_channels_permute;
 
