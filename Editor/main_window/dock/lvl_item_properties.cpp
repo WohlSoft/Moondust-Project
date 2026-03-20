@@ -87,7 +87,7 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
 
     re_translate_widgets();
 
-    m_extraSettingsSpacer.reset(new QSpacerItem(10, 999999, QSizePolicy::Minimum, QSizePolicy::Expanding));
+    m_extraSettingsSpacer.reset(new QSpacerItem(10, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     setAttribute(Qt::WA_LayoutUsesWidgetRect);
     setAttribute(Qt::WA_ShowWithoutActivating);
     setFocusPolicy(Qt::StrongFocus);
@@ -1009,6 +1009,8 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
         ui->extraSettings->setMinimumHeight(spacerNeeded ? 0 : 150);
         if(spacerNeeded)
             ui->extraSettings->layout()->addItem(m_extraSettingsSpacer.get());
+
+        ui->extraSettings->adjustSize();
     }
 }
 

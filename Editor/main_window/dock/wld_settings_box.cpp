@@ -34,7 +34,6 @@
 #include "wld_settings_box.h"
 #include "ui_wld_settings_box.h"
 
-#include <tuple>
 
 WorldSettingsBox::WorldSettingsBox(QWidget *parent) :
     QDockWidget(parent),
@@ -59,7 +58,7 @@ WorldSettingsBox::WorldSettingsBox(QWidget *parent) :
         height()
     );
 
-    m_extraSettingsSpacer.reset(new QSpacerItem(100, 999999, QSizePolicy::Minimum, QSizePolicy::Expanding));
+    m_extraSettingsSpacer.reset(new QSpacerItem(10, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
     m_lastVisibilityState = isVisible();
     mw()->docks_world.
