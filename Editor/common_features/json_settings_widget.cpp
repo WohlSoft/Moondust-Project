@@ -2283,10 +2283,11 @@ QWidget *JsonSettingsWidget::loadLayoutDetail(JsonSettingsWidget::SetupStack &st
         m_spacerNeeded = true;
     }
 
+    widget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
+
     QJsonArray layoutEntries = layoutData["layout"].toArray();
     loadLayoutEntries(stack, layoutEntries, widget, err, qobject_cast<QWidget*>(parent()));
-
-    widget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    widget->adjustSize();
 
     m_browser = widget;
 
