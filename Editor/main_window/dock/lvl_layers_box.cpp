@@ -469,7 +469,7 @@ void LvlLayersBox::modifyLayer(QString layerName, bool visible)
 
     const QSet<QGraphicsItem *> &allItems = edit->scene->allItems();
 
-    for(auto it = allItems.begin(); it != allItems.end(); it++)
+    for(auto it = allItems.begin(); it != allItems.end(); ++it)
     {
         QGraphicsItem *item = *it;
 
@@ -536,7 +536,7 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName)
 
     const QSet<QGraphicsItem *> &allItems = edit->scene->allItems();
 
-    for(auto it = allItems.begin(); it != allItems.end(); it++)
+    for(auto it = allItems.begin(); it != allItems.end(); ++it)
     {
         QGraphicsItem *item = *it;
 
@@ -645,7 +645,7 @@ void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName, bool vis
 
     const QSet<QGraphicsItem *> &allItems = edit->scene->allItems();
 
-    for(auto it = allItems.begin(); it != allItems.end(); it++)
+    for(auto it = allItems.begin(); it != allItems.end(); ++it)
     {
         QGraphicsItem *item = *it;
 

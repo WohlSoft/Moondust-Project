@@ -872,8 +872,7 @@ void ItemNPC::arrayApply()
     m_scene->m_data->meta.modified = true;
 
     //Update R-tree innex
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsNPC.insert(m_data.meta.array_id, this);
 }
 
@@ -1075,8 +1074,7 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bo
 
     setData(LvlScene::ITEM_IS_META, m_localProps.setup.is_meta_object);
 
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsNPC.insert(m_data.meta.array_id, this);
 }
 

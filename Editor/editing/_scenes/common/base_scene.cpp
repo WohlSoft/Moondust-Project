@@ -246,12 +246,12 @@ bool MoondustBaseScene::checkGroupCollisions(const PGE_ItemList &items)
     return false;
 }
 
-void MoondustBaseScene::registerElement(QGraphicsItem *item)
+static inline void pt2rp(const QPoint &pt, QSize &pz, MoondustBaseScene::RPoint &lt, MoondustBaseScene::RPoint &rb)
 {
-    QPoint pt = item->scenePos().toPoint();
-    QSize pz(item->data(ITEM_WIDTH).toInt(), item->data(ITEM_HEIGHT).toInt());
-    RPoint lt = {(int64_t)pt.x(), (int64_t)pt.y()};
-    RPoint rb = {(int64_t)pt.x() + (int64_t)pz.width(), (int64_t)pt.y() + (int64_t)pz.height()};
+    lt[0] = (int64_t)pt.x();
+    lt[1] = (int64_t)pt.y();
+    rb[0] = (int64_t)pt.x() + (int64_t)pz.width();
+    rb[1] = (int64_t)pt.y() + (int64_t)pz.height();
 
     if(pz.width() <= 0)
     {
@@ -264,40 +264,75 @@ void MoondustBaseScene::registerElement(QGraphicsItem *item)
         rb[1] = pt.y() + 1;
         pz.setHeight(1);
     }
+}
+
+void MoondustBaseScene::registerElement(QGraphicsItem *item)
+{
+    RPoint lt, rb;
+    QPoint pt = item->scenePos().toPoint();
+    QSize pz(item->data(ITEM_WIDTH).toInt(), item->data(ITEM_HEIGHT).toInt());
+    pt2rp(pt, pz, lt, rb);
+
+    if(!item->data(ITEM_IS_REGISTERED).isNull() && item->data(ITEM_IS_REGISTERED).toBool())
+        return;
 
     tree.Insert(lt, rb, item);
     item->setData(ITEM_LAST_POS, pt);
     item->setData(ITEM_LAST_SIZE, pz);
+
     m_itemsAll.insert(item);
+    item->setData(ITEM_IS_REGISTERED, true);
 }
 
 void MoondustBaseScene::updateElement(QGraphicsItem *item)
 {
-    unregisterElement(item);
-    registerElement(item);
+    QPoint pt;
+    QSize  pz;
+    RPoint lt, rb;
+
+    // Unregister ony when is actually registered
+    if(item->data(ITEM_IS_REGISTERED).toBool() &&
+       item->data(ITEM_LAST_POS).isValid() &&
+       !item->data(ITEM_LAST_SIZE).isNull())
+    {
+        pt = item->data(ITEM_LAST_POS).toPoint();
+        pz = item->data(ITEM_LAST_SIZE).toSize();
+        pt2rp(pt, pz, lt, rb);
+
+        tree.Remove(lt, rb, item);
+    }
+
+    pt = item->scenePos().toPoint();
+    pz.setWidth(item->data(ITEM_WIDTH).toInt());
+    pz.setHeight(item->data(ITEM_HEIGHT).toInt());
+    pt2rp(pt, pz, lt, rb);
+
+    tree.Insert(lt, rb, item);
+
+    item->setData(ITEM_LAST_POS, pt);
+    item->setData(ITEM_LAST_SIZE, pz);
+
+    if(item->data(ITEM_IS_REGISTERED).isNull() || !item->data(ITEM_IS_REGISTERED).toBool())
+    {
+        m_itemsAll.insert(item);
+        item->setData(ITEM_IS_REGISTERED, true);
+    }
 }
 
 void MoondustBaseScene::unregisterElement(QGraphicsItem *item)
 {
-    if(!item->data(ITEM_LAST_POS).isValid())
-        return;
-
-    if(item->data(ITEM_LAST_SIZE).isNull())
+    if(!item->data(ITEM_LAST_POS).isValid() || item->data(ITEM_LAST_SIZE).isNull() ||
+        item->data(ITEM_IS_REGISTERED).isNull() || !item->data(ITEM_IS_REGISTERED).toBool())
         return;
 
     QPoint pt = item->data(ITEM_LAST_POS).toPoint();
     QSize  pz = item->data(ITEM_LAST_SIZE).toSize();
-    RPoint lt = {(int64_t)pt.x(), (int64_t)pt.y()};
-    RPoint rb = {(int64_t)pt.x() + (int64_t)pz.width(), (int64_t)pt.y() + (int64_t)pz.height()};
-
-    if(pz.width() <= 0)
-        rb[0] = pt.x() + 1;
-
-    if(pz.height() <= 0)
-        rb[1] = pt.y() + 1;
+    RPoint lt, rb;
+    pt2rp(pt, pz, lt, rb);
 
     tree.Remove(lt, rb, item);
     m_itemsAll.remove(item);
+    item->setData(ITEM_IS_REGISTERED, false);
 }
 
 // static inline void _q_adjustRect(QRectF *rect)

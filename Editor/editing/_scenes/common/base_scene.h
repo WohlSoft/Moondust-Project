@@ -83,6 +83,8 @@ public:
         ITEM_IS_META =               28, //bool
         //! Item type as an integer enum value (see ItemTypes enumeration at defines.h)
         ITEM_TYPE_INT              = 29, //Int
+        //! Is item stored in the tree?
+        ITEM_IS_REGISTERED         = 30, //bool - 0 or Null - unregistered, 1 - registered
     };
 
     enum EditModeID

@@ -706,8 +706,7 @@ void ItemBlock::arrayApply()
     m_scene->m_data->meta.modified = true;
 
     //Update R-tree innex
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsBlocks.insert(m_data.meta.array_id, this);
 }
 
@@ -879,8 +878,7 @@ void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animato
     setData(LvlScene::ITEM_WIDTH, (int)m_data.w);  //width
     setData(LvlScene::ITEM_HEIGHT, (int)m_data.h);  //height
 
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsBlocks.insert(m_data.meta.array_id, this);
 }
 

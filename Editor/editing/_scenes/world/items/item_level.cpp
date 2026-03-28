@@ -393,8 +393,7 @@ void ItemLevel::arrayApply()
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
 
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsLevels.insert(m_data.meta.array_id, this);
 
     updateNotices();
@@ -473,8 +472,7 @@ void ItemLevel::setLevelData(WorldLevelTile inD, obj_w_level *mergedSet,
     if(animator_id && path_id && bPath_id)
         setAnimator(*animator_id, *path_id, *bPath_id);
 
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsLevels.insert(m_data.meta.array_id, this);
 
     updateNotices();

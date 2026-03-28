@@ -236,8 +236,7 @@ void ItemPlayerPoint::arrayApply()
     m_scene->m_data->meta.modified = true;
 
     //Update R-tree innex
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsPlayers.insert(m_data.id, this);
 }
 

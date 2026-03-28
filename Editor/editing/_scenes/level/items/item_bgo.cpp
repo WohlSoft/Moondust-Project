@@ -532,8 +532,7 @@ void ItemBGO::arrayApply()
     m_scene->m_data->meta.modified = true;
 
     //Update R-tree innex
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsBGO.insert(m_data.meta.array_id, this);
 }
 
@@ -586,8 +585,7 @@ void ItemBGO::setBGOData(LevelBGO inD, obj_bgo *mergedSet, long *animator_id)
     setData(LvlScene::ITEM_ID, (unsigned long long)m_data.id);
     setData(LvlScene::ITEM_ARRAY_ID, m_data.meta.array_id);
 
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsBGO.insert(m_data.meta.array_id, this);
 }
 

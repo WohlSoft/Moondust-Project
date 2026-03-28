@@ -324,8 +324,7 @@ void ItemPhysEnv::arrayApply()
     m_scene->m_data->meta.modified = true;
 
     //Update R-tree innex
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsPhysEnv.insert(m_data.meta.array_id, this);
 }
 
@@ -466,8 +465,7 @@ void ItemPhysEnv::setPhysEnvData(LevelPhysEnv inD)
     setData(LvlScene::ITEM_ARRAY_ID, m_data.meta.array_id);
     updateColor();
     refreshItemSize();
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsPhysEnv.insert(m_data.meta.array_id, this);
 }
 
