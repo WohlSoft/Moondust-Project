@@ -274,8 +274,7 @@ void ItemPath::arrayApply()
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
 
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsPaths.insert(m_data.meta.array_id, this);
 
     updateNearObjects(oldPos, sourcePos());
@@ -322,8 +321,7 @@ void ItemPath::setPathData(WorldPathTile inD, obj_w_path *mergedSet, long *anima
     if(animator_id)
         setAnimator(*animator_id);
 
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsPaths.insert(m_data.meta.array_id, this);
 
     updateNearObjects(sourcePos(), sourcePos());

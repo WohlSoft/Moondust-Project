@@ -257,8 +257,7 @@ void ItemScene::arrayApply()
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
 
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsScenery.insert(m_data.meta.array_id, this);
 }
 
@@ -301,8 +300,7 @@ void ItemScene::setSceneData(WorldScenery inD, obj_w_scenery *mergedSet, long *a
     if(animator_id)
         setAnimator(*animator_id);
 
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsScenery.insert(m_data.meta.array_id, this);
 }
 

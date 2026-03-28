@@ -876,8 +876,7 @@ void ItemDoor::arrayApply()
     m_scene->m_data->meta.modified = true;
 
     //Update R-tree innex
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
 
     if(m_pointSide == D_Entrance)
         m_scene->m_itemsDoorEnters.insert(m_data.meta.array_id, this);
@@ -991,8 +990,7 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
     if(!init)
         arrayApply();
 
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
 
     if(m_pointSide == D_Entrance)
         m_scene->m_itemsDoorEnters.insert(m_data.meta.array_id, this);

@@ -244,8 +244,7 @@ void ItemTile::arrayApply()
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
 
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsTiles.insert(m_data.meta.array_id, this);
 }
 
@@ -289,8 +288,7 @@ void ItemTile::setTileData(WorldTerrainTile inD, obj_w_tile *mergedSet, long *an
     setData(WldScene::ITEM_ID, (unsigned long long)m_data.id);
     setData(WldScene::ITEM_ARRAY_ID, m_data.meta.array_id);
 
-    m_scene->unregisterElement(this);
-    m_scene->registerElement(this);
+    m_scene->updateElement(this);
     m_scene->m_itemsTiles.insert(m_data.meta.array_id, this);
 }
 
