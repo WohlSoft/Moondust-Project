@@ -20,13 +20,19 @@
 #include "audio_processor.h"
 #include "audio_detect.h"
 #include "codec/audio_vorbis.h"
-#include "codec/audio_opus.h"
-#include "codec/audio_mp3.h"
+#if defined(MOONDUST_DECODE_OPUS) || defined(MOONDUST_ENCODE_OPUS)
+#   include "codec/audio_opus.h"
+#endif
+#if defined(MOONDUST_DECODE_MP3) || defined(MOONDUST_ENCODE_MP3)
+#   include "codec/audio_mp3.h"
+#endif
 #include "codec/audio_qoa.h"
 #include "codec/audio_wav.h"
 #include "codec/audio_gme.h"
 #include "codec/audio_flac.h"
-#include "codec/audio_ffmpeg.h"
+#if defined(MOONDUST_DECODE_FFMPEG) || defined(MOONDUST_ENCODE_FFMPEG)
+#   include "codec/audio_ffmpeg.h"
+#endif
 #include "codec/audio_midi_adl.h"
 #include "codec/audio_midi_opn.h"
 #include "codec/audio_midi_edmidi.h"
@@ -163,17 +169,21 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, const std::stri
         m_in_file.reset(new MDAudioVorbis);
         break;
 
+#ifdef MOONDUST_DECODE_OPUS
     case FORMAT_OPUS:
         m_in_file.reset(new MDAudioOpus);
         break;
+#endif
 
     case FORMAT_FLAC:
         m_in_file.reset(new MDAudioFLAC);
         break;
 
+#ifdef MOONDUST_DECODE_MP3
     case FORMAT_MP3:
         m_in_file.reset(new MDAudioMP3);
         break;
+#endif
 
     case FORMAT_WAVPACK:
         break;
@@ -181,9 +191,11 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, const std::stri
     case FORMAT_TRACKER:
         break;
 
+#ifdef MOONDUST_DECODE_FFMPEG
     case FORMAT_FFMPEG:
         m_in_file.reset(new MDAudioFFMPEG);
         break;
+#endif
 
     case FORMAT_MIDI:
     case FORMAT_RIFF_MIDI:
@@ -286,12 +298,16 @@ bool MoondustAudioProcessor::openOutFile(const std::string &file, int dstFormat,
     case FORMAT_XQOA:
         m_out_file.reset(new MDAudioQOA(true));
         break;
+#ifdef MOONDUST_ENCODE_OPUS
     case FORMAT_OPUS:
         m_out_file.reset(new MDAudioOpus);
         break;
+#endif
+#ifdef MOONDUST_ENCODE_MP3
     case FORMAT_MP3:
         m_out_file.reset(new MDAudioMP3);
         break;
+#endif
     case FORMAT_WAV:
         m_out_file.reset(new MDAudioWAV);
         break;
