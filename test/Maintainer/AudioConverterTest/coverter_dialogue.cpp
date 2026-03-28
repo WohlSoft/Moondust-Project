@@ -284,8 +284,8 @@ void CoverterDialogue::runner()
                     m_dstSpec.m_total_length = totalWrite;
                     m_dstSpec.m_loop_start = std::floor(m_dstSpec.m_loop_start * rateFactor);
                     m_dstSpec.m_loop_end = std::floor(m_dstSpec.m_loop_end * rateFactor);
-                    if(m_dstSpec.m_loop_end > m_dstSpec.m_total_length)
-                        m_dstSpec.m_loop_end = m_dstSpec.m_total_length;
+                    if(m_dstSpec.m_loop_end >= m_dstSpec.m_total_length)
+                        m_dstSpec.m_loop_end = m_dstSpec.m_total_length - 1;
                     m_dstSpec.m_loop_len = m_dstSpec.m_loop_end - m_dstSpec.m_loop_start;
 
                     m_cvt.rewindRead();

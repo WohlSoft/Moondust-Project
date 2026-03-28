@@ -423,11 +423,12 @@ bool MDAudioQOA::close()
                 if(m_spec.m_loop_len != 0)
                 {
                     // Extra samples to make loop end to not fail
-                    if(sample_data_pos + 4 <= sample_data_len)
-                        sample_data_pos += 4;
+                    if(sample_data_pos + 8 <= sample_data_len)
+                        sample_data_pos += 8;
                     else
                         sample_data_pos = sample_data_len;
                 }
+
                 encode_frame(); // Finish the data that was left
             }
 
