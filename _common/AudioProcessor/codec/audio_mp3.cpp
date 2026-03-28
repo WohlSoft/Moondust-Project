@@ -22,7 +22,9 @@
 #include "audio_mp3.h"
 
 #include <mpg123.h>
+#ifdef MOONDUST_ENCODE_MP3
 #include <lame/lame.h>
+#endif
 
 #include "mp3/mp3utils.h"
 
@@ -211,6 +213,7 @@ bool MDAudioMP3::openRead(SDL_RWops *file)
 
 bool MDAudioMP3::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
 {
+#ifdef MOONDUST_ENCODE_MP3
     const int allowed_rate[9] =
     {
         8000,
@@ -313,12 +316,18 @@ bool MDAudioMP3::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     }
 
     return true;
+#else
+    (void)file; (void)dstSpec;
+    m_lastError = "MP3 Encode support is not built!";
+    return false;
+#endif
 }
 
 bool MDAudioMP3::close()
 {
     if(m_write)
     {
+#ifdef MOONDUST_ENCODE_MP3
         if(m_lame)
         {
             if(m_written > 0)
@@ -329,6 +338,7 @@ bool MDAudioMP3::close()
 
             lame_close(m_lame);
         }
+#endif
         m_lame = nullptr;
         m_write = false;
     }
@@ -417,6 +427,7 @@ retry:
 
 size_t MDAudioMP3::writeChunk(uint8_t *in, size_t inSize)
 {
+#ifdef MOONDUST_ENCODE_MP3
     int ret, frame_size;
 
     switch(m_spec.m_sample_format)
@@ -467,4 +478,8 @@ size_t MDAudioMP3::writeChunk(uint8_t *in, size_t inSize)
     }
 
     return inSize;
+#else
+    (void)in; (void)inSize;
+    return 0;
+#endif
 }
