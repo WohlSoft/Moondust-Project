@@ -1,12 +1,19 @@
 
-option(ENABLE_AUDIO_PROCESSOR_FFMPEG_ENCODE "Enable encoding support for FFMPEG" OFF)
-option(ENABLE_AUDIO_PROCESSOR_FFMPEG_DECODE "Enable decoding support for FFMPEG" ON)
-
-option(ENABLE_AUDIO_PROCESSOR_OPUS_ENCODE "Enable encoding support for OPUS" ON)
-option(ENABLE_AUDIO_PROCESSOR_OPUS_DECODE "Enable decoding support for OPUS" ON)
-
-option(ENABLE_AUDIO_PROCESSOR_MP3_ENCODE "Enable encoding support for MP3 using Lame" ON)
-option(ENABLE_AUDIO_PROCESSOR_MP3_DECODE_MPG123 "Enable decoding support for MP3 using MPG123" ON)
+if(NOT MOONDUST_AUDIO_CODECS)
+    option(ENABLE_AUDIO_PROCESSOR_FFMPEG_ENCODE "Enable encoding support for FFMPEG" OFF)
+    option(ENABLE_AUDIO_PROCESSOR_FFMPEG_DECODE "Enable decoding support for FFMPEG" ON)
+    option(ENABLE_AUDIO_PROCESSOR_OPUS_ENCODE "Enable encoding support for OPUS" ON)
+    option(ENABLE_AUDIO_PROCESSOR_OPUS_DECODE "Enable decoding support for OPUS" ON)
+    option(ENABLE_AUDIO_PROCESSOR_MP3_ENCODE "Enable encoding support for MP3 using Lame" ON)
+    option(ENABLE_AUDIO_PROCESSOR_MP3_DECODE_MPG123 "Enable decoding support for MP3 using MPG123" ON)
+else()
+    set(ENABLE_AUDIO_PROCESSOR_MP3_DECODE_MPG123 ON)
+    set(ENABLE_AUDIO_PROCESSOR_MP3_ENCODE OFF)
+    set(ENABLE_AUDIO_PROCESSOR_OPUS_DECODE ON)
+    set(ENABLE_AUDIO_PROCESSOR_OPUS_ENCODE OFF)
+    set(ENABLE_AUDIO_PROCESSOR_FFMPEG_ENCODE OFF)
+    set(ENABLE_AUDIO_PROCESSOR_FFMPEG_DECODE OFF)
+endif()
 
 add_library(libMoondustAudio STATIC)
 
@@ -154,17 +161,41 @@ target_sources(libMoondustAudio PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/codec/pxtone/pxtoneNoise.h
 )
 
-target_link_libraries(libMoondustAudio PUBLIC
-    SDL2 SDL2main
-    swresample avformat avcodec avutil
-    ogg
-    opus opusfile opusenc
-    FLAC
-    vorbis vorbisfile vorbisenc
-    mpg123 mp3lame
-    xmp
-    ADLMIDI OPNMIDI EDMIDI fluidsynth gme
-)
+if(NOT MOONDUST_AUDIO_CODECS)
+    target_link_libraries(libMoondustAudio PUBLIC SDL2 SDL2main)
+
+    if(ENABLE_AUDIO_PROCESSOR_MP3_ENCODE OR ENABLE_AUDIO_PROCESSOR_MP3_DECODE_MPG123)
+        target_link_libraries(libMoondustAudio PUBLIC swresample avformat avcodec avutil)
+    endif()
+
+    target_link_libraries(libMoondustAudio PUBLIC ogg)
+
+    if(ENABLE_AUDIO_PROCESSOR_OPUS_ENCODE)
+        target_link_libraries(libMoondustAudio PUBLIC opus opusfile)
+    endif()
+
+    if(ENABLE_AUDIO_PROCESSOR_OPUS_ENCODE)
+        target_link_libraries(libMoondustAudio PUBLIC opusenc)
+    endif()
+
+    target_link_libraries(libMoondustAudio PUBLIC FLAC)
+
+    target_link_libraries(libMoondustAudio PUBLIC vorbis vorbisfile)
+    target_link_libraries(libMoondustAudio PUBLIC vorbisenc)
+
+    if(ENABLE_AUDIO_PROCESSOR_MP3_DECODE_MPG123)
+        target_link_libraries(libMoondustAudio PUBLIC mpg123)
+    endif()
+
+    if(ENABLE_AUDIO_PROCESSOR_MP3_ENCODE)
+        target_link_libraries(libMoondustAudio PUBLIC mp3lame)
+    endif()
+
+    target_link_libraries(libMoondustAudio PUBLIC
+        xmp
+        ADLMIDI OPNMIDI EDMIDI fluidsynth gme
+    )
+endif()
 
 target_compile_options(libMoondustAudio PRIVATE -Wall -Wextra)
 

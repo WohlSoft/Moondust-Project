@@ -22,7 +22,9 @@
 #include "audio_opus.h"
 
 #include <opus/opusfile.h>
-#include <opus/opusenc.h>
+#ifdef MOONDUST_ENCODE_OPUS
+#   include <opus/opusenc.h>
+#endif
 
 int MDAudioOpus::set_op_error(const char *function, int error)
 {
@@ -103,6 +105,7 @@ static opus_int64 sdl_tell_func(void *datasource)
     return SDL_RWtell((SDL_RWops*)datasource);
 }
 
+#ifdef MOONDUST_ENCODE_OPUS
 static int sdl_write_func(void *datasource, const unsigned char *ptr, opus_int32 len)
 {
     int ret = SDL_RWwrite((SDL_RWops*)datasource, ptr, 1, len);
@@ -114,6 +117,7 @@ static int sdl_write_close(void *datasource)
     (void)datasource; // Do nothing!
     return 0;
 }
+#endif
 
 
 bool MDAudioOpus::openRead(SDL_RWops *file)
@@ -226,6 +230,7 @@ bool MDAudioOpus::openRead(SDL_RWops *file)
 
 bool MDAudioOpus::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
 {
+#ifdef MOONDUST_ENCODE_OPUS
     OpusEncCallbacks callbacks;
     std::string from_num;
     int err;
@@ -315,12 +320,18 @@ bool MDAudioOpus::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     ope_encoder_ctl(m_enc, OPUS_SET_EXPERT_FRAME_DURATION(OPUS_FRAMESIZE_10_MS));
 
     return true;
+#else
+    (void)file; (void)dstSpec;
+    m_lastError = "OPUS Encode support is not built!";
+    return false;
+#endif
 }
 
 bool MDAudioOpus::close()
 {
     if(m_write)
     {
+#ifdef MOONDUST_ENCODE_OPUS
         if(m_file)
         {
             if(m_enc)
@@ -333,6 +344,7 @@ bool MDAudioOpus::close()
             if(m_out_comments)
                 ope_comments_destroy(m_out_comments);
         }
+#endif
 
         m_enc = nullptr;
         m_out_comments = nullptr;
@@ -402,6 +414,7 @@ size_t MDAudioOpus::readChunk(uint8_t *out, size_t outSize, bool *spec_changed)
 
 size_t MDAudioOpus::writeChunk(uint8_t *in, size_t inSize)
 {
+#ifdef MOONDUST_ENCODE_OPUS
     if(m_spec.m_sample_format == AUDIO_F32SYS)
     {
         size_t frame_size = sizeof(float) * m_spec.m_channels;
@@ -432,4 +445,8 @@ size_t MDAudioOpus::writeChunk(uint8_t *in, size_t inSize)
 
         return (ret == OPE_OK) ? inSize : 0;
     }
+#else
+    (void)in; (void)inSize;
+    return 0;
+#endif
 }
