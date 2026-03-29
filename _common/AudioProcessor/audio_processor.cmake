@@ -195,6 +195,8 @@ if(NOT MOONDUST_AUDIO_CODECS)
         xmp
         ADLMIDI OPNMIDI EDMIDI fluidsynth gme
     )
+else()
+    add_dependencies(libMoondustAudio AudioCodecs_Local)
 endif()
 
 target_compile_options(libMoondustAudio PRIVATE -Wall -Wextra)

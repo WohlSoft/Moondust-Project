@@ -104,7 +104,7 @@ add_dependencies(libxtconvert
     PGE_libspc2it
     PGE_FileFormatsQt
     libMoondustAudio
-    PGE_AudioCodecsEncode
+    AudioCodecs_Local
     SDL2_Local
 )
 
