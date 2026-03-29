@@ -38,6 +38,7 @@ include(../_common/static_qt.cmake)
 include(../_common/qt-modules/compat/pge_qt_compat.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/tclap/tclap.cmake)
+include(../_common/AudioProcessor/audio_processor.cmake)
 
 if(PGE_USE_QT5)
     pge_cxx_standard(14)
@@ -82,7 +83,7 @@ add_library(libxtconvert
     src/graphics_load.cpp src/graphics_load.h
     src/texconv.cpp src/texconv.h
     src/export_tpl.cpp src/export_tpl.h
-    src/export_audio.cpp src/export_audio.h
+    # src/export_audio.cpp src/export_audio.h
     src/has_no_mask.cpp src/has_no_mask.h
     src/extract_archive.cpp src/extract_archive.h
     src/misc.cpp src/misc.h
@@ -102,7 +103,8 @@ add_dependencies(libxtconvert
     PGE_libimagequant
     PGE_libspc2it
     PGE_FileFormatsQt
-    SDLMixerX_Local
+    libMoondustAudio
+    PGE_AudioCodecsEncode
     SDL2_Local
 )
 
@@ -171,13 +173,7 @@ if(APPLE)
 endif()
 
 target_link_libraries(libxtconvert PRIVATE PGE_XTConvert_QtLibs)
-
-if(PGE_STATIC_SDLMIXER)
-    target_link_libraries(libxtconvert PUBLIC PGE_SDLMixerX_static PGE_SDL2_static)
-else()
-    target_link_libraries(libxtconvert PUBLIC PGE_SDLMixerX PGE_SDL2)
-endif()
-
+target_link_libraries(libxtconvert PUBLIC libMoondustAudio PGE_AudioCodecsEncode PGE_SDL2)
 target_link_libraries(libxtconvert PRIVATE ${PGE_XTCONVERT_LINK_LIBS})
 
 target_include_directories(libxtconvert PUBLIC include)

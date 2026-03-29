@@ -111,11 +111,11 @@ XTConvertUI::XTConvertUI(QWidget *parent) :
     qRegisterMetaType<XTConvert::Spec>();
     qRegisterMetaType<XTConvertUpdate>();
 
-    connect(this, &XTConvertUI::do_run, worker_p, &XTConvert_Worker::do_run);
-    connect(this, &XTConvertUI::do_cancel, worker_p, &XTConvert_Worker::do_cancel);
+    QObject::connect(this, &XTConvertUI::do_run, worker_p, &XTConvert_Worker::do_run);
+    QObject::connect(this, &XTConvertUI::do_cancel, worker_p, &XTConvert_Worker::do_cancel);
 
-    connect(worker_p, &XTConvert_Worker::status_update, this, &XTConvertUI::on_status_update);
-    connect(worker_p, &XTConvert_Worker::finish, this, &XTConvertUI::on_finish);
+    QObject::connect(worker_p, &XTConvert_Worker::status_update, this, &XTConvertUI::update_status);
+    QObject::connect(worker_p, &XTConvert_Worker::finish, this, &XTConvertUI::on_finish);
 
     worker->moveToThread(&process_thread);
     process_thread.start();
@@ -229,7 +229,7 @@ void XTConvertUI::on_finish()
     updateControls();
 }
 
-void XTConvertUI::on_status_update(XTConvertUpdate update)
+void XTConvertUI::update_status(const XTConvertUpdate update)
 {
     if(update.log_category == XTConvert::LogCategory::ErrorMessage)
     {
@@ -429,7 +429,8 @@ void XTConvertUI::on_browse_output_clicked()
     if(!dialog.exec())
         return;
 
-    QString out = dialog.selectedFiles().front();
+    QStringList files = dialog.selectedFiles();
+    QString out = files.isEmpty() ? QString() : files.first();
 
     if(out.isEmpty())
         return;

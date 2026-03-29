@@ -39,7 +39,7 @@ public:
     int progress_callback(int cur_stage, int stage_count, const std::string& stage_name, int cur_file, int file_count, const std::string& file_name);
 
 signals:
-    void status_update(XTConvertUpdate update);
+    void status_update(const XTConvertUpdate update);
     void finish();
 
 public slots:
@@ -73,7 +73,7 @@ private slots:
     void on_target_platform_currentIndexChanged(int index);
     void on_target_version_currentIndexChanged(int index);
 
-    void on_status_update(XTConvertUpdate update);
+    void update_status(const XTConvertUpdate update);
     void on_finish();
 
 protected:
