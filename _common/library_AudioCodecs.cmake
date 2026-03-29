@@ -153,6 +153,11 @@ ExternalProject_Add(
 target_link_libraries(PGE_AudioCodecs INTERFACE "${AudioCodecs_Libs}" ${libZLib_A_Lib})
 target_link_libraries(PGE_AudioCodecsEncode INTERFACE "${AudioCodecs_Libs_Encode}" ${libZLib_A_Lib})
 
+if(WIN32)
+    # Needed by libmpg123
+    target_link_libraries(PGE_AudioCodecsEncode INTERFACE shlwapi)
+endif()
+
 if(AUDIOCODECS_ENABLE_ENCODERS)
     InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libFLAC/COPYING.Xiph" RENAME "License.FLAC.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
 endif()
