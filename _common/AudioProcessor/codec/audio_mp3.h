@@ -41,7 +41,9 @@ class MDAudioMP3 : public MDAudioFile
     lame_t m_lame = nullptr;
 
     bool m_write = false;
+#ifdef MOONDUST_ENCODE_MP3
     size_t m_written = 0;
+#endif
 
     const char* mpg_err(mpg123_handle* mpg, int result);
 
