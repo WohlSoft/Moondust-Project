@@ -21,6 +21,9 @@
 #include <SDL2/SDL_audio.h>
 #include "audio_flac.h"
 
+#if defined(_WIN32)
+#   define FLAC__NO_DLL  // Allow static link of encoder
+#endif
 #include <FLAC/stream_encoder.h>
 #include <FLAC/stream_decoder.h>
 #include <FLAC/metadata.h>
