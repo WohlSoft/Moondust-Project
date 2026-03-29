@@ -1587,6 +1587,11 @@ public:
         {
             return convert_music_16m(filename, in_path, out_path);
         }
+        else if(m_spec.target_platform == TargetPlatform::T3X && is_synthesized_music)
+        {
+            // FIXME: Implement the handling of file references and supply music arguments for the accurate result!!!
+            return convert_music_16m(filename, in_path, out_path);
+        }
         else if(filename.endsWith(".spc") && m_spec.target_platform == TargetPlatform::T3X)
         {
             log_file(LogCategory::AudioSpc2It, in_path);
