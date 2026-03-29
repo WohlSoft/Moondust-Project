@@ -23,6 +23,7 @@
 #include <SDL2/SDL_audio.h>
 #include "audio_vorbis.h"
 
+#define OV_EXCLUDE_STATIC_CALLBACKS
 #include <vorbis/vorbisfile.h>
 #include <vorbis/vorbisenc.h>
 
@@ -35,14 +36,14 @@ struct MDAudioVorbis_private
 
     // Vorbis Write
     ogg_stream_state m_os;    //!< take physical pages, weld into a logical stream of packets
-    bool             m_os_init = false;
     ogg_page         m_og;    //!< one Ogg bitstream page.  Vorbis packets are inside
     ogg_packet       m_op;    //!< one raw packet of data for decode
     vorbis_comment   m_vc;    //!< struct that stores all the user comments
-    bool             m_vc_init = false;
     vorbis_dsp_state m_vd;    //!< central working state for the packet->PCM decoder
-    bool             m_vd_init = false;
     vorbis_block     m_vb;    //!< local working space for packet->PCM decode
+    bool             m_os_init = false;
+    bool             m_vc_init = false;
+    bool             m_vd_init = false;
     bool             m_vb_init = false;
 
     void zeroAll()
