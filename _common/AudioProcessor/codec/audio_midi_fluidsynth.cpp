@@ -20,7 +20,12 @@
 #include <SDL2/SDL_rwops.h>
 #include <SDL2/SDL_audio.h>
 
-#include <fluidsynth.h>
+#ifdef AUDIO_PROCESSOR_USE_FLUIDLITE
+#include <fluidlite.h>
+#   define FLUID_FAILED -1
+#else
+#   include <fluidsynth.h>
+#endif
 #include "midi_seq/mix_midi_seq.h"
 
 #include "audio_midi_fluidsynth.h"
