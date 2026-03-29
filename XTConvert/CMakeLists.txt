@@ -173,7 +173,11 @@ if(APPLE)
 endif()
 
 target_link_libraries(libxtconvert PRIVATE PGE_XTConvert_QtLibs)
-target_link_libraries(libxtconvert PUBLIC libMoondustAudio PGE_AudioCodecsEncode PGE_SDL2)
+if(PGE_STATIC_SDLMIXER)
+    target_link_libraries(libxtconvert PUBLIC libMoondustAudio PGE_AudioCodecsEncode PGE_SDL2_static)
+else()
+    target_link_libraries(libxtconvert PUBLIC libMoondustAudio PGE_AudioCodecsEncode PGE_SDL2)
+endif()
 target_link_libraries(libxtconvert PRIVATE ${PGE_XTCONVERT_LINK_LIBS})
 
 target_include_directories(libxtconvert PUBLIC include)
