@@ -153,6 +153,12 @@ ExternalProject_Add(
 target_link_libraries(PGE_AudioCodecs INTERFACE "${AudioCodecs_Libs}" ${libZLib_A_Lib})
 target_link_libraries(PGE_AudioCodecsEncode INTERFACE "${AudioCodecs_Libs_Encode}" ${libZLib_A_Lib})
 
+# Include opus' directory directly, otherwise build fails
+if(AUDIOCODECS_ENABLE_ENCODERS)
+    target_include_directories(PGE_AudioCodecs INTERFACE "${DEPENDENCIES_INSTALL_DIR}/include/opus")
+    target_include_directories(PGE_AudioCodecsEncode INTERFACE "${DEPENDENCIES_INSTALL_DIR}/include/opus")
+endif()
+
 if(AUDIOCODECS_ENABLE_ENCODERS)
     InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libFLAC/COPYING.Xiph" RENAME "License.FLAC.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
 endif()
