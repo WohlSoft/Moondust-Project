@@ -89,6 +89,32 @@ endif()
 option(PGE_STATIC_SDLMIXER "Prefer static assembly of SDL Mixer X and libraries" ${PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT})
 option(ENABLE_ADDRESS_SANITIZER "Enable the Address Sanitizer GCC feature" OFF)
 
+set(AUDIOCODECS_ENABLE_ENCODERS OFF)
+set(SDLMIXER_USE_OGG_STB ON)
+
+if(NOT EMSCRIPTEN AND NOT ANDROID)
+    option(PGE_BUILD_GIFS2PNG "Build the GIFs2PNG utility component" ON)
+    option(PGE_BUILD_PNG2GIFS "Build the GIFs2PNG utility component" ON)
+    option(PGE_BUILD_LAZYFIXTOOL "Build the LazyFixTool utility component" ON)
+    option(PGE_BUILD_PALETTEFILTER "Build the PaletteFilter utility component" ON)
+    option(PGE_BUILD_XTCONVERT "Build the XTConvert utility component" ON)
+
+    if(PGE_BUILD_XTCONVERT)
+        set(AUDIOCODECS_ENABLE_ENCODERS ON)
+        set(SDLMIXER_USE_OGG_STB OFF)
+    endif()
+endif()
+
+option(PGE_BUILD_ENGINE "Build the Runtime Engine component" ON)
+
+if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)
+    option(PGE_BUILD_EDITOR "Build the PGE Editor component (Qt5 required)" ON)
+    option(PGE_BUILD_PLAYERCALIBRATOR "Build the Player Calibrator utility component (Qt5 required)" ON)
+    option(PGE_BUILD_MUSICPLAYER "Build the SDL Mixer X Music Player component (Qt5 required)" ON)
+    option(PGE_BUILD_MAINTAINER "Build the Maintainer utility component (Qt5 required)" ON)
+    option(PGE_BUILD_TRANSLATOR "Build the Translator utility component (Qt5 required)" ON)
+endif()
+
 if(PGE_STATIC_SDLMIXER)
     set(PGE_SHARED_SDLMIXER OFF)
 else()
@@ -153,7 +179,6 @@ endif()
 # Build dependent libraries only
 add_custom_target(libs DEPENDS ${LIBS_TARGETS})
 
-option(PGE_BUILD_ENGINE "Build the Runtime Engine component" ON)
 if(PGE_BUILD_ENGINE)
     add_subdirectory(Engine)
     # Append changelog file
@@ -165,31 +190,26 @@ if(PGE_BUILD_ENGINE)
 endif()
 
 if(NOT EMSCRIPTEN AND NOT ANDROID)
-    option(PGE_BUILD_GIFS2PNG "Build the GIFs2PNG utility component" ON)
     if(PGE_BUILD_GIFS2PNG)
         add_subdirectory(GIFs2PNG)
         InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/GIFs2PNG_Readme.txt" RENAME "GIFs2PNG.readme.txt" DESTINATION "${PGE_INSTALL_DOCS}" COMPONENT "MoondustGifs2PNG")
     endif()
 
-    option(PGE_BUILD_PNG2GIFS "Build the GIFs2PNG utility component" ON)
     if(PGE_BUILD_PNG2GIFS)
         add_subdirectory(PNG2GIFs)
         InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/PNG2GIFs_Readme.txt" RENAME "PNG2GIFs.readme.txt" DESTINATION "${PGE_INSTALL_DOCS}" COMPONENT "MoondustPNG2GIFs")
     endif()
 
-    option(PGE_BUILD_LAZYFIXTOOL "Build the LazyFixTool utility component" ON)
     if(PGE_BUILD_LAZYFIXTOOL)
         add_subdirectory(LazyFixTool)
         InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/LazyFixTool_Readme.txt" RENAME "LazyFixTool.readme.txt" DESTINATION "${PGE_INSTALL_DOCS}" COMPONENT "MoondustLazyFixTool")
     endif()
 
-    option(PGE_BUILD_PALETTEFILTER "Build the PaletteFilter utility component" ON)
     if(PGE_BUILD_PALETTEFILTER)
         add_subdirectory(PaletteFilter)
         InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/PaletteFilter_Readme.txt" RENAME "PaletteFilter.readme.txt" DESTINATION "${PGE_INSTALL_DOCS}" COMPONENT "MoondustPalleteFilter")
     endif()
 
-    option(PGE_BUILD_XTCONVERT "Build the XTConvert utility component" ON)
     if(PGE_BUILD_XTCONVERT)
         include(_common/library_lz4.cmake)
         include(_common/library_mbediso.cmake)
@@ -209,7 +229,6 @@ endif()
 if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)
     include(_common/qt-modules/qt_modules_langs.cmake)
 
-    option(PGE_BUILD_EDITOR "Build the PGE Editor component (Qt5 required)" ON)
     if(PGE_BUILD_EDITOR)
         add_subdirectory(Editor)
         # Append changelog file
@@ -218,7 +237,6 @@ if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)
         qtDeployAdd(pge_editor)
     endif()
 
-    option(PGE_BUILD_PLAYERCALIBRATOR "Build the Player Calibrator utility component (Qt5 required)" ON)
     if(PGE_BUILD_PLAYERCALIBRATOR)
         add_subdirectory(PlayableCalibrator)
         # Append changelog file
@@ -227,7 +245,6 @@ if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)
         qtDeployAdd(pge_calibrator)
     endif()
 
-    option(PGE_BUILD_MUSICPLAYER "Build the SDL Mixer X Music Player component (Qt5 required)" ON)
     if(PGE_BUILD_MUSICPLAYER)
         add_subdirectory(MusicPlayer)
         # Append changelog file
@@ -236,13 +253,11 @@ if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)
         qtDeployAdd(pge_musplay)
     endif()
 
-    option(PGE_BUILD_MAINTAINER "Build the Maintainer utility component (Qt5 required)" ON)
     if(PGE_BUILD_MAINTAINER)
         add_subdirectory(Maintainer)
         qtDeployAdd(pge_maintainer)
     endif()
 
-    option(PGE_BUILD_TRANSLATOR "Build the Translator utility component (Qt5 required)" ON)
     if(PGE_BUILD_TRANSLATOR)
         add_subdirectory(Translator)
         qtDeployAdd(pge_translator)
