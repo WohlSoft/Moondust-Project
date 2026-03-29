@@ -5025,7 +5025,7 @@ If this flag is enabled, you can only place a warp exit.</source>
     </message>
     <message>
         <source>If this field is not empty, player will travel from the current level to the specified one.</source>
-        <translation>若此字段不为空，且传送类型不为瞬移时，玩家将从当前关卡传送到指定关卡。</translation>
+        <translation>若此字段不为空，且传送点类型不为瞬移时，玩家将从当前关卡传送到指定关卡。</translation>
     </message>
     <message>
         <source>Level file:</source>
