@@ -170,7 +170,7 @@ InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libopusfile/COPYING"
 if(AUDIOCODECS_ENABLE_ENCODERS)
     InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libvorbis/COPYING" RENAME "License.Vorbis.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
     InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libogg/COPYING" RENAME "License.OGG.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
-    InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libmad/COPYING" RENAME "License.libMAD.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
+    InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libmpg123/COPYING" RENAME "License.libMPG123.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
 endif()
 
 InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libmodplug/COPYING" RENAME "License.libModPlug.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
