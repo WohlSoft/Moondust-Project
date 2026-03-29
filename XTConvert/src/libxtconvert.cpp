@@ -1288,10 +1288,31 @@ public:
 
         m_audioDstSpec = m_audioCvt.getInSpec();
         m_audioDstSpec.m_sample_format = AUDIO_S16LSB;
-        m_audioDstSpec.m_sample_rate = 44100;
 
-        if(m_audioDstSpec.m_channels > 2)
-            m_audioDstSpec.m_channels = 2;
+        switch(m_spec.target_platform)
+        {
+        default:
+            m_audioDstSpec.m_sample_rate = 44100;
+            break;
+
+        case TargetPlatform::T3X:
+            m_audioDstSpec.m_sample_rate = 44100;
+            if(m_audioDstSpec.m_channels > 2)
+                m_audioDstSpec.m_channels = 2;
+            break;
+
+        case TargetPlatform::TPL:
+            m_audioDstSpec.m_sample_rate = 32000;
+            m_audioDstSpec.m_sample_format = AUDIO_S16MSB;
+            if(m_audioDstSpec.m_channels > 2)
+                m_audioDstSpec.m_channels = 2;
+            break;
+
+        case TargetPlatform::DSG:
+            m_audioDstSpec.m_sample_rate = 16384;
+            m_audioDstSpec.m_channels = 1;
+            break;
+        }
 
         m_audioOutPath = out_path;
         m_audioOutFormat = FORMAT_WAV;
@@ -1315,7 +1336,7 @@ public:
         return true;
     }
 
-    bool convert_music_16m(const QString&, const QString& in_path, const QString& out_path)
+    bool convert_music_xqoa(const QString&, const QString& in_path, const QString& out_path)
     {
         if(!m_audioCvt.openInFile(in_path.toStdString()))
         {
@@ -1326,10 +1347,31 @@ public:
 
         m_audioDstSpec = m_audioCvt.getInSpec();
         m_audioDstSpec.m_sample_format = AUDIO_S16LSB;
-        m_audioDstSpec.m_sample_rate = 44100;
 
-        if(m_audioDstSpec.m_channels > 2)
-            m_audioDstSpec.m_channels = 2;
+        switch(m_spec.target_platform)
+        {
+        default:
+            m_audioDstSpec.m_sample_rate = 44100;
+            break;
+
+        case TargetPlatform::T3X:
+            m_audioDstSpec.m_sample_rate = 44100;
+            if(m_audioDstSpec.m_channels > 2)
+                m_audioDstSpec.m_channels = 2;
+            break;
+
+        case TargetPlatform::TPL:
+            m_audioDstSpec.m_sample_format = AUDIO_S16MSB;
+            m_audioDstSpec.m_sample_rate = 32000;
+            if(m_audioDstSpec.m_channels > 2)
+                m_audioDstSpec.m_channels = 2;
+            break;
+
+        case TargetPlatform::DSG:
+            m_audioDstSpec.m_sample_rate = 16384;
+            m_audioDstSpec.m_channels = 1;
+            break;
+        }
 
         m_audioOutPath = out_path;
         m_audioOutFormat = FORMAT_XQOA;
@@ -1587,12 +1629,12 @@ public:
             return convert_sfx(filename, in_path, out_path);
         else if(m_spec.target_platform == TargetPlatform::DSG && (filename.endsWith(".wav") || is_non_tracker_music || is_tracker_music))
         {
-            return convert_music_16m(filename, in_path, out_path);
+            return convert_music_xqoa(filename, in_path, out_path);
         }
         else if(m_spec.target_platform == TargetPlatform::T3X && is_synthesized_music)
         {
             // FIXME: Implement the handling of file references and supply music arguments for the accurate result!!!
-            return convert_music_16m(filename, in_path, out_path);
+            return convert_music_xqoa(filename, in_path, out_path);
         }
         else if(filename.endsWith(".spc") && m_spec.target_platform == TargetPlatform::T3X)
         {
@@ -2050,7 +2092,7 @@ public:
             else
             {
                 // currently can't use mus_args
-                success = convert_music_16m(use_fn_in, use_fn_in, use_fn_out);
+                success = convert_music_xqoa(use_fn_in, use_fn_in, use_fn_out);
                 use_fn_out += ".qoa";
             }
 
