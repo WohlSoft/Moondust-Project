@@ -35,7 +35,9 @@
 
 #include <FreeImageLite.h>
 
-#include <SDL2/SDL_mixer_ext.h>
+#include <SDL2/SDL_audio.h>
+#include <audio_processor.h>
+#include <audio_format.h>
 #include <PGE_File_Formats/file_formats.h>
 
 #include <json.hpp>
@@ -53,7 +55,7 @@
 #include "graphics_load.h"
 #include "texconv.h"
 #include "export_tpl.h"
-#include "export_audio.h"
+// #include "export_audio.h"
 #include "has_no_mask.h"
 #include "extract_archive.h"
 
@@ -186,71 +188,6 @@ static bool validate_image_filename(const QString& filename, QString& type, QStr
     return false;
 }
 
-struct MixerX_Sentinel
-{
-    bool valid = false;
-
-    MixerX_Sentinel(const Spec& spec)
-    {
-        {
-            int freq;
-            Uint16 fmt;
-            int chn;
-
-            if(Mix_QuerySpec(&freq, &fmt, &chn))
-                return;
-        }
-
-        if(Mix_Init(MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MID) < 0)
-            return;
-
-        SDL_AudioSpec as;
-
-        as.channels = 2;
-        as.format = AUDIO_S16LSB;
-        as.freq = 44100;
-        as.silence = 0;
-        as.samples = 8192;
-        as.size = as.samples * 4;
-        as.callback = nullptr;
-        as.userdata = nullptr;
-
-        if(spec.target_platform == TargetPlatform::TPL)
-            as.freq = 32000;
-        else if(spec.target_platform == TargetPlatform::DSG)
-            as.freq = 16384;
-
-        Mix_InitMixer(&as, SDL_FALSE);
-
-        {
-            int freq;
-            Uint16 fmt;
-            int chn;
-
-            if(!Mix_QuerySpec(&freq, &fmt, &chn) || freq != as.freq || chn != as.channels || fmt != as.format)
-            {
-                Mix_FreeMixer();
-                Mix_Quit();
-
-                return;
-            }
-        }
-
-        valid = true;
-    }
-
-    ~MixerX_Sentinel()
-    {
-        if(valid)
-        {
-            Mix_FreeMixer();
-            Mix_Quit();
-        }
-
-        valid = true;
-    }
-};
-
 class Converter
 {
     struct DirInfo
@@ -283,6 +220,20 @@ class Converter
         bool playstyle_classic = false;
         QString char_block;
     };
+
+    MoondustAudioProcessor m_audioCvt;
+    MDAudioFileSpec m_audioDstSpec;
+    QString m_audioOutPath;
+    int m_audioOutFormat = 0;
+
+    enum AudioCvtPhase
+    {
+        PHASE_IDLE = 0,
+        PHASE_LENGHT_MEASURE,
+        PHASE_CONVERSION
+    };
+
+    int m_audioPhase = PHASE_IDLE;
 
     QTemporaryDir m_temp_input_dir_owner;
     QTemporaryDir m_temp_assets_dir_owner;
@@ -324,18 +275,19 @@ class Converter
         // check for 1x textures: fonts
         if(path_parts[path_parts.size() - 1] == "fonts")
         {
-            for(QFileInfo f : m_cur_dir.dir.entryInfoList({"*.ini"}))
+            auto fontFiles = m_cur_dir.dir.entryInfoList({"*.ini"});
+
+            foreach(const QFileInfo &f, fontFiles)
             {
                 // qInfo() << "Scanning" << f.absoluteFilePath();
-
                 QSettings ini(f.absoluteFilePath(), QSettings::IniFormat);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
                 ini.setIniCodec("UTF-8");
 #endif
-
                 ini.beginGroup("font-map");
                 int texture_scale = ini.value("texture-scale", 1).toInt();
                 QString texture_filename = ini.value("texture", "").toString().toLower();
+                ini.endGroup();
 
                 // qInfo() << "scale" << texture_scale << "fn" << texture_filename;
 
@@ -1208,7 +1160,8 @@ public:
             return false;
 
         bool is_lvlx = (lvl.meta.RecentFormat == LevelData::PGEX);
-        bool is_lvl38a = (lvl.meta.RecentFormat == LevelData::SMBX38A);
+        // bool is_lvl38a = (lvl.meta.RecentFormat == LevelData::SMBX38A);
+
         if(is_lvlx && lvl.meta.configPackId == "SMBX2")
         {
             m_error = "Level targets SMBX2.";
@@ -1225,60 +1178,179 @@ public:
         return true;
     }
 
+    bool audio_cvt_runner()
+    {
+        int oldRate = m_audioCvt.getInSpec().m_sample_rate;
+        bool hasMeasure;
+        uint32_t prev_progress = m_audioCvt.curChunk();
+
+        m_audioDstSpec = m_audioCvt.getOutSpec();
+
+        if(m_audioDstSpec.m_sample_rate != oldRate &&
+           m_audioDstSpec.m_loop_start != 0 && m_audioDstSpec.m_loop_end != 0 &&
+           m_audioDstSpec.m_loop_start < m_audioDstSpec.m_loop_end &&
+           m_audioDstSpec.m_loop_end <= m_audioDstSpec.m_total_length) // If sample rate is different and valid loop points are set
+        {
+            // Perform a dry run to figure the valid loop points data
+            m_audioPhase = PHASE_LENGHT_MEASURE;
+        }
+        else // Otherwise, just write down as-is
+        {
+            m_audioPhase = PHASE_CONVERSION;
+        }
+
+        hasMeasure = (m_audioPhase == PHASE_LENGHT_MEASURE);
+
+        while(!m_audioCvt.done())
+        {
+            if(hasMeasure)
+            {
+                switch(m_audioPhase)
+                {
+                case PHASE_LENGHT_MEASURE:
+                    if(!m_audioCvt.runChunk(true))
+                    {
+                        auto err = QString("Conversion failed (Phase Measure): %1").arg(QString::fromStdString(m_audioCvt.getLastError()));
+                        qWarning() << err;
+                        return false;
+                    }
+
+                    if(prev_progress != m_audioCvt.curChunk())
+                    {
+                        // qDebug() << "Progress" << m_cvt.curChunk() << " of " << m_cvt.numChunks() * 2;
+                        prev_progress = m_audioCvt.curChunk();
+                    }
+
+                    if(m_audioCvt.done())
+                    {
+                        int64_t totalRead = m_audioCvt.getSamplesReadStat();
+                        int64_t totalWrite = m_audioCvt.getSamplesWrittenStat();
+
+                        double rateFactor = totalWrite / (double)totalRead;
+                        m_audioDstSpec.m_total_length = totalWrite;
+                        m_audioDstSpec.m_loop_start = std::floor(m_audioDstSpec.m_loop_start * rateFactor);
+                        m_audioDstSpec.m_loop_end = std::floor(m_audioDstSpec.m_loop_end * rateFactor);
+                        if(m_audioDstSpec.m_loop_end >= m_audioDstSpec.m_total_length)
+                            m_audioDstSpec.m_loop_end = m_audioDstSpec.m_total_length - 1;
+                        m_audioDstSpec.m_loop_len = m_audioDstSpec.m_loop_end - m_audioDstSpec.m_loop_start;
+
+                        m_audioCvt.rewindRead();
+
+                        if(!m_audioCvt.openOutFile(m_audioOutPath.toStdString(), m_audioOutFormat, m_audioDstSpec))
+                        {
+                            auto err = QString("Failed to open output file %1: %2").arg(m_audioOutPath, QString::fromStdString(m_audioCvt.getLastError()));
+                            qWarning() << err;
+                            return false;
+                        }
+
+                        m_audioPhase = PHASE_CONVERSION;
+                    }
+
+                    break;
+                case PHASE_CONVERSION:
+                    if(!m_audioCvt.runChunk(false))
+                    {
+                        auto err = QString("Conversion failed (Phase Conversion): %1").arg(QString::fromStdString(m_audioCvt.getLastError()));
+                        qWarning() << err;
+                        return false;
+                    }
+
+                    if(prev_progress != m_audioCvt.curChunk())
+                    {
+                        prev_progress = m_audioCvt.curChunk();
+                    }
+
+                    break;
+                }
+            }
+            else
+            {
+                if(!m_audioCvt.runChunk())
+                {
+                    auto err = QString("Conversion failed: %1").arg(QString::fromStdString(m_audioCvt.getLastError()));
+                    qWarning() << err;
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     bool convert_sfx(const QString&, const QString& in_path, const QString& out_path)
     {
-        Mix_Chunk* ch = Mix_LoadWAV(in_path.toUtf8().data());
-        if(!ch)
+        if(!m_audioCvt.openInFile(in_path.toStdString()))
         {
             log_file(LogCategory::SkippedInvalid, in_path);
+            m_audioCvt.close();
             return true;
         }
 
-        // qInfo() << "length" << ch->alen;
+        m_audioDstSpec = m_audioCvt.getInSpec();
+        m_audioDstSpec.m_sample_format = AUDIO_S16LSB;
+        m_audioDstSpec.m_sample_rate = 44100;
 
-        QByteArray wav_data;
+        if(m_audioDstSpec.m_channels > 2)
+            m_audioDstSpec.m_channels = 2;
 
-        ExportAudio::export_wav(wav_data, ch);
+        m_audioOutPath = out_path;
+        m_audioOutFormat = FORMAT_WAV;
 
-        Mix_FreeChunk(ch);
-
-        QFile file(out_path);
-        if(!file.open(QIODevice::WriteOnly))
-            return false;
-        else
+        if(!m_audioCvt.openOutFile(m_audioOutPath.toStdString(), m_audioOutFormat, m_audioDstSpec))
         {
-            file.write(wav_data);
-            file.close();
-            return true;
+            log_file(LogCategory::ErrorMessage, out_path);
+            m_audioCvt.close();
+            return false;
         }
+
+        if(!audio_cvt_runner())
+        {
+            log_file(LogCategory::ErrorMessage, QString("Conversion failed: %1").arg(out_path));
+            m_audioCvt.close();
+            return false;
+        }
+
+        m_audioCvt.close();
+
+        return true;
     }
 
     bool convert_music_16m(const QString&, const QString& in_path, const QString& out_path)
     {
-        Mix_Chunk* ch = Mix_LoadWAV(in_path.toUtf8().data());
-        if(!ch)
+        if(!m_audioCvt.openInFile(in_path.toStdString()))
         {
             log_file(LogCategory::SkippedInvalid, in_path);
+            m_audioCvt.close();
             return true;
         }
 
-        log_file(LogCategory::AudioQoa, in_path);
+        m_audioDstSpec = m_audioCvt.getInSpec();
+        m_audioDstSpec.m_sample_format = AUDIO_S16LSB;
+        m_audioDstSpec.m_sample_rate = 44100;
 
-        QByteArray qoa_data;
+        if(m_audioDstSpec.m_channels > 2)
+            m_audioDstSpec.m_channels = 2;
 
-        ExportAudio::export_qoa(qoa_data, ch);
+        m_audioOutPath = out_path;
+        m_audioOutFormat = FORMAT_XQOA;
 
-        Mix_FreeChunk(ch);
-
-        QFile file(out_path + ".qoa");
-        if(!file.open(QIODevice::WriteOnly))
-            return false;
-        else
+        if(!m_audioCvt.openOutFile(m_audioOutPath.toStdString(), m_audioOutFormat, m_audioDstSpec))
         {
-            file.write(qoa_data);
-            file.close();
-            return true;
+            log_file(LogCategory::ErrorMessage, out_path);
+            m_audioCvt.close();
+            return false;
         }
+
+        if(!audio_cvt_runner())
+        {
+            log_file(LogCategory::ErrorMessage, QString("Conversion failed: %1").arg(out_path));
+            m_audioCvt.close();
+            return false;
+        }
+
+        m_audioCvt.close();
+
+        return true;
     }
 
     bool scan_episode(const QString& in_path)
@@ -1415,6 +1487,7 @@ public:
     {
         sync_cur_dir(in_path);
 
+        // PCM-based streams
         const QStringList non_tracker_music =
         {
             // MPEG 1 Layer III
@@ -1423,6 +1496,13 @@ public:
             ".ogg", ".flac", ".opus",
             // Uncompressed audio data
             ".aiff",
+            // Windows Media Audio
+            ".wma"
+        };
+
+        // Music streams that might require relatively powerful CPU, otherwise they will be played choppy on too old hardware
+        const QStringList synthesized_music =
+        {
             // MIDI
             ".mid", ".midi", ".rmi", ".mus", ".kar", ".xmi", ".cmf",
             // Id Music File (OPL2 raw) / Imago Orpheus (Tracker music)
@@ -1432,8 +1512,6 @@ public:
             ".nsfe", ".sap", ".vgm", ".vgz",
             // PXTONE
             ".pttune", ".ptcop",
-            // Windows Media Audio
-            ".wma"
         };
 
         const QStringList tracker_music =
@@ -1474,7 +1552,8 @@ public:
             ".ds_store", "desktop.ini", "progress.json", "nomariochallenge",
         };
 
-        bool is_non_tracker_music = fEndsWith(non_tracker_music, filename);
+        bool is_synthesized_music = fEndsWith(synthesized_music, filename);
+        bool is_non_tracker_music = fEndsWith(non_tracker_music, filename) || is_synthesized_music;
         bool is_tracker_music = fEndsWith(tracker_music, filename);
 
         bool is_midi_bank = fEndsWith({".wopl", ".wopn", ".sf2", ".sf3"}, filename);
@@ -2385,16 +2464,9 @@ cleanup:
     bool process()
     {
         GraphicsLoad::FreeImage_Sentinel fs;
-        MixerX_Sentinel ms(m_spec);
 
         init_mask_arrays();
         m_source_hash = 0;
-
-        if(!ms.valid)
-        {
-            qInfo() << "Error: MixerX could not be (re)initialized";
-            return false;
-        }
 
         if(m_spec.target_platform == TargetPlatform::DSG && m_spec.convert_gifs != ConvertGIFs::All)
         {
