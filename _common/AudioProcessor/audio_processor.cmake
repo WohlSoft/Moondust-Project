@@ -199,8 +199,8 @@ else()
     add_dependencies(libMoondustAudio AudioCodecs_Local)
     # Include opus' directory directly, otherwise build fails
     if(ENABLE_AUDIO_PROCESSOR_OPUS_DECODE OR ENABLE_AUDIO_PROCESSOR_OPUS_ENCODE)
-        target_include_directories(libMoondustAudio INTERFACE "${DEPENDENCIES_INSTALL_DIR}/include/opus")
-        target_include_directories(libMoondustAudio INTERFACE "${DEPENDENCIES_INSTALL_DIR}/include/opus")
+        target_include_directories(libMoondustAudio PRIVATE "${DEPENDENCIES_INSTALL_DIR}/include/opus")
+        target_include_directories(libMoondustAudio PRIVATE "${DEPENDENCIES_INSTALL_DIR}/include/opus")
     endif()
 endif()
 
