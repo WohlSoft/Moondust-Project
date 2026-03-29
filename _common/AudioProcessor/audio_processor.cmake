@@ -203,11 +203,6 @@ else()
         target_include_directories(libMoondustAudio PRIVATE "${DEPENDENCIES_INSTALL_DIR}/include/opus")
         target_include_directories(libMoondustAudio PRIVATE "${DEPENDENCIES_INSTALL_DIR}/include/opus")
     endif()
-
-    if(WIN32)
-        # Needed by libmpg123
-        target_link_libraries(libMoondustAudio PUBLIC shlwapi)
-    endif()
 endif()
 
 target_compile_options(libMoondustAudio PRIVATE -Wall -Wextra)
