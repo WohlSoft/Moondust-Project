@@ -23,8 +23,8 @@ struct XTConvertUpdate
     int file_count;
 };
 
-Q_DECLARE_METATYPE(XTConvert::Spec);
-Q_DECLARE_METATYPE(XTConvertUpdate);
+Q_DECLARE_METATYPE(XTConvert::Spec)
+Q_DECLARE_METATYPE(XTConvertUpdate)
 
 class XTConvert_Worker : public QObject
 {
