@@ -1496,6 +1496,8 @@ public:
             ".ogg", ".flac", ".opus",
             // Uncompressed audio data
             ".aiff",
+            // SPC700 music file
+            ".spc",
             // Windows Media Audio
             ".wma"
         };
@@ -1507,8 +1509,8 @@ public:
             ".mid", ".midi", ".rmi", ".mus", ".kar", ".xmi", ".cmf",
             // Id Music File (OPL2 raw) / Imago Orpheus (Tracker music)
             ".imf", ".wlf",
-            // GAME EMU (Chiptunes)
-            ".spc", ".ay", ".gbs", ".gym", ".hes", ".kss", ".nsf",
+            // GAME EMU (Chiptunes), SPC is skipped as it gets converted into tracker format
+            /*".spc", */".ay", ".gbs", ".gym", ".hes", ".kss", ".nsf",
             ".nsfe", ".sap", ".vgm", ".vgz",
             // PXTONE
             ".pttune", ".ptcop",
