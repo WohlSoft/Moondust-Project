@@ -170,7 +170,7 @@ if(NOT MOONDUST_AUDIO_CODECS)
 
     target_link_libraries(libMoondustAudio PUBLIC ogg)
 
-    if(ENABLE_AUDIO_PROCESSOR_OPUS_ENCODE)
+    if(ENABLE_AUDIO_PROCESSOR_OPUS_DECODE)
         target_link_libraries(libMoondustAudio PUBLIC opus opusfile)
     endif()
 
@@ -197,6 +197,11 @@ if(NOT MOONDUST_AUDIO_CODECS)
     )
 else()
     add_dependencies(libMoondustAudio AudioCodecs_Local)
+    # Include opus' directory directly, otherwise build fails
+    if(ENABLE_AUDIO_PROCESSOR_OPUS_DECODE OR ENABLE_AUDIO_PROCESSOR_OPUS_ENCODE)
+        target_include_directories(libMoondustAudio INTERFACE "${DEPENDENCIES_INSTALL_DIR}/include/opus")
+        target_include_directories(libMoondustAudio INTERFACE "${DEPENDENCIES_INSTALL_DIR}/include/opus")
+    endif()
 endif()
 
 target_compile_options(libMoondustAudio PRIVATE -Wall -Wextra)
