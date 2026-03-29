@@ -197,6 +197,7 @@ if(NOT MOONDUST_AUDIO_CODECS)
     )
 else()
     add_dependencies(libMoondustAudio AudioCodecs_Local)
+    target_compile_definitions(libMoondustAudio PRIVATE -DAUDIO_PROCESSOR_USE_FLUIDLITE)
     # Include opus' directory directly, otherwise build fails
     if(ENABLE_AUDIO_PROCESSOR_OPUS_DECODE OR ENABLE_AUDIO_PROCESSOR_OPUS_ENCODE)
         target_include_directories(libMoondustAudio PRIVATE "${DEPENDENCIES_INSTALL_DIR}/include/opus")
