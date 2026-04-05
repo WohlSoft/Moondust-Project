@@ -1,4 +1,7 @@
 /*
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2026 Vitaly Novichkov <admin@wohlnet.ru>
+ *
  * XTConvert, a tool to package asset packs and episodes for TheXTech game engine.
  * Copyright (c) 2024 ds-sloth
  *
