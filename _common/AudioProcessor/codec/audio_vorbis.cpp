@@ -109,7 +109,7 @@ bool MDAudioVorbis::updateSection()
 
     m_spec.m_sample_rate = p->m_vi.rate;
     m_spec.m_channels = p->m_vi.channels;
-    m_spec.m_frame_size = m_spec.m_channels * (SDL_AUDIO_BITSIZE(m_spec.m_sample_format) / 8);
+    m_spec.updateFrameSize();
 
     return true;
 }
@@ -310,7 +310,7 @@ bool MDAudioVorbis::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         m_spec.m_sample_format = AUDIO_F32SYS;
 #endif
 
-    m_spec.m_frame_size = m_spec.m_channels * (SDL_AUDIO_BITSIZE(m_spec.m_sample_format) / 8);
+    m_spec.updateFrameSize();
 
     if(m_spec.vbr)
     {

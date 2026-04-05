@@ -90,7 +90,7 @@ bool MDAudioEDMIDI::openRead(SDL_RWops *file)
     m_spec.m_channels = 2;
     m_spec.m_sample_format = m_specWanted.getSampleFormat(AUDIO_F32SYS);
     m_spec.m_sample_rate = m_specWanted.getSampleRate(44100);
-    m_spec.m_frame_size = m_spec.m_channels * (SDL_AUDIO_BITSIZE(m_spec.m_sample_format) / 8);
+    m_spec.updateFrameSize();
 
     if(!reCreateSynth())
     {
