@@ -337,7 +337,7 @@ struct MDAudioFLAC_callbacks
                 break;
             }
 
-            music->m_spec.m_frame_size = music->m_spec.m_channels * (SDL_AUDIO_BITSIZE(music->m_spec.m_sample_format) / 8);
+            music->m_spec.updateFrameSize();
 
             /*printf("FLAC: Sample rate = %d, channels = %d, bits_per_sample = %d\n", music->sample_rate, music->channels, music->bits_per_sample);*/
         }

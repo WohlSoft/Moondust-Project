@@ -280,7 +280,7 @@ bool MDAudioQOA::openRead(SDL_RWops *file)
     m_spec.m_channels = info.channels;
     m_spec.m_sample_rate = info.samplerate;
     m_spec.m_total_length = info.samples;
-    m_spec.m_frame_size = m_spec.m_channels * (SDL_AUDIO_BITSIZE(m_spec.m_sample_format) / 8);
+    m_spec.updateFrameSize();
 
     return true;
 }
@@ -315,7 +315,7 @@ bool MDAudioQOA::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     qoa_file_begin = 0;
 
     m_spec.m_sample_format = AUDIO_S16SYS; // Can only work with the PCM16
-    m_spec.m_frame_size = m_spec.m_channels * (SDL_AUDIO_BITSIZE(m_spec.m_sample_format) / 8);
+    m_spec.updateFrameSize();
 
     info.channels = m_spec.m_channels;
     info.samplerate = m_spec.m_sample_rate;
