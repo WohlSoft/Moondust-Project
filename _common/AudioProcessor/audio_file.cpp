@@ -22,6 +22,11 @@
 #include "audio_file.h"
 
 
+void MDAudioFileSpec::updateFrameSize()
+{
+    m_frame_size = m_channels * (SDL_AUDIO_BITSIZE(m_sample_format) / 8);
+}
+
 int MDAudioFileSpecWanted::getChannels(int def, int max) const
 {
     int ret = (m_channels > 0) ? m_channels : def;

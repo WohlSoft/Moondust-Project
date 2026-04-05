@@ -404,7 +404,7 @@ bool MDAudioWAV::openRead(SDL_RWops *file)
         return false;
     }
 
-    m_spec.m_frame_size = m_spec.m_channels * (SDL_AUDIO_BITSIZE(m_spec.m_sample_format) / 8);
+    m_spec.updateFrameSize();
 
     for(drwav_uint32 i = 0; i < wav->metadataCount; ++i)
     {
@@ -554,7 +554,7 @@ bool MDAudioWAV::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         break;
     }
 
-    m_spec.m_frame_size = m_spec.m_channels * (SDL_AUDIO_BITSIZE(m_spec.m_sample_format) / 8);
+    m_spec.updateFrameSize();
 
     initChPermute();
 
