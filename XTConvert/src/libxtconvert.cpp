@@ -59,6 +59,8 @@
 #include "has_no_mask.h"
 #include "extract_archive.h"
 
+#include "episode_box.h"
+
 #include "libxtconvert.h"
 
 static void log_file_callback_default(void*, XTConvert::LogCategory cat, const std::string& str)
@@ -252,6 +254,9 @@ class Converter
 
     EpisodeInfo m_episode_info;
     uint32_t m_source_hash = 0;
+
+    // All the levels and world maps of the episode gets loaded together to apply various manipulations to all files together
+    EpisodeBox m_episodeData;
 
     void sync_cur_dir(const QString& in_file)
     {
