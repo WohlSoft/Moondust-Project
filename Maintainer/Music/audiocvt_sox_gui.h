@@ -22,7 +22,7 @@
 #include <QDialog>
 #include <QQueue>
 #include <QProcess>
-#include <files/episode_box.h>
+#include <episode_box.h>
 #include <QFuture>
 
 namespace Ui {

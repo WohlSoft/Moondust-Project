@@ -136,7 +136,6 @@ list(APPEND PGE_MAINTAINER_SRCS
     main.cpp
     main_window.cpp                 main_window.h
     Music/audiocvt_sox_gui.cpp      Music/audiocvt_sox_gui.h
-    files/episode_box.cpp           files/episode_box.h
     common_features/logger.cpp      common_features/logger.h    common_features/logger_sets.h
     EpisodeCvt/episode_converter.cpp    EpisodeCvt/episode_converter.h
     EpisodeCvt/case_fixer.cpp       EpisodeCvt/case_fixer.h
@@ -212,6 +211,7 @@ if(PGE_BUILD_XTCONVERT)
 endif()
 
 target_link_libraries(PGE_Maintainer_QtLibs INTERFACE
+    episode_box
     PGE_FileFormatsQt
     ${QT_LIBS_LIST}
     ${QT_EXTRA_LIBS}

@@ -35,7 +35,10 @@ void EpisodeBox_level::buildEntriesCache()
         for(int i = 0; i < d.sections.size(); i++)
         {
             QString &musFile = d.sections[i].music_file;
-            if(musFile.isEmpty()) continue;
+
+            if(musFile.isEmpty())
+                continue;
+
             musFile.replace('\\', '/');
             musFile.replace("//", "/");
             QString mFile = fullPath.absoluteFilePath(musFile);
@@ -52,7 +55,10 @@ void EpisodeBox_level::buildEntriesCache()
             for(int j = 0; j < d.events[i].sets.size(); j++)
             {
                 QString &musFile = d.events[i].sets[j].music_file;
-                if(musFile.isEmpty()) continue;
+
+                if(musFile.isEmpty())
+                    continue;
+
                 musFile.replace('\\', '/');
                 musFile.replace("//", "/");
                 QString mFile = fullPath.absoluteFilePath(musFile);
@@ -68,7 +74,10 @@ void EpisodeBox_level::buildEntriesCache()
         for(int i = 0; i < d.doors.size(); i++)
         {
             QString &lvlFile = d.doors[i].lname;
-            if(lvlFile.isEmpty()) continue;
+
+            if(lvlFile.isEmpty())
+                continue;
+
             lvlFile.replace('\\', '/');
             lvlFile.replace("//", "/");
             if(!lvlFile.endsWith(".lvl", Qt::CaseInsensitive) && !lvlFile.endsWith(".lvlx", Qt::CaseInsensitive))
@@ -92,6 +101,14 @@ EpisodeBox_level::EpisodeBox_level()
 
 EpisodeBox_level::EpisodeBox_level(const EpisodeBox_level &e)
 {
+    this->operator=(e);
+}
+
+EpisodeBox_level::~EpisodeBox_level()
+{}
+
+EpisodeBox_level &EpisodeBox_level::operator=(const EpisodeBox_level &e)
+{
     d             = e.d;
     ftype         = e.ftype;
     ftypeVer      = e.ftypeVer;
@@ -100,10 +117,8 @@ EpisodeBox_level::EpisodeBox_level(const EpisodeBox_level &e)
     music_entries = e.music_entries;
     level_entries = e.level_entries;
     m_wasOverwritten = e.m_wasOverwritten;
+    return *this;
 }
-
-EpisodeBox_level::~EpisodeBox_level()
-{}
 
 bool EpisodeBox_level::open(QString filePath)
 {
@@ -160,14 +175,17 @@ QString EpisodeBox_level::findFileAliasCaseInsensitive(QString file)
 bool EpisodeBox_level::renameFile(QString oldFile, QString newFile)
 {
     bool modified = false;
+
     if(oldFile == fPath)
     {
         QFile::rename(fPath, newFile);
         fPath = newFile;
         QString newDataPath = newFile;
         int dotPos = newFile.lastIndexOf(".");
+
         if(dotPos > 0)
             newDataPath.remove(dotPos, newDataPath.size() - dotPos);
+
         QDir dDir(dataPath);
         if(dDir.exists())
         {
@@ -189,13 +207,16 @@ bool EpisodeBox_level::renameFile(QString oldFile, QString newFile)
             }
         }
     }
+
     modified |= renameMusic(oldFile, newFile, true);
     modified |= renameLevel(oldFile, newFile, true);
+
     if(modified)
     {
         save();
         m_wasOverwritten = true;
     }
+
     return modified;
 }
 
@@ -203,6 +224,7 @@ bool EpisodeBox_level::renameMusic(QString oldMus, QString newMus, bool isBulk)
 {
     bool modified = false;
     QDir fullPath(d.meta.path);
+
     for(MusicField &mus : music_entries)
     {
         if(mus.absolutePath.compare(oldMus, Qt::CaseInsensitive) == 0)
@@ -211,11 +233,13 @@ bool EpisodeBox_level::renameMusic(QString oldMus, QString newMus, bool isBulk)
             modified = true;
         }
     }
+
     if(!isBulk && modified)
     {
         save();
         m_wasOverwritten = true;
     }
+
     return modified;
 }
 
@@ -223,6 +247,7 @@ bool EpisodeBox_level::renameLevel(QString oldLvl, QString newLvl, bool isBulk)
 {
     bool modified = false;
     QDir fullPath(d.meta.path);
+
     for(MusicField &lvl : level_entries)
     {
         if(lvl.absolutePath.compare(oldLvl, Qt::CaseInsensitive) == 0)
@@ -231,11 +256,13 @@ bool EpisodeBox_level::renameLevel(QString oldLvl, QString newLvl, bool isBulk)
             modified = true;
         }
     }
+
     if(!isBulk && modified)
     {
         save();
         m_wasOverwritten = true;
     }
+
     return modified;
 }
 
@@ -277,7 +304,10 @@ void EpisodeBox_world::buildEntriesCache()
         for(int i = 0; i < d.music.size(); i++)
         {
             QString &musFile = d.music[i].music_file;
-            if(musFile.isEmpty()) continue;
+
+            if(musFile.isEmpty())
+                continue;
+
             musFile.replace('\\', '/');
             musFile.replace("//", "/");
             QString mFile = fullPath.absoluteFilePath(musFile);
@@ -293,7 +323,10 @@ void EpisodeBox_world::buildEntriesCache()
         {
             //on -1 check intro level file! (just to have shorter code)
             QString &lvlFile = i < 0 ? d.IntroLevel_file : d.levels[i].lvlfile;
-            if(lvlFile.isEmpty()) continue;
+
+            if(lvlFile.isEmpty())
+                continue;
+
             lvlFile.replace('\\', '/');
             lvlFile.replace("//", "/");
             if(!lvlFile.endsWith(".lvl", Qt::CaseInsensitive) && !lvlFile.endsWith(".lvlx", Qt::CaseInsensitive))
@@ -317,6 +350,14 @@ EpisodeBox_world::EpisodeBox_world()
 
 EpisodeBox_world::EpisodeBox_world(const EpisodeBox_world &w)
 {
+    this->operator=(w);
+}
+
+EpisodeBox_world::~EpisodeBox_world()
+{}
+
+EpisodeBox_world &EpisodeBox_world::operator=(const EpisodeBox_world &w)
+{
     d           = w.d;
     fPath       = w.fPath;
     dataPath    = w.dataPath;
@@ -325,10 +366,8 @@ EpisodeBox_world::EpisodeBox_world(const EpisodeBox_world &w)
     music_entries = w.music_entries;
     level_entries = w.level_entries;
     m_wasOverwritten = w.m_wasOverwritten;
+    return *this;
 }
-
-EpisodeBox_world::~EpisodeBox_world()
-{}
 
 bool EpisodeBox_world::open(QString filePath)
 {
@@ -512,8 +551,11 @@ void EpisodeBox::openEpisode(QString dirPath, bool recursive)
                 EpisodeBox_level l;
                 if(l.open(epPath + "/" + file))     //Push only valid files!!!
                 {
-                    d.push_back(l);
-                    d.last().buildEntriesCache();
+                    d.push_back(std::move(l));
+                    EpisodeBox_level &ll = d.last();
+                    ll.buildEntriesCache();
+                    foreach(const MusicField &mus, ll.music_entries)
+                        m_musicFiles.insert(mus.absolutePath);
                 }
             }
             else
@@ -521,8 +563,11 @@ void EpisodeBox::openEpisode(QString dirPath, bool recursive)
                 EpisodeBox_world w;
                 if(w.open(epPath + "/" + file)) //Push only valid files!!!
                 {
-                    dw.push_back(w);
-                    dw.last().buildEntriesCache();
+                    dw.push_back(std::move(w));
+                    EpisodeBox_world &ww = dw.last();
+                    ww.buildEntriesCache();
+                    foreach(const MusicField &mus, ww.music_entries)
+                        m_musicFiles.insert(mus.absolutePath);
                 }
             }
         }
@@ -537,8 +582,11 @@ void EpisodeBox::openEpisode(QString dirPath, bool recursive)
                 EpisodeBox_level l;
                 if(l.open(epPath + "/" + file))     //Push only valid files!!!
                 {
-                    d.push_back(l);
-                    d.last().buildEntriesCache();
+                    d.push_back(std::move(l));
+                    EpisodeBox_level &ll = d.last();
+                    ll.buildEntriesCache();
+                    foreach(const MusicField &mus, ll.music_entries)
+                        m_musicFiles.insert(mus.absolutePath);
                 }
             }
             else
@@ -546,8 +594,11 @@ void EpisodeBox::openEpisode(QString dirPath, bool recursive)
                 EpisodeBox_world w;
                 if(w.open(epPath + "/" + file)) //Push only valid files!!!
                 {
-                    dw.push_back(w);
-                    dw.last().buildEntriesCache();
+                    dw.push_back(std::move(w));
+                    EpisodeBox_world &ww = dw.last();
+                    ww.buildEntriesCache();
+                    foreach(const MusicField &mus, ww.music_entries)
+                        m_musicFiles.insert(mus.absolutePath);
                 }
             }
         }

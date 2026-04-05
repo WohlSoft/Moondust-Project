@@ -136,6 +136,7 @@ target_link_libraries(PGE_XTConvert_QtLibs
     PGE_FreeImage
     PGE_libimagequant
     PGE_libspc2it
+    episode_box
     PGE_FileFormatsQt
     ${QT_LIBS_LIST}
     ${QT_EXTRA_LIBS}
