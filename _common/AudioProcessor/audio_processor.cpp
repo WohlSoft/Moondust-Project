@@ -38,6 +38,7 @@
 #include "codec/audio_midi_edmidi.h"
 #include "codec/audio_midi_fluidsynth.h"
 #include "codec/audio_pxtone.h"
+#include "codec/audio_tracker_xmp.h"
 
 #include <SDL2/SDL.h>
 
@@ -189,6 +190,7 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, const std::stri
         break;
 
     case FORMAT_TRACKER:
+        m_in_file.reset(new MDAudioXMP);
         break;
 
 #ifdef MOONDUST_DECODE_FFMPEG
