@@ -134,16 +134,16 @@ set(PGE_MAINTAINER_SRCS)
 list(APPEND PGE_MAINTAINER_SRCS
     ${PGETRANSLATOR_SRCS}
     main.cpp
-    main_window.cpp
-    Music/audiocvt_sox_gui.cpp
-    files/episode_box.cpp
-    common_features/logger.cpp
-    EpisodeCvt/episode_converter.cpp
-    EpisodeCvt/case_fixer.cpp
-    Graphics/gifs2png.cpp
-    Graphics/png2gifs.cpp
-    Graphics/lazyfix.cpp
-    Graphics/palette_filter.cpp
+    main_window.cpp                 main_window.h
+    Music/audiocvt_sox_gui.cpp      Music/audiocvt_sox_gui.h
+    files/episode_box.cpp           files/episode_box.h
+    common_features/logger.cpp      common_features/logger.h    common_features/logger_sets.h
+    EpisodeCvt/episode_converter.cpp    EpisodeCvt/episode_converter.h
+    EpisodeCvt/case_fixer.cpp       EpisodeCvt/case_fixer.h
+    Graphics/gifs2png.cpp           Graphics/gifs2png.h
+    Graphics/png2gifs.cpp           Graphics/png2gifs.h
+    Graphics/lazyfix.cpp            Graphics/lazyfix.h
+    Graphics/palette_filter.cpp     Graphics/palette_filter.h
     ${UTF8MAIN_SRCS}
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
