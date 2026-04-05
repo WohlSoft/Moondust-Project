@@ -20,7 +20,11 @@
 #define EPISODE_BOX_H
 
 #include <QString>
+#include <QList>
+#include <QSet>
+
 #include <PGE_File_Formats/file_formats.h>
+
 
 struct MusicField
 {
@@ -53,6 +57,8 @@ public:
     EpisodeBox_level();
     EpisodeBox_level(const EpisodeBox_level&e);
     ~EpisodeBox_level();
+
+    EpisodeBox_level &operator=(const EpisodeBox_level &e);
 
     bool open(QString filePath);
     QString findFileAliasCaseInsensitive(QString file);
@@ -87,6 +93,8 @@ public:
     EpisodeBox_world(const EpisodeBox_world&w);
     ~EpisodeBox_world();
 
+    EpisodeBox_world &operator=(const EpisodeBox_world &w);
+
     bool open(QString filePath);
     QString findFileAliasCaseInsensitive(QString file);
     bool renameFile(QString oldFile, QString newFile);
@@ -111,9 +119,15 @@ public:
     long overwrittenWorlds();
     int  totalElements();
 
+    // Path to the episode
     QString epPath;
+
+    //! Episode's level files
     QList<EpisodeBox_level> d;
+    //! Episode's world maps
     QList<EpisodeBox_world> dw;
+    //! List of all unique music files
+    QSet<QString> m_musicFiles;
 };
 
 
