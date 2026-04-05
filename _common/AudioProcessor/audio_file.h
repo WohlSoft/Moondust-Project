@@ -70,6 +70,8 @@ struct MDAudioFileSpec
     int profile = -1;
     //! Encoder's complexity (may vary across encoders)
     int complexity = -1;
+
+    void updateFrameSize();
 };
 
 struct MDAudioFileSpecWanted
