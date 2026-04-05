@@ -361,6 +361,8 @@ bool MDAudioFluidSynth::close()
     m_file = nullptr;
     m_in_file.clear();
 
+    m_spec = MDAudioFileSpec();
+
     return true;
 }
 
