@@ -16,6 +16,7 @@ else()
 endif()
 
 add_library(libMoondustAudio STATIC)
+set_target_properties(libMoondustAudio PROPERTIES OUTPUT_NAME "MoondustAudio")
 
 if(ENABLE_AUDIO_PROCESSOR_MP3_ENCODE OR ENABLE_AUDIO_PROCESSOR_MP3_DECODE_MPG123)
     target_sources(libMoondustAudio PRIVATE
@@ -208,6 +209,7 @@ else()
     endif()
 endif()
 
+target_compile_definitions(libMoondustAudio PRIVATE -DLIBXMP_STATIC)
 target_compile_options(libMoondustAudio PRIVATE -Wall -Wextra)
 
 target_include_directories(libMoondustAudio PUBLIC ${CMAKE_CURRENT_LIST_DIR})
