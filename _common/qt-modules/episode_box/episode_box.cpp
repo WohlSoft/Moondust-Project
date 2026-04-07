@@ -92,35 +92,7 @@ void EpisodeBox_level::buildEntriesCache()
     }
 }
 
-EpisodeBox_level::EpisodeBox_level()
-{
-    ftype = F_NONE;
-    ftypeVer = 0;
-    m_wasOverwritten = false;
-}
-
-EpisodeBox_level::EpisodeBox_level(const EpisodeBox_level &e)
-{
-    this->operator=(e);
-}
-
-EpisodeBox_level::~EpisodeBox_level()
-{}
-
-EpisodeBox_level &EpisodeBox_level::operator=(const EpisodeBox_level &e)
-{
-    d             = e.d;
-    ftype         = e.ftype;
-    ftypeVer      = e.ftypeVer;
-    fPath         = e.fPath;
-    dataPath      = e.dataPath;
-    music_entries = e.music_entries;
-    level_entries = e.level_entries;
-    m_wasOverwritten = e.m_wasOverwritten;
-    return *this;
-}
-
-bool EpisodeBox_level::open(QString filePath)
+bool EpisodeBox_level::open(const QString &filePath)
 {
     fPath = filePath;
 
@@ -154,7 +126,7 @@ bool EpisodeBox_level::open(QString filePath)
     return d.meta.ReadFileValid;
 }
 
-QString EpisodeBox_level::findFileAliasCaseInsensitive(QString file)
+QString EpisodeBox_level::findFileAliasCaseInsensitive(const QString &file)
 {
     QDir fullPath(d.meta.path);
     for(MusicField &mus : music_entries)
@@ -172,7 +144,7 @@ QString EpisodeBox_level::findFileAliasCaseInsensitive(QString file)
     return QString();
 }
 
-bool EpisodeBox_level::renameFile(QString oldFile, QString newFile)
+bool EpisodeBox_level::renameFile(const QString &oldFile, const QString &newFile)
 {
     bool modified = false;
 
@@ -220,7 +192,7 @@ bool EpisodeBox_level::renameFile(QString oldFile, QString newFile)
     return modified;
 }
 
-bool EpisodeBox_level::renameMusic(QString oldMus, QString newMus, bool isBulk)
+bool EpisodeBox_level::renameMusic(const QString &oldMus, const QString &newMus, bool isBulk)
 {
     bool modified = false;
     QDir fullPath(d.meta.path);
@@ -243,7 +215,7 @@ bool EpisodeBox_level::renameMusic(QString oldMus, QString newMus, bool isBulk)
     return modified;
 }
 
-bool EpisodeBox_level::renameLevel(QString oldLvl, QString newLvl, bool isBulk)
+bool EpisodeBox_level::renameLevel(const QString &oldLvl, const QString &newLvl, bool isBulk)
 {
     bool modified = false;
     QDir fullPath(d.meta.path);
@@ -289,6 +261,8 @@ void EpisodeBox_level::save()
             return;
     }
 }
+
+
 
 
 void EpisodeBox_world::buildEntriesCache()
@@ -341,35 +315,8 @@ void EpisodeBox_world::buildEntriesCache()
     }
 }
 
-EpisodeBox_world::EpisodeBox_world()
-{
-    ftype = F_NONE;
-    ftypeVer = 0;
-    m_wasOverwritten = false;
-}
 
-EpisodeBox_world::EpisodeBox_world(const EpisodeBox_world &w)
-{
-    this->operator=(w);
-}
-
-EpisodeBox_world::~EpisodeBox_world()
-{}
-
-EpisodeBox_world &EpisodeBox_world::operator=(const EpisodeBox_world &w)
-{
-    d           = w.d;
-    fPath       = w.fPath;
-    dataPath    = w.dataPath;
-    ftype       = w.ftype;
-    ftypeVer    = w.ftypeVer;
-    music_entries = w.music_entries;
-    level_entries = w.level_entries;
-    m_wasOverwritten = w.m_wasOverwritten;
-    return *this;
-}
-
-bool EpisodeBox_world::open(QString filePath)
+bool EpisodeBox_world::open(const QString &filePath)
 {
     fPath = filePath;
     FileFormats::OpenWorldFile(filePath, d);
@@ -412,7 +359,7 @@ QString EpisodeBox_world::findFileAliasCaseInsensitive(QString file)
     return QString();
 }
 
-bool EpisodeBox_world::renameFile(QString oldFile, QString newFile)
+bool EpisodeBox_world::renameFile(const QString &oldFile, const QString &newFile)
 {
     bool modified = false;
     if(oldFile == fPath)
@@ -421,9 +368,12 @@ bool EpisodeBox_world::renameFile(QString oldFile, QString newFile)
         fPath = newFile;
         QString newDataPath = newFile;
         int dotPos = newFile.lastIndexOf(".");
+
         if(dotPos > 0)
             newDataPath.remove(dotPos, newDataPath.size() - dotPos);
+
         QDir dDir(dataPath);
+
         if(dDir.exists())
         {
             if(dataPath != newDataPath)
@@ -444,20 +394,24 @@ bool EpisodeBox_world::renameFile(QString oldFile, QString newFile)
             }
         }
     }
+
     modified |= renameMusic(oldFile, newFile, true);
     modified |= renameLevel(oldFile, newFile, true);
+
     if(modified)
     {
         save();
         m_wasOverwritten = true;
     }
+
     return modified;
 }
 
-bool EpisodeBox_world::renameMusic(QString oldMus, QString newMus, bool isBulk)
+bool EpisodeBox_world::renameMusic(const QString &oldMus, const QString &newMus, bool isBulk)
 {
     bool modified = false;
     QDir fullPath(d.meta.path);
+
     for(MusicField &mus : music_entries)
     {
         if(mus.absolutePath.compare(oldMus, Qt::CaseInsensitive) == 0)
@@ -466,15 +420,17 @@ bool EpisodeBox_world::renameMusic(QString oldMus, QString newMus, bool isBulk)
             modified = true;
         }
     }
+
     if(!isBulk && modified)
     {
         save();
         m_wasOverwritten = true;
     }
+
     return modified;
 }
 
-bool EpisodeBox_world::renameLevel(QString oldLvl, QString newLvl, bool isBulk)
+bool EpisodeBox_world::renameLevel(const QString &oldLvl, const QString &newLvl, bool isBulk)
 {
     bool modified = false;
     QDir fullPath(d.meta.path);
@@ -514,6 +470,110 @@ void EpisodeBox_world::save()
             return;
     }
 }
+
+
+
+QString Episode_music_ini::fieldToFile(const QString &field)
+{
+    QStringList f = field.split('=');
+
+    if(f.size() < 2)
+        return field;
+
+    QString file = f[1].trimmed();
+
+    if(file.front() == '"')
+        file.remove(0, 1);
+
+    if(file.back() == '"')
+        file.remove(file.size() - 1, 1);
+
+    return file;
+}
+
+void Episode_music_ini::updateField(QString &field, const QString &newFile)
+{
+    // FIXME: Implement this!
+}
+
+void Episode_music_ini::buildEntriesCache()
+{
+    // FIXME: Implement this!
+}
+
+bool Episode_music_ini::open(const QString &filePath)
+{
+    QFile in(filePath);
+    QFileInfo info(filePath);
+
+    if(!in.open(QIODevice::ReadOnly|QIODevice::Text))
+        return false;
+
+    QTextStream tIn(&in);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    tIn.setEncoding(QStringConverter::Utf8);
+#else
+    tIn.setCodec("UTF-8");
+#endif
+
+    file_lines.clear();
+    QString line;
+
+    while(!tIn.atEnd())
+    {
+        line = tIn.readLine();
+        file_lines.push_back(line.trimmed());
+    }
+
+    in.close();
+
+    fPath = filePath;
+    dataPath = info.absoluteDir().absolutePath();
+
+    return true;
+}
+
+QString Episode_music_ini::findFileAliasCaseInsensitive(const QString &file)
+{
+    QDir fullPath(dataPath);
+
+    for(MusicField &mus : music_entries)
+    {
+        if(mus.absolutePath.compare(file, Qt::CaseInsensitive) == 0)
+            return fieldToFile(*(mus.field));
+    }
+
+    return QString();
+}
+
+bool Episode_music_ini::renameMusic(const QString &oldMus, const QString &newMus, bool isBulk)
+{
+    // FIXME: Implement this!
+    return false;
+}
+
+void Episode_music_ini::save()
+{
+    QFile out(fPath);
+
+    if(out.open(QIODevice::WriteOnly|QIODevice::Text))
+    {
+        QTextStream tOut(&out);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        tOut.setEncoding(QStringConverter::Utf8);
+#else
+        tOut.setCodec("UTF-8");
+#endif
+
+        foreach(const QString &line, file_lines)
+            tOut << line << "\n";
+
+        tOut.flush();
+        out.close();
+    }
+}
+
+
 
 
 EpisodeBox::EpisodeBox() {}
