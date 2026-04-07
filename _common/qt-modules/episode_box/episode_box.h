@@ -37,34 +37,34 @@ class EpisodeBox_level
 public:
     enum fType
     {
-        F_NONE=-1,
-        F_LVL=0,
-        F_LVLX=1,
-        F_LVL38A=2
+        F_NONE = -1,
+        F_LVL = 0,
+        F_LVLX = 1,
+        F_LVL38A = 2
     };
 
-    fType ftype;
-    int   ftypeVer;
+    fType ftype = F_NONE;
+    int   ftypeVer = 0;
     LevelData d;
     QString fPath;
     QString dataPath;
-    bool m_wasOverwritten;
+    bool m_wasOverwritten = false;
 
     void buildEntriesCache();
     QList<MusicField> music_entries;
     QList<MusicField> level_entries;
 
-    EpisodeBox_level();
-    EpisodeBox_level(const EpisodeBox_level&e);
-    ~EpisodeBox_level();
+    EpisodeBox_level() = default;
+    EpisodeBox_level(const EpisodeBox_level &e) = default;
+    ~EpisodeBox_level() = default;
 
-    EpisodeBox_level &operator=(const EpisodeBox_level &e);
+    EpisodeBox_level &operator=(const EpisodeBox_level &e) = default;
 
-    bool open(QString filePath);
-    QString findFileAliasCaseInsensitive(QString file);
-    bool renameFile(QString oldFile, QString newFile);
-    bool renameMusic(QString oldMus, QString newMus, bool isBulk = false);
-    bool renameLevel(QString oldLvl, QString newLvl, bool isBulk = false);
+    bool open(const QString &filePath);
+    QString findFileAliasCaseInsensitive(const QString &file);
+    bool renameFile(const QString &oldFile, const QString &newFile);
+    bool renameMusic(const QString &oldMus, const QString &newMus, bool isBulk = false);
+    bool renameLevel(const QString &oldLvl, const QString &newLvl, bool isBulk = false);
     void save();
 };
 
@@ -78,30 +78,59 @@ public:
         F_WLDX = 1,
         F_WLD38A = 2
     };
-    fType ftype;
-    int   ftypeVer;
+
+    fType ftype = F_NONE;
+    int   ftypeVer = 0;
     WorldData d;
     QString fPath;
     QString dataPath;
-    bool m_wasOverwritten;
+    bool m_wasOverwritten = false;
 
     void buildEntriesCache();
     QList<MusicField> music_entries;
     QList<MusicField> level_entries;
 
-    EpisodeBox_world();
-    EpisodeBox_world(const EpisodeBox_world&w);
-    ~EpisodeBox_world();
+    EpisodeBox_world() = default;
+    EpisodeBox_world(const EpisodeBox_world&w) = default;
+    ~EpisodeBox_world() = default;
 
-    EpisodeBox_world &operator=(const EpisodeBox_world &w);
+    EpisodeBox_world &operator=(const EpisodeBox_world &w) = default;
 
-    bool open(QString filePath);
+    bool open(const QString &filePath);
     QString findFileAliasCaseInsensitive(QString file);
-    bool renameFile(QString oldFile, QString newFile);
-    bool renameMusic(QString oldMus, QString newMus, bool isBulk = false);
-    bool renameLevel(QString oldLvl, QString newLvl, bool isBulk = false);
+    bool renameFile(const QString &oldFile, const QString &newFile);
+    bool renameMusic(const QString &oldMus, const QString &newMus, bool isBulk = false);
+    bool renameLevel(const QString &oldLvl, const QString &newLvl, bool isBulk = false);
     void save();
 };
+
+class Episode_music_ini
+{
+    QString fieldToFile(const QString &field);
+    void updateField(QString &field, const QString &newFile);
+
+public:
+    QString fPath;
+    QString dataPath;
+
+    Episode_music_ini();
+
+    Episode_music_ini(const Episode_music_ini &w) = default;
+    ~Episode_music_ini();
+
+    Episode_music_ini &operator=(const Episode_music_ini &w) = default;
+
+    QList<QString> file_lines;
+
+    void buildEntriesCache();
+    QList<MusicField> music_entries;
+
+    bool open(const QString &filePath);
+    QString findFileAliasCaseInsensitive(const QString &file);
+    bool renameMusic(const QString &oldMus, const QString &newMus, bool isBulk = false);
+    void save();
+};
+
 
 class EpisodeBox
 {
