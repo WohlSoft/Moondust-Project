@@ -28,8 +28,14 @@
 
 struct MusicField
 {
+    //! Absolute path to the music file
     QString  absolutePath;
+    //! The pointer to the physical field container
     QString *field;
+    //! If a part of field used, the offset
+    int start = -1;
+    //! If a part of field is used, the length
+    int length = -1;
 };
 
 class EpisodeBox_level
@@ -106,17 +112,17 @@ public:
 
 class Episode_music_ini
 {
-    QString fieldToFile(const QString &field);
-    void updateField(QString &field, const QString &newFile);
+    static QString fieldToFile(const MusicField &mus);
+    static void updateField(MusicField &field, const QString &newFile);
 
 public:
     QString fPath;
     QString dataPath;
+    bool m_wasOverwritten = false;
 
-    Episode_music_ini();
-
+    Episode_music_ini() = default;
     Episode_music_ini(const Episode_music_ini &w) = default;
-    ~Episode_music_ini();
+    ~Episode_music_ini() = default;
 
     Episode_music_ini &operator=(const Episode_music_ini &w) = default;
 
@@ -134,6 +140,7 @@ public:
 
 class EpisodeBox
 {
+    void addEntry(const QString &file);
 public:
     EpisodeBox();
     ~EpisodeBox();
@@ -146,6 +153,7 @@ public:
     void renameLevel(QString oldLvl, QString newLvl);
     long overwrittenLevels();
     long overwrittenWorlds();
+    long overwrittenMusicInis();
     int  totalElements();
 
     // Path to the episode
@@ -155,6 +163,8 @@ public:
     QList<EpisodeBox_level> d;
     //! Episode's world maps
     QList<EpisodeBox_world> dw;
+    //! Episode's music.ini files
+    QList<Episode_music_ini> mus_ini;
     //! List of all unique music files
     QSet<QString> m_musicFiles;
 };
