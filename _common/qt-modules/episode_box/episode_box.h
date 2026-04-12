@@ -58,6 +58,7 @@ public:
 
     void buildEntriesCache();
     QList<MusicField> music_entries;
+    QList<MusicField> sound_entries;
     QList<MusicField> level_entries;
 
     EpisodeBox_level() = default;
@@ -71,6 +72,7 @@ public:
     bool renameFile(const QString &oldFile, const QString &newFile);
     bool renameMusic(const QString &oldMus, const QString &newMus, bool isBulk = false);
     bool renameLevel(const QString &oldLvl, const QString &newLvl, bool isBulk = false);
+    bool renameSFX(const QString &oldSFX, const QString &newSFX, bool isBulk = false);
     void save();
 };
 
@@ -115,6 +117,7 @@ class Episode_music_ini
     static QString fieldToFile(const MusicField &mus);
     static void updateField(MusicField &field, const QString &newFile);
 
+    bool m_isSoundsIni = false;
 public:
     QString fPath;
     QString dataPath;
@@ -131,7 +134,7 @@ public:
     void buildEntriesCache();
     QList<MusicField> music_entries;
 
-    bool open(const QString &filePath);
+    bool open(const QString &filePath, bool isSoundsIni);
     QString findFileAliasCaseInsensitive(const QString &file);
     bool renameMusic(const QString &oldMus, const QString &newMus, bool isBulk = false);
     void save();
@@ -150,10 +153,12 @@ public:
     QString findFileAliasCaseInsensitive(QString file);
     void renameFile(QString oldFile, QString newFile);
     void renameMusic(QString oldMus, QString newMus);
+    void renameSFX(QString oldSFX, QString newSFX);
     void renameLevel(QString oldLvl, QString newLvl);
     long overwrittenLevels();
     long overwrittenWorlds();
     long overwrittenMusicInis();
+    long overwrittenSoundInis();
     int  totalElements();
 
     // Path to the episode
@@ -165,8 +170,12 @@ public:
     QList<EpisodeBox_world> dw;
     //! Episode's music.ini files
     QList<Episode_music_ini> mus_ini;
+    //! Episode's sounds.ini files
+    QList<Episode_music_ini> snd_ini;
     //! List of all unique music files
     QSet<QString> m_musicFiles;
+    //! List of all unique SFX sound files
+    QSet<QString> m_soundFiles;
 };
 
 
