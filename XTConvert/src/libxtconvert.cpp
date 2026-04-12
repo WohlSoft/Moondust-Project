@@ -722,12 +722,14 @@ public:
                 FreeImage_SetTagType(tag, FIDT_BYTE);
 
                 FreeImage_SetTagKey(tag, "channels");
-                FreeImage_SetTagValue(tag, &(val = (qoi_is_trans) ? 4 : 3));
+                val = (qoi_is_trans ? 4 : 3);
+                FreeImage_SetTagValue(tag, &val);
                 if(!FreeImage_SetMetadata(FIMD_COMMENTS, image, FreeImage_GetTagKey(tag), tag))
                     save_success = false;
 
                 FreeImage_SetTagKey(tag, "colorspace");
-                FreeImage_SetTagValue(tag, &(val = (qoi_is_1x) ? 1 : 0));
+                val = (qoi_is_1x ? 1 : 0);
+                FreeImage_SetTagValue(tag, &val);
                 if(!FreeImage_SetMetadata(FIMD_COMMENTS, image, FreeImage_GetTagKey(tag), tag))
                     save_success = false;
 

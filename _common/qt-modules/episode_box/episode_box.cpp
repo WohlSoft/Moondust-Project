@@ -89,6 +89,42 @@ void EpisodeBox_level::buildEntriesCache()
             lvl.field = &lvlFile;
             level_entries.push_back(lvl);
         }
+
+        // Level-wide music overrides
+        for(int i = 0; i < d.music_overrides.size(); i++)
+        {
+            QString &musFile = d.music_overrides[i].fileName;
+
+            if(musFile.isEmpty())
+                continue;
+
+            musFile.replace('\\', '/');
+            musFile.replace("//", "/");
+            QString mFile = fullPath.absoluteFilePath(musFile);
+
+            MusicField mus;
+            mus.absolutePath = mFile;
+            mus.field = &musFile;
+            music_entries.push_back(mus);
+        }
+
+        // Level-wide sound overrides
+        for(int i = 0; i < d.sound_overrides.size(); i++)
+        {
+            QString &sndFile = d.sound_overrides[i].fileName;
+
+            if(sndFile.isEmpty())
+                continue;
+
+            sndFile.replace('\\', '/');
+            sndFile.replace("//", "/");
+            QString mFile = fullPath.absoluteFilePath(sndFile);
+
+            MusicField snd;
+            snd.absolutePath = mFile;
+            snd.field = &sndFile;
+            sound_entries.push_back(snd);
+        }
     }
 }
 
@@ -139,6 +175,12 @@ QString EpisodeBox_level::findFileAliasCaseInsensitive(const QString &file)
     {
         if(lvl.absolutePath.compare(file, Qt::CaseInsensitive) == 0)
             return *(lvl.field);
+    }
+
+    for(MusicField &snd : sound_entries)
+    {
+        if(snd.absolutePath.compare(file, Qt::CaseInsensitive) == 0)
+            return *(snd.field);
     }
 
     return QString();
@@ -225,6 +267,29 @@ bool EpisodeBox_level::renameLevel(const QString &oldLvl, const QString &newLvl,
         if(lvl.absolutePath.compare(oldLvl, Qt::CaseInsensitive) == 0)
         {
             *(lvl.field) = fullPath.relativeFilePath(newLvl);
+            modified = true;
+        }
+    }
+
+    if(!isBulk && modified)
+    {
+        save();
+        m_wasOverwritten = true;
+    }
+
+    return modified;
+}
+
+bool EpisodeBox_level::renameSFX(const QString &oldSFX, const QString &newSFX, bool isBulk)
+{
+    bool modified = false;
+    QDir fullPath(d.meta.path);
+
+    for(MusicField &mus : sound_entries)
+    {
+        if(mus.absolutePath.compare(oldSFX, Qt::CaseInsensitive) == 0)
+        {
+            *(mus.field) = fullPath.relativeFilePath(newSFX);
             modified = true;
         }
     }
@@ -455,7 +520,8 @@ bool EpisodeBox_world::renameLevel(const QString &oldLvl, const QString &newLvl,
 
 void EpisodeBox_world::save()
 {
-    if(!d.meta.ReadFileValid) return;
+    if(!d.meta.ReadFileValid)
+        return;
 
     if(ftype == F_WLD)
     {
@@ -496,9 +562,15 @@ void Episode_music_ini::buildEntriesCache()
     for(QString &line : file_lines)
     {
         if(line.startsWith('['))
-            is_music_group = line.startsWith("[world-music-", Qt::CaseInsensitive) ||
-                             line.startsWith("[level-music-", Qt::CaseInsensitive) ||
-                             line.startsWith("[special-music-", Qt::CaseInsensitive);
+        {
+            if(m_isSoundsIni)
+                is_music_group = line.compare("[sound-main]", Qt::CaseInsensitive) != 0 &&
+                                 line.startsWith("[sound-", Qt::CaseInsensitive);
+            else
+                is_music_group = line.startsWith("[world-music-", Qt::CaseInsensitive) ||
+                                 line.startsWith("[level-music-", Qt::CaseInsensitive) ||
+                                 line.startsWith("[special-music-", Qt::CaseInsensitive);
+        }
 
         if(is_music_group && line.startsWith("file"))
         {
@@ -562,10 +634,11 @@ void Episode_music_ini::buildEntriesCache()
     }
 }
 
-bool Episode_music_ini::open(const QString &filePath)
+bool Episode_music_ini::open(const QString &filePath, bool isSoundsIni)
 {
     QFile in(filePath);
     QFileInfo info(filePath);
+    QString line;
 
     if(!in.open(QIODevice::ReadOnly|QIODevice::Text))
         return false;
@@ -579,7 +652,6 @@ bool Episode_music_ini::open(const QString &filePath)
 
     music_entries.clear();
     file_lines.clear();
-    QString line;
 
     while(!tIn.atEnd())
     {
@@ -591,6 +663,7 @@ bool Episode_music_ini::open(const QString &filePath)
 
     fPath = filePath;
     dataPath = info.absoluteDir().absolutePath();
+    m_isSoundsIni = isSoundsIni;
 
     return true;
 }
@@ -635,7 +708,7 @@ void Episode_music_ini::save()
 {
     QFile out(fPath);
 
-    if(out.open(QIODevice::WriteOnly|QIODevice::Text))
+    if(out.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QTextStream tOut(&out);
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
@@ -684,13 +757,25 @@ void EpisodeBox::addEntry(const QString &file)
     else if(file.compare("music.ini", Qt::CaseInsensitive) == 0 || file.endsWith("/music.ini", Qt::CaseInsensitive))
     {
         Episode_music_ini mus;
-        if(mus.open(epPath + "/" + file)) //Push only valid files!!!
+        if(mus.open(epPath + "/" + file, false)) //Push only valid files!!!
         {
             mus_ini.push_back(std::move(mus));
             Episode_music_ini &ww = mus_ini.last();
             ww.buildEntriesCache();
             foreach(const MusicField &mus, ww.music_entries)
                 m_musicFiles.insert(mus.absolutePath);
+        }
+    }
+    else if(file.compare("sounds.ini", Qt::CaseInsensitive) == 0 || file.endsWith("/sounds.ini", Qt::CaseInsensitive))
+    {
+        Episode_music_ini mus;
+        if(mus.open(epPath + "/" + file, true)) //Push only valid files!!!
+        {
+            snd_ini.push_back(std::move(mus));
+            Episode_music_ini &ww = snd_ini.last();
+            ww.buildEntriesCache();
+            foreach(const MusicField &mus, ww.music_entries)
+                m_soundFiles.insert(mus.absolutePath);
         }
     }
 }
@@ -701,12 +786,12 @@ EpisodeBox::~EpisodeBox() {}
 
 void EpisodeBox::openEpisode(QString dirPath, bool recursive)
 {
+    QStringList filters;
+    QDir dr(dirPath);
+
     d.clear();
     dw.clear();
     epPath = dirPath;
-    QDir dr(dirPath);
-    dr.setPath(dirPath);
-    QStringList filters;
 
     //Files which are supports custom musics
     filters << "*.lvl";
@@ -714,6 +799,9 @@ void EpisodeBox::openEpisode(QString dirPath, bool recursive)
     filters << "*.wld";
     filters << "*.wldx";
     filters << "music.ini";
+    filters << "sounds.ini";
+
+    dr.setPath(dirPath);
     dr.setSorting(QDir::NoSort);
     dr.setNameFilters(filters);
 
@@ -732,6 +820,7 @@ void EpisodeBox::openEpisode(QString dirPath, bool recursive)
     else
     {
         QStringList dirList = dr.entryList(filters, QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDir::NoSort);
+
         foreach(const QString &file, dirList)
             addEntry(file);
     }
@@ -740,22 +829,26 @@ void EpisodeBox::openEpisode(QString dirPath, bool recursive)
 long EpisodeBox::overwrittenLevels()
 {
     long count = 0;
+
     for(int i = 0; i < d.size(); i++)
     {
         if(d[i].m_wasOverwritten)
             count++;
     }
+
     return count;
 }
 
 long EpisodeBox::overwrittenWorlds()
 {
     long count = 0;
+
     for(int i = 0; i < dw.size(); i++)
     {
         if(dw[i].m_wasOverwritten)
             count++;
     }
+
     return count;
 }
 
@@ -766,6 +859,19 @@ long EpisodeBox::overwrittenMusicInis()
     for(int i = 0; i < mus_ini.size(); i++)
     {
         if(mus_ini[i].m_wasOverwritten)
+            count++;
+    }
+
+    return count;
+}
+
+long EpisodeBox::overwrittenSoundInis()
+{
+    long count = 0;
+
+    for(int i = 0; i < snd_ini.size(); i++)
+    {
+        if(snd_ini[i].m_wasOverwritten)
             count++;
     }
 
@@ -792,6 +898,7 @@ QString EpisodeBox::findFileAliasCaseInsensitive(QString file)
         if(!f.isEmpty())
             return f;
     }
+
     return QString();
 }
 
@@ -814,6 +921,15 @@ void EpisodeBox::renameMusic(QString oldMus, QString newMus)
 
     for(int i = 0; i < mus_ini.size(); i++)
         mus_ini[i].renameMusic(oldMus, newMus);
+}
+
+void EpisodeBox::renameSFX(QString oldSFX, QString newSFX)
+{
+    for(int i = 0; i < d.size(); i++)
+        d[i].renameSFX(oldSFX, newSFX);
+
+    for(int i = 0; i < mus_ini.size(); i++)
+        snd_ini[i].renameMusic(oldSFX, newSFX);
 }
 
 void EpisodeBox::renameLevel(QString oldLvl, QString newLvl)
