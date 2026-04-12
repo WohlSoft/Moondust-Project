@@ -738,8 +738,12 @@ void EpisodeBox::addEntry(const QString &file)
             d.push_back(std::move(l));
             EpisodeBox_level &ll = d.last();
             ll.buildEntriesCache();
+
             foreach(const MusicField &mus, ll.music_entries)
                 m_musicFiles.insert(mus.absolutePath);
+
+            foreach(const MusicField &mus, ll.sound_entries)
+                m_soundFiles.insert(mus.absolutePath);
         }
     }
     else if(file.endsWith(".wld", Qt::CaseInsensitive) || file.endsWith(".wldx", Qt::CaseInsensitive))
@@ -789,8 +793,7 @@ void EpisodeBox::openEpisode(QString dirPath, bool recursive)
     QStringList filters;
     QDir dr(dirPath);
 
-    d.clear();
-    dw.clear();
+    clear();
     epPath = dirPath;
 
     //Files which are supports custom musics
@@ -824,6 +827,17 @@ void EpisodeBox::openEpisode(QString dirPath, bool recursive)
         foreach(const QString &file, dirList)
             addEntry(file);
     }
+}
+
+void EpisodeBox::clear()
+{
+    epPath.clear();
+    d.clear();
+    dw.clear();
+    mus_ini.clear();
+    snd_ini.clear();
+    m_musicFiles.clear();
+    m_soundFiles.clear();
 }
 
 long EpisodeBox::overwrittenLevels()
