@@ -149,6 +149,7 @@ public:
     ~EpisodeBox();
 
     void openEpisode(QString dirPath, bool recursive);
+    void clear();
 
     QString findFileAliasCaseInsensitive(QString file);
     void renameFile(QString oldFile, QString newFile);
