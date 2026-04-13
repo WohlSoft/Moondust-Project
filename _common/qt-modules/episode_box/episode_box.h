@@ -38,7 +38,34 @@ struct MusicField
     int length = -1;
 };
 
-class EpisodeBox_level
+class EpisodeBox_Base
+{
+public:
+    EpisodeBox_Base() = default;
+    virtual ~EpisodeBox_Base() = default;
+
+    QString fPath;
+    QString fPathOrig;
+    QString dataPath;
+    bool m_wasOverwritten = false;
+
+    void setSavePath(const QString &oldRootPath, const QString &newDirPath);
+
+    virtual QString findFileAliasCaseInsensitive(const QString &file);
+
+    bool renameFile(const QString &oldFile, const QString &newFile);
+
+    virtual bool renameMusic(const QString &oldMus, const QString &newMus, bool isBulk = false);
+    virtual bool renameLevel(const QString &oldLvl, const QString &newLvl, bool isBulk = false);
+    virtual bool renameSFX(const QString &oldSFX, const QString &newSFX, bool isBulk = false);
+
+    virtual void save();
+
+protected:
+    void makeSaveDir();
+};
+
+class EpisodeBox_level : public EpisodeBox_Base
 {
 public:
     enum fType
@@ -52,9 +79,6 @@ public:
     fType ftype = F_NONE;
     int   ftypeVer = 0;
     LevelData d;
-    QString fPath;
-    QString dataPath;
-    bool m_wasOverwritten = false;
 
     void buildEntriesCache();
     QList<MusicField> music_entries;
@@ -68,15 +92,16 @@ public:
     EpisodeBox_level &operator=(const EpisodeBox_level &e) = default;
 
     bool open(const QString &filePath);
-    QString findFileAliasCaseInsensitive(const QString &file);
-    bool renameFile(const QString &oldFile, const QString &newFile);
-    bool renameMusic(const QString &oldMus, const QString &newMus, bool isBulk = false);
-    bool renameLevel(const QString &oldLvl, const QString &newLvl, bool isBulk = false);
-    bool renameSFX(const QString &oldSFX, const QString &newSFX, bool isBulk = false);
-    void save();
+
+    QString findFileAliasCaseInsensitive(const QString &file) override;
+
+    bool renameMusic(const QString &oldMus, const QString &newMus, bool isBulk = false) override;
+    bool renameLevel(const QString &oldLvl, const QString &newLvl, bool isBulk = false) override;
+    bool renameSFX(const QString &oldSFX, const QString &newSFX, bool isBulk = false) override;
+    void save() override;
 };
 
-class EpisodeBox_world
+class EpisodeBox_world : public EpisodeBox_Base
 {
 public:
     enum fType
@@ -90,9 +115,6 @@ public:
     fType ftype = F_NONE;
     int   ftypeVer = 0;
     WorldData d;
-    QString fPath;
-    QString dataPath;
-    bool m_wasOverwritten = false;
 
     void buildEntriesCache();
     QList<MusicField> music_entries;
@@ -105,24 +127,22 @@ public:
     EpisodeBox_world &operator=(const EpisodeBox_world &w) = default;
 
     bool open(const QString &filePath);
-    QString findFileAliasCaseInsensitive(QString file);
-    bool renameFile(const QString &oldFile, const QString &newFile);
-    bool renameMusic(const QString &oldMus, const QString &newMus, bool isBulk = false);
-    bool renameLevel(const QString &oldLvl, const QString &newLvl, bool isBulk = false);
-    void save();
+
+    QString findFileAliasCaseInsensitive(const QString &file) override;
+
+    bool renameMusic(const QString &oldMus, const QString &newMus, bool isBulk = false) override;
+    bool renameLevel(const QString &oldLvl, const QString &newLvl, bool isBulk = false) override;
+    void save() override;
 };
 
-class Episode_music_ini
+class Episode_music_ini : public EpisodeBox_Base
 {
     static QString fieldToFile(const MusicField &mus);
     static void updateField(MusicField &field, const QString &newFile);
 
     bool m_isSoundsIni = false;
+    QString m_contentPath;
 public:
-    QString fPath;
-    QString dataPath;
-    bool m_wasOverwritten = false;
-
     Episode_music_ini() = default;
     Episode_music_ini(const Episode_music_ini &w) = default;
     ~Episode_music_ini() = default;
@@ -134,10 +154,12 @@ public:
     void buildEntriesCache();
     QList<MusicField> music_entries;
 
-    bool open(const QString &filePath, bool isSoundsIni);
-    QString findFileAliasCaseInsensitive(const QString &file);
-    bool renameMusic(const QString &oldMus, const QString &newMus, bool isBulk = false);
-    void save();
+    bool open(const QString &filePath, bool isSoundsIni, const QString &contentPath = QString());
+
+    QString findFileAliasCaseInsensitive(const QString &file) override;
+
+    bool renameMusic(const QString &oldMus, const QString &newMus, bool isBulk = false) override;
+    void save() override;
 };
 
 
@@ -148,8 +170,10 @@ public:
     EpisodeBox();
     ~EpisodeBox();
 
-    void openEpisode(QString dirPath, bool recursive);
+    bool openEpisode(const QString &dirPath, bool recursive);
     void clear();
+
+    void setSavePath(const QString &newDirPath);
 
     QString findFileAliasCaseInsensitive(QString file);
     void renameFile(QString oldFile, QString newFile);
@@ -162,8 +186,11 @@ public:
     long overwrittenSoundInis();
     int  totalElements();
 
+    QStringList getOverridenFiles(bool origPaths = false);
+
     // Path to the episode
     QString epPath;
+    QString epPathOrig;
 
     //! Episode's level files
     QList<EpisodeBox_level> d;

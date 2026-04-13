@@ -40,6 +40,8 @@
 #include <audio_format.h>
 #include <PGE_File_Formats/file_formats.h>
 
+#include <pge_qt_compat.h>
+
 #include <json.hpp>
 
 #include "archive.h"
@@ -243,6 +245,9 @@ class Converter
     QDir m_input_dir;
     QDir m_assets_dir;
 
+    // A cache of processed files to don't process them twice at the final stage
+    QSet<QString> m_consumedFiles;
+
     QTemporaryDir m_temp_dir_owner;
     QDir m_temp_dir;
 
@@ -257,6 +262,8 @@ class Converter
 
     // All the levels and world maps of the episode gets loaded together to apply various manipulations to all files together
     EpisodeBox m_episodeData;
+    Episode_music_ini m_rootSoundIni;
+    Episode_music_ini m_rootMusicIni;
 
     void sync_cur_dir(const QString& in_file)
     {
@@ -1343,9 +1350,9 @@ public:
         return true;
     }
 
-    bool convert_music_xqoa(const QString&, const QString& in_path, const QString& out_path)
+    bool convert_music_xqoa(const QString&, const QString& in_path, const QString& out_path, const QString &musicArgs = QString())
     {
-        if(!m_audioCvt.openInFile(in_path.toStdString()))
+        if(!m_audioCvt.openInFile(in_path.toStdString(), musicArgs.toStdString()))
         {
             log_file(LogCategory::SkippedInvalid, in_path);
             m_audioCvt.close();
@@ -1532,76 +1539,76 @@ public:
         return false;
     }
 
+    // PCM-based streams
+    const QStringList non_tracker_music =
+    {
+        // MPEG 1 Layer III
+        ".mp3",
+        // OGG Vorbis, FLAC, and Opus
+        ".ogg", ".flac", ".opus",
+        // Uncompressed audio data
+        ".aiff",
+        // SPC700 music file
+        ".spc",
+        // Windows Media Audio
+        ".wma"
+    };
+
+    // Music streams that might require relatively powerful CPU, otherwise they will be played choppy on too old hardware
+    const QStringList synthesized_music =
+    {
+        // MIDI
+        ".mid", ".midi", ".rmi", ".mus", ".kar", ".xmi", ".cmf",
+        // Id Music File (OPL2 raw) / Imago Orpheus (Tracker music)
+        ".imf", ".wlf",
+        // GAME EMU (Chiptunes), SPC is skipped as it gets converted into tracker format
+        /*".spc", */".ay", ".gbs", ".gym", ".hes", ".kss", ".nsf",
+        ".nsfe", ".sap", ".vgm", ".vgz",
+        // PXTONE
+        ".pttune", ".ptcop",
+    };
+
+    const QStringList tracker_music =
+    {
+        ".mod", ".it", ".s3m", ".669", ".med", ".xm", ".amf",
+        ".apun", ".dsm", ".far", ".gdm", ".mtm", ".psm",
+        ".okt", ".stm", ".stx", ".ult", ".uni", ".mptm"
+    };
+
+    const QStringList junk_files_tails =
+    {
+        // OS junk
+        ".db", ".db:encryptable", ".tmp", ".bak", "~",
+        // Moondust Tilesets
+        ".tileset.ini", ".tsgrp.ini",
+        // Game saves
+        ".sav", ".savx", ".dat",
+        // Unsupported images
+        ".jpg", ".jpeg", ".bmp", ".tga", ".pcx",
+        // Special graphics formats
+        ".xcf", ".psd", ".pdn", ".ai", ".psg", ".ps", ".kra",
+        // Executables
+        ".dll", ".exe",
+        // Archives
+        ".rar", ".zip", ".7z", ".tar", ".gz", ".bz2", ".xz", ".lzma",
+        // TheXTech packages
+        ".xte", ".xta",
+        // Documents
+        ".odt", ".ods", ".pdf", ".md", ".rtf", ".doc", ".docx", ".xls", ".xlsx",
+        // Scripts (except lua)
+        ".sh", ".bat", ".cmd", ".py", ".pl", ".php", ".rb",
+        // Other
+        ".pal", "tst"
+    };
+
+    const QStringList junk_files_match =
+    {
+        ".ds_store", "desktop.ini", "progress.json", "nomariochallenge",
+    };
+
     bool convert_file(const QString& filename, const QString& in_path, const QString& out_path, const QString& rel_path)
     {
         sync_cur_dir(in_path);
-
-        // PCM-based streams
-        const QStringList non_tracker_music =
-        {
-            // MPEG 1 Layer III
-            ".mp3",
-            // OGG Vorbis, FLAC, and Opus
-            ".ogg", ".flac", ".opus",
-            // Uncompressed audio data
-            ".aiff",
-            // SPC700 music file
-            ".spc",
-            // Windows Media Audio
-            ".wma"
-        };
-
-        // Music streams that might require relatively powerful CPU, otherwise they will be played choppy on too old hardware
-        const QStringList synthesized_music =
-        {
-            // MIDI
-            ".mid", ".midi", ".rmi", ".mus", ".kar", ".xmi", ".cmf",
-            // Id Music File (OPL2 raw) / Imago Orpheus (Tracker music)
-            ".imf", ".wlf",
-            // GAME EMU (Chiptunes), SPC is skipped as it gets converted into tracker format
-            /*".spc", */".ay", ".gbs", ".gym", ".hes", ".kss", ".nsf",
-            ".nsfe", ".sap", ".vgm", ".vgz",
-            // PXTONE
-            ".pttune", ".ptcop",
-        };
-
-        const QStringList tracker_music =
-        {
-            ".mod", ".it", ".s3m", ".669", ".med", ".xm", ".amf",
-            ".apun", ".dsm", ".far", ".gdm", ".mtm", ".psm",
-            ".okt", ".stm", ".stx", ".ult", ".uni", ".mptm"
-        };
-
-        const QStringList junk_files_tails =
-        {
-            // OS junk
-            ".db", ".db:encryptable", ".tmp", ".bak", "~",
-            // Moondust Tilesets
-            ".tileset.ini", ".tsgrp.ini",
-            // Game saves
-            ".sav", ".savx", ".dat",
-            // Unsupported images
-            ".jpg", ".jpeg", ".bmp", ".tga", ".pcx",
-            // Special graphics formats
-            ".xcf", ".psd", ".pdn", ".ai", ".psg", ".ps", ".kra",
-            // Executables
-            ".dll", ".exe",
-            // Archives
-            ".rar", ".zip", ".7z", ".tar", ".gz", ".bz2", ".xz", ".lzma",
-            // TheXTech packages
-            ".xte", ".xta",
-            // Documents
-            ".odt", ".ods", ".pdf", ".md", ".rtf", ".doc", ".docx", ".xls", ".xlsx",
-            // Scripts (except lua)
-            ".sh", ".bat", ".cmd", ".py", ".pl", ".php", ".rb",
-            // Other
-            ".pal", "tst"
-        };
-
-        const QStringList junk_files_match =
-        {
-            ".ds_store", "desktop.ini", "progress.json", "nomariochallenge",
-        };
 
         bool is_synthesized_music = fEndsWith(synthesized_music, filename);
         bool is_non_tracker_music = fEndsWith(non_tracker_music, filename) || is_synthesized_music;
@@ -1699,6 +1706,148 @@ public:
         }
     }
 
+    static QString stripMusArgs(const QString &path, QString *args = nullptr)
+    {
+        if(args)
+            args->clear();
+
+        if(path.lastIndexOf('|') >= 0)
+        {
+            if(args)
+                *args = path.mid(path.lastIndexOf('|') + 1, -1);
+
+            return path.mid(0, path.lastIndexOf('|'));
+        }
+
+        return path;
+    }
+
+    static void processPathArguments(const QString &root, const QString &data, const QString &cpMusic, QString &outArgs)
+    {
+        if(outArgs.isEmpty())
+            return;
+        // Replace macros with the absoulte paths:
+        outArgs.replace("{e}", root + "/"); // Episode root
+        outArgs.replace("{d}", root + "/" + data); // Level/World data directory
+        outArgs.replace("{r}", cpMusic + "/"); // Config pack music root
+    }
+
+    static QString getArgsInject(const QString &args)
+    {
+        QString argsInject = args;
+
+        if(!argsInject.isEmpty())
+        {
+            argsInject.replace(':', '-');
+            argsInject.replace('.', '_');
+            argsInject.replace(';', '-');
+            argsInject.replace('/', '-');
+            argsInject.replace('\\', '-');
+
+            if(argsInject.size() > 20)
+                argsInject.remove(20, -1);
+
+            argsInject.append(".");
+        }
+
+        return argsInject;
+    }
+
+    bool processSingleMusic(const QDir &episodeRoot, const QDir &episodeRootNew,
+                            size_t &files_done, size_t file_count,
+                            const QString &origMusicPath, QString &newRenamePath, QString &consumedFile)
+    {
+        QString args, argsOrig;
+        QString musFile = stripMusArgs(origMusicPath, &argsOrig);
+        QFileInfo musInfo(musFile);
+        QString fileName = musInfo.fileName().toLower();
+        QString rel_path = episodeRoot.relativeFilePath(musFile);
+        QString temp_path = episodeRootNew.filePath(rel_path);
+        newRenamePath = musFile;
+
+        if(!episodeRootNew.exists())
+            episodeRootNew.mkpath(".");
+
+        args = argsOrig;
+
+        processPathArguments(m_episodeData.epPathOrig, QString(), QString(), args);
+
+        // sync_cur_dir(musFile);
+
+        bool succ = false;
+
+        bool is_synthesized_music = fEndsWith(synthesized_music, fileName);
+        bool is_non_tracker_music = fEndsWith(non_tracker_music, fileName) || is_synthesized_music;
+        bool is_tracker_music = fEndsWith(tracker_music, fileName);
+
+        if(progress(STAGE_CONVERT, files_done, file_count, musFile) < 0)
+        {
+            m_error = "Conversion canceled by user";
+            return false;
+        }
+
+        QString argsInject = getArgsInject(argsOrig);
+
+        if(m_spec.target_platform == TargetPlatform::DSG && (fileName.endsWith(".wav") || is_non_tracker_music || is_tracker_music))
+        {
+            temp_path.replace(Q_QRegExp("([^.]+)$"), argsInject + "xqoa");
+            newRenamePath.replace(Q_QRegExp("([^.]+)$"), argsInject + "xqoa");
+            succ = convert_music_xqoa(fileName, musFile, temp_path, args);
+            consumedFile = musFile;
+        }
+        else if(m_spec.target_platform == TargetPlatform::T3X && is_synthesized_music)
+        {
+            newRenamePath.replace(Q_QRegExp("([^.]+)$"), argsInject + "xqoa");
+            temp_path.replace(Q_QRegExp("([^.]+)$"), argsInject + "xqoa");
+            succ = convert_music_xqoa(fileName, musFile, temp_path, args);
+            consumedFile = musFile;
+        }
+        else
+        {
+            newRenamePath.clear();
+            return true; // Nothing To Do
+        }
+
+        if(!succ)
+        {
+            m_error = "Failed to convert episode music";
+            return false;
+        }
+
+        return true;
+    }
+
+    bool processEpisodeData(size_t &files_done, size_t file_count)
+    {
+        QDir episodeRoot(m_episodeData.epPathOrig);
+        QDir episodeRootNew(m_episodeData.epPath);
+
+        foreach(const QString &musFileStr, m_episodeData.m_musicFiles)
+        {
+            QString newRenamePath, consumedPath;
+
+            if(!processSingleMusic(episodeRoot, episodeRootNew, files_done, file_count, musFileStr, newRenamePath, consumedPath))
+                return false;
+
+            if(newRenamePath.isEmpty())
+                continue;
+
+            ++files_done;
+            m_episodeData.renameMusic(musFileStr, newRenamePath);
+            m_consumedFiles.insert(consumedPath);
+        }
+
+        auto overridenFiles = m_episodeData.getOverridenFiles(true);
+
+        foreach(const QString &file, overridenFiles)
+        {
+            m_consumedFiles.insert(file);
+            ++files_done;
+        }
+
+        return true;
+    }
+
     bool build_temp_dir()
     {
         m_input_dir.makeAbsolute();
@@ -1766,23 +1915,111 @@ public:
         // check count of files
         size_t file_count = 0;
         QDirIterator count_it(m_input_dir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
+
+        // List of consumed files to avoid them from the global queues
+        m_consumedFiles.clear();
+
         while(count_it.hasNext())
         {
             file_count++;
             count_it.next();
         }
 
+        if(m_spec.package_type == PackageType::Episode)
+            m_episodeData.openEpisode(m_input_dir.absolutePath(), true);
+
         // iterate over all directories
         size_t files_done = 0;
+
+        // First convert files from the listed stuff
+        if(m_spec.package_type == PackageType::AssetPack)
+        {
+            if(m_spec.target_platform != TargetPlatform::DSG)
+            {
+                if(m_rootMusicIni.open(m_input_dir.filePath("music.ini"), false, m_input_dir.filePath("music")))
+                {
+                    m_rootMusicIni.setSavePath(m_input_dir.absolutePath(), m_temp_dir.absolutePath());
+                    QDir origPath = QFileInfo(m_rootMusicIni.fPathOrig).absoluteDir();
+                    QDir savePath = QFileInfo(m_rootMusicIni.fPath).absoluteDir();
+
+                    for(auto it = m_rootMusicIni.music_entries.begin(); it != m_rootMusicIni.music_entries.end(); ++it)
+                    {
+                        auto &mus = *it;
+                        QString newRenamePath, consumedPath;
+
+                        if(!processSingleMusic(origPath, savePath, files_done, file_count, mus.absolutePath, newRenamePath, consumedPath))
+                            return false;
+
+                        if(newRenamePath.isEmpty())
+                            continue;
+
+                        ++files_done;
+                        m_rootMusicIni.renameMusic(mus.absolutePath, newRenamePath);
+                        m_consumedFiles.insert(consumedPath);
+                    }
+                }
+
+                if(m_rootSoundIni.open(m_input_dir.filePath("sounds.ini"), true, m_input_dir.filePath("sound")))
+                {
+                    m_rootSoundIni.setSavePath(m_input_dir.absolutePath(), m_temp_dir.absolutePath());
+                    QDir origPath = QFileInfo(m_rootMusicIni.fPathOrig).absoluteDir();
+                    QDir savePath = QFileInfo(m_rootMusicIni.fPath).absoluteDir();
+
+                    for(auto it = m_rootSoundIni.music_entries.begin(); it != m_rootSoundIni.music_entries.end(); ++it)
+                    {
+                        auto &mus = *it;
+                        QString newRenamePath, consumedPath;
+
+                        if(!processSingleMusic(origPath, savePath, files_done, file_count, mus.absolutePath, newRenamePath, consumedPath))
+                            return false;
+
+                        if(newRenamePath.isEmpty())
+                            continue;
+
+                        ++files_done;
+                        m_rootSoundIni.renameMusic(mus.absolutePath, newRenamePath);
+                        m_consumedFiles.insert(consumedPath);
+                    }
+                }
+            }
+
+            QDir worlds(m_input_dir.filePath("worlds"));
+            auto episodes = worlds.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+
+            foreach(const QString &e, episodes)
+            {
+                // Count the episode's content
+                if(m_episodeData.openEpisode(worlds.filePath(e), true))
+                {
+                    m_episodeData.setSavePath(m_temp_dir.filePath("worlds/" + e));
+
+                    if(!processEpisodeData(files_done, file_count))
+                        return false;
+
+                    m_episodeData.clear();
+                }
+            }
+        }
+        else if(m_spec.package_type == PackageType::Episode)
+        {
+            m_episodeData.setSavePath(m_temp_dir.absolutePath());
+
+            if(!processEpisodeData(files_done, file_count))
+                return false;
+        }
+
         QDirIterator it(m_input_dir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
 
         while(it.hasNext())
         {
-            files_done++;
+            ++files_done;
 
             QString abs_path = it.next();
             QString rel_path = m_input_dir.relativeFilePath(abs_path);
             QString temp_path = m_temp_dir.filePath(rel_path);
+
+            if(m_consumedFiles.contains(abs_path))
+                continue; // Don't process the already proceeded file path
 
             if(m_spec.package_type == PackageType::AssetPack)
             {
@@ -1854,6 +2091,8 @@ public:
 
         if(m_spec.target_platform == TargetPlatform::DSG && m_spec.package_type == PackageType::AssetPack)
             post_process_success &= build_soundbank();
+
+        m_consumedFiles.clear();
 
         return post_process_success;
     }
@@ -2058,16 +2297,22 @@ public:
         for(auto& mus : music_filenames)
         {
             QString real_fn = mus.second;
-            QString mus_args = "";
+            QString mus_args, mus_args_orig;
+            QString argsInject;
 
             if(mus.second.contains('|'))
             {
                 real_fn = mus.second.section('|', 0, -2);
-                mus_args = mus.second.section('|', -1, -1);
+                mus_args_orig = mus_args = mus.second.section('|', -1, -1);
+                processPathArguments(QString(), QString(), m_input_dir.filePath("music/"), mus_args);
+                argsInject = getArgsInject(mus_args_orig);
             }
 
             QString use_fn_in = m_input_dir.filePath("music" + (QDir::separator() + real_fn));
             QString use_fn_out = m_temp_dir.filePath("music" + (QDir::separator() + real_fn));
+
+            if(!argsInject.isEmpty())
+                use_fn_out += argsInject;
 
             if(QFile::exists(use_fn_in + ".spc"))
             {
@@ -2098,9 +2343,8 @@ public:
                 success = QFile::copy(use_fn_in, use_fn_out);
             else
             {
-                // currently can't use mus_args
-                success = convert_music_xqoa(use_fn_in, use_fn_in, use_fn_out);
-                use_fn_out += ".qoa";
+                use_fn_out += ".xqoa";
+                success = convert_music_xqoa(use_fn_in, use_fn_in, use_fn_out, mus_args);
             }
 
             mus.second = use_fn_out;
