@@ -1294,7 +1294,32 @@ public:
 
     bool convert_sfx(const QString&, const QString& in_path, const QString& out_path)
     {
-        if(!m_audioCvt.openInFile(in_path.toStdString()))
+        MDAudioFileSpecWanted spec_wanted;
+
+        switch(m_spec.target_platform)
+        {
+        default:
+            spec_wanted.m_sample_rate = 44100;
+            break;
+
+        case TargetPlatform::T3X:
+            spec_wanted.m_sample_rate = 44100;
+            spec_wanted.m_channels = 2;
+            break;
+
+        case TargetPlatform::TPL:
+            spec_wanted.m_sample_format = AUDIO_S16MSB;
+            spec_wanted.m_sample_rate = 32000;
+            spec_wanted.m_channels = 2;
+            break;
+
+        case TargetPlatform::DSG:
+            spec_wanted.m_sample_rate = 16384;
+            spec_wanted.m_channels = 1;
+            break;
+        }
+
+        if(!m_audioCvt.openInFile(in_path.toStdString(), std::string(), nullptr, &spec_wanted))
         {
             log_file(LogCategory::SkippedInvalid, in_path);
             m_audioCvt.close();
@@ -1353,7 +1378,32 @@ public:
 
     bool convert_music_xqoa(const QString&, const QString& in_path, const QString& out_path, const QString &musicArgs = QString())
     {
-        if(!m_audioCvt.openInFile(in_path.toStdString(), musicArgs.toStdString()))
+        MDAudioFileSpecWanted spec_wanted;
+
+        switch(m_spec.target_platform)
+        {
+        default:
+            spec_wanted.m_sample_rate = 44100;
+            break;
+
+        case TargetPlatform::T3X:
+            spec_wanted.m_sample_rate = 44100;
+            spec_wanted.m_channels = 2;
+            break;
+
+        case TargetPlatform::TPL:
+            spec_wanted.m_sample_format = AUDIO_S16MSB;
+            spec_wanted.m_sample_rate = 32000;
+            spec_wanted.m_channels = 2;
+            break;
+
+        case TargetPlatform::DSG:
+            spec_wanted.m_sample_rate = 16384;
+            spec_wanted.m_channels = 1;
+            break;
+        }
+
+        if(!m_audioCvt.openInFile(in_path.toStdString(), musicArgs.toStdString(), nullptr, &spec_wanted))
         {
             log_file(LogCategory::SkippedInvalid, in_path);
             m_audioCvt.close();
