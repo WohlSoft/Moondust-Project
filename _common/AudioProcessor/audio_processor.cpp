@@ -114,7 +114,7 @@ const MDAudioFileSpec &MoondustAudioProcessor::getOutSpec() const
     return m_out_file->getSpec();
 }
 
-bool MoondustAudioProcessor::openInFile(const std::string &file, const std::string &argsString, int *detectedFormat)
+bool MoondustAudioProcessor::openInFile(const std::string &file, const std::string &argsString, int *detectedFormat, const MDAudioFileSpecWanted *spec_wanted)
 {
     AudioFormats format = FORMAT_UNKNOWN;
     MusicArgs args(argsString);
@@ -259,6 +259,9 @@ bool MoondustAudioProcessor::openInFile(const std::string &file, const std::stri
         m_rw_in = nullptr;
         return false;
     }
+
+    if(spec_wanted)
+        m_in_file->setWantedSpec(*spec_wanted);
 
     m_in_file->setArgs(args);
 
