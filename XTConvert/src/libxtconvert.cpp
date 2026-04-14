@@ -30,6 +30,7 @@
 #include <QDirIterator>
 #include <QDateTime>
 #include <QSettings>
+#include <QCryptographicHash>
 
 #include <fcntl.h>
 
@@ -1732,25 +1733,22 @@ public:
         outArgs.replace("{r}", cpMusic + "/"); // Config pack music root
     }
 
-    static QString getArgsInject(const QString &args)
+    static QString getArgsInject(const QString &fileSuffix, const QString &args)
     {
-        QString argsInject = args;
+        if(args.isEmpty())
+            return "-" + fileSuffix;
+        else
+            return "-" + fileSuffix + "-" + QCryptographicHash::hash(args.toUtf8(), QCryptographicHash::Sha1).toHex().left(10);
+    }
 
-        if(!argsInject.isEmpty())
-        {
-            argsInject.replace(':', '-');
-            argsInject.replace('.', '_');
-            argsInject.replace(';', '-');
-            argsInject.replace('/', '-');
-            argsInject.replace('\\', '-');
+    static void replaceSuffix(QString &ioString, const QString &newSuffix)
+    {
+        int dotPos = ioString.lastIndexOf('.');
 
-            if(argsInject.size() > 20)
-                argsInject.remove(20, -1);
-
-            argsInject.append(".");
-        }
-
-        return argsInject;
+        if(dotPos > 0)
+            ioString.replace(dotPos, ioString.size() - dotPos, newSuffix);
+        else
+            ioString.append(newSuffix);
     }
 
     bool processSingleMusic(const QDir &episodeRoot, const QDir &episodeRootNew,
@@ -1786,19 +1784,19 @@ public:
             return false;
         }
 
-        QString argsInject = getArgsInject(argsOrig);
+        QString argsInject = getArgsInject(musInfo.suffix(), argsOrig);
 
         if(m_spec.target_platform == TargetPlatform::DSG && (fileName.endsWith(".wav") || is_non_tracker_music || is_tracker_music))
         {
-            temp_path.replace(Q_QRegExp("([^.]+)$"), argsInject + "xqoa");
-            newRenamePath.replace(Q_QRegExp("([^.]+)$"), argsInject + "xqoa");
+            replaceSuffix(temp_path, argsInject + ".xqoa");
+            replaceSuffix(newRenamePath, argsInject + ".xqoa");
             succ = convert_music_xqoa(fileName, musFile, temp_path, args);
             consumedFile = musFile;
         }
         else if(m_spec.target_platform == TargetPlatform::T3X && is_synthesized_music)
         {
-            newRenamePath.replace(Q_QRegExp("([^.]+)$"), argsInject + "xqoa");
-            temp_path.replace(Q_QRegExp("([^.]+)$"), argsInject + "xqoa");
+            replaceSuffix(temp_path, argsInject + ".xqoa");
+            replaceSuffix(newRenamePath, argsInject + ".xqoa");
             succ = convert_music_xqoa(fileName, musFile, temp_path, args);
             consumedFile = musFile;
         }
@@ -1834,7 +1832,9 @@ public:
 
             ++files_done;
             m_episodeData.renameMusic(musFileStr, newRenamePath);
-            m_consumedFiles.insert(consumedPath);
+
+            if(!m_consumedFiles.contains(consumedPath))
+                m_consumedFiles.insert(consumedPath);
         }
 
         auto overridenFiles = m_episodeData.getOverridenFiles(true);
@@ -2303,9 +2303,10 @@ public:
             if(mus.second.contains('|'))
             {
                 real_fn = mus.second.section('|', 0, -2);
+                QFileInfo fileInfo(real_fn);
                 mus_args_orig = mus_args = mus.second.section('|', -1, -1);
                 processPathArguments(QString(), QString(), m_input_dir.filePath("music/"), mus_args);
-                argsInject = getArgsInject(mus_args_orig);
+                argsInject = getArgsInject(fileInfo.suffix(), mus_args_orig);
             }
 
             QString use_fn_in = m_input_dir.filePath("music" + (QDir::separator() + real_fn));
