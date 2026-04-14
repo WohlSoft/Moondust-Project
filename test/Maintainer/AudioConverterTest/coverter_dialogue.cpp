@@ -158,6 +158,7 @@ void CoverterDialogue::on_runCvt_clicked()
 
     QString inPath = ui->fileIn->text();
     QString inPathArgs;
+    MDAudioFileSpecWanted wanted;
     int argsBegin = inPath.indexOf('|');
 
     if(argsBegin >= 0)
@@ -166,7 +167,13 @@ void CoverterDialogue::on_runCvt_clicked()
         inPath.remove(argsBegin, inPath.size() - argsBegin);
     }
 
-    if(!m_cvt.openInFile(inPath.toStdString(), inPathArgs.toStdString()))
+    if(ui->channels->isChecked())
+        wanted.m_channels = ui->dstChannels->value();
+
+    if(ui->rate->isChecked())
+        wanted.m_sample_rate = ui->dstRate->value();
+
+    if(!m_cvt.openInFile(inPath.toStdString(), inPathArgs.toStdString(), nullptr, &wanted))
     {
         auto err = QString("Failed to open input file %1: %2").arg(inPath, QString::fromStdString(m_cvt.getLastError()));
         qWarning() << err;
