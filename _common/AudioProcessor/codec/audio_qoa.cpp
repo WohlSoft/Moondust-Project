@@ -261,6 +261,7 @@ bool MDAudioQOA::openRead(SDL_RWops *file)
         return false;
     }
 
+    SDL_memset(&info, 0, sizeof(qoa_desc));
     first_frame_pos = qoa_decode_header(header, QOA_MIN_FILESIZE, &info);
     if(!first_frame_pos)
     {
@@ -317,6 +318,7 @@ bool MDAudioQOA::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     m_spec.m_sample_format = AUDIO_S16SYS; // Can only work with the PCM16
     m_spec.updateFrameSize();
 
+    SDL_memset(&info, 0, sizeof(qoa_desc));
     info.channels = m_spec.m_channels;
     info.samplerate = m_spec.m_sample_rate;
     info.samples = m_spec.m_total_length;
@@ -456,6 +458,7 @@ bool MDAudioQOA::close()
         written_samples = 0;
         sample_data_pos = 0;
         sample_data_len = 0;
+        SDL_memset(&info, 0, sizeof(qoa_desc));
 
         m_file = nullptr;
     }
@@ -470,6 +473,7 @@ bool MDAudioQOA::close()
 
         m_decode_buffer.clear();
         m_sample_buffer.clear();
+        SDL_memset(&info, 0, sizeof(qoa_desc));
 
         SDL_RWseek(m_file, 0, SEEK_SET);
 
