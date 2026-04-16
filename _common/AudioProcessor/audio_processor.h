@@ -44,7 +44,14 @@ class MoondustAudioProcessor
     std::unique_ptr<MDAudioFile> m_out_file;
 
     SDL_AudioStream *m_cvt_stream = nullptr;
+    int m_cvt_in_channels = 0;
+    int m_cvt_in_sample_format = 0;
+    int m_cvt_in_sample_rate = 0;
+    int m_cvt_out_channels = 0;
+    int m_cvt_out_sample_format = 0;
+    int m_cvt_out_sample_rate = 0;
     bool init_cvt_stream();
+    bool update_cvt_stream();
 
     double m_curChunk = 0;
     double m_numChunks = 0;
