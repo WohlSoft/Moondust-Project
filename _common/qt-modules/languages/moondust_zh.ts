@@ -343,31 +343,31 @@
     <name>MsgBoxPreview</name>
     <message>
         <source>Bad #command syntax</source>
-        <translation>#command语法错误</translation>
+        <translation>预处理器语法错误</translation>
     </message>
     <message>
         <source>Bad function() syntax</source>
-        <translation>function()语法错误</translation>
+        <translation>函数语法错误</translation>
     </message>
     <message>
         <source>Unknown #command specified</source>
-        <translation>未知的#command参数</translation>
+        <translation>未定义的预处理器名称</translation>
     </message>
     <message>
         <source>Unknown function() specified</source>
-        <translation>未知的function()参数</translation>
+        <translation>未定义的函数名称</translation>
     </message>
     <message>
         <source>Bad function() arguments specified</source>
-        <translation>function()参数错误</translation>
+        <translation>函数参数错误</translation>
     </message>
     <message>
         <source>Extra characters at end of the code line</source>
-        <translation type="unfinished"></translation>
+        <translation>代码行末尾存在额外字符</translation>
     </message>
     <message>
         <source>Illegal usage of a #command</source>
-        <translation>#command用法错误</translation>
+        <translation>预处理器用法错误</translation>
     </message>
     <message>
         <source>Macro error: </source>
