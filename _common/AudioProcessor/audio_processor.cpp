@@ -73,6 +73,37 @@ bool MoondustAudioProcessor::init_cvt_stream()
 
     m_curChunk = 0;
 
+    m_cvt_in_channels = spec_src.m_channels;
+    m_cvt_in_sample_format = spec_src.m_sample_format;
+    m_cvt_in_sample_rate = spec_src.m_sample_rate;
+
+    m_cvt_out_channels = spec_dst.m_channels;
+    m_cvt_out_sample_format = spec_dst.m_sample_format;
+    m_cvt_out_sample_rate = spec_dst.m_sample_rate;
+
+    return true;
+}
+
+bool MoondustAudioProcessor::update_cvt_stream()
+{
+    if(!m_cvt_stream)
+        return init_cvt_stream();
+
+    const auto &spec_src = m_in_file->getSpec();
+    const auto &spec_dst = m_out_file->getSpec();
+
+    if(m_cvt_in_channels != spec_src.m_channels ||
+       m_cvt_in_sample_format != spec_src.m_sample_format ||
+       m_cvt_in_sample_rate != spec_src.m_sample_rate ||
+       m_cvt_out_channels != spec_dst.m_channels ||
+       m_cvt_out_sample_format != spec_dst.m_sample_format ||
+       m_cvt_out_sample_rate != spec_dst.m_sample_rate)
+    {
+        return init_cvt_stream();
+    }
+
+    SDL_AudioStreamClear(m_cvt_stream);
+
     return true;
 }
 
@@ -352,7 +383,7 @@ bool MoondustAudioProcessor::openOutFile(const std::string &file, int dstFormat,
         return false;
     }
 
-    if(!init_cvt_stream())
+    if(!update_cvt_stream())
     {
         m_out_file.reset(nullptr);
         SDL_RWclose(m_rw_out);
@@ -451,7 +482,7 @@ bool MoondustAudioProcessor::rewindRead()
     m_stat_read = 0;
     m_curChunk = 0.0;
 
-    if(!init_cvt_stream())
+    if(!update_cvt_stream())
         return false;
 
     return m_in_file->readRewind();
