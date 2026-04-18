@@ -1183,6 +1183,10 @@ public:
             return false;
         }
 
+        // copy it without modification if it's already LVLX
+        if(is_lvlx)
+            return QFile::copy(in_path, out_path);
+
         // yes, a false ".lvl" file -- this is needed to prevent interfering with links between levels without modifying the world map, which could interfere with gamesaves
         if(!FileFormats::SaveLevelFile(lvl, out_path, FileFormats::LevelFileFormat::LVL_PGEX))
         {
@@ -1688,7 +1692,7 @@ public:
             return convert_image(filename, in_path, out_path, rel_path);
         else if(filename.endsWith(".ini") && m_cur_dir.convert_font_inis)
             return convert_font_ini(filename, in_path, out_path);
-        else if(m_spec.target_platform != TargetPlatform::Desktop && filename.endsWith(".lvl"))
+        else if(filename.endsWith(".lvl"))
             return convert_lvl(filename, in_path, out_path);
         else if(m_spec.target_platform != TargetPlatform::Desktop && filename.endsWith(".ogg") && rel_path.startsWith("sound/"))
             return convert_sfx(filename, in_path, out_path);
