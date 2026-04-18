@@ -34,9 +34,9 @@ https://wohlsoft.ru/pgewiki/Building_Moondust_Project_from_sources
 -->
 
 ## CI Build status
-Linux | Mac OS X | Windows
------------- | ------------- | -------------
-[![Build Status](https://semaphoreci.com/api/v1/wohlstand/moondust-project/branches/master/shields_badge.svg)](https://semaphoreci.com/wohlstand/moondust-project) | [![Build Status](https://travis-ci.org/WohlSoft/Moondust-Project.svg?branch=master)](https://travis-ci.org/WohlSoft/Moondust-Project) | [![Windows CI](https://github.com/WohlSoft/Moondust-Project/workflows/Windows%20CI/badge.svg?branch=master&event=push)](https://github.com/WohlSoft/Moondust-Project/actions?query=workflow%3A%22Windows+CI%22)
+Linux | Mac OS X | Windows | Android
+------------ | ------------- | ------------- | -------------
+[![Ubuntu Static CI](https://github.com/WohlSoft/Moondust-Project/actions/workflows/ubuntu-ci.yml/badge.svg)](https://github.com/WohlSoft/Moondust-Project/actions/workflows/ubuntu-ci.yml) [![DEB CI](https://github.com/WohlSoft/Moondust-Project/actions/workflows/ubuntu-deb-ci.yml/badge.svg)](https://github.com/WohlSoft/Moondust-Project/actions/workflows/ubuntu-deb-ci.yml) | [![macOS CI](https://github.com/WohlSoft/Moondust-Project/actions/workflows/macos-ci.yml/badge.svg)](https://github.com/WohlSoft/Moondust-Project/actions/workflows/macos-ci.yml) | [![Windows CI](https://github.com/WohlSoft/Moondust-Project/actions/workflows/windows-ci.yml/badge.svg)](https://github.com/WohlSoft/Moondust-Project/actions/workflows/windows-ci.yml) | [![Android CI](https://github.com/WohlSoft/Moondust-Project/actions/workflows/android-ci.yml/badge.svg)](https://github.com/WohlSoft/Moondust-Project/actions/workflows/android-ci.yml)
 
 # Components
 A list of components are included with Moondust Project
