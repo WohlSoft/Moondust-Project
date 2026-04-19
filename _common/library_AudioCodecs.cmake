@@ -50,6 +50,7 @@ endif()
 set_static_lib(AC_FLAC          "${DEPENDENCIES_INSTALL_DIR}" FLAC)
 set_static_lib(AC_FLUITLITE     "${DEPENDENCIES_INSTALL_DIR}" fluidlite)
 set_static_lib(AC_OPUSFILE      "${DEPENDENCIES_INSTALL_DIR}" opusfile)
+set_static_lib(AC_OPUSENC       "${DEPENDENCIES_INSTALL_DIR}" opusenc)
 set_static_lib(AC_OPUS          "${DEPENDENCIES_INSTALL_DIR}" opus)
 set_static_lib(AC_VORBISENC     "${DEPENDENCIES_INSTALL_DIR}" vorbisenc)
 set_static_lib(AC_VORBISFILE    "${DEPENDENCIES_INSTALL_DIR}" vorbisfile)
@@ -83,6 +84,7 @@ list(APPEND AudioCodecs_Libs
 
 list(APPEND AudioCodecs_Libs_Encode
     "${AC_FLUITLITE}"
+    "${AC_OPUSENC}"
     "${AC_OPUSFILE}"
     "${AC_OPUS}"
 )
@@ -139,6 +141,7 @@ ExternalProject_Add(
         "-DBUILD_OGG_VORBIS=${AUDIOCODECS_ENABLE_ENCODERS}"
         "-DBUILD_FLAC=${AUDIOCODECS_ENABLE_ENCODERS}"
         "-DBUILD_MPG123=${AUDIOCODECS_ENABLE_ENCODERS}"
+        "-DBUILD_OPUS_ENC=${AUDIOCODECS_ENABLE_ENCODERS}"
         "-DBUILD_WAVPACK=OFF"
         ${AUDIO_CODECS_BUILD_ARGS}
         ${ANDROID_CMAKE_FLAGS}
