@@ -8853,7 +8853,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>You can set a condition to open path in specified direction (controls at each side of those arrows), dependent on level exit code.</source>
-        <translation>你可以按方向设置开启路线的条件，取决于过关的代码。</translation>
+        <translation>您可以根据过关的种类，设置开启指定方向的路线的条件。</translation>
     </message>
     <message>
         <source>Level file:</source>
