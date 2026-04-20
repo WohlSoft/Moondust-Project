@@ -1311,6 +1311,7 @@ public:
         case TargetPlatform::T3X:
             spec_wanted.m_sample_rate = 44100;
             spec_wanted.m_channels = 2;
+            m_audioOutFormat = FORMAT_WAV;
             break;
 
         case TargetPlatform::TPL:
