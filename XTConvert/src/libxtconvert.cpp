@@ -1300,6 +1300,8 @@ public:
     {
         MDAudioFileSpecWanted spec_wanted;
 
+        m_audioOutFormat = FORMAT_XQOA;
+
         switch(m_spec.target_platform)
         {
         default:
@@ -1320,6 +1322,7 @@ public:
         case TargetPlatform::DSG:
             spec_wanted.m_sample_rate = 16384;
             spec_wanted.m_channels = 1;
+            m_audioOutFormat = FORMAT_WAV;
             break;
         }
 
@@ -1359,7 +1362,6 @@ public:
         }
 
         m_audioOutPath = out_path;
-        m_audioOutFormat = FORMAT_WAV;
 
         if(!m_audioCvt.openOutFile(m_audioOutPath.toStdString(), m_audioOutFormat, m_audioDstSpec))
         {
