@@ -1842,8 +1842,6 @@ public:
         bool succ = false;
 
         bool is_synthesized_music = fEndsWith(synthesized_music, fileName);
-        bool is_non_tracker_music = fEndsWith(non_tracker_music, fileName) || is_synthesized_music;
-        bool is_tracker_music = fEndsWith(tracker_music, fileName);
 
         if(progress(STAGE_CONVERT, files_done, file_count, musFile) < 0)
         {
@@ -1853,7 +1851,7 @@ public:
 
         QString argsInject = getArgsInject(musInfo.suffix(), argsOrig);
 
-        if(m_spec.target_platform == TargetPlatform::DSG && (fileName.endsWith(".wav") || is_non_tracker_music || is_tracker_music))
+        if(m_spec.target_platform == TargetPlatform::DSG)
         {
             replaceSuffix(temp_path, argsInject + ".xqoa");
             replaceSuffix(newRenamePath, argsInject + ".xqoa");
