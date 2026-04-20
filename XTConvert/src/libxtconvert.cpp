@@ -1445,6 +1445,19 @@ public:
         m_audioOutPath = out_path;
         m_audioOutFormat = FORMAT_XQOA;
 
+        // ensure that out_path's parent folder exists
+        {
+            QFileInfo out_file = QFileInfo(out_path);
+            QDir out_dir = out_file.dir();
+
+            if(!out_dir.exists() && !out_dir.mkpath("."))
+            {
+                log_file(LogCategory::ErrorMessage, QString("Could not create directory: %1").arg(out_dir.path()));
+                m_audioCvt.close();
+                return false;
+            }
+        }
+
         if(!m_audioCvt.openOutFile(m_audioOutPath.toStdString(), m_audioOutFormat, m_audioDstSpec))
         {
             log_file(LogCategory::ErrorMessage, out_path);
