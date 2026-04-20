@@ -2449,7 +2449,7 @@ public:
 
         for(const auto& mus : music_filenames)
         {
-            if(mus.second.endsWith(".qoa") || !QFileInfo(mus.second).isFile())
+            if(mus.second.endsWith(".xqoa") || !QFileInfo(mus.second).isFile())
                 continue;
 
             mmutil_args_str.push_back(mus.second.toUtf8());
@@ -2511,7 +2511,7 @@ public:
 
             for(const auto& mus : music_filenames)
             {
-                if(mus.second.endsWith(".qoa"))
+                if(mus.second.endsWith(".xqoa"))
                 {
                     music_ini.beginGroup(mus.first);
                     music_ini.setValue("file-qoa", mus.second.section(QDir::separator(), -1, -1));
@@ -2553,7 +2553,7 @@ public:
         // clean up inputs to maxmod
         for(const auto& mus : music_filenames)
         {
-            if(mus.second.endsWith(".qoa") || !QFileInfo(mus.second).isFile())
+            if(mus.second.endsWith(".xqoa") || !QFileInfo(mus.second).isFile())
                 continue;
 
             QFile::remove(mus.second);
