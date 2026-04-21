@@ -57,6 +57,7 @@ set_static_lib(AC_VORBISFILE    "${DEPENDENCIES_INSTALL_DIR}" vorbisfile)
 set_static_lib(AC_VORBIS        "${DEPENDENCIES_INSTALL_DIR}" vorbis)
 set_static_lib(AC_OGG           "${DEPENDENCIES_INSTALL_DIR}" ogg)
 set_static_lib(AC_MPG123        "${DEPENDENCIES_INSTALL_DIR}" mpg123)
+set_static_lib(AC_MP3LAME       "${DEPENDENCIES_INSTALL_DIR}" mp3lame)
 set_static_lib(AC_MODPLUG       "${DEPENDENCIES_INSTALL_DIR}" modplug)
 set_static_lib(AC_XMP           "${DEPENDENCIES_INSTALL_DIR}" xmp)
 set_static_lib(AC_ADLMIDI       "${DEPENDENCIES_INSTALL_DIR}" ADLMIDI)
@@ -116,6 +117,7 @@ list(APPEND AudioCodecs_Libs
 list(APPEND AudioCodecs_Libs_Encode
     "${AC_OGG}"
     "${AC_MPG123}"
+    "${AC_MP3LAME}"
     "${AC_MODPLUG}"
     "${AC_XMP}"
     "${AC_ADLMIDI}"
@@ -141,6 +143,7 @@ ExternalProject_Add(
         "-DBUILD_OGG_VORBIS=${AUDIOCODECS_ENABLE_ENCODERS}"
         "-DBUILD_FLAC=${AUDIOCODECS_ENABLE_ENCODERS}"
         "-DBUILD_MPG123=${AUDIOCODECS_ENABLE_ENCODERS}"
+        "-DBUILD_MP3LAME=${AUDIOCODECS_ENABLE_ENCODERS}"
         "-DBUILD_OPUS_ENC=${AUDIOCODECS_ENABLE_ENCODERS}"
         "-DBUILD_WAVPACK=OFF"
         ${AUDIO_CODECS_BUILD_ARGS}
@@ -173,6 +176,7 @@ if(AUDIOCODECS_ENABLE_ENCODERS)
     InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libvorbis/COPYING" RENAME "License.Vorbis.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
     InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libogg/COPYING" RENAME "License.OGG.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
     InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libmpg123/COPYING" RENAME "License.libMPG123.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
+    InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/liblamemp3/COPYING" RENAME "License.LameMP3.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
 endif()
 
 InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libmodplug/COPYING" RENAME "License.libModPlug.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
