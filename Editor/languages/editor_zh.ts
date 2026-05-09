@@ -5739,11 +5739,11 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Convert GIF with mask to PNG (GIFs2PNG)...</source>
-        <translation>转换带有影子元件的 GIF 到 PNG (GIFs2PNG)...</translation>
+        <translation>转换带有蒙版的 GIF 到 PNG (GIFs2PNG)...</translation>
     </message>
     <message>
         <source>Convert PNG to GIF with mask (PNG2GIFs)...</source>
-        <translation>转换 PNG 到带有影子元件的 GIF (PNG2GIFs)...</translation>
+        <translation>转换 PNG 到带有蒙版的 GIF (PNG2GIFs)...</translation>
     </message>
     <message>
         <source>World settings</source>
@@ -5970,11 +5970,11 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Fix wrong masks</source>
-        <translation>修复错误影子文件</translation>
+        <translation>修复错误蒙版</translation>
     </message>
     <message>
         <source>This tool will fix all wrong masks of images which causing display bugs</source>
-        <translation>使用此工具将因错误影子文件而产生的 Bug</translation>
+        <translation>使用此工具将修复因错误蒙版而显示异常的图像</translation>
     </message>
     <message>
         <source>Delete section</source>
@@ -6366,11 +6366,11 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
-        <translation>此文件未使用带透明影子文件的 GIF 或不是自定义素材文件。</translation>
+        <translation>此文件未使用带蒙版的 GIF 图像，或者不是自定义素材文件。</translation>
     </message>
     <message>
         <source>Fixing of masks...</source>
-        <translation>影子文件修复中……</translation>
+        <translation>蒙版修复中……</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -6383,7 +6383,7 @@ Do you want to clone another section?</source>
     <message>
         <source>Masks has been fixed!
 Please reload current file to apply result.</source>
-        <translation>影子元件已修复！
+        <translation>蒙版已修复！
 请刷新当前文件以看到变化。</translation>
     </message>
     <message>

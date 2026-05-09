@@ -27,6 +27,10 @@
                 <langSet xml:lang="zh_Hans"><tig><term>月尘</term></tig></langSet>
                 <note from="translator">“月尘”是Moondust的中文译名。</note>
             </termEntry>
+            <termEntry id="mask">
+                <langSet xml:lang="en"><tig><term>mask</term></tig></langSet>
+                <langSet xml:lang="zh_Hans"><tig><term>蒙版</term></tig></langSet>
+            </termEntry>
         </body>
     </text>
 </martif>

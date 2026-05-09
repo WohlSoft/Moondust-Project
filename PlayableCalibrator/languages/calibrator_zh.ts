@@ -1151,7 +1151,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="583"/>
         <source>Write masked GIFs</source>
-        <translation>保存为带影子文件的 GIF</translation>
+        <translation>保存为带蒙版的 GIF</translation>
     </message>
     <message>
         <source>Hint</source>

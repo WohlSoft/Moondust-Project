@@ -619,7 +619,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.ui" line="17"/>
         <source>Convert masked GIFs into PNG</source>
-        <translation>转换带有影子文件的 GIF 到 PNG</translation>
+        <translation>转换带有蒙版的 GIF 到 PNG</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="109"/>
@@ -629,7 +629,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.ui" line="125"/>
         <source>Drop your masked GIFs files into this window for a quick conversion</source>
-        <translation>将带有影子文件的 GIF 文件拖放至此以进行快速转换</translation>
+        <translation>将带有蒙版的 GIF 文件拖放至此以进行快速转换</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="136"/>
@@ -650,7 +650,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.ui" line="216"/>
         <source>Skip images with non-black-and-white masks</source>
-        <translation>跳过带有非黑白影子文件的图片</translation>
+        <translation>跳过带有非黑白蒙版的图片</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="156"/>
@@ -675,7 +675,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.ui" line="142"/>
         <source>Configuration package path (needed to find missing mask files):</source>
-        <translation>配置包文件夹（需要搜索丢失的影子文件）：</translation>
+        <translation>配置包文件夹（需要搜索丢失的GIF蒙版文件）：</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="168"/>
@@ -696,7 +696,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/gifs2png.ui" line="75"/>
         <source>This wizard will help you to convert graphics designed for SMBX 1.3 (in a GIF format with a using of bitmask), into PNG with a true transparency.</source>
-        <translation>此向导将 SMBX 1.3 中的素材（带有影子元件的 GIF 格式图像）转换为带真实透明通道的 PNG 格式图像。</translation>
+        <translation>此向导将 SMBX 1.3 中的素材（带有蒙版的 GIF 格式图像）转换为带真实透明通道的 PNG 格式图像。</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="34"/>
@@ -792,7 +792,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.ui" line="17"/>
         <source>Fix bad-designed masked GIFs</source>
-        <translation>修复错误的带有影子文件的 GIF 图像</translation>
+        <translation>修复错误的带有蒙版的 GIF 图像</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="31"/>
@@ -802,7 +802,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.ui" line="47"/>
         <source>Drop your masked GIFs files into this window for a quick porcessing</source>
-        <translation>将带有影子文件的 GIF 图像拖放至此进行快速处理</translation>
+        <translation>将带有蒙版的 GIF 图像拖放至此进行快速处理</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="58"/>
@@ -863,7 +863,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/lazyfix.ui" line="174"/>
         <source>This wizard will help you to automatically fix any SMBX 1.3 graphics (in a GIF format with the use of bitmask) that have a bad-designed invalid mask (e.g. made with a lazy effort). Masks made with a lazy effort are masks made by the copying of a front image and filling the background with white. This making method for masks gives an illusion of quick work, however, these masks are invalid and may cause strange glitches on some graphical engines and converters. After processing these sprites, all invalid masks will be turned into the valid form of the black shape as they must be, and therefore, they can be freely used everywhere without glitches.</source>
-        <translation>此向导将帮助您修复 SMBX 1.3 的素材（带有影子文件的 GIF）中错误的影子文件（例如使用懒人方法），懒人方法是将前端文件作为副本并使用白色作为背景色的方法。虽然此方法可以加快制作素材的进度，但此方法是无效的，同时会在部分引擎和转换器中所显示的图像出现问题。处理完成后，所有的影子文件将会转为黑白图像，因此可以自由地在任何地方使用。</translation>
+        <translation>此向导将帮助您修复 SMBX 1.3 的素材（带有蒙版的 GIF）中错误的蒙版文件（例如使用懒人方法）。懒人方法是将主图像作为副本并使用白色作为填充背景色的方法。虽然此方法可以加快制作素材的进度，但此方法是无效的，同时会在部分引擎和转换器中所显示的图像出现问题。处理完成后，所有的蒙版将会转为黑白图像，因此可以自由地在任何地方使用。</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="65"/>
@@ -967,7 +967,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../main_window.ui" line="105"/>
         <source>Converts pair of GIF (frontend and mask) graphics into merged sprite in PNG format with semi-transparency support.</source>
-        <translation>转换 GIF（普通文件及影子文件）图像到合并后的图像为的可支持 Alpha 通道的 PNG 格式。</translation>
+        <translation>转换 GIF（主图像及蒙版）图像到合并后的图像为的可支持透明通道的 PNG 格式。</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="108"/>
@@ -979,7 +979,7 @@ Important: There are only level and world map files gets being converted. Any in
         <location filename="../main_window.ui" line="137"/>
         <location filename="../main_window.ui" line="153"/>
         <source>Converts regular PNG graphics into pair of GIF files (frontend and it&apos;s mask) compatible with bitblit algorithm (required by SMBX legacy engine).</source>
-        <translation>转换 PNG 图像到可兼容 Bitblt 算法的 GIF（普通文件及影子文件）图像（需要 SMBX 1.3 的支持）。</translation>
+        <translation>转换 PNG 图像到可兼容 Bitblit 算法的 GIF（主图像及蒙版）图像（需要 SMBX 1.3 的支持）。</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="124"/>
@@ -989,7 +989,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../main_window.ui" line="140"/>
         <source>Fix bad-designed masked GIF graphics</source>
-        <translation>修复错误的影子文件</translation>
+        <translation>修复错误的GIF蒙版文件</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="156"/>
@@ -1037,7 +1037,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/png2gifs.ui" line="17"/>
         <source>Convert PNG into masked GIFs</source>
-        <translation>转换 PNG 到带有影子文件的 GIF</translation>
+        <translation>转换 PNG 到带有蒙版的 GIF</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="109"/>
@@ -1098,7 +1098,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../Graphics/png2gifs.ui" line="75"/>
         <source>This wizard will help you to convert PNG graphics with a true transparency into graphics designed for SMBX 1.3 (in a GIF format with a using of bitmask).</source>
-        <translation>此向导将带真实透明通道的 PNG 格式图像转换为适配 SMBX 1.3 中的素材（带有影子元件的 GIF 格式图像）。</translation>
+        <translation>此向导将带真实透明通道的 PNG 格式图像转换为适配 SMBX 1.3 中的素材（带有蒙版的 GIF 格式图像）。</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="34"/>
