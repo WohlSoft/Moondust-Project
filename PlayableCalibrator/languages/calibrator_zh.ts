@@ -1141,7 +1141,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="569"/>
         <source>Write PNG+GIFs</source>
-        <translation>同时保存为 PNG 和带影子文件的 GIF</translation>
+        <translation>同时保存为 PNG 和带有蒙版的 GIF</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="576"/>

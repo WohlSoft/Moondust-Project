@@ -972,7 +972,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../main_window.ui" line="108"/>
         <source>GIFs to PNG converter</source>
-        <translation>转换带有影子文件的 GIF 到 PNG</translation>
+        <translation>转换带有蒙版的 GIF 到 PNG</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="121"/>
@@ -984,7 +984,7 @@ Important: There are only level and world map files gets being converted. Any in
     <message>
         <location filename="../main_window.ui" line="124"/>
         <source>PNG to GIFs converter</source>
-        <translation>转换PNG 到带有影子文件的 GIF</translation>
+        <translation>转换 PNG 到带有蒙版的 GIF</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="140"/>

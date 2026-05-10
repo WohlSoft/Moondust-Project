@@ -5735,7 +5735,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Fix Lazily-made graphics (LazyFixTool)...</source>
-        <translation>修复错误的影子文件 (LazyFixTool)...</translation>
+        <translation>修复错误的蒙版 (LazyFixTool)...</translation>
     </message>
     <message>
         <source>Convert GIF with mask to PNG (GIFs2PNG)...</source>
