@@ -58,6 +58,14 @@ struct TranslationData_EVENT
     TrLine message;
 };
 
+struct TranslationData_WARP
+{
+    int warp_index = -1;
+    QString stars_msg_tr_id;
+    TrLine stars_msg;
+};
+
+
 struct TranslationData_DialogueNode
 {
     enum Type
@@ -83,6 +91,8 @@ struct TranslationData_Level
     QMap<int, TranslationData_NPC> npc;
     //! Text data stored at event entries
     QMap<int, TranslationData_EVENT> events;
+    //! Text data stored at warp entries
+    QMap<int, TranslationData_WARP> warps;
     //! Dialogue sequences (used to make an order and see the order of messages)
     QVector<TranslationData_Dialogue> dialogues;
     //! Stoirage of useful translations
@@ -149,6 +159,7 @@ struct TranslationData
 
     // Meta-file only: TrId maps to inten indexes
     QMap<QString, int> trId_map_lvl_npc;
+    QMap<QString, int> trId_map_lvl_warps;
     QMap<QString, int> trId_map_lvl_events;
     QMap<QString, int> trId_map_wld_levels;
     QMap<QString, int> trId_map_script_lines;

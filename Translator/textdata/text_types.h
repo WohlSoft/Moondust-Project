@@ -42,7 +42,8 @@ enum L_DType
 {
     LDT_EVENT = 0,
     LDT_NPC,
-    LDT_TITLE
+    LDT_TITLE,
+    LDT_WARP
 };
 
 enum W_DType

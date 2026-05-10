@@ -139,6 +139,26 @@ static bool validate(const QMap<int, TranslationData_NPC> &d)
 
     return ret;
 }
+
+static bool validate(const QMap<int, TranslationData_WARP> &d)
+{
+    bool ret = true;
+    for(auto i = d.begin(); i != d.end(); ++i)
+    {
+        Q_ASSERT(i.key() >= 0);
+        ret &= (i.key() == i.value().warp_index);
+        Q_ASSERT(ret);
+        if(!ret)
+            qWarning() << QString("Caught a Warp entry %1 with %1 index inside").arg(i.key()).arg(i.value().warp_index);
+    }
+
+    if(ret)
+        qDebug() << "Warp array is valid";
+    else
+        qWarning() << "Warp array is INVALID";
+
+    return ret;
+}
 #endif
 
 
@@ -405,9 +425,15 @@ TrLine &TextDataProcessor::getItemRef(TranslateProject &proj, const QString &lan
 
             case TextTypes::LDT_NPC:
                 if(!r.npc.contains(key))
-                    std::logic_error("NPCkey is not found");
+                    std::logic_error("NPC key is not found");
 
                 return r.npc[key].talk;
+
+            case TextTypes::LDT_WARP:
+                if(!r.warps.contains(key))
+                    std::logic_error("Warp entry key is not found");
+
+                return r.warps[key].stars_msg;
 
             case TextTypes::LDT_TITLE:
                 return r.title;
@@ -516,6 +542,26 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
 
 #ifdef DEBUG_BUILD
     validate(tr.npc);
+#endif
+
+    for(int i = 0; i < l.doors.size(); ++i)
+    {
+        auto &ed = l.doors[i];
+        TranslationData_WARP e;
+
+        if(ed.stars_msg.isEmpty())
+            continue;
+
+        hasStrings |= true;
+
+        e.warp_index = i;
+        e.stars_msg.text = ed.stars_msg;
+        tr.warps.insert(i, e);
+        qDebug() << "Warp" << i << "custom stars needed message: [" << e.stars_msg.text << "]";
+    }
+
+#ifdef DEBUG_BUILD
+    validate(tr.warps);
 #endif
 
     // Build relations
@@ -711,7 +757,7 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
                 }
             }
 
-            // Import NPC source notes
+            // Import Events source notes
             for(auto &no : old.events)
             {
                 for(auto &nn : tr.events)
@@ -720,6 +766,18 @@ void TextDataProcessor::importLevel(TranslationData &origin, const QString &path
                         continue; // Not ours
 
                     nn.message.note = no.message.note;
+                }
+            }
+
+            // Import Warp source notes
+            for(auto &no : old.warps)
+            {
+                for(auto &nn : tr.warps)
+                {
+                    if(no.warp_index != nn.warp_index)
+                        continue; // Not ours
+
+                    nn.stars_msg.note = no.stars_msg.note;
                 }
             }
         }
@@ -1249,6 +1307,43 @@ bool TextDataProcessor::saveJSONs(const QString &directory, const TranslateProje
                 lo["npc"] = npc_a;
             }
 
+            if(!la.warps.isEmpty())
+            {
+                QJsonArray warps_a;
+
+                for(auto &n : la.warps)
+                {
+                    QJsonObject entry;
+                    if(useTrId)
+                    {
+                        entry["tr-id"] = n.stars_msg_tr_id;
+                        if(isOrigin)
+                            entry["i"] = n.warp_index;
+                    }
+                    else
+                        entry["i"] = n.warp_index;
+
+                    entry["stars-msg"] = n.stars_msg.text;
+                    if(!n.stars_msg.note.isEmpty())
+                        entry["stars-msg-n"] = n.stars_msg.note;
+
+                    if(!isOrigin)
+                    {
+                        entry["orig"] = origin.levels[l.key()].warps[n.warp_index].stars_msg.text;
+
+                        if(n.stars_msg.unfinished)
+                            entry["u"] = true;
+
+                        if(n.stars_msg.vanished)
+                            entry["v"] = true;
+                    }
+
+                    warps_a.append(entry);
+                }
+
+                lo["warps"] = warps_a;
+            }
+
             if(!la.events.isEmpty())
             {
                 QJsonArray event_a;
@@ -1569,6 +1664,16 @@ void TextDataProcessor::updateTranslation(TranslateProject &proj, const QString 
             }
         }
 
+        for(auto eit = ls.warps.begin(); eit != ls.warps.end(); ++eit)
+        {
+            if(!ld.warps.contains(eit.key())) // Create empty entry with an "unfinished" entry
+            {
+                auto &n = ld.warps[eit.key()];
+                n.stars_msg.unfinished = true;
+                n.warp_index = eit->warp_index;
+            }
+        }
+
 #ifdef DEBUG_BUILD
         validate(ls.npc);
         validate(ls.events);
@@ -1860,6 +1965,42 @@ void TextDataProcessor::loadTranslation(TranslateProject &proj, const QString &t
                     }
 
                     lvl.events.insert(et.event_index, et);
+                }
+            }
+
+            if(entry.contains("warps"))
+            {
+                QJsonArray arr = entry["warps"].toArray();
+                for(const auto &it : arr)
+                {
+                    auto ito = it.toObject();
+                    TranslationData_WARP et;
+                    et.warp_index = ito["i"].toInt(-1);
+                    et.stars_msg_tr_id = ito["tr-id"].toString();
+
+                    if(et.warp_index < 0 && et.stars_msg_tr_id.isEmpty())
+                        continue; // Skip invalid entries
+
+                    if(tr.useTrId)
+                    {
+                        if(isOrigin)
+                        {
+                            Q_ASSERT(et.warp_index >= 0);
+                            Q_ASSERT(!et.stars_msg_tr_id.isEmpty());
+                            tr.trId_map_lvl_warps.insert(et.stars_msg_tr_id, et.warp_index);
+                        }
+                        else
+                        {
+                            Q_ASSERT(tr_orig.trId_map_lvl_warps.contains(et.stars_msg_tr_id));
+                            et.warp_index = tr_orig.trId_map_lvl_warps[et.stars_msg_tr_id];
+                        }
+                    }
+
+                    et.stars_msg.text = ito["stars-msg"].toString();
+                    et.stars_msg.note = ito["stars-msg-n"].toString();
+                    et.stars_msg.unfinished = ito["u"].toBool();
+                    et.stars_msg.vanished = ito["v"].toBool();
+                    lvl.warps.insert(et.warp_index, et);
                 }
             }
 

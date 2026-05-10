@@ -143,6 +143,25 @@ void FilesStringsModel::setFileData(const QString &lang, int s, const QString &k
             m_view.push_back(e);
         }
 
+        for(auto w = m_level->warps.cbegin() ; w != m_level->warps.cend(); ++w)
+        {
+            TrView e;
+            const auto &cur_item = cur_level->warps.contains(w.key()) ?
+                                       cur_level->warps[w.key()] :
+                                       w.value();
+
+            e.source = s;
+            e.type = TextTypes::LDT_WARP;
+            e.title = w->stars_msg.text;
+            e.tr_note = w->stars_msg.note;
+            e.root = key;
+            e.key = w.key();
+            e.state = stateFromTrLine(cur_item.stars_msg);
+            e.note = QString::number(w->warp_index);
+            e.note = QString("Warp-%1").arg(w->warp_index);
+            m_view.push_back(e);
+        }
+
         for(auto w = m_level->npc.begin() ; w != m_level->npc.end(); ++w)
         {
             TrView e;
@@ -293,6 +312,13 @@ void FilesStringsModel::updateStatus(const QString &lang)
                 if(!cur_level->npc.contains(o.key))
                     continue;
                 o.state = stateFromTrLine(cur_level->npc[o.key].talk);
+                emit dataChanged(index(i, C_STATE), index(i, C_STATE));
+                break;
+
+            case TextTypes::LDT_WARP:
+                if(!cur_level->warps.contains(o.key))
+                    continue;
+                o.state = stateFromTrLine(cur_level->warps[o.key].stars_msg);
                 emit dataChanged(index(i, C_STATE), index(i, C_STATE));
                 break;
 
@@ -520,6 +546,8 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
                     return tr("Event");
                 case TextTypes::LDT_NPC:
                     return tr("NPC");
+                case TextTypes::LDT_WARP:
+                    return tr("Warp");
                 case TextTypes::LDT_TITLE:
                     return tr("Title");
                 }
@@ -573,6 +601,8 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
                     return tr("Event's message box");
                 case TextTypes::LDT_NPC:
                     return tr("NPC's dialogue message");
+                case TextTypes::LDT_WARP:
+                    return tr("Warp's custom message of required stars");
                 case TextTypes::LDT_TITLE:
                     return tr("Level file's title");
                 }
@@ -613,6 +643,8 @@ QVariant FilesStringsModel::data(const QModelIndex &index, int role) const
                     return QIcon(":/images/scripts.png");
                 case TextTypes::LDT_NPC:
                     return QIcon(":/images/coin.png");
+                case TextTypes::LDT_WARP:
+                    return QIcon(":/images/star.png");
                 case TextTypes::LDT_TITLE:
                     return QIcon(":/images/level.png");
                 }

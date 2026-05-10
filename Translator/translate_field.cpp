@@ -208,6 +208,15 @@ void TranslateField::reloadEntry()
             setText(e.message.text, e.message.note, !e.message.unfinished);
             break;
         }
+        case TextTypes::LDT_WARP:
+        {
+            if(m_key < 0)
+                return;
+            auto &e = l.warps[m_key];
+            m_tr = &e.stars_msg;
+            setText(e.stars_msg.text, e.stars_msg.note, !e.stars_msg.unfinished);
+            break;
+        }
         case TextTypes::LDT_TITLE:
             m_tr = &l.title;
             setText(l.title.text, l.title.note, !l.title.unfinished);
