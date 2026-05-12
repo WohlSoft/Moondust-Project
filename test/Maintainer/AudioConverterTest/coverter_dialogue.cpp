@@ -98,15 +98,23 @@ CoverterDialogue::CoverterDialogue(QWidget *parent)
                 ui->fileOut->setText(outFile);
                 break;
             case 5:
-                outFile.replace(dot + 1, outFile.size() - (dot - 1), "wav");
-                ui->fileOut->setText(outFile);
-                break;
             case 6:
                 outFile.replace(dot + 1, outFile.size() - (dot - 1), "wav");
                 ui->fileOut->setText(outFile);
                 break;
             case 7:
                 outFile.replace(dot + 1, outFile.size() - (dot - 1), "flac");
+                ui->fileOut->setText(outFile);
+                break;
+            case 8:
+            case 9:
+                outFile.replace(dot + 1, outFile.size() - (dot - 1), "wma");
+                ui->fileOut->setText(outFile);
+                break;
+            case 10:
+            case 11:
+            case 12:
+                outFile.replace(dot + 1, outFile.size() - (dot - 1), "wav");
                 ui->fileOut->setText(outFile);
                 break;
             }
@@ -124,6 +132,12 @@ CoverterDialogue::CoverterDialogue(QWidget *parent)
     ui->dstFormat->addItem("WAV", (int)FORMAT_WAV);
     ui->dstFormat->addItem("WAV float64", (int)FORMAT_WAV_F64);
     ui->dstFormat->addItem("FLAC", (int)FORMAT_FLAC);
+    ui->dstFormat->addItem("WMAv1", (int)FORMAT_WMAV1);
+    ui->dstFormat->addItem("WMAv2", (int)FORMAT_WMAV2);
+    ui->dstFormat->addItem("WAV muLaw", (int)FORMAT_WAV_MULAW);
+    ui->dstFormat->addItem("WAV ALaw", (int)FORMAT_WAV_ALAW);
+    ui->dstFormat->addItem("WAV MS-ADPCM", (int)FORMAT_WAV_ADPCM_MS);
+    ui->dstFormat->addItem("WAV IMA-ADPCM", (int)FORMAT_WAV_ADPCM_IMA);
     ui->dstFormat->setCurrentIndex(0);
     ui->dstFormat->blockSignals(false);
 

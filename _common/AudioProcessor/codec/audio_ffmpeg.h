@@ -25,6 +25,7 @@
 
 struct MDAudioFFMPEG_private;
 typedef struct AVPacket AVPacket;
+typedef struct AVFrame AVFrame;
 
 class MDAudioFFMPEG : public MDAudioFile
 {
@@ -43,6 +44,7 @@ class MDAudioFFMPEG : public MDAudioFile
     friend int md_audio_ffmpeg_rw_write_cb(void *opaque, const uint8_t *data, int size);
 
     int decode_packet(const AVPacket *pkt, bool *got_some, bool *spec_changed);
+    int encode_frame(AVFrame *frame);
 
 public:
     enum EncodeTarget

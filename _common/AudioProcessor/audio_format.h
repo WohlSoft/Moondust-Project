@@ -25,7 +25,6 @@ enum AudioFormats
 {
     FORMAT_UNKNOWN = 0,
     FORMAT_WAV,
-    FORMAT_WAV_F64,
     FORMAT_AIFF,
     FORMAT_OGG_VORBIS,
     FORMAT_OPUS,
@@ -44,6 +43,14 @@ enum AudioFormats
     FORMAT_PXTONE,
     FORMAT_QOA,
     FORMAT_XQOA,
+    // Encode only
+    FORMAT_WAV_F64,
+    FORMAT_WMAV1,
+    FORMAT_WMAV2,
+    FORMAT_WAV_MULAW,
+    FORMAT_WAV_ALAW,
+    FORMAT_WAV_ADPCM_MS,
+    FORMAT_WAV_ADPCM_IMA,
 };
 
 #endif // AUDIO_FORMAT_H
