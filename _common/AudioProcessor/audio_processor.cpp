@@ -356,6 +356,26 @@ bool MoondustAudioProcessor::openOutFile(const std::string &file, int dstFormat,
     case FORMAT_FLAC:
         m_out_file.reset(new MDAudioFLAC());
         break;
+#ifdef MOONDUST_ENCODE_FFMPEG
+    case FORMAT_WMAV1:
+        m_out_file.reset(new MDAudioFFMPEG(MDAudioFFMPEG::ENCODE_WMAv1));
+        break;
+    case FORMAT_WMAV2:
+        m_out_file.reset(new MDAudioFFMPEG(MDAudioFFMPEG::ENCODE_WMAv2));
+        break;
+    case FORMAT_WAV_MULAW:
+        m_out_file.reset(new MDAudioFFMPEG(MDAudioFFMPEG::ENCODE_WAV_MULAW));
+        break;
+    case FORMAT_WAV_ALAW:
+        m_out_file.reset(new MDAudioFFMPEG(MDAudioFFMPEG::ENCODE_WAV_ALAW));
+        break;
+    case FORMAT_WAV_ADPCM_MS:
+        m_out_file.reset(new MDAudioFFMPEG(MDAudioFFMPEG::ENCODE_WAV_ADPCM_MS));
+        break;
+    case FORMAT_WAV_ADPCM_IMA:
+        m_out_file.reset(new MDAudioFFMPEG(MDAudioFFMPEG::ENCODE_WAV_ADPCM_IMA));
+        break;
+#endif
     default:
         m_lastError = "Incorrect or unsupported destination format";
         return false;
