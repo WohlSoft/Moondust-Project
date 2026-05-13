@@ -37,6 +37,8 @@ class MDAudioFFMPEG : public MDAudioFile
 
     bool m_write = false;
 
+    std::vector<std::vector<uint8_t> > m_io_buffer_planar;
+
     static int _rw_read_buffer(void *opaque, uint8_t *buf, int buf_size);
     static int64_t _rw_seek(void *opaque, int64_t offset, int whence);
 
