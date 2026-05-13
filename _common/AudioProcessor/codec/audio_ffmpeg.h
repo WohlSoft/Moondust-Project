@@ -46,7 +46,10 @@ class MDAudioFFMPEG : public MDAudioFile
     friend int md_audio_ffmpeg_rw_write_cb(void *opaque, const uint8_t *data, int size);
 
     int decode_packet(const AVPacket *pkt, bool *got_some, bool *spec_changed);
+#ifdef MOONDUST_ENCODE_FFMPEG
     int encode_frame(AVFrame *frame);
+    int proceed_encode_buffer();
+#endif
 
 public:
     enum EncodeTarget
