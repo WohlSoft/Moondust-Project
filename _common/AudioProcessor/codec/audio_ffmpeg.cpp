@@ -126,6 +126,7 @@ struct MDAudioFFMPEG_private
     uint64_t src_ch_layout = 0;
     uint64_t dst_ch_layout = 0;
     int dst_channels = 0;
+    int required_frame_size = 0;
     int64_t pts_counter = 0;
     AVFrame *encode_frame = nullptr;
     AVFormatContext *ofmt_ctx = nullptr;
@@ -459,7 +460,10 @@ bool MDAudioFFMPEG::updateStream(bool *spec_changed)
                 layout.nb_channels = channels;
 
                 if(channels > 8)
+                {
                     layout.u.mask = AV_CH_LAYOUT_SURROUND;
+                    layout.order = AV_CHANNEL_ORDER_CUSTOM;
+                }
                 else if(channels == 8)
                     layout.u.mask = AV_CH_LAYOUT_7POINT1;
                 else if(channels == 7)
@@ -658,6 +662,7 @@ int MDAudioFFMPEG::decode_packet(const AVPacket *pkt, bool *got_some, bool *spec
     return 0;
 }
 
+#ifdef MOONDUST_ENCODE_FFMPEG
 static void get_packet_defaults(AVPacket *pkt)
 {
     SDL_memset(pkt, 0, sizeof(*pkt));
@@ -721,6 +726,95 @@ int MDAudioFFMPEG::encode_frame(AVFrame *frame)
 
     return 0;
 }
+
+int MDAudioFFMPEG::proceed_encode_buffer()
+{
+    size_t unpadded_linesize;
+    size_t dst_sample_size;
+    size_t dst_frame_size;
+    size_t dst_buffer_size;
+    int ret;
+    Uint8 *in = m_io_buffer.data();
+
+    if(m_buffer_pos == 0)
+        return 1; // Do Nothing!
+
+    if(p->swr_ctx)
+    {
+        Uint8 *s[AV_NUM_DATA_POINTERS] = {0, 0, 0, 0, 0, 0, 0, 0};
+        size_t s_num = p->planar ? SDL_min(p->dst_channels, AV_NUM_DATA_POINTERS) : 1;
+
+        p->encode_frame->format = p->dst_sample_fmt;
+        dst_sample_size = av_get_bytes_per_sample((enum AVSampleFormat)p->encode_frame->format);
+        dst_frame_size = p->planar ? dst_sample_size : dst_sample_size * p->dst_channels;
+        dst_buffer_size = SDL_min(m_buffer_pos, p->required_frame_size * dst_frame_size);
+        unpadded_linesize = dst_buffer_size;
+
+        p->encode_frame->sample_rate = p->srate;
+        p->encode_frame->ch_layout.order = p->dst_channels > 8 ? AV_CHANNEL_ORDER_CUSTOM : AV_CHANNEL_ORDER_NATIVE;
+        p->encode_frame->ch_layout.nb_channels = p->dst_channels;
+        av_channel_layout_from_mask(&p->encode_frame->ch_layout, p->dst_ch_layout);
+
+        if(m_io_buffer_planar.size() < s_num)
+            m_io_buffer_planar.resize(s_num);
+
+        for(size_t c = 0; c < s_num; ++c)
+        {
+            if(m_io_buffer_planar[c].size() < (size_t)unpadded_linesize)
+                m_io_buffer_planar[c].resize(unpadded_linesize);
+
+            s[c] = m_io_buffer_planar[c].data();
+        }
+
+        p->encode_frame->nb_samples = unpadded_linesize / dst_frame_size;
+        p->encode_frame->pts = p->pts_counter;
+        p->pts_counter += p->encode_frame->nb_samples;
+
+        ret = swr_convert(p->swr_ctx,
+                          s, p->encode_frame->nb_samples,
+                          (const Uint8**)&in, m_buffer_pos / m_spec.m_frame_size);
+
+        if(ret < 0)
+        {
+            m_lastError = "FFMPEG: Failed to convert samples!";
+            return 0;
+        }
+
+        for(size_t c = 0; c < s_num; ++c)
+        {
+            p->encode_frame->data[c] = s[c];
+            p->encode_frame->linesize[c] = unpadded_linesize;
+            p->encode_frame->extended_data = p->encode_frame->data;
+        }
+
+
+        if(encode_frame(p->encode_frame) < 0)
+        {
+            m_lastError.insert(0, "FFMPEG: Failed to encode frame: ");
+            return 0;
+        }
+
+        av_frame_unref(p->encode_frame);
+    }
+    else
+    {
+        avcodec_fill_audio_frame(p->encode_frame, p->dst_channels, p->dst_sample_fmt, in, m_buffer_pos / m_spec.m_frame_size, 0);
+
+        if(encode_frame(p->encode_frame) < 0)
+        {
+            m_lastError.insert(0, "FFMPEG: Failed to encode frame: ");
+            return 0;
+        }
+
+        av_frame_unref(p->encode_frame);
+    }
+
+    m_buffer_left = m_io_buffer.size();
+    m_buffer_pos = 0;
+
+    return 1;
+}
+#endif
 
 MDAudioFFMPEG::MDAudioFFMPEG(EncodeTarget encode) :
     MDAudioFile(),
@@ -950,6 +1044,7 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     AVCodecParameters *output_codec_context;
     AVDictionary *opt = nullptr;
     const char *paquet_type_text = "wav";
+    char proto[] = "file:///sdl_rwops";
     int ret;
 
     close();
@@ -969,11 +1064,15 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         tCodec = AV_CODEC_ID_WMAV1;
         paquet_type_text = "asf";
         m_spec.m_sample_format = AUDIO_F32SYS;
+        if(m_spec.m_channels > 8)
+            m_spec.m_channels = 8; // Maximum 8 channels due to planar layout
         break;
     case ENCODE_WMAv2:
         tCodec = AV_CODEC_ID_WMAV2;
         paquet_type_text = "asf";
         m_spec.m_sample_format = AUDIO_F32SYS;
+        if(m_spec.m_channels > 8)
+            m_spec.m_channels = 8; // Maximum 8 channels due to planar layout
         break;
     case ENCODE_WAV_MULAW:
         tCodec = AV_CODEC_ID_PCM_MULAW;
@@ -989,11 +1088,15 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         tCodec = AV_CODEC_ID_ADPCM_MS;
         paquet_type_text = "wav";
         m_spec.m_sample_format = AUDIO_S16SYS;
+        if(m_spec.m_channels > 2)
+            m_spec.m_channels = 2; // This codec supports only stereo or mono
         break;
     case ENCODE_WAV_ADPCM_IMA:
         tCodec = AV_CODEC_ID_ADPCM_IMA_WAV;
         paquet_type_text = "wav";
         m_spec.m_sample_format = AUDIO_S16SYS;
+        if(m_spec.m_channels > 2)
+            m_spec.m_channels = 2; // This codec supports only stereo or mono
         break;
     case ENCODE_AIFF:
         break;
@@ -1044,7 +1147,7 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         break;
     }
 
-    m_spec.m_frame_size = m_spec.m_channels * (SDL_AUDIO_BITSIZE(m_spec.m_sample_format) / 8);
+    m_spec.updateFrameSize();
 
     p->schannels = m_spec.m_channels;
     p->select_chgannel_layout();
@@ -1063,33 +1166,22 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
 
     p->audio_enc_ctx->sample_rate = p->srate;
 #if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
-    av_channel_layout_from_mask(&p->audio_enc_ctx->ch_layout, p->dst_ch_layout);
+    p->audio_enc_ctx->ch_layout.order = p->dst_ch_layout > 8 ? AV_CHANNEL_ORDER_CUSTOM : AV_CHANNEL_ORDER_NATIVE;
     p->audio_enc_ctx->ch_layout.nb_channels = p->dst_channels;
+    av_channel_layout_from_mask(&p->audio_enc_ctx->ch_layout, p->dst_ch_layout);
 #else
     p->audio_enc_ctx->channels = p->dst_channels;
     p->audio_enc_ctx->channel_layout = p->dst_ch_layout;
 #endif
 
-    if(avcodec_open2(p->audio_enc_ctx, p->codec, nullptr) < 0)
+    ret = avcodec_open2(p->audio_enc_ctx, p->codec, nullptr);
+    if(ret < 0)
     {
-        m_lastError = "FFMPEG: Could not open codec";
+        m_lastError = "FFMPEG: Could not open codec: ";
+        m_lastError += mix_av_err2str(ret);
         close();
         return false;
     }
-
-    int buffer_size = av_samples_get_buffer_size(NULL,
-                                                 p->dst_channels,
-                                                 p->audio_enc_ctx->frame_size,
-                                                 p->audio_enc_ctx->sample_fmt, 0);
-    if(buffer_size < 0)
-    {
-        m_lastError = "FFMPEG: Failed to calculate buffer size";
-        m_lastError += mix_av_err2str(buffer_size);
-        close();
-        return false;
-    }
-
-    m_io_buffer.resize(buffer_size);
 
     ret = avformat_alloc_output_context2(&p->ofmt_ctx, nullptr, paquet_type_text, nullptr);
     if(ret < 0)
@@ -1100,7 +1192,7 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         return false;
     }
 
-    p->audio_stream = avformat_new_stream(p->ofmt_ctx, NULL);
+    p->audio_stream = avformat_new_stream(p->ofmt_ctx, p->audio_enc_ctx->codec);
     if(!p->audio_stream)
     {
         m_lastError = "FFMPEG: Could not allocate encode stream";
@@ -1115,22 +1207,32 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
 
     output_codec_context->codec_id = p->audio_enc_ctx->codec_id;
     output_codec_context->codec_type = AVMEDIA_TYPE_AUDIO;
-    output_codec_context->codec_tag = 0;
-    output_codec_context->bit_rate = 0;
-    output_codec_context->extradata = nullptr;
-    output_codec_context->extradata_size = 0;
+    output_codec_context->codec_tag = p->audio_enc_ctx->codec_tag;
+    output_codec_context->bit_rate = p->audio_enc_ctx->bit_rate;
+    output_codec_context->extradata = p->audio_enc_ctx->extradata;
+    output_codec_context->extradata_size = p->audio_enc_ctx->extradata_size;
     output_codec_context->sample_rate = p->srate;
+    output_codec_context->format = p->dst_sample_fmt;
 #if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
-    av_channel_layout_from_mask(&output_codec_context->ch_layout, p->dst_ch_layout);
-    output_codec_context->ch_layout.nb_channels = p->dst_channels;
+    SDL_memcpy(&output_codec_context->ch_layout, &p->audio_enc_ctx->ch_layout, sizeof(AVChannelLayout));
 #else
     output_codec_context->channel_layout = p->dst_ch_layout;
     output_codec_context->channels = p->dst_channels;
 #endif
 
-    p->avio_out = avio_alloc_context(m_io_buffer.data(),
-                                     m_io_buffer.size(),
-                                     AVIO_FLAG_READ_WRITE,
+    p->in_buffer = (uint8_t *)av_malloc(AUDIO_INBUF_SIZE);
+    p->in_buffer_size = AUDIO_INBUF_SIZE;
+
+    if(!p->in_buffer)
+    {
+        m_lastError = "FFMPEG: Out of memory";
+        close();
+        return false;
+    }
+
+    p->avio_out = avio_alloc_context(p->in_buffer,
+                                     p->in_buffer_size,
+                                     AVIO_FLAG_READ_WRITE | AVIO_FLAG_DIRECT,
                                      this,
                                      _rw_read_buffer,
                                      md_audio_ffmpeg_rw_write_cb,
@@ -1139,6 +1241,9 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     if(!p->avio_out)
     {
         m_lastError = "FFMPEG: Failed to initialize AVIO interface";
+        av_free(p->in_buffer);
+        p->in_buffer = nullptr;
+        p->in_buffer_size = 0;
         close();
         return false;
     }
@@ -1148,7 +1253,7 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     p->pts_counter = 0;
 
     p->ofmt_ctx->pb = p->avio_out;
-    p->ofmt_ctx->flags = AVFMT_FLAG_CUSTOM_IO;
+    p->ofmt_ctx->url = proto;
 
     // Init resampler
     if(p->src_ch_layout != p->dst_ch_layout || p->schannels != p->dst_channels || p->sfmt != p->dst_sample_fmt)
@@ -1161,11 +1266,13 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         p->merge_buffer.clear();
 
 #if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
-        av_channel_layout_from_mask(&layout_src, p->src_ch_layout);
+        layout_src.order = p->schannels > 8 ? AV_CHANNEL_ORDER_CUSTOM : AV_CHANNEL_ORDER_NATIVE;
         layout_src.nb_channels = p->schannels;
+        av_channel_layout_from_mask(&layout_src, p->src_ch_layout);
 
-        av_channel_layout_from_mask(&layout_dst, p->dst_ch_layout);
+        layout_dst.order = p->dst_channels > 8 ? AV_CHANNEL_ORDER_CUSTOM : AV_CHANNEL_ORDER_NATIVE;
         layout_dst.nb_channels = p->dst_channels;
+        av_channel_layout_from_mask(&layout_dst, p->dst_ch_layout);
 
         av_opt_set_chlayout(p->swr_ctx, "in_chlayout",  &layout_src, 0);
         av_opt_set_chlayout(p->swr_ctx, "out_chlayout", &layout_dst, 0);
@@ -1203,13 +1310,18 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         return false;
     }
 
-    p->encode_frame->nb_samples = AUDIO_INBUF_SIZE;
+    p->required_frame_size = p->audio_enc_ctx->frame_size;
+    if(p->required_frame_size <= 0)
+        p->required_frame_size = 2048; // Default block size
+
+    p->encode_frame->nb_samples = p->required_frame_size;
     p->encode_frame->format = p->dst_sample_fmt;
     p->encode_frame->sample_rate = p->srate;
 
 #if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
-    av_channel_layout_from_mask(&p->encode_frame->ch_layout, p->src_ch_layout);
+    p->encode_frame->ch_layout.order = p->dst_channels > 8 ? AV_CHANNEL_ORDER_CUSTOM : AV_CHANNEL_ORDER_NATIVE;
     p->encode_frame->ch_layout.nb_channels = p->dst_channels;
+    av_channel_layout_from_mask(&p->encode_frame->ch_layout, p->src_ch_layout);
 #else
     p->encode_frame->channel_layout = p->dst_ch_layout;
     p->encode_frame->channels = p->dst_channels;
@@ -1224,6 +1336,13 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         return false;
     }
 
+    m_spec.updateFrameSize();
+
+    // Initialise the receive buffer
+    m_buffer_pos = 0;
+    m_buffer_left = m_spec.m_frame_size * p->required_frame_size;
+    m_io_buffer.resize(m_buffer_left);
+
     return true;
 #else
     (void)file; (void)dstSpec;
@@ -1236,6 +1355,8 @@ bool MDAudioFFMPEG::close()
 {
     if(p->encode_frame)
     {
+        // Flush buffer if anything left
+        proceed_encode_buffer();
         // Finalize encode video!
         encode_frame(nullptr);
 
@@ -1244,22 +1365,22 @@ bool MDAudioFFMPEG::close()
         p->encode_frame = nullptr;
     }
 
-    if(p->ofmt_ctx)
-    {
-        av_write_trailer(p->ofmt_ctx);
-        avio_context_free(&p->ofmt_ctx->pb);
-        avformat_free_context(p->ofmt_ctx);
-        p->avio_out = nullptr;
-        p->ofmt_ctx = nullptr;
-    }
+    // if(p->ofmt_ctx)
+    // {
+    //     av_write_trailer(p->ofmt_ctx);
+    //     avio_context_free(&p->ofmt_ctx->pb);
+    //     avformat_free_context(p->ofmt_ctx);
+    //     p->avio_out = nullptr;
+    //     p->ofmt_ctx = nullptr;
+    // }
 
-    if(p->avio_out)
-    {
-        avio_context_free(&p->avio_out);
-        if(p->fmt_ctx)
-            p->fmt_ctx->pb = nullptr;
-        p->avio_out = nullptr;
-    }
+    // if(p->avio_out)
+    // {
+    //     avio_context_free(&p->avio_out);
+    //     if(p->fmt_ctx)
+    //         p->fmt_ctx->pb = nullptr;
+    //     p->avio_out = nullptr;
+    // }
 
     if(p->audio_enc_ctx)
     {
@@ -1381,110 +1502,25 @@ retry:
 size_t MDAudioFFMPEG::writeChunk(uint8_t *in, size_t inSize)
 {
 #ifdef MOONDUST_ENCODE_FFMPEG
-    size_t unpadded_linesize;
-    size_t sample_size;
     size_t left = inSize;
     size_t to_send_bytes;
-    int ret;
 
-    if(p->swr_ctx)
+    while(left > 0)
     {
-        while(left > 0)
+        to_send_bytes = SDL_min(m_buffer_left, left);
+
+        SDL_memcpy(m_io_buffer.data() + m_buffer_pos, in, to_send_bytes);
+
+        m_buffer_left -= to_send_bytes;
+        m_buffer_pos += to_send_bytes;
+        in += to_send_bytes;
+        left -= to_send_bytes;
+
+        if(m_buffer_left == 0)
         {
-            p->encode_frame->format = p->dst_sample_fmt;
-            sample_size = av_get_bytes_per_sample((enum AVSampleFormat)p->encode_frame->format);
-            to_send_bytes = SDL_min((int)left, p->audio_enc_ctx->frame_size * m_spec.m_frame_size);
-            unpadded_linesize = sample_size * p->dst_channels * (to_send_bytes / m_spec.m_frame_size);
-
-            p->encode_frame->sample_rate = p->srate;
-            av_channel_layout_from_mask(&p->encode_frame->ch_layout, p->dst_ch_layout);
-            p->encode_frame->ch_layout.nb_channels = p->dst_channels;
-
-            if(p->planar)
-            {
-                Uint8 *s[AV_NUM_DATA_POINTERS] = {0, 0, 0, 0, 0, 0, 0, 0};
-                size_t s_num = SDL_min(p->dst_channels, AV_NUM_DATA_POINTERS);
-
-                unpadded_linesize = sample_size * (to_send_bytes / m_spec.m_frame_size);
-
-                if(m_io_buffer_planar.size() < s_num)
-                    m_io_buffer_planar.resize(s_num);
-
-                for(size_t c = 0; c < s_num; ++c)
-                {
-                    if(m_io_buffer_planar[c].size() < (size_t)unpadded_linesize)
-                        m_io_buffer_planar[c].resize(unpadded_linesize);
-
-                    s[c] = m_io_buffer_planar[c].data();
-                }
-
-                p->encode_frame->nb_samples = unpadded_linesize / sample_size;
-                p->encode_frame->pts = p->pts_counter;
-                p->pts_counter += p->encode_frame->nb_samples;
-
-                ret = swr_convert(p->swr_ctx,
-                                  s, p->encode_frame->nb_samples,
-                                  (const Uint8**)&in, to_send_bytes / m_spec.m_frame_size);
-
-                if(ret < 0)
-                {
-                    m_lastError = "FFMPEG: Failed to convert samples!";
-                    return 0;
-                }
-
-                for(size_t c = 0; c < s_num; ++c)
-                {
-                    p->encode_frame->data[c] = s[c];
-                    p->encode_frame->linesize[c] = unpadded_linesize;
-                    p->encode_frame->extended_data = p->encode_frame->data;
-                }
-            }
-            else
-            {
-                if(m_io_buffer.size() < (size_t)unpadded_linesize)
-                    m_io_buffer.resize(unpadded_linesize);
-
-                p->encode_frame->nb_samples = unpadded_linesize / (sample_size * p->dst_channels);
-                p->encode_frame->pts = p->pts_counter;
-                p->pts_counter += p->encode_frame->nb_samples;
-
-                Uint8 *s = m_io_buffer.data();
-
-                ret = swr_convert(p->swr_ctx,
-                                  &s, p->encode_frame->nb_samples,
-                                  (const Uint8**)&in, to_send_bytes / m_spec.m_frame_size);
-
-                if(ret < 0)
-                {
-                    m_lastError = "FFMPEG: Failed to convert samples!";
-                    return 0;
-                }
-
-                avcodec_fill_audio_frame(p->encode_frame, p->dst_channels, p->dst_sample_fmt, m_io_buffer.data(), m_io_buffer.size(), 0);
-            }
-
-            if(encode_frame(p->encode_frame) < 0)
-            {
-                m_lastError.insert(0, "FFMPEG: Failed to encode frame: ");
+            if(!proceed_encode_buffer())
                 return 0;
-            }
-
-            av_frame_unref(p->encode_frame);
-            left -= to_send_bytes;
-            in += to_send_bytes;
         }
-    }
-    else
-    {
-        avcodec_fill_audio_frame(p->encode_frame, p->dst_channels, p->dst_sample_fmt, in, inSize, m_spec.m_frame_size);
-
-        if(encode_frame(p->encode_frame) < 0)
-        {
-            m_lastError = "FFMPEG: Failed to encode frame!";
-            return 0;
-        }
-
-        av_frame_unref(p->encode_frame);
     }
 
     return inSize;
