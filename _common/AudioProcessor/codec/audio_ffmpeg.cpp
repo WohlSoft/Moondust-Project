@@ -747,8 +747,10 @@ int MDAudioFFMPEG::proceed_encode_buffer()
 
         p->encode_frame->nb_samples = unpadded_linesize / dst_frame_size;
 
-        p->encode_frame->pts = av_rescale_q(p->pts_counter, (AVRational){1, p->srate}, p->audio_enc_ctx->time_base);
+        p->encode_frame->pts = p->pts_counter;
         p->pts_counter += p->encode_frame->nb_samples;
+
+        p->encode_frame->nb_samples = m_buffer_pos / m_spec.m_frame_size;
 
         ret = swr_convert(p->swr_ctx,
                           p->encode_frame->data, p->encode_frame->nb_samples,
@@ -772,7 +774,7 @@ int MDAudioFFMPEG::proceed_encode_buffer()
         SDL_memcpy(p->encode_frame->data[0], in, m_buffer_pos);
         p->encode_frame->nb_samples = m_buffer_pos / m_spec.m_frame_size;
 
-        p->encode_frame->pts = av_rescale_q(p->pts_counter, (AVRational){1, p->srate}, p->audio_enc_ctx->time_base);
+        p->encode_frame->pts = p->pts_counter; // av_rescale_q(p->pts_counter, (AVRational){1, p->srate}, p->audio_enc_ctx->time_base);
         p->pts_counter += p->encode_frame->nb_samples;
 
         if(encode_frame(p->encode_frame) < 0)
@@ -1023,7 +1025,7 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     AVDictionary *opt = nullptr;
     const char *paquet_type_text = "wav";
     const char proto[] = "file:///sdl_rwops";
-    int ret;
+    int ret, block_align = 0;
 
     close();
 
@@ -1044,6 +1046,7 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         m_spec.m_sample_format = AUDIO_F32SYS;
         if(m_spec.m_channels > 8)
             m_spec.m_channels = 8; // Maximum 8 channels due to planar layout
+        block_align = 0;
         break;
     case ENCODE_WMAv2:
         tCodec = AV_CODEC_ID_WMAV2;
@@ -1051,6 +1054,7 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         m_spec.m_sample_format = AUDIO_F32SYS;
         if(m_spec.m_channels > 8)
             m_spec.m_channels = 8; // Maximum 8 channels due to planar layout
+        block_align = 0;
         break;
     case ENCODE_WAV_MULAW:
         tCodec = AV_CODEC_ID_PCM_MULAW;
@@ -1068,6 +1072,7 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         m_spec.m_sample_format = AUDIO_S16SYS;
         if(m_spec.m_channels > 2)
             m_spec.m_channels = 2; // This codec supports only stereo or mono
+        block_align = 1024;
         break;
     case ENCODE_WAV_ADPCM_IMA:
         tCodec = AV_CODEC_ID_ADPCM_IMA_WAV;
@@ -1075,6 +1080,7 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         m_spec.m_sample_format = AUDIO_S16SYS;
         if(m_spec.m_channels > 2)
             m_spec.m_channels = 2; // This codec supports only stereo or mono
+        block_align = 1 + (1024 * m_spec.m_channels);
         break;
     case ENCODE_AIFF:
         break;
@@ -1143,6 +1149,7 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         m_spec.m_sample_rate = p->srate;
 
     p->audio_enc_ctx->sample_rate = p->srate;
+    p->audio_enc_ctx->block_align = block_align;
     p->audio_enc_ctx->time_base = (AVRational){1, p->srate};
 
 #if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
@@ -1192,6 +1199,7 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     output_codec_context->codec_type = AVMEDIA_TYPE_AUDIO;
     output_codec_context->codec_tag = p->audio_enc_ctx->codec_tag;
     output_codec_context->bit_rate = p->audio_enc_ctx->bit_rate;
+    output_codec_context->block_align = p->audio_enc_ctx->block_align;
     output_codec_context->sample_rate = p->srate;
     output_codec_context->format = p->dst_sample_fmt;
 #if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
@@ -1350,6 +1358,7 @@ bool MDAudioFFMPEG::close()
     {
         // Flush buffer if anything left
         proceed_encode_buffer();
+        encode_frame(nullptr);
 
         // Finalize the audio stream
         av_write_trailer(p->ofmt_ctx);
