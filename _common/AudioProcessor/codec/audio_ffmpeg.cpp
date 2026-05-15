@@ -1356,6 +1356,20 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     if((p->ofmt_ctx->oformat->flags & AVFMT_GLOBALHEADER) != 0)
         p->audio_enc_ctx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
 
+
+    if(!m_spec.m_meta_title.empty())
+        av_dict_set(&p->ofmt_ctx->metadata, "title", m_spec.m_meta_title.c_str(), 0);
+
+    if(!m_spec.m_meta_artist.empty())
+        av_dict_set(&p->ofmt_ctx->metadata, "artist", m_spec.m_meta_artist.c_str(), 0);
+
+    if(!m_spec.m_meta_album.empty())
+        av_dict_set(&p->ofmt_ctx->metadata, "album", m_spec.m_meta_album.c_str(), 0);
+
+    if(!m_spec.m_meta_copyright.empty())
+        av_dict_set(&p->ofmt_ctx->metadata, "copyright", m_spec.m_meta_copyright.c_str(), 0);
+
+
     av_dump_format(p->ofmt_ctx, p->stream_index, "<SDL_RWops context 1>", 1);
 
     ret = avformat_write_header(p->ofmt_ctx, &opt);
