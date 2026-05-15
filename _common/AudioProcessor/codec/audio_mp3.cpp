@@ -47,6 +47,7 @@ MDAudioMP3::MDAudioMP3() :
 
 MDAudioMP3::~MDAudioMP3()
 {
+    MDAudioMP3::close();
     delete m_mp3file;
 }
 
