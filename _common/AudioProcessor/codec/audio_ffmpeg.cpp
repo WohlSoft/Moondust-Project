@@ -1044,16 +1044,26 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         tCodec = AV_CODEC_ID_WMAV1;
         paquet_type_text = "asf";
         m_spec.m_sample_format = AUDIO_F32SYS;
+
         if(m_spec.m_channels > 8)
             m_spec.m_channels = 8; // Maximum 8 channels due to planar layout
+
+        if(m_spec.m_sample_rate > 48000)
+            m_spec.m_sample_rate = 48000; // WMA supports maximum 48000
+
         block_align = 0;
         break;
     case ENCODE_WMAv2:
         tCodec = AV_CODEC_ID_WMAV2;
         paquet_type_text = "asf";
         m_spec.m_sample_format = AUDIO_F32SYS;
+
         if(m_spec.m_channels > 8)
             m_spec.m_channels = 8; // Maximum 8 channels due to planar layout
+
+        if(m_spec.m_sample_rate > 48000)
+            m_spec.m_sample_rate = 48000; // WMA supports maximum 48000
+
         block_align = 0;
         break;
     case ENCODE_WAV_MULAW:
@@ -1137,7 +1147,26 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     p->select_chgannel_layout();
 
     p->dst_sample_fmt = p->sfmt;
-    p->audio_enc_ctx->bit_rate = m_spec.bitrate > 0 ? m_spec.bitrate : 128000;
+
+    if(m_spec.vbr)
+    {
+        int quality = m_spec.quality > 0 ? m_spec.quality : 5;
+        p->audio_enc_ctx->bit_rate_tolerance = 1;
+        p->audio_enc_ctx->rc_max_rate = m_spec.bitrate_max > 0 ? m_spec.bitrate_max : 256000;
+        p->audio_enc_ctx->rc_min_rate = m_spec.bitrate_min > 0 ? m_spec.bitrate_min : 64000;
+        p->audio_enc_ctx->flags |= AV_CODEC_FLAG_QSCALE;
+        p->audio_enc_ctx->flags |= AV_CODEC_FLAG_PASS2;
+        p->audio_enc_ctx->global_quality = 20 - (quality - 8);
+    }
+    else
+    {
+        p->audio_enc_ctx->bit_rate_tolerance = 0;
+        p->audio_enc_ctx->bit_rate = m_spec.bitrate > 0 ? m_spec.bitrate : 128000;
+        p->audio_enc_ctx->rc_min_rate = p->audio_enc_ctx->bit_rate;
+        p->audio_enc_ctx->rc_max_rate = p->audio_enc_ctx->bit_rate;
+        p->audio_enc_ctx->flags &= ~AV_CODEC_FLAG_QSCALE;
+        p->audio_enc_ctx->flags |= AV_CODEC_FLAG_PASS1;
+    }
 
     p->find_supported_fmt();
     p->audio_enc_ctx->sample_fmt = p->dst_sample_fmt; // Target sample format, if mismatches, then conversion is required
@@ -1327,6 +1356,8 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
 
     if((p->ofmt_ctx->oformat->flags & AVFMT_GLOBALHEADER) != 0)
         p->audio_enc_ctx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
+
+    av_dump_format(p->ofmt_ctx, p->stream_index, "<SDL_RWops context 1>", 1);
 
     ret = avformat_write_header(p->ofmt_ctx, &opt);
     if(ret < 0)
