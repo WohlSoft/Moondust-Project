@@ -702,6 +702,9 @@ int MDAudioFFMPEG::encode_frame(AVFrame *frame)
 
         av_packet_rescale_ts(p->pkt, p->src_tb, p->audio_stream->time_base);
         p->pkt->stream_index = p->audio_stream->index;
+        p->pkt->pts = frame->pts;
+        p->pkt->dts = frame->pts;
+        p->pkt->duration = p->pts_counter - frame->pts;
 
         ret = av_interleaved_write_frame(p->ofmt_ctx, p->pkt);
 
@@ -1148,6 +1151,8 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
 
     p->dst_sample_fmt = p->sfmt;
 
+    p->audio_enc_ctx->codec_type = AVMEDIA_TYPE_AUDIO;
+
     if(m_spec.vbr)
     {
         int quality = m_spec.quality > 0 ? m_spec.quality : 5;
@@ -1190,15 +1195,6 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     p->audio_enc_ctx->channel_layout = p->dst_ch_layout;
 #endif
 
-    ret = avcodec_open2(p->audio_enc_ctx, p->codec, nullptr);
-    if(ret < 0)
-    {
-        m_lastError = "FFMPEG: Could not open codec: ";
-        m_lastError += mix_av_err2str(ret);
-        close();
-        return false;
-    }
-
     ret = avformat_alloc_output_context2(&p->ofmt_ctx, nullptr, paquet_type_text, nullptr);
     if(ret < 0)
     {
@@ -1216,27 +1212,30 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
         return false;
     }
 
+    ret = avcodec_open2(p->audio_enc_ctx, p->codec, nullptr);
+    if(ret < 0)
+    {
+        m_lastError = "FFMPEG: Could not open codec: ";
+        m_lastError += mix_av_err2str(ret);
+        close();
+        return false;
+    }
+
     p->audio_stream->id = 0;
     p->audio_stream->index = 0;
+    p->stream_index = 0;
 
     output_codec_context = p->audio_stream->codecpar;
-    p->audio_stream->time_base = (AVRational){1, p->srate};
-    SDL_memcpy(&p->src_tb, &p->audio_enc_ctx->time_base, sizeof(AVRational));
-    SDL_memcpy(&p->audio_stream->time_base, &p->audio_enc_ctx->time_base, sizeof(AVRational));
 
-    output_codec_context->codec_id = p->audio_enc_ctx->codec_id;
-    output_codec_context->codec_type = AVMEDIA_TYPE_AUDIO;
-    output_codec_context->codec_tag = p->audio_enc_ctx->codec_tag;
-    output_codec_context->bit_rate = p->audio_enc_ctx->bit_rate;
-    output_codec_context->block_align = p->audio_enc_ctx->block_align;
-    output_codec_context->sample_rate = p->srate;
-    output_codec_context->format = p->dst_sample_fmt;
-#if defined(AVCODEC_NEW_CHANNEL_LAYOUT)
-    SDL_memcpy(&output_codec_context->ch_layout, &p->audio_enc_ctx->ch_layout, sizeof(AVChannelLayout));
-#else
-    output_codec_context->channel_layout = p->dst_ch_layout;
-    output_codec_context->channels = p->dst_channels;
-#endif
+    /* copy the stream parameters to the muxer */
+    ret = avcodec_parameters_from_context(output_codec_context, p->audio_enc_ctx);
+    if (ret < 0)
+    {
+        m_lastError = "FFMPEG: Could not copy the stream parameters: ";
+        m_lastError += mix_av_err2str(ret);
+        close();
+        return false;
+    }
 
     p->in_buffer = (uint8_t *)av_malloc(AUDIO_INBUF_SIZE);
     p->in_buffer_size = AUDIO_INBUF_SIZE;
@@ -1345,7 +1344,7 @@ bool MDAudioFFMPEG::openWrite(SDL_RWops *file, const MDAudioFileSpec &dstSpec)
     p->encode_frame->channels = p->dst_channels;
 #endif
 
-    ret = av_frame_get_buffer(p->encode_frame, 2);
+    ret = av_frame_get_buffer(p->encode_frame, 0);
     if(ret < 0)
     {
         m_lastError = "FFMPEG: Failed to allocate frame's buffer: ";
@@ -1396,12 +1395,6 @@ bool MDAudioFFMPEG::close()
         avio_flush(p->avio_out);
     }
 
-    if(p->encode_frame)
-    {
-        av_frame_free(&p->encode_frame);
-        p->encode_frame = nullptr;
-    }
-
     if(p->audio_enc_ctx)
     {
         avcodec_free_context(&p->audio_enc_ctx);
@@ -1412,6 +1405,12 @@ bool MDAudioFFMPEG::close()
     {
         avcodec_free_context(&p->audio_dec_ctx);
         p->audio_dec_ctx = nullptr;
+    }
+
+    if(p->encode_frame)
+    {
+        av_frame_free(&p->encode_frame);
+        p->encode_frame = nullptr;
     }
 
     if(p->avio_out)
