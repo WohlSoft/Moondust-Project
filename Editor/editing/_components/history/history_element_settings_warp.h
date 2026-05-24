@@ -20,6 +20,9 @@ public:
     virtual void redo();
 
 private:
+    void removeDoorEntry(LevelDoor *door);
+    void historyRemoveDoors(const LevelDoor &door, QGraphicsItem *item);
+
     int m_array_id;
     HistorySettings::LevelSettingSubType m_subtype;
     QVariant m_modData;

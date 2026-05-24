@@ -907,6 +907,18 @@ void ItemDoor::removeFromArray()
     syncPairItems();
 }
 
+void ItemDoor::removeFromArrayI(int doorIndex)
+{
+    if(doorIndex >= m_scene->m_data->doors.size())
+        return; // Invalid array entry!
+
+    // Sync the state from the source to avoid further sync hallucinations!
+    m_data = m_scene->m_data->doors[doorIndex];
+
+    // Call the next step!
+    ItemDoor::removeFromArray();
+}
+
 
 void ItemDoor::returnBack()
 {

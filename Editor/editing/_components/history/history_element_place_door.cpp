@@ -53,8 +53,10 @@ void HistoryElementPlaceDoor::redo()
     bool found = false;
     LevelDoor door;
 
-    foreach(LevelDoor findDoor, lvlScene->m_data->doors){
-        if(m_door.meta.array_id == findDoor.meta.array_id){
+    foreach(LevelDoor findDoor, lvlScene->m_data->doors)
+    {
+        if(m_door.meta.array_id == findDoor.meta.array_id)
+        {
             door = findDoor;
             found = true;
             break;
@@ -66,12 +68,15 @@ void HistoryElementPlaceDoor::redo()
 
     bool isEntrance = m_door.isSetIn;
 
-    if(isEntrance) {
+    if(isEntrance)
+    {
         door.ix = m_door.ix;
         door.iy = m_door.iy;
         door.isSetIn = true;
         lvlScene->placeDoorEnter(door, false, false);
-    } else {
+    }
+    else
+    {
         door.ox = m_door.ox;
         door.oy = m_door.oy;
         door.isSetOut = true;
@@ -84,7 +89,13 @@ void HistoryElementPlaceDoor::redo()
 
 void HistoryElementPlaceDoor::historyRemoveDoors(const LevelDoor &/*door*/, QGraphicsItem* item)
 {
-    ((ItemDoor *)item)->removeFromArray();
-    if(item) delete (item);
+    ItemDoor *sceneItem = qgraphicsitem_cast<ItemDoor*>(item);
+
+    if(sceneItem)
+        sceneItem->removeFromArray();
+
+    if(item)
+        delete (item);
+
     MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 }

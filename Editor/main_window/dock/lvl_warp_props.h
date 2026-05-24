@@ -95,6 +95,7 @@ private slots:
     void on_WarpAllowNPC_IL_clicked(bool checked);
 
 private:
+    void syncAllowedPoints(LevelDoor *warp, unsigned int warpId);
     void recountWarpIndexes();
 
     unsigned int getWarpId();
