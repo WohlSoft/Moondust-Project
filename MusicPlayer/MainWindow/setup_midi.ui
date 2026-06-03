@@ -372,7 +372,7 @@
         </item>
         <item>
          <property name="text">
-          <string>Nuked OPL3 1.7</string>
+          <string>Nuked OPL3 1.8 Fast</string>
          </property>
         </item>
         <item>
@@ -413,6 +413,11 @@
         <item>
          <property name="text">
           <string>Nuked OPL2 Lite (9 2-op voices only)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Nuked CQM (Creative's OPL3 clone)</string>
          </property>
         </item>
        </widget>

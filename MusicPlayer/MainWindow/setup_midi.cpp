@@ -348,6 +348,9 @@ static int toOplEmu(int index)
     case 9:
         index = ADLMIDI_OPL3_EMU_NUKED_OPL2_LITE;
         break;
+    case 10:
+        index = ADLMIDI_OPL3_EMU_NUKED_CQM;
+        break;
     }
     return index;
 }
