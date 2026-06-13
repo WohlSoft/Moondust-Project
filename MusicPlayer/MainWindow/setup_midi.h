@@ -66,6 +66,7 @@ private slots:
 
     void on_opnNumChips_editingFinished();
     void on_adlNumChips_editingFinished();
+    void on_edmidiNumModules_editingFinished();
 
     void on_timidityCfgPathBrowse_clicked();
     void on_timidityCfgPath_editingFinished();
@@ -82,6 +83,11 @@ private slots:
     void on_opn_use_custom_clicked(bool checked);
     void on_adl_use_custom_clicked(bool checked);
 
+    void on_edmidiModeEMIDI_clicked();
+    void on_opnModeEMIDI_clicked();
+    void on_fluidModeEMIDI_clicked();
+    void on_adlModeEMIDI_clicked();
+
 signals:
     void songRestartNeeded();
 
@@ -92,6 +98,7 @@ private:
 
     void restartForAdl();
     void restartForOpn();
+    void restartForEdMidi();
     void restartForTimidity();
     void restartForFluidSynth();
     int m_gainFactor = 100;
@@ -99,6 +106,7 @@ private:
     bool m_setupLock = false;
     int  m_numChipsAdlPrev = 0;
     int  m_numChipsOpnPrev = 0;
+    int  m_numModsEdMidiPrev = 0;
 };
 
 #endif // SETUP_MIDI_H

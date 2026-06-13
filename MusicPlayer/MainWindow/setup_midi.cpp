@@ -81,6 +81,7 @@ void SetupMidi::loadSetup()
     ui->adlSoftPan->setChecked(setup.value("ADLMIDI-SoftPan", true).toBool());
     ui->adlRunAtPcmRate->setChecked(setup.value("ADLMIDI-RunAtPcmRate", false).toBool());
     ui->adlLowQuality->setChecked(setup.value("ADLMIDI-LowQuality", false).toBool());
+    ui->adlModeEMIDI->setChecked(setup.value("ADLMIDI-ModeEMIDI", false).toBool());
 
     ui->opnEmulator->setCurrentIndex(setup.value("OPNMIDI-Emulator", 0).toInt());
     ui->opnNumChips->setValue(setup.value("OPNMIDI-NumChips", 8).toInt());
@@ -92,6 +93,12 @@ void SetupMidi::loadSetup()
     ui->opnSoftPan->setChecked(setup.value("OPNMIDI-SoftPan", true).toBool());
     ui->opnRunAtPcmRate->setChecked(setup.value("OPNMIDI-RunAtPcmRate", false).toBool());
     ui->opnLowQuality->setChecked(setup.value("OPNMIDI-LowQuality", false).toBool());
+    ui->opnModeEMIDI->setChecked(setup.value("OPNMIDI-ModeEMIDI", false).toBool());
+
+    ui->fluidModeEMIDI->setChecked(setup.value("FluidSynth-ModeEMIDI", false).toBool());
+
+    ui->edmidiNumModules->setValue(setup.value("EDMIDI-NumModules", 2).toInt());
+    ui->edmidiModeEMIDI->setChecked(setup.value("EDMIDI-ModeEMIDI", false).toBool());
 
     ui->timidityCfgPath->setText(setup.value("Timidity-Config-Path", QString()).toString());
     ui->fluidSynthSF2Paths->setText(setup.value("FluidSynth-SoundFonts", QString()).toString());
@@ -124,6 +131,7 @@ void SetupMidi::saveSetup()
     setup.setValue("ADLMIDI-SoftPan", ui->adlSoftPan->checkState());
     setup.setValue("ADLMIDI-RunAtPcmRate", ui->adlRunAtPcmRate->checkState());
     setup.setValue("ADLMIDI-LowQuality", ui->adlLowQuality->checkState());
+    setup.setValue("ADLMIDI-ModeEMIDI", ui->adlModeEMIDI->isChecked());
 
     setup.setValue("ADLMIDI-Bank", ui->adl_bank->text());
     setup.setValue("ADLMIDI-Bank-UseCustom", ui->adl_use_custom->isChecked());
@@ -136,9 +144,15 @@ void SetupMidi::saveSetup()
     setup.setValue("OPNMIDI-SoftPan", ui->opnSoftPan->checkState());
     setup.setValue("OPNMIDI-RunAtPcmRate", ui->opnRunAtPcmRate->checkState());
     setup.setValue("OPNMIDI-LowQuality", ui->opnLowQuality->checkState());
+    setup.setValue("OPNMIDI-ModeEMIDI", ui->opnModeEMIDI->isChecked());
 
     setup.setValue("OPNMIDI-Bank", ui->opn_bank->text());
     setup.setValue("OPNMIDI-Bank-UseCustom", ui->opn_use_custom->isChecked());
+
+    setup.setValue("FluidSynth-ModeEMIDI", ui->fluidModeEMIDI->checkState());
+
+    setup.setValue("EDMIDI-NumModules", ui->edmidiNumModules->value());
+    setup.setValue("EDMIDI-ModeEMIDI", ui->edmidiModeEMIDI->isChecked());
 
     setup.setValue("Timidity-Config-Path", ui->timidityCfgPath->text());
     setup.setValue("FluidSynth-SoundFonts", ui->fluidSynthSF2Paths->text());
@@ -163,6 +177,7 @@ void SetupMidi::sendSetup()
     Mix_ADLMIDI_setFullPanStereo(ui->adlSoftPan->isChecked());
     Mix_ADLMIDI_setRunAtPcmRate(ui->adlRunAtPcmRate->isChecked());
     Mix_ADLMIDI_setLowQualityMode(ui->adlLowQuality->isChecked());
+    Mix_ADLMIDI_setModeEMIDI(ui->adlModeEMIDI->isChecked());
 
     ui->adl_bank->setModified(true);
     on_adl_bank_editingFinished();
@@ -173,9 +188,15 @@ void SetupMidi::sendSetup()
     Mix_OPNMIDI_setChannelAllocMode(ui->opnChanAlloc->currentIndex() - 1);
     Mix_OPNMIDI_setAutoArpeggio(tristateToInt(ui->opn_autoArpeggio->checkState()));
     Mix_OPNMIDI_setFullPanStereo(ui->opnSoftPan->isChecked());
+    Mix_OPNMIDI_setModeEMIDI(ui->opnModeEMIDI->isChecked());
 
     ui->opn_bank->setModified(true);
     on_opn_bank_editingFinished();
+
+    Mix_FLUIDSYNTH_setModeEMIDI(ui->fluidModeEMIDI->isChecked());
+
+    Mix_EDMIDI_setModulesNum(ui->edmidiNumModules->value());
+    Mix_EDMIDI_setModeEMIDI(ui->edmidiModeEMIDI->isChecked());
 
     ui->timidityCfgPath->setModified(true);
     on_timidityCfgPath_editingFinished();
@@ -468,6 +489,7 @@ void SetupMidi::updateWindowLayout()
     ui->opnmidi_extra->setVisible(ui->mididevice->currentIndex() == MIDI_OPNMIDI);
     ui->timidity_extra->setVisible(ui->mididevice->currentIndex() == MIDI_Timidity);
     ui->fluidsynth_extra->setVisible(ui->mididevice->currentIndex() == MIDI_Fluidsynth);
+    ui->edmidi_extra->setVisible(ui->mididevice->currentIndex() == MIDI_EDMIDI);
     adjustSize();
     update();
 }
@@ -613,6 +635,29 @@ void SetupMidi::on_opnNumChips_editingFinished()
 #endif
 }
 
+void SetupMidi::on_edmidiNumModules_editingFinished()
+{
+#ifdef SDL_MIXER_X
+    if(m_setupLock)
+        return;
+    if(m_numModsEdMidiPrev != ui->edmidiNumModules->value())
+    {
+        m_numModsEdMidiPrev = ui->edmidiNumModules->value();
+
+        if(m_numModsEdMidiPrev % 2 != 0) // Value must be multiple 2!
+        {
+            ++m_numModsEdMidiPrev;
+            ui->edmidiNumModules->blockSignals(true);
+            ui->edmidiNumModules->setValue(m_numModsEdMidiPrev);
+            ui->edmidiNumModules->blockSignals(false);
+        }
+
+        Mix_EDMIDI_setModulesNum(ui->edmidiNumModules->value());
+        restartForEdMidi();
+        updateAutoArgs();
+    }
+#endif
+}
 
 void SetupMidi::on_opn_autoArpeggio_clicked()
 {
@@ -844,6 +889,8 @@ void SetupMidi::updateAutoArgs()
             args += QString("o%1;").arg(ui->adlChanAlloc->currentIndex() - 1);
         if(ui->adl_autoArpeggio->checkState() == Qt::Checked)
             args += QString("j%1;").arg(tristateToInt(ui->adl_autoArpeggio->checkState()));
+        if(ui->adlModeEMIDI->checkState() == Qt::Checked)
+            args += QString("i%1;").arg(tristateToInt(ui->adlModeEMIDI->checkState()));
         if(ui->adl_use_custom->checkState() == Qt::Checked && !ui->adl_bank->text().isEmpty())
             args += QString("x=%1;").arg(ui->adl_bank->text());
         if(m_gainFactor != m_gainDefault)
@@ -858,6 +905,8 @@ void SetupMidi::updateAutoArgs()
             args += QString("l%1;").arg(ui->opnVolumeModel->currentIndex());
         if(ui->opnNumChips->value() != 8)
             args += QString("c%1;").arg(ui->opnNumChips->value());
+        if(ui->opnModeEMIDI->checkState() == Qt::Checked)
+            args += QString("i%1;").arg(tristateToInt(ui->opnModeEMIDI->checkState()));
         if(ui->opn_autoArpeggio->checkState() == Qt::Checked)
             args += QString("j%1;").arg(tristateToInt(ui->opn_autoArpeggio->checkState()));
         if(ui->opnChanAlloc->currentIndex() != 0)
@@ -872,10 +921,16 @@ void SetupMidi::updateAutoArgs()
             args += QString("x=%1;").arg(ui->fluidSynthSF2Paths->text());
         if(m_gainFactor != m_gainDefault)
             args += QString("g=%1;").arg(float(m_gainFactor) * 0.01f);
+        if(ui->fluidModeEMIDI->checkState() == Qt::Checked)
+            args += QString("i%1;").arg(tristateToInt(ui->fluidModeEMIDI->checkState()));
         break;
     case 5:
         if(m_gainFactor != m_gainDefault)
             args += QString("g=%1;").arg(float(m_gainFactor) * 0.01f);
+        if(ui->edmidiNumModules->value() != 2)
+            args += QString("m%1;").arg(ui->edmidiNumModules->value());
+        if(ui->edmidiModeEMIDI->checkState() == Qt::Checked)
+            args += QString("i%1;").arg(tristateToInt(ui->edmidiModeEMIDI->checkState()));
         break;
     }
     ui->autoArguments->setText(args);
@@ -967,6 +1022,19 @@ void SetupMidi::restartForOpn()
 #endif
 }
 
+void SetupMidi::restartForEdMidi()
+{
+#ifdef SDL_MIXER_X
+    if(Mix_PlayingMusicStream(PGE_MusicPlayer::s_playMus) &&
+      (PGE_MusicPlayer::type == MUS_MID) &&
+      (Mix_GetMidiPlayer() == MIDI_EDMIDI)
+    )
+    {
+        emit songRestartNeeded();
+    }
+#endif
+}
+
 void SetupMidi::restartForTimidity()
 {
 #ifdef SDL_MIXER_X
@@ -990,5 +1058,52 @@ void SetupMidi::restartForFluidSynth()
     {
         emit songRestartNeeded();
     }
+#endif
+}
+
+
+void SetupMidi::on_adlModeEMIDI_clicked()
+{
+#ifdef SDL_MIXER_X
+    if(m_setupLock)
+        return;
+    Mix_ADLMIDI_setModeEMIDI(ui->adlModeEMIDI->isChecked());
+    restartForAdl();
+    updateAutoArgs();
+#endif
+}
+
+
+void SetupMidi::on_opnModeEMIDI_clicked()
+{
+#ifdef SDL_MIXER_X
+    if(m_setupLock)
+        return;
+    Mix_OPNMIDI_setModeEMIDI(ui->opnModeEMIDI->isChecked());
+    restartForOpn();
+    updateAutoArgs();
+#endif
+}
+
+
+void SetupMidi::on_fluidModeEMIDI_clicked()
+{
+#ifdef SDL_MIXER_X
+    if(m_setupLock)
+        return;
+    Mix_FLUIDSYNTH_setModeEMIDI(ui->fluidModeEMIDI->isChecked());
+    restartForFluidSynth();
+    updateAutoArgs();
+#endif
+}
+
+void SetupMidi::on_edmidiModeEMIDI_clicked()
+{
+#ifdef SDL_MIXER_X
+    if(m_setupLock)
+        return;
+    Mix_EDMIDI_setModeEMIDI(ui->edmidiModeEMIDI->isChecked());
+    restartForEdMidi();
+    updateAutoArgs();
 #endif
 }
