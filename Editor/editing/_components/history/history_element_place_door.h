@@ -24,6 +24,7 @@ public slots:
     void historyRemoveDoors(const LevelDoor &door, QGraphicsItem *item);
 private:
     LevelDoor m_door;
+    bool m_isEntrance;
 };
 
 #endif // HISTORYELEMENTPLACEDOOR_H

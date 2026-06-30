@@ -307,12 +307,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     auto *item = dynamic_cast<ItemDoor *>(*it);
                     Q_ASSERT(item);
-                    //Applay move into main array
-                    //historySourceBuffer.water.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
-                    LevelDoor oldDoorData = item->m_data;
-                    oldDoorData.isSetIn = true;
-                    oldDoorData.isSetOut = false;
-                    historySourceBuffer.doors.push_back(oldDoorData);
+                    historySourceBuffer.doors.push_back(item->m_data);
                     item->m_data.ix = (long)(*it)->scenePos().x();
                     item->m_data.iy = (long)(*it)->scenePos().y();
 
@@ -323,23 +318,14 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                     }
 
                     item->arrayApply();
-                    LevelDoor newDoorData = item->m_data;
-                    newDoorData.isSetIn = true;
-                    newDoorData.isSetOut = false;
-                    historyBuffer.doors.push_back(newDoorData);
-                    //historyBuffer.water.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
+                    historyBuffer.doors.push_back(item->m_data);
                     s->m_data->meta.modified = true;
                 }
                 else if(ObjType == ItemTypes::LVL_META_DoorExit)
                 {
                     auto *item = dynamic_cast<ItemDoor *>(*it);
                     Q_ASSERT(item);
-                    //Applay move into main array
-                    //historySourceBuffer.water.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
-                    LevelDoor oldDoorData = dynamic_cast<ItemDoor *>(*it)->m_data;
-                    oldDoorData.isSetIn = false;
-                    oldDoorData.isSetOut = true;
-                    historySourceBuffer.doors.push_back(oldDoorData);
+                    historySourceBuffer.doors.push_back(item->m_data);
                     item->m_data.ox = (long)(*it)->scenePos().x();
                     item->m_data.oy = (long)(*it)->scenePos().y();
 
@@ -350,11 +336,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                     }
 
                     item->arrayApply();
-                    LevelDoor newDoorData = item->m_data;
-                    newDoorData.isSetIn = false;
-                    newDoorData.isSetOut = true;
-                    historyBuffer.doors.push_back(newDoorData);
-                    //historyBuffer.water.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
+                    historyBuffer.doors.push_back(item->m_data);
                     s->m_data->meta.modified = true;
                 }
                 else if(ObjType == ItemTypes::LVL_Player)

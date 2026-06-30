@@ -12,6 +12,7 @@
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/world/wld_scene.h>
 #include <common_features/main_window_ptr.h>
+#include <main_window/dock/lvl_warp_props.h>
 
 #include <editing/_components/history/item_searcher.h>
 
@@ -170,6 +171,7 @@ void HistoryElementItemSetting::processLevelUndo()
         return;
 
     ItemSearcher levelSearcher;
+    bool syncWarpsDialogue = false;
 
     if(m_modLevelSetting == HistorySettings::SETTING_INVISIBLE)
     {
@@ -231,56 +233,67 @@ void HistoryElementItemSetting::processLevelUndo()
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyUndoSettingsTwoWayDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_NOVEHICLE)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyUndoSettingsNoVehiclesDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_ALLOWNPC)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyUndoSettingsAllowNPCDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_ALLOWNPC_IL)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyUndoSettingsAllowNPCILDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_LOCKED)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyUndoSettingsLockedDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_NEED_A_BOMB)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyUndoSettingsBombNeedDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_HIDE_STAR_NUMBER)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyUndoSettingsHideStarNumDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_ENABLE_CANNON)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyUndoSettingsEnCannonDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyUndoSettingsSpecialStateReqDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_W_NEEDS_FLOOR)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyUndoSettingsStoodReqDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_HIDE_LEVEL_ENTER_SCENE)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyUndoSettingsHideLvlEntSceneDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_GENACTIVATE)
     {
@@ -369,6 +382,9 @@ void HistoryElementItemSetting::processLevelUndo()
     }
 
     levelSearcher.find(m_modLevelData, lvlScene);
+
+    if(syncWarpsDialogue)
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 }
 
 void HistoryElementItemSetting::processWorldRedo()
@@ -440,6 +456,7 @@ void HistoryElementItemSetting::processLevelRedo()
         return;
 
     ItemSearcher levelSearcher;
+    bool syncWarpsDialogue = false;
 
     if(m_modLevelSetting == HistorySettings::SETTING_INVISIBLE)
     {
@@ -501,56 +518,67 @@ void HistoryElementItemSetting::processLevelRedo()
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyRedoSettingsTwoWayDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_NOVEHICLE)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyRedoSettingsNoVehiclesDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_ALLOWNPC)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyRedoSettingsAllowNPCDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_ALLOWNPC_IL)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyRedoSettingsAllowNPCILDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_LOCKED)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyRedoSettingsLockedDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_NEED_A_BOMB)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyRedoSettingsBombNeedDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_HIDE_STAR_NUMBER)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyRedoSettingsHideStarNumDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_ENABLE_CANNON)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyRedoSettingsEnCannonDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyRedoSettingsSpecialStateReqDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_W_NEEDS_FLOOR)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyRedoSettingsStoodReqDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_HIDE_LEVEL_ENTER_SCENE)
     {
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor, QGraphicsItem *)), this, SLOT(historyRedoSettingsHideLvlEntSceneDoors(LevelDoor, QGraphicsItem *)));
+        syncWarpsDialogue = true;
     }
     else if(m_modLevelSetting == HistorySettings::SETTING_GENACTIVATE)
     {
@@ -639,6 +667,9 @@ void HistoryElementItemSetting::processLevelRedo()
     }
 
     levelSearcher.find(m_modLevelData, lvlScene);
+
+    if(syncWarpsDialogue)
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 }
 
 void HistoryElementItemSetting::historyUndoSettingPathBackgroundLevel(const WorldLevelTile &sourceLevel, QGraphicsItem *item)

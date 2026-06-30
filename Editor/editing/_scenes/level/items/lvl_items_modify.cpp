@@ -98,6 +98,9 @@ void LvlScene::doorPointsSync(unsigned int arrayID, bool remove)
 
     auto &door = m_data->doors[i];
 
+    const bool allowEnter = (!door.lvl_o && !door.lvl_i) || door.lvl_o;
+    const bool allowExit = (!door.lvl_o && !door.lvl_i) || door.lvl_i;
+
     if(door.isSetIn || remove)
     {
         auto di = m_itemsDoorEnters.find(arrayID);
@@ -105,10 +108,11 @@ void LvlScene::doorPointsSync(unsigned int arrayID, bool remove)
         {
             ItemDoor *d = di.value();
 
-            if( (!(!door.lvl_o && !door.lvl_i) || (door.lvl_o && !door.lvl_i) ) || remove)
+            if(!allowEnter || remove)
             {
-                d->m_data = m_data->doors[i];
-                d->removeFromArray();
+                door.isSetIn = false;
+                d->m_data = door;
+                d->removeFromArrayI(i);
                 delete d;
             }
             else
@@ -126,16 +130,18 @@ void LvlScene::doorPointsSync(unsigned int arrayID, bool remove)
         if(di != m_itemsDoorExits.end())
         {
             ItemDoor *d = di.value();
-            if((!((!door.lvl_o && !door.lvl_i) || door.lvl_i)) || remove)
+
+            if(!allowExit || remove)
             {
+                door.isSetOut = false;
                 d->m_data = door;
-                d->removeFromArray();
+                d->removeFromArrayI(i);
                 delete d;
             }
             else
             {
                 door.isSetOut = true;
-                d->m_data = m_data->doors[i];
+                d->m_data = door;
                 d->refreshArrows();
             }
         }
@@ -206,36 +212,13 @@ void LvlScene::placeAll(const LevelData &data)
 
     foreach(const LevelDoor &door, data.doors)
     {
-        LevelDoor originalDoor;
-        bool found = false;
+        LevelDoor originalDoor = door;
 
-        foreach(LevelDoor findDoor, m_data->doors)
-        {
-            if(door.meta.array_id == findDoor.meta.array_id)
-            {
-                originalDoor = findDoor;
-                found = true;
-                break;
-            }
-        }
-
-        if(!found)
-            break;
-
-        if(door.isSetIn && !door.isSetOut)
-        {
-            originalDoor.ix = door.ix;
-            originalDoor.iy = door.iy;
-            originalDoor.isSetIn = true;
+        if(door.isSetIn)
             placeDoorEnter(originalDoor, false, false);
-        }
-        else if(!door.isSetIn && door.isSetOut)
-        {
-            originalDoor.ox = door.ox;
-            originalDoor.oy = door.oy;
-            originalDoor.isSetOut = true;
+
+        if(door.isSetOut)
             placeDoorExit(originalDoor, false, false);
-        }
 
         hasToUpdateDoorData = true;
     }

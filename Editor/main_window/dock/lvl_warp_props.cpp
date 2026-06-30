@@ -1240,57 +1240,81 @@ void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
     }
 }
 
+void LvlWarpBox::syncAllowedPoints(LevelDoor *w, unsigned int warpId)
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelEdit *edit = mw()->activeLvlEditWin();
+
+    const bool allowEnter = (!w->lvl_o && !w->lvl_i) || w->lvl_o;
+    const bool allowExit = (!w->lvl_o && !w->lvl_i) || w->lvl_i;
+
+        //Disable placing door point, if it not avaliable
+    ui->WarpSetEntrance->setEnabled(allowEnter);
+    //Disable placing door point, if it not avaliable
+    ui->WarpSetExit->setEnabled(allowExit);
+
+    edit->scene->doorPointsSync(warpId);
+
+    ui->WarpExitPlaced->setChecked(w->isSetOut);
+    ui->WarpEntrancePlaced->setChecked(w->isSetIn);
+
+    // //Unset placed point, if not it avaliable
+    // if(!allowExit)
+    // {
+    //     w->isSetOut = false;
+    //     ui->WarpExitPlaced->setChecked(w->isSetOut);
+    //     w->ox = w->ix;
+    //     w->oy = w->iy;
+    // }
+
+    // //Unset placed point, if not it avaliable
+    // if(!allowEnter)
+    // {
+    //     w->isSetIn = false;
+    //     ui->WarpEntrancePlaced->setChecked(false);
+    //     w->ix = w->ox;
+    //     w->iy = w->oy;
+    // }
+}
 
 /////Door mode (Level Entrance / Level Exit)
 void LvlWarpBox::on_WarpLevelExit_clicked(bool checked)
 {
-    if(m_lockSettings) return;
+    if(m_lockSettings)
+        return;
 
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
         return;
 
     QList<QVariant> extraData;
     LevelEdit *edit = mw()->activeLvlEditWin();
-    bool exists = false;
     unsigned int warpId = getWarpId();
 
     auto *w = findWarp(edit->LvlData, warpId);
-    if(w)
-    {
-        exists = true;
-        extraData.push_back(checked);
-        if(checked)
-        {
-            extraData.push_back(static_cast<int>(w->ox));
-            extraData.push_back(static_cast<int>(w->oy));
-        }
-        w->lvl_o = checked;
-    }
-
-    if(!exists)
+    if(!w)
         return;
 
-    //Disable placing door point, if it not avaliable
-    ui->WarpSetEntrance->setEnabled((!w->lvl_o && !w->lvl_i) || (w->lvl_o && !w->lvl_i));
-    //Disable placing door point, if it not avaliable
-    ui->WarpSetExit->setEnabled((!w->lvl_o && !w->lvl_i) || w->lvl_i);
+    extraData.push_back(checked); // 0
+    extraData.push_back(static_cast<bool>(w->isSetIn)); // 1
+    extraData.push_back(static_cast<int>(w->ix)); // 2
+    extraData.push_back(static_cast<int>(w->iy)); // 3
 
-    bool iPlaced = w->isSetIn;
-    bool oPlaced = w->isSetOut;
+    extraData.push_back(static_cast<bool>(w->isSetOut)); // 4
+    extraData.push_back(static_cast<int>(w->ox)); // 5
+    extraData.push_back(static_cast<int>(w->oy)); // 6
+    w->lvl_o = checked;
 
-    edit->scene->doorPointsSync(ui->warpsList->currentData().toUInt());
+    syncAllowedPoints(w, warpId);
 
-    //Unset placed point, if not it avaliable
-    if(!((!w->lvl_o && !w->lvl_i) || w->lvl_i))
-    {
-        oPlaced = false;
-        ui->WarpExitPlaced->setChecked(false);
-        w->ox = w->ix;
-        w->oy = w->iy;
-    }
+    extraData.push_back(static_cast<bool>(w->isSetIn)); // 7
+    extraData.push_back(static_cast<int>(w->ix)); //8
+    extraData.push_back(static_cast<int>(w->iy)); //9
 
-    w->isSetIn = iPlaced;
-    w->isSetOut = oPlaced;
+    extraData.push_back(static_cast<bool>(w->isSetOut)); //10
+    extraData.push_back(static_cast<int>(w->ox)); // 11
+    extraData.push_back(static_cast<int>(w->oy)); // 12
 
     edit->scene->m_history->addChangeWarpSettings(static_cast<int>(warpId),
             HistorySettings::SETTING_LEVELEXIT,
@@ -1308,45 +1332,32 @@ void LvlWarpBox::on_WarpLevelEntrance_clicked(bool checked)
 
     QList<QVariant> extraData;
     LevelEdit *edit = mw()->activeLvlEditWin();
-    bool exists = false;
     unsigned int warpId = getWarpId();
 
     auto *w = findWarp(edit->LvlData, warpId);
-    if(w)
-    {
-        exists = true;
-        extraData.push_back(checked);
-        if(checked)
-        {
-            extraData.push_back(static_cast<int>(w->ix));
-            extraData.push_back(static_cast<int>(w->iy));
-        }
-        w->lvl_i = checked;
-    }
+    if(!w)
+        return;
 
-    if(!exists) return;
+    extraData.push_back(checked);
 
-    //Disable placing door point, if it not avaliable
-    ui->WarpSetEntrance->setEnabled((!w->lvl_o && !w->lvl_i) || (w->lvl_o && !w->lvl_i));
-    //Disable placing door point, if it not avaliable
-    ui->WarpSetExit->setEnabled((!w->lvl_o && !w->lvl_i) || w->lvl_i);
+    extraData.push_back(static_cast<bool>(w->isSetIn));
+    extraData.push_back(static_cast<int>(w->ix));
+    extraData.push_back(static_cast<int>(w->iy));
 
-    bool iPlaced = w->isSetIn;
-    bool oPlaced = w->isSetOut;
+    extraData.push_back(static_cast<bool>(w->isSetOut));
+    extraData.push_back(static_cast<int>(w->ox));
+    extraData.push_back(static_cast<int>(w->oy));
+    w->lvl_i = checked;
 
-    edit->scene->doorPointsSync(ui->warpsList->currentData().toUInt());
+    syncAllowedPoints(w, warpId);
 
-    //Unset placed point, if not it avaliable
-    if(!((!w->lvl_o && !w->lvl_i) || (w->lvl_o && !w->lvl_i)))
-    {
-        iPlaced = false;
-        ui->WarpEntrancePlaced->setChecked(false);
-        w->ix = w->ox;
-        w->iy = w->oy;
-    }
+    extraData.push_back(static_cast<bool>(w->isSetIn));
+    extraData.push_back(static_cast<int>(w->ix));
+    extraData.push_back(static_cast<int>(w->iy));
 
-    w->isSetIn = iPlaced;
-    w->isSetOut = oPlaced;
+    extraData.push_back(static_cast<bool>(w->isSetOut));
+    extraData.push_back(static_cast<int>(w->ox));
+    extraData.push_back(static_cast<int>(w->oy));
 
     edit->scene->m_history->addChangeWarpSettings(static_cast<int>(warpId),
             HistorySettings::SETTING_LEVELENTR,

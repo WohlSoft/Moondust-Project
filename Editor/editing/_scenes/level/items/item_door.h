@@ -64,6 +64,7 @@ public:
 
     void arrayApply();
     void removeFromArray();
+    void removeFromArrayI(int doorIndex);
 
     void returnBack();
     QPoint sourcePos();
@@ -77,6 +78,7 @@ public:
 
 private:
     void syncPairItems();
+    void syncFromSrc();
 
     QBrush m_brush;
     QPen   m_pen;
