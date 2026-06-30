@@ -212,36 +212,13 @@ void LvlScene::placeAll(const LevelData &data)
 
     foreach(const LevelDoor &door, data.doors)
     {
-        LevelDoor originalDoor;
-        bool found = false;
+        LevelDoor originalDoor = door;
 
-        foreach(LevelDoor findDoor, m_data->doors)
-        {
-            if(door.meta.array_id == findDoor.meta.array_id)
-            {
-                originalDoor = findDoor;
-                found = true;
-                break;
-            }
-        }
-
-        if(!found)
-            break;
-
-        if(door.isSetIn && !door.isSetOut)
-        {
-            originalDoor.ix = door.ix;
-            originalDoor.iy = door.iy;
-            originalDoor.isSetIn = true;
+        if(door.isSetIn)
             placeDoorEnter(originalDoor, false, false);
-        }
-        else if(!door.isSetIn && door.isSetOut)
-        {
-            originalDoor.ox = door.ox;
-            originalDoor.oy = door.oy;
-            originalDoor.isSetOut = true;
+
+        if(door.isSetOut)
             placeDoorExit(originalDoor, false, false);
-        }
 
         hasToUpdateDoorData = true;
     }

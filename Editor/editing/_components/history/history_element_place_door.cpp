@@ -8,11 +8,9 @@
 
 HistoryElementPlaceDoor::HistoryElementPlaceDoor(const LevelDoor &door, bool isEntrance, QObject *parent) :
     QObject(parent),
-    m_door(door)
-{
-    m_door.isSetIn = isEntrance;
-    m_door.isSetOut = !isEntrance;
-}
+    m_door(door),
+    m_isEntrance(isEntrance)
+{}
 
 HistoryElementPlaceDoor::~HistoryElementPlaceDoor()
 {}
@@ -31,12 +29,12 @@ void HistoryElementPlaceDoor::undo()
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    ItemSearcher* searcher = new ItemSearcher(ItemTypes::LVL_S_Door);
+    ItemSearcher* searcher = new ItemSearcher(m_isEntrance ? ItemTypes::LVL_S_DoorEnter : ItemTypes::LVL_S_DoorExit);
 
     LevelData data;
     data.doors << m_door;
 
-    QObject::connect(searcher,&ItemSearcher::foundDoor, this, &HistoryElementPlaceDoor::historyRemoveDoors);
+    QObject::connect(searcher, &ItemSearcher::foundDoor, this, &HistoryElementPlaceDoor::historyRemoveDoors);
     searcher->find(data, lvlScene);
     delete searcher;
 }
@@ -46,14 +44,15 @@ void HistoryElementPlaceDoor::redo()
     if(!m_scene)
         return;
 
-    LvlScene* lvlScene;
-    if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
+    LvlScene* lvlScene = qobject_cast<LvlScene*>(m_scene);
+
+    if(!lvlScene)
         return;
 
     bool found = false;
     LevelDoor door;
 
-    foreach(LevelDoor findDoor, lvlScene->m_data->doors)
+    foreach(const LevelDoor &findDoor, lvlScene->m_data->doors)
     {
         if(m_door.meta.array_id == findDoor.meta.array_id)
         {
@@ -66,9 +65,7 @@ void HistoryElementPlaceDoor::redo()
     if(!found)
         return;
 
-    bool isEntrance = m_door.isSetIn;
-
-    if(isEntrance)
+    if(m_isEntrance)
     {
         door.ix = m_door.ix;
         door.iy = m_door.iy;
@@ -84,7 +81,6 @@ void HistoryElementPlaceDoor::redo()
     }
 
     MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
-
 }
 
 void HistoryElementPlaceDoor::historyRemoveDoors(const LevelDoor &/*door*/, QGraphicsItem* item)

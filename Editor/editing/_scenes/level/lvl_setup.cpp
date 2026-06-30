@@ -285,22 +285,7 @@ void LvlScene::setLayerToSelected(const QString &lName, bool isNew)
                 else if(objType == ItemTypes::LVL_META_DoorEnter || objType == ItemTypes::LVL_META_DoorExit)
                 {
                     auto *itm = qgraphicsitem_cast<ItemDoor *>(SelItem);
-
-                    if(objType == ItemTypes::LVL_META_DoorExit)
-                    {
-                        LevelDoor tDoor = itm->m_data;
-                        tDoor.isSetOut = true;
-                        tDoor.isSetIn = false;
-                        modData.doors.push_back(tDoor);
-                    }
-                    else if(objType == ItemTypes::LVL_META_DoorEnter)
-                    {
-                        LevelDoor tDoor = itm->m_data;
-                        tDoor.isSetOut = false;
-                        tDoor.isSetIn = true;
-                        modData.doors.push_back(tDoor);
-                    }
-
+                    modData.doors.push_back(itm->m_data);
                     itm->m_data.layer = lr.name;
                     itm->setVisible(!lr.hidden);
                     itm->arrayApply();

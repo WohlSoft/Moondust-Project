@@ -39,26 +39,23 @@ void ItemSearcher::setFindFilter(uint32_t findFilter)
 
 void ItemSearcher::find(const LevelData &dataToFind, LvlScene *scene)
 {
-    if(m_findFilter & ItemTypes::LVL_S_Door)
+    if(m_findFilter & ItemTypes::LVL_S_DoorEnter)
     {
         foreach(const LevelDoor &door, dataToFind.doors)
         {
-            if(door.isSetIn && !door.isSetOut)
-            {
-                auto d = scene->m_itemsDoorEnters.find(door.meta.array_id);
-                if(d != scene->m_itemsDoorEnters.end() && d.value()->data(LvlScene::ITEM_ARRAY_ID).toUInt() == door.meta.array_id)
-                    emit foundDoor(door, d.value());
-            }
+            auto d = scene->m_itemsDoorEnters.find(door.meta.array_id);
+            if(d != scene->m_itemsDoorEnters.end() && d.value()->data(LvlScene::ITEM_ARRAY_ID).toUInt() == door.meta.array_id)
+                emit foundDoor(door, d.value());
         }
+    }
 
+    if(m_findFilter & ItemTypes::LVL_S_DoorExit)
+    {
         foreach(const LevelDoor &door, dataToFind.doors)
         {
-            if(!door.isSetIn && door.isSetOut)
-            {
-                auto d = scene->m_itemsDoorExits.find(door.meta.array_id);
-                if(d != scene->m_itemsDoorExits.end() && d.value()->data(LvlScene::ITEM_ARRAY_ID).toUInt() == door.meta.array_id)
-                    emit foundDoor(door, d.value());
-            }
+            auto d = scene->m_itemsDoorExits.find(door.meta.array_id);
+            if(d != scene->m_itemsDoorExits.end() && d.value()->data(LvlScene::ITEM_ARRAY_ID).toUInt() == door.meta.array_id)
+                emit foundDoor(door, d.value());
         }
     }
 

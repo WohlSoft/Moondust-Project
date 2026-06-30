@@ -1296,25 +1296,25 @@ void LvlWarpBox::on_WarpLevelExit_clicked(bool checked)
     if(!w)
         return;
 
-    extraData.push_back(checked);
-    extraData.push_back(static_cast<bool>(w->isSetIn));
-    extraData.push_back(static_cast<int>(w->ix));
-    extraData.push_back(static_cast<int>(w->iy));
+    extraData.push_back(checked); // 0
+    extraData.push_back(static_cast<bool>(w->isSetIn)); // 1
+    extraData.push_back(static_cast<int>(w->ix)); // 2
+    extraData.push_back(static_cast<int>(w->iy)); // 3
 
-    extraData.push_back(static_cast<bool>(w->isSetOut));
-    extraData.push_back(static_cast<int>(w->ox));
-    extraData.push_back(static_cast<int>(w->oy));
+    extraData.push_back(static_cast<bool>(w->isSetOut)); // 4
+    extraData.push_back(static_cast<int>(w->ox)); // 5
+    extraData.push_back(static_cast<int>(w->oy)); // 6
     w->lvl_o = checked;
 
     syncAllowedPoints(w, warpId);
 
-    extraData.push_back(static_cast<bool>(w->isSetIn));
-    extraData.push_back(static_cast<int>(w->ix));
-    extraData.push_back(static_cast<int>(w->iy));
+    extraData.push_back(static_cast<bool>(w->isSetIn)); // 7
+    extraData.push_back(static_cast<int>(w->ix)); //8
+    extraData.push_back(static_cast<int>(w->iy)); //9
 
-    extraData.push_back(static_cast<bool>(w->isSetOut));
-    extraData.push_back(static_cast<int>(w->ox));
-    extraData.push_back(static_cast<int>(w->oy));
+    extraData.push_back(static_cast<bool>(w->isSetOut)); //10
+    extraData.push_back(static_cast<int>(w->ox)); // 11
+    extraData.push_back(static_cast<int>(w->oy)); // 12
 
     edit->scene->m_history->addChangeWarpSettings(static_cast<int>(warpId),
             HistorySettings::SETTING_LEVELEXIT,

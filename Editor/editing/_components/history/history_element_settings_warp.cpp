@@ -141,7 +141,7 @@ void HistoryElementSettingsWarp::undo()
                 lvlScene->placeDoorEnter(*doorp);
             }
             else if(newIn && !oldIn) // Remove item
-                removeDoorEntry(doorp);
+                removeDoorEntry(doorp, true);
         }
 
         if(oldOut != newOut)
@@ -154,7 +154,7 @@ void HistoryElementSettingsWarp::undo()
                 lvlScene->placeDoorExit(*doorp);
             }
             else if(newOut && !oldOut) // Remove item
-                removeDoorEntry(doorp);
+                removeDoorEntry(doorp, false);
         }
     }
     else
@@ -197,19 +197,19 @@ void HistoryElementSettingsWarp::redo()
     if(subtype == HistorySettings::SETTING_TWOWAY)
         doorp->two_way = extraData.toBool();
     else if(subtype == HistorySettings::SETTING_NOVEHICLE)
-        doorp->novehicles = extraData.toBool();    
+        doorp->novehicles = extraData.toBool();
     else if(subtype == HistorySettings::SETTING_ALLOWNPC)
         doorp->allownpc = extraData.toBool();
     else if(subtype == HistorySettings::SETTING_ALLOWNPC_IL)
         doorp->allownpc_interlevel = extraData.toBool();
     else if(subtype == HistorySettings::SETTING_LOCKED)
-        doorp->locked = extraData.toBool();    
+        doorp->locked = extraData.toBool();
     else if(subtype == HistorySettings::SETTING_NEED_A_BOMB)
         doorp->need_a_bomb = extraData.toBool();
     else if(subtype == HistorySettings::SETTING_HIDE_STAR_NUMBER)
         doorp->star_num_hide = extraData.toBool();
     else if(subtype == HistorySettings::SETTING_ENABLE_CANNON)
-        doorp->cannon_exit = extraData.toBool();    
+        doorp->cannon_exit = extraData.toBool();
     else if(subtype == HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED)
         doorp->special_state_required = extraData.toBool();
     else if(subtype == HistorySettings::SETTING_W_NEEDS_FLOOR)
@@ -280,7 +280,7 @@ void HistoryElementSettingsWarp::redo()
                 lvlScene->placeDoorEnter(*doorp);
             }
             else if(!newIn && oldIn) // Remove item
-                removeDoorEntry(doorp);
+                removeDoorEntry(doorp, true);
         }
 
         if(newOut != oldOut)
@@ -293,7 +293,7 @@ void HistoryElementSettingsWarp::redo()
                 lvlScene->placeDoorExit(*doorp);
             }
             else if(oldOut && !newOut) // Remove item
-                removeDoorEntry(doorp);
+                removeDoorEntry(doorp, false);
         }
     }
     else
@@ -302,22 +302,22 @@ void HistoryElementSettingsWarp::redo()
     MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 }
 
-void HistoryElementSettingsWarp::removeDoorEntry(LevelDoor *door)
+void HistoryElementSettingsWarp::removeDoorEntry(LevelDoor *door, bool enter)
 {
     LvlScene* lvlScene;
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    ItemSearcher searcher(ItemTypes::LVL_S_Door);
+    ItemSearcher searcher(enter ? ItemTypes::LVL_S_DoorEnter : ItemTypes::LVL_S_DoorExit);
 
     LevelData data;
     data.doors << *door;
 
-    QObject::connect(&searcher, &ItemSearcher::foundDoor, this, &HistoryElementSettingsWarp::historyRemoveDoors);
+    QObject::connect(&searcher, &ItemSearcher::foundDoor, this, &HistoryElementSettingsWarp::historyRemoveDoorPoints);
     searcher.find(data, lvlScene);
 }
 
-void HistoryElementSettingsWarp::historyRemoveDoors(const LevelDoor &/*door*/, QGraphicsItem *item)
+void HistoryElementSettingsWarp::historyRemoveDoorPoints(const LevelDoor &/*door*/, QGraphicsItem *item)
 {
     ItemDoor *sceneItem = qgraphicsitem_cast<ItemDoor*>(item);
 

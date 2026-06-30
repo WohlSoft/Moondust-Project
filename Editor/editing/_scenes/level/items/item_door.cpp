@@ -367,20 +367,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 auto d = qgraphicsitem_cast<ItemDoor *>(selItem);
                 Q_ASSERT(d);
 
-                if(sIsExit)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = true;
-                    door.isSetIn = false;
-                    modDoors.doors.push_back(door);
-                }
-                else if(sIsEnter)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = false;
-                    door.isSetIn = true;
-                    modDoors.doors.push_back(door);
-                }
+                modDoors.doors.push_back(d->m_data);
 
                 d->m_data.novehicles = NoTransport->isChecked();
                 d->arrayApply();
@@ -403,20 +390,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
                 Q_ASSERT(d);
 
-                if(sIsExit)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = true;
-                    door.isSetIn = false;
-                    modDoors.doors.push_back(door);
-                }
-                else if(sIsEnter)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = false;
-                    door.isSetIn = true;
-                    modDoors.doors.push_back(door);
-                }
+                modDoors.doors.push_back(d->m_data);
 
                 d->m_data.allownpc = allowNPC->isChecked();
                 d->arrayApply();
@@ -439,20 +413,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
                 Q_ASSERT(d);
 
-                if(sIsExit)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = true;
-                    door.isSetIn = false;
-                    modDoors.doors.push_back(door);
-                }
-                else if(sIsEnter)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = false;
-                    door.isSetIn = true;
-                    modDoors.doors.push_back(door);
-                }
+                modDoors.doors.push_back(d->m_data);
 
                 d->m_data.locked = locked->isChecked();
                 d->arrayApply();
@@ -475,20 +436,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
                 Q_ASSERT(d);
 
-                if(sIsExit)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = true;
-                    door.isSetIn = false;
-                    modDoors.doors.push_back(door);
-                }
-                else if(sIsEnter)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = false;
-                    door.isSetIn = true;
-                    modDoors.doors.push_back(door);
-                }
+                modDoors.doors.push_back(d->m_data);
 
                 d->m_data.need_a_bomb = bombNeed->isChecked();
                 d->arrayApply();
@@ -511,20 +459,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
                 Q_ASSERT(d);
 
-                if(sIsExit)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = true;
-                    door.isSetIn = false;
-                    modDoors.doors.push_back(door);
-                }
-                else if(sIsEnter)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = false;
-                    door.isSetIn = true;
-                    modDoors.doors.push_back(door);
-                }
+                modDoors.doors.push_back(d->m_data);
 
                 d->m_data.special_state_required = specialStReq->isChecked();
                 d->arrayApply();
@@ -547,20 +482,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
                 Q_ASSERT(d);
 
-                if(sIsExit)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = true;
-                    door.isSetIn = false;
-                    modDoors.doors.push_back(door);
-                }
-                else if(sIsEnter)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = false;
-                    door.isSetIn = true;
-                    modDoors.doors.push_back(door);
-                }
+                modDoors.doors.push_back(d->m_data);
 
                 d->m_data.stood_state_required = floorReq->isChecked();
                 d->arrayApply();
@@ -685,7 +607,7 @@ void ItemDoor::syncPairItems()
     if(found)
     {
         //directlry
-        m_scene->m_data->doors[m_data.meta.index] = m_data; //apply current bgoData
+        m_scene->m_data->doors[m_data.meta.index] = m_data; //apply current door data
     }
     else for(int i = 0; i < m_scene->m_data->doors.size(); i++)
     {
@@ -694,6 +616,37 @@ void ItemDoor::syncPairItems()
         {
             m_data.meta.index = i;
             m_scene->m_data->doors[i] = m_data;
+            break;
+        }
+    }
+}
+
+void ItemDoor::syncFromSrc()
+{
+    bool found = false;
+
+    if(m_data.meta.index < (unsigned int)m_scene->m_data->doors.size())
+    {
+        //Check index
+        if(m_data.meta.array_id == m_scene->m_data->doors[m_data.meta.index].meta.array_id)
+            found = true;
+    }
+
+    //Apply current data in main array
+    if(found)
+    {
+        //directlry
+        int i = m_data.meta.index;
+        m_data = m_scene->m_data->doors[i]; //apply current door data
+        m_data.meta.index = i;
+    }
+    else for(int i = 0; i < m_scene->m_data->doors.size(); i++)
+    {
+        //after find it into array
+        if(m_scene->m_data->doors[i].meta.array_id == m_data.meta.array_id)
+        {
+            m_data = m_scene->m_data->doors[i];
+            m_data.meta.index = i;
             break;
         }
     }
@@ -888,6 +841,8 @@ void ItemDoor::arrayApply()
 
 void ItemDoor::removeFromArray()
 {
+    syncFromSrc();
+
     if(m_pointSide == D_Entrance)
     {
         m_data.isSetIn = false;
