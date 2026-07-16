@@ -3174,8 +3174,8 @@ version code must be less or equal specific code)</source>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
-        <translation>在 SMBX 引擎测试关卡，
-需要 LunaLua（现为 SMBX2 的核心引擎）的支持。</translation>
+        <translation>在 SMBX 引擎测试关卡。
+需要 LunaLua（SMBX2 脚本系统）的支持。</translation>
     </message>
     <message>
         <source>Reset checkpoints</source>
@@ -3192,7 +3192,7 @@ Otherwise, it will be very limited.</source>
     </message>
     <message>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation>如果你的显卡不支持 OpenGL 渲染，或 LunaLua 异常终止，可禁用 OpenGL 渲染，将使用 GDI 渲染，但会严重削弱运行效果。</translation>
+        <translation>如果你的显卡不支持 OpenGL 渲染，或 SMBX2 异常终止，可禁用 OpenGL 渲染，将使用 GDI 渲染，但会严重削弱运行效果。</translation>
     </message>
     <message>
         <source>Keep running in background</source>
@@ -3209,7 +3209,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation>结束 LunaTester 进程，使引擎重新开始。</translation>
+        <translation>结束 LunaTester 进程，之后可以重启引擎。</translation>
     </message>
     <message>
         <source>Start Game</source>
@@ -3218,7 +3218,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     </message>
     <message>
         <source>Launch LunaTester as a normal game.</source>
-        <translation>使用 LunaTester 运行普通游戏。</translation>
+        <translation>使用 LunaTester 进行正常游戏。</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
@@ -3234,7 +3234,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     </message>
     <message>
         <source>Please select a path to LunaTester:</source>
-        <translation>请选择 LunaTester 所在的位置：</translation>
+        <translation>请选择 LunaTester（或SMBX2）所在的位置：</translation>
     </message>
     <message>
         <source>Use default</source>
@@ -3264,7 +3264,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
-        <translation>检测到 SMBX 1.3！</translation>
+        <translation>检测到原版 SMBX 1.3！</translation>
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
@@ -3277,21 +3277,21 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     <message>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
-        <translation>更改 LunaTester 所在位置……</translation>
+        <translation>更改 LunaTester（或SMBX2）所在位置……</translation>
     </message>
     <message>
         <source>Select the location of LunaTester.</source>
-        <translation>选择 LunaTester 位置。</translation>
+        <translation>选择 LunaTester（或SMBX2）位置。</translation>
     </message>
     <message>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
-        <translation>LunaTester 位置</translation>
+        <translation>LunaTester（或SMBX2）位置</translation>
     </message>
     <message>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
-        <translation>选择 LunaTester 位置</translation>
+        <translation>选择 LunaTester（或SMBX2）位置</translation>
     </message>
     <message>
         <source>SMBX64 limits are exceeded!</source>
@@ -3312,19 +3312,19 @@ Do you want to continue the process?</source>
     <message>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
-        <translation>LunaTester 文件夹检测失败</translation>
+        <translation>LunaTester（或SMBX2）文件夹检测失败</translation>
     </message>
     <message>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
-        <translation>由于 &quot;%1&quot; 未找到，无法启动 LunaTester! 可能由于以下原因：</translation>
+        <translation>由于 &quot;%1&quot; 未找到，无法启动 LunaTester！可能由于以下原因：</translation>
     </message>
     <message>
         <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
-        <translation>- LunaTester 文件夹（或 SMBX2 根文件夹）设置错误，请检查 LunaTester 文件夹是否正确。
+        <translation>- LunaTester文件夹（即 SMBX2 数据文件夹）设置错误，请检查 SMBX2 数据文件夹是否正确。
 - 可能由于杀毒软件误报而被移除，请检查您的杀毒软件中隔离区是否有对应文件。
 - SMBX2 安装方式错误，导致文件丢失，请重新安装 SMBX2 以修复您的问题。</translation>
     </message>
@@ -3341,7 +3341,7 @@ You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
         <translation>&quot;%1&quot; 未找到！
 您的引擎是原版 SMBX 1.3！
-因此无法通过 LunaTester 进行关卡测试。需要 LunaLua（SMBX2）的支持。</translation>
+因此无法测试关卡。此功能需要 SMBX2 脚本系统 LunaLua 的支持。</translation>
     </message>
     <message>
         <source>Test saved level/world</source>
@@ -3403,7 +3403,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
-        <translation>启动 LunaTester 失败，因为文件夹中存在不兼容的 LunaDll.dll：%1</translation>
+        <translation>启动 LunaTester 失败，因为文件夹中存在不兼容的 LunaDLL.dll：%1</translation>
     </message>
     <message>
         <source>Incompatible LunaLua</source>
@@ -3415,7 +3415,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
-        <translation>无法在 worlds 根文件夹以外的位置启动地图。</translation>
+        <translation>无法在 worlds 根文件夹以外的位置游玩地图。</translation>
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid world file.</source>
@@ -3423,7 +3423,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
-        <translation>您必须关闭正在运行的游戏才能更改 LunaTester 文件夹。您现在要关闭 LunaTester 吗？</translation>
+        <translation>您必须关闭正在运行的游戏才能更改 LunaTester（SMBX2）文件夹。您现在要关闭 LunaTester 吗？</translation>
     </message>
     <message>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
