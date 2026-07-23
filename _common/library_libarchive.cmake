@@ -41,7 +41,7 @@ ExternalProject_Add(
         "-DENABLE_EXPAT=OFF"
         "-DENABLE_PCREPOSIX=OFF"
         "-DENABLE_PCRE2POSIX=OFF"
-        "-DENABLE_LIBGCC=OFF"
+        "-DENABLE_LIBGCC=ON"
         "-DENABLE_CNG=OFF"
         "-DENABLE_TAR=OFF"
         "-DENABLE_TAR_SHARED=OFF"
