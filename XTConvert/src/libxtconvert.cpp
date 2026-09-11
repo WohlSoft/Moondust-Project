@@ -140,6 +140,7 @@ const LogLevel log_level[(int)LogCategory::Category_Count] =
 enum Stage
 {
     STAGE_EXTRACT = 0,
+    STAGE_MUSIC,
     STAGE_CONVERT,
     STAGE_POST_PROCESS,
     STAGE_PACK,
@@ -150,6 +151,7 @@ enum Stage
 const char* const stage_names[(int)STAGE_COUNT] =
 {
     "Extracting",
+    "Converting Music",
     "Converting",
     "Finishing",
     "Packaging",
@@ -1846,7 +1848,7 @@ public:
 
         bool is_synthesized_music = fEndsWith(synthesized_music, fileName);
 
-        if(progress(STAGE_CONVERT, files_done, file_count, musFile) < 0)
+        if(progress(STAGE_MUSIC, files_done, file_count, musFile) < 0)
         {
             m_error = "Conversion canceled by user";
             return false;
@@ -1908,10 +1910,7 @@ public:
         auto overridenFiles = m_episodeData.getOverridenFiles(true);
 
         foreach(const QString &file, overridenFiles)
-        {
             m_consumedFiles.insert(file);
-            ++files_done;
-        }
 
         return true;
     }
@@ -1980,21 +1979,11 @@ public:
             }
         }
 
-        // check count of files
-        size_t file_count = 0;
-        QDirIterator count_it(m_input_dir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
-
         // List of consumed files to avoid them from the global queues
         m_consumedFiles.clear();
 
-        while(count_it.hasNext())
-        {
-            file_count++;
-            count_it.next();
-        }
-
-        if(m_spec.package_type == PackageType::Episode)
-            m_episodeData.openEpisode(m_input_dir.absolutePath(), true);
+        // AUDIO CONVERSION ROUND
+        size_t file_count = 0;
 
         // iterate over all directories
         size_t files_done = 0;
@@ -2002,9 +1991,26 @@ public:
         // First convert files from the listed stuff
         if(m_spec.package_type == PackageType::AssetPack)
         {
+            // find worlds
+            QDir worlds(m_input_dir.filePath("worlds"));
+            auto episodes = worlds.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+
+            foreach(const QString &e, episodes)
+            {
+                // Count the episode's content
+                if(m_episodeData.openEpisode(worlds.filePath(e), true))
+                    file_count += m_episodeData.m_musicFiles.size();
+            }
+
             if(m_spec.target_platform != TargetPlatform::DSG)
             {
-                if(m_rootMusicIni.open(m_input_dir.filePath("music.ini"), false, m_input_dir.filePath("music")))
+                bool music_present = (m_rootMusicIni.open(m_input_dir.filePath("music.ini"), false, m_input_dir.filePath("music")));
+                bool sound_present = (m_rootSoundIni.open(m_input_dir.filePath("sounds.ini"), true, m_input_dir.filePath("sound")));
+
+                file_count += m_rootMusicIni.music_entries.size();
+                file_count += m_rootSoundIni.music_entries.size();
+
+                if(music_present)
                 {
                     m_rootMusicIni.setSavePath(m_input_dir.absolutePath(), m_temp_dir.absolutePath());
                     QDir origPath = QFileInfo(m_rootMusicIni.fPathOrig).absoluteDir();
@@ -2027,7 +2033,7 @@ public:
                     }
                 }
 
-                if(m_rootSoundIni.open(m_input_dir.filePath("sounds.ini"), true, m_input_dir.filePath("sound")))
+                if(sound_present)
                 {
                     m_rootSoundIni.setSavePath(m_input_dir.absolutePath(), m_temp_dir.absolutePath());
                     QDir origPath = QFileInfo(m_rootMusicIni.fPathOrig).absoluteDir();
@@ -2051,12 +2057,9 @@ public:
                 }
             }
 
-            QDir worlds(m_input_dir.filePath("worlds"));
-            auto episodes = worlds.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
-
+            // convert the content for each world
             foreach(const QString &e, episodes)
             {
-                // Count the episode's content
                 if(m_episodeData.openEpisode(worlds.filePath(e), true))
                 {
                     m_episodeData.setSavePath(m_temp_dir.filePath("worlds/" + e));
@@ -2070,11 +2073,29 @@ public:
         }
         else if(m_spec.package_type == PackageType::Episode)
         {
+            m_episodeData.openEpisode(m_input_dir.absolutePath(), true);
             m_episodeData.setSavePath(m_temp_dir.absolutePath());
+
+            file_count = m_episodeData.m_musicFiles.size();
 
             if(!processEpisodeData(files_done, file_count))
                 return false;
         }
+
+        // MAIN CONVERSION ROUND
+
+        // check count of files
+        file_count = 0;
+        QDirIterator count_it(m_input_dir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
+
+        while(count_it.hasNext())
+        {
+            file_count++;
+            count_it.next();
+        }
+
+        // iterate over all directories
+        files_done = 0;
 
         QDirIterator it(m_input_dir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
 
