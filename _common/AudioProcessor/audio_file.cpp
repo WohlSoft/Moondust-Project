@@ -1,0 +1,201 @@
+/*
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2025 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
+ */
+
+#include <SDL2/SDL_stdinc.h>
+#include <SDL2/SDL_audio.h>
+#include "audio_file.h"
+
+
+void MDAudioFileSpec::updateFrameSize()
+{
+    m_frame_size = m_channels * (SDL_AUDIO_BITSIZE(m_sample_format) / 8);
+}
+
+int MDAudioFileSpecWanted::getChannels(int def, int max) const
+{
+    int ret = (m_channels > 0) ? m_channels : def;
+    return ret <= max ? ret : max;
+}
+
+int MDAudioFileSpecWanted::getSampleRate(int def) const
+{
+    return (m_sample_rate > 0) ? m_sample_rate : def;
+}
+
+int MDAudioFileSpecWanted::getSampleFormat(int def) const
+{
+    return (m_sample_format != 0) ? m_sample_format : def;
+}
+
+
+bool MDAudioFile::isLoopTag(const char *tag)
+{
+    char buf[5];
+    SDL_strlcpy(buf, tag, 5);
+    return SDL_strcasecmp(buf, "LOOP") == 0;
+}
+
+int64_t MDAudioFile::parseTime(char *time, long samplerate_hz)
+{
+    char *num_start, *p;
+    int64_t result;
+    char c;
+    int val;
+
+    /* Time is directly expressed as a sample position */
+    if (SDL_strchr(time, ':') == nullptr)
+        return SDL_strtoll(time, nullptr, 10);
+
+    result = 0;
+    num_start = time;
+
+    for(p = time; *p != '\0'; ++p)
+    {
+        if(*p == '.' || *p == ':')
+        {
+            c = *p; *p = '\0';
+            if((val = SDL_atoi(num_start)) < 0)
+                return -1;
+
+            result = result * 60 + val;
+            num_start = p + 1;
+            *p = c;
+        }
+
+        if(*p == '.')
+        {
+            double val_f = SDL_atof(p);
+
+            if(val_f < 0)
+                return -1;
+
+            return result * samplerate_hz + (Sint64) (val_f * samplerate_hz);
+        }
+    }
+
+    if((val = SDL_atoi(num_start)) < 0)
+        return -1;
+
+    return (result * 60 + val) * samplerate_hz;
+}
+
+static size_t _utf16_byte_len(const char *str)
+{
+    size_t len = 0;
+    const char *cur = str;
+    if (!cur)
+        return 0;
+
+    while(cur[0] != '\0' || cur[1] != '\0')
+    {
+        len += 2;
+        cur += 2;
+    }
+    return len;
+}
+
+std::string MDAudioFile::parseidiMetaTag(const char *src)
+{
+    std::string ret;
+    size_t src_len = SDL_strlen(src);
+    char *dst = nullptr;
+
+    if(src_len >= 3 && (SDL_memcmp(src, "\xEF\xBB\xBF", 3) == 0))
+        dst = SDL_strdup(src + 3);
+    else if (src_len >= 2 && (SDL_memcmp(src, "\xFF\xFE", 2) == 0))
+        dst = SDL_iconv_string("UTF-8", "UCS-2LE", src, _utf16_byte_len(src) + 2);
+    else if (src_len >= 2 && (SDL_memcmp(src, "\xFE\xFF", 2) == 0))
+        dst = SDL_iconv_string("UTF-8", "UCS-2BE", src, _utf16_byte_len(src) + 2);
+    else
+        dst = SDL_iconv_string("UTF-8", "ISO-8859-1", src, SDL_strlen(src) + 1);
+
+    if(dst)
+        ret = std::string(dst);
+
+    SDL_free(dst);
+
+    return ret;
+}
+
+static int s_makeGainedVolume(int volume, float gain)
+{
+    return (int)SDL_floorf(((float)(volume) * (gain)) + 0.5f);
+}
+
+void MDAudioFile::copyGained(float gain, uint8_t *buf_in, uint8_t *buf_out, size_t buf_size)
+{
+    switch(m_spec.m_sample_format)
+    {
+    case AUDIO_U8:
+        SDL_memset(buf_out, 0x80, buf_size);
+        break;
+    case AUDIO_U16MSB:
+    case AUDIO_U16LSB:
+    {
+        uint16_t *buf_u = (uint16_t*)buf_out;
+        uint16_t *buf_u_end = (uint16_t*)(buf_out + buf_size);
+
+        for( ; buf_u < buf_u_end; ++buf_u)
+        {
+            uint8_t *n = (uint8_t *)buf_u;
+            if(m_spec.m_sample_format == AUDIO_U16LSB)
+            {
+                n[0] = 0x00;
+                n[1] = 0x80;
+            }
+            else
+            {
+                n[0] = 0x80;
+                n[1] = 0x00;
+            }
+        }
+        break;
+    }
+    default:
+        SDL_memset(buf_out, 0, buf_size);
+        break;
+    }
+
+    SDL_MixAudioFormat(buf_out, buf_in, m_spec.m_sample_format, (Uint32)buf_size, s_makeGainedVolume(SDL_MIX_MAXVOLUME, gain));
+}
+
+MDAudioFile::MDAudioFile() {}
+
+MDAudioFile::~MDAudioFile()
+{}
+
+std::string MDAudioFile::getLastError()
+{
+    return m_lastError;
+}
+
+void MDAudioFile::setArgs(const MusicArgs &args)
+{
+    m_args = args;
+}
+
+void MDAudioFile::setWantedSpec(const MDAudioFileSpecWanted &spec)
+{
+    m_specWanted = spec;
+}
+
+const MDAudioFileSpec &MDAudioFile::getSpec() const
+{
+    return m_spec;
+}

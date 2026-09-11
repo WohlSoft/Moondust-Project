@@ -8,7 +8,7 @@
 #include <QAtomicInteger>
 #include <QTimer>
 
-#include <files/episode_box.h>
+#include <episode_box.h>
 
 namespace Ui {
 class EpisodeConverter;

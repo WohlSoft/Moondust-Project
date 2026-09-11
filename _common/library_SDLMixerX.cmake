@@ -34,6 +34,10 @@ if(NOT SDL2_USE_SYSTEM)
     list(APPEND MixerX_Deps SDL2_Local)
 endif()
 
+if(NOT DEFINED SDLMIXER_USE_OGG_STB)
+    set(SDLMIXER_USE_OGG_STB ON)
+endif()
+
 # SDL Mixer X - an audio library, fork of SDL Mixer
 ExternalProject_Add(
     SDLMixerX_Local
@@ -51,11 +55,11 @@ ExternalProject_Add(
         "-DCMAKE_DEBUG_POSTFIX=${PGE_LIBS_DEBUG_SUFFIX}"
         "-DSDL_MIXER_X_SHARED=${PGE_SHARED_SDLMIXER}"
         "-DMIXERX_ENABLE_GPL=ON"
-        "-DUSE_MIDI_FLUIDLITE_OGG_STB=ON"
+        "-DUSE_MIDI_FLUIDLITE_OGG_STB=${SDLMIXER_USE_OGG_STB}"
         "-DUSE_FLAC=OFF"
         "-DUSE_DRFLAC=ON"
         "-DUSE_MP3_DRMP3=ON"
-        "-DUSE_OGG_VORBIS_STB=ON"
+        "-DUSE_OGG_VORBIS_STB=${SDLMIXER_USE_OGG_STB}"
         "-DUSE_MP3_MPG123=OFF"
         "-DUSE_WAVPACK=OFF"
         "-DMIXERX_DISABLE_SO_VERSION=ON"
