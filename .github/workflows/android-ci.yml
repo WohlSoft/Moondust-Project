@@ -90,6 +90,8 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools'
 
       # Without NDK not compile and not normal error message. NDK is required
       #- name: Install NDK
@@ -144,19 +146,25 @@ jobs:
 
           mv moondust/build/outputs/apk/release/moondust-release-unsigned.apk moondust-engine-android-${BRANCH_NAME_RES}.apk
 
+      - name: Prepare APK filename
+        id: apk-filename
+        shell: bash
+        run: |
+          echo "branch_name=$BRANCH_NAME_RES" >> $GITHUB_OUTPUT;
+
       - name: Upload APK
-        if: success() && ${{ steps.signing-check.outputs.available == 'true' }}
+        if: success() && steps.signing-check.outputs.available == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: moondust-engine-android-${BRANCH_NAME_RES}
+          name: moondust-engine-android-${{steps.apk-filename.outputs.branch_name}}
           path: Engine/android-project/moondust-engine-android-*.apk
 
       - name: Upload APK (unsigned)
-        if: success() && ${{ steps.signing-check.outputs.available != 'true' }}
+        if: success() && steps.signing-check.outputs.available == 'true'
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: moondust-engine-android-${BRANCH_NAME_RES}-unsigned
+          name: moondust-engine-android-${{steps.apk-filename.outputs.branch_name}}-unsigned
           path: Engine/android-project/moondust-engine-android-*.apk
 
       - name: Deploy to builds.wohlsoft.ru
