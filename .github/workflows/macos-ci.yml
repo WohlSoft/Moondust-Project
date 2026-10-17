@@ -153,6 +153,7 @@ jobs:
 
     - name: Rename package
       shell: bash
+      if: success() && github.event_name != 'pull_request' && github.event_name != 'workflow_dispatch' && steps.event-check.outputs.is_pull_request == 'false' && steps.upload-check.outputs.available == 'true'
       run: |
         mv ./bin-cmake-release/pge-project-${BRANCH_NAME}-macosx.pkg ./bin-cmake-release/pge-project-${BRANCH_NAME}-macosx-${{ matrix.config.arch }}.pkg
         # mv ./bin-cmake-release/pge-project-${BRANCH_NAME}-macosx.dmg ./bin-cmake-release/pge-project-${BRANCH_NAME}-macosx-${{ matrix.config.arch }}.dmg
@@ -162,7 +163,7 @@ jobs:
       uses: actions/upload-artifact@v4
       continue-on-error: true
       with:
-        path: bin-cmake-release/*.dmg
+        path: bin-cmake-release/*.pkg
         name: ${{ matrix.config.name }} ${{ matrix.config.build_type }}
 
     - name: Deploy to builds.wohlsoft.ru
