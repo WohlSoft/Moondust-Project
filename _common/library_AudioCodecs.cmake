@@ -92,7 +92,7 @@ InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libopusfile/COPYING"
 #InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libmad/COPYING" RENAME "License.libMAD.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
 InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libmodplug/COPYING" RENAME "License.libModPlug.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
 InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libxmp/COPYING.LIB" RENAME "License.libXMP.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
-InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libADLMIDI/LICENSE" RENAME "License.libADLMIDI.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
+InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libADLMIDI/LICENSE.txt" RENAME "License.libADLMIDI.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
 InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libOPNMIDI/LICENSE" RENAME "License.libOPNMIDI.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
 InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libEDMIDI/LICENSE.txt" RENAME "License.libEDMIDI.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
 InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libtimidity-sdl/COPYING" RENAME "License.Timidity.txt" DESTINATION "${PGE_INSTALL_LICS}" COMPONENT "MoondustLibs")
