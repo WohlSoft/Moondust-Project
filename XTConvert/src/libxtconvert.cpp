@@ -1171,13 +1171,17 @@ public:
     {
         LevelData lvl;
 
-        FileFormats::SetSMBX64LvlFlags(FileFormats::F_SMBX64_KEEP_LEGACY_NPC_IN_BLOCK_CODES);
-
-        if(!FileFormats::OpenLevelFile(in_path, lvl))
+        // out_path may already exist due to music conversion
+        if(QFile::exists(out_path))
+        {
+            if(!FileFormats::OpenLevelFile(out_path, lvl))
+                return false;
+        }
+        else if(!FileFormats::OpenLevelFile(in_path, lvl))
             return false;
 
-        bool is_lvlx = (lvl.meta.RecentFormat == LevelData::PGEX);
-        // bool is_lvl38a = (lvl.meta.RecentFormat == LevelData::SMBX38A);
+        bool is_lvlx = (lvl.meta.RecentFormat == FileFormats::LevelFileFormat::LVL_PGEX);
+        // bool is_lvl38a = (lvl.meta.RecentFormat == FileFormats::LevelFileFormat::LVL_SMBX38A);
 
         if(is_lvlx && lvl.meta.configPackId == "SMBX2")
         {
@@ -1186,13 +1190,49 @@ public:
         }
 
         // copy it without modification if it's already LVLX
-        if(is_lvlx)
+        if(is_lvlx && !QFile::exists(out_path))
             return QFile::copy(in_path, out_path);
 
-        // yes, a false ".lvl" file -- this is needed to prevent interfering with links between levels without modifying the world map, which could interfere with gamesaves
+        // yes, create a false ".lvl" file -- this is needed to prevent interfering with links between levels without modifying the world map, which could interfere with gamesaves
         if(!FileFormats::SaveLevelFile(lvl, out_path, FileFormats::LevelFileFormat::LVL_PGEX))
         {
             m_error = "Could not save level.";
+            return false;
+        }
+
+        return true;
+    }
+
+    bool convert_wld(const QString&, const QString& in_path, const QString& out_path)
+    {
+        WorldData wld;
+
+       // out_path may already exist due to music conversion
+        if(QFile::exists(out_path))
+        {
+            if(!FileFormats::OpenWorldFile(out_path, wld))
+                return false;
+        }
+        else if(!FileFormats::OpenWorldFile(in_path, wld))
+            return false;
+
+        bool is_wldx = (wld.meta.RecentFormat == WorldData::PGEX);
+        // bool is_wld38a = (wld.meta.RecentFormat == WorldData::SMBX38A);
+
+        if(is_wldx && wld.meta.configPackId == "SMBX2")
+        {
+            m_error = "Episode targets SMBX2.";
+            return false;
+        }
+
+        // copy it without modification if it's already LVLX
+        if(is_wldx && !QFile::exists(out_path))
+            return QFile::copy(in_path, out_path);
+
+        // yes, create a false ".wld" file -- this is needed for transparent conversion (most likely)
+        if(!FileFormats::SaveWorldFile(wld, out_path, FileFormats::WorldFileFormat::WLD_PGEX))
+        {
+            m_error = "Could not save world.";
             return false;
         }
 
@@ -1710,8 +1750,16 @@ public:
             return convert_image(filename, in_path, out_path, rel_path);
         else if(filename.endsWith(".ini") && m_cur_dir.convert_font_inis)
             return convert_font_ini(filename, in_path, out_path);
-        else if(filename.endsWith(".lvl"))
-            return convert_lvl(filename, in_path, out_path);
+        else if(filename.endsWith(".lvl") || filename.endsWith(".lvlx"))
+        {
+            // out_path may already exist due to episode music conversion
+            if(filename.endsWith(".lvl"))
+                return convert_lvl(filename, in_path, out_path);
+            else if(QFile::exists(out_path))
+                return true;
+            else
+                return QFile::copy(in_path, out_path);
+        }
         else if(m_spec.target_platform != TargetPlatform::Desktop && filename.endsWith(".ogg") && rel_path.startsWith("sound/"))
             return convert_sfx(filename, in_path, out_path);
         else if(m_spec.target_platform == TargetPlatform::DSG && (filename.endsWith(".wav") || is_non_tracker_music || is_tracker_music))
@@ -1734,7 +1782,13 @@ public:
             if(!scan_episode(in_path))
                 return false;
 
-            return QFile::copy(in_path, out_path);
+            // out_path may already exist due to episode music conversion
+            if(filename.endsWith(".wld"))
+                return convert_wld(filename, in_path, out_path);
+            else if(QFile::exists(out_path))
+                return true;
+            else
+                return QFile::copy(in_path, out_path);
         }
         else if(m_spec.package_type == PackageType::Episode && filename.startsWith("translation_") && filename.endsWith(".json"))
         {
@@ -1910,7 +1964,13 @@ public:
         auto overridenFiles = m_episodeData.getOverridenFiles(true);
 
         foreach(const QString &file, overridenFiles)
+        {
+            const QString fLower = file.toLower();
+            if(fLower.endsWith(".wld") || fLower.endsWith(".wldx") || fLower.endsWith(".lvl") || fLower.endsWith(".lvlx"))
+                continue;
+
             m_consumedFiles.insert(file);
+        }
 
         return true;
     }
@@ -2853,6 +2913,8 @@ cleanup:
 
     bool process()
     {
+        FileFormats::SetSMBX64LvlFlags(FileFormats::F_SMBX64_KEEP_LEGACY_NPC_IN_BLOCK_CODES);
+
         GraphicsLoad::FreeImage_Sentinel fs;
 
         init_mask_arrays();
