@@ -50,3 +50,47 @@
 	path = _Libs/libtiff
 	url = https://github.com/WohlSoft/libtiff.git
 	branch = master
+[submodule "_Libs/tex3ds"]
+	path = _Libs/tex3ds
+	url = https://github.com/WohlSoft/xtconvert-tex3ds.git
+	branch = libtex3ds
+[submodule "_Libs/3dstools"]
+	path = _Libs/3dstools
+	url = https://github.com/WohlSoft/xtconvert-3dstools.git
+	branch = libromfs3ds
+[submodule "_Libs/libimagequant"]
+	path = _Libs/libimagequant
+	url = https://github.com/WohlSoft/xtconvert-libimagequant.git
+	branch = 2.x
+[submodule "_Libs/libarchive"]
+	path = _Libs/libarchive
+	url = https://github.com/WohlSoft/xtconvert-libarchive.git
+	branch = fix-iso-filenames
+[submodule "_Libs/mbediso"]
+	path = _Libs/mbediso
+	url = https://github.com/WohlSoft/mbediso.git
+	branch = main
+[submodule "_Libs/spc2it"]
+	path = _Libs/spc2it
+	url = https://github.com/WohlSoft/spc2it.git
+	branch = master
+[submodule "_Libs/mmutil"]
+	path = _Libs/mmutil
+	url = https://github.com/WohlSoft/mmutil.git
+	branch = master
+[submodule "_Libs/lz4"]
+	path = _Libs/lz4
+	url = https://github.com/WohlSoft/lz4.git
+	branch = release-patches
+[submodule "_Libs/libgnurx"]
+	path = _Libs/libgnurx
+	url = https://github.com/WohlSoft/libgnurx.git
+	branch = master
+[submodule "_Libs/libxz"]
+	path = _Libs/libxz
+	url = https://github.com/WohlSoft/xz.git
+	branch = master
+[submodule "_Libs/libtiff"]
+	path = _Libs/libtiff
+	url = https://github.com/WohlSoft/libtiff.git
+	branch = master

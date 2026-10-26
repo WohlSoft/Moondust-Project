@@ -1,0 +1,127 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014-2026 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#ifndef XT_CONVERT_H
+#define XT_CONVERT_H
+
+#include <QDialog>
+#include <QQueue>
+#include <QThread>
+#include <QTextEdit>
+#include <memory>
+#include <array>
+
+#include "libxtconvert.h"
+
+struct XTConvertUpdate
+{
+    // if -1, is a progress update; if -2, a completion report
+    XTConvert::LogCategory log_category = XTConvert::LogCategory::Category_Count;
+    QString file_name; // or error message (if any) if log_category is -2
+
+    int cur_stage;
+    int stage_count;
+    QString stage_name;
+    int cur_file;
+    int file_count;
+};
+
+Q_DECLARE_METATYPE(XTConvert::Spec)
+Q_DECLARE_METATYPE(XTConvertUpdate)
+
+class XTConvert_Worker : public QObject
+{
+    Q_OBJECT
+
+    bool is_running = false;
+    bool is_cancelled = false;
+
+public:
+
+    void log_file_callback(XTConvert::LogCategory log_category, const std::string& filename);
+    int progress_callback(int cur_stage, int stage_count, const std::string& stage_name, int cur_file, int file_count, const std::string& file_name);
+
+signals:
+    void status_update(const XTConvertUpdate update);
+    void finish();
+
+public slots:
+    void do_cancel();
+    void do_run(XTConvert::Spec spec);
+};
+
+namespace Ui {
+class XTConvertUI;
+}
+
+class XTConvertUI : public QDialog
+{
+    Q_OBJECT
+
+public:
+    explicit XTConvertUI(QWidget *parent = 0);
+    ~XTConvertUI();
+    void updateControls();
+    void start();
+
+signals:
+    void do_run(XTConvert::Spec);
+    void do_cancel();
+
+private slots:
+    void on_start_clicked();
+    void on_browse_content_clicked();
+    void on_browse_output_clicked();
+    void on_content_type_currentIndexChanged(int index);
+    void on_target_platform_currentIndexChanged(int index);
+    void on_target_version_currentIndexChanged(int index);
+
+    void update_status(const XTConvertUpdate update);
+    void on_finish();
+
+protected:
+    void closeEvent( QCloseEvent * e );
+
+private:
+    QThread process_thread;
+    std::unique_ptr<QObject> worker;
+
+    // NOT OWNED, OWNED BY QTabWidget ui->logs
+    std::array<QTextEdit*, (int)XTConvert::LogCategory::Category_Count> m_log_entries;
+    std::array<int, (int)XTConvert::LogCategory::Category_Count> m_log_entry_counts;
+    std::array<int, (int)XTConvert::LogCategory::Category_Count> m_cat_to_position;
+    std::array<int, (int)XTConvert::LogCategory::Category_Count> m_position_to_cat;
+
+    QString m_recent_content_path;
+    QString m_recent_output_path;
+
+    XTConvert::TargetPlatform m_target_platform = XTConvert::TargetPlatform::T3X;
+
+    bool m_target_archive = false;
+    bool m_target_asset_pack = false;
+    bool m_target_legacy = true;
+
+    bool m_in_progress = false;
+    bool m_had_error = false;
+    Ui::XTConvertUI *ui;
+
+    //statistics
+    QStringList logs;
+};
+
+#endif // XT_CONVERT_H

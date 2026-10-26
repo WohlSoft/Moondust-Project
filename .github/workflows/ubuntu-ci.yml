@@ -6,7 +6,7 @@ on:
       - master
       - stable
       - versus-ci-ubuntu
-      - wip-translator
+      - wip-xtconvert
   pull_request:
     branches:
       - master
@@ -74,8 +74,7 @@ jobs:
     - name: Pull submodules
       shell: bash
       run: |
-        git submodule init
-        git submodule update
+        git submodule update --init --recursive
 
     - name: Check if a pull request
       id: event-check
@@ -214,8 +213,16 @@ jobs:
 
         ./build.sh no-pause ninja deploy static-qt qt-png portable
 
+    - name: Upload artifact
+      if: success() && steps.upload-check.outputs.available == 'true'
+      uses: actions/upload-artifact@v4
+      continue-on-error: true
+      with:
+        path: bin-cmake-release/*.tar.bz2
+        name: ${{ matrix.config.name }} ${{ matrix.config.build_type }}
+
     - name: Deploy to builds.wohlsoft.ru
-      if: success() && github.event_name != 'pull_request' && steps.event-check.outputs.is_pull_request == 'false' && steps.upload-check.outputs.available == 'true'
+      if: success() && github.event_name != 'pull_request' && github.event_name != 'workflow_dispatch' && steps.event-check.outputs.is_pull_request == 'false' && steps.upload-check.outputs.available == 'true'
       shell: bash
       run: |
         if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
