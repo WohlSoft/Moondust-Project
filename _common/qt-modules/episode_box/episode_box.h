@@ -190,6 +190,7 @@ public:
     QString findFileAliasCaseInsensitive(const QString &file) override;
 
     bool renameMusic(const QString &oldMus, const QString &newMus, bool isBulk = false) override;
+    bool renameSFX(const QString &oldSFX, const QString &newSFX, bool isBulk = false) override;
     void save() override;
 };
 

@@ -956,9 +956,39 @@ bool Episode_LunaScript::renameMusic(const QString &oldMus, const QString &newMu
 
     for(MusicField &mus : music_entries)
     {
+        if(mus.isSFX)
+            continue; // Rename only music
+
         if(mus.absolutePath.compare(oldMus, Qt::CaseInsensitive) == 0)
         {
             updateField(mus, (mus.useDataPath ? sfxPath : episodePath).relativeFilePath(newMus));
+            modified = true;
+        }
+    }
+
+    if(!isBulk && modified)
+    {
+        save();
+        m_wasOverwritten = true;
+    }
+
+    return modified;
+}
+
+bool Episode_LunaScript::renameSFX(const QString &oldSFX, const QString &newSFX, bool isBulk)
+{
+    bool modified = false;
+    QDir episodePath(m_episodePath);
+    QDir sfxPath(dataPath);
+
+    for(MusicField &mus : music_entries)
+    {
+        if(!mus.isSFX)
+            continue; // Rename only SFX
+
+        if(mus.absolutePath.compare(oldSFX, Qt::CaseInsensitive) == 0)
+        {
+            updateField(mus, (mus.useDataPath ? sfxPath : episodePath).relativeFilePath(newSFX));
             modified = true;
         }
     }
@@ -1333,7 +1363,7 @@ void EpisodeBox::renameSFX(QString oldSFX, QString newSFX)
         snd_ini[i].renameMusic(oldSFX, newSFX);
 
     for(int i = 0; i < luna_scripts.size(); i++)
-        luna_scripts[i].renameMusic(oldSFX, newSFX);
+        luna_scripts[i].renameSFX(oldSFX, newSFX);
 }
 
 void EpisodeBox::renameLevel(QString oldLvl, QString newLvl)
