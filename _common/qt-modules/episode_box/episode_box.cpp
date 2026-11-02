@@ -19,10 +19,27 @@
 #include "episode_box.h"
 
 #include <QDir>
+#include <QFileInfo>
 #include <QStringList>
 #include <QDirIterator>
 #include <QtDebug>
 
+static void s_clearPath(QString &p)
+{
+    // Take account of MixerX's path arguments
+    if(p.contains('|'))
+    {
+        QString path = p.mid(0, p.indexOf('|'));
+        QString args = p.mid(p.indexOf('|'));
+        QFileInfo pi(path);
+        p = pi.canonicalFilePath() + args;
+    }
+    else
+    {
+        QFileInfo pi(p);
+        p = pi.canonicalFilePath();
+    }
+}
 
 void EpisodeBox_Base::setSavePath(const QString &oldRootPath, const QString &newDirPath)
 {
@@ -631,6 +648,7 @@ void Episode_music_ini::buildEntriesCache()
             QString musFile = line.mid(mus.start, mus.length);
 
             mus.absolutePath = fullPath.absoluteFilePath(musFile);
+            s_clearPath(mus.absolutePath);
             mus.field = &line;
             music_entries.push_back(mus);
         }
@@ -674,8 +692,6 @@ bool Episode_music_ini::open(const QString &filePath, bool isSoundsIni, const QS
 
 QString Episode_music_ini::findFileAliasCaseInsensitive(const QString &file)
 {
-    QDir fullPath(m_contentPath.isEmpty() ? dataPath : m_contentPath);
-
     for(MusicField &mus : music_entries)
     {
         if(mus.absolutePath.compare(file, Qt::CaseInsensitive) == 0)
@@ -730,6 +746,255 @@ void Episode_music_ini::save()
         out.close();
     }
 }
+
+
+
+QString Episode_LunaScript::fieldToFile(const MusicField &mus)
+{
+    return mus.field->mid(mus.start, mus.length);
+}
+
+void Episode_LunaScript::updateField(MusicField &field, const QString &newFile)
+{
+    field.field->replace(field.start, field.length, newFile);
+    field.length = newFile.size();
+}
+
+#define PARSE_FMT_STR       " %149[^,], %lf , %lf , %lf , %lf , %lf , %999[^\n]"
+#define PARSE_FMT_STR_2     " %149[^,], %i , %i , %i , %i , %i , %999[^\n]"
+
+void Episode_LunaScript::buildEntriesCache()
+{
+    music_entries.clear();
+    QDir episodePath(m_episodePath);
+    QDir sfxPath(dataPath);
+    char combuf[150];
+    char wstrbuf[1000];
+
+    struct LunaCommand
+    {
+        QString cmd;
+        double target = 0.0;
+        double param1 = 0.0;
+        double param2 = 0.0;
+        double param3 = 0.0;
+        double length = 0.0;
+        int btarget = 0;
+        int bparam1 = 0;
+        int bparam2 = 0;
+        int bparam3 = 0;
+        int blength = 0;
+        QString str;
+        QString inLineComment;
+    };
+
+    for(QString &line : file_lines)
+    {
+        LunaCommand cmd;
+        QByteArray wbuf = line.toUtf8();
+        size_t wbuflen = 0;
+        int strStart, numCommas;
+
+        memset(combuf, 0, 150);
+        memset(wstrbuf, 0, 1000);
+
+        // Is it a comment?
+        char *comment = strstr(wbuf.data(), "//");
+        if(comment)
+            comment[0] = '\0'; // Cut the comment line at here
+
+        // does this line contains anything useful?
+        wbuflen = strlen(wbuf.data());
+        while(wbuflen > 0)
+        {
+            auto c = wbuf.data()[wbuflen - 1];
+            if(c != '\n' && c != '\r' && c != '\t' && c != ' ')
+                break;
+            wbuf.data()[wbuflen - 1] = '\0';
+            wbuflen--;
+        }
+
+        // Is it an empty line?
+        if(wbuflen <= 0)
+            continue;
+
+        if(wbuf[0] == '#')
+            continue; // Skip section headers (not needed for our purposes here!)
+
+        // Decimal pass
+        int hits = sscanf(wbuf, PARSE_FMT_STR, combuf, &cmd.target, &cmd.param1, &cmd.param2, &cmd.param3, &cmd.length, wstrbuf);
+
+        // Integer pass
+        int bhits = sscanf(wbuf, PARSE_FMT_STR_2, combuf, &cmd.btarget, &cmd.bparam1, &cmd.bparam2, &cmd.bparam3, &cmd.blength, wstrbuf);
+
+        // Check for formatting failure
+        if(hits < 3 && bhits < 3)
+            continue;
+
+        if(cmd.target == 0 && cmd.btarget != 0)
+            cmd.target = cmd.btarget;
+        if(cmd.param1 == 0 && cmd.bparam1 != 0)
+            cmd.param1 = cmd.bparam1;
+        if(cmd.param2 == 0 && cmd.bparam2 != 0)
+            cmd.param2 = cmd.bparam2;
+        if(cmd.param3 == 0 && cmd.bparam3 != 0)
+            cmd.param3 = cmd.bparam3;
+        if(cmd.length == 0 && cmd.blength != 0)
+            cmd.length = cmd.blength;
+
+        cmd.cmd = QString::fromLatin1(combuf, strnlen(combuf, 150));
+
+        std::string ac_str = std::string(wstrbuf);
+        ac_str.erase(ac_str.find_last_not_of(" \n\r\t") + 1);
+
+        cmd.str = QString::fromStdString(ac_str);
+
+        // Find the offset of the string data
+        numCommas = 0;
+        strStart = 0;
+
+        for(int i = 0; i < (int)line.size(); ++i)
+        {
+            if(line[i] == QChar(','))
+            {
+                if(++numCommas == 6)
+                {
+                    strStart = i + 1;
+                    break;
+                }
+            }
+        }
+
+        if(cmd.cmd.compare(QStringLiteral("SetMusic")) == 0)
+        {
+            MusicField mus;
+            QString musFile;
+
+            mus.start = strStart;
+            mus.length = cmd.str.size();
+            mus.field = &line;
+            mus.isSFX = false;
+            mus.useDataPath = false;
+            musFile = line.mid(mus.start, mus.length);
+            mus.absolutePath = episodePath.absoluteFilePath(musFile);
+            s_clearPath(mus.absolutePath);
+            music_entries.push_back(mus);
+        }
+        else if((cmd.cmd.compare(QStringLiteral("SFX")) == 0 && cmd.param1 == 0) ||
+                (cmd.cmd.compare(QStringLiteral("PlaySFX")) == 0 && cmd.param1 == 0) ||
+                (cmd.cmd.compare(QStringLiteral("StopSFX")) == 0) ||
+                (cmd.cmd.compare(QStringLiteral("SFXPreLoad")) == 0)
+        )
+        {
+            MusicField mus;
+            QString musFile;
+
+            mus.start = strStart;
+            mus.length = cmd.str.size();
+            mus.field = &line;
+            mus.isSFX = true;
+            mus.useDataPath = true;
+            musFile = line.mid(mus.start, mus.length);
+            mus.absolutePath = sfxPath.absoluteFilePath(musFile);
+            s_clearPath(mus.absolutePath);
+            music_entries.push_back(mus);
+        }
+    }
+}
+
+bool Episode_LunaScript::open(const QString &filePath, const QString &episodePath)
+{
+    QFile in(filePath);
+    QFileInfo info(filePath);
+    QString line;
+
+    if(!in.open(QIODevice::ReadOnly|QIODevice::Text))
+        return false;
+
+    QTextStream tIn(&in);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    tIn.setEncoding(QStringConverter::Utf8);
+#else
+    tIn.setCodec("UTF-8");
+#endif
+
+    music_entries.clear();
+    file_lines.clear();
+
+    while(!tIn.atEnd())
+    {
+        line = tIn.readLine();
+        file_lines.push_back(line.trimmed());
+    }
+
+    in.close();
+
+    fPath = filePath;
+    // SFX path
+    dataPath = info.absoluteDir().absolutePath();
+    m_episodePath = episodePath;
+
+    return true;
+}
+
+QString Episode_LunaScript::findFileAliasCaseInsensitive(const QString &file)
+{
+    for(MusicField &mus : music_entries)
+    {
+        if(mus.absolutePath.compare(file, Qt::CaseInsensitive) == 0)
+            return fieldToFile(mus);
+    }
+
+    return QString();
+}
+
+bool Episode_LunaScript::renameMusic(const QString &oldMus, const QString &newMus, bool isBulk)
+{
+    bool modified = false;
+    QDir episodePath(m_episodePath);
+    QDir sfxPath(dataPath);
+
+    for(MusicField &mus : music_entries)
+    {
+        if(mus.absolutePath.compare(oldMus, Qt::CaseInsensitive) == 0)
+        {
+            updateField(mus, (mus.useDataPath ? sfxPath : episodePath).relativeFilePath(newMus));
+            modified = true;
+        }
+    }
+
+    if(!isBulk && modified)
+    {
+        save();
+        m_wasOverwritten = true;
+    }
+
+    return modified;
+}
+
+void Episode_LunaScript::save()
+{
+    QFile out(fPath);
+
+    makeSaveDir();
+
+    if(out.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QTextStream tOut(&out);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        tOut.setEncoding(QStringConverter::Utf8);
+#else
+        tOut.setCodec("UTF-8");
+#endif
+
+        foreach(const QString &line, file_lines)
+            tOut << line << "\n";
+
+        tOut.flush();
+        out.close();
+    }
+}
+
 
 
 
@@ -788,6 +1053,23 @@ void EpisodeBox::addEntry(const QString &file)
                 m_soundFiles.insert(mus.absolutePath);
         }
     }
+    else if(file.compare("lunadll.txt", Qt::CaseInsensitive) == 0 || file.endsWith("/lunadll.txt", Qt::CaseInsensitive))
+    {
+        Episode_LunaScript mus;
+        if(mus.open(epPath + "/" + file, epPath)) //Push only valid files!!!
+        {
+            luna_scripts.push_back(std::move(mus));
+            Episode_LunaScript &ww = luna_scripts.last();
+            ww.buildEntriesCache();
+            foreach(const MusicField &mus, ww.music_entries)
+            {
+                if(mus.isSFX)
+                    m_soundFiles.insert(mus.absolutePath);
+                else
+                    m_musicFiles.insert(mus.absolutePath);
+            }
+        }
+    }
 }
 
 EpisodeBox::EpisodeBox() {}
@@ -814,6 +1096,7 @@ bool EpisodeBox::openEpisode(const QString &dirPath, bool recursive)
     filters << "*.wldx";
     filters << "music.ini";
     filters << "sounds.ini";
+    filters << "lunadll.txt";
 
     dr.setPath(dirPath);
     dr.setSorting(QDir::NoSort);
@@ -854,6 +1137,7 @@ void EpisodeBox::clear()
     dw.clear();
     mus_ini.clear();
     snd_ini.clear();
+    luna_scripts.clear();
     m_musicFiles.clear();
     m_soundFiles.clear();
 }
@@ -875,6 +1159,9 @@ void EpisodeBox::setSavePath(const QString &newDirPath)
 
     for(int i = 0; i < snd_ini.size(); i++)
         snd_ini[i].setSavePath(epPath, newPath);
+
+    for(int i = 0; i < luna_scripts.size(); i++)
+        luna_scripts[i].setSavePath(epPath, newPath);
 
     epPath = newDirPath;
 
@@ -934,6 +1221,19 @@ long EpisodeBox::overwrittenSoundInis()
     return count;
 }
 
+long EpisodeBox::overwrittenLunaScripts()
+{
+    long count = 0;
+
+    for(int i = 0; i < luna_scripts.size(); i++)
+    {
+        if(luna_scripts[i].m_wasOverwritten)
+            count++;
+    }
+
+    return count;
+}
+
 int EpisodeBox::totalElements()
 {
     return d.size() + dw.size();
@@ -967,6 +1267,13 @@ QStringList EpisodeBox::getOverridenFiles(bool origPaths)
     for(int i = 0; i < snd_ini.size(); i++)
     {
         auto &f = snd_ini[i];
+        if(f.m_wasOverwritten)
+            ret.push_back(origPaths && !f.fPathOrig.isEmpty() ? f.fPathOrig : f.fPath);
+    }
+
+    for(int i = 0; i < luna_scripts.size(); i++)
+    {
+        auto &f = luna_scripts[i];
         if(f.m_wasOverwritten)
             ret.push_back(origPaths && !f.fPathOrig.isEmpty() ? f.fPathOrig : f.fPath);
     }
@@ -1012,6 +1319,9 @@ void EpisodeBox::renameMusic(QString oldMus, QString newMus)
 
     for(int i = 0; i < mus_ini.size(); i++)
         mus_ini[i].renameMusic(oldMus, newMus);
+
+    for(int i = 0; i < luna_scripts.size(); i++)
+        luna_scripts[i].renameMusic(oldMus, newMus);
 }
 
 void EpisodeBox::renameSFX(QString oldSFX, QString newSFX)
@@ -1021,6 +1331,9 @@ void EpisodeBox::renameSFX(QString oldSFX, QString newSFX)
 
     for(int i = 0; i < mus_ini.size(); i++)
         snd_ini[i].renameMusic(oldSFX, newSFX);
+
+    for(int i = 0; i < luna_scripts.size(); i++)
+        luna_scripts[i].renameMusic(oldSFX, newSFX);
 }
 
 void EpisodeBox::renameLevel(QString oldLvl, QString newLvl)

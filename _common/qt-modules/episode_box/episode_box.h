@@ -36,6 +36,10 @@ struct MusicField
     int start = -1;
     //! If a part of field is used, the length
     int length = -1;
+    //! LunaScript-only: Use data path
+    bool useDataPath = false;
+    //! LunaScript-only: The file is SFX
+    bool isSFX = false;
 };
 
 class EpisodeBox_Base
@@ -162,6 +166,33 @@ public:
     void save() override;
 };
 
+class Episode_LunaScript : public EpisodeBox_Base
+{
+    static QString fieldToFile(const MusicField &mus);
+    static void updateField(MusicField &field, const QString &newFile);
+
+    QString m_episodePath;
+    QString m_sfxRootPath;
+public:
+    Episode_LunaScript() = default;
+    Episode_LunaScript(const Episode_LunaScript &w) = default;
+    ~Episode_LunaScript() = default;
+
+    Episode_LunaScript &operator=(const Episode_LunaScript &w) = default;
+
+    QList<QString> file_lines;
+
+    void buildEntriesCache();
+    QList<MusicField> music_entries;
+
+    bool open(const QString &filePath, const QString &episodePath);
+
+    QString findFileAliasCaseInsensitive(const QString &file) override;
+
+    bool renameMusic(const QString &oldMus, const QString &newMus, bool isBulk = false) override;
+    void save() override;
+};
+
 
 class EpisodeBox
 {
@@ -184,6 +215,7 @@ public:
     long overwrittenWorlds();
     long overwrittenMusicInis();
     long overwrittenSoundInis();
+    long overwrittenLunaScripts();
     int  totalElements();
 
     QStringList getOverridenFiles(bool origPaths = false);
@@ -200,6 +232,8 @@ public:
     QList<Episode_music_ini> mus_ini;
     //! Episode's sounds.ini files
     QList<Episode_music_ini> snd_ini;
+    //! Episode's LunaScript scripts
+    QList<Episode_LunaScript> luna_scripts;
     //! List of all unique music files
     QSet<QString> m_musicFiles;
     //! List of all unique SFX sound files
