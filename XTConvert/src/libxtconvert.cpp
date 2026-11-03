@@ -1887,7 +1887,22 @@ public:
         QString fileName = musInfo.fileName().toLower();
         QString rel_path = episodeRoot.relativeFilePath(musFile);
         QString temp_path = episodeRootNew.filePath(rel_path);
-        newRenamePath = musFile;
+        bool use_short_names = m_spec.legacy_archives;
+
+        if(use_short_names)
+        {
+            QString newFileName = QString("%1-%2.%3")
+                .arg(QString(QCryptographicHash::hash(fileName.toUtf8(), QCryptographicHash::Sha1).toHex().left(10)))
+                .arg(files_done)
+                .arg(musInfo.suffix());
+            QString newMusFile = QString("%1/%2").arg(musInfo.absoluteDir().absolutePath()).arg(newFileName);
+
+            newRenamePath = newMusFile;
+            rel_path = episodeRoot.relativeFilePath(newMusFile);
+            temp_path = episodeRootNew.filePath(rel_path);
+        }
+        else
+            newRenamePath = musFile;
 
         if(!episodeRootNew.exists())
             episodeRootNew.mkpath(".");
@@ -1908,7 +1923,7 @@ public:
             return false;
         }
 
-        QString argsInject = getArgsInject(musInfo.suffix(), argsOrig);
+        QString argsInject = use_short_names ? QString() : getArgsInject(musInfo.suffix(), argsOrig);
 
         if(m_spec.target_platform == TargetPlatform::DSG)
         {
