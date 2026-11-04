@@ -7,6 +7,7 @@
 * Added an ability to copy and paste effect settings
 * Polished the SPC Echo effect
 * The loops time setting will be saved and restured on the application restart
+* Fixed MSB and Unsigned formats handling at WAV recordings
 
 1.4.4
 - Fixed the incorrect working of the effects applying at the SFX tester
