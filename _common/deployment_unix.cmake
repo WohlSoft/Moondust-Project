@@ -112,6 +112,11 @@ if(NOT EMSCRIPTEN)
     set(CPACK_DEBIAN_MOONDUSTPNG2GIFS_PACKAGE_SECTION utils)
     set(CPACK_DEBIAN_MOONDUSTPNG2GIFS_DESCRIPTION "Utility to create valid pair of GIF files for bitmask render (Legacy SMBX format) from alha-channel based PNG graphics.")
 
+    set(CPACK_DEBIAN_MOONDUSTXTCONVERT_PACKAGE_NAME "moondust-tool-xtconvert")
+    set(CPACK_DEBIAN_MOONDUSTXTCONVERT_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_DEB_VERSION})")
+    set(CPACK_DEBIAN_MOONDUSTXTCONVERT_PACKAGE_SECTION utils)
+    set(CPACK_DEBIAN_MOONDUSTXTCONVERT_DESCRIPTION "A packager utility to produce packages of game packs and episodes for TheXTech engine targeting on special platform targets.")
+
     set(CPACK_DEBIAN_MOONDUSTTRANSLATOR_PACKAGE_NAME "moondust-translator")
     set(CPACK_DEBIAN_MOONDUSTTRANSLATOR_PACKAGE_DEPENDS "moondust-libs (= ${PGE_TOOLCHAIN_DEB_VERSION});moondust-common (= ${PGE_TOOLCHAIN_DEB_VERSION})")
     set(CPACK_DEBIAN_MOONDUSTTRANSLATOR_PACKAGE_SECTION localization)

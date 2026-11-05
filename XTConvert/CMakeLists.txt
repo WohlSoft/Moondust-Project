@@ -227,5 +227,6 @@ if(${CMAKE_BUILD_TYPE_LOWER} STREQUAL "debug")
 endif()
 
 install(TARGETS xtconvert_cli
+    COMPONENT "MoondustXTConvert"
     RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}"
 )
