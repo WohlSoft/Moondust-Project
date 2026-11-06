@@ -226,7 +226,7 @@ if(NOT EMSCRIPTEN AND NOT ANDROID)
         include(_common/library_gnurx.cmake)
         include(_common/library_libarchive.cmake)
         add_subdirectory(XTConvert)
-        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/XTConvert_Readme.txt" RENAME "XTConvert.readme.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/XTConvert_Readme.txt" RENAME "XTConvert.readme.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}" COMPONENT "MoondustXTConvert")
     endif()
 endif()
 
