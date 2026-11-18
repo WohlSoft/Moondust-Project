@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <clocale>
+#include <locale>
 #include <iostream>
 #include <stdio.h>
 
@@ -28,9 +28,6 @@
 int main(int argc, char** argv)
 {
     XTConvert::Spec s;
-
-    // Workaround: https://doc.qt.io/qt-5/qcoreapplication.html#locale-settings
-    std::setlocale(LC_NUMERIC, "C");
 
     try
     {
