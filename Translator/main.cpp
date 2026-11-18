@@ -39,6 +39,9 @@ int main(int argc, char *argv[])
     QApplication::setOrganizationDomain(V_PGE_URL);
     QApplication::setApplicationName("Moondust Translator");
 
+    // Workaround: https://doc.qt.io/qt-5/qcoreapplication.html#locale-settings
+    setlocale(LC_NUMERIC, "C");
+
     QApplication a(argc, argv);
 
     AppPathManager::initAppPath(argv[0]);

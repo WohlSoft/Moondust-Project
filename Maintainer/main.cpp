@@ -65,6 +65,9 @@ int main(int argc, char *argv[])
     QApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
     QStringList args;
 
+    // Workaround: https://doc.qt.io/qt-5/qcoreapplication.html#locale-settings
+    setlocale(LC_NUMERIC, "C");
+
     QApplication a(argc, argv);
 #ifdef _WIN32
     for(int i = 0; i < argc; i++)
